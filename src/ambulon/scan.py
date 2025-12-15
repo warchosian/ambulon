@@ -693,20 +693,26 @@ def _simulate_scan(output_file: Path, dpi: int, settings: Dict[str, Any]) -> Dic
                 output_file = output_file.with_suffix('.txt')
         else:
             # Pour les autres formats, créer un fichier texte
-            with open(output_file.with_suffix('.txt'), 'w', encoding='utf-8') as f:
+            simulated_file = output_file.with_suffix('.txt')
+            with open(simulated_file, 'w', encoding='utf-8') as f:
                 f.write(f"# Scan simulé - {dpi} DPI\n")
                 f.write(f"Format demandé: {output_file.suffix}\n")
-                f.write("Mode simulation actif\n")
-            output_file = output_file.with_suffix('.txt')
+                f.write(f"Mode simulation actif\n")
+                f.write(f"Fichier original prévu: {output_file.name}\n")
+                f.write(f"Timestamp: {datetime.now()}\n")
+                f.write("Ce fichier a été généré en mode simulation.\n")
+                f.write("Pour un vrai scan, vérifiez la connexion du scanner.\n")
+            output_file = simulated_file
             
             # Créer un fichier OCR simulé si demandé
             if ocr_enabled:
                 ocr_file = output_file.with_suffix('.txt')
                 with open(ocr_file, 'w', encoding='utf-8') as f:
                     f.write(f"Scan simulé - {dpi} DPI\n")
-                    f.write(f"Format demandé: {output_file.suffix}\n")
+                    f.write(f"Format demandé: {settings.get('format', 'jpg')}\n")
                     f.write("Mode simulation actif\n")
                     f.write("Fichier OCR simulé\n")
+                    f.write(f"Timestamp: {datetime.now()}\n")
                 print(f"Fichier OCR simulé créé : {ocr_file}")
         
         return {
