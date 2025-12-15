@@ -37,3 +37,4 @@ build/
 *.ropeproject/
 *.hg/
 *.svn/
+.aider*
