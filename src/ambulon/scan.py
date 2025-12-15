@@ -143,13 +143,10 @@ def _perform_single_scan(dpi: int, output_dir: Path = None, scan_number: int = 1
                 if match:
                     existing_numbers.append(int(match.group(1)))
             
-            # Vérifier si l'auto-incrémentation est désactivée
-            no_increment = kwargs.get('no_increment', False)
+            # Vérifier si l'auto-incrémentation est activée
+            increment = kwargs.get('increment', False)
             
-            if no_increment:
-                # Utiliser le nom tel quel sans incrémentation
-                output_file = target_dir / filename_with_ext
-            else:
+            if increment:
                 # Déterminer le prochain numéro disponible
                 if existing_numbers:
                     next_number = max(existing_numbers) + 1
@@ -241,10 +238,10 @@ def _perform_single_scan(dpi: int, output_dir: Path = None, scan_number: int = 1
         logging.info(f"   Nom de fichier généré : {output_file.name}")
         if '.' in output_dir.name and output_dir.suffix:
             no_increment = kwargs.get('no_increment', False)
-            if no_increment:
-                logging.info(f"   Mode : nom de fichier complet spécifié sans auto-incrémentation")
-            else:
+            if increment:
                 logging.info(f"   Mode : nom de fichier complet spécifié avec auto-incrémentation")
+            else:
+                logging.info(f"   Mode : nom de fichier complet spécifié sans auto-incrémentation (défaut)")
                 if 'existing_files' in locals():
                     logging.info(f"   Fichiers existants trouvés : {len(existing_files)}")
                     if 'existing_numbers' in locals() and existing_numbers:
@@ -873,8 +870,8 @@ Profils TWAIN disponibles:
                        help='Qualite de compression (1-100, defaut: 90)')
     parser.add_argument('--naming', choices=['date', 'sequence', 'custom'], default='date',
                        help='Convention de nommage (defaut: date)')
-    parser.add_argument('--no-increment', action='store_true',
-                       help='Utiliser le nom de fichier tel quel sans auto-incrementation')
+    parser.add_argument('--increment', action='store_true',
+                       help='Activer l\'auto-incrementation du nom de fichier')
     
     # Options de traitement post-scan
     parser.add_argument('--ocr', action='store_true', help='Activer l\'OCR apres le scan')
@@ -970,7 +967,7 @@ Profils TWAIN disponibles:
         'calibrate': args.calibrate,
         'test_pattern': args.test_pattern,
         'manual': args.manual,
-        'no_increment': args.no_increment
+        'increment': args.increment
     }
     
     # Déterminer la résolution à utiliser : argument positionnel a priorité sur -r
