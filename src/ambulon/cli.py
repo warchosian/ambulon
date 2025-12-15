@@ -1,6 +1,9 @@
 """Module CLI pour Ambulon."""
 import sys
 import argparse
+import logging
+from datetime import datetime
+from pathlib import Path
 
 from . import hello
 from .scan import main as scan_main
@@ -9,6 +12,40 @@ from .mcp import main as mcp_main
 from .img2pdf import main as img2pdf_main
 from .compress_pdf import main as compress_pdf_main
 from .config import export_mcp_config, get_claude_config_path
+
+
+def setup_logging(verbose: bool = False):
+    """Configure le système de logging pour les modules."""
+    now = datetime.now()
+    timestamp = now.strftime("%Y-%m-%d_%Hh%Mm%Ss")
+    
+    logs_dir = Path("logs")
+    logs_dir.mkdir(exist_ok=True)
+    
+    log_file = logs_dir / f"ambulon.{timestamp}.log"
+    
+    level = logging.DEBUG if verbose else logging.INFO
+    
+    import os
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+    if hasattr(sys.stderr, 'reconfigure'):
+        sys.stderr.reconfigure(encoding='utf-8')
+    
+    file_handler = logging.FileHandler(log_file, encoding='utf-8')
+    file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
+    
+    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
+    
+    logging.basicConfig(
+        level=level,
+        handlers=[file_handler, console_handler],
+        force=True
+    )
+    
+    return log_file
 
 
 def show_help():
