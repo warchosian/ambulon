@@ -26,7 +26,7 @@ class TestMCPIntegration:
             # Tester la configuration du logging
             setup_logging()
             
-            print("✓ Serveur MCP importé avec succès")
+            print("OK Serveur MCP importe avec succes")
             
         except ImportError as e:
             pytest.fail(f"Impossible d'importer le serveur MCP: {e}")
@@ -50,12 +50,14 @@ class TestMCPIntegration:
             
             # Vérifier la structure des outils
             for tool in tools:
-                assert isinstance(tool, dict)
-                assert "name" in tool
-                assert "description" in tool
-                assert "inputSchema" in tool
+                # Les outils MCP sont des objets Tool, pas des dictionnaires
+                assert hasattr(tool, 'name')
+                assert hasattr(tool, 'description')
+                assert hasattr(tool, 'inputSchema')
+                assert tool.name is not None
+                assert tool.description is not None
             
-            print(f"✓ {len(tools)} outils MCP disponibles")
+            print(f"OK {len(tools)} outils MCP disponibles")
             
         except Exception as e:
             pytest.fail(f"Erreur lors du test de liste des outils: {e}")
@@ -69,25 +71,23 @@ class TestMCPIntegration:
             # Préparer les arguments pour le scan
             arguments = {
                 "dpi": 300,
-                "output_dir": str(Path.cwd() / "test_scans"),
-                "simulate": True  # Mode simulation pour les tests
+                "output_path": str(Path.cwd() / "test_scans" / "test_scan.jpg")
             }
             
             # Appeler l'outil de scan
             result = await handle_call_tool("scan_document", arguments)
             
-            # Vérifier la structure de la réponse
-            assert isinstance(result, dict)
-            assert "content" in result
-            assert isinstance(result["content"], list)
-            assert len(result["content"]) > 0
+            # Vérifier la structure de la réponse (CallToolResult)
+            assert hasattr(result, 'content')
+            assert isinstance(result.content, list)
+            assert len(result.content) > 0
             
             # Vérifier le contenu de la réponse
-            content = result["content"][0]
-            assert "type" in content
-            assert "text" in content
+            content = result.content[0]
+            assert hasattr(content, 'type')
+            assert hasattr(content, 'text')
             
-            print("✓ Outil de scan MCP fonctionne")
+            print("OK Outil de scan MCP fonctionne")
             
         except Exception as e:
             pytest.fail(f"Erreur lors du test de l'outil de scan: {e}")
@@ -120,12 +120,11 @@ class TestMCPIntegration:
                     # Appeler l'outil OCR
                     result = await handle_call_tool("ocr_image", arguments)
                     
-                    # Vérifier la structure de la réponse
-                    assert isinstance(result, dict)
-                    assert "content" in result
-                    assert isinstance(result["content"], list)
+                    # Vérifier la structure de la réponse (CallToolResult)
+                    assert hasattr(result, 'content')
+                    assert isinstance(result.content, list)
                     
-                    print("✓ Outil OCR MCP fonctionne")
+                    print("OK Outil OCR MCP fonctionne")
                     
         except Exception as e:
             pytest.fail(f"Erreur lors du test de l'outil OCR: {e}")
@@ -148,7 +147,7 @@ class TestMCPIntegration:
             # (même si ce n'est pas implémenté, il ne devrait pas crasher)
             assert result.returncode in [0, 1, 2]  # Codes de retour acceptables
             
-            print("✓ Processus serveur MCP peut être lancé")
+            print("OK Processus serveur MCP peut etre lance")
             
         except subprocess.TimeoutExpired:
             pytest.fail("Le serveur MCP a pris trop de temps à répondre")
@@ -185,7 +184,7 @@ class TestMCPIntegration:
                     assert "description" in tool
                     assert "category" in tool
             
-            print("✓ Configuration MCP valide")
+            print("OK Configuration MCP valide")
             
         except Exception as e:
             pytest.fail(f"Erreur lors de la validation de la config MCP: {e}")
@@ -213,7 +212,7 @@ class TestMCPIntegration:
             assert "tools_available" in server_status
             assert "tools_count" in server_status
             
-            print("✓ Statut d'installation MCP vérifié")
+            print("OK Statut d'installation MCP verifie")
             
         except Exception as e:
             pytest.fail(f"Erreur lors du test du statut MCP: {e}")
@@ -242,7 +241,7 @@ def run_mcp_integration_tests():
             test_func()
             passed += 1
         except Exception as e:
-            print(f"✗ {test_name}: {e}")
+            print(f"ERREUR {test_name}: {e}")
     
     # Tests async séparés
     async_tests = [
@@ -257,7 +256,7 @@ def run_mcp_integration_tests():
             asyncio.run(test_func())
             passed += 1
         except Exception as e:
-            print(f"✗ {test_name}: {e}")
+            print(f"ERREUR {test_name}: {e}")
     
     total += len(async_tests)
     
@@ -265,10 +264,10 @@ def run_mcp_integration_tests():
     print(f"Résultats: {passed}/{total} tests réussis")
     
     if passed == total:
-        print("✓ Tous les tests d'intégration MCP sont passés!")
+        print("OK Tous les tests d'integration MCP sont passes!")
         return True
     else:
-        print("✗ Certains tests d'intégration MCP ont échoué")
+        print("ERREUR Certains tests d'integration MCP ont echoue")
         return False
 
 

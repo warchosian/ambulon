@@ -219,7 +219,7 @@ def handle_config_command():
             # Afficher les outils disponibles
             print("\nOutils MCP disponibles:")
             for tool in tools:
-                print(f"  - {tool['name']}: {tool['description']}")
+                print(f"  - {tool.name}: {tool.description}")
             
         except Exception as e:
             print(f"ERREUR lors du test d'intégration: {e}")
