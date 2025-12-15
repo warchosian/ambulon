@@ -240,14 +240,14 @@ def _perform_single_scan(dpi: int, output_dir: Path = None, scan_number: int = 1
             no_increment = kwargs.get('no_increment', False)
             if increment:
                 logging.info(f"   Mode : nom de fichier complet spécifié avec auto-incrémentation")
-            else:
-                logging.info(f"   Mode : nom de fichier complet spécifié sans auto-incrémentation (défaut)")
                 if 'existing_files' in locals():
                     logging.info(f"   Fichiers existants trouvés : {len(existing_files)}")
                     if 'existing_numbers' in locals() and existing_numbers:
                         logging.info(f"   Dernier numéro utilisé : {max(existing_numbers):03d}")
                     if 'next_number' in locals():
                         logging.info(f"   Prochain numéro : {next_number:03d}")
+            else:
+                logging.info(f"   Mode : nom de fichier complet spécifié sans auto-incrémentation (défaut)")
         else:
             logging.info(f"   Mode : génération automatique avec numérotation")
             if 'existing_files' in locals():
