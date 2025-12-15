@@ -161,6 +161,9 @@ def _perform_single_scan(dpi: int, output_dir: Path = None, scan_number: int = 1
                 else:
                     filename = f"{filename_base}-{next_number:03d}{extension}"
                     output_file = target_dir / filename
+            else:
+                # Utiliser le nom tel quel sans incrémentation (comportement par défaut)
+                output_file = target_dir / filename_with_ext
         else:
             # -o contient le début du nom de fichier sans extension
             filename_base = output_dir.name
