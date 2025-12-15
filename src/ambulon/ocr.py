@@ -850,6 +850,13 @@ Langues supportées (exemples):
     input_path = Path(args.input)
     has_wildcards = '*' in input_str or '?' in input_str
     
+    # Vérifier d'abord si le chemin existe
+    if not input_path.exists() and not has_wildcards:
+        error_msg = f"Chemin d'entrée non trouvé : {input_path}"
+        logging.error(f"[ERREUR] {error_msg}")
+        print(f"Erreur : {error_msg}")
+        return 1
+    
     if has_wildcards or args.batch:
         # Mode lot avec pattern
         logging.info(f"[MODE] Mode lot détecté : {input_str}")
@@ -874,7 +881,7 @@ Langues supportées (exemples):
             print(f"Erreur : {error_msg}")
             return 1
     elif input_path.is_dir():
-        # Mode dossier
+        # Mode dossier - traiter tous les fichiers du dossier
         logging.info(f"[MODE] Mode dossier détecté : {input_str}")
         
         output_dir = None
@@ -898,15 +905,9 @@ Langues supportées (exemples):
             logging.error(f"[ERREUR] {error_msg}")
             print(f"Erreur : {error_msg}")
             return 1
-    else:
-        # Mode fichier unique
+    elif input_path.is_file():
+        # Mode fichier unique - traiter le fichier spécifique
         logging.info(f"[MODE] Mode fichier unique : {input_str}")
-        
-        if not input_path.exists():
-            error_msg = f"Fichier d'entrée non trouvé : {input_path}"
-            logging.error(f"[ERREUR] {error_msg}")
-            print(f"Erreur : {error_msg}")
-            return 1
         
         output_file = None
         if args.output:
@@ -923,6 +924,11 @@ Langues supportées (exemples):
             logging.error(f"[ERREUR] {error_msg}")
             print(f"Erreur : {error_msg}")
             return 1
+    else:
+        error_msg = f"Le chemin '{input_path}' n'est ni un fichier ni un dossier valide"
+        logging.error(f"[ERREUR] {error_msg}")
+        print(f"Erreur : {error_msg}")
+        return 1
     
     # Afficher les résultats
     if result['success']:
