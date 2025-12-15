@@ -750,7 +750,10 @@ def process_multiple_files(file_pattern: str, language: str = 'fra', output_dir:
                 output_file = None
             
             # Effectuer l'OCR sur le fichier
-            ocr_result = perform_ocr(file_path, language, output_file)
+            if file_path.is_dir():
+                ocr_result = _process_directory_ocr(file_path, language, output_file.parent if output_file else None)
+            else:
+                ocr_result = perform_ocr_single_file(file_path, language, output_file)
             
             if ocr_result['success']:
                 processed_files.append({
@@ -885,10 +888,10 @@ Langues supportées (exemples):
                 output_dir.mkdir(parents=True, exist_ok=True)
         
         try:
-            result = perform_ocr(
-                input_path=input_path,
+            result = _process_directory_ocr(
+                directory=input_path,
                 language=args.lang,
-                output_path=output_dir
+                output_dir=output_dir
             )
         except Exception as e:
             error_msg = f"Erreur lors du traitement du dossier : {str(e)}"
@@ -910,10 +913,10 @@ Langues supportées (exemples):
             output_file = Path(args.output)
         
         try:
-            result = perform_ocr(
-                input_path=input_path,
+            result = perform_ocr_single_file(
+                image_file=input_path,
                 language=args.lang,
-                output_path=output_file
+                output_file=output_file
             )
         except Exception as e:
             error_msg = f"Erreur lors de l'OCR : {str(e)}"
