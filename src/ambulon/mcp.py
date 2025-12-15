@@ -489,7 +489,12 @@ Le serveur MCP permet aux assistants IA d'utiliser les fonctionnalités d'Ambulo
 via le protocole Model Context Protocol (MCP).
 
 Configuration pour Claude Desktop:
-  Ajoutez dans claude_desktop_config.json:
+  Emplacement du fichier de configuration :
+  - Windows: %APPDATA%\\Claude\\claude_desktop_config.json
+  - macOS: ~/Library/Application Support/Claude/claude_desktop_config.json
+  - Linux: ~/.config/Claude/claude_desktop_config.json
+  
+  Contenu à ajouter dans claude_desktop_config.json:
   {
     "mcpServers": {
       "ambulon": {
