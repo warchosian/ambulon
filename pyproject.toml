@@ -9,6 +9,7 @@ packages = [{include = "ambulon", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+importlib-resources = "^6.0.0"
 
 [tool.poetry.group.dev.dependencies]
 commitizen = "^3.13.0"

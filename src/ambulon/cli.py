@@ -6,6 +6,7 @@ from . import hello
 from .scan import main as scan_main
 from .ocr import main as ocr_main
 from .mcp import main as mcp_main
+from .config import export_mcp_config, get_claude_config_path
 
 
 def show_help():
@@ -18,6 +19,7 @@ def show_help():
     print("  scan    Module de scan TWAIN avec profils DPI")
     print("  ocr     Module OCR - Reconnaissance optique de caractères")
     print("  mcp     Serveur MCP pour assistants IA")
+    print("  config  Gestion de la configuration MCP")
     print()
     print("Options générales:")
     print("  -h, --help    Afficher cette aide")
@@ -29,9 +31,61 @@ def show_help():
     print("  ambulon ocr --help           Aide du module OCR")
     print("  ambulon ocr -i image.jpg -l fra")
     print("  ambulon mcp                  Démarrer le serveur MCP")
+    print("  ambulon config export        Exporter la config MCP")
     print()
     print("Pour plus d'informations sur un module spécifique:")
     print("  ambulon [MODULE] --help")
+
+
+def handle_config_command():
+    """Gère les commandes de configuration MCP."""
+    if len(sys.argv) < 3:
+        print("Usage: ambulon config [COMMANDE]")
+        print()
+        print("Commandes disponibles:")
+        print("  export [FICHIER]     Exporter la configuration MCP")
+        print("  claude-path          Afficher le chemin de config Claude")
+        print()
+        print("Exemples:")
+        print("  ambulon config export")
+        print("  ambulon config export mon-config.json")
+        print("  ambulon config claude-path")
+        return 1
+    
+    subcommand = sys.argv[2]
+    
+    if subcommand == 'export':
+        try:
+            from pathlib import Path
+            output_file = Path(sys.argv[3]) if len(sys.argv) > 3 else Path("mcp-config.json")
+            exported_path = export_mcp_config(output_file)
+            print(f"Configuration MCP exportée vers: {exported_path}")
+            print()
+            print("Pour utiliser avec Claude Desktop:")
+            claude_path = get_claude_config_path()
+            print(f"1. Créez le répertoire: {claude_path.parent}")
+            print(f"2. Copiez le contenu dans: {claude_path}")
+            return 0
+        except Exception as e:
+            print(f"Erreur lors de l'export: {e}")
+            return 1
+    
+    elif subcommand == 'claude-path':
+        claude_path = get_claude_config_path()
+        print(f"Chemin de configuration Claude Desktop:")
+        print(f"  {claude_path}")
+        print()
+        if claude_path.exists():
+            print("✓ Le fichier existe")
+        else:
+            print("✗ Le fichier n'existe pas")
+            print(f"  Créez d'abord le répertoire: {claude_path.parent}")
+        return 0
+    
+    else:
+        print(f"Commande inconnue: {subcommand}")
+        print("Utilisez 'ambulon config' pour voir les commandes disponibles.")
+        return 1
 
 
 def main():
@@ -71,6 +125,8 @@ def main():
                 return mcp_main()
             finally:
                 sys.argv = original_argv
+        elif command == 'config':
+            return handle_config_command()
         else:
             print(f"Module inconnu: {command}")
             print("Utilisez 'ambulon --help' pour voir les modules disponibles.")
