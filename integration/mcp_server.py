@@ -448,11 +448,7 @@ async def main():
             write_stream,
             InitializationOptions(
                 server_name="ambulon",
-                server_version="0.3.0",
-                capabilities=server.get_capabilities(
-                    notification_options=None,
-                    experimental_capabilities={}
-                )
+                server_version="0.3.0"
             )
         )
 
