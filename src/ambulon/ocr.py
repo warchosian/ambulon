@@ -52,30 +52,35 @@ try:
 except ImportError:
     TESSERACT_AVAILABLE = False
 
-def perform_ocr(image_file: Path, language: str = 'fra', output_file: Path = None) -> Dict[str, Any]:
+def perform_ocr(input_path: Path, language: str = 'fra', output_path: Path = None) -> Dict[str, Any]:
     """
-    Effectue l'OCR sur un fichier image
+    Effectue l'OCR sur un fichier image ou un dossier
     
     Args:
-        image_file: Fichier image à traiter
+        input_path: Fichier image ou dossier à traiter
         language: Langue pour l'OCR (défaut: 'fra')
-        output_file: Fichier de sortie (optionnel)
+        output_path: Fichier ou dossier de sortie (optionnel)
         
     Returns:
         Dict contenant les informations sur l'OCR
     """
-    # Vérifier que le fichier existe et n'est pas vide
-    if not image_file.exists():
+    # Vérifier que le chemin d'entrée existe
+    if not input_path.exists():
         return {
             'success': False,
-            'error': f'Fichier image non trouvé : {image_file}'
+            'error': f'Chemin non trouvé : {input_path}'
         }
     
-    file_size = image_file.stat().st_size
+    # Si c'est un dossier, traiter tous les fichiers
+    if input_path.is_dir():
+        return _process_directory_ocr(input_path, language, output_path)
+    
+    # Si c'est un fichier, traiter le fichier unique
+    file_size = input_path.stat().st_size
     if file_size == 0:
         return {
             'success': False,
-            'error': f'Le fichier image est vide (0 octets) : {image_file}'
+            'error': f'Le fichier est vide (0 octets) : {input_path}'
         }
     
     try:
@@ -101,7 +106,7 @@ def perform_ocr(image_file: Path, language: str = 'fra', output_file: Path = Non
             if python_alt and fallback_enabled:
                 logging.info(f"[FALLBACK] Tesseract désactivé, utilisation de l'alternative Python: {python_alt}")
                 print(f"[FALLBACK] tesseract désactivé → utilisation de {python_alt}")
-                return _perform_ocr_python(image_file, language, output_file)
+                return _perform_ocr_python(input_path, language, output_path)
             else:
                 logging.error("[ERREUR] Tesseract désactivé et aucune alternative Python configurée")
                 return {
@@ -110,15 +115,15 @@ def perform_ocr(image_file: Path, language: str = 'fra', output_file: Path = Non
                 }
         
         # Générer le nom du fichier de sortie OCR
-        if output_file is None:
-            ocr_output_file = image_file.with_suffix('.txt')
+        if output_path is None:
+            ocr_output_file = input_path.with_suffix('.txt')
         else:
-            ocr_output_file = output_file
+            ocr_output_file = output_path
         
         logging.info(f"[OCR] Démarrage de l'OCR avec Tesseract")
         logging.info(f"[OCR] Exécutable : {tesseract_executable}")
         logging.info(f"[OCR] Langue : {language}")
-        logging.info(f"[OCR] Fichier d'entrée : {image_file}")
+        logging.info(f"[OCR] Fichier d'entrée : {input_path}")
         logging.info(f"[OCR] Fichier de sortie : {ocr_output_file}")
         
         # Construire la commande Tesseract
@@ -127,7 +132,7 @@ def perform_ocr(image_file: Path, language: str = 'fra', output_file: Path = Non
         
         cmd = [
             tesseract_executable,
-            str(image_file),
+            str(input_path),
             output_base,
             '-l', language,
             '--psm', '3',  # Page segmentation mode: Fully automatic page segmentation
@@ -156,7 +161,7 @@ def perform_ocr(image_file: Path, language: str = 'fra', output_file: Path = Non
             print(f"Taille du fichier OCR : {ocr_size} octets")
             return {
                 'success': True,
-                'input_file': image_file,
+                'input_file': input_path,
                 'output_file': ocr_output_file,
                 'language': language,
                 'file_size': ocr_size
@@ -354,6 +359,7 @@ def main():
         epilog="""
 Exemples d'utilisation:
   %(prog)s -i image.jpg -l fra
+  %(prog)s -i dossier_images/ -l fra -o textes/
   %(prog)s -i "scans/*.png" -l eng -o textes/
   %(prog)s -i document.pdf -l fra+eng -o resultat.txt
   %(prog)s -i "*.jpg" --batch -l fra
@@ -370,7 +376,7 @@ Langues supportées (exemples):
     
     # Options principales
     parser.add_argument('-i', '--input', required=True,
-                       help='Fichier d\'entrée ou pattern de fichiers (ex: image.jpg ou "*.png")')
+                       help='Fichier, dossier ou pattern de fichiers (ex: image.jpg, dossier/, "*.png")')
     parser.add_argument('-o', '--output',
                        help='Fichier ou répertoire de sortie (optionnel)')
     parser.add_argument('-l', '--lang', default='fra',
@@ -408,12 +414,13 @@ Langues supportées (exemples):
     logging.info(f"   Répertoire de travail : {Path.cwd()}")
     logging.info(f"   Langue OCR : {args.lang}")
     
-    # Déterminer si c'est un traitement en lot
+    # Déterminer le type de traitement
     input_str = str(args.input)
+    input_path = Path(args.input)
     has_wildcards = '*' in input_str or '?' in input_str
     
     if has_wildcards or args.batch:
-        # Mode lot
+        # Mode lot avec pattern
         logging.info(f"[MODE] Mode lot détecté : {input_str}")
         
         output_dir = None
@@ -435,13 +442,37 @@ Langues supportées (exemples):
             logging.error(f"[ERREUR] {error_msg}")
             print(f"Erreur : {error_msg}")
             return 1
+    elif input_path.is_dir():
+        # Mode dossier
+        logging.info(f"[MODE] Mode dossier détecté : {input_str}")
+        
+        output_dir = None
+        if args.output:
+            output_path = Path(args.output)
+            if output_path.is_dir() or not output_path.suffix:
+                output_dir = output_path
+            else:
+                # Si c'est un fichier, utiliser son dossier parent
+                output_dir = output_path.parent
+                output_dir.mkdir(parents=True, exist_ok=True)
+        
+        try:
+            result = perform_ocr(
+                input_path=input_path,
+                language=args.lang,
+                output_path=output_dir
+            )
+        except Exception as e:
+            error_msg = f"Erreur lors du traitement du dossier : {str(e)}"
+            logging.error(f"[ERREUR] {error_msg}")
+            print(f"Erreur : {error_msg}")
+            return 1
     else:
         # Mode fichier unique
         logging.info(f"[MODE] Mode fichier unique : {input_str}")
         
-        input_file = Path(args.input)
-        if not input_file.exists():
-            error_msg = f"Fichier d'entrée non trouvé : {input_file}"
+        if not input_path.exists():
+            error_msg = f"Fichier d'entrée non trouvé : {input_path}"
             logging.error(f"[ERREUR] {error_msg}")
             print(f"Erreur : {error_msg}")
             return 1
@@ -452,9 +483,9 @@ Langues supportées (exemples):
         
         try:
             result = perform_ocr(
-                image_file=input_file,
+                input_path=input_path,
                 language=args.lang,
-                output_file=output_file
+                output_path=output_file
             )
         except Exception as e:
             error_msg = f"Erreur lors de l'OCR : {str(e)}"
