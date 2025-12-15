@@ -267,6 +267,7 @@ def handle_test_command():
     """Gère les commandes de test."""
     import subprocess
     import os
+    from pathlib import Path
     
     if len(sys.argv) < 3:
         print("Usage: ambulon test [MODULE]")
