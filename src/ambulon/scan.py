@@ -110,10 +110,39 @@ def _perform_single_scan(dpi: int, output_dir: Path = None, scan_number: int = 1
     if output_dir.name and output_dir.name != 'scans':
         # Vérifier si -o contient un nom de fichier complet avec extension
         if '.' in output_dir.name and output_dir.suffix:
-            # -o contient un nom de fichier complet (ex: scans\drap.jpg)
+            # -o contient un nom de fichier complet (ex: documents/document_scanne.jpg)
             target_dir = output_dir.parent if output_dir.parent != Path('.') else Path('.')
-            filename = output_dir.name
-            output_file = target_dir / filename
+            filename_with_ext = output_dir.name
+            filename_base = output_dir.stem  # nom sans extension
+            extension = output_dir.suffix    # .jpg
+            
+            # Créer le répertoire cible si nécessaire
+            target_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Trouver le prochain numéro disponible en cherchant les fichiers existants
+            existing_files = list(target_dir.glob(f"{filename_base}-*.{extension[1:]}"))
+            existing_numbers = []
+            
+            for existing_file in existing_files:
+                # Extraire le numéro du nom de fichier (ex: document_scanne-001.jpg -> 001)
+                match = re.match(rf"{re.escape(filename_base)}-(\d{{3}})\.{re.escape(extension[1:])}", existing_file.name)
+                if match:
+                    existing_numbers.append(int(match.group(1)))
+            
+            # Déterminer le prochain numéro disponible
+            if existing_numbers:
+                next_number = max(existing_numbers) + 1
+            else:
+                next_number = 1
+            
+            # Pour les scans multiples, générer le nom de base sans numéro
+            # NAPS2 ajoutera automatiquement la numérotation
+            if number_of_scans > 1:
+                filename_base_for_naps2 = filename_base
+                output_file = target_dir / f"{filename_base_for_naps2}{extension}"
+            else:
+                filename = f"{filename_base}-{next_number:03d}{extension}"
+                output_file = target_dir / filename
         else:
             # -o contient le début du nom de fichier sans extension
             filename_base = output_dir.name
@@ -190,7 +219,13 @@ def _perform_single_scan(dpi: int, output_dir: Path = None, scan_number: int = 1
     else:
         logging.info(f"   Nom de fichier généré : {output_file.name}")
         if '.' in output_dir.name and output_dir.suffix:
-            logging.info(f"   Mode : nom de fichier complet spécifié")
+            logging.info(f"   Mode : nom de fichier complet spécifié avec auto-incrémentation")
+            if 'existing_files' in locals():
+                logging.info(f"   Fichiers existants trouvés : {len(existing_files)}")
+                if 'existing_numbers' in locals() and existing_numbers:
+                    logging.info(f"   Dernier numéro utilisé : {max(existing_numbers):03d}")
+                if 'next_number' in locals():
+                    logging.info(f"   Prochain numéro : {next_number:03d}")
         else:
             logging.info(f"   Mode : génération automatique avec numérotation")
             if 'existing_files' in locals():
