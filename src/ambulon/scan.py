@@ -74,7 +74,7 @@ def _perform_single_scan(dpi: int, output_dir: Path = None, scan_number: int = 1
     
     Args:
         dpi: Résolution de scan en DPI
-        output_dir: Répertoire de sortie
+        output_dir: Répertoire de sortie ou chemin de fichier complet
         scan_number: Numéro du scan (pour la numérotation)
         **kwargs: Options de scan supplémentaires
         
@@ -84,7 +84,14 @@ def _perform_single_scan(dpi: int, output_dir: Path = None, scan_number: int = 1
     if output_dir is None:
         output_dir = Path("./scans")
     
-    output_dir.mkdir(parents=True, exist_ok=True)
+    # Ne créer le répertoire que si output_dir est vraiment un répertoire
+    # Si c'est un fichier avec extension, créer seulement le répertoire parent
+    if output_dir.suffix:
+        # C'est un fichier, créer seulement le répertoire parent
+        output_dir.parent.mkdir(parents=True, exist_ok=True)
+    else:
+        # C'est un répertoire, le créer
+        output_dir.mkdir(parents=True, exist_ok=True)
     
     number_of_scans = kwargs.get('number', 1)
     
