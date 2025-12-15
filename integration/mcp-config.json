@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "dyag": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "dyag.mcp_server"
+      ],
+      "env": {
+        "PYTHONPATH": "/home/firmin/codespace/dyag/src"
+      },
+      "description": "Dyag PDF and image manipulation tools - Convert images to PDF, compress PDFs, and more"
+    }
+  }
+}
