@@ -27,10 +27,10 @@ def setup_logging(verbose: bool = False):
     now = datetime.now()
     timestamp = now.strftime("%Y-%m-%d_%Hh%Mm%Ss")
     
-    logs_dir = Path("dk.logs")
+    logs_dir = Path("logs")
     logs_dir.mkdir(exist_ok=True)
     
-    log_file = logs_dir / f"dk.scan.{timestamp}.log"
+    log_file = logs_dir / f"scan.{timestamp}.log"
     
     level = logging.DEBUG if verbose else logging.INFO
     
