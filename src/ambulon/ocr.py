@@ -864,7 +864,7 @@ Langues supportées (exemples):
     logging.info(f"[DEBUG] Est un fichier: {input_path.is_file()}")
     
     # Détecter le type de traitement - vérifier d'abord si c'est un dossier
-    if input_path.exists() and input_path.is_dir():
+    if input_path.is_dir():
         # Mode dossier - traiter tous les fichiers du dossier
         logging.info(f"[MODE] Mode dossier détecté : {input_str}")
         
