@@ -64,6 +64,20 @@ def perform_ocr(image_file: Path, language: str = 'fra', output_file: Path = Non
     Returns:
         Dict contenant les informations sur l'OCR
     """
+    # Vérifier que le fichier existe et n'est pas vide
+    if not image_file.exists():
+        return {
+            'success': False,
+            'error': f'Fichier image non trouvé : {image_file}'
+        }
+    
+    file_size = image_file.stat().st_size
+    if file_size == 0:
+        return {
+            'success': False,
+            'error': f'Le fichier image est vide (0 octets) : {image_file}'
+        }
+    
     try:
         # Charger la configuration pour obtenir le chemin de Tesseract
         import yaml

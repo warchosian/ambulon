@@ -382,10 +382,17 @@ def _perform_twain_scan(output_file: Path, dpi: int, **kwargs) -> bool:
             # Scan unique
             if output_file.exists():
                 file_size = output_file.stat().st_size
+            
+                # Vérifier que le fichier n'est pas vide
+                if file_size == 0:
+                    logging.error(f"[NAPS2] Le fichier de sortie est vide (0 octets) : {output_file}")
+                    print(f"Erreur : Le fichier scanné est vide. Vérifiez que le scanner est connecté et qu'un document est placé.")
+                    return False
+            
                 logging.info(f"[NAPS2] Scan réussi : {output_file} ({file_size} octets)")
                 print(f"Scan terminé avec succès !")
                 print(f"Taille du fichier : {file_size} octets")
-                
+            
                 # Effectuer l'OCR si demandé
                 if ocr_enabled:
                     ocr_success = _perform_ocr(output_file, ocr_lang)
@@ -395,7 +402,7 @@ def _perform_twain_scan(output_file: Path, dpi: int, **kwargs) -> bool:
                     else:
                         logging.warning(f"[OCR] OCR échoué pour {output_file}")
                         print(f"Attention : OCR échoué")
-                
+            
                 return True
             else:
                 logging.error(f"[NAPS2] Le fichier de sortie n'a pas été créé : {output_file}")
