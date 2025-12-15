@@ -2,17 +2,19 @@
 import sys
 
 from . import hello
-
-
-def scan(*args):
-    """Fonction scan temporaire."""
-    print(f"Commande scan appelée avec les arguments: {args}")
+from .scan import main as scan_main
 
 
 def main():
     """Fonction principale appelée par la commande `ambulon`."""
     if len(sys.argv) > 1 and sys.argv[1] == 'scan':
-        # Passer les arguments restants à la fonction scan
-        scan(*sys.argv[2:])
+        # Retirer 'scan' des arguments et lancer le module scan
+        original_argv = sys.argv
+        sys.argv = [sys.argv[0]] + sys.argv[2:]  # Garder le nom du programme et les arguments après 'scan'
+        try:
+            return scan_main()
+        finally:
+            sys.argv = original_argv
     else:
         print(hello())
+        return 0
