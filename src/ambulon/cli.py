@@ -20,6 +20,7 @@ def show_help():
     print("  ocr     Module OCR - Reconnaissance optique de caractères")
     print("  mcp     Serveur MCP pour assistants IA")
     print("  config  Gestion de la configuration MCP")
+    print("  test    Tests des modules Ambulon")
     print()
     print("Options générales:")
     print("  -h, --help    Afficher cette aide")
@@ -32,6 +33,7 @@ def show_help():
     print("  ambulon ocr -i image.jpg -l fra")
     print("  ambulon mcp                  Démarrer le serveur MCP")
     print("  ambulon config export        Exporter la config MCP")
+    print("  ambulon test config          Tester la configuration")
     print()
     print("Pour plus d'informations sur un module spécifique:")
     print("  ambulon [MODULE] --help")
@@ -44,12 +46,21 @@ def handle_config_command():
         print()
         print("Commandes disponibles:")
         print("  export [FICHIER]     Exporter la configuration MCP")
+        print("  install [ASSISTANT]  Installer la config pour un assistant")
+        print("  status               Afficher le statut des configurations")
+        print("  test                 Tester le serveur MCP")
+        print("  paths                Afficher tous les chemins de config")
         print("  claude-path          Afficher le chemin de config Claude")
+        print()
+        print("Assistants supportes pour install:")
+        print("  claude, openrouter, aider, continue, all")
         print()
         print("Exemples:")
         print("  ambulon config export")
-        print("  ambulon config export mon-config.json")
-        print("  ambulon config claude-path")
+        print("  ambulon config install claude")
+        print("  ambulon config install all")
+        print("  ambulon config status")
+        print("  ambulon config test")
         return 1
     
     subcommand = sys.argv[2]
@@ -60,12 +71,21 @@ def handle_config_command():
         print()
         print("Commandes disponibles:")
         print("  export [FICHIER]     Exporter la configuration MCP")
+        print("  install [ASSISTANT]  Installer la config pour un assistant")
+        print("  status               Afficher le statut des configurations")
+        print("  test                 Tester le serveur MCP")
+        print("  paths                Afficher tous les chemins de config")
         print("  claude-path          Afficher le chemin de config Claude")
+        print()
+        print("Assistants supportes pour install:")
+        print("  claude, openrouter, aider, continue, all")
         print()
         print("Exemples:")
         print("  ambulon config export")
-        print("  ambulon config export mon-config.json")
-        print("  ambulon config claude-path")
+        print("  ambulon config install claude")
+        print("  ambulon config install all")
+        print("  ambulon config status")
+        print("  ambulon config test")
         return 0
     
     if subcommand == 'export':
@@ -84,6 +104,127 @@ def handle_config_command():
             print(f"Erreur lors de l'export: {e}")
             return 1
     
+    elif subcommand == 'install':
+        from .config import (create_claude_config, create_openrouter_config, 
+                           create_aider_config, create_continue_config)
+        
+        assistant = sys.argv[3] if len(sys.argv) > 3 else "claude"
+        force = "--force" in sys.argv
+        
+        try:
+            if assistant == "all":
+                print("Installation de la configuration MCP pour tous les assistants...")
+                print()
+                
+                configs = {
+                    "Claude Desktop": create_claude_config,
+                    "OpenRouter": create_openrouter_config,
+                    "Aider": create_aider_config,
+                    "Continue (VSCode)": create_continue_config
+                }
+                
+                for name, create_func in configs.items():
+                    try:
+                        create_func(force)
+                        print(f"✓ {name}: Configuration installee")
+                    except Exception as e:
+                        print(f"✗ {name}: Erreur - {e}")
+                
+            elif assistant == "claude":
+                create_claude_config(force)
+                print("✓ Configuration Claude Desktop installee")
+                
+            elif assistant == "openrouter":
+                create_openrouter_config(force)
+                print("✓ Configuration OpenRouter installee")
+                
+            elif assistant == "aider":
+                create_aider_config(force)
+                print("✓ Configuration Aider installee")
+                
+            elif assistant == "continue":
+                create_continue_config(force)
+                print("✓ Configuration Continue (VSCode) installee")
+                
+            else:
+                print(f"Assistant inconnu: {assistant}")
+                print("Assistants supportes: claude, openrouter, aider, continue, all")
+                return 1
+            
+            print()
+            print("Redemarrez votre assistant pour prendre en compte les changements.")
+            return 0
+            
+        except Exception as e:
+            print(f"Erreur lors de l'installation: {e}")
+            return 1
+    
+    elif subcommand == 'status':
+        from .config import get_installation_status, test_mcp_server
+        
+        print("Statut des configurations MCP Ambulon:")
+        print("=" * 50)
+        
+        status = get_installation_status()
+        
+        for assistant, info in status.items():
+            print(f"\n{assistant.upper()}:")
+            print(f"  Repertoire: {'✓' if info['directory_exists'] else '✗'} {Path(info['config_path']).parent}")
+            print(f"  Config:     {'✓' if info['config_exists'] else '✗'} {info['config_path']}")
+            print(f"  Ambulon:    {'✓' if info['ambulon_configured'] else '✗'} {'Configure' if info['ambulon_configured'] else 'Non configure'}")
+        
+        print(f"\nSERVEUR MCP:")
+        test_results = test_mcp_server()
+        print(f"  Accessible: {'✓' if test_results['server_accessible'] else '✗'}")
+        print(f"  Outils:     {'✓' if test_results['tools_available'] else '✗'} ({test_results['tools_count']} disponibles)")
+        
+        if test_results['error']:
+            print(f"  Erreur:     {test_results['error']}")
+        
+        return 0
+    
+    elif subcommand == 'test':
+        from .config import test_mcp_server
+        
+        print("Test du serveur MCP Ambulon...")
+        print()
+        
+        results = test_mcp_server()
+        
+        if results['server_accessible']:
+            print("✓ Serveur MCP accessible")
+        else:
+            print("✗ Serveur MCP non accessible")
+        
+        if results['tools_available']:
+            print(f"✓ Outils disponibles ({results['tools_count']} outils)")
+        else:
+            print("✗ Aucun outil disponible")
+        
+        if results['error']:
+            print(f"✗ Erreur: {results['error']}")
+            return 1
+        
+        print()
+        print("Le serveur MCP fonctionne correctement!")
+        return 0
+    
+    elif subcommand == 'paths':
+        from .config import get_config_paths
+        
+        print("Chemins de configuration pour tous les assistants:")
+        print("=" * 55)
+        
+        paths = get_config_paths()
+        
+        for assistant, assistant_paths in paths.items():
+            print(f"\n{assistant.upper()}:")
+            for path_type, path in assistant_paths.items():
+                exists = "✓" if path.exists() else "✗"
+                print(f"  {path_type}: {exists} {path}")
+        
+        return 0
+    
     elif subcommand == 'claude-path':
         claude_path = get_claude_config_path()
         print(f"Chemin de configuration Claude Desktop:")
@@ -99,6 +240,74 @@ def handle_config_command():
     else:
         print(f"Commande inconnue: {subcommand}")
         print("Utilisez 'ambulon config' pour voir les commandes disponibles.")
+        return 1
+
+
+def handle_test_command():
+    """Gère les commandes de test."""
+    if len(sys.argv) < 3:
+        print("Usage: ambulon test [MODULE]")
+        print()
+        print("Modules de test disponibles:")
+        print("  config    Tester le module de configuration MCP")
+        print("  all       Tester tous les modules")
+        print()
+        print("Exemples:")
+        print("  ambulon test config")
+        print("  ambulon test all")
+        return 1
+    
+    test_module = sys.argv[2]
+    
+    if test_module in ['-h', '--help']:
+        print("Usage: ambulon test [MODULE]")
+        print()
+        print("Modules de test disponibles:")
+        print("  config    Tester le module de configuration MCP")
+        print("  all       Tester tous les modules")
+        print()
+        print("Exemples:")
+        print("  ambulon test config")
+        print("  ambulon test all")
+        return 0
+    
+    if test_module == 'config':
+        try:
+            from .test_config import run_all_tests
+            success = run_all_tests()
+            return 0 if success else 1
+        except ImportError as e:
+            print(f"Erreur d'import du module de test: {e}")
+            return 1
+        except Exception as e:
+            print(f"Erreur lors des tests: {e}")
+            return 1
+    
+    elif test_module == 'all':
+        print("Execution de tous les tests Ambulon...")
+        print()
+        
+        # Test du module config
+        try:
+            from .test_config import run_all_tests
+            config_success = run_all_tests()
+        except Exception as e:
+            print(f"Erreur lors des tests config: {e}")
+            config_success = False
+        
+        print()
+        print("=" * 50)
+        print("RESUME DES TESTS:")
+        print(f"  Configuration: {'✓ PASSE' if config_success else '✗ ECHEC'}")
+        
+        overall_success = config_success
+        print(f"\nResultat global: {'✓ TOUS LES TESTS PASSES' if overall_success else '✗ CERTAINS TESTS ONT ECHOUE'}")
+        
+        return 0 if overall_success else 1
+    
+    else:
+        print(f"Module de test inconnu: {test_module}")
+        print("Modules disponibles: config, all")
         return 1
 
 
@@ -141,6 +350,8 @@ def main():
                 sys.argv = original_argv
         elif command == 'config':
             return handle_config_command()
+        elif command == 'test':
+            return handle_test_command()
         else:
             print(f"Module inconnu: {command}")
             print("Utilisez 'ambulon --help' pour voir les modules disponibles.")
