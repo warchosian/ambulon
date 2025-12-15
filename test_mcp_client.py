@@ -25,10 +25,10 @@ class SimpleMCPClient:
                 stderr=asyncio.subprocess.PIPE,
                 cwd=Path.cwd()
             )
-            print("✓ Serveur MCP démarré")
+            print("OK Serveur MCP demarre")
             return True
         except Exception as e:
-            print(f"✗ Erreur lors du démarrage du serveur: {e}")
+            print(f"ERREUR lors du demarrage du serveur: {e}")
             return False
     
     async def send_request(self, method, params=None):
@@ -69,14 +69,14 @@ class SimpleMCPClient:
             })
             
             if response and "result" in response:
-                print("✓ Initialisation réussie")
+                print("OK Initialisation reussie")
                 print(f"  Serveur: {response['result'].get('serverInfo', {}).get('name', 'inconnu')}")
                 return True
             else:
-                print(f"✗ Réponse d'initialisation invalide: {response}")
+                print(f"ERREUR Reponse d'initialisation invalide: {response}")
                 return False
         except Exception as e:
-            print(f"✗ Erreur lors de l'initialisation: {e}")
+            print(f"ERREUR lors de l'initialisation: {e}")
             return False
     
     async def test_list_tools(self):
@@ -87,15 +87,15 @@ class SimpleMCPClient:
             
             if response and "result" in response:
                 tools = response["result"].get("tools", [])
-                print(f"✓ {len(tools)} outils listés:")
+                print(f"OK {len(tools)} outils listes:")
                 for tool in tools:
                     print(f"  - {tool.get('name', 'inconnu')}: {tool.get('description', 'pas de description')}")
                 return True
             else:
-                print(f"✗ Réponse de liste des outils invalide: {response}")
+                print(f"ERREUR Reponse de liste des outils invalide: {response}")
                 return False
         except Exception as e:
-            print(f"✗ Erreur lors de la liste des outils: {e}")
+            print(f"ERREUR lors de la liste des outils: {e}")
             return False
     
     async def test_call_tool(self, tool_name, arguments):
@@ -109,17 +109,17 @@ class SimpleMCPClient:
             
             if response and "result" in response:
                 result = response["result"]
-                print(f"✓ Outil {tool_name} appelé avec succès")
+                print(f"OK Outil {tool_name} appele avec succes")
                 if "content" in result:
                     content = result["content"]
                     if content and len(content) > 0:
                         print(f"  Résultat: {content[0].get('text', 'pas de texte')[:100]}...")
                 return True
             else:
-                print(f"✗ Réponse d'appel d'outil invalide: {response}")
+                print(f"ERREUR Reponse d'appel d'outil invalide: {response}")
                 return False
         except Exception as e:
-            print(f"✗ Erreur lors de l'appel de l'outil: {e}")
+            print(f"ERREUR lors de l'appel de l'outil: {e}")
             return False
     
     async def stop_server(self):
@@ -127,12 +127,12 @@ class SimpleMCPClient:
         if self.process:
             self.process.terminate()
             await self.process.wait()
-            print("✓ Serveur MCP arrêté")
+            print("OK Serveur MCP arrete")
 
 
 async def main():
     """Fonction principale de test du client."""
-    print("🔌 Test du client MCP avec le serveur Ambulon")
+    print("Test du client MCP avec le serveur Ambulon")
     print("=" * 60)
     
     client = SimpleMCPClient()
@@ -164,10 +164,10 @@ async def main():
                 if success:
                     passed += 1
             except Exception as e:
-                print(f"✗ {test_name}: Exception - {e}")
+                print(f"ERREUR {test_name}: Exception - {e}")
         
         print(f"\n{'=' * 60}")
-        print(f"📊 Résultats: {passed}/{total} tests réussis")
+        print(f"Resultats: {passed}/{total} tests reussis")
         
         return 0 if passed == total else 1
         
@@ -180,5 +180,5 @@ if __name__ == "__main__":
         exit_code = asyncio.run(main())
         sys.exit(exit_code)
     except KeyboardInterrupt:
-        print("\n⏹️  Test interrompu par l'utilisateur")
+        print("\nTest interrompu par l'utilisateur")
         sys.exit(1)
