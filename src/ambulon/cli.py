@@ -206,6 +206,25 @@ def handle_config_command():
             print(f"ERREUR: {results['error']}")
             return 1
         
+        # Test d'intégration rapide
+        print("\nTest d'intégration rapide...")
+        try:
+            import asyncio
+            from .mcp import handle_list_tools
+            
+            # Test de liste des outils
+            tools = asyncio.run(handle_list_tools())
+            print(f"OK {len(tools)} outils MCP listés avec succès")
+            
+            # Afficher les outils disponibles
+            print("\nOutils MCP disponibles:")
+            for tool in tools:
+                print(f"  - {tool['name']}: {tool['description']}")
+            
+        except Exception as e:
+            print(f"ERREUR lors du test d'intégration: {e}")
+            return 1
+        
         print()
         print("Le serveur MCP fonctionne correctement!")
         return 0
@@ -293,16 +312,46 @@ def handle_test_command():
             
         elif test_module in ['config', 'scan', 'ocr', 'mcp']:
             print(f"Execution des tests {test_module} avec pytest...")
-            test_file = f"tests/test_{test_module}.py"
-            if not os.path.exists(test_file):
-                print(f"Fichier de test {test_file} introuvable")
-                return 1
             
-            result = subprocess.run([
-                sys.executable, "-m", "pytest", 
-                test_file, "-v", "--tb=short"
-            ], cwd=os.getcwd())
-            return result.returncode
+            if test_module == 'mcp':
+                # Pour MCP, exécuter aussi les tests d'intégration
+                print("Tests unitaires MCP...")
+                test_file = "tests/test_mcp.py"
+                if os.path.exists(test_file):
+                    result1 = subprocess.run([
+                        sys.executable, "-m", "pytest", 
+                        test_file, "-v", "--tb=short"
+                    ], cwd=os.getcwd())
+                
+                print("\nTests d'intégration MCP...")
+                integration_file = "tests/test_mcp_integration.py"
+                if os.path.exists(integration_file):
+                    result2 = subprocess.run([
+                        sys.executable, "-m", "pytest", 
+                        integration_file, "-v", "--tb=short"
+                    ], cwd=os.getcwd())
+                    return max(result1.returncode if 'result1' in locals() else 0, 
+                              result2.returncode)
+                else:
+                    # Exécuter les tests d'intégration directement
+                    try:
+                        from tests.test_mcp_integration import run_mcp_integration_tests
+                        success = run_mcp_integration_tests()
+                        return 0 if success else 1
+                    except ImportError:
+                        print("Tests d'intégration MCP non disponibles")
+                        return result1.returncode if 'result1' in locals() else 1
+            else:
+                test_file = f"tests/test_{test_module}.py"
+                if not os.path.exists(test_file):
+                    print(f"Fichier de test {test_file} introuvable")
+                    return 1
+                
+                result = subprocess.run([
+                    sys.executable, "-m", "pytest", 
+                    test_file, "-v", "--tb=short"
+                ], cwd=os.getcwd())
+                return result.returncode
         else:
             print(f"Module de test inconnu: {test_module}")
             print("Modules disponibles: config, scan, ocr, mcp, all")
