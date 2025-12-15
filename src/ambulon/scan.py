@@ -1,16 +1,7 @@
-"""Module de scan pour Ambulon."""
-
-def scan(*args):
-    """Fonction principale pour le scan.
-    
-    Args:
-        *args: Arguments passés à la fonction scan.
-    """
-    print(f"Fonction de scan appelée avec les arguments: {args}")
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-dk.scan - Module de scan TWAIN avec profils DPI
+Module de scan TWAIN avec profils DPI pour Ambulon
 """
 
 import argparse
