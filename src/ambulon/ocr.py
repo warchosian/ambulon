@@ -857,8 +857,14 @@ Langues supportées (exemples):
         print(f"Erreur : {error_msg}")
         return 1
     
-    # Détecter le type de traitement en priorité sur l'existence du chemin
-    if input_path.exists() and input_path.is_dir():
+    # Debug: afficher les informations sur le chemin
+    logging.debug(f"[DEBUG] Chemin d'entrée: {input_path}")
+    logging.debug(f"[DEBUG] Existe: {input_path.exists()}")
+    logging.debug(f"[DEBUG] Est un dossier: {input_path.is_dir()}")
+    logging.debug(f"[DEBUG] Est un fichier: {input_path.is_file()}")
+    
+    # Détecter le type de traitement - vérifier d'abord si c'est un dossier
+    if input_path.is_dir():
         # Mode dossier - traiter tous les fichiers du dossier
         logging.info(f"[MODE] Mode dossier détecté : {input_str}")
         
@@ -906,7 +912,7 @@ Langues supportées (exemples):
             logging.error(f"[ERREUR] {error_msg}")
             print(f"Erreur : {error_msg}")
             return 1
-    elif input_path.exists() and input_path.is_file():
+    elif input_path.is_file():
         # Mode fichier unique - traiter le fichier spécifique
         logging.info(f"[MODE] Mode fichier unique : {input_str}")
         
