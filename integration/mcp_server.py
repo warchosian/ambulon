@@ -102,6 +102,11 @@ async def handle_list_tools() -> List[Tool]:
                         "type": "string",
                         "description": "Langue pour l'OCR",
                         "default": "fra"
+                    },
+                    "no_increment": {
+                        "type": "boolean",
+                        "description": "Utiliser le nom de fichier tel quel sans auto-incrémentation",
+                        "default": False
                     }
                 },
                 "required": ["output_path"]
@@ -185,6 +190,11 @@ async def handle_list_tools() -> List[Tool]:
                         "enum": ["color", "grayscale", "bw"],
                         "description": "Mode couleur",
                         "default": "color"
+                    },
+                    "no_increment": {
+                        "type": "boolean",
+                        "description": "Utiliser le nom de fichier tel quel sans auto-incrémentation",
+                        "default": False
                     }
                 },
                 "required": ["output_path"]
@@ -256,7 +266,8 @@ async def _handle_scan_document(arguments: Dict[str, Any]) -> CallToolResult:
         "paper_size": arguments.get("paper_size", "A4"),
         "number": arguments.get("number", 1),
         "ocr": arguments.get("ocr", False),
-        "lang": arguments.get("ocr_lang", "fra")
+        "lang": arguments.get("ocr_lang", "fra"),
+        "no_increment": arguments.get("no_increment", False)
     }
     
     # Effectuer le scan
@@ -363,7 +374,8 @@ async def _handle_scan_with_ocr(arguments: Dict[str, Any]) -> CallToolResult:
         "format": arguments.get("format", "jpg"),
         "color_mode": arguments.get("color_mode", "color"),
         "ocr": True,
-        "lang": arguments.get("ocr_lang", "fra")
+        "lang": arguments.get("ocr_lang", "fra"),
+        "no_increment": arguments.get("no_increment", False)
     }
     
     result = scan_document(dpi, output_path.parent, **scan_options)

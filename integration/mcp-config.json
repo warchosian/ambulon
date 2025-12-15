@@ -35,6 +35,15 @@
           }
         },
         {
+          "description": "Scanner avec nom de fichier exact (sans auto-incrémentation)",
+          "arguments": {
+            "dpi": 300,
+            "output_path": "documents/rapport.jpg",
+            "format": "jpg",
+            "no_increment": true
+          }
+        },
+        {
           "description": "Scanner plusieurs pages avec OCR",
           "arguments": {
             "dpi": 300,
@@ -95,6 +104,15 @@
             "dpi": 300,
             "output_path": "scans/document_with_text.jpg",
             "ocr_lang": "fra"
+          }
+        },
+        {
+          "description": "Scanner avec nom exact et OCR",
+          "arguments": {
+            "dpi": 300,
+            "output_path": "documents/contrat.jpg",
+            "ocr_lang": "fra",
+            "no_increment": true
           }
         }
       ]
