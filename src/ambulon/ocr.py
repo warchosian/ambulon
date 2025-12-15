@@ -857,30 +857,8 @@ Langues supportées (exemples):
         print(f"Erreur : {error_msg}")
         return 1
     
-    if has_wildcards or args.batch:
-        # Mode lot avec pattern
-        logging.info(f"[MODE] Mode lot détecté : {input_str}")
-        
-        output_dir = None
-        if args.output:
-            output_path = Path(args.output)
-            if output_path.is_dir() or not output_path.suffix:
-                output_dir = output_path
-                output_dir.mkdir(parents=True, exist_ok=True)
-        
-        try:
-            result = process_multiple_files(
-                file_pattern=input_str,
-                language=args.lang,
-                output_dir=output_dir,
-                verbose=args.verbose
-            )
-        except Exception as e:
-            error_msg = f"Erreur lors du traitement en lot : {str(e)}"
-            logging.error(f"[ERREUR] {error_msg}")
-            print(f"Erreur : {error_msg}")
-            return 1
-    elif input_path.is_dir():
+    # Détecter le type de traitement en priorité sur l'existence du chemin
+    if input_path.exists() and input_path.is_dir():
         # Mode dossier - traiter tous les fichiers du dossier
         logging.info(f"[MODE] Mode dossier détecté : {input_str}")
         
@@ -905,7 +883,30 @@ Langues supportées (exemples):
             logging.error(f"[ERREUR] {error_msg}")
             print(f"Erreur : {error_msg}")
             return 1
-    elif input_path.is_file():
+    elif has_wildcards or args.batch:
+        # Mode lot avec pattern
+        logging.info(f"[MODE] Mode lot détecté : {input_str}")
+        
+        output_dir = None
+        if args.output:
+            output_path = Path(args.output)
+            if output_path.is_dir() or not output_path.suffix:
+                output_dir = output_path
+                output_dir.mkdir(parents=True, exist_ok=True)
+        
+        try:
+            result = process_multiple_files(
+                file_pattern=input_str,
+                language=args.lang,
+                output_dir=output_dir,
+                verbose=args.verbose
+            )
+        except Exception as e:
+            error_msg = f"Erreur lors du traitement en lot : {str(e)}"
+            logging.error(f"[ERREUR] {error_msg}")
+            print(f"Erreur : {error_msg}")
+            return 1
+    elif input_path.exists() and input_path.is_file():
         # Mode fichier unique - traiter le fichier spécifique
         logging.info(f"[MODE] Mode fichier unique : {input_str}")
         
