@@ -276,6 +276,7 @@ def handle_test_command():
         print("  scan      Tester le module de scan")
         print("  ocr       Tester le module OCR")
         print("  mcp       Tester le serveur MCP")
+        print("  mcp-live  Tester le serveur MCP en conditions réelles")
         print("  all       Tester tous les modules")
         print()
         print("Exemples:")
@@ -310,7 +311,7 @@ def handle_test_command():
             ], cwd=os.getcwd())
             return result.returncode
             
-        elif test_module in ['config', 'scan', 'ocr', 'mcp']:
+        elif test_module in ['config', 'scan', 'ocr', 'mcp', 'mcp-live']:
             print(f"Execution des tests {test_module} avec pytest...")
             
             if test_module == 'mcp':
@@ -341,6 +342,19 @@ def handle_test_command():
                     except ImportError:
                         print("Tests d'intégration MCP non disponibles")
                         return result1.returncode if 'result1' in locals() else 1
+            elif test_module == 'mcp-live':
+                print("Test du serveur MCP en conditions réelles...")
+                
+                # Vérifier si le script de test existe
+                test_script = Path("test_mcp_server.py")
+                if test_script.exists():
+                    result = subprocess.run([
+                        sys.executable, str(test_script)
+                    ], cwd=os.getcwd())
+                    return result.returncode
+                else:
+                    print("Script de test MCP non trouvé. Créez test_mcp_server.py")
+                    return 1
             else:
                 test_file = f"tests/test_{test_module}.py"
                 if not os.path.exists(test_file):
