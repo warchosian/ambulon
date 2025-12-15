@@ -119,6 +119,13 @@ def _perform_single_scan(dpi: int, output_dir: Path = None, scan_number: int = 1
             # Créer le répertoire cible si nécessaire
             target_dir.mkdir(parents=True, exist_ok=True)
             
+            # Vérifier si le fichier de sortie complet existe déjà comme répertoire
+            full_output_path = target_dir / filename_with_ext
+            if full_output_path.exists() and full_output_path.is_dir():
+                error_msg = f"Le chemin de sortie '{full_output_path}' existe déjà comme répertoire. Impossible de créer un fichier avec ce nom."
+                logging.error(f"[ERREUR] {error_msg}")
+                raise ValueError(error_msg)
+            
             # Trouver le prochain numéro disponible en cherchant les fichiers existants
             existing_files = list(target_dir.glob(f"{filename_base}-*.{extension[1:]}"))
             existing_numbers = []
