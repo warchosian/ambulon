@@ -129,20 +129,27 @@ def _perform_single_scan(dpi: int, output_dir: Path = None, scan_number: int = 1
                 if match:
                     existing_numbers.append(int(match.group(1)))
             
-            # Déterminer le prochain numéro disponible
-            if existing_numbers:
-                next_number = max(existing_numbers) + 1
-            else:
-                next_number = 1
+            # Vérifier si l'auto-incrémentation est désactivée
+            no_increment = kwargs.get('no_increment', False)
             
-            # Pour les scans multiples, générer le nom de base sans numéro
-            # NAPS2 ajoutera automatiquement la numérotation
-            if number_of_scans > 1:
-                filename_base_for_naps2 = filename_base
-                output_file = target_dir / f"{filename_base_for_naps2}{extension}"
+            if no_increment:
+                # Utiliser le nom tel quel sans incrémentation
+                output_file = target_dir / filename_with_ext
             else:
-                filename = f"{filename_base}-{next_number:03d}{extension}"
-                output_file = target_dir / filename
+                # Déterminer le prochain numéro disponible
+                if existing_numbers:
+                    next_number = max(existing_numbers) + 1
+                else:
+                    next_number = 1
+                
+                # Pour les scans multiples, générer le nom de base sans numéro
+                # NAPS2 ajoutera automatiquement la numérotation
+                if number_of_scans > 1:
+                    filename_base_for_naps2 = filename_base
+                    output_file = target_dir / f"{filename_base_for_naps2}{extension}"
+                else:
+                    filename = f"{filename_base}-{next_number:03d}{extension}"
+                    output_file = target_dir / filename
         else:
             # -o contient le début du nom de fichier sans extension
             filename_base = output_dir.name
@@ -219,13 +226,17 @@ def _perform_single_scan(dpi: int, output_dir: Path = None, scan_number: int = 1
     else:
         logging.info(f"   Nom de fichier généré : {output_file.name}")
         if '.' in output_dir.name and output_dir.suffix:
-            logging.info(f"   Mode : nom de fichier complet spécifié avec auto-incrémentation")
-            if 'existing_files' in locals():
-                logging.info(f"   Fichiers existants trouvés : {len(existing_files)}")
-                if 'existing_numbers' in locals() and existing_numbers:
-                    logging.info(f"   Dernier numéro utilisé : {max(existing_numbers):03d}")
-                if 'next_number' in locals():
-                    logging.info(f"   Prochain numéro : {next_number:03d}")
+            no_increment = kwargs.get('no_increment', False)
+            if no_increment:
+                logging.info(f"   Mode : nom de fichier complet spécifié sans auto-incrémentation")
+            else:
+                logging.info(f"   Mode : nom de fichier complet spécifié avec auto-incrémentation")
+                if 'existing_files' in locals():
+                    logging.info(f"   Fichiers existants trouvés : {len(existing_files)}")
+                    if 'existing_numbers' in locals() and existing_numbers:
+                        logging.info(f"   Dernier numéro utilisé : {max(existing_numbers):03d}")
+                    if 'next_number' in locals():
+                        logging.info(f"   Prochain numéro : {next_number:03d}")
         else:
             logging.info(f"   Mode : génération automatique avec numérotation")
             if 'existing_files' in locals():
@@ -842,6 +853,8 @@ Profils TWAIN disponibles:
                        help='Qualite de compression (1-100, defaut: 90)')
     parser.add_argument('--naming', choices=['date', 'sequence', 'custom'], default='date',
                        help='Convention de nommage (defaut: date)')
+    parser.add_argument('--no-increment', action='store_true',
+                       help='Utiliser le nom de fichier tel quel sans auto-incrementation')
     
     # Options de traitement post-scan
     parser.add_argument('--ocr', action='store_true', help='Activer l\'OCR apres le scan')
@@ -936,7 +949,8 @@ Profils TWAIN disponibles:
         'preview': args.preview,
         'calibrate': args.calibrate,
         'test_pattern': args.test_pattern,
-        'manual': args.manual
+        'manual': args.manual,
+        'no_increment': args.no_increment
     }
     
     # Déterminer la résolution à utiliser : argument positionnel a priorité sur -r
