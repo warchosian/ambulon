@@ -54,16 +54,30 @@ def handle_config_command():
     
     subcommand = sys.argv[2]
     
+    # Gérer l'aide pour le module config
+    if subcommand in ['-h', '--help']:
+        print("Usage: ambulon config [COMMANDE]")
+        print()
+        print("Commandes disponibles:")
+        print("  export [FICHIER]     Exporter la configuration MCP")
+        print("  claude-path          Afficher le chemin de config Claude")
+        print()
+        print("Exemples:")
+        print("  ambulon config export")
+        print("  ambulon config export mon-config.json")
+        print("  ambulon config claude-path")
+        return 0
+    
     if subcommand == 'export':
         try:
             from pathlib import Path
             output_file = Path(sys.argv[3]) if len(sys.argv) > 3 else Path("mcp-config.json")
             exported_path = export_mcp_config(output_file)
-            print(f"Configuration MCP exportée vers: {exported_path}")
+            print(f"Configuration MCP exportee vers: {exported_path}")
             print()
             print("Pour utiliser avec Claude Desktop:")
             claude_path = get_claude_config_path()
-            print(f"1. Créez le répertoire: {claude_path.parent}")
+            print(f"1. Creez le repertoire: {claude_path.parent}")
             print(f"2. Copiez le contenu dans: {claude_path}")
             return 0
         except Exception as e:
@@ -76,10 +90,10 @@ def handle_config_command():
         print(f"  {claude_path}")
         print()
         if claude_path.exists():
-            print("✓ Le fichier existe")
+            print("Le fichier existe")
         else:
-            print("✗ Le fichier n'existe pas")
-            print(f"  Créez d'abord le répertoire: {claude_path.parent}")
+            print("Le fichier n'existe pas")
+            print(f"  Creez d'abord le repertoire: {claude_path.parent}")
         return 0
     
     else:
