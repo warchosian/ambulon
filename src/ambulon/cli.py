@@ -6,6 +6,8 @@ from . import hello
 from .scan import main as scan_main
 from .ocr import main as ocr_main
 from .mcp import main as mcp_main
+from .img2pdf import main as img2pdf_main
+from .compress_pdf import main as compress_pdf_main
 from .config import export_mcp_config, get_claude_config_path
 
 
@@ -16,11 +18,13 @@ def show_help():
     print("Usage: ambulon [MODULE] [OPTIONS]")
     print()
     print("Modules disponibles:")
-    print("  scan    Module de scan TWAIN avec profils DPI")
-    print("  ocr     Module OCR - Reconnaissance optique de caractères")
-    print("  mcp     Serveur MCP pour assistants IA")
-    print("  config  Gestion de la configuration MCP")
-    print("  test    Tests des modules Ambulon")
+    print("  scan         Module de scan TWAIN avec profils DPI")
+    print("  ocr          Module OCR - Reconnaissance optique de caractères")
+    print("  img2pdf      Convertir images en PDF")
+    print("  compress-pdf Compresser un fichier PDF")
+    print("  mcp          Serveur MCP pour assistants IA")
+    print("  config       Gestion de la configuration MCP")
+    print("  test         Tests des modules Ambulon")
     print()
     print("Options générales:")
     print("  -h, --help    Afficher cette aide")
@@ -31,6 +35,8 @@ def show_help():
     print("  ambulon scan -r 300 -o scans/")
     print("  ambulon ocr --help           Aide du module OCR")
     print("  ambulon ocr -i image.jpg -l fra")
+    print("  ambulon img2pdf scans/       Convertir images en PDF")
+    print("  ambulon compress-pdf doc.pdf Compresser un PDF")
     print("  ambulon mcp                  Démarrer le serveur MCP")
     print("  ambulon config export        Exporter la config MCP")
     print("  ambulon test config          Tester la configuration")
@@ -415,6 +421,22 @@ def main():
             sys.argv = [sys.argv[0]] + sys.argv[2:]  # Garder le nom du programme et les arguments après 'mcp'
             try:
                 return mcp_main()
+            finally:
+                sys.argv = original_argv
+        elif command == 'img2pdf':
+            # Retirer 'img2pdf' des arguments et lancer le module img2pdf
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                return img2pdf_main()
+            finally:
+                sys.argv = original_argv
+        elif command == 'compress-pdf':
+            # Retirer 'compress-pdf' des arguments et lancer le module compress_pdf
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                return compress_pdf_main()
             finally:
                 sys.argv = original_argv
         elif command == 'config':
