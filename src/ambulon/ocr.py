@@ -279,6 +279,434 @@ def _perform_ocr_python(image_file: Path, language: str = 'fra', output_file: Pa
             'error': error_msg
         }
 
+def _process_directory_ocr(directory: Path, language: str = 'fra', output_dir: Path = None) -> Dict[str, Any]:
+    """
+    Traite tous les fichiers images et PDF d'un dossier avec OCR
+    
+    Args:
+        directory: Dossier contenant les fichiers à traiter
+        language: Langue pour l'OCR
+        output_dir: Dossier de sortie (optionnel)
+        
+    Returns:
+        Dict contenant les résultats du traitement
+    """
+    # Extensions supportées pour l'OCR
+    supported_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp', '.pdf'}
+    
+    # Trouver tous les fichiers supportés dans le dossier
+    files_to_process = []
+    for file_path in directory.rglob('*'):
+        if file_path.is_file() and file_path.suffix.lower() in supported_extensions:
+            files_to_process.append(file_path)
+    
+    if not files_to_process:
+        return {
+            'success': False,
+            'error': f'Aucun fichier image ou PDF trouvé dans {directory}',
+            'processed_files': []
+        }
+    
+    logging.info(f"[OCR] Traitement du dossier : {directory}")
+    logging.info(f"[OCR] {len(files_to_process)} fichier(s) trouvé(s)")
+    
+    # Déterminer le dossier de sortie
+    if output_dir is None:
+        output_dir = directory / "textes"
+    
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    processed_files = []
+    errors = []
+    
+    for file_path in files_to_process:
+        try:
+            logging.info(f"[OCR] Traitement de : {file_path}")
+            
+            # Déterminer le fichier de sortie
+            output_file = output_dir / f"{file_path.stem}.txt"
+            
+            # Traiter selon le type de fichier
+            if file_path.suffix.lower() == '.pdf':
+                # Pour les PDF, extraire d'abord les images puis faire l'OCR
+                result = _process_pdf_ocr(file_path, language, output_file)
+            else:
+                # Pour les images, OCR direct
+                result = perform_ocr_single_file(file_path, language, output_file)
+            
+            if result['success']:
+                processed_files.append({
+                    'input_file': file_path,
+                    'output_file': result['output_file'],
+                    'success': True,
+                    'file_size': result['file_size']
+                })
+                logging.info(f"[OCR] OCR réussi pour : {file_path}")
+            else:
+                errors.append(f"OCR échoué pour {file_path}: {result['error']}")
+                logging.error(f"[OCR] OCR échoué pour : {file_path}")
+                
+        except Exception as e:
+            error_msg = f"Erreur lors du traitement de {file_path}: {str(e)}"
+            errors.append(error_msg)
+            logging.error(f"[ERREUR] {error_msg}")
+    
+    success = len(processed_files) > 0
+    
+    return {
+        'success': success,
+        'processed_files': processed_files,
+        'errors': errors,
+        'total_files': len(files_to_process),
+        'successful_files': len(processed_files),
+        'output_directory': output_dir
+    }
+
+
+def _process_pdf_ocr(pdf_file: Path, language: str = 'fra', output_file: Path = None) -> Dict[str, Any]:
+    """
+    Effectue l'OCR sur un fichier PDF en extrayant d'abord les images
+    
+    Args:
+        pdf_file: Fichier PDF à traiter
+        language: Langue pour l'OCR
+        output_file: Fichier de sortie (optionnel)
+        
+    Returns:
+        Dict contenant les informations sur l'OCR
+    """
+    try:
+        import fitz  # PyMuPDF
+        
+        # Générer le nom du fichier de sortie OCR
+        if output_file is None:
+            ocr_output_file = pdf_file.with_suffix('.txt')
+        else:
+            ocr_output_file = output_file
+        
+        logging.info(f"[OCR] Traitement PDF : {pdf_file}")
+        
+        # Ouvrir le PDF
+        doc = fitz.open(pdf_file)
+        all_text = []
+        
+        for page_num in range(len(doc)):
+            page = doc[page_num]
+            
+            # D'abord essayer d'extraire le texte directement
+            text = page.get_text()
+            if text.strip():
+                all_text.append(f"=== Page {page_num + 1} (texte direct) ===\n{text}\n")
+                logging.info(f"[OCR] Page {page_num + 1}: texte extrait directement")
+            else:
+                # Si pas de texte, convertir en image et faire l'OCR
+                logging.info(f"[OCR] Page {page_num + 1}: conversion en image pour OCR")
+                
+                # Rendre la page en image
+                mat = fitz.Matrix(2.0, 2.0)  # Zoom 2x pour meilleure qualité OCR
+                pix = page.get_pixmap(matrix=mat, alpha=False)
+                
+                # Sauvegarder temporairement l'image
+                temp_image = pdf_file.parent / f"temp_page_{page_num + 1}.png"
+                pix.save(temp_image)
+                
+                try:
+                    # Faire l'OCR sur l'image temporaire
+                    temp_output = pdf_file.parent / f"temp_page_{page_num + 1}.txt"
+                    ocr_result = perform_ocr_single_file(temp_image, language, temp_output)
+                    
+                    if ocr_result['success'] and temp_output.exists():
+                        with open(temp_output, 'r', encoding='utf-8') as f:
+                            page_text = f.read()
+                        all_text.append(f"=== Page {page_num + 1} (OCR) ===\n{page_text}\n")
+                        
+                        # Nettoyer les fichiers temporaires
+                        temp_output.unlink(missing_ok=True)
+                    
+                    temp_image.unlink(missing_ok=True)
+                    
+                except Exception as e:
+                    logging.warning(f"[OCR] Erreur OCR page {page_num + 1}: {e}")
+                    all_text.append(f"=== Page {page_num + 1} (erreur OCR) ===\nErreur: {e}\n")
+        
+        doc.close()
+        
+        # Écrire tout le texte dans le fichier de sortie
+        combined_text = "\n".join(all_text)
+        with open(ocr_output_file, 'w', encoding='utf-8') as f:
+            f.write(combined_text)
+        
+        ocr_size = ocr_output_file.stat().st_size
+        logging.info(f"[OCR] OCR PDF réussi : {ocr_output_file} ({ocr_size} octets)")
+        
+        return {
+            'success': True,
+            'input_file': pdf_file,
+            'output_file': ocr_output_file,
+            'language': language,
+            'file_size': ocr_size,
+            'pages_processed': len(doc)
+        }
+        
+    except ImportError:
+        return {
+            'success': False,
+            'error': 'PyMuPDF non installé. Installez avec: pip install PyMuPDF'
+        }
+    except Exception as e:
+        return {
+            'success': False,
+            'error': f'Erreur lors du traitement PDF: {str(e)}'
+        }
+
+
+def perform_ocr_single_file(image_file: Path, language: str = 'fra', output_file: Path = None) -> Dict[str, Any]:
+    """
+    Effectue l'OCR sur un fichier image unique
+    
+    Args:
+        image_file: Fichier image à traiter
+        language: Langue pour l'OCR (défaut: 'fra')
+        output_file: Fichier de sortie (optionnel)
+        
+    Returns:
+        Dict contenant les informations sur l'OCR
+    """
+    # Vérifier que le fichier existe et n'est pas vide
+    if not image_file.exists():
+        return {
+            'success': False,
+            'error': f'Fichier image non trouvé : {image_file}'
+        }
+    
+    file_size = image_file.stat().st_size
+    if file_size == 0:
+        return {
+            'success': False,
+            'error': f'Le fichier image est vide (0 octets) : {image_file}'
+        }
+    
+    try:
+        # Charger la configuration pour obtenir le chemin de Tesseract
+        import yaml
+        import subprocess
+        settings_file = Path("dk.config") / "settings.yaml"
+        config = {}
+        if settings_file.exists():
+            with open(settings_file, 'r', encoding='utf-8') as f:
+                config = yaml.safe_load(f)
+        
+        # Vérifier la configuration de Tesseract
+        tesseract_config = config.get('tools', {}).get('tesseract', {})
+        tesseract_enabled = tesseract_config.get('enabled', True)
+        tesseract_executable = tesseract_config.get('command', 'tesseract')
+        
+        # Vérifier s'il faut utiliser l'alternative Python
+        if not tesseract_enabled:
+            python_alt = tesseract_config.get('python_alternative')
+            fallback_enabled = tesseract_config.get('fallback_enabled', False)
+            
+            if python_alt and fallback_enabled:
+                logging.info(f"[FALLBACK] Tesseract désactivé, utilisation de l'alternative Python: {python_alt}")
+                print(f"[FALLBACK] tesseract désactivé → utilisation de {python_alt}")
+                return _perform_ocr_python(image_file, language, output_file)
+            else:
+                logging.error("[ERREUR] Tesseract désactivé et aucune alternative Python configurée")
+                return {
+                    'success': False,
+                    'error': 'Tesseract désactivé et aucune alternative Python configurée'
+                }
+        
+        # Générer le nom du fichier de sortie OCR
+        if output_file is None:
+            ocr_output_file = image_file.with_suffix('.txt')
+        else:
+            ocr_output_file = output_file
+        
+        logging.info(f"[OCR] Démarrage de l'OCR avec Tesseract")
+        logging.info(f"[OCR] Exécutable : {tesseract_executable}")
+        logging.info(f"[OCR] Langue : {language}")
+        logging.info(f"[OCR] Fichier d'entrée : {image_file}")
+        logging.info(f"[OCR] Fichier de sortie : {ocr_output_file}")
+        
+        # Construire la commande Tesseract
+        # Tesseract ajoute automatiquement l'extension .txt
+        output_base = str(ocr_output_file.with_suffix(''))
+        
+        cmd = [
+            tesseract_executable,
+            str(image_file),
+            output_base,
+            '-l', language,
+            '--psm', '3',  # Page segmentation mode: Fully automatic page segmentation
+            '--oem', '3'   # OCR Engine Mode: Default, based on what is available
+        ]
+        
+        logging.info(f"[OCR] Commande : {' '.join(cmd)}")
+        print(f"Lancement de l'OCR avec Tesseract...")
+        print(f"Langue : {language}")
+        print(f"Fichier de sortie OCR : {ocr_output_file}")
+        
+        # Exécuter la commande Tesseract
+        result = subprocess.run(
+            cmd, 
+            check=True, 
+            capture_output=True, 
+            text=True,
+            timeout=60  # Timeout de 60 secondes pour l'OCR
+        )
+        
+        # Vérifier que le fichier OCR a été créé
+        if ocr_output_file.exists():
+            ocr_size = ocr_output_file.stat().st_size
+            logging.info(f"[OCR] OCR réussi : {ocr_output_file} ({ocr_size} octets)")
+            print(f"Fichier OCR créé : {ocr_output_file}")
+            print(f"Taille du fichier OCR : {ocr_size} octets")
+            return {
+                'success': True,
+                'input_file': image_file,
+                'output_file': ocr_output_file,
+                'language': language,
+                'file_size': ocr_size
+            }
+        else:
+            logging.error(f"[OCR] Le fichier OCR n'a pas été créé : {ocr_output_file}")
+            return {
+                'success': False,
+                'error': f'Le fichier OCR n\'a pas été créé : {ocr_output_file}'
+            }
+        
+    except subprocess.CalledProcessError as e:
+        error_msg = f"Erreur Tesseract (code {e.returncode}): {e.stderr if e.stderr else 'Erreur inconnue'}"
+        logging.error(f"[OCR] {error_msg}")
+        print(f"Erreur OCR : {error_msg}")
+        return {
+            'success': False,
+            'error': error_msg
+        }
+    except subprocess.TimeoutExpired:
+        error_msg = "Timeout lors de l'OCR"
+        logging.error(f"[OCR] {error_msg}")
+        print(f"Erreur OCR : {error_msg}")
+        return {
+            'success': False,
+            'error': error_msg
+        }
+    except FileNotFoundError:
+        error_msg = f"Tesseract non trouvé : {tesseract_executable}"
+        logging.error(f"[OCR] {error_msg}")
+        print(f"Erreur OCR : {error_msg}")
+        return {
+            'success': False,
+            'error': error_msg
+        }
+    except Exception as e:
+        error_msg = f"Erreur générale OCR : {str(e)}"
+        logging.error(f"[OCR] {error_msg}")
+        print(f"Erreur OCR : {error_msg}")
+        return {
+            'success': False,
+            'error': error_msg
+        }
+
+
+def _process_pdf_ocr(pdf_file: Path, language: str = 'fra', output_file: Path = None) -> Dict[str, Any]:
+    """
+    Effectue l'OCR sur un fichier PDF en extrayant d'abord les images
+    
+    Args:
+        pdf_file: Fichier PDF à traiter
+        language: Langue pour l'OCR
+        output_file: Fichier de sortie (optionnel)
+        
+    Returns:
+        Dict contenant les informations sur l'OCR
+    """
+    try:
+        import fitz  # PyMuPDF
+        
+        # Générer le nom du fichier de sortie OCR
+        if output_file is None:
+            ocr_output_file = pdf_file.with_suffix('.txt')
+        else:
+            ocr_output_file = output_file
+        
+        logging.info(f"[OCR] Traitement PDF : {pdf_file}")
+        
+        # Ouvrir le PDF
+        doc = fitz.open(pdf_file)
+        all_text = []
+        
+        for page_num in range(len(doc)):
+            page = doc[page_num]
+            
+            # D'abord essayer d'extraire le texte directement
+            text = page.get_text()
+            if text.strip():
+                all_text.append(f"=== Page {page_num + 1} (texte direct) ===\n{text}\n")
+                logging.info(f"[OCR] Page {page_num + 1}: texte extrait directement")
+            else:
+                # Si pas de texte, convertir en image et faire l'OCR
+                logging.info(f"[OCR] Page {page_num + 1}: conversion en image pour OCR")
+                
+                # Rendre la page en image
+                mat = fitz.Matrix(2.0, 2.0)  # Zoom 2x pour meilleure qualité OCR
+                pix = page.get_pixmap(matrix=mat, alpha=False)
+                
+                # Sauvegarder temporairement l'image
+                temp_image = pdf_file.parent / f"temp_page_{page_num + 1}.png"
+                pix.save(temp_image)
+                
+                try:
+                    # Faire l'OCR sur l'image temporaire
+                    temp_output = pdf_file.parent / f"temp_page_{page_num + 1}.txt"
+                    ocr_result = perform_ocr_single_file(temp_image, language, temp_output)
+                    
+                    if ocr_result['success'] and temp_output.exists():
+                        with open(temp_output, 'r', encoding='utf-8') as f:
+                            page_text = f.read()
+                        all_text.append(f"=== Page {page_num + 1} (OCR) ===\n{page_text}\n")
+                        
+                        # Nettoyer les fichiers temporaires
+                        temp_output.unlink(missing_ok=True)
+                    
+                    temp_image.unlink(missing_ok=True)
+                    
+                except Exception as e:
+                    logging.warning(f"[OCR] Erreur OCR page {page_num + 1}: {e}")
+                    all_text.append(f"=== Page {page_num + 1} (erreur OCR) ===\nErreur: {e}\n")
+        
+        doc.close()
+        
+        # Écrire tout le texte dans le fichier de sortie
+        combined_text = "\n".join(all_text)
+        with open(ocr_output_file, 'w', encoding='utf-8') as f:
+            f.write(combined_text)
+        
+        ocr_size = ocr_output_file.stat().st_size
+        logging.info(f"[OCR] OCR PDF réussi : {ocr_output_file} ({ocr_size} octets)")
+        
+        return {
+            'success': True,
+            'input_file': pdf_file,
+            'output_file': ocr_output_file,
+            'language': language,
+            'file_size': ocr_size,
+            'pages_processed': len(doc)
+        }
+        
+    except ImportError:
+        return {
+            'success': False,
+            'error': 'PyMuPDF non installé. Installez avec: pip install PyMuPDF'
+        }
+    except Exception as e:
+        return {
+            'success': False,
+            'error': f'Erreur lors du traitement PDF: {str(e)}'
+        }
+
+
 def process_multiple_files(file_pattern: str, language: str = 'fra', output_dir: Path = None, verbose: bool = False) -> Dict[str, Any]:
     """
     Traite plusieurs fichiers avec OCR
