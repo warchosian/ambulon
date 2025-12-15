@@ -33,6 +33,8 @@ except ImportError:
 # Imports Ambulon
 from .scan import scan_document, process_existing_files as scan_process_files
 from .ocr import perform_ocr, process_multiple_files as ocr_process_files
+from .img2pdf import images_to_pdf
+from .compress_pdf import compress_pdf
 
 # Configuration du logging
 def setup_logging():
@@ -228,6 +230,61 @@ async def handle_list_tools() -> List[Tool]:
                 },
                 "required": ["pattern"]
             }
+        ),
+        Tool(
+            name="images_to_pdf",
+            description="Convertir toutes les images d'un répertoire en un seul fichier PDF",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "directory": {
+                        "type": "string",
+                        "description": "Répertoire contenant les images à convertir"
+                    },
+                    "output_path": {
+                        "type": "string",
+                        "description": "Chemin de sortie pour le PDF (optionnel)"
+                    },
+                    "compress": {
+                        "type": "boolean",
+                        "description": "Activer la compression pour réduire la taille",
+                        "default": False
+                    },
+                    "quality": {
+                        "type": "integer",
+                        "description": "Qualité JPEG pour la compression (1-100)",
+                        "default": 85,
+                        "minimum": 1,
+                        "maximum": 100
+                    }
+                },
+                "required": ["directory"]
+            }
+        ),
+        Tool(
+            name="compress_pdf",
+            description="Compresser un fichier PDF existant pour réduire sa taille",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "input_path": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier PDF à compresser"
+                    },
+                    "output_path": {
+                        "type": "string",
+                        "description": "Chemin de sortie pour le PDF compressé (optionnel)"
+                    },
+                    "quality": {
+                        "type": "integer",
+                        "description": "Qualité JPEG pour la compression (1-100)",
+                        "default": 85,
+                        "minimum": 1,
+                        "maximum": 100
+                    }
+                },
+                "required": ["input_path"]
+            }
         )
     ]
 
@@ -247,6 +304,10 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> CallToolResu
             return await _handle_scan_with_ocr(arguments)
         elif name == "process_existing_scans":
             return await _handle_process_existing_scans(arguments)
+        elif name == "images_to_pdf":
+            return await _handle_images_to_pdf(arguments)
+        elif name == "compress_pdf":
+            return await _handle_compress_pdf(arguments)
         else:
             return CallToolResult(
                 content=[TextContent(type="text", text=f"Outil inconnu: {name}")],
@@ -444,6 +505,75 @@ async def _handle_process_existing_scans(arguments: Dict[str, Any]) -> CallToolR
     else:
         return CallToolResult(
             content=[TextContent(type="text", text=f"Erreur de traitement: {result.get('error', 'Erreur inconnue')}")],
+            isError=True
+        )
+
+
+async def _handle_images_to_pdf(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère la conversion d'images en PDF."""
+    directory = arguments["directory"]
+    output_path = arguments.get("output_path")
+    compress = arguments.get("compress", False)
+    quality = arguments.get("quality", 85)
+    
+    if not Path(directory).exists():
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Répertoire non trouvé: {directory}")],
+            isError=True
+        )
+    
+    result = images_to_pdf(directory, output_path, verbose=True, compress=compress, quality=quality)
+    
+    if result["success"]:
+        response_text = f"Conversion images vers PDF réussie !\n"
+        response_text += f"Répertoire source: {directory}\n"
+        response_text += f"Fichier PDF: {result['output_file']}\n"
+        response_text += f"Total de pages: {result['total_pages']}\n"
+        response_text += f"Taille du fichier: {result['file_size'] / (1024*1024):.2f} MB\n"
+        
+        if result['compressed']:
+            response_text += f"Compression appliquée (qualité: {result['quality']})"
+        
+        return CallToolResult(
+            content=[TextContent(type="text", text=response_text)]
+        )
+    else:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur de conversion: {result.get('error', 'Erreur inconnue')}")],
+            isError=True
+        )
+
+
+async def _handle_compress_pdf(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère la compression de PDF."""
+    input_path = arguments["input_path"]
+    output_path = arguments.get("output_path")
+    quality = arguments.get("quality", 85)
+    
+    if not Path(input_path).exists():
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Fichier PDF non trouvé: {input_path}")],
+            isError=True
+        )
+    
+    result = compress_pdf(input_path, output_path, quality, verbose=True)
+    
+    if result["success"]:
+        response_text = f"Compression PDF réussie !\n"
+        response_text += f"Fichier d'entrée: {result['input_file']}\n"
+        response_text += f"Fichier de sortie: {result['output_file']}\n"
+        response_text += f"Taille originale: {result['original_size'] / (1024*1024):.2f} MB\n"
+        response_text += f"Taille compressée: {result['compressed_size'] / (1024*1024):.2f} MB\n"
+        response_text += f"Réduction: {result['reduction_percent']:.1f}%\n"
+        response_text += f"Pages traitées: {result['total_pages']}\n"
+        response_text += f"Qualité: {result['quality']}"
+        
+        return CallToolResult(
+            content=[TextContent(type="text", text=response_text)]
+        )
+    else:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur de compression: {result.get('error', 'Erreur inconnue')}")],
             isError=True
         )
 
