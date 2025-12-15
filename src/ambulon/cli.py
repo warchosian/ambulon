@@ -5,6 +5,7 @@ import argparse
 from . import hello
 from .scan import main as scan_main
 from .ocr import main as ocr_main
+from .mcp import main as mcp_main
 
 
 def show_help():
@@ -16,6 +17,7 @@ def show_help():
     print("Modules disponibles:")
     print("  scan    Module de scan TWAIN avec profils DPI")
     print("  ocr     Module OCR - Reconnaissance optique de caractères")
+    print("  mcp     Serveur MCP pour assistants IA")
     print()
     print("Options générales:")
     print("  -h, --help    Afficher cette aide")
@@ -26,6 +28,7 @@ def show_help():
     print("  ambulon scan -r 300 -o scans/")
     print("  ambulon ocr --help           Aide du module OCR")
     print("  ambulon ocr -i image.jpg -l fra")
+    print("  ambulon mcp                  Démarrer le serveur MCP")
     print()
     print("Pour plus d'informations sur un module spécifique:")
     print("  ambulon [MODULE] --help")
@@ -58,6 +61,14 @@ def main():
             sys.argv = [sys.argv[0]] + sys.argv[2:]  # Garder le nom du programme et les arguments après 'ocr'
             try:
                 return ocr_main()
+            finally:
+                sys.argv = original_argv
+        elif command == 'mcp':
+            # Retirer 'mcp' des arguments et lancer le module mcp
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]  # Garder le nom du programme et les arguments après 'mcp'
+            try:
+                return mcp_main()
             finally:
                 sys.argv = original_argv
         else:
