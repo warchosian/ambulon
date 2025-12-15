@@ -2,7 +2,11 @@
 import sys
 
 from . import hello
-from .scan import scan
+
+
+def scan(*args):
+    """Fonction scan temporaire."""
+    print(f"Commande scan appelée avec les arguments: {args}")
 
 
 def main():
