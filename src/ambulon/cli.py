@@ -126,25 +126,25 @@ def handle_config_command():
                 for name, create_func in configs.items():
                     try:
                         create_func(force)
-                        print(f"✓ {name}: Configuration installee")
+                        print(f"OK {name}: Configuration installee")
                     except Exception as e:
-                        print(f"✗ {name}: Erreur - {e}")
+                        print(f"ERREUR {name}: Erreur - {e}")
                 
             elif assistant == "claude":
                 create_claude_config(force)
-                print("✓ Configuration Claude Desktop installee")
+                print("OK Configuration Claude Desktop installee")
                 
             elif assistant == "openrouter":
                 create_openrouter_config(force)
-                print("✓ Configuration OpenRouter installee")
+                print("OK Configuration OpenRouter installee")
                 
             elif assistant == "aider":
                 create_aider_config(force)
-                print("✓ Configuration Aider installee")
+                print("OK Configuration Aider installee")
                 
             elif assistant == "continue":
                 create_continue_config(force)
-                print("✓ Configuration Continue (VSCode) installee")
+                print("OK Configuration Continue (VSCode) installee")
                 
             else:
                 print(f"Assistant inconnu: {assistant}")
@@ -161,6 +161,7 @@ def handle_config_command():
     
     elif subcommand == 'status':
         from .config import get_installation_status, test_mcp_server
+        from pathlib import Path
         
         print("Statut des configurations MCP Ambulon:")
         print("=" * 50)
@@ -169,14 +170,14 @@ def handle_config_command():
         
         for assistant, info in status.items():
             print(f"\n{assistant.upper()}:")
-            print(f"  Repertoire: {'✓' if info['directory_exists'] else '✗'} {Path(info['config_path']).parent}")
-            print(f"  Config:     {'✓' if info['config_exists'] else '✗'} {info['config_path']}")
-            print(f"  Ambulon:    {'✓' if info['ambulon_configured'] else '✗'} {'Configure' if info['ambulon_configured'] else 'Non configure'}")
+            print(f"  Repertoire: {'OK' if info['directory_exists'] else 'NON'} {Path(info['config_path']).parent}")
+            print(f"  Config:     {'OK' if info['config_exists'] else 'NON'} {info['config_path']}")
+            print(f"  Ambulon:    {'OK' if info['ambulon_configured'] else 'NON'} {'Configure' if info['ambulon_configured'] else 'Non configure'}")
         
         print(f"\nSERVEUR MCP:")
         test_results = test_mcp_server()
-        print(f"  Accessible: {'✓' if test_results['server_accessible'] else '✗'}")
-        print(f"  Outils:     {'✓' if test_results['tools_available'] else '✗'} ({test_results['tools_count']} disponibles)")
+        print(f"  Accessible: {'OK' if test_results['server_accessible'] else 'NON'}")
+        print(f"  Outils:     {'OK' if test_results['tools_available'] else 'NON'} ({test_results['tools_count']} disponibles)")
         
         if test_results['error']:
             print(f"  Erreur:     {test_results['error']}")
@@ -192,17 +193,17 @@ def handle_config_command():
         results = test_mcp_server()
         
         if results['server_accessible']:
-            print("✓ Serveur MCP accessible")
+            print("OK Serveur MCP accessible")
         else:
-            print("✗ Serveur MCP non accessible")
+            print("NON Serveur MCP non accessible")
         
         if results['tools_available']:
-            print(f"✓ Outils disponibles ({results['tools_count']} outils)")
+            print(f"OK Outils disponibles ({results['tools_count']} outils)")
         else:
-            print("✗ Aucun outil disponible")
+            print("NON Aucun outil disponible")
         
         if results['error']:
-            print(f"✗ Erreur: {results['error']}")
+            print(f"ERREUR: {results['error']}")
             return 1
         
         print()
@@ -220,7 +221,7 @@ def handle_config_command():
         for assistant, assistant_paths in paths.items():
             print(f"\n{assistant.upper()}:")
             for path_type, path in assistant_paths.items():
-                exists = "✓" if path.exists() else "✗"
+                exists = "OK" if path.exists() else "NON"
                 print(f"  {path_type}: {exists} {path}")
         
         return 0
@@ -245,11 +246,17 @@ def handle_config_command():
 
 def handle_test_command():
     """Gère les commandes de test."""
+    import subprocess
+    import os
+    
     if len(sys.argv) < 3:
         print("Usage: ambulon test [MODULE]")
         print()
         print("Modules de test disponibles:")
         print("  config    Tester le module de configuration MCP")
+        print("  scan      Tester le module de scan")
+        print("  ocr       Tester le module OCR")
+        print("  mcp       Tester le serveur MCP")
         print("  all       Tester tous les modules")
         print()
         print("Exemples:")
@@ -264,6 +271,9 @@ def handle_test_command():
         print()
         print("Modules de test disponibles:")
         print("  config    Tester le module de configuration MCP")
+        print("  scan      Tester le module de scan")
+        print("  ocr       Tester le module OCR")
+        print("  mcp       Tester le serveur MCP")
         print("  all       Tester tous les modules")
         print()
         print("Exemples:")
@@ -271,43 +281,38 @@ def handle_test_command():
         print("  ambulon test all")
         return 0
     
-    if test_module == 'config':
-        try:
-            from .test_config import run_all_tests
-            success = run_all_tests()
-            return 0 if success else 1
-        except ImportError as e:
-            print(f"Erreur d'import du module de test: {e}")
+    # Utiliser pytest pour exécuter les tests
+    try:
+        if test_module == 'all':
+            print("Execution de tous les tests avec pytest...")
+            result = subprocess.run([
+                sys.executable, "-m", "pytest", 
+                "tests/", "-v", "--tb=short"
+            ], cwd=os.getcwd())
+            return result.returncode
+            
+        elif test_module in ['config', 'scan', 'ocr', 'mcp']:
+            print(f"Execution des tests {test_module} avec pytest...")
+            test_file = f"tests/test_{test_module}.py"
+            if not os.path.exists(test_file):
+                print(f"Fichier de test {test_file} introuvable")
+                return 1
+            
+            result = subprocess.run([
+                sys.executable, "-m", "pytest", 
+                test_file, "-v", "--tb=short"
+            ], cwd=os.getcwd())
+            return result.returncode
+        else:
+            print(f"Module de test inconnu: {test_module}")
+            print("Modules disponibles: config, scan, ocr, mcp, all")
             return 1
-        except Exception as e:
-            print(f"Erreur lors des tests: {e}")
-            return 1
-    
-    elif test_module == 'all':
-        print("Execution de tous les tests Ambulon...")
-        print()
-        
-        # Test du module config
-        try:
-            from .test_config import run_all_tests
-            config_success = run_all_tests()
-        except Exception as e:
-            print(f"Erreur lors des tests config: {e}")
-            config_success = False
-        
-        print()
-        print("=" * 50)
-        print("RESUME DES TESTS:")
-        print(f"  Configuration: {'✓ PASSE' if config_success else '✗ ECHEC'}")
-        
-        overall_success = config_success
-        print(f"\nResultat global: {'✓ TOUS LES TESTS PASSES' if overall_success else '✗ CERTAINS TESTS ONT ECHOUE'}")
-        
-        return 0 if overall_success else 1
-    
-    else:
-        print(f"Module de test inconnu: {test_module}")
-        print("Modules disponibles: config, all")
+            
+    except FileNotFoundError:
+        print("pytest n'est pas installe. Installez-le avec: pip install pytest")
+        return 1
+    except Exception as e:
+        print(f"Erreur lors de l'execution des tests: {e}")
         return 1
 
 
