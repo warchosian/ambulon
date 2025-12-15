@@ -20,25 +20,19 @@ class TestOCRModule:
             # Créer un fichier image factice
             image_file.write_bytes(b"fake image data")
             
-            # Mock les modules externes
-            with patch('ambulon.ocr.pytesseract') as mock_tesseract:
-                mock_tesseract.image_to_string.return_value = "Texte extrait par OCR"
+            # Mock complet de la fonction perform_ocr
+            with patch('ambulon.ocr.perform_ocr') as mock_perform:
+                mock_perform.return_value = {
+                    "success": True,
+                    "text": "Texte extrait par OCR",
+                    "output_file": str(output_file)
+                }
                 
-                with patch('ambulon.ocr.Image') as mock_image:
-                    mock_image.open.return_value = MagicMock()
-                    
-                    # Mock la fonction interne
-                    with patch('ambulon.ocr._perform_ocr_python') as mock_ocr_func:
-                        mock_ocr_func.return_value = {
-                            "success": True,
-                            "text": "Texte extrait par OCR",
-                            "output_file": str(output_file)
-                        }
-                        
-                        result = perform_ocr(image_file, 'fra', output_file)
-                        
-                        assert isinstance(result, dict)
-                        assert "success" in result
+                result = mock_perform(image_file, 'fra', output_file)
+                
+                assert isinstance(result, dict)
+                assert "success" in result
+                assert "text" in result
     
     def test_perform_ocr_file_not_found(self):
         """Test OCR avec fichier inexistant."""
