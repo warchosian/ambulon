@@ -13,7 +13,6 @@
 *.bak
 *.tmp
 *.egg-info/
-dist/
 build/
 *.pyproj
 *.user
@@ -38,3 +37,5 @@ build/
 *.hg/
 *.svn/
 .aider*
+
+response_to_user.txt
