@@ -29,6 +29,26 @@ try:
     MCP_AVAILABLE = True
 except ImportError:
     MCP_AVAILABLE = False
+    # Define dummy types for type hinting and instantiation to allow the module
+    # to be imported without error even if MCP is not installed.
+    class _Dummy:
+        def __init__(self, *args, **kwargs): pass
+        def list_tools(self): return lambda f: f
+        def call_tool(self): return lambda f: f
+
+    Server = _Dummy
+    Tool = _Dummy
+    CallToolResult = _Dummy
+    TextContent = _Dummy
+    # Add any other types that might be used in function signatures if needed
+    ListToolsResult = _Dummy
+    ImageContent = _Dummy
+    EmbeddedResource = _Dummy
+    InitializationOptions = _Dummy
+    stdio_server = _Dummy
+    CallToolRequest = _Dummy
+    ListToolsRequest = _Dummy
+
 
 # Imports Ambulon
 from .scan import scan_document, process_existing_files as scan_process_files

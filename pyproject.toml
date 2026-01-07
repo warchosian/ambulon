@@ -6,7 +6,6 @@ authors = ["Votre Nom <votre.email@example.com>"]
 license = "MIT"
 readme = "README.md"
 packages = [{include = "ambulon", from = "src"}]
-include = ["src/ambulon/config/*.json"]
 
 [tool.poetry.dependencies]
 python = "^3.10"

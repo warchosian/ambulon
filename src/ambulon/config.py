@@ -15,25 +15,197 @@ except ImportError:
     from importlib_resources import files
 
 
+# The content of mcp-config.json is embedded here to ensure it's always included.
+_MCP_CONFIG_DATA = {
+  "mcpServers": {
+    "ambulon": {
+      "command": "python",
+      "args": ["-m", "ambulon.mcp"],
+      "cwd": ".",
+      "env": {
+        "PYTHONPATH": "src"
+      }
+    }
+  },
+  "server": {
+    "name": "ambulon",
+    "version": "0.3.0",
+    "description": "Serveur MCP pour Ambulon - Scanner et OCR via assistant IA",
+    "capabilities": {
+      "tools": {
+        "listChanged": True
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "scan_document",
+      "description": "Scanner un document avec NAPS2 et profils DPI configurables",
+      "category": "scan",
+      "examples": [
+        {
+          "description": "Scanner un document A4 en 300 DPI",
+          "arguments": {
+            "dpi": 300,
+            "output_path": "scans/document.jpg",
+            "format": "jpg",
+            "paper_size": "A4"
+          }
+        },
+        {
+          "description": "Scanner avec nom de fichier exact (sans auto-incrémentation)",
+          "arguments": {
+            "dpi": 300,
+            "output_path": "documents/rapport.jpg",
+            "format": "jpg",
+            "no_increment": True
+          }
+        },
+        {
+          "description": "Scanner plusieurs pages avec OCR",
+          "arguments": {
+            "dpi": 300,
+            "output_path": "scans/multi_page.pdf",
+            "format": "pdf",
+            "number": 3,
+            "ocr": True,
+            "ocr_lang": "fra"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ocr_image",
+      "description": "Effectuer une reconnaissance optique de caractères (OCR) sur une image",
+      "category": "ocr",
+      "examples": [
+        {
+          "description": "OCR d'une image en français",
+          "arguments": {
+            "image_path": "scans/document.jpg",
+            "language": "fra"
+          }
+        },
+        {
+          "description": "OCR multilingue français-anglais",
+          "arguments": {
+            "image_path": "scans/document.jpg",
+            "language": "fra+eng",
+            "output_path": "textes/document.txt"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ocr_batch",
+      "description": "Effectuer l'OCR sur plusieurs images en lot",
+      "category": "ocr",
+      "examples": [
+        {
+          "description": "OCR de tous les JPG d'un dossier",
+          "arguments": {
+            "pattern": "scans/*.jpg",
+            "language": "fra",
+            "output_dir": "textes/"
+          }
+        }
+      ]
+    },
+    {
+      "name": "scan_with_ocr",
+      "description": "Scanner un document et effectuer l'OCR en une seule opération",
+      "category": "scan+ocr",
+      "examples": [
+        {
+          "description": "Scanner et extraire le texte directement",
+          "arguments": {
+            "dpi": 300,
+            "output_path": "scans/document_with_text.jpg",
+            "ocr_lang": "fra"
+          }
+        },
+        {
+          "description": "Scanner avec nom exact et OCR",
+          "arguments": {
+            "dpi": 300,
+            "output_path": "documents/contrat.jpg",
+            "ocr_lang": "fra",
+            "no_increment": True
+          }
+        }
+      ]
+    },
+    {
+      "name": "process_existing_scans",
+      "description": "Traiter des fichiers de scan existants (ex: pour ajouter l'OCR)",
+      "category": "processing",
+      "examples": [
+        {
+          "description": "Ajouter l'OCR à des scans existants",
+          "arguments": {
+            "pattern": "scans/*.jpg",
+            "ocr": True,
+            "ocr_lang": "fra"
+          }
+        }
+      ]
+    }
+  ],
+  "installation": {
+    "requirements": [
+      "mcp",
+      "ambulon"
+    ],
+    "setup_commands": [
+      "pip install mcp",
+      "poetry install"
+    ]
+  },
+  "usage": {
+    "description": "Ce serveur MCP permet à un assistant IA d'utiliser les fonctionnalités de scan et d'OCR d'Ambulon",
+    "integration_examples": [
+      {
+        "assistant": "Claude Desktop",
+        "config_locations": {
+          "Windows": "%APPDATA%\\Claude\\claude_desktop_config.json",
+          "macOS": "~/Library/Application Support/Claude/claude_desktop_config.json",
+          "Linux": "~/.config/Claude/claude_desktop_config.json"
+        },
+        "config_snippet": {
+          "mcpServers": {
+            "ambulon": {
+              "command": "python",
+              "args": ["-m", "ambulon.mcp"],
+              "cwd": "/path/to/ambulon"
+            }
+          }
+        }
+      },
+      {
+        "assistant": "Cline VSCode",
+        "config_location": ".vscode/settings.json",
+        "config_snippet": {
+          "cline.mcp.servers": [
+            {
+              "name": "ambulon",
+              "command": "python",
+              "args": ["-m", "ambulon.mcp"]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+
 def get_mcp_config() -> Dict[str, Any]:
     """
-    Récupère la configuration MCP depuis les ressources du package.
+    Récupère la configuration MCP embarquée dans le package.
     
     Returns:
         Dict contenant la configuration MCP
     """
-    try:
-        # Accès au fichier via les ressources du package
-        config_file = files("ambulon").parent / "config" / "mcp-config.json"
-        with config_file.open("r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
-        # Fallback vers le fichier local si disponible
-        local_config = Path("config/mcp-config.json")
-        if local_config.exists():
-            with local_config.open("r", encoding="utf-8") as f:
-                return json.load(f)
-        raise FileNotFoundError("Configuration MCP introuvable")
+    return _MCP_CONFIG_DATA
 
 
 def export_mcp_config(output_path: Path = None) -> Path:
