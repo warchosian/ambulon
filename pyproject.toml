@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ambulon"
-version = "0.5.0"
+version = "0.5.1"
 description = "Suite complète d'outils de numérisation avec serveur MCP pour assistants IA."
 authors = ["Votre Nom <votre.email@example.com>"]
 license = "MIT"
@@ -31,9 +31,10 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.5.0"
+version = "0.5.1"
 tag_format = "$version"
 version_files = [
     "pyproject.toml:version",
     "src/ambulon/__init__.py:__version__"
 ]
+
