@@ -38,10 +38,17 @@ def main():
     base_clone_dir.mkdir(parents=True, exist_ok=True)
 
     for repo_url_suffix in repositories:
-        # Assuming the repo_url_suffix format is like "domain.com/group/project.git"
-        # and we need to insert the token before the domain.
-        # Example: gitlab-forge.din.developpement-durable.gouv.fr/snum/pnm3/produits/support/admin-ep/admin_ep.git
-        parts = repo_url_suffix.split('/', 1) # Split only on the first slash
+        # Retirer le préfixe https:// ou http:// s'il est présent
+        # Exemples acceptés:
+        # - https://gitlab-forge.din.developpement-durable.gouv.fr/snum/pnm3/gti/cerbere/cerbere-bouchon.git
+        # - gitlab-forge.din.developpement-durable.gouv.fr/snum/pnm3/produits/support/admin-ep/admin_ep.git
+        repo_url_clean = repo_url_suffix
+        if repo_url_clean.startswith('https://'):
+            repo_url_clean = repo_url_clean[8:]  # Retirer 'https://'
+        elif repo_url_clean.startswith('http://'):
+            repo_url_clean = repo_url_clean[7:]  # Retirer 'http://'
+
+        parts = repo_url_clean.split('/', 1)  # Split only on the first slash
         if len(parts) < 2:
             print(f"Warning: Invalid repository URL format: {repo_url_suffix}. Skipping.")
             continue
@@ -50,17 +57,20 @@ def main():
         path_in_gitlab = parts[1]
 
         # Construct the authenticated URL
-        # e.g., https://oauth2:glpat-token@gitlab.com/group/project.git
+        # e.g., https://username:token@gitlab.com/group/project.git
         authenticated_url = f"https://{username}:{token}@{domain}/{path_in_gitlab}"
 
-        repo_name = Path(repo_url_suffix).stem # Gets 'admin_ep' from the example
+        # Extract repository name from the cleaned URL (e.g., 'cerbere-bouchon' from 'cerbere-bouchon.git')
+        repo_name = Path(repo_url_clean).stem
         target_path = base_clone_dir / repo_name
 
         if target_path.exists():
             print(f"Repository '{repo_name}' already exists at '{target_path}'. Skipping.")
             continue
 
-        print(f"Cloning '{repo_name}' from '{authenticated_url}' to '{target_path}'...")
+        # Afficher l'URL sans les credentials pour la sécurité
+        display_url = f"https://{domain}/{path_in_gitlab}"
+        print(f"Cloning '{repo_name}' from '{display_url}' to '{target_path}'...")
         try:
             # Using shell=True for simpler command parsing on Windows, but be aware of security implications if inputs were not controlled.
             # Here, inputs are from config file, so it's relatively safe.
