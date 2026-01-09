@@ -1,0 +1,7 @@
+gitlab:
+  token: "YOUR_GITLAB_PRIVATE_ACCESS_TOKEN" # Replace with your GitLab Personal Access Token
+  username: "your-gitlab-username-for-pat" # This is often 'oauth2' or 'DOCUMENTATION' as per your example, or your actual username
+  base_clone_dir: "C:/Users/your_user/dev/gitlab_projects" # Base directory where projects will be cloned
+  repositories:
+    - "gitlab-forge.din.developpement-durable.gouv.fr/snum/pnm3/produits/support/admin-ep/admin_ep.git"
+    - "another/group/another_project.git" # Add more repository paths as needed

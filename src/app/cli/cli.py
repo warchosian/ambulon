@@ -6,13 +6,14 @@ from datetime import datetime
 from pathlib import Path
 
 from . import hello
-from .scan import main as scan_main
-from .ocr import main as ocr_main
-from .mcp import main as mcp_main
-from .img2pdf import main as img2pdf_main
-from .compress_pdf import main as compress_pdf_main
-from .config import export_mcp_config, get_claude_config_path
-from .rag import create_rag_collection # NEW
+from app.scan.commands.scan_main import main as scan_main
+from app.ocr.commands.ocr_main import main as ocr_main
+from app.mcp.mcp_server import main as mcp_main
+from app.conversion.commands.img2pdf import main as img2pdf_main
+from app.conversion.commands.compress_pdf import main as compress_pdf_main
+from app.mcp.mcp_config import export_mcp_config, get_claude_config_path
+from app.piag import create_collection # NEW - migration vers nouvelle architecture
+from app.gitlab.commands.gitlab_clone import main as gitlab_clone_main
 import requests # NEW
 import json # NEW
 
@@ -64,6 +65,7 @@ def show_help():
     print("  compress-pdf          Compresser un fichier PDF")
     print("  mcp                   Serveur MCP pour assistants IA")
     print("  config                Gestion de la configuration MCP")
+    print("  gitlab-clone          Cloner des projets GitLab depuis la configuration")
     print("  test                  Tests des modules Ambulon")
     print()
     print("Modules RAG PIAG (Retrieval Augmented Generation):")
@@ -95,6 +97,7 @@ def show_help():
     print("  ambulon compress-pdf doc.pdf Compresser un PDF")
     print("  ambulon mcp                  Démarrer le serveur MCP")
     print("  ambulon config export        Exporter la config MCP")
+    print("  ambulon gitlab-clone         Cloner les projets configurés")
     print("  ambulon test config          Tester la configuration")
     print()
     print("Pour plus d'informations sur un module spécifique:")
@@ -167,7 +170,7 @@ def handle_config_command():
             return 1
     
     elif subcommand == 'install':
-        from .config import (create_claude_config, create_openrouter_config, 
+        from app.mcp.mcp_config import (create_claude_config, create_openrouter_config, 
                            create_aider_config, create_continue_config)
         
         assistant = sys.argv[3] if len(sys.argv) > 3 else "claude"
@@ -222,7 +225,7 @@ def handle_config_command():
             return 1
     
     elif subcommand == 'status':
-        from .config import get_installation_status, test_mcp_server
+        from app.mcp.mcp_config import get_installation_status, test_mcp_server
         from pathlib import Path
         
         print("Statut des configurations MCP Ambulon:")
@@ -247,7 +250,7 @@ def handle_config_command():
         return 0
     
     elif subcommand == 'test':
-        from .config import test_mcp_server
+        from app.mcp.mcp_config import test_mcp_server
         
         print("Test du serveur MCP Ambulon...")
         print()
@@ -272,7 +275,7 @@ def handle_config_command():
         print("\nTest d'intégration rapide...")
         try:
             import asyncio
-            from .mcp import handle_list_tools
+            from app.mcp.mcp_server import handle_list_tools
             
             # Test de liste des outils
             tools = asyncio.run(handle_list_tools())
@@ -292,7 +295,7 @@ def handle_config_command():
         return 0
     
     elif subcommand == 'paths':
-        from .config import get_config_paths
+        from app.mcp.mcp_config import get_config_paths
         
         print("Chemins de configuration pour tous les assistants:")
         print("=" * 55)
@@ -479,7 +482,7 @@ def handle_rag_module(module_name: str):
     try:
         # Importer et exécuter le module comme __main__
         import runpy
-        runpy.run_module(f'ambulon.rag.{python_module}', run_name='__main__')
+        runpy.run_module(f'app.piag.commands.{python_module}', run_name='__main__')
         return 0
     except SystemExit as e:
         return e.code if e.code else 0
@@ -545,6 +548,14 @@ def main():
                 sys.argv = original_argv
         elif command == 'config':
             return handle_config_command()
+        elif command == 'gitlab-clone':
+            # Retirer 'gitlab-clone' des arguments et lancer le module gitlab
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                return gitlab_clone_main()
+            finally:
+                sys.argv = original_argv
         elif command == 'test':
             return handle_test_command()
         # Commandes RAG PIAG

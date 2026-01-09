@@ -2,6 +2,252 @@
 
 Ce projet utilise les outils suivants pour la gestion des modules Python et les commits conventionnels.
 
+## Architecture des Modules
+
+Le projet est organisé en un seul package `app` avec des modules catégorisés :
+
+```
+src/
+└── app/
+    ├── cli/              # CLI principal et framework
+    │   ├── main.py       # Point d'entrée de la commande
+    │   └── __init__.py
+    ├── piag/             # Module RAG PIAG
+    │   ├── commands/     # CLI pour les opérations PIAG
+    │   ├── core/         # Logique métier PIAG
+    │   └── __init__.py
+    ├── ocr/              # Module OCR
+    │   ├── commands/
+    │   ├── core/
+    │   └── __init__.py
+    ├── scan/             # Module Scanner
+    │   ├── commands/
+    │   ├── core/
+    │   └── __init__.py
+    └── conversion/       # Module conversion (PDF, images, compression)
+        ├── commands/
+        ├── core/
+        └── __init__.py
+```
+
+### Organisation par Catégories
+
+**`app/cli/`** : Framework CLI principal
+- Point d'entrée de la commande `ambulon`
+- Routage vers les différents modules
+- Utilitaires CLI communs
+- Gestion de configuration globale
+
+**Modules métier** : `app/piag/`, `app/ocr/`, `app/scan/`, `app/conversion/`
+- Chaque module est une catégorie fonctionnelle indépendante
+- Structure standardisée : `commands/` et `core/`
+- Pas de dépendances croisées entre modules
+
+### Structure Interne d'une Catégorie
+
+Chaque catégorie sous `app/` suit cette structure :
+
+```
+app/<categorie>/
+├── commands/       # Scripts CLI et points d'entrée
+│   ├── cmd_operation1.py
+│   ├── cmd_operation2.py
+│   └── ...
+├── core/          # Logique métier réutilisable
+│   ├── config.py   # Gestion de configuration
+│   ├── client.py   # Client API/HTTP
+│   ├── models.py   # Classes métier
+│   └── utils.py    # Utilitaires spécifiques
+└── __init__.py    # Exports publics
+```
+
+#### Répertoire `commands/`
+
+Contient les modules CLI exécutables via `python -m`. Chaque fichier gère :
+- Parsing des arguments CLI avec `argparse`
+- Hiérarchie de configuration : CLI > YAML > ENV > Défaut
+- Affichage formaté des résultats pour l'utilisateur
+- Gestion des erreurs et codes de sortie appropriés
+- Invocation des fonctions métier depuis `core/`
+
+#### Répertoire `core/`
+
+Contient la logique métier pure et réutilisable :
+- Fonctions métier principales (sans CLI)
+- Clients HTTP/API
+- Gestion centralisée de la configuration
+- Modèles de données et classes métier
+- Utilitaires partagés entre commandes
+- Code testable indépendamment du CLI
+
+### Exemple : Module PIAG (RAG)
+
+```
+src/
+└── app/
+    ├── __init__.py
+    ├── cli/
+    │   ├── main.py                # CLI principal, route vers app.piag
+    │   └── __init__.py
+    └── piag/
+        ├── commands/
+        │   ├── collection_add.py      # CLI: créer collection
+        │   ├── collection_list.py     # CLI: lister collections
+        │   ├── doc_upload.py          # CLI: uploader document
+        │   └── search.py              # CLI: recherche RAG
+        ├── core/
+        │   ├── config.py              # Config YAML centralisée
+        │   ├── client.py              # Client HTTP PIAG
+        │   ├── collections.py         # Logique collections
+        │   └── documents.py           # Logique documents
+        └── __init__.py                # Exports: create_collection(), etc.
+```
+
+**Imports dans le code :**
+```python
+# Dans app/cli/main.py
+from app.piag import create_collection, search_rag
+
+# Dans app/piag/commands/collection_add.py
+from app.piag.core.config import load_config
+from app.piag.core.client import PIAGClient
+
+# Pour l'utilisateur final (API programmatique)
+from app.piag import create_collection, upload_document
+```
+
+### Principes de Séparation
+
+1. **Pas de duplication** : Le code commun (config, HTTP, logging) doit être dans `core/`, jamais dupliqué dans `commands/`.
+
+2. **Réutilisabilité** : Les fonctions dans `core/` doivent être utilisables :
+   - Par les CLI dans `commands/`
+   - Par d'autres modules Python
+   - Par des scripts externes
+   - Dans des notebooks Jupyter
+
+3. **Testabilité** : La logique métier dans `core/` doit être testable indépendamment du CLI.
+
+4. **Clarté** : Organisation prévisible pour tous les développeurs :
+   - Besoin d'une commande CLI → `app/<categorie>/commands/`
+   - Besoin de logique métier → `app/<categorie>/core/`
+   - Besoin du framework CLI → `app/cli/`
+
+5. **Indépendance** : Chaque catégorie sous `app/` est autonome et n'a pas de dépendances entre catégories.
+
+### Gestion des Logs et Affichage Console
+
+**Principe général** : Toute application doit utiliser un gestionnaire de logs centralisé pour l'affichage console et la persistance des erreurs.
+
+#### Configuration des Logs
+
+```python
+import logging
+from datetime import datetime
+from pathlib import Path
+
+# Format : application_AAAA-MM-JJ_HHhMMmSSs.log
+timestamp = datetime.now().strftime("%Y-%m-%d_%Hh%Mm%Ss")
+log_dir = Path("logs")
+log_dir.mkdir(exist_ok=True)
+log_file = log_dir / f"{application_name}_{timestamp}.log"
+
+# Configuration du logger
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(log_file, encoding='utf-8'),  # Fichier
+        logging.StreamHandler()  # Console
+    ]
+)
+
+logger = logging.getLogger(__name__)
+```
+
+#### Règles d'Utilisation
+
+1. **Affichage Console** : Utiliser le logger, pas `print()`
+   ```python
+   # ❌ Éviter
+   print("Traitement en cours...")
+
+   # ✅ Correct
+   logger.info("Traitement en cours...")
+   ```
+
+2. **Logs d'Erreurs** : Automatiquement enregistrés dans `logs/`
+   ```python
+   try:
+       # code risqué
+   except Exception as e:
+       logger.error(f"Erreur lors du traitement: {e}", exc_info=True)
+   ```
+
+3. **Niveaux de Log** :
+   - `DEBUG` : Informations de débogage détaillées
+   - `INFO` : Confirmations de déroulement normal
+   - `WARNING` : Avertissements (non bloquants)
+   - `ERROR` : Erreurs (échecs d'opérations)
+   - `CRITICAL` : Erreurs critiques (crash imminent)
+
+4. **Emplacement des Logs** :
+   - Répertoire : `logs/` à la racine du projet
+   - Format du nom : `{application}_{AAAA-MM-JJ}_{HHhMMmSSs}.log`
+   - Exemple : `piag_search_2026-01-09_14h23m45s.log`
+
+5. **Rotation des Logs** : Utiliser `RotatingFileHandler` pour les applications longue durée
+   ```python
+   from logging.handlers import RotatingFileHandler
+
+   handler = RotatingFileHandler(
+       log_file,
+       maxBytes=10*1024*1024,  # 10 MB
+       backupCount=5,
+       encoding='utf-8'
+   )
+   ```
+
+#### Exemple d'Implémentation
+
+```python
+# Dans app/cli/logging_config.py
+import logging
+from datetime import datetime
+from pathlib import Path
+
+def setup_logging(application_name: str, level=logging.INFO):
+    """Configure le système de logging pour une application."""
+    timestamp = datetime.now().strftime("%Y-%m-%d_%Hh%Mm%Ss")
+    log_dir = Path("logs")
+    log_dir.mkdir(exist_ok=True)
+    log_file = log_dir / f"{application_name}_{timestamp}.log"
+
+    logging.basicConfig(
+        level=level,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler(log_file, encoding='utf-8'),
+            logging.StreamHandler()
+        ]
+    )
+
+    return logging.getLogger(application_name)
+
+# Utilisation dans app/piag/commands/search.py
+from app.cli.logging_config import setup_logging
+
+logger = setup_logging("piag_search")
+logger.info("Démarrage de la recherche RAG...")
+```
+
+#### Avantages
+
+- **Traçabilité** : Tous les événements et erreurs sont enregistrés avec horodatage
+- **Débogage** : Fichiers de logs consultables après exécution
+- **Cohérence** : Format uniforme pour toutes les applications
+- **Performance** : Rotation automatique pour éviter les fichiers trop volumineux
+
 ## Gestion des dépendances Python avec Poetry
 
 [Poetry](https://python-poetry.org/) est utilisé pour la gestion des dépendances et le packaging. Pour commencer :
@@ -56,7 +302,7 @@ Le processus de création d'une nouvelle release est strict et doit suivre ces �
 
 3.  **Créer la nouvelle version**: Exécutez `cz bump`. Cette commande va automatiquement :
     - Déterminer le nouveau numéro de version (PATCH, MINOR, ou MAJOR) en se basant sur vos commits.
-    - Mettre à jour la version dans `pyproject.toml` et `src/ambulon/__init__.py`.
+    - Mettre à jour la version dans `pyproject.toml` et `src/app/__init__.py`.
     - Générer ou mettre à jour le `CHANGELOG.md`.
     - Créer un commit et un tag Git pour la nouvelle version.
     ```bash
@@ -194,7 +440,7 @@ Vérifie automatiquement la syntaxe Python après chaque modification de fichier
 **Exemple de sortie :**
 ```
 🐍 [PYTHON-CHECK] Vérification de la syntaxe Python
-   📄 Fichier: src/ambulon/ocr.py
+   📄 Fichier: src/app/ocr/ocr.py
    ✅ Syntaxe Python valide
 ```
 
