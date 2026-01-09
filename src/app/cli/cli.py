@@ -9,11 +9,24 @@ from . import hello
 from app.scan.commands.scan_main import main as scan_main
 from app.ocr.commands.ocr_main import main as ocr_main
 from app.mcp.mcp_server import main as mcp_main
-from app.conversion.commands.img2pdf import main as img2pdf_main
-from app.conversion.commands.compress_pdf import main as compress_pdf_main
 from app.mcp.mcp_config import export_mcp_config, get_claude_config_path
 from app.piag import create_collection # NEW - migration vers nouvelle architecture
 from app.gitlab.commands.gitlab_clone import main as gitlab_clone_main
+
+# Modules de conversion
+from app.conversion import (
+    compress_pdf_main,
+    img2pdf_main,
+    process_html_to_markdown,
+    process_markdown_to_html,
+    convert_html_to_pdf,
+    json_to_jsonl,
+    process_json_to_markdown,
+)
+
+# Modules d'encoding
+from app.encoding import check_md_cli, fix_md_cli
+
 import requests # NEW
 import json # NEW
 
@@ -61,12 +74,23 @@ def show_help():
     print("Modules disponibles:")
     print("  scan                  Module de scan TWAIN avec profils DPI")
     print("  ocr                   Module OCR - Reconnaissance optique de caractères")
-    print("  img2pdf               Convertir images en PDF")
-    print("  compress-pdf          Compresser un fichier PDF")
     print("  mcp                   Serveur MCP pour assistants IA")
     print("  config                Gestion de la configuration MCP")
     print("  gitlab-clone          Cloner des projets GitLab depuis la configuration")
     print("  test                  Tests des modules Ambulon")
+    print()
+    print("Modules de conversion:")
+    print("  img2pdf               Convertir images en PDF")
+    print("  compress-pdf          Compresser un fichier PDF")
+    print("  html2md               Convertir HTML en Markdown")
+    print("  md2html               Convertir Markdown en HTML")
+    print("  html2pdf              Convertir HTML en PDF (avec Playwright)")
+    print("  json2jsonl            Convertir JSON array en JSONL")
+    print("  json2md               Convertir JSON en Markdown")
+    print()
+    print("Modules d'encoding:")
+    print("  chk-utf8              Vérifier l'encodage des fichiers Markdown")
+    print("  fix-utf8              Corriger l'encodage des fichiers Markdown")
     print()
     print("Modules RAG PIAG (Retrieval Augmented Generation):")
     print("  Collections:")
@@ -89,16 +113,16 @@ def show_help():
     print("  --version     Afficher la version")
     print()
     print("Exemples:")
-    print("  ambulon scan --help          Aide du module scan")
-    print("  ambulon scan -r 300 -o scans/")
-    print("  ambulon ocr --help           Aide du module OCR")
+    print("  ambulon scan --help            Aide du module scan")
     print("  ambulon ocr -i image.jpg -l fra")
-    print("  ambulon img2pdf scans/       Convertir images en PDF")
-    print("  ambulon compress-pdf doc.pdf Compresser un PDF")
-    print("  ambulon mcp                  Démarrer le serveur MCP")
-    print("  ambulon config export        Exporter la config MCP")
-    print("  ambulon gitlab-clone         Cloner les projets configurés")
-    print("  ambulon test config          Tester la configuration")
+    print("  ambulon img2pdf scans/         Convertir images en PDF")
+    print("  ambulon html2md doc.html       Convertir HTML en Markdown")
+    print("  ambulon md2html doc.md         Convertir Markdown en HTML")
+    print("  ambulon chk-utf8 -P '*.md'     Vérifier l'encodage des MD")
+    print("  ambulon fix-utf8 -P 'docs/**/*.md'  Corriger l'encodage")
+    print("  ambulon mcp                    Démarrer le serveur MCP")
+    print("  ambulon config export          Exporter la config MCP")
+    print("  ambulon gitlab-clone           Cloner les projets configurés")
     print()
     print("Pour plus d'informations sur un module spécifique:")
     print("  ambulon [MODULE] --help")
@@ -544,6 +568,132 @@ def main():
             sys.argv = [sys.argv[0]] + sys.argv[2:]
             try:
                 return compress_pdf_main()
+            finally:
+                sys.argv = original_argv
+        elif command == 'html2md':
+            # Convertir HTML en Markdown
+            if len(sys.argv) < 3:
+                print("Usage: ambulon html2md <input.html> [-o <output.md>] [--verbose]")
+                return 1
+            input_file = sys.argv[2]
+            output_file = None
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output_file = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--verbose':
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            return process_html_to_markdown(input_file, output_file, verbose)
+        elif command == 'md2html':
+            # Convertir Markdown en HTML
+            if len(sys.argv) < 3:
+                print("Usage: ambulon md2html <input.md> [-o <output.html>] [--verbose] [--no-standalone]")
+                return 1
+            input_file = sys.argv[2]
+            output_file = None
+            verbose = False
+            standalone = True
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output_file = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--verbose':
+                    verbose = True
+                    i += 1
+                elif sys.argv[i] == '--no-standalone':
+                    standalone = False
+                    i += 1
+                else:
+                    i += 1
+            return process_markdown_to_html(input_file, output_file, verbose, standalone)
+        elif command == 'html2pdf':
+            # Convertir HTML en PDF
+            if len(sys.argv) < 3:
+                print("Usage: ambulon html2pdf <input.html> [-o <output.pdf>] [--orientation portrait|landscape] [--verbose]")
+                return 1
+            input_file = sys.argv[2]
+            output_file = None
+            orientation = 'portrait'
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output_file = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--orientation' and i + 1 < len(sys.argv):
+                    orientation = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--verbose':
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            return convert_html_to_pdf(input_file, output_file, orientation, verbose)
+        elif command == 'json2jsonl':
+            # Convertir JSON en JSONL
+            if len(sys.argv) < 3:
+                print("Usage: ambulon json2jsonl <input.json> -o <output.jsonl> [--array-key KEY] [--verbose]")
+                return 1
+            input_file = sys.argv[2]
+            output_file = None
+            array_key = None
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output_file = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--array-key' and i + 1 < len(sys.argv):
+                    array_key = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            if not output_file:
+                print("Error: -o/--output is required")
+                return 1
+            return json_to_jsonl(input_file, output_file, array_key, verbose)
+        elif command == 'json2md':
+            # Convertir JSON en Markdown
+            if len(sys.argv) < 3:
+                print("Usage: ambulon json2md <input.json> [-o <output.md>] [--verbose]")
+                return 1
+            input_file = sys.argv[2]
+            output_file = None
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output_file = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--verbose':
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            return process_json_to_markdown(input_file, output_file, verbose)
+        elif command == 'chk-utf8':
+            # Vérifier l'encodage des fichiers Markdown
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                return check_md_cli()
+            finally:
+                sys.argv = original_argv
+        elif command == 'fix-utf8':
+            # Corriger l'encodage des fichiers Markdown
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                return fix_md_cli()
             finally:
                 sys.argv = original_argv
         elif command == 'config':
