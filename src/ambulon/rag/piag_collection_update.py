@@ -1,0 +1,214 @@
+
+"""Module pour modifier une collection RAG PIAG."""
+
+import json
+import os
+import sys
+import yaml
+import requests
+from pathlib import Path
+from typing import Dict, Any, Optional
+
+def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Charge la configuration depuis le fichier piag_rag.yaml.
+
+    Args:
+        config_path: Chemin personnalisé vers le fichier de configuration.
+                     Si None, utilise config/piag_rag.yaml à la racine du projet.
+
+    Returns:
+        Dictionnaire contenant la configuration.
+
+    Raises:
+        FileNotFoundError: Si le fichier de configuration n'est pas trouvé.
+        yaml.YAMLError: Si le fichier YAML est mal formé.
+    """
+    if config_path is None:
+        current_dir = Path(__file__).parent
+        config_path = current_dir.parent.parent.parent / "config" / "piag_rag.yaml"
+    else:
+        config_path = Path(config_path)
+
+    if not config_path.exists():
+        raise FileNotFoundError(f"Fichier de configuration non trouvé: {config_path}")
+
+    with open(config_path, 'r', encoding='utf-8') as f:
+        config = yaml.safe_load(f)
+
+    return config
+
+# Charger la configuration par défaut
+try:
+    _DEFAULT_CONFIG = load_config()
+    RAG_API_BASE_URL = _DEFAULT_CONFIG['api']['base_url']
+except (FileNotFoundError, KeyError, yaml.YAMLError) as e:
+    print(f"Avertissement: Impossible de charger la configuration: {e}", file=sys.stderr)
+    RAG_API_BASE_URL = "https://preprod.api.piag.e2.rie.gouv.fr/rag/"
+    _DEFAULT_CONFIG = None
+
+def update_collection(
+    collection_id: str,
+    name: str,
+    description: str,
+    api_token: str,
+    base_url: Optional[str] = None,
+    config: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
+    """
+    Modifie une collection RAG PIAG existante.
+
+    Args:
+        collection_id: L'identifiant de la collection RAG à modifier.
+        name: Le nouveau nom de la collection.
+        description: La nouvelle description de la collection.
+        api_token: Le token d'autorisation pour l'API RAG (Bearer token).
+        base_url: L'URL de base de l'API RAG. Si None, utilise la config.
+        config: Dictionnaire de configuration. Si None, utilise la config par défaut.
+
+    Returns:
+        La réponse JSON de l'API en cas de succès.
+
+    Raises:
+        requests.exceptions.RequestException: En cas d'erreur réseau ou de réponse HTTP non-2xx.
+    """
+    if config is None:
+        config = _DEFAULT_CONFIG or {}
+
+    if base_url is None:
+        base_url = config.get('api', {}).get('base_url', RAG_API_BASE_URL)
+
+    timeout = config.get('api', {}).get('timeout', 30)
+
+    headers = {
+        "accept": config.get('headers', {}).get('accept', 'application/json'),
+        "Authorization": f"Bearer {api_token}",
+        "Content-Type": config.get('headers', {}).get('content_type', 'application/json')
+    }
+
+    endpoint = config.get('endpoints', {}).get('collection_detail', '/api/v1/collections/{collection_id}')
+    endpoint = endpoint.replace('{collection_id}', collection_id)
+
+    url = f"{base_url.rstrip('/')}{endpoint}"
+
+    payload = {
+        "name": name,
+        "description": description
+    }
+
+    if config.get('logging', {}).get('log_requests', False):
+        print(f"[DEBUG] Requête PUT vers: {url}", file=sys.stderr)
+        print(f"[DEBUG] Payload: {json.dumps(payload, indent=2)}", file=sys.stderr)
+
+    try:
+        response = requests.put(url, headers=headers, data=json.dumps(payload), timeout=timeout)
+        response.raise_for_status()
+
+        result = response.json()
+
+        if config.get('logging', {}).get('log_responses', False):
+            print(f"[DEBUG] Réponse: {json.dumps(result, indent=2)}", file=sys.stderr)
+
+        return result
+    except requests.exceptions.RequestException as e:
+        print(f"Erreur lors de la modification de la collection: {e}", file=sys.stderr)
+        if hasattr(e, 'response') and e.response is not None:
+            print(f"Réponse API: {e.response.text}", file=sys.stderr)
+        raise
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Modifie une collection RAG PIAG.",
+        epilog="HIÉRARCHIE DE PRIORITÉ: Arguments CLI > Fichier YAML > Variables d'environnement > Valeurs par défaut"
+    )
+    parser.add_argument("--collection-id", help="ID de la collection RAG (écrase YAML et env).")
+    parser.add_argument("--name", help="Nouveau nom de la collection (écrase YAML et env).")
+    parser.add_argument("--description", help="Nouvelle description de la collection (écrase YAML et env).")
+    parser.add_argument("--token", help="Token API RAG Bearer (écrase YAML et env).")
+    parser.add_argument("--base-url", help="URL de base de l'API RAG (écrase YAML).")
+    parser.add_argument("--config", help="Chemin vers un fichier de configuration personnalisé.")
+    parser.add_argument("--debug", action="store_true", help="Active le mode debug (logging détaillé).")
+
+    args = parser.parse_args()
+
+    config = None
+    if args.config:
+        try:
+            config = load_config(args.config)
+            print(f"Configuration chargée depuis: {args.config}")
+        except Exception as e:
+            print(f"Erreur lors du chargement de la config: {e}", file=sys.stderr)
+            sys.exit(1)
+    else:
+        config = _DEFAULT_CONFIG if _DEFAULT_CONFIG else {}
+
+    if args.debug and config:
+        if 'logging' not in config:
+            config['logging'] = {}
+        config['logging']['enable_debug'] = True
+        config['logging']['log_requests'] = True
+        config['logging']['log_responses'] = True
+
+    # COLLECTION_ID
+    collection_id = args.collection_id
+    if not collection_id:
+        collection_id = config.get('project', {}).get('collection_id')
+    if not collection_id:
+        collection_id = os.getenv('PIAG_RAG_COLLECTION_ID')
+    if not collection_id:
+        print("Erreur: collection_id requis. Utilisez --collection-id, définissez-le dans le YAML, ou via PIAG_RAG_COLLECTION_ID", file=sys.stderr)
+        sys.exit(1)
+
+    # NAME
+    name = args.name
+    if not name:
+        name = config.get('project', {}).get('name')
+    if not name:
+        name = os.getenv('PIAG_RAG_COLLECTION_NAME')
+    if not name:
+        print("Erreur: name requis. Utilisez --name, définissez-le dans le YAML, ou via PIAG_RAG_COLLECTION_NAME", file=sys.stderr)
+        sys.exit(1)
+
+    # DESCRIPTION
+    description = args.description
+    if not description:
+        description = config.get('project', {}).get('description')
+    if not description:
+        description = os.getenv('PIAG_RAG_COLLECTION_DESCRIPTION')
+    if not description:
+        print("Erreur: description requise. Utilisez --description, définissez-la dans le YAML, ou via PIAG_RAG_COLLECTION_DESCRIPTION", file=sys.stderr)
+        sys.exit(1)
+
+    # TOKEN
+    api_token = args.token
+    if not api_token:
+        api_token = config.get('security', {}).get('token')
+    if not api_token:
+        token_env_var = config.get('security', {}).get('token_env_var', 'PIAG_RAG_API_TOKEN')
+        api_token = os.getenv(token_env_var)
+    if not api_token:
+        print(f"Erreur: Token API requis. Utilisez --token, définissez-le dans le YAML (non recommandé), ou via {token_env_var}", file=sys.stderr)
+        sys.exit(1)
+
+    base_url = args.base_url
+
+    try:
+        result = update_collection(
+            collection_id=collection_id,
+            name=name,
+            description=description,
+            api_token=api_token,
+            base_url=base_url,
+            config=config
+        )
+
+        print("✅ Collection modifiée avec succès :")
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+
+    except requests.exceptions.RequestException:
+        sys.exit(1)
+    except Exception as e:
+        print(f"❌ Une erreur inattendue est survenue : {e}", file=sys.stderr)
+        sys.exit(1)

@@ -63,12 +63,24 @@ jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
 uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
+name = "certifi"
+version = "2026.1.4"
+description = "Python package for providing Mozilla's CA Bundle."
+optional = false
+python-versions = ">=3.7"
+groups = ["main"]
+files = [
+    {file = "certifi-2026.1.4-py3-none-any.whl", hash = "sha256:9943707519e4add1115f44c2bc244f782c0249876bf51b6599fee1ffbedd685c"},
+    {file = "certifi-2026.1.4.tar.gz", hash = "sha256:ac726dd470482006e014ad384921ed6438c457018f4b3d204aea4281258b2120"},
+]
+
+[[package]]
 name = "charset-normalizer"
 version = "3.4.4"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 optional = false
 python-versions = ">=3.7"
-groups = ["dev"]
+groups = ["main", "dev"]
 files = [
     {file = "charset_normalizer-3.4.4-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:e824f1492727fa856dd6eda4f7cee25f8518a12f3c4a56a74e8095695089cf6d"},
     {file = "charset_normalizer-3.4.4-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:4bd5d4137d500351a30687c2d3971758aac9a19208fc110ccb9d7188fbe709e8"},
@@ -266,6 +278,21 @@ typing-extensions = {version = ">=4.6.0", markers = "python_version < \"3.13\""}
 
 [package.extras]
 test = ["pytest (>=6)"]
+
+[[package]]
+name = "idna"
+version = "3.11"
+description = "Internationalized Domain Names in Applications (IDNA)"
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "idna-3.11-py3-none-any.whl", hash = "sha256:771a87f49d9defaf64091e6e6fe9c18d4833f140bd19464795bc32d966ca37ea"},
+    {file = "idna-3.11.tar.gz", hash = "sha256:795dafcc9c04ed0c1fb032c2aa73654d8e8c5023a7df64a53f39190ada629902"},
+]
+
+[package.extras]
+all = ["flake8 (>=7.1.1)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2)"]
 
 [[package]]
 name = "importlib-resources"
@@ -804,6 +831,28 @@ files = [
 prompt_toolkit = ">=2.0,<4.0"
 
 [[package]]
+name = "requests"
+version = "2.32.5"
+description = "Python HTTP for Humans."
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "requests-2.32.5-py3-none-any.whl", hash = "sha256:2462f94637a34fd532264295e186976db0f5d453d1cdd31473c85a6a161affb6"},
+    {file = "requests-2.32.5.tar.gz", hash = "sha256:dbba0bac56e100853db0ea71b82b4dfd5fe2bf6d3754a8893c3af500cec7d7cf"},
+]
+
+[package.dependencies]
+certifi = ">=2017.4.17"
+charset_normalizer = ">=2,<4"
+idna = ">=2.5,<4"
+urllib3 = ">=1.21.1,<3"
+
+[package.extras]
+socks = ["PySocks (>=1.5.6,!=1.5.7)"]
+use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
+
+[[package]]
 name = "termcolor"
 version = "2.5.0"
 description = "ANSI color formatting for output in terminal"
@@ -897,6 +946,24 @@ files = [
 ]
 
 [[package]]
+name = "urllib3"
+version = "2.6.3"
+description = "HTTP library with thread-safe connection pooling, file post, and more."
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "urllib3-2.6.3-py3-none-any.whl", hash = "sha256:bf272323e553dfb2e87d9bfd225ca7b0f467b919d7bbd355436d3fd37cb0acd4"},
+    {file = "urllib3-2.6.3.tar.gz", hash = "sha256:1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"},
+]
+
+[package.extras]
+brotli = ["brotli (>=1.2.0) ; platform_python_implementation == \"CPython\"", "brotlicffi (>=1.2.0.0) ; platform_python_implementation != \"CPython\""]
+h2 = ["h2 (>=4,<5)"]
+socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
+zstd = ["backports-zstd (>=1.0.0) ; python_version < \"3.14\""]
+
+[[package]]
 name = "wcwidth"
 version = "0.2.14"
 description = "Measures the displayed width of unicode strings in a terminal"
@@ -911,4 +978,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "7936fcebcef80bcf7d4cea490008993338440d5fde8457f0e9c33eeb7e580197"
+content-hash = "cb263e9d5dc1263a0e4ecc3f35c0a293b33c16eb65c0fff107ab4a5408370ce7"

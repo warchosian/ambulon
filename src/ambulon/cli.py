@@ -12,6 +12,9 @@ from .mcp import main as mcp_main
 from .img2pdf import main as img2pdf_main
 from .compress_pdf import main as compress_pdf_main
 from .config import export_mcp_config, get_claude_config_path
+from .rag import create_rag_collection # NEW
+import requests # NEW
+import json # NEW
 
 
 def setup_logging(verbose: bool = False):
@@ -55,13 +58,29 @@ def show_help():
     print("Usage: ambulon [MODULE] [OPTIONS]")
     print()
     print("Modules disponibles:")
-    print("  scan         Module de scan TWAIN avec profils DPI")
-    print("  ocr          Module OCR - Reconnaissance optique de caractères")
-    print("  img2pdf      Convertir images en PDF")
-    print("  compress-pdf Compresser un fichier PDF")
-    print("  mcp          Serveur MCP pour assistants IA")
-    print("  config       Gestion de la configuration MCP")
-    print("  test         Tests des modules Ambulon")
+    print("  scan                  Module de scan TWAIN avec profils DPI")
+    print("  ocr                   Module OCR - Reconnaissance optique de caractères")
+    print("  img2pdf               Convertir images en PDF")
+    print("  compress-pdf          Compresser un fichier PDF")
+    print("  mcp                   Serveur MCP pour assistants IA")
+    print("  config                Gestion de la configuration MCP")
+    print("  test                  Tests des modules Ambulon")
+    print()
+    print("Modules RAG PIAG (Retrieval Augmented Generation):")
+    print("  Collections:")
+    print("    piag-collection-add     Créer une collection RAG")
+    print("    piag-collection-list    Lister les collections")
+    print("    piag-collection-get     Obtenir les détails d'une collection")
+    print("    piag-collection-update  Mettre à jour une collection")
+    print("    piag-collection-rm      Supprimer une collection")
+    print("  Documents:")
+    print("    piag-doc-upload         Upload un document")
+    print("    piag-doc-list           Lister les documents")
+    print("    piag-doc-get            Obtenir les détails d'un document")
+    print("    piag-doc-rm             Supprimer un document")
+    print("    piag-doc-chunks         Obtenir les chunks d'un document")
+    print("  Recherche:")
+    print("    piag-search             Recherche sémantique RAG")
     print()
     print("Options générales:")
     print("  -h, --help    Afficher cette aide")
@@ -423,6 +442,54 @@ def handle_test_command():
         return 1
 
 
+def handle_rag_module(module_name: str):
+    """
+    Exécute un module RAG en lançant son __main__ block.
+
+    Args:
+        module_name: Le nom du module Python (ex: 'piag_collection_add')
+
+    Returns:
+        Le code de retour du module.
+    """
+    # Mapper les noms de commandes aux noms de modules Python
+    command_to_module = {
+        'piag-collection-add': 'piag_collection_add',
+        'piag-collection-list': 'piag_collection_list',
+        'piag-collection-get': 'piag_collection_get',
+        'piag-collection-update': 'piag_collection_update',
+        'piag-collection-rm': 'piag_collection_rm',
+        'piag-doc-upload': 'piag_doc_upload',
+        'piag-doc-list': 'piag_doc_list',
+        'piag-doc-get': 'piag_doc_get',
+        'piag-doc-rm': 'piag_doc_rm',
+        'piag-doc-chunks': 'piag_doc_chunks',
+        'piag-search': 'piag_search',
+    }
+
+    python_module = command_to_module.get(module_name)
+    if not python_module:
+        print(f"Module RAG inconnu: {module_name}", file=sys.stderr)
+        return 1
+
+    # Manipuler sys.argv pour enlever le nom de la commande
+    original_argv = sys.argv
+    sys.argv = [sys.argv[0]] + sys.argv[2:]
+
+    try:
+        # Importer et exécuter le module comme __main__
+        import runpy
+        runpy.run_module(f'ambulon.rag.{python_module}', run_name='__main__')
+        return 0
+    except SystemExit as e:
+        return e.code if e.code else 0
+    except Exception as e:
+        print(f"Erreur lors de l'exécution du module {module_name}: {e}", file=sys.stderr)
+        return 1
+    finally:
+        sys.argv = original_argv
+
+
 def main():
     """Fonction principale appelée par la commande `ambulon`."""
     if len(sys.argv) > 1:
@@ -480,6 +547,12 @@ def main():
             return handle_config_command()
         elif command == 'test':
             return handle_test_command()
+        # Commandes RAG PIAG
+        elif command in ['piag-collection-add', 'piag-collection-list', 'piag-collection-get',
+                        'piag-collection-update', 'piag-collection-rm',
+                        'piag-doc-upload', 'piag-doc-list', 'piag-doc-get',
+                        'piag-doc-rm', 'piag-doc-chunks', 'piag-search']:
+            return handle_rag_module(command)
         else:
             print(f"Module inconnu: {command}")
             print("Utilisez 'ambulon --help' pour voir les modules disponibles.")

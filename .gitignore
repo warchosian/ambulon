@@ -39,3 +39,8 @@ build/
 .aider*
 
 response_to_user.txt
+
+# Configuration files with sensitive data
+config/piag_rag.yaml
+specs/parameters.md
+scripts/

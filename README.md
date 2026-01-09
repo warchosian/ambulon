@@ -58,6 +58,10 @@ ambulon compress-pdf gros_fichier.pdf -q 60
 
 # Scanner + OCR en une fois
 ambulon scan -r 300 -o documents/contrat.jpg --ocr --lang fra
+
+# Gérer les collections RAG
+ambulon rag --help
+ambulon rag create-collection --project-id <ID> --name "Mon Corpus" --description "Ma description" --token <TOKEN>
 ```
 
 ### Configuration MCP pour assistants IA
