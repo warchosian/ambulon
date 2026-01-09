@@ -41,9 +41,14 @@ build/
 response_to_user.txt
 
 # Configuration files with sensitive data
-config/piag.yml
-config/gitlab.yaml
+config/*
+!config/*.example
+!config/README.md
+
+# Specs
 specs/parameters.md
+
+# Scripts directory
 scripts/
 
 # Logs
