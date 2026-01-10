@@ -28,7 +28,7 @@ from app.conversion import (
 from app.encoding import check_md_cli, fix_md_cli
 
 # Module WikiSI
-from app.wikisi import process_parkjson2json, process_parkjson2md, flatten_wikisi_directory
+from app.wikisi import process_parkjson2json, process_parkjson2md, flatten_wikisi_directory, scrape_wikisi
 
 # Module Processing
 from app.processing import (
@@ -112,6 +112,7 @@ def show_help():
     print("Modules WikiSI (Parc applicatif):")
     print("  wikisi-extract        Extraire et filtrer des applications depuis JSON")
     print("  wikisi-md             Convertir parc applicatif JSON en Markdown (RAG)")
+    print("  wikisi-scrape         Aspirer récursivement un site web WikiSI")
     print()
     print("Modules Processing (Traitement de documents):")
     print("  add-toc-html          Ajouter une table des matières à HTML")
@@ -811,6 +812,71 @@ def main():
                 else:
                     i += 1
             return process_parkjson2md(input_file, output_file, verbose, range_spec, name_filter, id_filter, split_dir)
+        elif command == 'wikisi-scrape':
+            # Aspirer récursivement un site web WikiSI
+            url = None
+            output_dir = None
+            config_path = None
+            max_depth = None
+            delay = None
+            verbose = False
+            i = 2
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-u', '--url'] and i + 1 < len(sys.argv):
+                    url = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output_dir = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-c', '--config'] and i + 1 < len(sys.argv):
+                    config_path = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-d', '--depth'] and i + 1 < len(sys.argv):
+                    max_depth = int(sys.argv[i + 1])
+                    i += 2
+                elif sys.argv[i] == '--delay' and i + 1 < len(sys.argv):
+                    delay = float(sys.argv[i + 1])
+                    i += 2
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                elif sys.argv[i] in ['-h', '--help']:
+                    print("Usage: ambulon wikisi-scrape [OPTIONS]")
+                    print()
+                    print("Options:")
+                    print("  -u, --url URL         URL du site WikiSI à aspirer (ou WIKISI_BASE_URL)")
+                    print("  -o, --output DIR      Répertoire de sortie (ou WIKISI_OUTPUT_DIR)")
+                    print("  -c, --config FILE     Fichier de configuration YAML")
+                    print("  -d, --depth N         Profondeur maximale de récursion (-1 = illimité)")
+                    print("  --delay SECONDS       Délai entre requêtes (en secondes)")
+                    print("  -v, --verbose         Mode verbeux (logs détaillés)")
+                    print("  -h, --help            Afficher cette aide")
+                    print()
+                    print("Hiérarchie de configuration (priorité décroissante):")
+                    print("  1. Arguments CLI")
+                    print("  2. Fichier YAML (--config)")
+                    print("  3. Variables d'environnement (WIKISI_*)")
+                    print("  4. Valeurs par défaut")
+                    print()
+                    print("Variables d'environnement supportées:")
+                    print("  WIKISI_BASE_URL       URL du site à aspirer")
+                    print("  WIKISI_OUTPUT_DIR     Répertoire de sortie")
+                    print("  WIKISI_MAX_DEPTH      Profondeur maximale")
+                    print("  WIKISI_DELAY          Délai entre requêtes")
+                    print("  WIKISI_AUTH_TYPE      Type d'authentification (none/basic/bearer)")
+                    print("  WIKISI_USERNAME       Nom d'utilisateur (basic auth)")
+                    print("  WIKISI_PASSWORD       Mot de passe (basic auth)")
+                    print("  WIKISI_TOKEN          Token d'authentification (bearer)")
+                    print("  WIKISI_LOG_LEVEL      Niveau de log (debug/info/warning/error)")
+                    print()
+                    print("Exemples:")
+                    print("  ambulon wikisi-scrape --url https://wikisi.example.fr --output ./data")
+                    print("  ambulon wikisi-scrape --config config/wikisi.yaml --verbose")
+                    print("  WIKISI_BASE_URL=https://wikisi.fr ambulon wikisi-scrape -o ./wikisi-data")
+                    return 0
+                else:
+                    i += 1
+            return scrape_wikisi(url, output_dir, config_path, max_depth, delay, verbose)
         elif command == 'add-toc-html':
             # Ajouter TOC à HTML
             if len(sys.argv) < 3:

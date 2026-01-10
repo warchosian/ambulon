@@ -564,3 +564,618 @@ Cela ouvre un menu interactif pour configurer les hooks.
 **Voir la documentation complète :**
 - Guide des hooks : https://code.claude.com/docs/en/hooks-guide.md
 - Référence complète : https://code.claude.com/docs/en/hooks.md
+
+## Hiérarchie de Configuration
+
+Ce projet adopte une **hiérarchie de configuration standardisée** pour tous ses modules et commandes CLI. Cette approche permet une flexibilité maximale tout en garantissant une expérience utilisateur cohérente.
+
+### Principe de la Hiérarchie
+
+La configuration suit un ordre de priorité décroissant, du plus spécifique au plus général :
+
+1. **Arguments CLI** - Priorité la plus haute
+2. **Fichier YAML** - Configuration structurée
+3. **Variables d'environnement** - Configuration système
+4. **Valeurs par défaut** - Priorité la plus basse
+
+Chaque niveau **écrase** les niveaux inférieurs. Par exemple, un argument CLI écrasera la valeur correspondante dans le fichier YAML, les variables d'environnement et les valeurs par défaut.
+
+### Exemple d'Implémentation
+
+#### 1. Fichier de Configuration YAML
+
+Les fichiers YAML supportent la substitution de variables d'environnement avec la syntaxe `${VAR_NAME:-default_value}`.
+
+**Exemple : `config/wikisi.yaml`**
+```yaml
+site:
+  # URL de base - peut être définie par variable d'environnement
+  base_url: "${WIKISI_BASE_URL:-https://wikisi.example.gouv.fr}"
+  max_depth: -1
+  timeout: 30
+
+authentication:
+  type: "${WIKISI_AUTH_TYPE:-none}"
+  username: "${WIKISI_USERNAME:-}"
+  token: "${WIKISI_TOKEN:-}"
+
+output:
+  directory: "./wikisi-downloaded"
+```
+
+#### 2. Variables d'Environnement
+
+Les variables d'environnement permettent de configurer l'application sans modifier les fichiers :
+
+```bash
+# Définir les variables pour une session
+export WIKISI_BASE_URL="https://wikisi.production.fr"
+export WIKISI_AUTH_TYPE="bearer"
+export WIKISI_TOKEN="eyJhbGc..."
+
+# Lancer la commande (utilise les variables d'environnement)
+ambulon wikisi-scrape
+```
+
+#### 3. Arguments CLI
+
+Les arguments CLI ont toujours la priorité la plus haute :
+
+```bash
+# Les arguments écrasent YAML et variables d'environnement
+ambulon wikisi-scrape \
+    --url https://wikisi.dev.fr \
+    --output ./data \
+    --depth 5 \
+    --verbose
+```
+
+### Ordre de Résolution - Exemple Complet
+
+Pour un paramètre `base_url`, le système recherche dans cet ordre :
+
+```python
+def get_base_url(cli_arg, config_dict, env_vars, defaults):
+    # 1. Argument CLI (priorité maximale)
+    if cli_arg is not None:
+        return cli_arg
+
+    # 2. Fichier YAML (avec substitution de variables d'env)
+    if 'base_url' in config_dict:
+        yaml_value = config_dict['base_url']
+        # Substitution ${VAR:-default}
+        return substitute_env_vars(yaml_value)
+
+    # 3. Variable d'environnement directe
+    if 'WIKISI_BASE_URL' in env_vars:
+        return env_vars['WIKISI_BASE_URL']
+
+    # 4. Valeur par défaut (priorité minimale)
+    return defaults.get('base_url', 'https://default.example.fr')
+```
+
+### Modules Utilisant Cette Hiérarchie
+
+Cette hiérarchie est implémentée dans :
+
+- **Module WikiSI** (`app/wikisi/`)
+  - `wikisi-scrape` : Aspiration de site web
+  - Configuration : `config/wikisi.yaml`
+  - Variables : `WIKISI_*`
+
+- **Module PIAG** (`app/piag/`)
+  - Toutes les commandes RAG
+  - Configuration : `config/piag.yaml`
+  - Variables : `PIAG_RAG_*`
+
+- **Module GitLab** (`app/gitlab/`)
+  - `gitlab-clone` : Clonage de projets
+  - Configuration : `config/gitlab.yaml`
+  - Variables : `GITLAB_*`
+
+### Bonnes Pratiques
+
+#### 1. Documentation des Options
+
+Chaque commande doit documenter sa hiérarchie de configuration dans son aide :
+
+```bash
+ambulon wikisi-scrape --help
+
+Hiérarchie de configuration (priorité décroissante):
+  1. Arguments CLI
+  2. Fichier YAML (--config)
+  3. Variables d'environnement (WIKISI_*)
+  4. Valeurs par défaut
+
+Variables d'environnement supportées:
+  WIKISI_BASE_URL       URL du site à aspirer
+  WIKISI_OUTPUT_DIR     Répertoire de sortie
+  WIKISI_AUTH_TYPE      Type d'authentification (none/basic/bearer)
+  ...
+```
+
+#### 2. Sécurité des Tokens
+
+⚠️ **Ne jamais stocker de tokens ou secrets dans les fichiers YAML versionnés** :
+
+- ✅ Utiliser des variables d'environnement : `WIKISI_TOKEN=xxx ambulon ...`
+- ✅ Créer un fichier local non versionné : `config/wikisi.yaml` (dans `.gitignore`)
+- ❌ Éviter de commit ter des tokens dans `config/wikisi.yaml.example`
+
+#### 3. Substitution de Variables dans YAML
+
+Syntaxe supportée :
+
+```yaml
+# Variable avec valeur par défaut
+url: "${API_URL:-https://default.example.fr}"
+
+# Variable sans défaut (chaîne vide si non définie)
+token: "${API_TOKEN:-}"
+
+# Variable obligatoire (génère une erreur si non définie)
+project_id: "${PROJECT_ID}"  # Pas de ":-"
+```
+
+#### 4. Nommage des Variables d'Environnement
+
+Convention de nommage :
+
+```
+{MODULE}_{SECTION}_{PARAMETRE}
+
+Exemples:
+- WIKISI_BASE_URL
+- WIKISI_AUTH_TYPE
+- WIKISI_OUTPUT_DIR
+- PIAG_RAG_API_TOKEN
+- PIAG_RAG_PROJECT_ID
+- GITLAB_PRIVATE_TOKEN
+```
+
+### Exemple de Code - Fonction de Chargement de Config
+
+```python
+import os
+import re
+import yaml
+from pathlib import Path
+from typing import Dict, Any, Optional
+
+def load_config(
+    config_path: Optional[str] = None,
+    default_config: Dict[str, Any] = None
+) -> Dict[str, Any]:
+    """
+    Charge la configuration avec hiérarchie : CLI > YAML > ENV > Défaut.
+
+    Args:
+        config_path: Chemin vers fichier YAML (optionnel)
+        default_config: Configuration par défaut
+
+    Returns:
+        Configuration fusionnée
+    """
+    # Valeurs par défaut
+    config = default_config or {}
+
+    # Charger YAML si spécifié
+    if config_path and Path(config_path).exists():
+        with open(config_path, 'r', encoding='utf-8') as f:
+            yaml_content = f.read()
+
+        # Substitution des variables d'environnement
+        def replace_env_var(match):
+            var_expr = match.group(1)
+            if ':-' in var_expr:
+                var_name, default = var_expr.split(':-', 1)
+                return os.getenv(var_name, default)
+            return os.getenv(var_expr, '')
+
+        yaml_content = re.sub(r'\$\{([^}]+)\}', replace_env_var, yaml_content)
+        yaml_config = yaml.safe_load(yaml_content)
+
+        # Fusionner avec défauts
+        config = deep_merge(config, yaml_config)
+
+    # Les arguments CLI sont appliqués par le code appelant
+    return config
+
+def deep_merge(base: Dict, override: Dict) -> Dict:
+    """Fusionne récursivement deux dictionnaires."""
+    result = base.copy()
+    for key, value in override.items():
+        if key in result and isinstance(result[key], dict) and isinstance(value, dict):
+            result[key] = deep_merge(result[key], value)
+        else:
+            result[key] = value
+    return result
+```
+
+### Résumé des Avantages
+
+- **Flexibilité** : Adapter la configuration selon le contexte (dev/prod/CI)
+- **Sécurité** : Secrets dans variables d'env, jamais dans le code
+- **Cohérence** : Même hiérarchie pour tous les modules
+- **Transparence** : Comportement prévisible et documenté
+- **Testabilité** : Facile à configurer pour les tests automatisés
+
+## Tests et Couverture de Code
+
+Le projet **Ambulon** doit maintenir une couverture de tests élevée pour garantir la qualité, la fiabilité et la maintenabilité du code.
+
+### Objectifs de Couverture
+
+- **Couverture minimale** : 80% du code doit être couvert par des tests
+- **Couverture cible** : 90% ou plus pour le code critique (core/, client.py, config.py)
+- **Code critique** : 100% pour les fonctions de sécurité, authentification et gestion des erreurs
+
+### Structure des Tests
+
+Le projet utilise `pytest` comme framework de tests principal :
+
+```
+tests/
+├── unit/                    # Tests unitaires (logique métier isolée)
+│   ├── test_piag/
+│   │   ├── test_config.py
+│   │   ├── test_client.py
+│   │   └── test_collections.py
+│   ├── test_wikisi/
+│   │   ├── test_scraper.py
+│   │   ├── test_extract.py
+│   │   └── test_flatten.py
+│   └── test_conversion/
+│       ├── test_html2md.py
+│       └── test_pdf.py
+├── integration/             # Tests d'intégration (modules combinés)
+│   ├── test_piag_workflow.py
+│   ├── test_wikisi_pipeline.py
+│   └── test_cli_integration.py
+├── e2e/                     # Tests end-to-end (scénarios complets)
+│   ├── test_piag_e2e.py
+│   └── test_wikisi_e2e.py
+├── fixtures/                # Données de test réutilisables
+│   ├── sample_data.json
+│   ├── mock_responses.py
+│   └── test_config.yaml
+└── conftest.py             # Configuration pytest globale
+```
+
+### Types de Tests
+
+#### 1. Tests Unitaires (`tests/unit/`)
+
+Testent des fonctions et classes isolées, sans dépendances externes :
+
+```python
+# tests/unit/test_wikisi/test_extract.py
+import pytest
+from app.wikisi.commands.wikisi_extract_json import parse_range_spec
+
+def test_parse_range_spec_simple():
+    """Test simple range parsing."""
+    result = parse_range_spec("1-3", 10)
+    assert result == [0, 1, 2]
+
+def test_parse_range_spec_last_n():
+    """Test last N elements range."""
+    result = parse_range_spec("-5", 10)
+    assert result == [5, 6, 7, 8, 9]
+
+def test_parse_range_spec_from_n():
+    """Test from N to end range."""
+    result = parse_range_spec("7-", 10)
+    assert result == [6, 7, 8, 9]
+
+def test_parse_range_spec_invalid():
+    """Test invalid range handling."""
+    with pytest.raises(ValueError):
+        parse_range_spec("invalid", 10)
+```
+
+**Caractéristiques** :
+- Tests rapides (< 1ms par test)
+- Pas de réseau, fichiers, ou base de données
+- Utilisent des mocks pour les dépendances
+- Testent les cas nominaux ET les cas d'erreur
+
+#### 2. Tests d'Intégration (`tests/integration/`)
+
+Testent l'interaction entre plusieurs modules :
+
+```python
+# tests/integration/test_wikisi_pipeline.py
+import pytest
+from pathlib import Path
+from app.wikisi import process_parkjson2json, process_parkjson2md
+
+def test_json_to_markdown_pipeline(tmp_path):
+    """Test complete JSON extraction -> Markdown conversion pipeline."""
+    # Setup
+    input_json = tmp_path / "input.json"
+    filtered_json = tmp_path / "filtered.json"
+    output_md = tmp_path / "output.md"
+
+    # Create test data
+    test_data = {
+        "applications": [
+            {"nom": "App1", "description": "Test app 1"},
+            {"nom": "App2", "description": "Test app 2"}
+        ]
+    }
+    input_json.write_text(json.dumps(test_data))
+
+    # Step 1: Extract/filter JSON
+    result = process_parkjson2json(
+        str(input_json),
+        str(filtered_json),
+        verbose=False,
+        range_spec="1-1"
+    )
+    assert result == 0
+    assert filtered_json.exists()
+
+    # Step 2: Convert to Markdown
+    result = process_parkjson2md(
+        str(filtered_json),
+        str(output_md),
+        verbose=False
+    )
+    assert result == 0
+    assert output_md.exists()
+
+    # Verify output
+    md_content = output_md.read_text()
+    assert "# App1" in md_content
+    assert "App2" not in md_content  # Filtered out
+```
+
+**Caractéristiques** :
+- Tests moyennement rapides (< 100ms par test)
+- Utilisent des fichiers temporaires (`tmp_path`)
+- Mockent les API externes
+- Testent les flux de données entre modules
+
+#### 3. Tests End-to-End (`tests/e2e/`)
+
+Testent des scénarios utilisateur complets, incluant CLI :
+
+```python
+# tests/e2e/test_wikisi_e2e.py
+import pytest
+import subprocess
+from pathlib import Path
+
+def test_wikisi_scrape_full_workflow(tmp_path):
+    """Test complete WikiSI scraping workflow via CLI."""
+    output_dir = tmp_path / "scraped"
+
+    # Run CLI command
+    result = subprocess.run(
+        [
+            "ambulon", "wikisi-scrape",
+            "--url", "https://example.com",
+            "--output", str(output_dir),
+            "--depth", "1"
+        ],
+        capture_output=True,
+        text=True
+    )
+
+    # Verify success
+    assert result.returncode == 0
+    assert output_dir.exists()
+    assert (output_dir / "index.html").exists()
+    assert (output_dir / "scrape_metadata.json").exists()
+```
+
+**Caractéristiques** :
+- Tests lents (> 100ms, parfois plusieurs secondes)
+- Testent l'application comme un utilisateur réel
+- Peuvent utiliser des services externes (avec mocks optionnels)
+- Validés en environnement de pré-production
+
+### Bonnes Pratiques de Tests
+
+#### 1. Utiliser des Fixtures
+
+```python
+# tests/conftest.py
+import pytest
+from pathlib import Path
+
+@pytest.fixture
+def sample_wikisi_json():
+    """Fixture providing sample WikiSI JSON data."""
+    return {
+        "applications": [
+            {
+                "nom": "Application Test",
+                "id": "APP001",
+                "description": "Application de test"
+            }
+        ]
+    }
+
+@pytest.fixture
+def temp_config(tmp_path):
+    """Fixture providing temporary config file."""
+    config = tmp_path / "config.yaml"
+    config.write_text("""
+    site:
+      base_url: "https://test.example.com"
+      max_depth: 2
+    """)
+    return config
+```
+
+#### 2. Mocker les Dépendances Externes
+
+```python
+# tests/unit/test_wikisi/test_scraper.py
+import pytest
+from unittest.mock import Mock, patch
+from app.wikisi.commands.wikisi_scraper import WikiSIScraper
+
+@patch('app.wikisi.commands.wikisi_scraper.requests.Session')
+def test_scraper_fetch_page(mock_session, sample_config):
+    """Test page fetching with mocked HTTP."""
+    # Setup mock
+    mock_response = Mock()
+    mock_response.text = "<html><body>Test</body></html>"
+    mock_response.status_code = 200
+    mock_session.return_value.get.return_value = mock_response
+
+    # Test
+    scraper = WikiSIScraper(sample_config)
+    content = scraper._fetch_page("https://test.example.com")
+
+    # Verify
+    assert "Test" in content
+    mock_session.return_value.get.assert_called_once()
+```
+
+#### 3. Tester les Cas d'Erreur
+
+```python
+def test_scraper_handles_network_error():
+    """Test scraper gracefully handles network errors."""
+    with patch('requests.Session.get', side_effect=requests.ConnectionError):
+        scraper = WikiSIScraper(config)
+        result = scraper.scrape()
+
+        assert result['pages_failed'] > 0
+        assert result['pages_downloaded'] == 0
+```
+
+#### 4. Tests Paramétrés
+
+```python
+@pytest.mark.parametrize("range_spec,total,expected", [
+    ("1-3", 10, [0, 1, 2]),
+    ("-5", 10, [5, 6, 7, 8, 9]),
+    ("7-", 10, [6, 7, 8, 9]),
+    ("1,3,5", 10, [0, 2, 4]),
+])
+def test_parse_range_variants(range_spec, total, expected):
+    """Test multiple range specification variants."""
+    result = parse_range_spec(range_spec, total)
+    assert result == expected
+```
+
+### Exécution des Tests
+
+```bash
+# Tous les tests
+pytest
+
+# Tests unitaires uniquement
+pytest tests/unit/
+
+# Tests avec couverture
+pytest --cov=app --cov-report=html
+
+# Tests avec détails
+pytest -v
+
+# Tests d'un module spécifique
+pytest tests/unit/test_wikisi/
+
+# Tests avec rapport de couverture
+pytest --cov=app --cov-report=term-missing
+
+# Tests en parallèle (plus rapide)
+pytest -n auto
+```
+
+### Intégration Continue (CI)
+
+Les tests doivent s'exécuter automatiquement dans la CI :
+
+```yaml
+# .github/workflows/tests.yml
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run tests with coverage
+        run: |
+          poetry run pytest --cov=app --cov-report=xml --cov-report=term
+
+      - name: Check coverage threshold
+        run: |
+          poetry run coverage report --fail-under=80
+```
+
+### Couverture par Module - Objectifs
+
+| Module | Couverture Minimale | Couverture Cible | Notes |
+|--------|---------------------|------------------|-------|
+| `app/piag/` | 85% | 95% | Module critique (API externe) |
+| `app/wikisi/` | 80% | 90% | Web scraping complexe |
+| `app/conversion/` | 80% | 90% | Transformations de données |
+| `app/cli/` | 70% | 85% | CLI (testable via E2E) |
+| `app/encoding/` | 90% | 95% | Manipulation encodage (critique) |
+
+### Exclusions de Couverture
+
+Certaines parties peuvent être exclues de la couverture :
+
+```python
+# .coveragerc
+[run]
+omit =
+    tests/*
+    */migrations/*
+    */settings.py
+    */__pycache__/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+    @abstractmethod
+```
+
+### Obligations Avant Commit
+
+Avant chaque commit majeur :
+
+1. ✅ Tous les tests passent : `pytest`
+2. ✅ Couverture ≥ 80% : `pytest --cov=app --cov-report=term`
+3. ✅ Pas de régression : comparer avec couverture précédente
+4. ✅ Tests ajoutés pour nouvelles fonctionnalités
+
+### Résumé
+
+- **Écrire des tests** pour chaque nouvelle fonctionnalité
+- **Viser 80%+ de couverture** pour tout le code
+- **Utiliser des fixtures** pour éviter la duplication
+- **Mocker les dépendances** externes (API, fichiers, réseau)
+- **Tester les erreurs** autant que les cas nominaux
+- **Exécuter les tests** avant chaque commit
+- **Intégrer dans la CI** pour validation automatique
