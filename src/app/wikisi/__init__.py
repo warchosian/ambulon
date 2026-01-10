@@ -1,8 +1,15 @@
 """
-Module Park - DYAG
+Module WikiSI - Ambulon
 
-Transformation et manipulation de données structurées du référentiel Park.
+Transformation et manipulation de données du parc applicatif WikiSI.
+Extraction, filtrage et conversion des données d'applications en différents formats.
 """
 
-# Les commandes sont dans le sous-module commands
-# Usage: from dyag.park.commands.json2md_park import convert_park_to_markdown
+# Export des commandes principales
+from .commands.wikisi_extract_json import process_parkjson2json
+from .commands.wikisi_json_to_md import process_parkjson2md
+
+__all__ = [
+    'process_parkjson2json',  # Extraction et filtrage JSON
+    'process_parkjson2md',    # Conversion JSON vers Markdown
+]

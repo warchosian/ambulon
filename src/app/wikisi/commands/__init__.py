@@ -1,14 +1,13 @@
 """
-Park Commands - DYAG
+WikiSI Commands - Ambulon
 
-Commandes CLI pour la manipulation de données Park.
+Commandes CLI pour la manipulation de données du parc applicatif WikiSI.
 """
 
-# Temporarily commented out - main functions not implemented yet
-# from .json2json_park import main as json2json_park
-# from .json2md_park import main as json2md_park
+from .wikisi_extract_json import process_parkjson2json
+from .wikisi_json_to_md import process_parkjson2md
 
 __all__ = [
-    # "json2json_park",
-    # "json2md_park",
+    'process_parkjson2json',
+    'process_parkjson2md',
 ]

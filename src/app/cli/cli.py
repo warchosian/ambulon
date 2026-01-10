@@ -27,6 +27,24 @@ from app.conversion import (
 # Modules d'encoding
 from app.encoding import check_md_cli, fix_md_cli
 
+# Module WikiSI
+from app.wikisi import process_parkjson2json, process_parkjson2md
+
+# Module Processing
+from app.processing import (
+    add_toc_to_html,
+    add_toc_to_markdown,
+    concatenate_html_files,
+    flatten_html_directory,
+    flatten_markdown_directory,
+    flatten_wikisi_directory,
+    make_html_interactive,
+    fusion_html_files,
+    fusion_markdown_files,
+    md2project,
+    project_to_markdown,
+)
+
 import requests # NEW
 import json # NEW
 
@@ -92,6 +110,23 @@ def show_help():
     print("  chk-utf8              Vérifier l'encodage des fichiers Markdown")
     print("  fix-utf8              Corriger l'encodage des fichiers Markdown")
     print()
+    print("Modules WikiSI (Parc applicatif):")
+    print("  wikisi-extract        Extraire et filtrer des applications depuis JSON")
+    print("  wikisi-md             Convertir parc applicatif JSON en Markdown (RAG)")
+    print()
+    print("Modules Processing (Traitement de documents):")
+    print("  add-toc-html          Ajouter une table des matières à HTML")
+    print("  add-toc-md            Ajouter une table des matières à Markdown")
+    print("  concat-html           Concaténer plusieurs fichiers HTML")
+    print("  flatten-html          Aplatir une arborescence HTML")
+    print("  flatten-md            Aplatir une arborescence Markdown")
+    print("  flatten-wikisi        Aplatir une arborescence WikiSI")
+    print("  make-interactive      Rendre HTML interactif (anchors, navigation)")
+    print("  merge-html            Fusionner plusieurs fichiers HTML")
+    print("  merge-md              Fusionner plusieurs fichiers Markdown")
+    print("  md2project            Convertir Markdown en structure de projet")
+    print("  project2md            Convertir structure de projet en Markdown")
+    print()
     print("Modules RAG PIAG (Retrieval Augmented Generation):")
     print("  Collections:")
     print("    piag-collection-add     Créer une collection RAG")
@@ -113,16 +148,16 @@ def show_help():
     print("  --version     Afficher la version")
     print()
     print("Exemples:")
-    print("  ambulon scan --help            Aide du module scan")
-    print("  ambulon ocr -i image.jpg -l fra")
-    print("  ambulon img2pdf scans/         Convertir images en PDF")
-    print("  ambulon html2md doc.html       Convertir HTML en Markdown")
-    print("  ambulon md2html doc.md         Convertir Markdown en HTML")
-    print("  ambulon chk-utf8 -P '*.md'     Vérifier l'encodage des MD")
-    print("  ambulon fix-utf8 -P 'docs/**/*.md'  Corriger l'encodage")
-    print("  ambulon mcp                    Démarrer le serveur MCP")
-    print("  ambulon config export          Exporter la config MCP")
-    print("  ambulon gitlab-clone           Cloner les projets configurés")
+    print("  ambulon scan --help                 Aide du module scan")
+    print("  ambulon img2pdf scans/              Convertir images en PDF")
+    print("  ambulon html2md doc.html            Convertir HTML en Markdown")
+    print("  ambulon add-toc-md doc.md           Ajouter une TOC à Markdown")
+    print("  ambulon flatten-md docs/            Aplatir arborescence Markdown")
+    print("  ambulon merge-html dir/ -o out.html Fusionner HTML")
+    print("  ambulon wikisi-extract apps.json -o subset.json -r 1-10")
+    print("  ambulon wikisi-md apps.json -o apps.md --verbose")
+    print("  ambulon mcp                         Démarrer le serveur MCP")
+    print("  ambulon gitlab-clone                Cloner les projets configurés")
     print()
     print("Pour plus d'informations sur un module spécifique:")
     print("  ambulon [MODULE] --help")
@@ -696,6 +731,337 @@ def main():
                 return fix_md_cli()
             finally:
                 sys.argv = original_argv
+        elif command == 'wikisi-extract':
+            # Extraire et filtrer des applications depuis JSON
+            if len(sys.argv) < 3:
+                print("Usage: ambulon wikisi-extract <input.json> -o <output.json> [-r RANGE] [-n NAME] [-i ID] [--verbose] [--split-dir DIR]")
+                return 1
+            input_file = sys.argv[2]
+            output_file = None
+            range_spec = None
+            name_filter = None
+            id_filter = None
+            verbose = False
+            preserve_structure = True
+            include_metadata = True
+            split_dir = None
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output_file = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-r', '--range'] and i + 1 < len(sys.argv):
+                    range_spec = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-n', '--name'] and i + 1 < len(sys.argv):
+                    name_filter = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-i', '--id'] and i + 1 < len(sys.argv):
+                    id_filter = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--split-dir' and i + 1 < len(sys.argv):
+                    split_dir = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--no-preserve-structure':
+                    preserve_structure = False
+                    i += 1
+                elif sys.argv[i] == '--no-metadata':
+                    include_metadata = False
+                    i += 1
+                elif sys.argv[i] == '--verbose':
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            if not output_file and not split_dir:
+                print("Error: Either -o/--output or --split-dir is required")
+                return 1
+            return process_parkjson2json(input_file, output_file, verbose, range_spec, name_filter, id_filter, preserve_structure, include_metadata, split_dir)
+        elif command == 'wikisi-md':
+            # Convertir parc applicatif JSON en Markdown
+            if len(sys.argv) < 3:
+                print("Usage: ambulon wikisi-md <input.json> [-o <output.md>] [-r RANGE] [-n NAME] [-i ID] [--verbose] [--split-dir DIR]")
+                return 1
+            input_file = sys.argv[2]
+            output_file = None
+            range_spec = None
+            name_filter = None
+            id_filter = None
+            verbose = False
+            split_dir = None
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output_file = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-r', '--range'] and i + 1 < len(sys.argv):
+                    range_spec = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-n', '--name'] and i + 1 < len(sys.argv):
+                    name_filter = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-i', '--id'] and i + 1 < len(sys.argv):
+                    id_filter = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--split-dir' and i + 1 < len(sys.argv):
+                    split_dir = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--verbose':
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            return process_parkjson2md(input_file, output_file, verbose, range_spec, name_filter, id_filter, split_dir)
+        elif command == 'add-toc-html':
+            # Ajouter TOC à HTML
+            if len(sys.argv) < 3:
+                print("Usage: ambulon add-toc-html <input.html> [-o <output.html>] [--min-level N] [--max-level N] [--verbose]")
+                return 1
+            input_file = sys.argv[2]
+            output = None
+            min_level = 1
+            max_level = 6
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--min-level' and i + 1 < len(sys.argv):
+                    min_level = int(sys.argv[i + 1])
+                    i += 2
+                elif sys.argv[i] == '--max-level' and i + 1 < len(sys.argv):
+                    max_level = int(sys.argv[i + 1])
+                    i += 2
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            return add_toc_to_html(input_file, output, min_level, max_level, verbose)
+        elif command == 'add-toc-md':
+            # Ajouter TOC à Markdown
+            if len(sys.argv) < 3:
+                print("Usage: ambulon add-toc-md <input.md> [-o <output.md>] [--min-level N] [--max-level N] [--verbose]")
+                return 1
+            input_file = sys.argv[2]
+            output = None
+            min_level = 1
+            max_level = 6
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--min-level' and i + 1 < len(sys.argv):
+                    min_level = int(sys.argv[i + 1])
+                    i += 2
+                elif sys.argv[i] == '--max-level' and i + 1 < len(sys.argv):
+                    max_level = int(sys.argv[i + 1])
+                    i += 2
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            return add_toc_to_markdown(input_file, output, min_level, max_level, verbose)
+        elif command == 'concat-html':
+            # Concaténer HTML
+            if len(sys.argv) < 3:
+                print("Usage: ambulon concat-html <directory> -o <output.html> [--verbose]")
+                return 1
+            directory = sys.argv[2]
+            output = None
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            if not output:
+                print("Error: -o/--output is required")
+                return 1
+            return concatenate_html_files(directory, output, verbose)
+        elif command == 'flatten-html':
+            # Aplatir HTML
+            if len(sys.argv) < 3:
+                print("Usage: ambulon flatten-html <source_dir> [-o <output_dir>] [--verbose]")
+                return 1
+            source = sys.argv[2]
+            output = None
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            return flatten_html_directory(source, output, verbose)
+        elif command == 'flatten-md':
+            # Aplatir Markdown
+            if len(sys.argv) < 3:
+                print("Usage: ambulon flatten-md <source_dir> [-o <output_dir>] [--verbose]")
+                return 1
+            source = sys.argv[2]
+            output = None
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            return flatten_markdown_directory(source, output, verbose)
+        elif command == 'flatten-wikisi':
+            # Aplatir WikiSI
+            if len(sys.argv) < 3:
+                print("Usage: ambulon flatten-wikisi <source_dir> [-o <output_dir>] [--verbose]")
+                return 1
+            source = sys.argv[2]
+            output = None
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            return flatten_wikisi_directory(source, output, verbose)
+        elif command == 'make-interactive':
+            # Rendre HTML interactif
+            if len(sys.argv) < 3:
+                print("Usage: ambulon make-interactive <input.html> [-o <output.html>] [--verbose]")
+                return 1
+            input_file = sys.argv[2]
+            output = None
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            return make_html_interactive(input_file, output, verbose)
+        elif command == 'merge-html':
+            # Fusionner HTML
+            if len(sys.argv) < 3:
+                print("Usage: ambulon merge-html <directory> -o <output.html> [--verbose]")
+                return 1
+            directory = sys.argv[2]
+            output = None
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            if not output:
+                print("Error: -o/--output is required")
+                return 1
+            return fusion_html_files(directory, output, verbose)
+        elif command == 'merge-md':
+            # Fusionner Markdown
+            if len(sys.argv) < 3:
+                print("Usage: ambulon merge-md <directory> -o <output.md> [--verbose]")
+                return 1
+            directory = sys.argv[2]
+            output = None
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            if not output:
+                print("Error: -o/--output is required")
+                return 1
+            return fusion_markdown_files(directory, output, verbose)
+        elif command == 'md2project':
+            # Convertir Markdown en projet
+            if len(sys.argv) < 3:
+                print("Usage: ambulon md2project <input.md> [-o <output_dir>] [--dry-run] [--overwrite] [--merge] [--verbose]")
+                return 1
+            input_file = sys.argv[2]
+            output = None
+            dry_run = False
+            overwrite = False
+            merge = False
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--dry-run':
+                    dry_run = True
+                    i += 1
+                elif sys.argv[i] == '--overwrite':
+                    overwrite = True
+                    i += 1
+                elif sys.argv[i] == '--merge':
+                    merge = True
+                    i += 1
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            return md2project(input_file, output, dry_run, overwrite, merge, verbose)
+        elif command == 'project2md':
+            # Convertir projet en Markdown
+            if len(sys.argv) < 3:
+                print("Usage: ambulon project2md <project_dir> [-o <output.md>] [--exclude DIR] [--verbose]")
+                return 1
+            project_dir = sys.argv[2]
+            output = None
+            exclude_dirs = set()
+            verbose = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--exclude' and i + 1 < len(sys.argv):
+                    exclude_dirs.add(sys.argv[i + 1])
+                    i += 2
+                elif sys.argv[i] in ['-v', '--verbose']:
+                    verbose = True
+                    i += 1
+                else:
+                    i += 1
+            return project_to_markdown(project_dir, output, exclude_dirs, verbose)
         elif command == 'config':
             return handle_config_command()
         elif command == 'gitlab-clone':
