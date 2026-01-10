@@ -9,8 +9,12 @@ Ambulon offre des fonctionnalités de scan, OCR, et traitement PDF, le tout acce
 ### Modules principaux
 - **📄 Scan** : Scanner des documents avec NAPS2 et profils DPI configurables
 - **🔍 OCR** : Reconnaissance optique de caractères avec Tesseract
-- **📑 IMG2PDF** : Conversion d'images en PDF avec compression
-- **🗜️ Compress-PDF** : Compression de fichiers PDF existants
+- **📑 Conversion** : Conversions multiformats (HTML↔MD, JSON→MD, HTML→PDF, JSON→JSONL)
+- **🗜️ Compression PDF** : Compression et manipulation de fichiers PDF
+- **🌐 WikiSI** : Extraction, transformation et aspiration de données du parc applicatif
+- **📝 Processing** : Traitement de documents (TOC, fusion, aplatissement, interactivité)
+- **🔤 Encoding** : Vérification et correction d'encodage UTF-8
+- **🦊 GitLab** : Clonage de projets GitLab par groupes
 - **🤖 Serveur MCP** : Intégration avec assistants IA (Claude, OpenRouter, Aider, Continue)
 
 ### 7 outils MCP disponibles
@@ -44,11 +48,31 @@ pip install ambulon
 # Afficher l'aide
 ambulon --help
 
+# ========== Scan & OCR ==========
 # Scanner un document
 ambulon scan -r 300 -o documents/facture.jpg
 
 # OCR d'une image
 ambulon ocr -i documents/facture.jpg -l fra -o documents/facture.txt
+
+# Scanner + OCR en une fois
+ambulon scan -r 300 -o documents/contrat.jpg --ocr --lang fra
+
+# ========== Conversion ==========
+# HTML vers Markdown
+ambulon html2md document.html -o document.md
+
+# Markdown vers HTML
+ambulon md2html document.md -o document.html
+
+# HTML vers PDF
+ambulon html2pdf document.html -o document.pdf
+
+# JSON vers JSONL
+ambulon json2jsonl data.json -o data.jsonl
+
+# JSON vers Markdown
+ambulon json2md data.json -o data.md
 
 # Convertir images en PDF
 ambulon img2pdf documents/ -o documents/rapport.pdf
@@ -56,12 +80,70 @@ ambulon img2pdf documents/ -o documents/rapport.pdf
 # Compresser un PDF
 ambulon compress-pdf gros_fichier.pdf -q 60
 
-# Scanner + OCR en une fois
-ambulon scan -r 300 -o documents/contrat.jpg --ocr --lang fra
+# ========== WikiSI (Parc applicatif) ==========
+# Extraire et filtrer des applications
+ambulon wikisi-extract apps.json -o subset.json -r 1-10
 
-# Gérer les collections RAG
-ambulon rag --help
-ambulon rag create-collection --project-id <ID> --name "Mon Corpus" --description "Ma description" --token <TOKEN>
+# Convertir en Markdown pour RAG
+ambulon wikisi-md apps.json -o apps.md --verbose
+
+# Aspirer un site WikiSI
+ambulon wikisi-scrape --url https://wikisi.example.fr --output ./data
+
+# Aplatir une arborescence WikiSI
+ambulon flatten-wikisi ./wikisi-source -o ./wikisi-flat
+
+# ========== Processing (Traitement documents) ==========
+# Ajouter une table des matières
+ambulon add-toc-html document.html -o document-toc.html
+ambulon add-toc-md document.md -o document-toc.md
+
+# Fusionner plusieurs fichiers
+ambulon merge-html dir/ -o merged.html
+ambulon merge-md dir/ -o merged.md
+
+# Aplatir une arborescence
+ambulon flatten-html ./html-nested -o ./html-flat
+ambulon flatten-md ./md-nested -o ./md-flat
+
+# Concaténer des fichiers
+ambulon concat-html dir/ -o concatenated.html
+
+# Rendre HTML interactif (navigation)
+ambulon make-interactive document.html -o interactive.html
+
+# Convertir projet en Markdown / Markdown en projet
+ambulon project2md ./project -o project.md
+ambulon md2project project.md -o ./new-project
+
+# ========== Encoding ==========
+# Vérifier l'encodage UTF-8
+ambulon chk-utf8 documents/
+
+# Corriger l'encodage UTF-8
+ambulon fix-utf8 documents/
+
+# ========== GitLab ==========
+# Cloner des projets GitLab
+ambulon gitlab-clone
+
+# ========== RAG PIAG ==========
+# Collections RAG
+ambulon piag-collection-list --token <TOKEN>
+ambulon piag-collection-add --name "Mon Corpus" --description "Description" --token <TOKEN>
+ambulon piag-collection-get --collection-id <ID> --token <TOKEN>
+ambulon piag-collection-update --collection-id <ID> --name "Nouveau nom" --token <TOKEN>
+ambulon piag-collection-rm --collection-id <ID> --token <TOKEN>
+
+# Documents RAG
+ambulon piag-doc-upload --collection-id <ID> --file document.pdf --token <TOKEN>
+ambulon piag-doc-list --collection-id <ID> --token <TOKEN>
+ambulon piag-doc-get --document-id <ID> --token <TOKEN>
+ambulon piag-doc-rm --document-id <ID> --token <TOKEN>
+ambulon piag-doc-chunks --document-id <ID> --token <TOKEN>
+
+# Recherche sémantique
+ambulon piag-search --collection-id <ID> --query "Quelle est la procédure ?" --token <TOKEN>
 ```
 
 ### Configuration MCP pour assistants IA
@@ -91,6 +173,42 @@ ambulon test mcp-live
 ```
 
 ## 🔧 Configuration
+
+### Hiérarchie de Configuration
+
+Ambulon utilise une **hiérarchie de configuration standardisée** pour tous ses modules :
+
+1. **Arguments CLI** (priorité maximale) - Passés directement en ligne de commande
+2. **Fichier YAML** - Configuration structurée dans `config/*.yaml`
+3. **Variables d'environnement** - Variables système (ex: `WIKISI_BASE_URL`)
+4. **Valeurs par défaut** (priorité minimale)
+
+**Exemple avec wikisi-scrape :**
+```bash
+# 1. Via arguments CLI (priorité maximale)
+ambulon wikisi-scrape --url https://wikisi.fr --output ./data
+
+# 2. Via variables d'environnement
+export WIKISI_BASE_URL="https://wikisi.fr"
+export WIKISI_OUTPUT_DIR="./data"
+ambulon wikisi-scrape
+
+# 3. Via fichier YAML
+# Créez config/wikisi.yaml puis :
+ambulon wikisi-scrape --config config/wikisi.yaml
+```
+
+**Fichiers de configuration disponibles :**
+- `config/wikisi.yaml` - Configuration aspirateur WikiSI
+- `config/gitlab.yaml` - Configuration clonage GitLab
+- `config/piag.yaml` - Configuration RAG PIAG
+
+**Substitution de variables d'environnement dans YAML :**
+```yaml
+site:
+  base_url: "${WIKISI_BASE_URL:-https://default.example.fr}"
+  token: "${WIKISI_TOKEN:-}"
+```
 
 ### Assistants IA supportés
 
@@ -190,11 +308,19 @@ cz bump
 
 ### Dépendances
 
+#### Dépendances principales
 - **Pillow** : Traitement d'images
 - **PyMuPDF** : Manipulation PDF
 - **pytesseract** : Interface Python pour Tesseract
 - **importlib-resources** : Accès aux ressources du package
 - **pytest** : Framework de tests
+
+#### Dépendances optionnelles
+- **requests** : Client HTTP (pour wikisi-scrape, piag)
+- **beautifulsoup4** : Parsing HTML (pour wikisi-scrape, html2md, conversion)
+- **pyyaml** : Configuration YAML (pour wikisi-scrape, piag, gitlab)
+- **markdown** : Conversion Markdown (pour md2html)
+- **weasyprint** : Génération PDF (pour html2pdf)
 
 ## 📄 Licence
 
