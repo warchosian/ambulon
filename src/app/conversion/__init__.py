@@ -3,6 +3,7 @@
 # PDF et images
 from .commands.compress_pdf import main as compress_pdf_main
 from .commands.img2pdf import main as img2pdf_main
+from .commands.pdf2html import convert_pdf_to_html
 
 # HTML <-> Markdown
 from .commands.html2md import process_html_to_markdown
@@ -19,6 +20,7 @@ __all__ = [
     # PDF et images
     'compress_pdf_main',
     'img2pdf_main',
+    'convert_pdf_to_html',
     # HTML <-> Markdown
     'process_html_to_markdown',
     'process_markdown_to_html',
