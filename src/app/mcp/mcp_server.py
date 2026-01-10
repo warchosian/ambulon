@@ -57,6 +57,18 @@ from app.ocr.commands.ocr_main import perform_ocr, process_multiple_files as ocr
 from app.conversion.commands.img2pdf import images_to_pdf
 from app.conversion.commands.compress_pdf import compress_pdf
 
+# Imports WikiSI
+from app.wikisi import scrape_wikisi, process_parkjson2json, process_parkjson2md
+
+# Imports Conversion
+from app.conversion import process_html_to_markdown, process_markdown_to_html, process_json_to_markdown
+
+# Imports Processing
+from app.processing import add_toc_to_markdown, fusion_markdown_files, flatten_markdown_directory
+
+# Imports Encoding
+from app.encoding import check_md_cli, fix_md_cli
+
 # Configuration du logging
 def setup_logging():
     """Configure le logging pour le serveur MCP"""
@@ -306,6 +318,237 @@ async def handle_list_tools() -> List[Tool]:
                 },
                 "required": ["input_path"]
             }
+        ),
+        # WikiSI Tools
+        Tool(
+            name="wikisi_scrape",
+            description="Aspirer récursivement un site web WikiSI et télécharger toutes les pages HTML",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "description": "URL du site WikiSI à aspirer"
+                    },
+                    "output_dir": {
+                        "type": "string",
+                        "description": "Répertoire de sortie pour les fichiers téléchargés",
+                        "default": "./wikisi-downloaded"
+                    },
+                    "max_depth": {
+                        "type": "integer",
+                        "description": "Profondeur maximale de récursion (-1 = illimité)",
+                        "default": -1
+                    },
+                    "delay": {
+                        "type": "number",
+                        "description": "Délai entre requêtes en secondes",
+                        "default": 1.0
+                    }
+                },
+                "required": ["url"]
+            }
+        ),
+        Tool(
+            name="wikisi_extract",
+            description="Extraire et filtrer des applications depuis un fichier JSON du parc applicatif WikiSI",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "input_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier JSON d'entrée"
+                    },
+                    "output_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier JSON de sortie"
+                    },
+                    "range_spec": {
+                        "type": "string",
+                        "description": "Plage d'applications à extraire (ex: '1-10', '-5', '10-')"
+                    },
+                    "name_filter": {
+                        "type": "string",
+                        "description": "Filtrer par nom d'application (recherche insensible à la casse)"
+                    }
+                },
+                "required": ["input_file", "output_file"]
+            }
+        ),
+        Tool(
+            name="wikisi_to_markdown",
+            description="Convertir un fichier JSON WikiSI en Markdown structuré pour RAG",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "input_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier JSON d'entrée"
+                    },
+                    "output_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier Markdown de sortie"
+                    },
+                    "range_spec": {
+                        "type": "string",
+                        "description": "Plage d'applications à convertir"
+                    }
+                },
+                "required": ["input_file", "output_file"]
+            }
+        ),
+        # Conversion Tools
+        Tool(
+            name="html_to_markdown",
+            description="Convertir un fichier HTML en Markdown lisible",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "input_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier HTML d'entrée"
+                    },
+                    "output_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier Markdown de sortie"
+                    }
+                },
+                "required": ["input_file", "output_file"]
+            }
+        ),
+        Tool(
+            name="markdown_to_html",
+            description="Convertir un fichier Markdown en HTML",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "input_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier Markdown d'entrée"
+                    },
+                    "output_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier HTML de sortie"
+                    }
+                },
+                "required": ["input_file", "output_file"]
+            }
+        ),
+        Tool(
+            name="json_to_markdown",
+            description="Convertir un fichier JSON en Markdown structuré",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "input_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier JSON d'entrée"
+                    },
+                    "output_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier Markdown de sortie"
+                    }
+                },
+                "required": ["input_file", "output_file"]
+            }
+        ),
+        # Processing Tools
+        Tool(
+            name="add_toc_to_markdown",
+            description="Ajouter une table des matières à un fichier Markdown",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "input_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier Markdown d'entrée"
+                    },
+                    "output_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier Markdown de sortie (optionnel, modifie l'original si non spécifié)"
+                    },
+                    "min_level": {
+                        "type": "integer",
+                        "description": "Niveau minimum de titre à inclure dans la TOC",
+                        "default": 1,
+                        "minimum": 1,
+                        "maximum": 6
+                    },
+                    "max_level": {
+                        "type": "integer",
+                        "description": "Niveau maximum de titre à inclure dans la TOC",
+                        "default": 6,
+                        "minimum": 1,
+                        "maximum": 6
+                    }
+                },
+                "required": ["input_file"]
+            }
+        ),
+        Tool(
+            name="merge_markdown_files",
+            description="Fusionner plusieurs fichiers Markdown en un seul",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "source_dir": {
+                        "type": "string",
+                        "description": "Répertoire contenant les fichiers Markdown à fusionner"
+                    },
+                    "output_file": {
+                        "type": "string",
+                        "description": "Chemin vers le fichier Markdown fusionné"
+                    }
+                },
+                "required": ["source_dir", "output_file"]
+            }
+        ),
+        Tool(
+            name="flatten_markdown_directory",
+            description="Aplatir une arborescence de fichiers Markdown en structure plate",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "source_dir": {
+                        "type": "string",
+                        "description": "Répertoire source avec arborescence Markdown"
+                    },
+                    "output_dir": {
+                        "type": "string",
+                        "description": "Répertoire de sortie pour la structure plate"
+                    }
+                },
+                "required": ["source_dir", "output_dir"]
+            }
+        ),
+        # Encoding Tools
+        Tool(
+            name="check_utf8_encoding",
+            description="Vérifier l'encodage UTF-8 des fichiers Markdown dans un répertoire",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "directory": {
+                        "type": "string",
+                        "description": "Répertoire contenant les fichiers Markdown à vérifier"
+                    }
+                },
+                "required": ["directory"]
+            }
+        ),
+        Tool(
+            name="fix_utf8_encoding",
+            description="Corriger l'encodage UTF-8 des fichiers Markdown dans un répertoire",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "directory": {
+                        "type": "string",
+                        "description": "Répertoire contenant les fichiers Markdown à corriger"
+                    }
+                },
+                "required": ["directory"]
+            }
         )
     ]
 
@@ -329,6 +572,32 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> CallToolResu
             return await _handle_images_to_pdf(arguments)
         elif name == "compress_pdf":
             return await _handle_compress_pdf(arguments)
+        # WikiSI Tools
+        elif name == "wikisi_scrape":
+            return await _handle_wikisi_scrape(arguments)
+        elif name == "wikisi_extract":
+            return await _handle_wikisi_extract(arguments)
+        elif name == "wikisi_to_markdown":
+            return await _handle_wikisi_to_markdown(arguments)
+        # Conversion Tools
+        elif name == "html_to_markdown":
+            return await _handle_html_to_markdown(arguments)
+        elif name == "markdown_to_html":
+            return await _handle_markdown_to_html(arguments)
+        elif name == "json_to_markdown":
+            return await _handle_json_to_markdown(arguments)
+        # Processing Tools
+        elif name == "add_toc_to_markdown":
+            return await _handle_add_toc_to_markdown(arguments)
+        elif name == "merge_markdown_files":
+            return await _handle_merge_markdown_files(arguments)
+        elif name == "flatten_markdown_directory":
+            return await _handle_flatten_markdown_directory(arguments)
+        # Encoding Tools
+        elif name == "check_utf8_encoding":
+            return await _handle_check_utf8_encoding(arguments)
+        elif name == "fix_utf8_encoding":
+            return await _handle_fix_utf8_encoding(arguments)
         else:
             return CallToolResult(
                 content=[TextContent(type="text", text=f"Outil inconnu: {name}")],
@@ -597,6 +866,454 @@ async def _handle_compress_pdf(arguments: Dict[str, Any]) -> CallToolResult:
             content=[TextContent(type="text", text=f"Erreur de compression: {result.get('error', 'Erreur inconnue')}")],
             isError=True
         )
+
+# ============================================================================
+# WikiSI Tools Handlers
+# ============================================================================
+
+async def _handle_wikisi_scrape(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère l'aspiration de site WikiSI."""
+    url = arguments["url"]
+    output_dir = arguments.get("output_dir", "./wikisi-downloaded")
+    max_depth = arguments.get("max_depth", -1)
+    delay = arguments.get("delay", 1.0)
+
+    try:
+        exit_code = scrape_wikisi(
+            url=url,
+            output_dir=output_dir,
+            max_depth=max_depth,
+            delay=delay,
+            verbose=True
+        )
+
+        if exit_code == 0:
+            return CallToolResult(
+                content=[TextContent(
+                    type="text",
+                    text=f"Site WikiSI aspiré avec succès !\n"
+                         f"URL: {url}\n"
+                         f"Répertoire de sortie: {output_dir}\n"
+                         f"Profondeur maximale: {max_depth}\n"
+                         f"Consultez le répertoire {output_dir} pour les fichiers téléchargés."
+                )]
+            )
+        else:
+            return CallToolResult(
+                content=[TextContent(type="text", text=f"Erreur lors de l'aspiration du site WikiSI (exit code: {exit_code})")],
+                isError=True
+            )
+    except Exception as e:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur lors de l'aspiration: {str(e)}")],
+            isError=True
+        )
+
+
+async def _handle_wikisi_extract(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère l'extraction d'applications WikiSI."""
+    input_file = arguments["input_file"]
+    output_file = arguments["output_file"]
+    range_spec = arguments.get("range_spec")
+    name_filter = arguments.get("name_filter")
+
+    if not Path(input_file).exists():
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Fichier JSON non trouvé: {input_file}")],
+            isError=True
+        )
+
+    try:
+        exit_code = process_parkjson2json(
+            input_file=input_file,
+            output_file=output_file,
+            verbose=True,
+            range_spec=range_spec,
+            name_filter=name_filter
+        )
+
+        if exit_code == 0:
+            return CallToolResult(
+                content=[TextContent(
+                    type="text",
+                    text=f"Extraction WikiSI réussie !\n"
+                         f"Fichier d'entrée: {input_file}\n"
+                         f"Fichier de sortie: {output_file}\n"
+                         f"Filtres appliqués: {range_spec or name_filter or 'Aucun'}"
+                )]
+            )
+        else:
+            return CallToolResult(
+                content=[TextContent(type="text", text=f"Erreur lors de l'extraction (exit code: {exit_code})")],
+                isError=True
+            )
+    except Exception as e:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur lors de l'extraction: {str(e)}")],
+            isError=True
+        )
+
+
+async def _handle_wikisi_to_markdown(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère la conversion WikiSI JSON vers Markdown."""
+    input_file = arguments["input_file"]
+    output_file = arguments["output_file"]
+    range_spec = arguments.get("range_spec")
+
+    if not Path(input_file).exists():
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Fichier JSON non trouvé: {input_file}")],
+            isError=True
+        )
+
+    try:
+        exit_code = process_parkjson2md(
+            input_file=input_file,
+            output_file=output_file,
+            verbose=True,
+            range_spec=range_spec
+        )
+
+        if exit_code == 0:
+            # Lire le contenu généré
+            md_content = ""
+            try:
+                with open(output_file, 'r', encoding='utf-8') as f:
+                    md_content = f.read()
+                    # Limiter à 2000 caractères pour la preview
+                    if len(md_content) > 2000:
+                        md_content = md_content[:2000] + "\n... (contenu tronqué)"
+            except:
+                pass
+
+            response_text = f"Conversion WikiSI → Markdown réussie !\n"
+            response_text += f"Fichier d'entrée: {input_file}\n"
+            response_text += f"Fichier de sortie: {output_file}\n\n"
+            if md_content:
+                response_text += f"Aperçu du contenu :\n{'-' * 40}\n{md_content}\n{'-' * 40}"
+
+            return CallToolResult(
+                content=[TextContent(type="text", text=response_text)]
+            )
+        else:
+            return CallToolResult(
+                content=[TextContent(type="text", text=f"Erreur lors de la conversion (exit code: {exit_code})")],
+                isError=True
+            )
+    except Exception as e:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur lors de la conversion: {str(e)}")],
+            isError=True
+        )
+
+
+# ============================================================================
+# Conversion Tools Handlers
+# ============================================================================
+
+async def _handle_html_to_markdown(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère la conversion HTML vers Markdown."""
+    input_file = arguments["input_file"]
+    output_file = arguments["output_file"]
+
+    if not Path(input_file).exists():
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Fichier HTML non trouvé: {input_file}")],
+            isError=True
+        )
+
+    try:
+        exit_code = process_html_to_markdown(input_file, output_file, verbose=True)
+
+        if exit_code == 0:
+            return CallToolResult(
+                content=[TextContent(
+                    type="text",
+                    text=f"Conversion HTML → Markdown réussie !\n"
+                         f"Fichier d'entrée: {input_file}\n"
+                         f"Fichier de sortie: {output_file}"
+                )]
+            )
+        else:
+            return CallToolResult(
+                content=[TextContent(type="text", text=f"Erreur lors de la conversion (exit code: {exit_code})")],
+                isError=True
+            )
+    except Exception as e:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur lors de la conversion: {str(e)}")],
+            isError=True
+        )
+
+
+async def _handle_markdown_to_html(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère la conversion Markdown vers HTML."""
+    input_file = arguments["input_file"]
+    output_file = arguments["output_file"]
+
+    if not Path(input_file).exists():
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Fichier Markdown non trouvé: {input_file}")],
+            isError=True
+        )
+
+    try:
+        exit_code = process_markdown_to_html(input_file, output_file, verbose=True)
+
+        if exit_code == 0:
+            return CallToolResult(
+                content=[TextContent(
+                    type="text",
+                    text=f"Conversion Markdown → HTML réussie !\n"
+                         f"Fichier d'entrée: {input_file}\n"
+                         f"Fichier de sortie: {output_file}"
+                )]
+            )
+        else:
+            return CallToolResult(
+                content=[TextContent(type="text", text=f"Erreur lors de la conversion (exit code: {exit_code})")],
+                isError=True
+            )
+    except Exception as e:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur lors de la conversion: {str(e)}")],
+            isError=True
+        )
+
+
+async def _handle_json_to_markdown(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère la conversion JSON vers Markdown."""
+    input_file = arguments["input_file"]
+    output_file = arguments["output_file"]
+
+    if not Path(input_file).exists():
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Fichier JSON non trouvé: {input_file}")],
+            isError=True
+        )
+
+    try:
+        exit_code = process_json_to_markdown(input_file, output_file, verbose=True)
+
+        if exit_code == 0:
+            return CallToolResult(
+                content=[TextContent(
+                    type="text",
+                    text=f"Conversion JSON → Markdown réussie !\n"
+                         f"Fichier d'entrée: {input_file}\n"
+                         f"Fichier de sortie: {output_file}"
+                )]
+            )
+        else:
+            return CallToolResult(
+                content=[TextContent(type="text", text=f"Erreur lors de la conversion (exit code: {exit_code})")],
+                isError=True
+            )
+    except Exception as e:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur lors de la conversion: {str(e)}")],
+            isError=True
+        )
+
+
+# ============================================================================
+# Processing Tools Handlers
+# ============================================================================
+
+async def _handle_add_toc_to_markdown(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère l'ajout de TOC à un fichier Markdown."""
+    input_file = arguments["input_file"]
+    output_file = arguments.get("output_file")
+    min_level = arguments.get("min_level", 1)
+    max_level = arguments.get("max_level", 6)
+
+    if not Path(input_file).exists():
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Fichier Markdown non trouvé: {input_file}")],
+            isError=True
+        )
+
+    try:
+        exit_code = add_toc_to_markdown(input_file, output_file, min_level, max_level, verbose=True)
+
+        if exit_code == 0:
+            target = output_file or input_file
+            return CallToolResult(
+                content=[TextContent(
+                    type="text",
+                    text=f"Table des matières ajoutée avec succès !\n"
+                         f"Fichier d'entrée: {input_file}\n"
+                         f"Fichier de sortie: {target}\n"
+                         f"Niveaux inclus: {min_level} à {max_level}"
+                )]
+            )
+        else:
+            return CallToolResult(
+                content=[TextContent(type="text", text=f"Erreur lors de l'ajout de la TOC (exit code: {exit_code})")],
+                isError=True
+            )
+    except Exception as e:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur lors de l'ajout de la TOC: {str(e)}")],
+            isError=True
+        )
+
+
+async def _handle_merge_markdown_files(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère la fusion de fichiers Markdown."""
+    source_dir = arguments["source_dir"]
+    output_file = arguments["output_file"]
+
+    if not Path(source_dir).exists():
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Répertoire source non trouvé: {source_dir}")],
+            isError=True
+        )
+
+    try:
+        exit_code = fusion_markdown_files(source_dir, output_file, verbose=True)
+
+        if exit_code == 0:
+            return CallToolResult(
+                content=[TextContent(
+                    type="text",
+                    text=f"Fusion des fichiers Markdown réussie !\n"
+                         f"Répertoire source: {source_dir}\n"
+                         f"Fichier de sortie: {output_file}"
+                )]
+            )
+        else:
+            return CallToolResult(
+                content=[TextContent(type="text", text=f"Erreur lors de la fusion (exit code: {exit_code})")],
+                isError=True
+            )
+    except Exception as e:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur lors de la fusion: {str(e)}")],
+            isError=True
+        )
+
+
+async def _handle_flatten_markdown_directory(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère l'aplatissement d'arborescence Markdown."""
+    source_dir = arguments["source_dir"]
+    output_dir = arguments["output_dir"]
+
+    if not Path(source_dir).exists():
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Répertoire source non trouvé: {source_dir}")],
+            isError=True
+        )
+
+    try:
+        exit_code = flatten_markdown_directory(source_dir, output_dir, verbose=True)
+
+        if exit_code == 0:
+            return CallToolResult(
+                content=[TextContent(
+                    type="text",
+                    text=f"Aplatissement réussi !\n"
+                         f"Répertoire source: {source_dir}\n"
+                         f"Répertoire de sortie: {output_dir}"
+                )]
+            )
+        else:
+            return CallToolResult(
+                content=[TextContent(type="text", text=f"Erreur lors de l'aplatissement (exit code: {exit_code})")],
+                isError=True
+            )
+    except Exception as e:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur lors de l'aplatissement: {str(e)}")],
+            isError=True
+        )
+
+
+# ============================================================================
+# Encoding Tools Handlers
+# ============================================================================
+
+async def _handle_check_utf8_encoding(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère la vérification de l'encodage UTF-8."""
+    directory = arguments["directory"]
+
+    if not Path(directory).exists():
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Répertoire non trouvé: {directory}")],
+            isError=True
+        )
+
+    try:
+        # Sauvegarder argv et le modifier pour check_md_cli
+        original_argv = sys.argv.copy()
+        sys.argv = ['check_md_cli', directory]
+
+        try:
+            exit_code = check_md_cli()
+        finally:
+            sys.argv = original_argv
+
+        if exit_code == 0:
+            return CallToolResult(
+                content=[TextContent(
+                    type="text",
+                    text=f"Vérification d'encodage terminée !\n"
+                         f"Répertoire vérifié: {directory}\n"
+                         f"Consultez les logs pour les détails."
+                )]
+            )
+        else:
+            return CallToolResult(
+                content=[TextContent(type="text", text=f"Des problèmes d'encodage ont été détectés dans {directory}")],
+                isError=False  # Pas une erreur, juste des problèmes trouvés
+            )
+    except Exception as e:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur lors de la vérification: {str(e)}")],
+            isError=True
+        )
+
+
+async def _handle_fix_utf8_encoding(arguments: Dict[str, Any]) -> CallToolResult:
+    """Gère la correction de l'encodage UTF-8."""
+    directory = arguments["directory"]
+
+    if not Path(directory).exists():
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Répertoire non trouvé: {directory}")],
+            isError=True
+        )
+
+    try:
+        # Sauvegarder argv et le modifier pour fix_md_cli
+        original_argv = sys.argv.copy()
+        sys.argv = ['fix_md_cli', directory]
+
+        try:
+            exit_code = fix_md_cli()
+        finally:
+            sys.argv = original_argv
+
+        if exit_code == 0:
+            return CallToolResult(
+                content=[TextContent(
+                    type="text",
+                    text=f"Correction d'encodage terminée !\n"
+                         f"Répertoire traité: {directory}\n"
+                         f"Les fichiers ont été corrigés en UTF-8."
+                )]
+            )
+        else:
+            return CallToolResult(
+                content=[TextContent(type="text", text=f"Erreur lors de la correction d'encodage (exit code: {exit_code})")],
+                isError=True
+            )
+    except Exception as e:
+        return CallToolResult(
+            content=[TextContent(type="text", text=f"Erreur lors de la correction: {str(e)}")],
+            isError=True
+        )
+
 
 async def run_server():
     """Lance le serveur MCP."""
