@@ -28,7 +28,7 @@ from app.conversion import (
 from app.encoding import check_md_cli, fix_md_cli
 
 # Module WikiSI
-from app.wikisi import process_parkjson2json, process_parkjson2md
+from app.wikisi import process_parkjson2json, process_parkjson2md, flatten_wikisi_directory
 
 # Module Processing
 from app.processing import (
@@ -37,7 +37,6 @@ from app.processing import (
     concatenate_html_files,
     flatten_html_directory,
     flatten_markdown_directory,
-    flatten_wikisi_directory,
     make_html_interactive,
     fusion_html_files,
     fusion_markdown_files,
