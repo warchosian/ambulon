@@ -567,18 +567,93 @@ Cela ouvre un menu interactif pour configurer les hooks.
 
 ## Hiérarchie de Configuration
 
-Ce projet adopte une **hiérarchie de configuration standardisée** pour tous ses modules et commandes CLI. Cette approche permet une flexibilité maximale tout en garantissant une expérience utilisateur cohérente.
+### 🚨 RÈGLE OBLIGATOIRE DU PROJET
 
-### Principe de la Hiérarchie
+**TOUS les modules, commandes et fonctionnalités du projet Ambulon DOIVENT impérativement respecter la hiérarchie de configuration standardisée définie ci-dessous.**
 
-La configuration suit un ordre de priorité décroissant, du plus spécifique au plus général :
+Cette règle s'applique à :
+- ✅ Toutes les nouvelles commandes CLI
+- ✅ Tous les nouveaux modules (app/*)
+- ✅ Toutes les modifications de commandes existantes
+- ✅ Toutes les intégrations d'API externes
+- ✅ Toute fonctionnalité nécessitant une configuration
 
-1. **Arguments CLI** - Priorité la plus haute
-2. **Fichier YAML** - Configuration structurée
-3. **Variables d'environnement** - Configuration système
-4. **Valeurs par défaut** - Priorité la plus basse
+**Aucune exception n'est autorisée sans validation explicite dans les issues du projet.**
 
-Chaque niveau **écrase** les niveaux inférieurs. Par exemple, un argument CLI écrasera la valeur correspondante dans le fichier YAML, les variables d'environnement et les valeurs par défaut.
+### Principe de la Hiérarchie (LOI DU PROJET)
+
+La configuration **DOIT** suivre cet ordre de priorité décroissant, du plus spécifique au plus général :
+
+1. **Arguments CLI** - Priorité la plus haute (OBLIGATOIRE)
+2. **Fichier YAML** - Configuration structurée (OBLIGATOIRE)
+3. **Variables d'environnement** - Configuration système (OBLIGATOIRE)
+4. **Valeurs par défaut** - Priorité la plus basse (OBLIGATOIRE)
+
+**Règle d'écrasement :** Chaque niveau **DOIT** écraser les niveaux inférieurs. Par exemple, un argument CLI écrasera la valeur correspondante dans le fichier YAML, les variables d'environnement et les valeurs par défaut.
+
+### ❌ Anti-Patterns Interdits
+
+Les pratiques suivantes sont **STRICTEMENT INTERDITES** :
+
+```python
+# ❌ INTERDIT : Configuration uniquement par arguments CLI
+def my_command(url: str, output: str):
+    # Pas de support YAML ni variables d'env
+    pass
+
+# ❌ INTERDIT : Priorité inversée (YAML écrase CLI)
+config = load_yaml()
+if cli_arg:
+    config['url'] = cli_arg  # FAUX : CLI devrait avoir priorité absolue
+
+# ❌ INTERDIT : Variables d'env non supportées
+def my_command(url: str):
+    # Impossible de configurer via WIKISI_URL
+    pass
+
+# ❌ INTERDIT : Pas de valeurs par défaut
+def my_command(url: str = None):
+    if url is None:
+        raise ValueError("URL required")  # FAUX : doit avoir un défaut
+```
+
+### ✅ Pattern Obligatoire
+
+**TOUS les nouveaux modules DOIVENT utiliser ce pattern :**
+
+```python
+def my_command(
+    url: Optional[str] = None,
+    output_dir: Optional[str] = None,
+    config_path: Optional[str] = None,
+    verbose: bool = False
+) -> int:
+    """
+    Ma commande avec hiérarchie de configuration complète.
+
+    Hiérarchie (du plus au moins prioritaire) :
+    1. Arguments CLI (url, output_dir, etc.)
+    2. Fichier YAML (config_path)
+    3. Variables d'environnement (MY_MODULE_URL, MY_MODULE_OUTPUT_DIR)
+    4. Valeurs par défaut
+    """
+    # 1. Charger configuration (YAML + ENV + Defaults)
+    config = load_config(config_path)
+
+    # 2. Appliquer arguments CLI (priorité maximale)
+    if url is not None:
+        config['url'] = url
+    if output_dir is not None:
+        config['output_dir'] = output_dir
+
+    # 3. Valider que toutes les valeurs requises sont présentes
+    if not config.get('url'):
+        print("Error: URL required (via --url, config file, or MY_MODULE_URL)", file=sys.stderr)
+        return 1
+
+    # 4. Exécuter la logique métier
+    return execute_business_logic(config)
+```
 
 ### Exemple d'Implémentation
 
@@ -673,65 +748,200 @@ Cette hiérarchie est implémentée dans :
   - Configuration : `config/gitlab.yaml`
   - Variables : `GITLAB_*`
 
-### Bonnes Pratiques
+### Obligations de Documentation
 
-#### 1. Documentation des Options
+#### 1. Documentation dans --help (OBLIGATOIRE)
 
-Chaque commande doit documenter sa hiérarchie de configuration dans son aide :
+**Chaque commande DOIT impérativement documenter sa hiérarchie de configuration dans son aide (`--help`).**
+
+**Format obligatoire :**
 
 ```bash
-ambulon wikisi-scrape --help
+ambulon my-command --help
+
+Usage: ambulon my-command [OPTIONS]
+
+Description de la commande...
+
+Options:
+  -u, --url URL         URL à traiter
+  -o, --output DIR      Répertoire de sortie
+  -c, --config FILE     Fichier de configuration YAML
+  -v, --verbose         Mode verbeux
+  -h, --help            Afficher cette aide
 
 Hiérarchie de configuration (priorité décroissante):
-  1. Arguments CLI
+  1. Arguments CLI (--url, --output, etc.)
   2. Fichier YAML (--config)
-  3. Variables d'environnement (WIKISI_*)
+  3. Variables d'environnement (MY_MODULE_*)
   4. Valeurs par défaut
 
 Variables d'environnement supportées:
-  WIKISI_BASE_URL       URL du site à aspirer
-  WIKISI_OUTPUT_DIR     Répertoire de sortie
-  WIKISI_AUTH_TYPE      Type d'authentification (none/basic/bearer)
-  ...
+  MY_MODULE_URL         URL à traiter
+  MY_MODULE_OUTPUT_DIR  Répertoire de sortie
+  MY_MODULE_TIMEOUT     Timeout en secondes
+  MY_MODULE_TOKEN       Token d'authentification
+
+Exemples:
+  # Via arguments CLI
+  ambulon my-command --url https://example.com --output ./data
+
+  # Via variables d'environnement
+  MY_MODULE_URL=https://example.com ambulon my-command
+
+  # Via fichier de configuration
+  ambulon my-command --config config/my-module.yaml
 ```
 
-#### 2. Sécurité des Tokens
+**❌ L'absence de cette documentation dans --help est considérée comme une non-conformité bloquante.**
 
-⚠️ **Ne jamais stocker de tokens ou secrets dans les fichiers YAML versionnés** :
+#### 2. Fichiers de Configuration (OBLIGATOIRE)
 
-- ✅ Utiliser des variables d'environnement : `WIKISI_TOKEN=xxx ambulon ...`
-- ✅ Créer un fichier local non versionné : `config/wikisi.yaml` (dans `.gitignore`)
-- ❌ Éviter de commit ter des tokens dans `config/wikisi.yaml.example`
+**Pour chaque nouveau module, vous DEVEZ créer deux fichiers de configuration :**
 
-#### 3. Substitution de Variables dans YAML
+1. **`config/mon-module.yaml.example`** (VERSIONNÉ dans Git)
+   - Template avec toutes les options documentées
+   - Valeurs d'exemple (pas de vrais tokens)
+   - Commentaires explicatifs pour chaque section
+   - Support de substitution ${VAR:-default}
 
-Syntaxe supportée :
+2. **`config/mon-module.yaml`** (NON VERSIONNÉ, dans .gitignore)
+   - Configuration réelle de l'utilisateur
+   - Peut contenir des tokens/secrets
+   - Créé par l'utilisateur en copiant le .example
+
+**Format obligatoire du fichier .example :**
 
 ```yaml
-# Variable avec valeur par défaut
+# Configuration Mon Module - Example Template
+# Copiez ce fichier vers mon-module.yaml et ajustez les valeurs
+
+# Section principale
+main:
+  # URL de base (peut être définie par variable d'environnement)
+  url: "${MY_MODULE_URL:-https://default.example.com}"
+
+  # Timeout en secondes
+  timeout: 30
+
+# Authentification
+authentication:
+  # Type: "none", "basic", "bearer"
+  type: "${MY_MODULE_AUTH_TYPE:-none}"
+
+  # Token (⚠️ NE JAMAIS commiter de vrais tokens)
+  token: "${MY_MODULE_TOKEN:-}"
+
+# Sortie
+output:
+  directory: "./output"
+  format: "json"
+```
+
+**❌ Ne JAMAIS commiter de tokens ou secrets dans les fichiers .example**
+
+#### 3. Sécurité des Tokens (OBLIGATOIRE)
+
+**Règles de sécurité strictes :**
+
+- ✅ **OBLIGATOIRE** : Utiliser des variables d'environnement pour les tokens/secrets
+- ✅ **OBLIGATOIRE** : Tous les `config/*.yaml` (sauf `*.example`) DOIVENT être dans `.gitignore`
+- ✅ **OBLIGATOIRE** : Les fichiers `.example` ne doivent contenir QUE des exemples (jamais de vrais tokens)
+- ❌ **INTERDIT** : Commiter des tokens/secrets dans le dépôt Git
+- ❌ **INTERDIT** : Hardcoder des tokens dans le code Python
+- ❌ **INTERDIT** : Afficher des tokens en clair dans les logs (même en mode verbose)
+
+#### 4. Substitution de Variables dans YAML (OBLIGATOIRE)
+
+**Tous les fichiers YAML DOIVENT supporter la substitution de variables d'environnement.**
+
+**Syntaxe obligatoire :**
+
+```yaml
+# Variable avec valeur par défaut (RECOMMANDÉ)
 url: "${API_URL:-https://default.example.fr}"
 
 # Variable sans défaut (chaîne vide si non définie)
 token: "${API_TOKEN:-}"
 
-# Variable obligatoire (génère une erreur si non définie)
+# Variable obligatoire (génère une erreur si non définie) - À utiliser avec parcimonie
 project_id: "${PROJECT_ID}"  # Pas de ":-"
 ```
 
-#### 4. Nommage des Variables d'Environnement
+**Implémentation obligatoire dans `load_config()` :**
 
-Convention de nommage :
+```python
+import re
+import os
+
+def replace_env_var(match):
+    """Remplace ${VAR:-default} par la valeur de la variable d'environnement."""
+    var_expr = match.group(1)
+    if ':-' in var_expr:
+        var_name, default_value = var_expr.split(':-', 1)
+        return os.getenv(var_name, default_value)
+    else:
+        # Variable sans défaut - DOIT exister
+        var_name = var_expr
+        value = os.getenv(var_name)
+        if value is None:
+            raise ValueError(f"Variable d'environnement requise non définie: {var_name}")
+        return value
+
+# Appliquer la substitution
+yaml_content = re.sub(r'\$\{([^}]+)\}', replace_env_var, yaml_content)
+```
+
+#### 5. Nommage des Variables d'Environnement (OBLIGATOIRE)
+
+**Convention de nommage stricte :**
 
 ```
 {MODULE}_{SECTION}_{PARAMETRE}
+```
 
-Exemples:
-- WIKISI_BASE_URL
-- WIKISI_AUTH_TYPE
-- WIKISI_OUTPUT_DIR
-- PIAG_RAG_API_TOKEN
-- PIAG_RAG_PROJECT_ID
-- GITLAB_PRIVATE_TOKEN
+**Règles obligatoires :**
+- ✅ Tout en MAJUSCULES
+- ✅ Séparation par underscore (_)
+- ✅ Préfixe = nom du module
+- ✅ Noms explicites et descriptifs
+- ❌ Pas d'abréviations obscures
+- ❌ Pas de tirets (-)
+- ❌ Pas de caractères spéciaux
+
+**Exemples conformes :**
+```bash
+# Module WikiSI
+WIKISI_BASE_URL
+WIKISI_AUTH_TYPE
+WIKISI_OUTPUT_DIR
+WIKISI_MAX_DEPTH
+WIKISI_TOKEN
+
+# Module PIAG
+PIAG_RAG_API_TOKEN
+PIAG_RAG_PROJECT_ID
+PIAG_RAG_BASE_URL
+
+# Module GitLab
+GITLAB_PRIVATE_TOKEN
+GITLAB_BASE_URL
+GITLAB_GROUP_ID
+```
+
+**❌ Exemples NON conformes :**
+```bash
+# Mauvais : minuscules
+wikisi_url
+
+# Mauvais : tirets
+WIKISI-BASE-URL
+
+# Mauvais : pas de préfixe module
+BASE_URL
+
+# Mauvais : abréviation obscure
+WIKISI_BU
 ```
 
 ### Exemple de Code - Fonction de Chargement de Config
@@ -793,23 +1003,136 @@ def deep_merge(base: Dict, override: Dict) -> Dict:
     return result
 ```
 
+### ✅ Checklist de Conformité (OBLIGATOIRE avant commit)
+
+**Avant CHAQUE commit ajoutant/modifiant une commande ou un module, vérifier :**
+
+#### Configuration
+- [ ] La commande supporte les 4 niveaux de hiérarchie (CLI > YAML > ENV > Defaults)
+- [ ] Fichier `config/mon-module.yaml.example` créé et versionné
+- [ ] Fichier `config/mon-module.yaml` dans `.gitignore`
+- [ ] Substitution de variables d'env ${VAR:-default} implémentée dans YAML
+- [ ] Fonction `load_config()` implémentée avec fusion des sources
+- [ ] Arguments CLI écrasent bien YAML/ENV (priorité correcte)
+
+#### Documentation
+- [ ] `--help` documente la hiérarchie de configuration
+- [ ] Toutes les variables d'environnement listées dans `--help`
+- [ ] Au moins 3 exemples d'utilisation fournis (CLI, ENV, YAML)
+- [ ] Nommage des variables d'env conforme ({MODULE}_{SECTION}_{PARAM})
+- [ ] README.md mis à jour avec la nouvelle commande
+- [ ] CHANGELOG.md mis à jour
+
+#### Sécurité
+- [ ] Aucun token/secret hardcodé dans le code
+- [ ] Fichiers `.example` ne contiennent que des exemples (pas de vrais tokens)
+- [ ] Tous les `config/*.yaml` (sauf `*.example`) dans `.gitignore`
+- [ ] Tokens jamais affichés en clair dans les logs
+
+#### Tests
+- [ ] Tests unitaires pour `load_config()` avec différentes sources
+- [ ] Tests pour chaque niveau de la hiérarchie
+- [ ] Tests de sécurité (tokens non affichés)
+- [ ] Couverture ≥ 80% pour le nouveau code
+
+#### Code
+- [ ] Pattern obligatoire respecté (voir section "Pattern Obligatoire")
+- [ ] Pas d'anti-patterns présents
+- [ ] Type hints utilisés (`Optional[str]`, etc.)
+- [ ] Docstring avec hiérarchie documentée
+
+**❌ Un commit ne respectant pas cette checklist sera considéré comme non conforme et devra être corrigé.**
+
 ### Résumé des Avantages
 
 - **Flexibilité** : Adapter la configuration selon le contexte (dev/prod/CI)
 - **Sécurité** : Secrets dans variables d'env, jamais dans le code
-- **Cohérence** : Même hiérarchie pour tous les modules
+- **Cohérence** : Même hiérarchie pour tous les modules (LOI DU PROJET)
 - **Transparence** : Comportement prévisible et documenté
 - **Testabilité** : Facile à configurer pour les tests automatisés
+- **Maintenabilité** : Pattern standard reconnaissable immédiatement
 
 ## Tests et Couverture de Code
 
-Le projet **Ambulon** doit maintenir une couverture de tests élevée pour garantir la qualité, la fiabilité et la maintenabilité du code.
+### 🚨 RÈGLE OBLIGATOIRE - TESTS
 
-### Objectifs de Couverture
+**TOUS les nouveaux modules, commandes et fonctionnalités DOIVENT être couverts par des tests.**
 
-- **Couverture minimale** : 80% du code doit être couvert par des tests
+**Cette règle s'applique à :**
+- ✅ Toute nouvelle fonctionnalité (feature)
+- ✅ Toute correction de bug (fix)
+- ✅ Toute modification de code existant (refactor)
+- ✅ Toute nouvelle intégration d'API
+
+**Aucun code ne peut être mergé sans tests appropriés.**
+
+### Objectifs de Couverture (OBLIGATOIRES)
+
+- **Couverture minimale** : 80% du code DOIT être couvert par des tests
 - **Couverture cible** : 90% ou plus pour le code critique (core/, client.py, config.py)
 - **Code critique** : 100% pour les fonctions de sécurité, authentification et gestion des erreurs
+
+**❌ Tout pull request avec une couverture < 80% sera automatiquement rejeté.**
+
+### Obligations Spécifiques
+
+#### Pour la Hiérarchie de Configuration (OBLIGATOIRE)
+
+**Chaque module implémentant la hiérarchie de configuration DOIT avoir des tests pour :**
+
+1. **Arguments CLI prioritaires** :
+   ```python
+   def test_cli_args_override_all():
+       """Test que les arguments CLI écrasent YAML, ENV et defaults."""
+       # Setup
+       os.environ['MY_MODULE_URL'] = 'https://from-env.com'
+       config_file = create_yaml({'url': 'https://from-yaml.com'})
+
+       # Execute
+       result = my_command(
+           url='https://from-cli.com',  # CLI arg
+           config_path=config_file
+       )
+
+       # Assert - CLI doit gagner
+       assert 'https://from-cli.com' in result
+   ```
+
+2. **Fichier YAML écrase ENV** :
+   ```python
+   def test_yaml_overrides_env():
+       """Test que YAML écrase les variables d'environnement."""
+       os.environ['MY_MODULE_URL'] = 'https://from-env.com'
+       config_file = create_yaml({'url': 'https://from-yaml.com'})
+
+       result = my_command(config_path=config_file)
+
+       assert 'https://from-yaml.com' in result
+   ```
+
+3. **Variables d'env écrasent defaults** :
+   ```python
+   def test_env_overrides_defaults():
+       """Test que ENV écrase les valeurs par défaut."""
+       os.environ['MY_MODULE_URL'] = 'https://from-env.com'
+
+       result = my_command()  # Pas de CLI ni YAML
+
+       assert 'https://from-env.com' in result
+   ```
+
+4. **Defaults utilisés si rien d'autre** :
+   ```python
+   def test_uses_defaults_when_no_config():
+       """Test que les defaults sont utilisés en dernier recours."""
+       # Aucune config fournie
+       result = my_command()
+
+       # Doit utiliser la valeur par défaut
+       assert 'https://default.example.com' in result
+   ```
+
+**❌ L'absence de ces 4 tests pour un nouveau module est bloquante.**
 
 ### Structure des Tests
 
@@ -1161,21 +1484,80 @@ exclude_lines =
     @abstractmethod
 ```
 
-### Obligations Avant Commit
+### 🚨 Obligations Avant CHAQUE Commit (BLOQUANT)
 
-Avant chaque commit majeur :
+**Avant CHAQUE commit, vous DEVEZ exécuter et vérifier :**
 
-1. ✅ Tous les tests passent : `pytest`
-2. ✅ Couverture ≥ 80% : `pytest --cov=app --cov-report=term`
-3. ✅ Pas de régression : comparer avec couverture précédente
-4. ✅ Tests ajoutés pour nouvelles fonctionnalités
+#### 1. Tous les tests passent (OBLIGATOIRE)
+```bash
+pytest
+# Exit code DOIT être 0
+```
 
-### Résumé
+**❌ Un commit avec des tests qui échouent est INTERDIT.**
 
-- **Écrire des tests** pour chaque nouvelle fonctionnalité
-- **Viser 80%+ de couverture** pour tout le code
+#### 2. Couverture de code ≥ 80% (OBLIGATOIRE)
+```bash
+pytest --cov=app --cov-report=term
+# Coverage DOIT afficher ≥ 80%
+```
+
+**❌ Un commit qui fait baisser la couverture globale sous 80% est INTERDIT.**
+
+#### 3. Pas de régression de couverture (OBLIGATOIRE)
+```bash
+# Comparer avec la couverture précédente
+pytest --cov=app --cov-report=term | grep "TOTAL"
+```
+
+**❌ Une baisse de couverture sur un module existant est INTERDITE (sauf justification documentée).**
+
+#### 4. Tests pour nouvelles fonctionnalités (OBLIGATOIRE)
+
+**Toute nouvelle fonctionnalité DOIT avoir :**
+- [ ] Au moins 3 tests unitaires
+- [ ] Au moins 1 test d'intégration
+- [ ] Tests de la hiérarchie de configuration (si applicable)
+- [ ] Tests des cas d'erreur
+
+**❌ Une fonctionnalité sans tests ne peut PAS être commitée.**
+
+#### 5. Checklist de Tests pour Modules de Configuration
+
+Pour tout module implémentant la hiérarchie de configuration :
+
+- [ ] Test CLI écrase tout
+- [ ] Test YAML écrase ENV et defaults
+- [ ] Test ENV écrase defaults
+- [ ] Test defaults utilisés en dernier recours
+- [ ] Test substitution de variables ${VAR:-default}
+- [ ] Test gestion des tokens (non affichés dans logs)
+- [ ] Test fichier config inexistant (utilise defaults)
+- [ ] Test valeurs invalides (gestion d'erreur)
+
+**❌ L'absence d'un seul de ces tests est bloquante.**
+
+### Résumé des Règles de Tests
+
+#### Règles OBLIGATOIRES (Non négociables)
+
+1. ✅ **Écrire des tests** pour CHAQUE nouvelle fonctionnalité (LOI)
+2. ✅ **Couverture ≥ 80%** pour TOUT le code (LOI)
+3. ✅ **Hiérarchie de config testée** pour tous les modules configurables (LOI)
+4. ✅ **Tests passent** avant CHAQUE commit (LOI)
+5. ✅ **Pas de régression** de couverture tolérée (LOI)
+
+#### Bonnes Pratiques (Fortement recommandées)
+
 - **Utiliser des fixtures** pour éviter la duplication
 - **Mocker les dépendances** externes (API, fichiers, réseau)
 - **Tester les erreurs** autant que les cas nominaux
-- **Exécuter les tests** avant chaque commit
+- **Tests paramétrés** pour tester plusieurs cas similaires
 - **Intégrer dans la CI** pour validation automatique
+
+#### Sanctions
+
+- ❌ Commit sans tests → Rejeté systématiquement
+- ❌ Couverture < 80% → Rejeté systématiquement
+- ❌ Tests qui échouent → Rejeté systématiquement
+- ❌ Régression non justifiée → Rejeté systématiquement
