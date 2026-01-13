@@ -52,8 +52,8 @@ except ImportError:
 
 
 # Imports Ambulon
-from app.scan.commands.scan_main import scan_document, process_existing_files as scan_process_files
-from app.ocr.commands.ocr_main import perform_ocr, process_multiple_files as ocr_process_files
+from app.scan.core.scanning import scan_document, process_existing_files as scan_process_files
+from app.ocr.core.ocr_logic import perform_ocr_single_file, process_multiple_files as ocr_process_files
 from app.conversion.commands.img2pdf import images_to_pdf
 from app.conversion.commands.compress_pdf import compress_pdf
 

@@ -1,1 +1,1 @@
-"""Core Scan - Logique métier de numérisation."""
+# Core utilities for scan module

@@ -1,4 +1,4 @@
-# Module Encoding - DYAG
+# Module Encoding - Ambulon
 
 Module de gestion d'encodage pour fichiers Markdown.
 
@@ -11,21 +11,21 @@ Vérifie l'encodage de fichiers Markdown et détecte les problèmes potentiels.
 **Utilisation CLI** :
 ```bash
 # Vérifier tous les fichiers .md du répertoire courant
-dyag chk-utf8 -P "*.md"
+ambulon chk-utf8 -P "*.md"
 
 # Vérifier récursivement dans un dossier
-dyag chk-utf8 -P "docs/**/*.md"
+ambulon chk-utf8 -P "docs/**/*.md"
 
 # Mode silencieux (afficher seulement les problèmes)
-dyag chk-utf8 -P "src/**/*.md" --quiet
+ambulon chk-utf8 -P "src/**/*.md" --quiet
 
 # Seuil de confiance personnalisé
-dyag chk-utf8 -P "*.md" --min-confidence 0.9
+ambulon chk-utf8 -P "*.md" --min-confidence 0.9
 ```
 
 **Utilisation programmatique** :
 ```python
-from dyag.encoding import check_markdown_files
+from app.encoding import check_markdown_files
 
 results = check_markdown_files(["docs/**/*.md"])
 for result in results:
@@ -46,21 +46,21 @@ Corrige automatiquement l'encodage et le contenu des fichiers Markdown.
 **Utilisation CLI** :
 ```bash
 # Simuler les corrections (dry-run)
-dyag fix-utf8 -P "*.md" --dry-run
+ambulon fix-utf8 -P "*.md" --dry-run
 
 # Corriger avec backups
-dyag fix-utf8 -P "docs/**/*.md" --backup
+ambulon fix-utf8 -P "docs/**/*.md" --backup
 
 # Corriger silencieusement
-dyag fix-utf8 -P "src/**/*.md" --quiet
+ambulon fix-utf8 -P "src/**/*.md" --quiet
 
 # Corriger plusieurs patterns
-dyag fix-utf8 -P "*.md" -P "docs/**/*.md"
+ambulon fix-utf8 -P "*.md" -P "docs/**/*.md"
 ```
 
 **Utilisation programmatique** :
 ```python
-from dyag.encoding import fix_markdown_files
+from app.encoding import fix_markdown_files
 
 results = fix_markdown_files(
     patterns=["docs/**/*.md"],
@@ -78,7 +78,7 @@ for result in results:
 ## Dépendances
 
 ### Modules internes
-- `dyag.core.pathglob`: Résolution de motifs de chemins (globs)
+- `app.core.pathglob`: Résolution de motifs de chemins (globs)
 
 ### Modules externes
 - `chardet`: Détection d'encodage
@@ -89,14 +89,15 @@ for result in results:
 ## Architecture
 
 ```
-src/dyag/encoding/
+src/app/encoding/
 ├── __init__.py              # Exports publics
-├── chk_utf8.py             # Logique vérification encodage
-├── fix_utf8.py             # Logique correction encodage
+├── core/                   # Logique métier
+│   ├── checker.py          # Vérification encodage
+│   └── fixer.py            # Correction encodage
 ├── commands/               # Intégration CLI
 │   ├── __init__.py         # Exports commandes
-│   ├── chk_utf8_cmd.py     # Commande chk-utf8
-│   └── fix_utf8_cmd.py     # Commande fix-utf8
+│   ├── chk_utf8.py         # Commande chk-utf8
+│   └── fix_utf8.py         # Commande fix-utf8
 └── README.md               # Cette documentation
 ```
 

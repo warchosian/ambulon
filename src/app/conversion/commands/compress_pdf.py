@@ -1,12 +1,19 @@
 """
 Module de compression PDF pour Ambulon.
+Utilise PyMuPDF (fitz) et Pillow pour la compression.
+Suit la hiérarchie de configuration standard et les pratiques de logging.
 """
 
+import os
 import sys
+import logging
 from pathlib import Path
 from io import BytesIO
-from typing import Dict, Any
-import logging
+from typing import Dict, Any, Optional
+
+import typer
+from app.core.config_loader import load_config as load_app_config
+from app.core.logging_config import setup_logging
 
 try:
     from PIL import Image
@@ -22,229 +29,147 @@ except ImportError:
     PYMUPDF_AVAILABLE = False
     fitz = None
 
+# Setup logger for this module
+logger = logging.getLogger(__name__)
 
-def compress_pdf(input_path: str, output_path: str = None, quality: int = 85, 
-                verbose: bool = False) -> Dict[str, Any]:
+app = typer.Typer()
+
+DEFAULT_CONFIG = {
+    "conversion": {
+        "compress_pdf": {
+            "quality": 85
+        }
+    }
+}
+
+def compress_pdf(
+    input_path: Path,
+    output_path: Path,
+    quality: int,
+    verbose: bool = False
+) -> Optional[Path]:
     """
     Compresse un fichier PDF existant en retraitant ses images.
-
-    Args:
-        input_path: Chemin vers le fichier PDF d'entrée
-        output_path: Chemin de sortie PDF optionnel. Si None, ajoute le suffixe '_compressed'
-        quality: Qualité JPEG pour la compression (1-100, défaut 85)
-        verbose: Affichage verbeux
-
-    Returns:
-        Dict contenant les résultats de la compression
     """
     if not PIL_AVAILABLE or not PYMUPDF_AVAILABLE:
         missing_libs = []
-        if not PIL_AVAILABLE:
-            missing_libs.append("Pillow")
-        if not PYMUPDF_AVAILABLE:
-            missing_libs.append("PyMuPDF")
-        
-        error_msg = f"Bibliothèques requises non installées: {', '.join(missing_libs)}. Installez avec: pip install {' '.join(missing_libs)}"
-        logging.error(f"[COMPRESS_PDF] {error_msg}")
-        return {
-            "success": False,
-            "error": error_msg
-        }
+        if not PIL_AVAILABLE: missing_libs.append("Pillow")
+        if not PYMUPDF_AVAILABLE: missing_libs.append("PyMuPDF")
+        logger.error(f"Missing required libraries: {', '.join(missing_libs)}. Install with: pip install {' '.join(missing_libs)}")
+        return None
 
-    pdf_path = Path(input_path).resolve()
+    if not input_path.exists():
+        logger.error(f"PDF file '{input_path}' does not exist.")
+        return None
+    if not input_path.is_file():
+        logger.error(f"'{input_path}' is not a file.")
+        return None
+    if input_path.suffix.lower() != '.pdf':
+        logger.error(f"'{input_path}' is not a PDF file.")
+        return None
 
-    # Vérifier si le PDF existe
-    if not pdf_path.exists():
-        error_msg = f"Le fichier PDF '{input_path}' n'existe pas."
-        logging.error(f"[COMPRESS_PDF] {error_msg}")
-        return {
-            "success": False,
-            "error": error_msg
-        }
-
-    if not pdf_path.is_file():
-        error_msg = f"'{input_path}' n'est pas un fichier."
-        logging.error(f"[COMPRESS_PDF] {error_msg}")
-        return {
-            "success": False,
-            "error": error_msg
-        }
-
-    if pdf_path.suffix.lower() != '.pdf':
-        error_msg = f"'{input_path}' n'est pas un fichier PDF."
-        logging.error(f"[COMPRESS_PDF] {error_msg}")
-        return {
-            "success": False,
-            "error": error_msg
-        }
-
-    # Déterminer le chemin de sortie
-    if output_path is None:
-        # Ajouter '_compressed' avant l'extension
-        output_path = pdf_path.parent / f"{pdf_path.stem}_compressed{pdf_path.suffix}"
-    else:
-        output_path = Path(output_path)
-
-    output_path = output_path.resolve()
-
-    if verbose:
-        logging.info(f"[COMPRESS_PDF] PDF d'entrée: {pdf_path}")
-        logging.info(f"[COMPRESS_PDF] PDF de sortie: {output_path}")
-        logging.info(f"[COMPRESS_PDF] Qualité de compression: {quality}")
+    logger.info(f"Input PDF: {input_path}")
+    logger.info(f"Output PDF: {output_path}")
+    logger.info(f"Compression quality: {quality}")
 
     try:
-        # Ouvrir le PDF
-        doc = fitz.open(pdf_path)
+        doc = fitz.open(input_path)
         total_pages = len(doc)
+        logger.info(f"Processing {total_pages} pages...")
 
-        if verbose:
-            logging.info(f"[COMPRESS_PDF] Traitement de {total_pages} pages...")
-
-        # Créer un nouveau PDF
         new_doc = fitz.open()
 
         for page_num in range(total_pages):
             page = doc[page_num]
-
-            # Rendre la page en image à 72 DPI (résolution PDF standard)
-            # Utiliser un zoom de 1.0 pour garder la taille originale
-            mat = fitz.Matrix(1.0, 1.0)
+            mat = fitz.Matrix(1.0, 1.0) # Standard PDF resolution
             pix = page.get_pixmap(matrix=mat, alpha=False)
 
-            # Convertir en image PIL
             img_data = pix.tobytes("jpeg")
             img = Image.open(BytesIO(img_data))
+            if img.mode != 'RGB': img = img.convert('RGB')
 
-            # S'assurer du mode RGB
-            if img.mode != 'RGB':
-                img = img.convert('RGB')
-
-            # Compresser l'image avec optimisation
             buffer = BytesIO()
             img.save(buffer, format='JPEG', quality=quality, optimize=True, progressive=True)
             buffer.seek(0)
 
-            # Créer une nouvelle page avec l'image compressée
             rect = page.rect
             new_page = new_doc.new_page(width=rect.width, height=rect.height)
             new_page.insert_image(rect, stream=buffer.getvalue())
+            logger.debug(f"Page compressed {page_num + 1}/{total_pages}")
 
-            if verbose:
-                logging.info(f"[COMPRESS_PDF] Page compressée {page_num + 1}/{total_pages}")
-
-        # Sauvegarder le PDF compressé
         new_doc.save(output_path, garbage=4, deflate=True, clean=True)
         new_doc.close()
         doc.close()
 
-        # Obtenir les tailles de fichier
-        original_size = pdf_path.stat().st_size
+        original_size = input_path.stat().st_size
         compressed_size = output_path.stat().st_size
         reduction = ((original_size - compressed_size) / original_size) * 100
 
-        logging.info(f"[COMPRESS_PDF] PDF compressé créé avec succès: {output_path}")
-        logging.info(f"[COMPRESS_PDF] Taille originale: {original_size / (1024*1024):.2f} MB")
-        logging.info(f"[COMPRESS_PDF] Taille compressée: {compressed_size / (1024*1024):.2f} MB")
-        logging.info(f"[COMPRESS_PDF] Réduction de taille: {reduction:.1f}%")
-
-        return {
-            "success": True,
-            "input_file": pdf_path,
-            "output_file": output_path,
-            "original_size": original_size,
-            "compressed_size": compressed_size,
-            "reduction_percent": reduction,
-            "total_pages": total_pages,
-            "quality": quality
-        }
-
-    except Exception as e:
-        error_msg = f"Échec de la compression du PDF: {e}"
-        logging.error(f"[COMPRESS_PDF] {error_msg}")
-        return {
-            "success": False,
-            "error": error_msg
-        }
-
-
-def main():
-    """Point d'entrée principal pour le module compress_pdf."""
-    import argparse
-    from .cli import setup_logging
-    
-    parser = argparse.ArgumentParser(
-        description='Compresser un fichier PDF existant',
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Exemples d'utilisation:
-  %(prog)s document.pdf
-  %(prog)s document.pdf -o document_petit.pdf
-  %(prog)s gros_fichier.pdf --quality 60 --verbose
-        """
-    )
-
-    parser.add_argument(
-        'input',
-        type=str,
-        help='Fichier PDF d\'entrée à compresser'
-    )
-
-    parser.add_argument(
-        '-o', '--output',
-        type=str,
-        default=None,
-        help='Chemin du fichier PDF de sortie (défaut: <entrée>_compressed.pdf)'
-    )
-
-    parser.add_argument(
-        '-q', '--quality',
-        type=int,
-        default=85,
-        choices=range(1, 101),
-        metavar='QUALITE',
-        help='Qualité JPEG pour la compression (1-100, défaut: 85). Valeurs plus faibles = fichier plus petit mais qualité moindre'
-    )
-
-    parser.add_argument(
-        '--verbose',
-        action='store_true',
-        help='Afficher le progrès détaillé de la compression'
-    )
-
-    args = parser.parse_args()
-    
-    # Configuration du logging
-    setup_logging(args.verbose)
-    
-    logging.info(f"[DÉMARRAGE] Démarrage du module compress_pdf")
-    logging.info(f"   Fichier d'entrée: {args.input}")
-    if args.output:
-        logging.info(f"   Fichier de sortie: {args.output}")
-    
-    try:
-        result = compress_pdf(
-            args.input,
-            args.output,
-            args.quality,
-            args.verbose
-        )
+        logger.info(f"Compressed PDF created successfully: {output_path}")
+        logger.info(f"Original size: {original_size / (1024*1024):.2f} MB")
+        logger.info(f"Compressed size: {compressed_size / (1024*1024):.2f} MB")
+        logger.info(f"Size reduction: {reduction:.1f}%")
         
-        if result['success']:
-            print(f"Succès ! PDF compressé créé: {result['output_file']}")
-            print(f"Taille originale: {result['original_size'] / (1024*1024):.2f} MB")
-            print(f"Taille compressée: {result['compressed_size'] / (1024*1024):.2f} MB")
-            print(f"Réduction de taille: {result['reduction_percent']:.1f}%")
-            return 0
-        else:
-            print(f"Erreur: {result['error']}")
-            return 1
-            
+        return output_path
+
     except Exception as e:
-        error_msg = f"Erreur inattendue: {e}"
-        logging.error(f"[ERREUR] {error_msg}")
-        print(f"Erreur: {error_msg}")
-        return 1
+        logger.error(f"Failed to compress PDF: {e}", exc_info=True)
+        return None
 
+@app.command(
+    help="""
+    Compresses an existing PDF file to reduce its size.
 
-if __name__ == "__main__":
-    sys.exit(main())
+    Configuration Hierarchy (from highest to lowest priority):
+    1. Command-line arguments (e.g., --output)
+    2. YAML configuration file (`--config`)
+    3. Environment variables (e.g., COMPRESSPDF_QUALITY)
+    4. Default values
+    """
+)
+def main(
+    input_file: Path = typer.Argument(..., help="Input PDF file to compress.", exists=True, file_okay=True, dir_okay=False, readable=True),
+    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Path to the output compressed PDF file (default: <input>_compressed.pdf)."),
+    quality: Optional[int] = typer.Option(None, "--quality", "-q", min=1, max=100, help="JPEG quality for compression (1-100, default: 85). Lower values = smaller file but lower quality. Overrides config/env."),
+    config_path: Optional[Path] = typer.Option(None, "--config", help="Path to a YAML configuration file."),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging.")
+):
+    """
+    CLI for compressing PDF files.
+    """
+    # Setup logging
+    central_setup_logging(verbose)
+
+    # Determine default config file path
+    default_config_file = Path("config/compress_pdf.yaml")
+    if config_path is None and default_config_file.exists():
+        config_path = default_config_file
+
+    # Load config from YAML, substituting env vars, merged over defaults
+    config = load_app_config(str(config_path) if config_path else None, DEFAULT_CONFIG)
+    
+    # Extract values with hierarchy: CLI > Config > Env > Default
+    final_quality = quality if quality is not None else config['conversion']['compress_pdf'].get('quality', DEFAULT_CONFIG['conversion']['compress_pdf']['quality'])
+
+    # Determine output path if not provided
+    if output is None:
+        output = input_file.parent / f"{input_file.stem}_compressed{input_file.suffix}"
+
+    # Execute compression
+    result_path = compress_pdf(
+        input_path=input_file,
+        output_path=output,
+        quality=final_quality,
+        verbose=verbose
+    )
+
+    if result_path:
+        relative_path = os.path.relpath(result_path)
+        print(f"\n✓ Compression réussie !\nFichier produit : {relative_path}")
+        raise typer.Exit(code=0)
+    else:
+        logger.error("PDF compression failed.")
+        raise typer.Exit(code=1)
+
+if __name__ == '__main__':
+    app()

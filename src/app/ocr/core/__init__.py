@@ -1,1 +1,1 @@
-"""Core OCR - Logique métier OCR."""
+# Core logic for OCR module

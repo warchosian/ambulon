@@ -6,12 +6,12 @@ from datetime import datetime
 from pathlib import Path
 
 from . import hello
-from app.scan.commands.scan_main import main as scan_main
-from app.ocr.commands.ocr_main import main as ocr_main
-from app.mcp.mcp_server import main as mcp_main
-from app.mcp.mcp_config import export_mcp_config, get_claude_config_path
+from app.scan.commands.scan import main as scan_main
+from app.ocr.commands.ocr import main as ocr_main
+from app.mcp.commands.run_server import main as mcp_main
+from app.mcp.core.config import export_mcp_config, get_claude_config_path
 from app.piag import create_collection # NEW - migration vers nouvelle architecture
-from app.gitlab.commands.gitlab_clone import main as gitlab_clone_main
+from app.gitlab.commands.gitlab_clone import app as gitlab_clone_app
 
 # Modules de conversion
 from app.conversion import (
@@ -22,23 +22,25 @@ from app.conversion import (
     convert_html_to_pdf,
     json_to_jsonl,
     process_json_to_markdown,
+    pdf2html_main,
+    pdf2md_main,
 )
 
 # Modules d'encoding
 from app.encoding import check_md_cli, fix_md_cli
 
 # Module WikiSI
-from app.wikisi import process_parkjson2json, process_parkjson2md, flatten_wikisi_directory, scrape_wikisi
+from app.wikisi import wikisi_extract_json_cli, wikisi_json_to_md_cli, flatten_wikisi_directory, wikisi_scraper_cli
 
 # Module Processing
 from app.processing import (
-    add_toc_to_html,
-    add_toc_to_markdown,
-    concatenate_html_files,
-    flatten_html_directory,
-    flatten_markdown_directory,
+    add_toc4html_cli,
+    add_toc4md_cli,
+    concat_html_cli,
+    flatten_html_cli,
+    flatten_md_cli,
     make_html_interactive,
-    fusion_html_files,
+    merge_html_cli,
     fusion_markdown_files,
     md2project,
     project_to_markdown,
@@ -46,40 +48,8 @@ from app.processing import (
 
 import requests # NEW
 import json # NEW
+from app.core.logging_config import setup_logging
 
-
-def setup_logging(verbose: bool = False):
-    """Configure le système de logging pour les modules."""
-    now = datetime.now()
-    timestamp = now.strftime("%Y-%m-%d_%Hh%Mm%Ss")
-    
-    logs_dir = Path("logs")
-    logs_dir.mkdir(exist_ok=True)
-    
-    log_file = logs_dir / f"ambulon.{timestamp}.log"
-    
-    level = logging.DEBUG if verbose else logging.INFO
-    
-    import os
-    os.environ['PYTHONIOENCODING'] = 'utf-8'
-    if hasattr(sys.stdout, 'reconfigure'):
-        sys.stdout.reconfigure(encoding='utf-8')
-    if hasattr(sys.stderr, 'reconfigure'):
-        sys.stderr.reconfigure(encoding='utf-8')
-    
-    file_handler = logging.FileHandler(log_file, encoding='utf-8')
-    file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
-    
-    console_handler = logging.StreamHandler(sys.stdout)
-    console_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
-    
-    logging.basicConfig(
-        level=level,
-        handlers=[file_handler, console_handler],
-        force=True
-    )
-    
-    return log_file
 
 
 def show_help():
@@ -102,11 +72,13 @@ def show_help():
     print("  html2md               Convertir HTML en Markdown")
     print("  md2html               Convertir Markdown en HTML")
     print("  html2pdf              Convertir HTML en PDF (avec Playwright)")
+    print("  pdf2html              Convertir PDF en HTML")
+    print("  pdf2md                Convertir PDF en Markdown")
     print("  json2jsonl            Convertir JSON array en JSONL")
     print("  json2md               Convertir JSON en Markdown")
     print()
     print("Modules d'encoding:")
-    print("  chk-utf8              Vérifier l'encodage des fichiers Markdown")
+    print("  check-utf8            Vérifier l'encodage des fichiers Markdown")
     print("  fix-utf8              Corriger l'encodage des fichiers Markdown")
     print()
     print("Modules WikiSI (Parc applicatif):")
@@ -120,8 +92,8 @@ def show_help():
     print("  concat-html           Concaténer plusieurs fichiers HTML")
     print("  flatten-html          Aplatir une arborescence HTML")
     print("  flatten-md            Aplatir une arborescence Markdown")
-    print("  flatten-wikisi        Aplatir une arborescence WikiSI")
-    print("  make-interactive      Rendre HTML interactif (anchors, navigation)")
+    print("  wikisi-flatten        Aplatir une arborescence WikiSI")
+    print("  make-html-interactive Rendre HTML interactif (anchors, navigation)")
     print("  merge-html            Fusionner plusieurs fichiers HTML")
     print("  merge-md              Fusionner plusieurs fichiers Markdown")
     print("  md2project            Convertir Markdown en structure de projet")
@@ -150,6 +122,8 @@ def show_help():
     print("Exemples:")
     print("  ambulon scan --help                 Aide du module scan")
     print("  ambulon img2pdf scans/              Convertir images en PDF")
+    print("  ambulon pdf2html doc.pdf -o doc.html Convertir PDF en HTML")
+    print("  ambulon pdf2md doc.pdf -o doc.md   Convertir PDF en Markdown")
     print("  ambulon html2md doc.html            Convertir HTML en Markdown")
     print("  ambulon add-toc-md doc.md           Ajouter une TOC à Markdown")
     print("  ambulon flatten-md docs/            Aplatir arborescence Markdown")
@@ -229,7 +203,7 @@ def handle_config_command():
             return 1
     
     elif subcommand == 'install':
-        from app.mcp.mcp_config import (create_claude_config, create_openrouter_config, 
+        from app.mcp.core.config import (create_claude_config, create_openrouter_config, 
                            create_aider_config, create_continue_config)
         
         assistant = sys.argv[3] if len(sys.argv) > 3 else "claude"
@@ -284,7 +258,7 @@ def handle_config_command():
             return 1
     
     elif subcommand == 'status':
-        from app.mcp.mcp_config import get_installation_status, test_mcp_server
+        from app.mcp.core.config import get_installation_status, test_mcp_server
         from pathlib import Path
         
         print("Statut des configurations MCP Ambulon:")
@@ -309,7 +283,7 @@ def handle_config_command():
         return 0
     
     elif subcommand == 'test':
-        from app.mcp.mcp_config import test_mcp_server
+        from app.mcp.core.config import test_mcp_server
         
         print("Test du serveur MCP Ambulon...")
         print()
@@ -334,7 +308,7 @@ def handle_config_command():
         print("\nTest d'intégration rapide...")
         try:
             import asyncio
-            from app.mcp.mcp_server import handle_list_tools
+            from app.mcp.core.server import handle_list_tools
             
             # Test de liste des outils
             tools = asyncio.run(handle_list_tools())
@@ -354,7 +328,7 @@ def handle_config_command():
         return 0
     
     elif subcommand == 'paths':
-        from app.mcp.mcp_config import get_config_paths
+        from app.mcp.core.config import get_config_paths
         
         print("Chemins de configuration pour tous les assistants:")
         print("=" * 55)
@@ -554,6 +528,11 @@ def handle_rag_module(module_name: str):
 
 def main():
     """Fonction principale appelée par la commande `ambulon`."""
+    # Configure logging for the main CLI entry point
+    # We will pass a specific log_file_prefix
+    verbose = '--verbose' in sys.argv or '-v' in sys.argv # Check for verbose early
+    setup_logging(level=logging.DEBUG if verbose else logging.INFO, log_file_prefix="ambulon_cli")
+
     if len(sys.argv) > 1:
         command = sys.argv[1]
         
@@ -715,12 +694,29 @@ def main():
                 else:
                     i += 1
             return process_json_to_markdown(input_file, output_file, verbose)
-        elif command == 'chk-utf8':
+        elif command == 'pdf2html':
+            # Convertir PDF en HTML
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                return pdf2html_main()
+            finally:
+                sys.argv = original_argv
+        elif command == 'pdf2md':
+            # Convertir PDF en Markdown
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                return pdf2md_main()
+            finally:
+                sys.argv = original_argv
+        elif command == 'check-utf8':
             # Vérifier l'encodage des fichiers Markdown
             original_argv = sys.argv
             sys.argv = [sys.argv[0]] + sys.argv[2:]
             try:
-                return check_md_cli()
+                check_md_cli() # Call the typer app directly
+                return 0 # Typer handles exit codes internally
             finally:
                 sys.argv = original_argv
         elif command == 'fix-utf8':
@@ -733,265 +729,77 @@ def main():
                 sys.argv = original_argv
         elif command == 'wikisi-extract':
             # Extraire et filtrer des applications depuis JSON
-            if len(sys.argv) < 3:
-                print("Usage: ambulon wikisi-extract <input.json> -o <output.json> [-r RANGE] [-n NAME] [-i ID] [--verbose] [--split-dir DIR]")
-                return 1
-            input_file = sys.argv[2]
-            output_file = None
-            range_spec = None
-            name_filter = None
-            id_filter = None
-            verbose = False
-            preserve_structure = True
-            include_metadata = True
-            split_dir = None
-            i = 3
-            while i < len(sys.argv):
-                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
-                    output_file = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-r', '--range'] and i + 1 < len(sys.argv):
-                    range_spec = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-n', '--name'] and i + 1 < len(sys.argv):
-                    name_filter = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-i', '--id'] and i + 1 < len(sys.argv):
-                    id_filter = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] == '--split-dir' and i + 1 < len(sys.argv):
-                    split_dir = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] == '--no-preserve-structure':
-                    preserve_structure = False
-                    i += 1
-                elif sys.argv[i] == '--no-metadata':
-                    include_metadata = False
-                    i += 1
-                elif sys.argv[i] == '--verbose':
-                    verbose = True
-                    i += 1
-                else:
-                    i += 1
-            if not output_file and not split_dir:
-                print("Error: Either -o/--output or --split-dir is required")
-                return 1
-            return process_parkjson2json(input_file, output_file, verbose, range_spec, name_filter, id_filter, preserve_structure, include_metadata, split_dir)
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                wikisi_extract_json_cli()
+                return 0
+            finally:
+                sys.argv = original_argv
         elif command == 'wikisi-md':
             # Convertir parc applicatif JSON en Markdown
-            if len(sys.argv) < 3:
-                print("Usage: ambulon wikisi-md <input.json> [-o <output.md>] [-r RANGE] [-n NAME] [-i ID] [--verbose] [--split-dir DIR]")
-                return 1
-            input_file = sys.argv[2]
-            output_file = None
-            range_spec = None
-            name_filter = None
-            id_filter = None
-            verbose = False
-            split_dir = None
-            i = 3
-            while i < len(sys.argv):
-                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
-                    output_file = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-r', '--range'] and i + 1 < len(sys.argv):
-                    range_spec = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-n', '--name'] and i + 1 < len(sys.argv):
-                    name_filter = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-i', '--id'] and i + 1 < len(sys.argv):
-                    id_filter = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] == '--split-dir' and i + 1 < len(sys.argv):
-                    split_dir = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] == '--verbose':
-                    verbose = True
-                    i += 1
-                else:
-                    i += 1
-            return process_parkjson2md(input_file, output_file, verbose, range_spec, name_filter, id_filter, split_dir)
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                wikisi_json_to_md_cli()
+                return 0
+            finally:
+                sys.argv = original_argv
         elif command == 'wikisi-scrape':
             # Aspirer récursivement un site web WikiSI
-            url = None
-            output_dir = None
-            config_path = None
-            max_depth = None
-            delay = None
-            verbose = False
-            i = 2
-            while i < len(sys.argv):
-                if sys.argv[i] in ['-u', '--url'] and i + 1 < len(sys.argv):
-                    url = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
-                    output_dir = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-c', '--config'] and i + 1 < len(sys.argv):
-                    config_path = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-d', '--depth'] and i + 1 < len(sys.argv):
-                    max_depth = int(sys.argv[i + 1])
-                    i += 2
-                elif sys.argv[i] == '--delay' and i + 1 < len(sys.argv):
-                    delay = float(sys.argv[i + 1])
-                    i += 2
-                elif sys.argv[i] in ['-v', '--verbose']:
-                    verbose = True
-                    i += 1
-                elif sys.argv[i] in ['-h', '--help']:
-                    print("Usage: ambulon wikisi-scrape [OPTIONS]")
-                    print()
-                    print("Options:")
-                    print("  -u, --url URL         URL du site WikiSI à aspirer (ou WIKISI_BASE_URL)")
-                    print("  -o, --output DIR      Répertoire de sortie (ou WIKISI_OUTPUT_DIR)")
-                    print("  -c, --config FILE     Fichier de configuration YAML")
-                    print("  -d, --depth N         Profondeur maximale de récursion (-1 = illimité)")
-                    print("  --delay SECONDS       Délai entre requêtes (en secondes)")
-                    print("  -v, --verbose         Mode verbeux (logs détaillés)")
-                    print("  -h, --help            Afficher cette aide")
-                    print()
-                    print("Hiérarchie de configuration (priorité décroissante):")
-                    print("  1. Arguments CLI")
-                    print("  2. Fichier YAML (--config)")
-                    print("  3. Variables d'environnement (WIKISI_*)")
-                    print("  4. Valeurs par défaut")
-                    print()
-                    print("Variables d'environnement supportées:")
-                    print("  WIKISI_BASE_URL       URL du site à aspirer")
-                    print("  WIKISI_OUTPUT_DIR     Répertoire de sortie")
-                    print("  WIKISI_MAX_DEPTH      Profondeur maximale")
-                    print("  WIKISI_DELAY          Délai entre requêtes")
-                    print("  WIKISI_AUTH_TYPE      Type d'authentification (none/basic/bearer)")
-                    print("  WIKISI_USERNAME       Nom d'utilisateur (basic auth)")
-                    print("  WIKISI_PASSWORD       Mot de passe (basic auth)")
-                    print("  WIKISI_TOKEN          Token d'authentification (bearer)")
-                    print("  WIKISI_LOG_LEVEL      Niveau de log (debug/info/warning/error)")
-                    print()
-                    print("Exemples:")
-                    print("  ambulon wikisi-scrape --url https://wikisi.example.fr --output ./data")
-                    print("  ambulon wikisi-scrape --config config/wikisi.yaml --verbose")
-                    print("  WIKISI_BASE_URL=https://wikisi.fr ambulon wikisi-scrape -o ./wikisi-data")
-                    return 0
-                else:
-                    i += 1
-            return scrape_wikisi(url, output_dir, config_path, max_depth, delay, verbose)
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                wikisi_scraper_cli()
+                return 0
+            finally:
+                sys.argv = original_argv
         elif command == 'add-toc-html':
             # Ajouter TOC à HTML
-            if len(sys.argv) < 3:
-                print("Usage: ambulon add-toc-html <input.html> [-o <output.html>] [--min-level N] [--max-level N] [--verbose]")
-                return 1
-            input_file = sys.argv[2]
-            output = None
-            min_level = 1
-            max_level = 6
-            verbose = False
-            i = 3
-            while i < len(sys.argv):
-                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
-                    output = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] == '--min-level' and i + 1 < len(sys.argv):
-                    min_level = int(sys.argv[i + 1])
-                    i += 2
-                elif sys.argv[i] == '--max-level' and i + 1 < len(sys.argv):
-                    max_level = int(sys.argv[i + 1])
-                    i += 2
-                elif sys.argv[i] in ['-v', '--verbose']:
-                    verbose = True
-                    i += 1
-                else:
-                    i += 1
-            return add_toc_to_html(input_file, output, min_level, max_level, verbose)
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                add_toc4html_cli()
+                return 0
+            finally:
+                sys.argv = original_argv
         elif command == 'add-toc-md':
             # Ajouter TOC à Markdown
-            if len(sys.argv) < 3:
-                print("Usage: ambulon add-toc-md <input.md> [-o <output.md>] [--min-level N] [--max-level N] [--verbose]")
-                return 1
-            input_file = sys.argv[2]
-            output = None
-            min_level = 1
-            max_level = 6
-            verbose = False
-            i = 3
-            while i < len(sys.argv):
-                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
-                    output = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] == '--min-level' and i + 1 < len(sys.argv):
-                    min_level = int(sys.argv[i + 1])
-                    i += 2
-                elif sys.argv[i] == '--max-level' and i + 1 < len(sys.argv):
-                    max_level = int(sys.argv[i + 1])
-                    i += 2
-                elif sys.argv[i] in ['-v', '--verbose']:
-                    verbose = True
-                    i += 1
-                else:
-                    i += 1
-            return add_toc_to_markdown(input_file, output, min_level, max_level, verbose)
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                add_toc4md_cli()
+                return 0
+            finally:
+                sys.argv = original_argv
         elif command == 'concat-html':
             # Concaténer HTML
-            if len(sys.argv) < 3:
-                print("Usage: ambulon concat-html <directory> -o <output.html> [--verbose]")
-                return 1
-            directory = sys.argv[2]
-            output = None
-            verbose = False
-            i = 3
-            while i < len(sys.argv):
-                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
-                    output = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-v', '--verbose']:
-                    verbose = True
-                    i += 1
-                else:
-                    i += 1
-            if not output:
-                print("Error: -o/--output is required")
-                return 1
-            return concatenate_html_files(directory, output, verbose)
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                concat_html_cli()
+                return 0
+            finally:
+                sys.argv = original_argv
         elif command == 'flatten-html':
             # Aplatir HTML
-            if len(sys.argv) < 3:
-                print("Usage: ambulon flatten-html <source_dir> [-o <output_dir>] [--verbose]")
-                return 1
-            source = sys.argv[2]
-            output = None
-            verbose = False
-            i = 3
-            while i < len(sys.argv):
-                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
-                    output = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-v', '--verbose']:
-                    verbose = True
-                    i += 1
-                else:
-                    i += 1
-            return flatten_html_directory(source, output, verbose)
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                flatten_html_cli()
+                return 0
+            finally:
+                sys.argv = original_argv
         elif command == 'flatten-md':
             # Aplatir Markdown
-            if len(sys.argv) < 3:
-                print("Usage: ambulon flatten-md <source_dir> [-o <output_dir>] [--verbose]")
-                return 1
-            source = sys.argv[2]
-            output = None
-            verbose = False
-            i = 3
-            while i < len(sys.argv):
-                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
-                    output = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-v', '--verbose']:
-                    verbose = True
-                    i += 1
-                else:
-                    i += 1
-            return flatten_markdown_directory(source, output, verbose)
-        elif command == 'flatten-wikisi':
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                flatten_md_cli()
+                return 0
+            finally:
+                sys.argv = original_argv
+        elif command == 'wikisi-flatten':
             # Aplatir WikiSI
             if len(sys.argv) < 3:
                 print("Usage: ambulon flatten-wikisi <source_dir> [-o <output_dir>] [--verbose]")
@@ -1010,7 +818,7 @@ def main():
                 else:
                     i += 1
             return flatten_wikisi_directory(source, output, verbose)
-        elif command == 'make-interactive':
+        elif command == 'make-html-interactive':
             # Rendre HTML interactif
             if len(sys.argv) < 3:
                 print("Usage: ambulon make-interactive <input.html> [-o <output.html>] [--verbose]")
@@ -1031,110 +839,48 @@ def main():
             return make_html_interactive(input_file, output, verbose)
         elif command == 'merge-html':
             # Fusionner HTML
-            if len(sys.argv) < 3:
-                print("Usage: ambulon merge-html <directory> -o <output.html> [--verbose]")
-                return 1
-            directory = sys.argv[2]
-            output = None
-            verbose = False
-            i = 3
-            while i < len(sys.argv):
-                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
-                    output = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-v', '--verbose']:
-                    verbose = True
-                    i += 1
-                else:
-                    i += 1
-            if not output:
-                print("Error: -o/--output is required")
-                return 1
-            return fusion_html_files(directory, output, verbose)
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                merge_html_cli()
+                return 0
+            finally:
+                sys.argv = original_argv
         elif command == 'merge-md':
             # Fusionner Markdown
-            if len(sys.argv) < 3:
-                print("Usage: ambulon merge-md <directory> -o <output.md> [--verbose]")
-                return 1
-            directory = sys.argv[2]
-            output = None
-            verbose = False
-            i = 3
-            while i < len(sys.argv):
-                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
-                    output = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] in ['-v', '--verbose']:
-                    verbose = True
-                    i += 1
-                else:
-                    i += 1
-            if not output:
-                print("Error: -o/--output is required")
-                return 1
-            return fusion_markdown_files(directory, output, verbose)
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                merge_md_cli()
+                return 0
+            finally:
+                sys.argv = original_argv
         elif command == 'md2project':
             # Convertir Markdown en projet
-            if len(sys.argv) < 3:
-                print("Usage: ambulon md2project <input.md> [-o <output_dir>] [--dry-run] [--overwrite] [--merge] [--verbose]")
-                return 1
-            input_file = sys.argv[2]
-            output = None
-            dry_run = False
-            overwrite = False
-            merge = False
-            verbose = False
-            i = 3
-            while i < len(sys.argv):
-                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
-                    output = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] == '--dry-run':
-                    dry_run = True
-                    i += 1
-                elif sys.argv[i] == '--overwrite':
-                    overwrite = True
-                    i += 1
-                elif sys.argv[i] == '--merge':
-                    merge = True
-                    i += 1
-                elif sys.argv[i] in ['-v', '--verbose']:
-                    verbose = True
-                    i += 1
-                else:
-                    i += 1
-            return md2project(input_file, output, dry_run, overwrite, merge, verbose)
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                md2project_cli()
+                return 0
+            finally:
+                sys.argv = original_argv
         elif command == 'project2md':
             # Convertir projet en Markdown
-            if len(sys.argv) < 3:
-                print("Usage: ambulon project2md <project_dir> [-o <output.md>] [--exclude DIR] [--verbose]")
-                return 1
-            project_dir = sys.argv[2]
-            output = None
-            exclude_dirs = set()
-            verbose = False
-            i = 3
-            while i < len(sys.argv):
-                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
-                    output = sys.argv[i + 1]
-                    i += 2
-                elif sys.argv[i] == '--exclude' and i + 1 < len(sys.argv):
-                    exclude_dirs.add(sys.argv[i + 1])
-                    i += 2
-                elif sys.argv[i] in ['-v', '--verbose']:
-                    verbose = True
-                    i += 1
-                else:
-                    i += 1
-            return project_to_markdown(project_dir, output, exclude_dirs, verbose)
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                project2md_cli()
+                return 0
+            finally:
+                sys.argv = original_argv
         elif command == 'config':
             return handle_config_command()
         elif command == 'gitlab-clone':
             # Retirer 'gitlab-clone' des arguments et lancer le module gitlab
             original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            sys.argv = [sys.argv[0]] + ['clone'] + sys.argv[2:]
             try:
-                return gitlab_clone_main()
+                return gitlab_clone_app()
             finally:
                 sys.argv = original_argv
         elif command == 'test':

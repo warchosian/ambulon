@@ -32,8 +32,8 @@ from .core.fixer import (
 )
 
 # Export CLI depuis commands/
-from .commands.chk_utf8 import main_cli as check_md_cli
-from .commands.fix_utf8 import main_cli as fix_md_cli
+from .commands.check_utf8 import app as check_md_cli
+from .commands.fix_utf8 import app as fix_md_cli
 
 __all__ = [
     # Checker functions

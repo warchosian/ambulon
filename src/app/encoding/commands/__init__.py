@@ -1,7 +1,11 @@
-"""Commandes d'encodage pour fichiers Markdown - DYAG"""
+"""Commandes d'encodage pour fichiers Markdown - Ambulon"""
 
-from .chk_utf8 import run_chk_utf8, main_cli as chk_utf8_cli
-from .fix_utf8 import run_fix_utf8, main_cli as fix_utf8_cli
+from .check_utf8 import app as check_utf8_app
+from .fix_utf8 import app as fix_utf8_app
+
+# Aliases pour compatibilité
+chk_utf8_cli = check_utf8_app
+fix_utf8_cli = fix_utf8_app
 
 
 def register_chk_utf8_command(subparsers):
@@ -82,8 +86,8 @@ def register_fix_utf8_command(subparsers):
 
 
 __all__ = [
-    "run_chk_utf8",
-    "run_fix_utf8",
+    "check_utf8_app",
+    "fix_utf8_app",
     "chk_utf8_cli",
     "fix_utf8_cli",
     "register_chk_utf8_command",

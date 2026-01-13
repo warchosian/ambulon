@@ -4,6 +4,8 @@
 from .commands.compress_pdf import main as compress_pdf_main
 from .commands.img2pdf import main as img2pdf_main
 from .commands.pdf2html import convert_pdf_to_html
+from .commands.pdf2html import main as pdf2html_main
+from .commands.pdf2md import main as pdf2md_main
 
 # HTML <-> Markdown
 from .commands.html2md import process_html_to_markdown
@@ -21,6 +23,8 @@ __all__ = [
     'compress_pdf_main',
     'img2pdf_main',
     'convert_pdf_to_html',
+    'pdf2html_main',
+    'pdf2md_main',
     # HTML <-> Markdown
     'process_html_to_markdown',
     'process_markdown_to_html',

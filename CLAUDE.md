@@ -139,6 +139,48 @@ from app.piag import create_collection, upload_document
 
 **Principe général** : Toute application doit utiliser un gestionnaire de logs centralisé pour l'affichage console et la persistance des erreurs.
 
+### Affichage du chemin des fichiers générés (OBLIGATOIRE)
+
+**Toute commande générant un fichier en sortie DOIT afficher le chemin relatif de ce fichier à la fin de son exécution, dans un format cliquable par les terminaux modernes (ex: VS Code).**
+
+#### Format d'affichage obligatoire
+
+```
+✓ <Opération> réussie !
+Fichier produit : <chemin/relatif/vers/fichier.ext>
+```
+
+#### Implémentation recommandée
+
+Pour garantir la cliquabilité et la portabilité (Windows/Linux), utilisez `os.path.relpath`.
+
+```python
+import os
+from pathlib import Path
+
+# ... (votre logique de génération de fichier, output_path est un objet Path)
+
+if output_path:
+    try:
+        relative_path = os.path.relpath(output_path)
+    except ValueError:
+        # Fallback si le chemin n'est pas relatif (ex: autre drive sur Windows)
+        relative_path = output_path.resolve()
+
+    print(f"\n✓ Conversion réussie !")
+    print(f"Fichier produit : {relative_path}")
+    return 0
+else:
+    # Gérer l'échec
+    return 1
+```
+
+#### Règles d'Utilisation
+
+1. **Chemin relatif** : Toujours afficher le chemin relatif par rapport au répertoire courant (`Path.cwd()`).
+2. **Cliquable** : Le format doit être reconnu par le terminal de l'utilisateur comme un lien (souvent, un simple chemin sur sa propre ligne est suffisant).
+3. **OS-agnostique** : `os.path.relpath` gère les séparateurs (`/` ou `\`) automatiquement.
+
 #### Configuration des Logs
 
 ```python

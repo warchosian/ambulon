@@ -1,104 +1,110 @@
-"""Module GitLab Clone - Clone des projets GitLab depuis la configuration."""
-import yaml
+"""
+CLI command to clone GitLab projects based on a configuration file.
+This module handles CLI arguments, configuration loading, and logging.
+The core cloning logic resides in app.gitlab.core.cloning.
+"""
+import typer
+import logging
+import os
 from pathlib import Path
-import subprocess
-import sys
+from typing import List, Optional
 
-CONFIG_FILE = Path("config/gitlab.yaml")
+from app.core.config_loader import load_config as load_app_config
+from app.core.logging_config import setup_logging
+from app.gitlab.core.cloning import clone_repository
 
-def load_config():
-    """Charge la configuration GitLab depuis le fichier YAML."""
-    if not CONFIG_FILE.exists():
-        print(f"Error: Configuration file '{CONFIG_FILE}' not found.")
-        print(f"Please create '{CONFIG_FILE}' based on '{CONFIG_FILE}.example'.")
-        sys.exit(1)
-    with open(CONFIG_FILE, 'r') as f:
-        try:
-            return yaml.safe_load(f)
-        except yaml.YAMLError as e:
-            print(f"Error parsing YAML configuration: {e}")
-            sys.exit(1)
+app = typer.Typer()
 
-def main():
+# Default configuration for this module
+DEFAULT_CONFIG = {
+    'gitlab': {
+        'token': os.getenv('GITLAB_PRIVATE_TOKEN', ''),
+        'username': os.getenv('GITLAB_USERNAME', 'oauth2'),
+        'base_clone_dir': './gitlab_clones',
+        'repositories': []
+    }
+}
+
+# Setup logger for this module
+logger = logging.getLogger(__name__)
+
+@app.command(
+    help="""
+    Clones GitLab projects specified in the configuration.
+
+    Configuration Hierarchy (from highest to lowest priority):
+    1. Command-line arguments (e.g., --token)
+    2. YAML configuration file (`--config`)
+    3. Environment variables (e.g., GITLAB_PRIVATE_TOKEN)
+    4. Default values
     """
-    Fonction principale - Clone les projets GitLab spécifiés dans config/gitlab.yaml.
+)
+def clone(
+    token: Optional[str] = typer.Option(None, "--token", "-t", help="GitLab Private Access Token. Overrides config file and env var."),
+    username: Optional[str] = typer.Option(None, "--username", "-u", help="GitLab username for PAT. Overrides config file and env var."),
+    base_clone_dir: Optional[Path] = typer.Option(None, "--output", "-o", help="Base directory to clone projects into. Overrides config file."),
+    config_path: Path = typer.Option("config/gitlab.yaml", "--config", "-c", help="Path to the gitlab.yaml configuration file."),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging.")
+):
     """
-    config = load_config()
+    Clones GitLab projects based on a flexible configuration hierarchy.
+    """
+    # Setup logging
+    log_level = logging.DEBUG if verbose else logging.INFO
+    setup_logging(level=log_level, log_file_prefix="gitlab_clone")
+
+    # 1. Load config from YAML, substituting env vars, merged over defaults
+    config = load_app_config(str(config_path), DEFAULT_CONFIG)
+    
+    # 2. Override with CLI arguments if they were provided
+    if token:
+        config['gitlab']['token'] = token
+    if username:
+        config['gitlab']['username'] = username
+    if base_clone_dir:
+        config['gitlab']['base_clone_dir'] = str(base_clone_dir)
+
+    # 3. Validate the final configuration
     gitlab_config = config.get("gitlab", {})
-
-    token = gitlab_config.get("token")
-    username = gitlab_config.get("username")
-    base_clone_dir = Path(gitlab_config.get("base_clone_dir", "."))
+    final_token = gitlab_config.get("token")
+    final_username = gitlab_config.get("username")
+    final_base_dir_str = gitlab_config.get("base_clone_dir")
     repositories = gitlab_config.get("repositories", [])
 
-    if not all([token, username, base_clone_dir, repositories]):
-        print("Error: Missing 'token', 'username', 'base_clone_dir', or 'repositories' in gitlab.yaml.")
-        sys.exit(1)
+    if not all([final_token, final_username, final_base_dir_str, repositories]):
+        logger.error("Configuration is incomplete. Missing 'token', 'username', 'base_clone_dir', or 'repositories'.")
+        logger.error("Please provide them via CLI args, config/gitlab.yaml, or environment variables.")
+        raise typer.Exit(code=1)
 
-    base_clone_dir.mkdir(parents=True, exist_ok=True)
+    # 4. Execute business logic
+    final_base_dir = Path(final_base_dir_str)
+    final_base_dir.mkdir(parents=True, exist_ok=True)
+    
+    logger.info(f"Found {len(repositories)} repositories to process.")
+    
+    has_errors = False
+    for repo_url in repositories:
+        for result in clone_repository(repo_url, final_base_dir, final_username, final_token):
+            status = result.get("status")
+            message = result.get("message")
+            
+            if status == "error":
+                logger.error(message)
+                if result.get("stderr"):
+                    logger.error(f"Details: {result['stderr']}")
+                has_errors = True
+            elif status == "skipped":
+                logger.warning(message)
+            elif status == "cloning":
+                logger.info(message)
+            elif status == "success":
+                logger.info(message)
 
-    for repo_url_suffix in repositories:
-        # Retirer le préfixe https:// ou http:// s'il est présent
-        # Exemples acceptés:
-        # - https://gitlab-forge.din.developpement-durable.gouv.fr/snum/pnm3/gti/cerbere/cerbere-bouchon.git
-        # - gitlab-forge.din.developpement-durable.gouv.fr/snum/pnm3/produits/support/admin-ep/admin_ep.git
-        repo_url_clean = repo_url_suffix
-        if repo_url_clean.startswith('https://'):
-            repo_url_clean = repo_url_clean[8:]  # Retirer 'https://'
-        elif repo_url_clean.startswith('http://'):
-            repo_url_clean = repo_url_clean[7:]  # Retirer 'http://'
-
-        parts = repo_url_clean.split('/', 1)  # Split only on the first slash
-        if len(parts) < 2:
-            print(f"Warning: Invalid repository URL format: {repo_url_suffix}. Skipping.")
-            continue
-
-        domain = parts[0]
-        path_in_gitlab = parts[1]
-
-        # Construct the authenticated URL
-        # e.g., https://username:token@gitlab.com/group/project.git
-        authenticated_url = f"https://{username}:{token}@{domain}/{path_in_gitlab}"
-
-        # Extract repository name from the cleaned URL (e.g., 'cerbere-bouchon' from 'cerbere-bouchon.git')
-        repo_name = Path(repo_url_clean).stem
-        target_path = base_clone_dir / repo_name
-
-        if target_path.exists():
-            print(f"Repository '{repo_name}' already exists at '{target_path}'. Skipping.")
-            continue
-
-        # Afficher l'URL sans les credentials pour la sécurité
-        display_url = f"https://{domain}/{path_in_gitlab}"
-        print(f"Cloning '{repo_name}' from '{display_url}' to '{target_path}'...")
-        try:
-            # Using shell=True for simpler command parsing on Windows, but be aware of security implications if inputs were not controlled.
-            # Here, inputs are from config file, so it's relatively safe.
-            result = subprocess.run(
-                ["git", "clone", authenticated_url, str(target_path)],
-                check=True,
-                capture_output=True,
-                text=True,
-                shell=True # For Windows compatibility with git command
-            )
-            print(f"Successfully cloned '{repo_name}'.")
-            if result.stdout:
-                print("STDOUT:")
-                print(result.stdout)
-            if result.stderr:
-                print("STDERR:")
-                print(result.stderr)
-        except subprocess.CalledProcessError as e:
-            print(f"Error cloning '{repo_name}': {e}")
-            print(f"STDOUT: {e.stdout}")
-            print(f"STDERR: {e.stderr}")
-            sys.exit(1)
-        except FileNotFoundError:
-            print("Error: 'git' command not found. Please ensure Git is installed and in your PATH.")
-            sys.exit(1)
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-            sys.exit(1)
+    if has_errors:
+        logger.error("\nCompleted with errors.")
+        raise typer.Exit(code=1)
+    else:
+        logger.info("\nAll repositories processed successfully.")
 
 if __name__ == "__main__":
-    main()
+    app()
