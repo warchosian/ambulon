@@ -484,50 +484,52 @@ def handle_test_command():
 
 def handle_rag_module(module_name: str):
     """
-    Exécute un module RAG en lançant son __main__ block.
+    Exécute un module RAG PIAG.
 
     Args:
-        module_name: Le nom du module Python (ex: 'piag_collection_add')
+        module_name: Le nom de la commande (ex: 'piag-collection-add')
 
     Returns:
         Le code de retour du module.
     """
-    # Mapper les noms de commandes aux noms de modules Python
-    command_to_module = {
-        'piag-collection-add': 'piag_collection_add',
-        'piag-collection-list': 'piag_collection_list',
-        'piag-collection-get': 'piag_collection_get',
-        'piag-collection-update': 'piag_collection_update',
-        'piag-collection-rm': 'piag_collection_rm',
-        'piag-doc-upload': 'piag_doc_upload',
-        'piag-doc-list': 'piag_doc_list',
-        'piag-doc-get': 'piag_doc_get',
-        'piag-doc-rm': 'piag_doc_rm',
-        'piag-doc-chunks': 'piag_doc_chunks',
-        'piag-search': 'piag_search',
+    # Mapper les noms de commandes aux fonctions main()
+    command_to_import = {
+        'piag-collection-add': ('app.piag.commands.piag_collection_add', 'main'),
+        'piag-collection-list': ('app.piag.commands.piag_collection_list', 'main'),
+        'piag-collection-get': ('app.piag.commands.piag_collection_get', 'main'),
+        'piag-collection-update': ('app.piag.commands.piag_collection_update', 'main'),
+        'piag-collection-rm': ('app.piag.commands.piag_collection_rm', 'main'),
+        'piag-doc-upload': ('app.piag.commands.piag_doc_upload', 'main'),
+        'piag-doc-list': ('app.piag.commands.piag_doc_list', 'main'),
+        'piag-doc-get': ('app.piag.commands.piag_doc_get', 'main'),
+        'piag-doc-rm': ('app.piag.commands.piag_doc_rm', 'main'),
+        'piag-doc-chunks': ('app.piag.commands.piag_doc_chunks', 'main'),
+        'piag-search': ('app.piag.commands.piag_search', 'main'),
     }
 
-    python_module = command_to_module.get(module_name)
-    if not python_module:
+    import_info = command_to_import.get(module_name)
+    if not import_info:
         print(f"Module RAG inconnu: {module_name}", file=sys.stderr)
         return 1
 
-    # Manipuler sys.argv pour enlever le nom de la commande
-    original_argv = sys.argv
-    sys.argv = [sys.argv[0]] + sys.argv[2:]
+    module_path, function_name = import_info
 
     try:
-        # Importer et exécuter le module comme __main__
-        import runpy
-        runpy.run_module(f'app.piag.commands.{python_module}', run_name='__main__')
-        return 0
-    except SystemExit as e:
-        return e.code if e.code else 0
+        # Importer dynamiquement la fonction main()
+        import importlib
+        module = importlib.import_module(module_path)
+        main_func = getattr(module, function_name)
+
+        # Préparer les arguments (enlever 'ambulon' et le nom de la commande)
+        args = sys.argv[2:]
+
+        # Appeler la fonction main() avec les arguments
+        return main_func(args)
     except Exception as e:
         print(f"Erreur lors de l'exécution du module {module_name}: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc()
         return 1
-    finally:
-        sys.argv = original_argv
 
 
 def main():
@@ -753,17 +755,12 @@ def main():
                 sys.argv = original_argv
         elif command == 'wikisi-scrape':
             # Aspirer récursivement un site web WikiSI
+            from app.wikisi import wikisi_scraper_cli
             original_argv = sys.argv
             sys.argv = [sys.argv[0]] + sys.argv[2:]
             try:
-                import runpy
-                runpy.run_module('app.wikisi.commands.wikisi_scraper', run_name='__main__')
+                wikisi_scraper_cli()
                 return 0
-            except SystemExit as e:
-                return e.code if e.code else 0
-            except Exception as e:
-                print(f"Erreur lors de l'exécution du module wikisi-scrape: {e}", file=sys.stderr)
-                return 1
             finally:
                 sys.argv = original_argv
         elif command == 'add-toc-html':
