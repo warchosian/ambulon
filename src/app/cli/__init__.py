@@ -1,6 +1,6 @@
 """Module principal d'Ambulon."""
 
-__version__ = "1.0.0"
+from app import __version__
 
 def hello():
     """Affiche un message de salutation avec la version courante."""
