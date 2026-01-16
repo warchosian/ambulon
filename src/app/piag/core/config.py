@@ -30,10 +30,11 @@ def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
         if not path_to_check.exists():
             raise FileNotFoundError(f"Fichier de configuration non trouvé: {config_path}")
     else:
-        current_dir = Path(__file__).parent
-        project_root = current_dir.parent.parent.parent.parent
-        
-        yaml_path = project_root / "config" / "piag.yaml"
+        # Cherche le fichier de config depuis le répertoire courant de l'utilisateur
+        # (où ambulon est lancé), pas depuis le répertoire d'installation du package
+        cwd = Path.cwd()
+
+        yaml_path = cwd / "config" / "piag.yaml"
 
         if yaml_path.exists():
             path_to_check = yaml_path
