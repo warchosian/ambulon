@@ -49,6 +49,7 @@ from app.processing import (
 import requests # NEW
 import json # NEW
 from app.core.logging_config import setup_logging
+from app.cli.commands import handle_init_command
 
 
 
@@ -63,6 +64,7 @@ def show_help():
     print("  ocr                   Module OCR - Reconnaissance optique de caractères")
     print("  mcp                   Serveur MCP pour assistants IA")
     print("  config                Gestion de la configuration MCP")
+    print("  init                  Générer les fichiers de configuration (piag, gitlab, wikisi)")
     print("  gitlab-clone          Cloner des projets GitLab depuis la configuration")
     print("  test                  Tests des modules Ambulon")
     print()
@@ -875,6 +877,8 @@ def main():
                 sys.argv = original_argv
         elif command == 'config':
             return handle_config_command()
+        elif command == 'init':
+            return handle_init_command()
         elif command == 'gitlab-clone':
             # Retirer 'gitlab-clone' des arguments et lancer le module gitlab
             original_argv = sys.argv

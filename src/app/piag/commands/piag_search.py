@@ -45,16 +45,35 @@ def main(argv=None):
 
     # Validations
     if not collection_name_or_id:
-        print("Erreur: Le nom ou l'ID de la collection est requis (--collection, config, ou PIAG_RAG_COLLECTION_ID)", file=sys.stderr)
+        print("❌ Erreur: Le nom ou l'ID de la collection est requis", file=sys.stderr)
+        print("   Vous pouvez le fournir via:", file=sys.stderr)
+        print("   • --collection <name>", file=sys.stderr)
+        print("   • Variable d'env: PIAG_RAG_COLLECTION_ID", file=sys.stderr)
+        print("   • Fichier de config: config/piag.yaml", file=sys.stderr)
+        print("\n💡 Pour créer un fichier de configuration:", file=sys.stderr)
+        print("   ambulon init piag", file=sys.stderr)
         return 1
     if not query:
-        print("Erreur: La requête de recherche est requise (--query, config, ou PIAG_RAG_SEARCH_QUERY)", file=sys.stderr)
+        print("❌ Erreur: La requête de recherche est requise", file=sys.stderr)
+        print("   Utilisez: --query \"Votre question ici\"", file=sys.stderr)
         return 1
     if not api_token:
-        print("Erreur: Token API requis (--token, config, ou PIAG_RAG_API_TOKEN)", file=sys.stderr)
+        print("❌ Erreur: Token API requis", file=sys.stderr)
+        print("   Vous pouvez le fournir via:", file=sys.stderr)
+        print("   • --token <votre_token>", file=sys.stderr)
+        print("   • Variable d'env: PIAG_RAG_API_TOKEN", file=sys.stderr)
+        print("   • Fichier de config: config/piag.yaml (section security.token)", file=sys.stderr)
+        print("\n💡 Pour créer un fichier de configuration:", file=sys.stderr)
+        print("   ambulon init piag", file=sys.stderr)
         return 1
     if not project_id:
-        print("Erreur: Project ID requis (--project-id, config, ou PIAG_RAG_PROJECT_ID)", file=sys.stderr)
+        print("❌ Erreur: Project ID requis", file=sys.stderr)
+        print("   Vous pouvez le fournir via:", file=sys.stderr)
+        print("   • --project-id <votre_id>", file=sys.stderr)
+        print("   • Variable d'env: PIAG_RAG_PROJECT_ID", file=sys.stderr)
+        print("   • Fichier de config: config/piag.yaml (section project.project_id)", file=sys.stderr)
+        print("\n💡 Pour créer un fichier de configuration:", file=sys.stderr)
+        print("   ambulon init piag", file=sys.stderr)
         return 1
 
     try:

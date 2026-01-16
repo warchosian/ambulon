@@ -363,7 +363,41 @@ Le processus de création d'une nouvelle release est strict et doit suivre ces �
     ```
     Si des fichiers manquent, retournez à la section "Vérification de l'Intégrité du Build" pour ajuster la configuration `pyproject.toml`, puis recommencez le build.
 
-6.  **Pousser les changements**: Si la vérification du build est réussie, poussez vos commits et tags vers le dépôt distant.
+6.  **Vérification de l'Absence de Secrets** : **🚨 ÉTAPE CRITIQUE - Cette vérification est OBLIGATOIRE avant CHAQUE push vers GitHub/GitLab.**
+
+    Avant de pousser vos changements, vous DEVEZ vérifier qu'aucun secret (tokens, API keys, project IDs, credentials) n'est présent dans les fichiers qui seront poussés.
+
+    **Commandes de vérification obligatoires :**
+    ```bash
+    # 1. Vérifier les fichiers qui seront poussés
+    git diff --staged
+    git diff HEAD
+
+    # 2. Rechercher des patterns de secrets dans les fichiers modifiés
+    git diff HEAD | grep -i "token\|secret\|password\|api_key\|credential"
+
+    # 3. Vérifier spécifiquement les fichiers de documentation
+    grep -r "token\|secret\|password\|api_key\|project_id" doc/ --include="*.md"
+
+    # 4. Vérifier les fichiers de configuration
+    grep -r "token\|secret\|password\|api_key" config/ --include="*.yaml" --include="*.example"
+    ```
+
+    **⚠️ Si un secret est détecté :**
+    - **NE PAS POUSSER** immédiatement
+    - Remplacer les secrets par des placeholders (ex: `"VOTRE_TOKEN_ICI"`, `"your_project_id_here"`)
+    - Amender le commit si nécessaire : `git commit --amend --no-edit`
+    - Re-vérifier l'absence de secrets
+    - Si un secret a déjà été poussé, considérer le secret comme compromis et le révoquer immédiatement
+
+    **Checklist de sécurité :**
+    - [ ] Aucun token JWT dans les fichiers
+    - [ ] Aucun project_id réel dans la documentation
+    - [ ] Aucun mot de passe dans les exemples
+    - [ ] Les fichiers `.example` contiennent uniquement des placeholders
+    - [ ] Les fichiers de config réels (`config/*.yaml`) sont dans `.gitignore`
+
+7.  **Pousser les changements**: Si la vérification du build ET la vérification de l'absence de secrets sont réussies, poussez vos commits et tags vers le dépôt distant.
     ```bash
     git push --follow-tags
     ```
