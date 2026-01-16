@@ -4,9 +4,9 @@ Utilizes core logic from app.processing.core.html_concatenator.
 Handles CLI arguments, configuration loading, and logging.
 """
 
-import typer
+import sys
+import argparse
 import logging
-import os
 from pathlib import Path
 from typing import Optional
 
@@ -15,8 +15,6 @@ from app.core.logging_config import setup_logging
 from ..core.html_concatenator import concatenate_html_files_logic
 
 logger = logging.getLogger(__name__)
-
-app = typer.Typer()
 
 DEFAULT_CONFIG = {
     'processing': {
@@ -27,73 +25,150 @@ DEFAULT_CONFIG = {
     }
 }
 
-@app.command(
-    help=f"""
+def main(argv=None):
+    """
+    Entry point with argv parameter for testability.
+
     Concatenates multiple HTML files from a specified directory into a single HTML file.
     Files are sorted in natural (numeric) order.
 
     Configuration Hierarchy (from highest to lowest priority):
     1. Command-line arguments
-    2. YAML configuration file (`--config`, e.g., `config/processing.yaml`)
+    2. YAML configuration file (--config, e.g., config/processing.yaml)
     3. Environment variables
     4. Default values
-    """,
-)
-def main(
-    directory: Path = typer.Argument(..., help="Directory containing HTML files.", exists=True, file_okay=False, dir_okay=True, readable=True),
-    output: Path = typer.Option(..., "--output", "-o", help="Output HTML file path."),
-    config_path: Optional[Path] = typer.Option(None, "--config", "-c", help="Path to a YAML configuration file (e.g., config/processing.yaml)."),
-    
+    """
+    parser = argparse.ArgumentParser(
+        description="Concatenates multiple HTML files from a specified directory into a single HTML file.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Configuration Hierarchy (from highest to lowest priority):
+  1. Command-line arguments
+  2. YAML configuration file (--config, e.g., config/processing.yaml)
+  3. Environment variables
+  4. Default values
+
+Examples:
+  # Basic concatenation
+  ambulon concat-html /path/to/html-dir --output output.html
+
+  # With configuration file
+  ambulon concat-html /path/to/html-dir -o output.html --config config/processing.yaml
+
+  # Without headers and custom title
+  ambulon concat-html /path/to/html-dir -o output.html --no-headers --title "My Document"
+        """
+    )
+
+    # Positional arguments
+    parser.add_argument(
+        "directory",
+        type=Path,
+        help="Directory containing HTML files."
+    )
+
+    # Required options
+    parser.add_argument(
+        "-o", "--output",
+        type=Path,
+        required=True,
+        help="Output HTML file path."
+    )
+
+    # Configuration
+    parser.add_argument(
+        "-c", "--config",
+        type=Path,
+        dest="config_path",
+        help="Path to a YAML configuration file (e.g., config/processing.yaml)."
+    )
+
     # Global options
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging."),
-    quiet: bool = typer.Option(False, "--quiet", "-q", help="Suppress most output messages."),
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Enable verbose logging."
+    )
+    parser.add_argument(
+        "-q", "--quiet",
+        action="store_true",
+        help="Suppress most output messages."
+    )
 
     # Concatenation specific options
-    include_headers: Optional[bool] = typer.Option(None, "--include-headers", help="Add headers showing source file names. Set with --no-headers to disable."),
-    no_headers: bool = typer.Option(False, "--no-headers", help="Do not add headers showing source file names."),
-    title: Optional[str] = typer.Option(None, "--title", help="Title for the concatenated document."),
-):
-    """
-    CLI for concatenating HTML files.
-    """
-    # Configure logging
-    log_level = logging.DEBUG if verbose else (logging.WARNING if quiet else logging.INFO)
+    parser.add_argument(
+        "--include-headers",
+        action="store_true",
+        dest="include_headers",
+        help="Add headers showing source file names (default)."
+    )
+    parser.add_argument(
+        "--no-headers",
+        action="store_true",
+        dest="no_headers",
+        help="Do not add headers showing source file names."
+    )
+    parser.add_argument(
+        "--title",
+        type=str,
+        help="Title for the concatenated document."
+    )
+
+    args = parser.parse_args(argv)
+
+    # Validate directory exists
+    if not args.directory.exists():
+        print(f"Error: Directory does not exist: {args.directory}", file=sys.stderr)
+        return 1
+    if not args.directory.is_dir():
+        print(f"Error: Path is not a directory: {args.directory}", file=sys.stderr)
+        return 1
+
+    # Setup logging
+    log_level = logging.DEBUG if args.verbose else (logging.WARNING if args.quiet else logging.INFO)
     setup_logging(level=log_level, log_file_prefix="concat_html")
     logger.info("[START] Starting concat-html module.")
-    logger.debug(f"CLI arguments: {typer.Context.get_current().params}")
+    logger.debug(f"CLI arguments: {vars(args)}")
 
     # Load configuration
-    config = load_app_config(str(config_path) if config_path else None, DEFAULT_CONFIG)
+    config = load_app_config(str(args.config_path) if args.config_path else None, DEFAULT_CONFIG)
     concat_html_config = config['processing']['concat_html']
 
     # Apply CLI overrides (highest priority) and resolve config
-    final_include_headers = include_headers if include_headers is not None else concat_html_config.get('include_headers', DEFAULT_CONFIG['processing']['concat_html']['include_headers'])
-    if no_headers:
+    if args.include_headers:
+        final_include_headers = True
+    elif args.no_headers:
         final_include_headers = False
-    
-    final_title = title if title is not None else concat_html_config.get('title', DEFAULT_CONFIG['processing']['concat_html']['title'])
+    else:
+        final_include_headers = concat_html_config.get('include_headers', DEFAULT_CONFIG['processing']['concat_html']['include_headers'])
+
+    final_title = args.title if args.title is not None else concat_html_config.get('title', DEFAULT_CONFIG['processing']['concat_html']['title'])
 
     # Execute core logic
-    exit_code, generated_path = concatenate_html_files_logic(
-        directory=directory,
-        output_file=output,
-        include_headers=final_include_headers,
-        title=final_title
-    )
+    try:
+        exit_code, generated_path = concatenate_html_files_logic(
+            directory=args.directory,
+            output_file=args.output,
+            include_headers=final_include_headers,
+            title=final_title
+        )
 
-    if exit_code == 0:
-        if generated_path:
-            try:
-                relative_path = generated_path.relative_to(Path.cwd())
-            except ValueError:
-                relative_path = generated_path.resolve()
-            print(f"\n✓ Concatenation successful!\nFile produced: {relative_path}")
+        if exit_code == 0:
+            if generated_path:
+                try:
+                    relative_path = generated_path.relative_to(Path.cwd())
+                except ValueError:
+                    relative_path = generated_path.resolve()
+                print(f"\n✓ Concatenation successful!\nFile produced: {relative_path}")
+            else:
+                print("\n✓ Concatenation successful, but no specific output file generated (e.g., no HTML files found).")
+            return 0
         else:
-            print("\n✓ Concatenation successful, but no specific output file generated (e.g., no HTML files found).")
-        raise typer.Exit(code=0)
-    else:
-        logger.error("Failed to concatenate HTML files.")
-        raise typer.Exit(code=1)
+            logger.error("Failed to concatenate HTML files.")
+            return 1
+    except Exception as e:
+        logger.error(f"Error during concatenation: {e}", exc_info=True)
+        return 1
 
 if __name__ == '__main__':
-    app()
+    sys.exit(main())

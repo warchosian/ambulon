@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.0.1 (2026-01-16)
+
+### BREAKING CHANGE
+
+- Typer dependency completely removed from project
+
+### Fix
+
+- **cli**: Import __version__ from app instead of hardcoding 1.0.0
+- **cli**: Replace runpy with direct imports for PIAG and WikiSI commands
+
+### Refactor
+
+- Replace Typer with argparse in all CLI commands
+
 ## 1.1.1 (2026-01-16)
 
 ### Fix

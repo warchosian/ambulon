@@ -23,10 +23,10 @@ filters:
 
   # Patterns d'URLs à exclure (regex)
   exclude_patterns:
-    - ".*/logout.*"
-    - ".*/admin.*"
-    - ".*\\.pdf$"
-    - ".*\\.zip$"
+    - '.*/logout.*'
+    - '.*/admin.*'
+    - '.*\.pdf$'
+    - '.*\.zip$'
 
   # Extensions de fichiers à télécharger
   allowed_extensions:
