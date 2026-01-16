@@ -43,6 +43,89 @@ src/
 - Structure standardisée : `commands/` et `core/`
 - Pas de dépendances croisées entre modules
 
+### 🚨 RÈGLE OBLIGATOIRE - Framework CLI
+
+**TOUS les nouveaux modules CLI DOIVENT utiliser argparse de la bibliothèque standard Python.**
+
+**❌ INTERDIT : Utilisation de Typer ou autres frameworks CLI tiers**
+
+**Raisons :**
+- **Typer a été complètement retiré du projet en version 2.0.0** suite à des problèmes récurrents :
+  - RuntimeWarning avec `runpy.run_module`
+  - Conflits avec manipulation de `sys.argv`
+  - "Got unexpected extra arguments" errors
+  - Complexité inutile pour notre cas d'usage
+- **argparse** est la solution standard, stable, et bien documentée
+- Pas de dépendances externes
+- Contrôle total sur le parsing et la gestion des arguments
+- Facilite les tests et l'intégration
+
+**Pattern obligatoire pour tous les nouveaux CLI :**
+
+```python
+import sys
+import argparse
+import logging
+from pathlib import Path
+
+def main(argv=None):
+    """
+    Point d'entrée de la commande.
+
+    Args:
+        argv: Arguments en ligne de commande (list), ou None pour utiliser sys.argv
+
+    Returns:
+        Code de sortie (0 = succès, non-zéro = erreur)
+    """
+    parser = argparse.ArgumentParser(
+        description="Description de la commande",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Configuration Hierarchy (from highest to lowest priority):
+  1. Command-line arguments
+  2. YAML configuration file (--config)
+  3. Environment variables
+  4. Default values
+        """
+    )
+
+    # Arguments positionnels
+    parser.add_argument("input", help="Fichier d'entrée")
+
+    # Arguments optionnels
+    parser.add_argument("-o", "--output", help="Fichier de sortie")
+    parser.add_argument("-c", "--config", help="Fichier de configuration YAML")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Mode verbeux")
+    parser.add_argument("-q", "--quiet", action="store_true", help="Mode silencieux")
+
+    args = parser.parse_args(argv)
+
+    # Configuration du logging
+    log_level = logging.DEBUG if args.verbose else (logging.WARNING if args.quiet else logging.INFO)
+    setup_logging(level=log_level, log_file_prefix="module_name")
+
+    try:
+        # Logique métier ici
+        result = process_data(args.input, args.output)
+        return 0
+    except Exception as e:
+        logger.error(f"Erreur: {e}", exc_info=True)
+        return 1
+
+if __name__ == '__main__':
+    sys.exit(main())
+```
+
+**Points clés obligatoires :**
+- ✅ Fonction `main(argv=None)` pour testabilité
+- ✅ Retour d'un code de sortie (0 ou 1)
+- ✅ `if __name__ == '__main__': sys.exit(main())`
+- ✅ Documentation de la hiérarchie de configuration dans `--help`
+- ✅ Gestion d'exceptions avec logging
+- ❌ Jamais de `raise typer.Exit()` ou équivalent
+- ❌ Jamais de décorateurs `@app.command()`
+
 ### Structure Interne d'une Catégorie
 
 Chaque catégorie sous `app/` suit cette structure :
