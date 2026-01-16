@@ -7,7 +7,7 @@ import argparse
 from app.piag.core import PIAGClient, load_config
 
 
-if __name__ == "__main__":
+def main(argv=None):
     parser = argparse.ArgumentParser(
         description="Liste les collections RAG PIAG d'un projet.",
         epilog="HIÉRARCHIE DE PRIORITÉ: Arguments CLI > Fichier YAML > Variables d'environnement > Valeurs par défaut"
@@ -22,7 +22,7 @@ if __name__ == "__main__":
     parser.add_argument("--config", help="Chemin vers un fichier de configuration personnalisé.")
     parser.add_argument("--debug", action="store_true", help="Active le mode debug (logging détaillé).")
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     # Charger la configuration
     config = None
@@ -32,7 +32,7 @@ if __name__ == "__main__":
             print(f"Configuration chargée depuis: {args.config}")
         except Exception as e:
             print(f"Erreur lors du chargement de la config: {e}", file=sys.stderr)
-            sys.exit(1)
+            return 1
     else:
         try:
             config = load_config()
@@ -50,12 +50,12 @@ if __name__ == "__main__":
     project_id = args.project_id or config.get('project', {}).get('project_id') or os.getenv('PIAG_RAG_PROJECT_ID')
     if not project_id:
         print("Erreur: project_id requis", file=sys.stderr)
-        sys.exit(1)
+        return 1
 
     api_token = args.token or config.get('security', {}).get('token') or os.getenv(config.get('security', {}).get('token_env_var', 'PIAG_RAG_API_TOKEN'))
     if not api_token:
         print("Erreur: Token API requis", file=sys.stderr)
-        sys.exit(1)
+        return 1
 
     limit = args.limit or config.get('listing', {}).get('default_limit', 20)
     offset = args.offset or config.get('listing', {}).get('default_offset', 0)
@@ -75,7 +75,10 @@ if __name__ == "__main__":
         elif isinstance(result, list):
             print(f"\nRésumé: {len(result)} collection(s)")
 
-        sys.exit(0)
+        return 0
     except Exception as e:
         print(f"Erreur : {e}", file=sys.stderr)
-        sys.exit(1)
+        return 1
+
+if __name__ == "__main__":
+    sys.exit(main())

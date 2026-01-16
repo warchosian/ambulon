@@ -12,33 +12,40 @@ from typing import Dict, Any, Optional
 
 def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
     """
-    Charge la configuration depuis le fichier piag.yml.
+    Charge la configuration depuis un fichier piag.yaml ou piag.yml.
 
     Args:
         config_path: Chemin personnalisé vers le fichier de configuration.
-                     Si None, utilise config/piag.yml à la racine du projet.
+                     Si None, recherche config/piag.yaml puis config/piag.yml.
 
     Returns:
         Dictionnaire contenant la configuration.
 
     Raises:
-        FileNotFoundError: Si le fichier de configuration n'est pas trouvé.
+        FileNotFoundError: Si aucun fichier de configuration n'est trouvé.
         yaml.YAMLError: Si le fichier YAML est mal formé.
     """
-    if config_path is None:
-        # Trouver le répertoire racine du projet (où se trouve config/)
-        current_dir = Path(__file__).parent
-        config_path = current_dir.parent.parent.parent.parent / "config" / "piag.yml"
+    if config_path:
+        path_to_check = Path(config_path)
+        if not path_to_check.exists():
+            raise FileNotFoundError(f"Fichier de configuration non trouvé: {config_path}")
     else:
-        config_path = Path(config_path)
+        current_dir = Path(__file__).parent
+        project_root = current_dir.parent.parent.parent.parent
+        
+        yaml_path = project_root / "config" / "piag.yaml"
 
-    if not config_path.exists():
-        raise FileNotFoundError(f"Fichier de configuration non trouvé: {config_path}")
+        if yaml_path.exists():
+            path_to_check = yaml_path
+        else:
+            # Retourne un dictionnaire vide si aucun fichier de config par défaut n'est trouvé.
+            # Cela permet aux commandes de fonctionner uniquement avec les variables d'env / args CLI.
+            return {}
 
-    with open(config_path, 'r', encoding='utf-8') as f:
+    with open(path_to_check, 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
 
-    return config
+    return config or {}
 
 
 # Charger la configuration par défaut au niveau du module

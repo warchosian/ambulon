@@ -7,8 +7,9 @@ license = "MIT"
 readme = "README.md"
 packages = [{include = "app", from = "src"}]
 include = [
-    "config/mcp-config.json",
     "config/piag.yaml.example",
+    "config/gitlab.yaml.example",
+    "config/wikisi.yaml.example",
     "config/README.md"
 ]
 

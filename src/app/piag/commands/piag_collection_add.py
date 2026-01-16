@@ -6,7 +6,7 @@ import argparse
 from app.piag.core import PIAGClient, load_config
 
 
-if __name__ == "__main__":
+def main(argv=None):
     """
     Script CLI pour créer une collection RAG PIAG.
 
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     parser.add_argument("--config", help="Chemin vers un fichier de configuration personnalisé.")
     parser.add_argument("--debug", action="store_true", help="Active le mode debug (logging détaillé).")
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     # Charger la configuration personnalisée si spécifiée
     config = None
@@ -41,7 +41,7 @@ if __name__ == "__main__":
             print(f"Configuration chargée depuis: {args.config}")
         except Exception as e:
             print(f"Erreur lors du chargement de la config: {e}", file=sys.stderr)
-            sys.exit(1)
+            return 1
     else:
         try:
             config = load_config()
@@ -66,7 +66,7 @@ if __name__ == "__main__":
         project_id = os.getenv('PIAG_RAG_PROJECT_ID')  # Variable d'env (priorité 3)
     if not project_id:
         print("Erreur: project_id requis. Utilisez --project-id, définissez-le dans le YAML, ou via PIAG_RAG_PROJECT_ID", file=sys.stderr)
-        sys.exit(1)
+        return 1
 
     # 2. NAME
     name = args.name  # Argument CLI (priorité 1)
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         name = os.getenv('PIAG_RAG_COLLECTION_NAME')  # Variable d'env (priorité 3)
     if not name:
         print("Erreur: name requis. Utilisez --name, définissez-le dans le YAML, ou via PIAG_RAG_COLLECTION_NAME", file=sys.stderr)
-        sys.exit(1)
+        return 1
 
     # 3. DESCRIPTION
     description = args.description  # Argument CLI (priorité 1)
@@ -86,7 +86,7 @@ if __name__ == "__main__":
         description = os.getenv('PIAG_RAG_COLLECTION_DESCRIPTION')  # Variable d'env (priorité 3)
     if not description:
         print("Erreur: description requise. Utilisez --description, définissez-la dans le YAML, ou via PIAG_RAG_COLLECTION_DESCRIPTION", file=sys.stderr)
-        sys.exit(1)
+        return 1
 
     # 4. TOKEN
     api_token = args.token  # Argument CLI (priorité 1)
@@ -98,7 +98,7 @@ if __name__ == "__main__":
         api_token = os.getenv(token_env_var)
     if not api_token:
         print(f"Erreur: Token API requis. Utilisez --token, définissez-le dans le YAML (non recommandé), ou via {token_env_var}", file=sys.stderr)
-        sys.exit(1)
+        return 1
 
     # 5. BASE_URL (optionnel, a des valeurs par défaut)
     base_url = args.base_url  # Argument CLI (priorité 1)
@@ -117,8 +117,11 @@ if __name__ == "__main__":
         print("Collection RAG créée avec succès :")
         import json
         print(json.dumps(result, indent=2))
-        sys.exit(0)
+        return 0
 
     except Exception as e:
         print(f"Une erreur est survenue : {e}", file=sys.stderr)
-        sys.exit(1)
+        return 1
+
+if __name__ == "__main__":
+    sys.exit(main())

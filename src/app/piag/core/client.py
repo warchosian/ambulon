@@ -182,6 +182,40 @@ class PIAGClient:
         endpoint = get_endpoint('collection_detail', self.config).replace('{collection_id}', collection_id)
         return self._request('DELETE', endpoint)
 
+    def resolve_collection_id(self, collection_name_or_id: str, project_id: str) -> str:
+        """
+        Résout un nom ou un ID de collection en un ID de collection.
+
+        Args:
+            collection_name_or_id: Nom ou ID de la collection.
+            project_id: ID du projet auquel la collection appartient.
+
+        Returns:
+            L'ID de la collection.
+
+        Raises:
+            ValueError: Si la collection n'est pas trouvée.
+        """
+        if not collection_name_or_id:
+            raise ValueError("Le nom ou l'ID de la collection ne peut pas être vide.")
+
+        # Première tentative : l'argument est déjà un ID
+        try:
+            self.get_collection(collection_name_or_id)
+            return collection_name_or_id
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code != 404:
+                raise # Renvoyer les erreurs autres que "Not Found"
+
+        # Deuxième tentative : l'argument est un nom
+        collections = self.list_collections(project_id, limit=1000).get('items', [])
+        for collection in collections:
+            if collection.get('name') == collection_name_or_id:
+                return collection['id']
+
+        raise ValueError(f"Collection '{collection_name_or_id}' non trouvée dans le projet '{project_id}'.")
+
+
     # Documents
 
     def upload_document(self, collection_id: str, file_path: str) -> Dict[str, Any]:
