@@ -9,7 +9,6 @@ from .config import (
     get_endpoint,
     should_log_requests,
     should_log_responses,
-    DEFAULT_CONFIG,
     DEFAULT_BASE_URL
 )
 
@@ -25,7 +24,6 @@ __all__ = [
     'get_endpoint',
     'should_log_requests',
     'should_log_responses',
-    'DEFAULT_CONFIG',
     'DEFAULT_BASE_URL',
     # Client
     'PIAGClient',
