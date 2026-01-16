@@ -48,15 +48,26 @@ def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
     return config or {}
 
 
-# Charger la configuration par défaut au niveau du module
-try:
-    DEFAULT_CONFIG = load_config()
-    DEFAULT_BASE_URL = DEFAULT_CONFIG['api']['base_url']
-except (FileNotFoundError, KeyError, yaml.YAMLError) as e:
-    print(f"Avertissement: Impossible de charger la configuration: {e}", file=sys.stderr)
-    # Fallback sur l'URL en dur
-    DEFAULT_BASE_URL = "https://preprod.api.piag.e2.rie.gouv.fr/rag/"
-    DEFAULT_CONFIG = None
+# Configuration par défaut (chargée à la demande pour éviter warnings au démarrage)
+_DEFAULT_CONFIG = None
+_CONFIG_LOADED = False
+DEFAULT_BASE_URL = "https://preprod.api.piag.e2.rie.gouv.fr/rag/"
+
+
+def _load_default_config() -> Dict[str, Any]:
+    """Charge la configuration par défaut de manière lazy (à la demande)."""
+    global _DEFAULT_CONFIG, _CONFIG_LOADED
+
+    if not _CONFIG_LOADED:
+        try:
+            _DEFAULT_CONFIG = load_config()
+            _CONFIG_LOADED = True
+        except (FileNotFoundError, KeyError, yaml.YAMLError):
+            # Pas de config trouvée = comportement normal (pas d'avertissement)
+            _DEFAULT_CONFIG = {}
+            _CONFIG_LOADED = True
+
+    return _DEFAULT_CONFIG
 
 
 def get_config(config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
@@ -70,7 +81,7 @@ def get_config(config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         Dictionnaire de configuration.
     """
     if config is None:
-        return DEFAULT_CONFIG or {}
+        return _load_default_config()
     return config
 
 
