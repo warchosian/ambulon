@@ -8,7 +8,8 @@ import json
 import io
 
 # Add the src directory to the sys.path to allow importing modules
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent / "src"))
+# This line is removed as it's not needed with a poetry install
+# sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent / "src"))
 
 from app.piag.core.config import load_config
 

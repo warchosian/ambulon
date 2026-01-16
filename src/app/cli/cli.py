@@ -10,7 +10,6 @@ from app.scan.commands.scan import main as scan_main
 from app.ocr.commands.ocr import main as ocr_main
 from app.mcp.commands.run_server import main as mcp_main
 from app.mcp.core.config import export_mcp_config, get_claude_config_path
-from app.piag import create_collection # NEW - migration vers nouvelle architecture
 from app.gitlab.commands.gitlab_clone import app as gitlab_clone_app
 
 # Modules de conversion
@@ -29,8 +28,11 @@ from app.conversion import (
 # Modules d'encoding
 from app.encoding import check_md_cli, fix_md_cli
 
+
+
 # Module WikiSI
-from app.wikisi import wikisi_extract_json_cli, wikisi_json_to_md_cli, flatten_wikisi_directory, wikisi_scraper_cli
+
+
 
 # Module Processing
 from app.processing import (
@@ -731,6 +733,7 @@ def main():
                 sys.argv = original_argv
         elif command == 'wikisi-extract':
             # Extraire et filtrer des applications depuis JSON
+            from app.wikisi import wikisi_extract_json_cli
             original_argv = sys.argv
             sys.argv = [sys.argv[0]] + sys.argv[2:]
             try:
@@ -740,6 +743,7 @@ def main():
                 sys.argv = original_argv
         elif command == 'wikisi-md':
             # Convertir parc applicatif JSON en Markdown
+            from app.wikisi import wikisi_json_to_md_cli
             original_argv = sys.argv
             sys.argv = [sys.argv[0]] + sys.argv[2:]
             try:
@@ -752,8 +756,14 @@ def main():
             original_argv = sys.argv
             sys.argv = [sys.argv[0]] + sys.argv[2:]
             try:
-                wikisi_scraper_cli()
+                import runpy
+                runpy.run_module('app.wikisi.commands.wikisi_scraper', run_name='__main__')
                 return 0
+            except SystemExit as e:
+                return e.code if e.code else 0
+            except Exception as e:
+                print(f"Erreur lors de l'exécution du module wikisi-scrape: {e}", file=sys.stderr)
+                return 1
             finally:
                 sys.argv = original_argv
         elif command == 'add-toc-html':
@@ -803,6 +813,7 @@ def main():
                 sys.argv = original_argv
         elif command == 'wikisi-flatten':
             # Aplatir WikiSI
+            from app.wikisi import flatten_wikisi_directory
             if len(sys.argv) < 3:
                 print("Usage: ambulon flatten-wikisi <source_dir> [-o <output_dir>] [--verbose]")
                 return 1

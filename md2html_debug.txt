@@ -1,28 +1,5 @@
-Tree paragraphs wrapped: 1
-Total paragraphs: 87
+Tree paragraphs wrapped: 0
+Total paragraphs: 1
 
-Para 0: has_tree=False, len=19, start=﻿# Projet : ambulon
-
-Para 1: has_tree=False, len=95, start=<strong>Chemin</strong> : <code>G:\WarchoLife\WarchoDevplace\Gitlab_Applications\ambulon</code>
-
-Para 2: has_tree=False, len=52, start=<strong>Fichiers</strong> : 15 fichiers non-binaires
-
-Para 3: has_tree=False, len=36, start=<h2>📁 Arborescence des fichiers</h2>
-
-Para 4: has_tree=True, len=1037, start=├── <strong>doc/</strong>
-│   ├── ___HTML_TAG_0______HTML_TAG_30___ <em>(4.423 octets)</em>
-│   ├── 
-
-Para 5: has_tree=False, len=4, start=<hr>
-
-Para 6: has_tree=False, len=31, start=<h2>📄 Contenu des fichiers</h2>
-
-Para 7: has_tree=False, len=5, start=
-<hr>
-
-Para 8: has_tree=False, len=97, start=<h3>📄 <code>.aider.chat.history.md</code> [4.484 octets]</h3>
-___HTML_TAG_15___ ___HTML_TAG_45___
-
-Para 9: has_tree=False, len=203, start=<blockquote>
-<strong>Chemin relatif</strong> : <code>.aider.chat.history.md</code>  
-<strong>Taille<
+Para 0: has_tree=False, len=16550, start=___HTML_TAG_0___
+<svg id="container" width="934.94921875" xmlns="http://www.w3.org/2000/svg" class="
