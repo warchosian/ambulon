@@ -75,17 +75,17 @@ Vous devez avoir accès à l'API PIAG avec l'une de ces méthodes :
 ```bash
 # Windows (CMD)
 set PIAG_RAG_API_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-set PIAG_RAG_PROJECT_ID=PnuQzUEmwRDkxZPX
+set PIAG_RAG_PROJECT_ID=your_project_id_here
 set PIAG_RAG_BASE_URL=https://preprod.api.piag.e2.rie.gouv.fr/rag/
 
 # Windows (PowerShell)
 $env:PIAG_RAG_API_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-$env:PIAG_RAG_PROJECT_ID="PnuQzUEmwRDkxZPX"
+$env:PIAG_RAG_PROJECT_ID="your_project_id_here"
 $env:PIAG_RAG_BASE_URL="https://preprod.api.piag.e2.rie.gouv.fr/rag/"
 
 # Linux/Mac
 export PIAG_RAG_API_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-export PIAG_RAG_PROJECT_ID="PnuQzUEmwRDkxZPX"
+export PIAG_RAG_PROJECT_ID="your_project_id_here"
 export PIAG_RAG_BASE_URL="https://preprod.api.piag.e2.rie.gouv.fr/rag/"
 ```
 
@@ -99,7 +99,7 @@ api:
   base_url: "https://preprod.api.piag.e2.rie.gouv.fr/rag/"
 
 project:
-  project_id: "PnuQzUEmwRDkxZPX"
+  project_id: "your_project_id_here"
 
 security:
   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
