@@ -1,11 +1,13 @@
 """Commandes d'encodage pour fichiers Markdown - Ambulon"""
 
-from .check_utf8 import app as check_utf8_app
-from .fix_utf8 import app as fix_utf8_app
+from .check_utf8 import main as check_utf8_main
+from .fix_utf8 import main as fix_utf8_main
 
 # Aliases pour compatibilité
-chk_utf8_cli = check_utf8_app
-fix_utf8_cli = fix_utf8_app
+chk_utf8_cli = check_utf8_main
+fix_utf8_cli = fix_utf8_main
+check_utf8_app = check_utf8_main
+fix_utf8_app = fix_utf8_main
 
 
 def register_chk_utf8_command(subparsers):

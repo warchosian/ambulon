@@ -23,63 +23,63 @@ from .commands import (
 # Les CLI apps sont importées directement
 # Si l'import échoue, on crée des dummy apps
 try:
-    from .commands.add_toc4html import app as add_toc4html_cli
+    from .commands.add_toc4html import main as add_toc4html_cli
 except ImportError as e:
     import logging
     logging.getLogger(__name__).warning(f"Could not load add_toc4html_cli: {e}")
     add_toc4html_cli = None
 
 try:
-    from .commands.add_toc4md import app as add_toc4md_cli
+    from .commands.add_toc4md import main as add_toc4md_cli
 except ImportError as e:
     import logging
     logging.getLogger(__name__).warning(f"Could not load add_toc4md_cli: {e}")
     add_toc4md_cli = None
 
 try:
-    from .commands.concat_html import app as concat_html_cli
+    from .commands.concat_html import main as concat_html_cli
 except ImportError as e:
     import logging
     logging.getLogger(__name__).warning(f"Could not load concat_html_cli: {e}")
     concat_html_cli = None
 
 try:
-    from .commands.flatten_html import app as flatten_html_cli
+    from .commands.flatten_html import main as flatten_html_cli
 except ImportError as e:
     import logging
     logging.getLogger(__name__).warning(f"Could not load flatten_html_cli: {e}")
     flatten_html_cli = None
 
 try:
-    from .commands.flatten_md import app as flatten_md_cli
+    from .commands.flatten_md import main as flatten_md_cli
 except ImportError as e:
     import logging
     logging.getLogger(__name__).warning(f"Could not load flatten_md_cli: {e}")
     flatten_md_cli = None
 
 try:
-    from .commands.merge_html import app as merge_html_cli
+    from .commands.merge_html import main as merge_html_cli
 except ImportError as e:
     import logging
     logging.getLogger(__name__).warning(f"Could not load merge_html_cli: {e}")
     merge_html_cli = None
 
 try:
-    from .commands.merge_md import app as merge_md_cli
+    from .commands.merge_md import main as merge_md_cli
 except ImportError as e:
     import logging
     logging.getLogger(__name__).warning(f"Could not load merge_md_cli: {e}")
     merge_md_cli = None
 
 try:
-    from .commands.md2project import app as md2project_cli
+    from .commands.md2project import main as md2project_cli
 except ImportError as e:
     import logging
     logging.getLogger(__name__).warning(f"Could not load md2project_cli: {e}")
     md2project_cli = None
 
 try:
-    from .commands.project2md import app as project2md_cli
+    from .commands.project2md import main as project2md_cli
 except ImportError as e:
     import logging
     logging.getLogger(__name__).warning(f"Could not load project2md_cli: {e}")

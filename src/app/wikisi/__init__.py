@@ -6,9 +6,9 @@ Extraction, filtrage et conversion des données d'applications en différents fo
 """
 
 # Export des commandes CLI
-from .commands.wikisi_extract_json import app as wikisi_extract_json_cli
-from .commands.wikisi_json_to_md import app as wikisi_json_to_md_cli
-from .commands.wikisi_scraper import app as wikisi_scraper_cli
+from .commands.wikisi_extract_json import main as wikisi_extract_json_cli
+from .commands.wikisi_json_to_md import main as wikisi_json_to_md_cli
+from .commands.wikisi_scraper import main as wikisi_scraper_cli
 
 # Export des fonctions métier (pour MCP et usage programmatique)
 from .commands import (

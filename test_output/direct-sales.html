@@ -1,0 +1,1050 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Advertise on plantuml.com | Ezoic Direct Sales</title>
+
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/b064e4a587.js" crossorigin="anonymous"></script>
+            <script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+		<script>
+			var onloadCallback = function() {
+				grecaptcha.render('g-recaptcha', {
+					'sitekey' : '6LePP9kaAAAAAPpQ5F_3r8wELTSsClouslvSoBlZ',
+					'theme': 'dark',
+					'expired-callback': expCallback
+				});
+			};
+			var expCallback = function() {
+				grecaptcha.reset();
+			};
+		</script>
+        <style>
+            .bar {
+                fill: #5f89ad;
+            }
+            .axis {
+                font-size: 13px;
+            }
+            .axisWhite {
+                color: white;
+            }
+            
+            .label {
+                font-size: 13px;
+            }
+            a {
+                text-decoration: none;
+            }
+            
+            
+            
+            
+            .rel {
+                position: relative;
+            }
+            .clip-shape {
+                transform: scaleX(1) scaleY(-1);
+                position: absolute;
+                bottom: 0; 
+                left: 0;
+                z-index: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .overlay-stats {
+                z-index: 1;
+            }
+            .contact-card {
+                width: 28rem;
+                height: 14rem;
+                
+            }
+            .w-65 {
+                width: 65%;
+            }
+            .w-85 {
+                width: 85%;
+            }
+            .black-bg {
+                background-color: #333;
+            }
+            .circle-icon {
+                background: #f2f2f2;
+                width: 65px;
+                height: 65px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 65px;
+                vertical-align: middle;
+            }
+            .black-bg-header {
+                color: white;
+            }
+            .black-bg-lead {
+                color: lightgray;
+            }
+            .white-bg-lead {
+                color: gray;
+            }
+			 .display-3 {
+				font-size: calc(1.425rem + 3.3vw);
+				font-weight: 400;
+				line-height: 1.2;
+				word-wrap: break-word;
+			}
+            .badge {
+                display: inline-block;
+                padding: .55em .85em;
+                font-size: .75em;
+                font-weight: 700;
+                line-height: 1;
+                color: #fff;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: baseline;
+                border-radius: .25rem;
+                border-radius: 16px;
+            }
+            .btn.btn-primary, .btn.btn-primary:hover, .btn.btn-primary:focus, .btn.btn-primary.active {
+                color: #ffffff;
+                background-color: #03c900;
+                border-color: #03c900;
+                padding: 14px 20px 14px 20px;
+                text-shadow: 1px 1px 1px #9595957d;
+            }
+
+            .btn.btn-secondary, .btn.btn-secondary:hover, .btn.btn-secondary:focus, .btn.btn-secondary.active {
+                color: #ffffff;
+                background-color: #ef3054;
+                border-color: #ef3054;
+            }
+            input, textarea {
+                background-color:#333 !important;
+                color: #FFF !important;
+            }
+            img { 
+                max-width: 100%; 
+                height: auto; 
+            }
+            .about-ezoic {
+                color: white;
+            }
+            input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus {
+			  -webkit-text-fill-color: white;
+			  transition: background-color 5000s ease-in-out 0s;
+            }
+			#ref-domain-pie-chart, #browsers-pie-chart, #devices-pie-chart {
+				overflow: visible;
+			}
+            @media (max-width: 768px) {
+                .mobile-rounded-card {
+                    border-radius: 16px !important;
+                }
+            }
+
+            @media (max-width: 992px) {
+                .tablet-rounded-card-left {
+                    border-bottom-left-radius: 16px !important; 
+                    border-top-left-radius: 16px !important;
+                }
+                .tablet-rounded-card-right {
+                    border-bottom-right-radius: 16px !important; 
+                    border-top-right-radius: 16px !important; 
+                }
+                .tablet-card-shadow {
+                    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
+                }
+				.tablet-w-95 {
+					width: 95%;
+				}
+            }
+
+            @media (min-width: 992px) {
+                .desktop-rounded-card-left {
+                    border-bottom-left-radius: 16px !important; 
+                    border-top-left-radius: 16px !important;
+                }
+                .desktop-rounded-card-right {
+                    border-bottom-right-radius: 16px !important; 
+                    border-top-right-radius: 16px !important; 
+                }
+                .desktop-card-shadow {
+                    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .4);
+                }
+                .desktop-icon-hide {
+                    display: none;
+                }
+				.desktop-w-65 {
+					width: 65%;
+				}
+            }
+            
+        </style>
+    </head>
+    <body class="w-100">
+
+        
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+				
+                <a class="navbar-brand d-flex align-content-center" target="_blank" href="https://ezoic.com">
+                    <img src="https://www.ezoic.com/wp-content/uploads/2021/04/ezoic-logo-small.png" alt=""  height="24" class="d-inline-block align-top">
+                </a>
+				
+                <div class="d-flex align-content-center">
+                    <a href="#contact"><i class="fas fa-question-circle fa-lg desktop-icon-hide about-ezoic"></i></a>
+                    <a href="#contact" class="d-none d-lg-block">
+                        <span class="navbar-text ms-1">
+                            Learn About Direct Sales Using Ezoic
+                        </span>
+                    </a>
+                    
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid g-0">
+            
+            <div class="banner-container d-flex justify-content-center pt-5 rel">
+                <div class="desktop-w-65 tablet-w-95">
+                    
+					
+                    	<h1 class="display-3 text-shadow text-center w-100">PlantUML</h1>
+					
+					<p class="lead text-shadow text-center w-100 mt-3">Reach out to project managers, architects and software developers</p>
+
+                    <div class="d-flex flex-wrap g-0 mt-5">
+                        <div class="flex-grow-1 align-self-end">
+							
+							
+							
+                        </div>
+                        <a href="//plantuml.com" style="z-index: 5;"><button type="button" class="btn btn-secondary mb-sm-1 mb-1 mb-lg-0">
+                            <div class="d-flex align-content-center">
+                                <div><i class="fas fa-external-link-alt"></i></div>
+                                <div class="ms-1">plantuml.com</div>
+                            </div>
+                        </button></a>
+                    </div>
+
+                    <div class="w-100 rel overlay-stats">
+                        <div class="row mt-2 m-auto desktop-rounded-card-left desktop-rounded-card-right desktop-card-shadow">
+                            <div class="col-lg-3 col-md-6 col-sm-12 g-0 mb-3 mb-sm-3 mb-lg-0">
+                                <div class="card text-center rounded-0 mobile-rounded-card tablet-rounded-card-left desktop-rounded-card-left h-100 w-100">
+                                    <div class="card-body">
+                                        <i class="fas fa-user-friends fa-2x circle-icon"></i>
+										
+                                        	<h1 class="card-title" id="unique-visitors"></h1>
+										
+                                        <p class="card-text white-bg-lead">Monthly Unique Visitors</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 g-0 mb-3 mb-sm-3 mb-lg-0">
+                                <div class="card text-center rounded-0 mobile-rounded-card tablet-rounded-card-right h-100 w-100">
+                                    <div class="card-body">
+                                        <i class="fas fa-users fa-2x circle-icon"></i>
+										
+                                        	<h1 class="card-title" id="pageviews"></h1>
+										
+                                        <p class="card-text white-bg-lead">Monthly Page Views</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 g-0 mb-3 mb-sm-3 mb-lg-0">
+                                <div class="card text-center rounded-0 mobile-rounded-card tablet-rounded-card-left h-100 w-100">
+                                    <div class="card-body">
+                                        <i class="fas fa-clock fa-2x circle-icon"></i>
+										
+                                        	<h1 class="card-title" id="average-time-on-site"></h1>
+										
+                                        <p class="card-text white-bg-lead">Average Time on Site</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 g-0 mb-3 mb-sm-3 mb-lg-0">
+                                <div class="card text-center rounded-0 mobile-rounded-card tablet-rounded-card-right desktop-rounded-card-right h-100 w-100">
+                                    <div class="card-body">
+                                        <i class="fas fa-user-alt fa-2x circle-icon"></i>
+										
+                                        	<h1 class="card-title" id="return-visitors-rate"></h1>
+										
+                                        <p class="card-text white-bg-lead">Return Visitor Rate</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clip-shape w-100 d-none d-lg-block d-flex">
+                    <svg viewBox="0 0 800 50" preserveAspectRatio="none">
+                        <polygon fill="white" points="0,0 800,0 800,50 400,0 0,50"></polygon>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <div class="w-85 pb-5">
+                    <div class="row align-items-center mt-5 m-auto">
+                        <div class="col-lg-7 d-flex justify-content-center">
+                            <div class="row">
+                                <h1 class="display-6"><i class="fas fa-info-circle me-2"></i>About PlantUML</h1>
+                                <p class="lead white-bg-lead">
+									PlantUML website is running since 2009 with excellent natural referencing because it&#39;s used by many major IT projects.
+
+Its main audience is made up of project managers, developers and IT architects with above-average incomes.
+For advertisers, it&#39;s an easy and secure way to reach out a population interested in computers in general, new technologies or job search.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 d-flex justify-content-center">
+                            <div class="card text-center shadow-lg">
+                                <div class="card-body">
+                                    <h5 class="card-title">Negotiate Direct Ad Deal</h5>
+                                    <p class="card-text white-bg-lead">Ready to advertise on plantuml.com? Or would you like to speak with a member from Ezoic's direct sales team to find out more information?</p>
+                                    <a href="#contact"><button type="button" class="btn btn-primary btn-lg">Speak with us today!<i class="fas fa-arrow-right ps-2"></i></button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="d-flex justify-content-center black-bg">
+                <div class="w-85 pt-5 pb-5">
+                    <div class="row m-auto">
+                        <div class="col-lg-5 col-md-12 d-flex">
+                            <div class="row d-flex h-100 w-100 align-items-center">
+								<div>
+									<h1 class="display-6 black-bg-header"><i class="fas fa-users me-2"></i>Audience Highlights</h1>
+									<p class="lead black-bg-lead">
+										Ezoicâs advanced targeting enables you to target the exact audience you are looking for across any website on our platform. Publishers can choose to target things like Google Organic Search, location, browser, device, cities, states, returning visitors, new visitors, and much more. Publishers can easily get insight into their audiences with in-depth analytics and use that data to target specific audiences.
+									</p>
+								</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 d-flex">
+							<div class="row d-flex h-100 w-100 align-items-start">
+								<div>
+									<p class="lead black-bg-header">Pageviews per Traffic Source</p>
+									
+										<div id="ref-domain-pie-chart" style="width:auto; height: auto; "></div>
+									
+								</div>
+							</div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 d-flex">
+							<div class="row d-flex h-100 w-100 align-items-start">
+								<div>
+									<p class="lead black-bg-header">Pageviews per Country</p>
+									
+										<div id="countries-bar-chart" style="width:auto; height: auto; "></div>
+									
+								</div>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="d-flex justify-content-center">
+                <div class="w-85 pt-5 pb-5">
+                    <div class="row align-items-center m-auto">
+                        <div class="col-lg-3 col-md-12 d-flex">
+							<div class="row d-flex h-100 w-100 align-items-start">
+								<div>
+									<p class="lead">Pageviews per Browser</p>
+									
+										<div id="browsers-pie-chart" style="width:auto; height: auto;"></div>
+									
+								</div>
+							</div>
+						</div>
+                        <div class="col-lg-3 col-md-12 d-flex">
+							<div class="row d-flex h-100 w-100 align-items-start">
+								<div>
+									<p class="lead">Pageviews per Device</p>
+									
+										<div id="devices-pie-chart" style="width:auto; height: auto;"></div>
+									
+								</div>
+							</div>
+						</div>
+                        <div class="col-lg-6 col-md-12 d-flex">
+                            <div class="row">
+								<div class="row d-flex h-100 w-100 align-items-center">
+									<div>
+										<h1 class="display-6"><i class="fas fa-desktop me-2"></i>Website Technology Highlights</h1>
+										<p class="lead white-bg-lead">
+											Ezoicâs advanced segmentation allows direct advertisers to target website visitors to plantuml.com, based on the type of technology they are using to browse the website.
+										</p>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="d-flex justify-content-center black-bg">
+                <div class="w-85 pt-5 pb-5">
+                    <div class="row align-items-center m-auto">
+                        <div class="col-lg-7 d-flex justify-content-center">
+                            <div class="row">
+                                <h1 class="display-6 black-bg-header"><img class="me-2" style="height: 40px" src="https://www.ezoic.com/wp-content/uploads/2023/04/ezoic-transparent-white-logo.webp">Individualized Ad Experiences Using Ezoic Technology</h1>                            
+                                <p class="lead black-bg-lead">
+									Ezoic is a powerful machine-learning platform that can deliver viewable, high-quality ads at scale across a network of trusted publishers. Ezoic uses artificial intelligence to dynamically control ad locations, sizes, colors, types, and more, and adapts in real-time to individual visitor preferences, i.e, need more 970x260's in Sweden? Ezoic can adapt existing placements to meet those needs. This technology provides websites with a higher CTR, click quality, and viewability based on present demographics and look-alike user behavior. Ezoic optimizes for user experience and revenue simultaneously through artificial intelligence, ensuring that users arenât experiencing websites filled with ads and creating ad blindness, which ultimately earns publishers less money. Ezoic contains thousands of diverse publishers on our platform, which allows us to cover almost every category and vertical for advertisers.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 d-flex justify-content-center">
+                            <img src="https://www.ezoic.com/wp-content/uploads/2023/04/ad-visitor-ezoic-gif.gif" width="500px"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <div class="w-85 pt-5 pb-5">
+                    <h1 class="display-6 text-center">Popular Ad Inventory Segments</h1>
+
+                    <div class="row justify-content-md-center mt-4">
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-3 mb-sm-3 mb-lg-0 d-flex justify-content-center">
+                            <div class="card text-center shadow-sm h-100 w-100">
+                                <div class="card-body">
+                                    <i class="fas fa-eye fa-2x circle-icon"></i>
+                                    <h4>High Viewability</h4>
+                                    <p class="card-text white-bg-lead">Target ad placements with 70% or greater average viewability.</p>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-3 mb-sm-3 mb-lg-0 d-flex justify-content-center">
+                            <div class="card text-center shadow-sm h-100 w-100">
+                                <div class="card-body">
+                                    <i class="fas fa-mouse-pointer fa-2x circle-icon"></i>
+                                    <h4>High CTR</h4>
+                                    <p class="card-text white-bg-lead">Focus on ad placements with high click-through rates.</p>
+                                </div>
+                            </div>                      
+                        </div>
+        
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-3 mb-sm-3 mb-lg-0 d-flex justify-content-center">
+                            <div class="card text-center shadow-sm h-100 w-100">
+                                <div class="card-body">
+                                    <i class="fas fa-user-clock fa-2x circle-icon"></i>
+                                    <h4>High Engagement</h4>
+                                    <p class="card-text white-bg-lead">Target ad placements on pages with high level of user engagement scores.</p>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-3 mb-sm-3 mb-lg-0 d-flex justify-content-center">
+                            <div class="card text-center shadow-sm h-100 w-100">
+                                <div class="card-body">
+                                    <i class="fas fa-wrench fa-2x circle-icon"></i>
+                                    <h4>Custom Segment</h4>
+                                    <p class="card-text white-bg-lead">Customized for your individual ad targeting needs.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center black-bg" id="contact">
+                <div class="desktop-w-65 tablet-w-95 pt-5 pb-3">
+                    <h1 class="display-6 text-center black-bg-header mb-3">Ready to get your campaign live on plantuml.com?<br/>Or would you like to learn more? Contact Us!</h1>
+
+                    <form method="POST">
+                        <div class="row mb-3">
+                            <div class="form-group">
+                                <label for="name-input" class="black-bg-lead">Name</label>
+                                <input type="text" class="form-control" id="name-input" name="contact-name">
+                            </div>
+                        </div>
+
+						<div class="row mb-3">
+                            <div class="form-group">
+                                <label for="email-input" class="black-bg-lead">Email</label>
+                                <input type="email" class="form-control" id="email-input" name="contact-email">
+                            </div>
+						</div>
+
+						<div class="row mb-3">
+                            <div class="form-group">
+                                <label for="phone-input" class="black-bg-lead">Phone</label>
+                                <input type="text" class="form-control" id="phone-input" name="contact-phone">
+                            </div>
+						</div>
+
+						<div class="row mb-3">
+                            <div class="form-group">
+                                <label for="contact-website" class="black-bg-lead">Website</label>
+                                <input type="text" class="form-control" id="contact-website" name="contact-website">
+                            </div>
+						</div>
+
+						<div class="row mb-3">
+                            <div class="form-group">
+                                <label for="contact-platform" class="black-bg-lead">I am a(n)</label>
+								<select class="form-select" aria-label="Default select example" id="contact-platform" name="contact-platform" style="background-color: #333; color: lightgray;">
+								  <option selected>Ad Network</option>
+								  <option value="Agency">Agency</option>
+								  <option value="Individual Advertiser">Individual Advertiser</option>
+								  <option value="Demand Side Platform">Demand Side Platform</option>
+								  <option value="Supply Side Platform">Supply Side Platform</option>
+								  <option value="Ad Platform">Ad Platform</option>
+								  <option value="Other">Other</option>
+								</select>
+                            </div>
+						</div>
+
+						<div class="row mb-3">
+                            <div class="form-group">
+                                <label for="contact-budget" class="black-bg-lead">My budget is</label>
+								<select class="form-select" aria-label="Default select example" id="contact-budget" name="contact-budget" style="background-color: #333; color: lightgray;">
+								  <option selected>$100,000+ or more</option>
+								  <option value="$50,000-$100,000">$50,000-$100,000</option>
+								  <option value="$10,000-$50,000">$10,000-$50,000</option>
+								  <option value="$2,500-$10,000">$2,500-$10,000</option>
+								  <option value="$500-$2,500">$500-$2,500</option>
+								  <option value="Less than $500">Less than $500</option>
+								</select>
+                            </div>
+						</div>
+
+                        <div class="row mb-3">
+                            <div class="form-group">
+                                <label for="contact-adtype" class="black-bg-lead">Interested in</label>
+								<select class="form-select" multiple aria-label="Default select example" id="contact-adtype" name="contact-adtype" style="background-color: #333; color: lightgray;">
+								  <option value="Banner Ads">Banner Ads</option>
+								  <option value="Video Ads">Video Ads</option>
+								  <option value="Sponsored Posts">Sponsored Posts</option>
+								  <option value="Other">Other</option>
+								</select>
+                            </div>
+						</div>
+
+                        <div class="row mb-3">
+                            <div class="form-group">
+                                <label for="contact-message" class="black-bg-lead">Message</label>
+                                <textarea class="form-control" id="contact-message" rows="5" name="contact-message"></textarea>
+                            </div>
+                        </div>
+
+						<div class="row d-flex justify-content-end mb-3">
+							<div id="g-recaptcha"></div>
+						</div>
+
+                        <div class="row mb-3">
+							<div class="d-grid form-group">
+                        		<button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+							</div>
+                        </div>
+                    </form>
+					<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"async defer></script>
+                </div>
+            </div>
+            
+        </div>
+
+ 
+
+    </body>
+</html>
+
+  
+
+<script>
+$( document ).ready(function() {
+	if ( window.history.replaceState ) {
+	  window.history.replaceState( null, null, window.location.href );
+	}
+	if ($(".toast")[0]){
+		$(".toast").toast('show');
+	}
+
+	var bg_color = '#' + "";
+	if (bg_color != "") {
+		$(".banner-container").css("background-color", bg_color);
+	} else {
+		$(".banner-container").css("background-color", "#5fa624");
+	}
+
+	var headingTextColor = '#' + ""
+
+	$(".text-shadow").css("color", headingTextColor);
+
+	if (headingTextColor == "#000000") {
+		$(".text-shadow").css("text-shadow", "1px 1px 1px #FFFFFF");
+	} else {
+		$(".text-shadow").css("text-shadow", "1px 1px 1px #000000");
+	}
+
+	function fmtMSS(s){return(s-(s%=60))/60+(9<s?':':':0')+s}
+
+	var monthlyUniqueVisitors =  575986 
+	var monthlyPageviews =  2263716 
+	var averageTimeOnSite =  844 
+	var returnVisitorsRate =  58.9 
+	returnVisitorsRate = +returnVisitorsRate.toFixed(2);
+	$("#unique-visitors").text(monthlyUniqueVisitors.toLocaleString());
+	$("#pageviews").text(monthlyPageviews.toLocaleString());
+	$("#average-time-on-site").text(fmtMSS(averageTimeOnSite));
+	$("#return-visitors-rate").text(returnVisitorsRate + "%");
+
+	
+	var countryData = [{"Country":"CN","Pageviews":589280},{"Country":"IN","Pageviews":209794},{"Country":"VN","Pageviews":150803},{"Country":"ID","Pageviews":137112},{"Country":"PK","Pageviews":99700}] || [];
+	countryData = countryData.sort(function (a, b) {
+		return d3.ascending(a.Pageviews, b.Pageviews);
+	});
+    var margin = {
+            top: 25,
+            right: 65,
+            bottom: 15,
+            left: 60
+    };
+	var origWidth = 500;
+	var origHeight = 350;
+
+    var width = 500 - margin.left - margin.right,
+        height = 350 - margin.top - margin.bottom;
+
+    var y = d3.scaleBand()
+          .range([height, 0])
+          .padding(0.1);
+
+    var x = d3.scaleLinear()
+          .range([0, width]);
+
+    var svg = d3.select("#countries-bar-chart").append("svg")
+		.attr("width", '100%')
+		.attr("height", '100%')
+		.attr('viewBox','0 0 '+ origWidth +' '+origHeight )
+        .append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+    x.domain([0, d3.max(countryData, function(d){ return d.Pageviews; })])
+    y.domain(countryData.map(function(d) { return d.Country; }));
+
+    var bars = svg.selectAll(".bar")
+        .data(countryData)
+        .enter()
+        .append("g")
+    
+    bars.append("rect")
+      .attr("class", "bar")
+      .attr("width", function(d) {return x(d.Pageviews); } )
+      .attr("y", function(d) { return y(d.Country); })
+      .attr("height", y.bandwidth());
+
+    svg.append("g")
+		.attr("class", "axisWhite")
+        .call(d3.axisLeft(y));
+
+    bars.append("text")
+        .attr("class", "label")
+        .attr("y", function (d) {
+            return y(d.Country) + y.bandwidth() / 2 + 4;
+        })
+        .attr("x", function (d) {
+            return x(d.Pageviews) + 3;
+        })
+        .text(function (d) {
+            return d.Pageviews.toLocaleString();
+        })
+		.attr("fill", "white");
+
+    
+    
+    
+    
+    
+    
+	
+	
+
+
+
+	var rawRefDomainData = [{"ReferringDomain":"plantuml.com","Pageviews":573805},{"ReferringDomain":"google.com","Pageviews":522525},{"ReferringDomain":"bing.com","Pageviews":174252},{"ReferringDomain":"doubao.com","Pageviews":25388},{"ReferringDomain":"yahoo.com","Pageviews":20191},{"ReferringDomain":"baidu.com","Pageviews":15101},{"ReferringDomain":"chatgpt.com","Pageviews":11686},{"ReferringDomain":"duckduckgo.com","Pageviews":5017},{"ReferringDomain":"so.com","Pageviews":3315},{"ReferringDomain":"github.com","Pageviews":3021},{"ReferringDomain":"qianwen.com","Pageviews":2995},{"ReferringDomain":"office.net","Pageviews":2736},{"ReferringDomain":"tencent.com","Pageviews":1862},{"ReferringDomain":"csdn.net","Pageviews":1626},{"ReferringDomain":"google.com.hk","Pageviews":1329},{"ReferringDomain":"microsoft.com","Pageviews":1277},{"ReferringDomain":"msn.cn","Pageviews":1170},{"ReferringDomain":"plantuml.online","Pageviews":1155},{"ReferringDomain":"android.googlequicksearchbox","Pageviews":1099},{"ReferringDomain":"qiita.com","Pageviews":1045},{"ReferringDomain":"quark.cn","Pageviews":839},{"ReferringDomain":"facebook.com","Pageviews":816},{"ReferringDomain":"atlassian.net","Pageviews":780},{"ReferringDomain":"chaoxing.com","Pageviews":766},{"ReferringDomain":"yandex.ru","Pageviews":760},{"ReferringDomain":"ecosia.org","Pageviews":711},{"ReferringDomain":"zhihu.com","Pageviews":706},{"ReferringDomain":"claude.ai","Pageviews":659},{"ReferringDomain":"brave.com","Pageviews":617},{"ReferringDomain":"msn.com","Pageviews":599},{"ReferringDomain":"plantuml.net","Pageviews":572},{"ReferringDomain":"medium.com","Pageviews":535},{"ReferringDomain":"qwant.com","Pageviews":487},{"ReferringDomain":"localhost","Pageviews":447},{"ReferringDomain":"github.io","Pageviews":437},{"ReferringDomain":"naver.com","Pageviews":431},{"ReferringDomain":"ac.il","Pageviews":421},{"ReferringDomain":"wikipedia.org","Pageviews":413},{"ReferringDomain":"sus.ac.jp","Pageviews":413},{"ReferringDomain":"yandex.by","Pageviews":399},{"ReferringDomain":"perplexity.ai","Pageviews":349},{"ReferringDomain":"tistory.com","Pageviews":322},{"ReferringDomain":"notepm.jp","Pageviews":291},{"ReferringDomain":"youtube.com","Pageviews":269},{"ReferringDomain":"ericsson.se","Pageviews":265},{"ReferringDomain":"etsmtl.ca","Pageviews":224},{"ReferringDomain":"vinfast.vn","Pageviews":223},{"ReferringDomain":"blackbox.ai","Pageviews":210},{"ReferringDomain":"cnblogs.com","Pageviews":193},{"ReferringDomain":"zalo.me","Pageviews":185},{"ReferringDomain":"hatenablog.com","Pageviews":182},{"ReferringDomain":"live.com","Pageviews":176},{"ReferringDomain":"ubs.net","Pageviews":173},{"ReferringDomain":"mediatek.inc","Pageviews":173},{"ReferringDomain":"jser.com","Pageviews":167},{"ReferringDomain":"instagram.com","Pageviews":157},{"ReferringDomain":"coccoc.com","Pageviews":151},{"ReferringDomain":"qq.com","Pageviews":148},{"ReferringDomain":"epam.com","Pageviews":147},{"ReferringDomain":"zte.com.cn","Pageviews":147},{"ReferringDomain":"feishu.cn","Pageviews":146},{"ReferringDomain":"jpmchase.net","Pageviews":144},{"ReferringDomain":"telegram.org","Pageviews":143},{"ReferringDomain":"0.1","Pageviews":142},{"ReferringDomain":"stratus-addons.com","Pageviews":131},{"ReferringDomain":"antfin.com","Pageviews":128},{"ReferringDomain":"yahoo.co.jp","Pageviews":128},{"ReferringDomain":"jyshare.com","Pageviews":128},{"ReferringDomain":"gmehome.com","Pageviews":122},{"ReferringDomain":"yandex.com.tr","Pageviews":122},{"ReferringDomain":"gitlab.com","Pageviews":121},{"ReferringDomain":"z.ai","Pageviews":121},{"ReferringDomain":"kagi.com","Pageviews":117},{"ReferringDomain":"google.com.vn","Pageviews":116},{"ReferringDomain":"yandex.kz","Pageviews":112},{"ReferringDomain":"viblo.asia","Pageviews":112},{"ReferringDomain":"yuque.com","Pageviews":103},{"ReferringDomain":"vhslearning.org","Pageviews":98},{"ReferringDomain":"automotive.cloud","Pageviews":95},{"ReferringDomain":"topdeveloperacademy.com","Pageviews":93},{"ReferringDomain":"lmarena.ai","Pageviews":90},{"ReferringDomain":"deepseeksvc.com","Pageviews":84},{"ReferringDomain":"microsoftonline.com","Pageviews":84},{"ReferringDomain":"mistral.ai","Pageviews":82},{"ReferringDomain":"huawei.com","Pageviews":80},{"ReferringDomain":"hatenablog.jp","Pageviews":79},{"ReferringDomain":"intellitask.cn","Pageviews":77},{"ReferringDomain":"exotec.com","Pageviews":75},{"ReferringDomain":"insignex.local","Pageviews":73},{"ReferringDomain":"sankuai.com","Pageviews":71},{"ReferringDomain":"google.co.uk","Pageviews":68},{"ReferringDomain":"edu.tw","Pageviews":66},{"ReferringDomain":"visual-paradigm.com","Pageviews":66},{"ReferringDomain":"getanalyst.ru","Pageviews":63},{"ReferringDomain":"alibaba-inc.com","Pageviews":60},{"ReferringDomain":"rose-hulman.edu","Pageviews":59},{"ReferringDomain":"sharepoint.com","Pageviews":58},{"ReferringDomain":"infineon.com","Pageviews":58},{"ReferringDomain":"googleusercontent.com","Pageviews":57},{"ReferringDomain":"larkoffice.com","Pageviews":54},{"ReferringDomain":"gpt2edu.com","Pageviews":53},{"ReferringDomain":"katsuster.net","Pageviews":52},{"ReferringDomain":"google.co.in","Pageviews":52},{"ReferringDomain":"oyg.me","Pageviews":51},{"ReferringDomain":"educoder.net","Pageviews":51},{"ReferringDomain":"dokugaku-engineer.com","Pageviews":51},{"ReferringDomain":"melco.co.jp","Pageviews":50},{"ReferringDomain":"cave.pp.ua","Pageviews":48},{"ReferringDomain":"miro.com","Pageviews":48},{"ReferringDomain":"luwh.site","Pageviews":47},{"ReferringDomain":"asciidoctor.org","Pageviews":47},{"ReferringDomain":"google.cz","Pageviews":47},{"ReferringDomain":"juejin.cn","Pageviews":46},{"ReferringDomain":"isct.ac.jp","Pageviews":44},{"ReferringDomain":"upm.es","Pageviews":44},{"ReferringDomain":"minimaxi.com","Pageviews":43},{"ReferringDomain":"aliyun.com","Pageviews":42},{"ReferringDomain":"messenger.com","Pageviews":42},{"ReferringDomain":"maybank.com.my","Pageviews":42},{"ReferringDomain":"gv.at","Pageviews":42},{"ReferringDomain":"translate.goog","Pageviews":41},{"ReferringDomain":"dbswiso.prd","Pageviews":41},{"ReferringDomain":"google.de","Pageviews":39},{"ReferringDomain":"microsoft.us","Pageviews":39},{"ReferringDomain":"ya.ru","Pageviews":39},{"ReferringDomain":"obsidian.md","Pageviews":38},{"ReferringDomain":"paul.pub","Pageviews":38},{"ReferringDomain":"velog.io","Pageviews":38},{"ReferringDomain":"google.com.au","Pageviews":38},{"ReferringDomain":"51kaixin.cloud","Pageviews":37},{"ReferringDomain":"havetkms.co.za","Pageviews":35},{"ReferringDomain":"l3harris.com","Pageviews":35},{"ReferringDomain":"doc.pl","Pageviews":35},{"ReferringDomain":"google.fr","Pageviews":35},{"ReferringDomain":"kielce.pl","Pageviews":34},{"ReferringDomain":"powerplantuml.com","Pageviews":34},{"ReferringDomain":"coze.cn","Pageviews":34},{"ReferringDomain":"azurewebsites.net","Pageviews":34},{"ReferringDomain":"quora.com","Pageviews":33},{"ReferringDomain":"99.103","Pageviews":33},{"ReferringDomain":"saasprotection.com","Pageviews":33},{"ReferringDomain":"overleaf.com","Pageviews":32},{"ReferringDomain":"helmo.be","Pageviews":32},{"ReferringDomain":"csdiy.wiki","Pageviews":32},{"ReferringDomain":"boardmix.cn","Pageviews":32},{"ReferringDomain":"google.ru","Pageviews":32},{"ReferringDomain":"t.co","Pageviews":31},{"ReferringDomain":"text-to-diagram.com","Pageviews":31},{"ReferringDomain":"bloomberg.com","Pageviews":31},{"ReferringDomain":"linkedin.com","Pageviews":31},{"ReferringDomain":"oracle.com","Pageviews":31},{"ReferringDomain":"toutiao.com","Pageviews":30},{"ReferringDomain":"google.ch","Pageviews":30},{"ReferringDomain":"icepanel.io","Pageviews":30},{"ReferringDomain":"canva.com","Pageviews":30},{"ReferringDomain":"xsimplechat.com","Pageviews":29},{"ReferringDomain":"zep.us","Pageviews":29},{"ReferringDomain":"wenxiaobai.com","Pageviews":29},{"ReferringDomain":"census.gov","Pageviews":29},{"ReferringDomain":"readthedocs.io","Pageviews":28},{"ReferringDomain":"volcengine.com","Pageviews":28},{"ReferringDomain":"ipg.pt","Pageviews":28},{"ReferringDomain":"j-parc.jp","Pageviews":28},{"ReferringDomain":"niyanmemo.com","Pageviews":28},{"ReferringDomain":"gosi.ins","Pageviews":28},{"ReferringDomain":"dataloid.blogspot.com","Pageviews":27},{"ReferringDomain":"sogou.com","Pageviews":26},{"ReferringDomain":"filext.com","Pageviews":26},{"ReferringDomain":"ga.com","Pageviews":26},{"ReferringDomain":"sphinx-doc.org","Pageviews":26},{"ReferringDomain":"azure.com","Pageviews":26},{"ReferringDomain":"taranawireless.com","Pageviews":26},{"ReferringDomain":"startpage.com","Pageviews":26},{"ReferringDomain":"bosch.com","Pageviews":26},{"ReferringDomain":"jobdeveloper.co.kr","Pageviews":25},{"ReferringDomain":"20.174","Pageviews":25},{"ReferringDomain":"softwarearchitecture.tools","Pageviews":25},{"ReferringDomain":"amadeus.net","Pageviews":25},{"ReferringDomain":"ios-net.co.jp","Pageviews":25},{"ReferringDomain":"chatgpt","Pageviews":25},{"ReferringDomain":"kostal.com","Pageviews":24},{"ReferringDomain":"yandex.uz","Pageviews":24},{"ReferringDomain":"reddit.frontpage","Pageviews":24},{"ReferringDomain":"google.ca","Pageviews":24},{"ReferringDomain":"bytetech.info","Pageviews":24},{"ReferringDomain":"oooai.cc","Pageviews":24},{"ReferringDomain":"143.65","Pageviews":24},{"ReferringDomain":"google.co.jp","Pageviews":24},{"ReferringDomain":"google.es","Pageviews":24},{"ReferringDomain":"bytesnap.co.uk","Pageviews":23},{"ReferringDomain":"breezethat.com","Pageviews":23},{"ReferringDomain":"kuleuven.cloud","Pageviews":23},{"ReferringDomain":"uk.hsbc","Pageviews":23},{"ReferringDomain":"zscloud.net","Pageviews":23},{"ReferringDomain":"autostrade.it","Pageviews":22},{"ReferringDomain":"anect.cz","Pageviews":22},{"ReferringDomain":"google.com.pk","Pageviews":22},{"ReferringDomain":"npmjs.com","Pageviews":22},{"ReferringDomain":"redhat.com","Pageviews":22},{"ReferringDomain":"xfinder.pro","Pageviews":22},{"ReferringDomain":"dou.ua","Pageviews":22},{"ReferringDomain":"lenovo.com.cn","Pageviews":22},{"ReferringDomain":"aisingroup.com","Pageviews":22},{"ReferringDomain":"google.com.ua","Pageviews":22},{"ReferringDomain":"11.148","Pageviews":22},{"ReferringDomain":"at.sky","Pageviews":22},{"ReferringDomain":"inp-toulouse.fr","Pageviews":21},{"ReferringDomain":"vernalis.com","Pageviews":21},{"ReferringDomain":"cloudframework.app","Pageviews":21},{"ReferringDomain":"hhu.de","Pageviews":21},{"ReferringDomain":"lge.com","Pageviews":21},{"ReferringDomain":"growi.cloud","Pageviews":21},{"ReferringDomain":"asrock.rastogi","Pageviews":21},{"ReferringDomain":"mobiletips.in","Pageviews":20},{"ReferringDomain":"inspera.com","Pageviews":20},{"ReferringDomain":"mongodb.com","Pageviews":20},{"ReferringDomain":"modeling-languages.com","Pageviews":20},{"ReferringDomain":"canlidovizfiyatlari.com","Pageviews":20},{"ReferringDomain":"jackeylea.com","Pageviews":20},{"ReferringDomain":"aliud.pw","Pageviews":20},{"ReferringDomain":"msicc.net","Pageviews":20},{"ReferringDomain":"htsc.com.cn","Pageviews":20},{"ReferringDomain":"purrgramming.life","Pageviews":19},{"ReferringDomain":"orgmode.org","Pageviews":19},{"ReferringDomain":"poe.com","Pageviews":19},{"ReferringDomain":"blogs.ink","Pageviews":19},{"ReferringDomain":"nike.com","Pageviews":19},{"ReferringDomain":"kohyoung.com","Pageviews":18},{"ReferringDomain":"workona.com","Pageviews":18},{"ReferringDomain":"ai.orange","Pageviews":18},{"ReferringDomain":"vilniustech.lt","Pageviews":18},{"ReferringDomain":"mot-solutions.com","Pageviews":18},{"ReferringDomain":"habr.com","Pageviews":18},{"ReferringDomain":"jianshu.com","Pageviews":18},{"ReferringDomain":"asana.com","Pageviews":18},{"ReferringDomain":"linkedin.android","Pageviews":18},{"ReferringDomain":"ubsdev.net","Pageviews":18},{"ReferringDomain":"google.co.id","Pageviews":18},{"ReferringDomain":"cybertech.vn","Pageviews":18},{"ReferringDomain":"socionext.com","Pageviews":18},{"ReferringDomain":"bmwgroup.net","Pageviews":17},{"ReferringDomain":"16.63","Pageviews":17},{"ReferringDomain":"coreai.com","Pageviews":17},{"ReferringDomain":"fanuc.co.jp","Pageviews":17},{"ReferringDomain":"saxion.nl","Pageviews":17},{"ReferringDomain":"doocs.org","Pageviews":17},{"ReferringDomain":"google.co.nz","Pageviews":17},{"ReferringDomain":"yandex.com","Pageviews":17},{"ReferringDomain":"tpisoftware.com","Pageviews":17},{"ReferringDomain":"fujifilm-intra.com","Pageviews":17},{"ReferringDomain":"google.pt","Pageviews":16},{"ReferringDomain":"trycatch.tv","Pageviews":16},{"ReferringDomain":"univ-reunion.fr","Pageviews":16},{"ReferringDomain":"pypi.org","Pageviews":16},{"ReferringDomain":"embeddedrelated.com","Pageviews":16},{"ReferringDomain":"brew.sh","Pageviews":16},{"ReferringDomain":"google.com.sg","Pageviews":16},{"ReferringDomain":"aexp.com","Pageviews":16},{"ReferringDomain":"garmin.com","Pageviews":16},{"ReferringDomain":"ovhcloud.tools","Pageviews":16},{"ReferringDomain":"skygroup.app","Pageviews":16},{"ReferringDomain":"amadagp.co.jp","Pageviews":16},{"ReferringDomain":"notion.so","Pageviews":16},{"ReferringDomain":"usanjose.co","Pageviews":16},{"ReferringDomain":"visualstudio.com","Pageviews":15},{"ReferringDomain":"displayjenkinsvm","Pageviews":15},{"ReferringDomain":"cubic3.com","Pageviews":15},{"ReferringDomain":"geniie.net","Pageviews":15},{"ReferringDomain":"fossies.org","Pageviews":15},{"ReferringDomain":"google.com.my","Pageviews":15},{"ReferringDomain":"ycombinator.com","Pageviews":15},{"ReferringDomain":"continental.cloud","Pageviews":15},{"ReferringDomain":"blueorigin.com","Pageviews":15},{"ReferringDomain":"x-network.jp","Pageviews":15},{"ReferringDomain":"deepseek.com","Pageviews":15},{"ReferringDomain":"39.21","Pageviews":15},{"ReferringDomain":"kdocs.cn","Pageviews":15},{"ReferringDomain":"alura.com.br","Pageviews":15},{"ReferringDomain":"oika.me","Pageviews":15},{"ReferringDomain":"samsung.net","Pageviews":15},{"ReferringDomain":"longcat.chat","Pageviews":15},{"ReferringDomain":"lucid.co","Pageviews":15},{"ReferringDomain":"askmany.cn","Pageviews":14},{"ReferringDomain":"sfr.com","Pageviews":14},{"ReferringDomain":"ibm.com","Pageviews":14},{"ReferringDomain":"google.pl","Pageviews":14},{"ReferringDomain":"didichuxing.com","Pageviews":14},{"ReferringDomain":"gitcode.com","Pageviews":14},{"ReferringDomain":"tudelft.nl","Pageviews":14},{"ReferringDomain":"zscaler.net","Pageviews":14},{"ReferringDomain":"schaeffler.com","Pageviews":14},{"ReferringDomain":"actica-v.internal","Pageviews":14},{"ReferringDomain":"enterprise.design","Pageviews":14},{"ReferringDomain":"tsubock-lab.xyz","Pageviews":13},{"ReferringDomain":"elk.de","Pageviews":13},{"ReferringDomain":"chatonex.com","Pageviews":13},{"ReferringDomain":"note.com","Pageviews":13},{"ReferringDomain":"plantuml.biz","Pageviews":13},{"ReferringDomain":"certi.org.br","Pageviews":13},{"ReferringDomain":"aim.security","Pageviews":13},{"ReferringDomain":"swisscows.com","Pageviews":13},{"ReferringDomain":"threads.com","Pageviews":13},{"ReferringDomain":"encurtador.dev","Pageviews":13},{"ReferringDomain":"rt-thread.org","Pageviews":13},{"ReferringDomain":"phpdoc.org","Pageviews":13},{"ReferringDomain":"cloud.microsoft","Pageviews":13},{"ReferringDomain":"analog.com","Pageviews":13},{"ReferringDomain":"st.com","Pageviews":13},{"ReferringDomain":"volvo.com","Pageviews":13},{"ReferringDomain":"tu-berlin.de","Pageviews":13},{"ReferringDomain":"taskhub.jp","Pageviews":13},{"ReferringDomain":"n.cn","Pageviews":13},{"ReferringDomain":"onenote.com","Pageviews":13},{"ReferringDomain":"ac.at","Pageviews":12},{"ReferringDomain":"mcn123.com","Pageviews":12},{"ReferringDomain":"google.com.tr","Pageviews":12},{"ReferringDomain":"runoob.com","Pageviews":12},{"ReferringDomain":"kroko.ovh","Pageviews":12},{"ReferringDomain":"trello.com","Pageviews":12},{"ReferringDomain":"nure.ua","Pageviews":12},{"ReferringDomain":"uantwerpen.be","Pageviews":12},{"ReferringDomain":"10.244","Pageviews":12},{"ReferringDomain":"oxilor.com","Pageviews":12},{"ReferringDomain":"zscaler.com","Pageviews":12},{"ReferringDomain":"medtronic.com","Pageviews":12},{"ReferringDomain":"guidewire.net","Pageviews":12},{"ReferringDomain":"bshg.com","Pageviews":12},{"ReferringDomain":"danskenet.net","Pageviews":12},{"ReferringDomain":"osaka-u.ac.jp","Pageviews":11},{"ReferringDomain":"100.40","Pageviews":11},{"ReferringDomain":"vnpt-technology.vn","Pageviews":11},{"ReferringDomain":"karl-voit.at","Pageviews":11},{"ReferringDomain":"endava.com","Pageviews":11},{"ReferringDomain":"magna.com","Pageviews":11},{"ReferringDomain":"merck.com","Pageviews":11},{"ReferringDomain":"nextgeeker.com","Pageviews":11},{"ReferringDomain":"herokuapp.com","Pageviews":11},{"ReferringDomain":"maravillo.lan","Pageviews":11},{"ReferringDomain":"ufc.br","Pageviews":11},{"ReferringDomain":"ziemer.info","Pageviews":11},{"ReferringDomain":"nec.co.jp","Pageviews":11},{"ReferringDomain":"abaltadocs","Pageviews":11},{"ReferringDomain":"gleek.io","Pageviews":11},{"ReferringDomain":"hpecorp.net","Pageviews":11},{"ReferringDomain":"zhenguanyu.com","Pageviews":11},{"ReferringDomain":"luxoft.com","Pageviews":11},{"ReferringDomain":"gnulinux.ch","Pageviews":11},{"ReferringDomain":"twitter.android","Pageviews":11},{"ReferringDomain":"telekom.de","Pageviews":11},{"ReferringDomain":"claude-plugins.dev","Pageviews":11},{"ReferringDomain":"h3d.com.cn","Pageviews":11},{"ReferringDomain":"kpit.com","Pageviews":11},{"ReferringDomain":"clickai.io","Pageviews":11},{"ReferringDomain":"carleton.ca","Pageviews":11},{"ReferringDomain":"leyton.com","Pageviews":10},{"ReferringDomain":"bananachn.com","Pageviews":10},{"ReferringDomain":"google.nl","Pageviews":10},{"ReferringDomain":"bath.ac.uk","Pageviews":10},{"ReferringDomain":"vidogram.messenger","Pageviews":10},{"ReferringDomain":"jamk.fi","Pageviews":10},{"ReferringDomain":"thm.de","Pageviews":10},{"ReferringDomain":"factset.io","Pageviews":10},{"ReferringDomain":"lukemerrett.com","Pageviews":10},{"ReferringDomain":"josefjebavy.cz","Pageviews":10},{"ReferringDomain":"archlinux.org","Pageviews":10},{"ReferringDomain":"caci.com","Pageviews":10},{"ReferringDomain":"oer-informatik.de","Pageviews":10},{"ReferringDomain":"mt.mtnet","Pageviews":10},{"ReferringDomain":"hirain.com","Pageviews":10},{"ReferringDomain":"ufpel.edu.br","Pageviews":10},{"ReferringDomain":"hs-mannheim.de","Pageviews":10},{"ReferringDomain":"nvidia.com","Pageviews":10},{"ReferringDomain":"artgroup-spa.com","Pageviews":10},{"ReferringDomain":"edu.cn","Pageviews":10},{"ReferringDomain":"claudechn.com","Pageviews":10},{"ReferringDomain":"idec.co.jp","Pageviews":10},{"ReferringDomain":"udemy.com","Pageviews":10},{"ReferringDomain":"pole-emploi.net","Pageviews":10},{"ReferringDomain":"bkryza.com","Pageviews":10},{"ReferringDomain":"adminml.com","Pageviews":10},{"ReferringDomain":"planttext.com","Pageviews":10},{"ReferringDomain":"bitbucket.org","Pageviews":10},{"ReferringDomain":"contact.de","Pageviews":9},{"ReferringDomain":"femaleswitch.com","Pageviews":9},{"ReferringDomain":"hikvision.com","Pageviews":9},{"ReferringDomain":"cloud.socgen","Pageviews":9},{"ReferringDomain":"youdao.com","Pageviews":9},{"ReferringDomain":"tuzhanai.com","Pageviews":9},{"ReferringDomain":"mgx.dev","Pageviews":9},{"ReferringDomain":"schemacrawler.com","Pageviews":9},{"ReferringDomain":"atlbattery.com","Pageviews":9},{"ReferringDomain":"hm.edu","Pageviews":9},{"ReferringDomain":"drawio.com","Pageviews":9},{"ReferringDomain":"audi.com","Pageviews":9},{"ReferringDomain":"larksuite.com","Pageviews":9},{"ReferringDomain":"esol.co.jp","Pageviews":9},{"ReferringDomain":"marelli.com","Pageviews":9},{"ReferringDomain":"acloudfan.com","Pageviews":9},{"ReferringDomain":"iduba.com","Pageviews":9},{"ReferringDomain":"supportman-server.local","Pageviews":9},{"ReferringDomain":"arian.li","Pageviews":9},{"ReferringDomain":"rcouyi.com","Pageviews":9},{"ReferringDomain":"urbanisation-si.com","Pageviews":9},{"ReferringDomain":"google.com.ph","Pageviews":9},{"ReferringDomain":"wimdeblauwe.com","Pageviews":9},{"ReferringDomain":"torry.io","Pageviews":9},{"ReferringDomain":"one-bcs.com","Pageviews":9},{"ReferringDomain":"publickey1.jp","Pageviews":9},{"ReferringDomain":"newsuk1.com","Pageviews":9},{"ReferringDomain":"samsungds.net","Pageviews":9},{"ReferringDomain":"search.app","Pageviews":9},{"ReferringDomain":"com.slack","Pageviews":9},{"ReferringDomain":"trustnetic.com","Pageviews":8},{"ReferringDomain":"syachiku.net","Pageviews":8},{"ReferringDomain":"pnw.loc","Pageviews":8},{"ReferringDomain":"microchip.com","Pageviews":8},{"ReferringDomain":"reddit.com","Pageviews":8},{"ReferringDomain":"tongyi.com","Pageviews":8},{"ReferringDomain":"google.co.ma","Pageviews":8},{"ReferringDomain":"commerzbank.com","Pageviews":8},{"ReferringDomain":"owasp.org","Pageviews":8},{"ReferringDomain":"linuxlinks.com","Pageviews":8},{"ReferringDomain":"h-da.io","Pageviews":8},{"ReferringDomain":"splus.ir","Pageviews":8},{"ReferringDomain":"terma.com","Pageviews":8},{"ReferringDomain":"harman.com","Pageviews":8},{"ReferringDomain":"digipad.app","Pageviews":8},{"ReferringDomain":"formulatrix.com","Pageviews":8},{"ReferringDomain":"dahuatech.com","Pageviews":8},{"ReferringDomain":"fmr.com","Pageviews":8},{"ReferringDomain":"nanoha-code.com","Pageviews":8},{"ReferringDomain":"isel.pt","Pageviews":8},{"ReferringDomain":"google.co.kr","Pageviews":8},{"ReferringDomain":"cisco.com","Pageviews":8},{"ReferringDomain":"google.be","Pageviews":8},{"ReferringDomain":"251.221","Pageviews":8},{"ReferringDomain":"igap.net","Pageviews":8},{"ReferringDomain":"clickup.com","Pageviews":8},{"ReferringDomain":"jd.com","Pageviews":7},{"ReferringDomain":"agile.bns","Pageviews":7},{"ReferringDomain":"dsmxp.com","Pageviews":7},{"ReferringDomain":"daddyprogrammer.org","Pageviews":7},{"ReferringDomain":"edf.fr","Pageviews":7},{"ReferringDomain":"cargurus.com","Pageviews":7},{"ReferringDomain":"agh.edu.pl","Pageviews":7},{"ReferringDomain":"google.co.il","Pageviews":7},{"ReferringDomain":"tapd.cn","Pageviews":7},{"ReferringDomain":"joplinapp.org","Pageviews":7},{"ReferringDomain":"mynaparrot.es","Pageviews":7},{"ReferringDomain":"kiconnect.nrw","Pageviews":7},{"ReferringDomain":"ericssondevops.com","Pageviews":7},{"ReferringDomain":"google.it","Pageviews":7},{"ReferringDomain":"collaborationlayer-traton.com","Pageviews":7},{"ReferringDomain":"naverlabs.com","Pageviews":7},{"ReferringDomain":"nissan.biz","Pageviews":7},{"ReferringDomain":"maldun.com","Pageviews":7},{"ReferringDomain":"weserve.co.jp","Pageviews":7},{"ReferringDomain":"suzuki.co.jp","Pageviews":7},{"ReferringDomain":"boeing.com","Pageviews":7},{"ReferringDomain":"kuaishou.com","Pageviews":7},{"ReferringDomain":"plantuml","Pageviews":7},{"ReferringDomain":"exp-aws.net","Pageviews":7},{"ReferringDomain":"wolai.com","Pageviews":7},{"ReferringDomain":"smz.zone","Pageviews":7},{"ReferringDomain":"liu.se","Pageviews":7},{"ReferringDomain":"calllab.net","Pageviews":7},{"ReferringDomain":"telegram.messenger","Pageviews":7},{"ReferringDomain":"tpssoft.com","Pageviews":7},{"ReferringDomain":"vector.int","Pageviews":7},{"ReferringDomain":"jetbrains.com","Pageviews":7},{"ReferringDomain":"grok.com","Pageviews":6},{"ReferringDomain":"google.gg","Pageviews":6},{"ReferringDomain":"chatadc.com","Pageviews":6},{"ReferringDomain":"banksvcs.net","Pageviews":6},{"ReferringDomain":"intrabpce.fr","Pageviews":6},{"ReferringDomain":"18.187","Pageviews":6},{"ReferringDomain":"yishuifengxiao.com","Pageviews":6},{"ReferringDomain":"asml.com","Pageviews":6},{"ReferringDomain":"artofmemory.com","Pageviews":6},{"ReferringDomain":"freecodecamp.org","Pageviews":6},{"ReferringDomain":"coding-cloud.com","Pageviews":6},{"ReferringDomain":"coreview.com","Pageviews":6},{"ReferringDomain":"webdevtutor.net","Pageviews":6},{"ReferringDomain":"fireflycloud.net","Pageviews":6},{"ReferringDomain":"oth-aw.de","Pageviews":6},{"ReferringDomain":"ceiti.md","Pageviews":6},{"ReferringDomain":"pwc.com","Pageviews":6},{"ReferringDomain":"athabascau.ca","Pageviews":6},{"ReferringDomain":"mayanks-macbook-pro","Pageviews":6},{"ReferringDomain":"dev.br","Pageviews":6},{"ReferringDomain":"hatena.ne.jp","Pageviews":6},{"ReferringDomain":"capcom.co.jp","Pageviews":6},{"ReferringDomain":"atlassian.com","Pageviews":6},{"ReferringDomain":"muni.cz","Pageviews":6},{"ReferringDomain":"runc.info","Pageviews":6},{"ReferringDomain":"plantuml.lan","Pageviews":6},{"ReferringDomain":"outlier.ai","Pageviews":6},{"ReferringDomain":"arm.com","Pageviews":6},{"ReferringDomain":"lovableproject.com","Pageviews":6},{"ReferringDomain":"memofun.net","Pageviews":6},{"ReferringDomain":"msxf.test","Pageviews":6},{"ReferringDomain":"monstar-lab.com","Pageviews":6},{"ReferringDomain":"bfigroupe.net","Pageviews":6},{"ReferringDomain":"geeklibrary.jp","Pageviews":6},{"ReferringDomain":"codigus.dev","Pageviews":6},{"ReferringDomain":"rmshtech.com","Pageviews":6},{"ReferringDomain":"chatopens.vip","Pageviews":6},{"ReferringDomain":"blackboard.com","Pageviews":6},{"ReferringDomain":"codefactori.com","Pageviews":6},{"ReferringDomain":"substack.com","Pageviews":6},{"ReferringDomain":"navercorp.com","Pageviews":5},{"ReferringDomain":"finat.pl","Pageviews":5},{"ReferringDomain":"hatenablog-parts.com","Pageviews":5},{"ReferringDomain":"daouoffice.com","Pageviews":5},{"ReferringDomain":"devhints.io","Pageviews":5},{"ReferringDomain":"globant.com","Pageviews":5},{"ReferringDomain":"1.252","Pageviews":5},{"ReferringDomain":"1.209","Pageviews":5},{"ReferringDomain":"healthcareit.net","Pageviews":5},{"ReferringDomain":"javaadvent.com","Pageviews":5},{"ReferringDomain":"defectdojo.com","Pageviews":5},{"ReferringDomain":"bbbserver.de","Pageviews":5},{"ReferringDomain":"rtptgcs.com","Pageviews":5},{"ReferringDomain":"intranetofthings.work","Pageviews":5},{"ReferringDomain":"diamant-software.de","Pageviews":5},{"ReferringDomain":"android.gm","Pageviews":5},{"ReferringDomain":"z-a-k-i.com","Pageviews":5},{"ReferringDomain":"nsroot.net","Pageviews":5},{"ReferringDomain":"hometogo.rocks","Pageviews":5},{"ReferringDomain":"covline.com","Pageviews":5},{"ReferringDomain":"fxd.blue","Pageviews":5},{"ReferringDomain":"copilot.com","Pageviews":5},{"ReferringDomain":"zoho.com","Pageviews":5},{"ReferringDomain":"saturngod.net","Pageviews":5},{"ReferringDomain":"ads.local","Pageviews":5},{"ReferringDomain":"canva.cn","Pageviews":5},{"ReferringDomain":"gva.es","Pageviews":5},{"ReferringDomain":"centene.com","Pageviews":5},{"ReferringDomain":"12.117","Pageviews":5},{"ReferringDomain":"learnbook.com.au","Pageviews":5},{"ReferringDomain":"batechworks.com","Pageviews":5},{"ReferringDomain":"qast.jp","Pageviews":5},{"ReferringDomain":"orangesharing.com","Pageviews":5},{"ReferringDomain":"miro-apps.com","Pageviews":5},{"ReferringDomain":"worthytutors.com","Pageviews":5},{"ReferringDomain":"duckdns.org","Pageviews":5},{"ReferringDomain":"stjude.org","Pageviews":5},{"ReferringDomain":"tmc-stargate.com","Pageviews":5},{"ReferringDomain":"scs.domain","Pageviews":5},{"ReferringDomain":"yun-craft.com","Pageviews":5},{"ReferringDomain":"rommelag.com","Pageviews":5},{"ReferringDomain":"i-soft.com.cn","Pageviews":5},{"ReferringDomain":"linux.do","Pageviews":5},{"ReferringDomain":"google.com.tw","Pageviews":5},{"ReferringDomain":"schemalab.app","Pageviews":5},{"ReferringDomain":"mamesfactory.com","Pageviews":5},{"ReferringDomain":"oraclecorp.com","Pageviews":4},{"ReferringDomain":"fpvirtualaragon.es","Pageviews":4},{"ReferringDomain":"hihonor.com","Pageviews":4},{"ReferringDomain":"honda-gamma.com","Pageviews":4},{"ReferringDomain":"aiwentu.com","Pageviews":4},{"ReferringDomain":"bosch.cloud","Pageviews":4},{"ReferringDomain":"webstream.co.jp","Pageviews":4},{"ReferringDomain":"rbi.tech","Pageviews":4},{"ReferringDomain":"javathinking.com","Pageviews":4},{"ReferringDomain":"docsy.dev","Pageviews":4},{"ReferringDomain":"chatpro.jp","Pageviews":4},{"ReferringDomain":"global.hsbc","Pageviews":4},{"ReferringDomain":"koczka.com","Pageviews":4},{"ReferringDomain":"csharptutorial.hu","Pageviews":4},{"ReferringDomain":"pictet.io","Pageviews":4},{"ReferringDomain":"getcourse.ru","Pageviews":4},{"ReferringDomain":"polarion.com","Pageviews":4},{"ReferringDomain":"hoppoco.blogspot.com","Pageviews":4},{"ReferringDomain":"jishuzhan.net","Pageviews":4},{"ReferringDomain":"swamedia.xyz","Pageviews":4},{"ReferringDomain":"appstart.cl","Pageviews":4},{"ReferringDomain":"leadyven.com","Pageviews":4},{"ReferringDomain":"commend.site","Pageviews":4},{"ReferringDomain":"bcv.ch","Pageviews":4},{"ReferringDomain":"zooxlabs.com","Pageviews":4},{"ReferringDomain":"concordia.ca","Pageviews":4},{"ReferringDomain":"4omini.xyz","Pageviews":4},{"ReferringDomain":"okta.com","Pageviews":4},{"ReferringDomain":"includ.io","Pageviews":4},{"ReferringDomain":"us01-aecopilot-sg","Pageviews":4},{"ReferringDomain":"factorfx.com","Pageviews":4},{"ReferringDomain":"clien.net","Pageviews":4},{"ReferringDomain":"swiggy.cloud","Pageviews":4},{"ReferringDomain":"lanjingchat.com","Pageviews":4},{"ReferringDomain":"html-coding.co.jp","Pageviews":4},{"ReferringDomain":"guiferreira.me","Pageviews":4},{"ReferringDomain":"google.bg","Pageviews":4},{"ReferringDomain":"ledatech.cn","Pageviews":4},{"ReferringDomain":"deltaww.com","Pageviews":4},{"ReferringDomain":"vivo.xyz","Pageviews":4},{"ReferringDomain":"writertools.site","Pageviews":4},{"ReferringDomain":"oop.vn","Pageviews":4},{"ReferringDomain":"nbyt.fr","Pageviews":4},{"ReferringDomain":"neo4j.com","Pageviews":4},{"ReferringDomain":"mvnrepository.com","Pageviews":4},{"ReferringDomain":"jitaku.work","Pageviews":4},{"ReferringDomain":"google.com.eg","Pageviews":4},{"ReferringDomain":"cox.com","Pageviews":4},{"ReferringDomain":"edu.sg","Pageviews":4},{"ReferringDomain":"fsoft.com.vn","Pageviews":4},{"ReferringDomain":"mikrotik.com","Pageviews":4},{"ReferringDomain":"stormbpmn.com","Pageviews":4},{"ReferringDomain":"1.233","Pageviews":4},{"ReferringDomain":"dongou.tech","Pageviews":4},{"ReferringDomain":"colruytgroup.com","Pageviews":4},{"ReferringDomain":"248.74","Pageviews":4},{"ReferringDomain":"sjzgw.cn","Pageviews":4},{"ReferringDomain":"hosted-tools.com","Pageviews":4},{"ReferringDomain":"zeiss.org","Pageviews":4},{"ReferringDomain":"otpbank.hu","Pageviews":4},{"ReferringDomain":"javis.vn","Pageviews":4},{"ReferringDomain":"syntx.ai","Pageviews":4},{"ReferringDomain":"asiainfo.com.cn","Pageviews":4},{"ReferringDomain":"chatgp7.com","Pageviews":4},{"ReferringDomain":"capitalone.com","Pageviews":4},{"ReferringDomain":"cybozu.co.jp","Pageviews":4},{"ReferringDomain":"capgemini.com","Pageviews":4},{"ReferringDomain":"unosoft.hu","Pageviews":4},{"ReferringDomain":"google.co.th","Pageviews":4},{"ReferringDomain":"sapo.pt","Pageviews":4},{"ReferringDomain":"chocolatey.org","Pageviews":4},{"ReferringDomain":"wizark.jp","Pageviews":4},{"ReferringDomain":"csin.cz","Pageviews":4},{"ReferringDomain":"1.174","Pageviews":4},{"ReferringDomain":"gitee.com","Pageviews":4},{"ReferringDomain":"bundesbank.de","Pageviews":4},{"ReferringDomain":"infimotion.com","Pageviews":4},{"ReferringDomain":"web.isolation","Pageviews":4},{"ReferringDomain":"sktelecom.com","Pageviews":4},{"ReferringDomain":"hldc.co.jp","Pageviews":4},{"ReferringDomain":"apache.org","Pageviews":4},{"ReferringDomain":"edepuml01","Pageviews":4},{"ReferringDomain":"mda.ca","Pageviews":4},{"ReferringDomain":"onsemi.com","Pageviews":4},{"ReferringDomain":"zscalerthree.net","Pageviews":4},{"ReferringDomain":"alfaintra.net","Pageviews":4},{"ReferringDomain":"ullisroboterseite.de","Pageviews":4},{"ReferringDomain":"10.242","Pageviews":4},{"ReferringDomain":"free.fr","Pageviews":4},{"ReferringDomain":"51cto.com","Pageviews":3},{"ReferringDomain":"univ-grenoble-alpes.fr","Pageviews":3},{"ReferringDomain":"deus-ex-machina-ism.com","Pageviews":3},{"ReferringDomain":"home-assistant.io","Pageviews":3},{"ReferringDomain":"reurl.cc","Pageviews":3},{"ReferringDomain":"teliacompany.net","Pageviews":3},{"ReferringDomain":"google.kz","Pageviews":3},{"ReferringDomain":"hardyfish.top","Pageviews":3},{"ReferringDomain":"google.ae","Pageviews":3},{"ReferringDomain":"tngdigital.com.my","Pageviews":3},{"ReferringDomain":"sm.cn","Pageviews":3},{"ReferringDomain":"korp.intranet","Pageviews":3},{"ReferringDomain":"freedium-mirror.cfd","Pageviews":3},{"ReferringDomain":"duosecurity.com","Pageviews":3},{"ReferringDomain":"2.25","Pageviews":3},{"ReferringDomain":"tclking.com","Pageviews":3},{"ReferringDomain":"maybank.co.id","Pageviews":3},{"ReferringDomain":"szut.dev","Pageviews":3},{"ReferringDomain":"essentrium.ru","Pageviews":3},{"ReferringDomain":"oreilly.com","Pageviews":3},{"ReferringDomain":"uca.fr","Pageviews":3},{"ReferringDomain":"fpt.com","Pageviews":3},{"ReferringDomain":"t-mobile.pl","Pageviews":3},{"ReferringDomain":"vaberlin.de","Pageviews":3},{"ReferringDomain":"redmine.jp","Pageviews":3},{"ReferringDomain":"retirementpartner.com","Pageviews":3},{"ReferringDomain":"dorck.cn","Pageviews":3},{"ReferringDomain":"tufts.edu","Pageviews":3},{"ReferringDomain":"rabobank.nl","Pageviews":3},{"ReferringDomain":"4.21","Pageviews":3},{"ReferringDomain":"towardsdev.com","Pageviews":3},{"ReferringDomain":"marvelstonemed.com","Pageviews":3},{"ReferringDomain":"siemens.com","Pageviews":3},{"ReferringDomain":"panasonic.com","Pageviews":3},{"ReferringDomain":"43.85","Pageviews":3},{"ReferringDomain":"hs-fulda.de","Pageviews":3},{"ReferringDomain":"visa.com","Pageviews":3},{"ReferringDomain":"disney.com","Pageviews":3},{"ReferringDomain":"here.com","Pageviews":3},{"ReferringDomain":"kioxia.com","Pageviews":3},{"ReferringDomain":"visionon.cn","Pageviews":3},{"ReferringDomain":"smhk.net","Pageviews":3},{"ReferringDomain":"chatopens.chat","Pageviews":3},{"ReferringDomain":"xueban.org.cn","Pageviews":3},{"ReferringDomain":"107.99","Pageviews":3},{"ReferringDomain":"ikasgela.com","Pageviews":3},{"ReferringDomain":"ichigoichie-blog.com","Pageviews":3},{"ReferringDomain":"suncor.com","Pageviews":3},{"ReferringDomain":"pncint.net","Pageviews":3},{"ReferringDomain":"eitaa.messenger","Pageviews":3},{"ReferringDomain":"conference.ke","Pageviews":3},{"ReferringDomain":"gmo.jp","Pageviews":3},{"ReferringDomain":"360.com","Pageviews":3},{"ReferringDomain":"wakuwakup.net","Pageviews":3},{"ReferringDomain":"futuresteps.online","Pageviews":3},{"ReferringDomain":"markdownlivepreview.com","Pageviews":3},{"ReferringDomain":"jku.at","Pageviews":3},{"ReferringDomain":"ruche.trusty","Pageviews":3},{"ReferringDomain":"airbank.cz","Pageviews":3},{"ReferringDomain":"netease.com","Pageviews":3},{"ReferringDomain":"augsburg.edu","Pageviews":3},{"ReferringDomain":"google.com.ly","Pageviews":3},{"ReferringDomain":"myppt.cc","Pageviews":3},{"ReferringDomain":"mcas.ms","Pageviews":3},{"ReferringDomain":"fhlmc.com","Pageviews":3},{"ReferringDomain":"coralnet.co.jp","Pageviews":3},{"ReferringDomain":"murex.com","Pageviews":3},{"ReferringDomain":"molops.net","Pageviews":3},{"ReferringDomain":"mrspience.com","Pageviews":3},{"ReferringDomain":"raindrop.io","Pageviews":3},{"ReferringDomain":"halo.run","Pageviews":3},{"ReferringDomain":"yinwang.com","Pageviews":3},{"ReferringDomain":"mille.pl","Pageviews":3},{"ReferringDomain":"joern-karthaus.de","Pageviews":3},{"ReferringDomain":"sheincorp.cn","Pageviews":3},{"ReferringDomain":"vk.com","Pageviews":3},{"ReferringDomain":"t3.chat","Pageviews":3},{"ReferringDomain":"emineo.ch","Pageviews":3},{"ReferringDomain":"24.83","Pageviews":3},{"ReferringDomain":"dreams.plus","Pageviews":3},{"ReferringDomain":"woa.com","Pageviews":3},{"ReferringDomain":"3zso.com","Pageviews":3},{"ReferringDomain":"h3c.com","Pageviews":3},{"ReferringDomain":"sokolik.info","Pageviews":3},{"ReferringDomain":"rojratt.com","Pageviews":3},{"ReferringDomain":"133.79","Pageviews":3},{"ReferringDomain":"ifb.edu.br","Pageviews":3},{"ReferringDomain":"seb.net","Pageviews":3},{"ReferringDomain":"offidocs.com","Pageviews":3},{"ReferringDomain":"czechai.io","Pageviews":3},{"ReferringDomain":"miraxia.com","Pageviews":3},{"ReferringDomain":"west-wind.com","Pageviews":3},{"ReferringDomain":"google.cl","Pageviews":3},{"ReferringDomain":"meituan.com","Pageviews":3},{"ReferringDomain":"3.116","Pageviews":3},{"ReferringDomain":"mathworks.com","Pageviews":3},{"ReferringDomain":"zalan.do","Pageviews":3},{"ReferringDomain":"aero.org","Pageviews":3},{"ReferringDomain":"open-vsx.org","Pageviews":3},{"ReferringDomain":"myoas.com","Pageviews":3},{"ReferringDomain":"lixil.com","Pageviews":3},{"ReferringDomain":"sap.com","Pageviews":3},{"ReferringDomain":"refinitiv.com","Pageviews":3},{"ReferringDomain":"binyweb.com","Pageviews":3},{"ReferringDomain":"astondevs.ru","Pageviews":3},{"ReferringDomain":"ccampus.org","Pageviews":3},{"ReferringDomain":"shortcut.com","Pageviews":3},{"ReferringDomain":"amd.com","Pageviews":3},{"ReferringDomain":"codeberg.page","Pageviews":3},{"ReferringDomain":"edu.co","Pageviews":3},{"ReferringDomain":"google.gr","Pageviews":3},{"ReferringDomain":"ericsson.com","Pageviews":2},{"ReferringDomain":"newtonideas.com","Pageviews":2},{"ReferringDomain":"creationline.com","Pageviews":2},{"ReferringDomain":"nttdata.com","Pageviews":2},{"ReferringDomain":"context7.com","Pageviews":2},{"ReferringDomain":"deloitte.com","Pageviews":2},{"ReferringDomain":"4.40","Pageviews":2},{"ReferringDomain":"zytintra.com","Pageviews":2},{"ReferringDomain":"ynov.com","Pageviews":2},{"ReferringDomain":"ilive.cn","Pageviews":2},{"ReferringDomain":"coderanch.com","Pageviews":2},{"ReferringDomain":"softpedia.com","Pageviews":2},{"ReferringDomain":"southernco.com","Pageviews":2},{"ReferringDomain":"netcompany.com","Pageviews":2},{"ReferringDomain":"jaccomeijer.nl","Pageviews":2},{"ReferringDomain":"automotive-wan.com","Pageviews":2},{"ReferringDomain":"japiim.com.br","Pageviews":2},{"ReferringDomain":"workplace.com","Pageviews":2},{"ReferringDomain":"dewu-inc.com","Pageviews":2},{"ReferringDomain":"diamond.jp","Pageviews":2},{"ReferringDomain":"absurdi.st","Pageviews":2},{"ReferringDomain":"oulu.net","Pageviews":2},{"ReferringDomain":"madrid.org","Pageviews":2},{"ReferringDomain":"ifsp.edu.br","Pageviews":2},{"ReferringDomain":"toyota-tsusho.com","Pageviews":2},{"ReferringDomain":"covea.priv","Pageviews":2},{"ReferringDomain":"fileinfo.com","Pageviews":2},{"ReferringDomain":"seekly.zone","Pageviews":2},{"ReferringDomain":"h-da.de","Pageviews":2},{"ReferringDomain":"siliconflow.cn","Pageviews":2},{"ReferringDomain":"knaw.nl","Pageviews":2},{"ReferringDomain":"studi.fr","Pageviews":2},{"ReferringDomain":"paic.com.cn","Pageviews":2},{"ReferringDomain":"bourgognefranchecomte.fr","Pageviews":2},{"ReferringDomain":"docs-as-co.de","Pageviews":2},{"ReferringDomain":"dwaiai.de","Pageviews":2},{"ReferringDomain":"temenos.com","Pageviews":2},{"ReferringDomain":"apn.local","Pageviews":2},{"ReferringDomain":"umoncton.ca","Pageviews":2},{"ReferringDomain":"jlr-apps.com","Pageviews":2},{"ReferringDomain":"tinyurl.com","Pageviews":2},{"ReferringDomain":"google.com.br","Pageviews":2},{"ReferringDomain":"highresbio.com","Pageviews":2},{"ReferringDomain":"baeldung.com","Pageviews":2},{"ReferringDomain":"tbox.cn","Pageviews":2},{"ReferringDomain":"hmg-corp.io","Pageviews":2},{"ReferringDomain":"memo.wiki","Pageviews":2},{"ReferringDomain":"linkml.io","Pageviews":2},{"ReferringDomain":"keygene.com","Pageviews":2},{"ReferringDomain":"uni-heidelberg.de","Pageviews":2},{"ReferringDomain":"halykbank.kz","Pageviews":2},{"ReferringDomain":"hk.hsbc","Pageviews":2},{"ReferringDomain":"tools.sap","Pageviews":2},{"ReferringDomain":"bik.pl","Pageviews":2},{"ReferringDomain":"bsh-group.com","Pageviews":2},{"ReferringDomain":"ztccloud.com.cn","Pageviews":2},{"ReferringDomain":"hs-bremerhaven.de","Pageviews":2},{"ReferringDomain":"1.10","Pageviews":2},{"ReferringDomain":"nixos.org","Pageviews":2},{"ReferringDomain":"nos.pt","Pageviews":2},{"ReferringDomain":"richard-wolf.com","Pageviews":2},{"ReferringDomain":"128.96","Pageviews":2},{"ReferringDomain":"happycoders.eu","Pageviews":2},{"ReferringDomain":"ssghosting.net","Pageviews":2},{"ReferringDomain":"boxine.de","Pageviews":2},{"ReferringDomain":"100.37","Pageviews":2},{"ReferringDomain":"1.254","Pageviews":2},{"ReferringDomain":"ttyunsou.com","Pageviews":2},{"ReferringDomain":"mti.moscow","Pageviews":2},{"ReferringDomain":"ey.com","Pageviews":2},{"ReferringDomain":"16.170","Pageviews":2},{"ReferringDomain":"greenhouse.io","Pageviews":2},{"ReferringDomain":"oktawave.com","Pageviews":2},{"ReferringDomain":"mercadolibre.com","Pageviews":2},{"ReferringDomain":"t.me","Pageviews":2},{"ReferringDomain":"fubonlife.com.tw","Pageviews":2},{"ReferringDomain":"eduardfekete.com","Pageviews":2},{"ReferringDomain":"aidea-suite.jp","Pageviews":2},{"ReferringDomain":"askgpt.app","Pageviews":2},{"ReferringDomain":"askgo.ai","Pageviews":2},{"ReferringDomain":"130.93","Pageviews":2},{"ReferringDomain":"buildzr.dev","Pageviews":2},{"ReferringDomain":"1.2","Pageviews":2},{"ReferringDomain":"hampel-soft.com","Pageviews":2},{"ReferringDomain":"jameskupke.com","Pageviews":2},{"ReferringDomain":"ampproject.org","Pageviews":2},{"ReferringDomain":"tauri.localhost","Pageviews":2},{"ReferringDomain":"ost.ch","Pageviews":2},{"ReferringDomain":"unilim.fr","Pageviews":2},{"ReferringDomain":"91.200","Pageviews":2},{"ReferringDomain":"tcontas.pt","Pageviews":2},{"ReferringDomain":"raritan.com","Pageviews":2},{"ReferringDomain":"ctan.org","Pageviews":2},{"ReferringDomain":"lilo.org","Pageviews":2},{"ReferringDomain":"replit.dev","Pageviews":2},{"ReferringDomain":"deref-web.de","Pageviews":2},{"ReferringDomain":"gecko.rs","Pageviews":2},{"ReferringDomain":"tab-browser.com","Pageviews":2},{"ReferringDomain":"0.15","Pageviews":2},{"ReferringDomain":"jp.sharp","Pageviews":2},{"ReferringDomain":"amazon.com","Pageviews":2},{"ReferringDomain":"dingtalk.com","Pageviews":2},{"ReferringDomain":"stripe.com","Pageviews":2},{"ReferringDomain":"eni.com","Pageviews":2},{"ReferringDomain":"line.android","Pageviews":2},{"ReferringDomain":"univ-artois.fr","Pageviews":2},{"ReferringDomain":"abnamro.com","Pageviews":2},{"ReferringDomain":"zurich.com","Pageviews":2},{"ReferringDomain":"somai.id","Pageviews":2},{"ReferringDomain":"gitlab.io","Pageviews":2},{"ReferringDomain":"anker-in.com","Pageviews":2},{"ReferringDomain":"codegenes.net","Pageviews":2},{"ReferringDomain":"rebs.de","Pageviews":2},{"ReferringDomain":"js.wiki","Pageviews":2},{"ReferringDomain":"jobcan.jp","Pageviews":2},{"ReferringDomain":"gs.com","Pageviews":2},{"ReferringDomain":"antgroup-inc.cn","Pageviews":2},{"ReferringDomain":"elsevier.systems","Pageviews":2},{"ReferringDomain":"64.190","Pageviews":2},{"ReferringDomain":"instructure.com","Pageviews":2},{"ReferringDomain":"mailbox.org","Pageviews":2},{"ReferringDomain":"zkb.ch","Pageviews":2},{"ReferringDomain":"penpot.app","Pageviews":2},{"ReferringDomain":"furydocs.io","Pageviews":2},{"ReferringDomain":"doxygen.nl","Pageviews":2},{"ReferringDomain":"keadex.dev","Pageviews":2},{"ReferringDomain":"leetcode.com","Pageviews":2},{"ReferringDomain":"kimik2.com","Pageviews":2},{"ReferringDomain":"148.112","Pageviews":2},{"ReferringDomain":"leopharma-app.com","Pageviews":2},{"ReferringDomain":"adobe.com","Pageviews":2},{"ReferringDomain":"stu-platform.live","Pageviews":2},{"ReferringDomain":"claas.local","Pageviews":2},{"ReferringDomain":"cesteonline.es","Pageviews":2},{"ReferringDomain":"exch.int","Pageviews":2},{"ReferringDomain":"asakabank.uz","Pageviews":2},{"ReferringDomain":"bbraun.com","Pageviews":2},{"ReferringDomain":"brightspace.com","Pageviews":2},{"ReferringDomain":"seeyon.com","Pageviews":2},{"ReferringDomain":"fsi.co.jp","Pageviews":2},{"ReferringDomain":"fenaco.com","Pageviews":2},{"ReferringDomain":"google.dk","Pageviews":2},{"ReferringDomain":"sd42.nl","Pageviews":2},{"ReferringDomain":"jira.com","Pageviews":2},{"ReferringDomain":"nokia.com","Pageviews":2},{"ReferringDomain":"share-wis.com","Pageviews":2},{"ReferringDomain":"1.8","Pageviews":2},{"ReferringDomain":"hse.ru","Pageviews":2},{"ReferringDomain":"bitcat.love","Pageviews":2},{"ReferringDomain":"88.208","Pageviews":2},{"ReferringDomain":"360caigang.cn","Pageviews":2},{"ReferringDomain":"intel.com","Pageviews":2},{"ReferringDomain":"bgithub.xyz","Pageviews":2},{"ReferringDomain":"target.com","Pageviews":1},{"ReferringDomain":"uni-due.de","Pageviews":1},{"ReferringDomain":"hdems.com","Pageviews":1},{"ReferringDomain":"google.at","Pageviews":1},{"ReferringDomain":"yjcloud.yn.cn","Pageviews":1},{"ReferringDomain":"lenovomm.com","Pageviews":1},{"ReferringDomain":"laleynext.es","Pageviews":1},{"ReferringDomain":"1.20","Pageviews":1},{"ReferringDomain":"techcombank.com.vn","Pageviews":1},{"ReferringDomain":"google.com.mx","Pageviews":1},{"ReferringDomain":"frankfurt-university.de","Pageviews":1},{"ReferringDomain":"korny.info","Pageviews":1},{"ReferringDomain":"thenduy.com","Pageviews":1},{"ReferringDomain":"sra.co.jp","Pageviews":1},{"ReferringDomain":"rnt.lscm","Pageviews":1},{"ReferringDomain":"neps.academy","Pageviews":1},{"ReferringDomain":"segmentfault.com","Pageviews":1},{"ReferringDomain":"sjoelund.se","Pageviews":1},{"ReferringDomain":"3ds.com","Pageviews":1},{"ReferringDomain":"wdc.com","Pageviews":1},{"ReferringDomain":"hes-so.ch","Pageviews":1},{"ReferringDomain":"mil.ua","Pageviews":1},{"ReferringDomain":"qa-community.co.uk","Pageviews":1},{"ReferringDomain":"cammac.de","Pageviews":1},{"ReferringDomain":"timelessq.com","Pageviews":1},{"ReferringDomain":"eclipse.dev","Pageviews":1},{"ReferringDomain":"tbulms.al","Pageviews":1},{"ReferringDomain":"dreads.bnb","Pageviews":1},{"ReferringDomain":"minnstate.edu","Pageviews":1},{"ReferringDomain":"chuangjisu.com","Pageviews":1},{"ReferringDomain":"hackartist.io","Pageviews":1},{"ReferringDomain":"chesspnt.com","Pageviews":1},{"ReferringDomain":"edenred.net","Pageviews":1},{"ReferringDomain":"100.122","Pageviews":1},{"ReferringDomain":"acsiatech.com","Pageviews":1},{"ReferringDomain":"samsungdisplay.net","Pageviews":1},{"ReferringDomain":"ilograph.com","Pageviews":1},{"ReferringDomain":"hdsaison.com.vn","Pageviews":1},{"ReferringDomain":"mubu.com","Pageviews":1},{"ReferringDomain":"univ-tln.fr","Pageviews":1},{"ReferringDomain":"hpe.com","Pageviews":1},{"ReferringDomain":"travp.net","Pageviews":1},{"ReferringDomain":"chatveskole.cz","Pageviews":1},{"ReferringDomain":"mynanian.top","Pageviews":1},{"ReferringDomain":"qatestlab.biz","Pageviews":1},{"ReferringDomain":"jamacloud.com","Pageviews":1},{"ReferringDomain":"nak.de","Pageviews":1},{"ReferringDomain":"confluence.schwarz","Pageviews":1},{"ReferringDomain":"ddns.net","Pageviews":1},{"ReferringDomain":"cs.sys","Pageviews":1},{"ReferringDomain":"vwgroup.com","Pageviews":1},{"ReferringDomain":"11.59","Pageviews":1},{"ReferringDomain":"238.169","Pageviews":1},{"ReferringDomain":"yadro.com","Pageviews":1},{"ReferringDomain":"aiville.com","Pageviews":1},{"ReferringDomain":"swisscom.com","Pageviews":1},{"ReferringDomain":"3.6","Pageviews":1},{"ReferringDomain":"ripurun.com","Pageviews":1},{"ReferringDomain":"ac.kr","Pageviews":1},{"ReferringDomain":"d-1k.be","Pageviews":1},{"ReferringDomain":"osd.se","Pageviews":1},{"ReferringDomain":"wi-gameserver.com","Pageviews":1},{"ReferringDomain":"shop-apotheke.com","Pageviews":1},{"ReferringDomain":"haomuyang.com","Pageviews":1},{"ReferringDomain":"atatech.org","Pageviews":1},{"ReferringDomain":"kaonmedia.com","Pageviews":1},{"ReferringDomain":"gitmind.ai","Pageviews":1},{"ReferringDomain":"nihon-u.ac.jp","Pageviews":1},{"ReferringDomain":"xsinternal.com","Pageviews":1},{"ReferringDomain":"rsue.ru","Pageviews":1},{"ReferringDomain":"zpong.com","Pageviews":1},{"ReferringDomain":"i-smet.kz","Pageviews":1},{"ReferringDomain":"ubuntu.local","Pageviews":1},{"ReferringDomain":"hateblo.jp","Pageviews":1},{"ReferringDomain":"kkguan.com","Pageviews":1},{"ReferringDomain":"monex.jp","Pageviews":1},{"ReferringDomain":"0.104","Pageviews":1},{"ReferringDomain":"30.238","Pageviews":1},{"ReferringDomain":"typst.app","Pageviews":1},{"ReferringDomain":"200.234","Pageviews":1},{"ReferringDomain":"arc.net","Pageviews":1},{"ReferringDomain":"honeywell.lab","Pageviews":1},{"ReferringDomain":"aichatos8.com.cn","Pageviews":1},{"ReferringDomain":"th-rosenheim.de","Pageviews":1},{"ReferringDomain":"gl2i.fr","Pageviews":1},{"ReferringDomain":"standardchartered.com","Pageviews":1},{"ReferringDomain":"const.cc","Pageviews":1},{"ReferringDomain":"veriserve-vietnam.com","Pageviews":1},{"ReferringDomain":"cmss.com","Pageviews":1},{"ReferringDomain":"edu.ar","Pageviews":1},{"ReferringDomain":"aceins.com","Pageviews":1},{"ReferringDomain":"cohesity.com","Pageviews":1},{"ReferringDomain":"disy.net","Pageviews":1},{"ReferringDomain":"k8s-dev.internal","Pageviews":1},{"ReferringDomain":"fbsbx.com","Pageviews":1},{"ReferringDomain":"emergentagent.com","Pageviews":1},{"ReferringDomain":"continue","Pageviews":1},{"ReferringDomain":"paysera.net","Pageviews":1},{"ReferringDomain":"perlego.com","Pageviews":1},{"ReferringDomain":"vpbank.com.vn","Pageviews":1},{"ReferringDomain":"marquardt.de","Pageviews":1},{"ReferringDomain":"miltenyibiotec.de","Pageviews":1},{"ReferringDomain":"janitza.dev","Pageviews":1},{"ReferringDomain":"zuiyouliao.com","Pageviews":1},{"ReferringDomain":"16.31","Pageviews":1},{"ReferringDomain":"wuaze.com","Pageviews":1},{"ReferringDomain":"psnc.pl","Pageviews":1},{"ReferringDomain":"tybbxcz.cn","Pageviews":1},{"ReferringDomain":"pepsico.com","Pageviews":1},{"ReferringDomain":"hanqichuan.com","Pageviews":1},{"ReferringDomain":"denso.com","Pageviews":1},{"ReferringDomain":"kethalia.com","Pageviews":1},{"ReferringDomain":"daum.net","Pageviews":1},{"ReferringDomain":"recursionist.io","Pageviews":1},{"ReferringDomain":"frt.vn","Pageviews":1},{"ReferringDomain":"topview.ai","Pageviews":1},{"ReferringDomain":"datev.de","Pageviews":1},{"ReferringDomain":"21.24","Pageviews":1},{"ReferringDomain":"lookafar.net","Pageviews":1},{"ReferringDomain":"devmedia.com.br","Pageviews":1},{"ReferringDomain":"hikerpig.cn","Pageviews":1},{"ReferringDomain":"liner.com","Pageviews":1},{"ReferringDomain":"duo.nl","Pageviews":1},{"ReferringDomain":"uni-hamburg.de","Pageviews":1},{"ReferringDomain":"convert.guru","Pageviews":1},{"ReferringDomain":"pkg-server","Pageviews":1},{"ReferringDomain":"csy-jira-prod","Pageviews":1},{"ReferringDomain":"walmart.com","Pageviews":1},{"ReferringDomain":"245.232","Pageviews":1},{"ReferringDomain":"133.167","Pageviews":1},{"ReferringDomain":"iggroup.local","Pageviews":1},{"ReferringDomain":"springer.com","Pageviews":1},{"ReferringDomain":"linuxadictos.com","Pageviews":1},{"ReferringDomain":"wellsfargo.net","Pageviews":1},{"ReferringDomain":"88.77","Pageviews":1},{"ReferringDomain":"vgwholdings.net","Pageviews":1},{"ReferringDomain":"datacloudmail.ru","Pageviews":1},{"ReferringDomain":"rockwellcollins.com","Pageviews":1},{"ReferringDomain":"uha.fr","Pageviews":1},{"ReferringDomain":"showdoc.com.cn","Pageviews":1},{"ReferringDomain":"viber.com","Pageviews":1},{"ReferringDomain":"amlogic.com","Pageviews":1},{"ReferringDomain":"chinafuda.com","Pageviews":1},{"ReferringDomain":"ffhs.ch","Pageviews":1},{"ReferringDomain":"jacquiread.com","Pageviews":1},{"ReferringDomain":"google.cat","Pageviews":1},{"ReferringDomain":"lycorp.co.jp","Pageviews":1},{"ReferringDomain":"google.hu","Pageviews":1},{"ReferringDomain":"docs.rs","Pageviews":1},{"ReferringDomain":"lenovo.com","Pageviews":1},{"ReferringDomain":"73.131","Pageviews":1},{"ReferringDomain":"banque-france.fr","Pageviews":1},{"ReferringDomain":"prateekjain.dev","Pageviews":1},{"ReferringDomain":"unwoundstack.com","Pageviews":1},{"ReferringDomain":"stepik.org","Pageviews":1},{"ReferringDomain":"group.gca","Pageviews":1},{"ReferringDomain":"crowdcast.io","Pageviews":1},{"ReferringDomain":"allianz.net","Pageviews":1},{"ReferringDomain":"fjord.jp","Pageviews":1},{"ReferringDomain":"planfix.ru","Pageviews":1},{"ReferringDomain":"xygalaxy.com","Pageviews":1},{"ReferringDomain":"gubins.online","Pageviews":1},{"ReferringDomain":"posdev","Pageviews":1},{"ReferringDomain":"evanlin.com","Pageviews":1},{"ReferringDomain":"freebsd.org","Pageviews":1},{"ReferringDomain":"notegpt.io","Pageviews":1},{"ReferringDomain":"jdon.com","Pageviews":1},{"ReferringDomain":"ichitra.net","Pageviews":1},{"ReferringDomain":"serpro.gov.br","Pageviews":1},{"ReferringDomain":"oth-regensburg.de","Pageviews":1},{"ReferringDomain":"poissonsoft.com","Pageviews":1},{"ReferringDomain":"ofd-h.de","Pageviews":1},{"ReferringDomain":"gov.uk","Pageviews":1},{"ReferringDomain":"joeblu.com","Pageviews":1},{"ReferringDomain":"volvocars.biz","Pageviews":1},{"ReferringDomain":"honda-ivi.com","Pageviews":1},{"ReferringDomain":"sbdl.dev","Pageviews":1},{"ReferringDomain":"yandex.net","Pageviews":1},{"ReferringDomain":"nmn.io","Pageviews":1},{"ReferringDomain":"teamnexus.in","Pageviews":1},{"ReferringDomain":"uwm.com","Pageviews":1},{"ReferringDomain":"advantest.co.jp","Pageviews":1},{"ReferringDomain":"gitmind.net","Pageviews":1},{"ReferringDomain":"csh.org.tw","Pageviews":1},{"ReferringDomain":"49.211","Pageviews":1},{"ReferringDomain":"gocapable.com","Pageviews":1},{"ReferringDomain":"qaoneadr.local","Pageviews":1},{"ReferringDomain":"dce-eir.net","Pageviews":1},{"ReferringDomain":"girishuppal.com","Pageviews":1},{"ReferringDomain":"neople.co.kr","Pageviews":1},{"ReferringDomain":"minimax.io","Pageviews":1},{"ReferringDomain":"16.113","Pageviews":1},{"ReferringDomain":"pingpongx.org","Pageviews":1},{"ReferringDomain":"onftech.local","Pageviews":1},{"ReferringDomain":"1.149","Pageviews":1},{"ReferringDomain":"clsa.com","Pageviews":1},{"ReferringDomain":"groupama.fr","Pageviews":1},{"ReferringDomain":"eda-inc.jp","Pageviews":1},{"ReferringDomain":"ericonline.cn","Pageviews":1},{"ReferringDomain":"openurls.com.cn","Pageviews":1},{"ReferringDomain":"coda.io","Pageviews":1},{"ReferringDomain":"163.32","Pageviews":1},{"ReferringDomain":"librecours.net","Pageviews":1},{"ReferringDomain":"wlfamily.site","Pageviews":1},{"ReferringDomain":"honorlock.com","Pageviews":1},{"ReferringDomain":"sms-group.com","Pageviews":1},{"ReferringDomain":"cnacltlsde001","Pageviews":1},{"ReferringDomain":"derlin.ch","Pageviews":1},{"ReferringDomain":"faesel.com","Pageviews":1},{"ReferringDomain":"umc.com","Pageviews":1},{"ReferringDomain":"anoff.io","Pageviews":1},{"ReferringDomain":"uoi.gr","Pageviews":1},{"ReferringDomain":"google.dz","Pageviews":1},{"ReferringDomain":"kytoc.vn","Pageviews":1},{"ReferringDomain":"yorku.ca","Pageviews":1},{"ReferringDomain":"nokia.net","Pageviews":1},{"ReferringDomain":"nijialin.com","Pageviews":1},{"ReferringDomain":"amazonaws.com","Pageviews":1},{"ReferringDomain":"gartner.com","Pageviews":1},{"ReferringDomain":"gitversion.net","Pageviews":1},{"ReferringDomain":"andersenlab.com","Pageviews":1},{"ReferringDomain":"caolu.xin","Pageviews":1},{"ReferringDomain":"groupebpce.fr","Pageviews":1},{"ReferringDomain":"airbusds.corp","Pageviews":1},{"ReferringDomain":"onemoreaddin.com","Pageviews":1},{"ReferringDomain":"ovice.com","Pageviews":1},{"ReferringDomain":"bytedance.net","Pageviews":1},{"ReferringDomain":"kinaxis.com","Pageviews":1},{"ReferringDomain":"eu.sew","Pageviews":1},{"ReferringDomain":"toyotanmc.com","Pageviews":1},{"ReferringDomain":"bycs.de","Pageviews":1},{"ReferringDomain":"stackedit.io","Pageviews":1},{"ReferringDomain":"sde.dk","Pageviews":1},{"ReferringDomain":"slsp.sk","Pageviews":1},{"ReferringDomain":"lancaster.ac.uk","Pageviews":1},{"ReferringDomain":"rollingwireless.com","Pageviews":1},{"ReferringDomain":"twitch.tv","Pageviews":1},{"ReferringDomain":"132.177","Pageviews":1},{"ReferringDomain":"keluofeite.com","Pageviews":1},{"ReferringDomain":"sicarrier.com","Pageviews":1},{"ReferringDomain":"databyte.hu","Pageviews":1},{"ReferringDomain":"zalando.net","Pageviews":1},{"ReferringDomain":"companyworkplace.com","Pageviews":1},{"ReferringDomain":"bw.schule","Pageviews":1},{"ReferringDomain":"246.206","Pageviews":1},{"ReferringDomain":"google.ee","Pageviews":1},{"ReferringDomain":"sqlshack.com","Pageviews":1},{"ReferringDomain":"collaboration-man.com","Pageviews":1},{"ReferringDomain":"radolyn.ayugram","Pageviews":1},{"ReferringDomain":"bt.com","Pageviews":1},{"ReferringDomain":"wearecommunity.io","Pageviews":1},{"ReferringDomain":"chateverywhere.app","Pageviews":1},{"ReferringDomain":"fhir.org","Pageviews":1},{"ReferringDomain":"yinxiang.com","Pageviews":1},{"ReferringDomain":"inspera.no","Pageviews":1},{"ReferringDomain":"jadve.com","Pageviews":1},{"ReferringDomain":"aysa.ad","Pageviews":1},{"ReferringDomain":"apple.com","Pageviews":1},{"ReferringDomain":"xiaojukeji.com","Pageviews":1},{"ReferringDomain":"iframe-yang.yandex","Pageviews":1},{"ReferringDomain":"sf-express.com","Pageviews":1},{"ReferringDomain":"201.146","Pageviews":1},{"ReferringDomain":"unitasolucoes.com.br","Pageviews":1},{"ReferringDomain":"office365.us","Pageviews":1},{"ReferringDomain":"eclipse.org","Pageviews":1},{"ReferringDomain":"zaloapp.com","Pageviews":1},{"ReferringDomain":"accurate-is-development.com","Pageviews":1},{"ReferringDomain":"chatopens.ai","Pageviews":1},{"ReferringDomain":"advantest.com","Pageviews":1},{"ReferringDomain":"chatbotapp.ai","Pageviews":1},{"ReferringDomain":"mobis.co.kr","Pageviews":1},{"ReferringDomain":"akadns.net","Pageviews":1},{"ReferringDomain":"alm.serpro","Pageviews":1},{"ReferringDomain":"skillbox.ru","Pageviews":1},{"ReferringDomain":"dzen.ru","Pageviews":1},{"ReferringDomain":"oxygenxml.com","Pageviews":1},{"ReferringDomain":"prd.tkp","Pageviews":1},{"ReferringDomain":"newtab","Pageviews":1},{"ReferringDomain":"micron.com","Pageviews":1},{"ReferringDomain":"edu.my","Pageviews":1},{"ReferringDomain":"ieee-jp.org","Pageviews":1},{"ReferringDomain":"barcapint.com","Pageviews":1},{"ReferringDomain":"pp-bmc","Pageviews":1},{"ReferringDomain":"confluence","Pageviews":1},{"ReferringDomain":"svc.co.at","Pageviews":1}] || [];
+	var refDomainDataGrouped = [];
+	var refDomainData = [];
+	var otherRefDomainSum = 0;
+	var googleSum = 0;
+	var bingSum = 0;
+	var yahooSum = 0;
+	var facebookSum = 0;
+	for (var i = 0; i < rawRefDomainData.length; i++) {
+		if (rawRefDomainData[i].ReferringDomain.includes("google")) {
+			googleSum += rawRefDomainData[i].Pageviews;
+		} else if (rawRefDomainData[i].ReferringDomain.includes("bing")) {
+			bingSum += rawRefDomainData[i].Pageviews;
+		} else if (rawRefDomainData[i].ReferringDomain.includes("yahoo")) {
+			yahooSum += rawRefDomainData[i].Pageviews;			
+		} else if (rawRefDomainData[i].ReferringDomain.includes("facebook")) {
+			facebookSum += rawRefDomainData[i].Pageviews;
+		} else {
+			refDomainDataGrouped.push(rawRefDomainData[i]);
+		}
+	}
+	refDomainDataGrouped.push({'ReferringDomain': 'google.com', 'Pageviews': googleSum});
+	refDomainDataGrouped.push({'ReferringDomain': 'bing.com', 'Pageviews': bingSum});
+	refDomainDataGrouped.push({'ReferringDomain': 'yahoo.com', 'Pageviews': yahooSum});
+	refDomainDataGrouped.push({'ReferringDomain': 'facebook.com', 'Pageviews': facebookSum});
+
+	refDomainDataGrouped = refDomainDataGrouped.sort(function (a, b) {
+		return d3.descending(a.Pageviews, b.Pageviews);
+	});
+	
+	var totalRefDomainData = 0;
+	for (var i = 0; i < refDomainDataGrouped.length; i++) {
+		if (i <= 4) {
+			if (refDomainDataGrouped[i].ReferringDomain === "plantuml.com") {
+				refDomainDataGrouped[i].ReferringDomain = 'Direct';
+			}
+			refDomainData[i] = refDomainDataGrouped[i];
+		} else {
+			otherRefDomainSum += refDomainDataGrouped[i].Pageviews;
+		}
+		totalRefDomainData += refDomainDataGrouped[i].Pageviews;
+	}
+	refDomainData.push({'ReferringDomain': 'Other', 'Pageviews': otherRefDomainSum});
+
+	
+
+
+    var rawBrowsersData = [{"Browser":"Chrome","Pageviews":1366220},{"Browser":"IE","Pageviews":669032},{"Browser":"Firefox","Pageviews":98260},{"Browser":"Safari","Pageviews":97960},{"Browser":"Opera","Pageviews":17906},{"Browser":"QQ","Pageviews":5455},{"Browser":"Yandex","Pageviews":2877},{"Browser":"Unknown","Pageviews":2747},{"Browser":"Samsung","Pageviews":2653},{"Browser":"Blackberry","Pageviews":221},{"Browser":"FBApp","Pageviews":217},{"Browser":"UCBrowser","Pageviews":144},{"Browser":"YahooBot","Pageviews":8},{"Browser":"BaiduBot","Pageviews":8},{"Browser":"Silk","Pageviews":7},{"Browser":"YandexBot","Pageviews":1}] || [];
+	rawBrowsersData = rawBrowsersData.sort(function (a, b) {
+		return d3.descending(a.Pageviews, b.Pageviews);
+	});
+	browsersData = [];
+	otherBrowsersSum = 0;
+	var totalBrowsersData = 0;
+	for (var i = 0; i < rawBrowsersData.length; i++) {
+		if (i <= 4) {
+			browsersData[i] = rawBrowsersData[i];
+		} else {
+			otherBrowsersSum += rawBrowsersData[i].Pageviews;
+		}
+		totalBrowsersData += rawBrowsersData[i].Pageviews;
+	}
+	browsersData.push({'Browser': 'Other', 'Pageviews': otherBrowsersSum});
+	
+	var formFactorData = [{"FormFactor":"Desktop","Pageviews":2120619},{"FormFactor":"Mobile","Pageviews":131662},{"FormFactor":"Tablet","Pageviews":11435}] || [];
+	var totalFormFactorData = 0;
+	for (var i = 0; i < formFactorData.length; i++) { 
+		totalFormFactorData += formFactorData[i].Pageviews;
+	}
+
+    var margin = {
+            top: 15,
+            right: 135,
+            bottom: 15,
+            left: 15
+    };
+
+	var origDimension = 330;
+    var width = 330 - margin.left - margin.right,
+        height = 330 - margin.top - margin.bottom;
+
+    var radius = Math.min(width, height) / 2 - 15
+
+    var svg = d3.select("#browsers-pie-chart")
+        .append("svg")
+		.attr("width", '100%')
+		.attr("height", '100%')
+		.attr('viewBox','0 0 '+ origDimension +' '+origDimension )
+        
+    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    var pie = d3.pie().value(function(d) { 
+        return d.Pageviews; 
+    });
+
+    var arc = d3.arc()
+                .innerRadius(50)
+                .outerRadius(radius);
+
+	var arcOver = d3.arc()
+      .innerRadius(50)
+      .outerRadius(radius+5);
+
+    var arcs = g.selectAll("arc")
+                .data(pie(browsersData))
+                .enter()
+                .append("g")
+                .attr("class", "arc")
+
+    arcs.append("text")
+            .attr("x", (margin.top / 2) - 3)             
+            .attr("y", (margin.bottom / 2))
+            .attr("text-anchor", "middle")  
+            .style("font-size", "16px").text(function(d){
+            return (d.data.Pageviews/totalBrowsersData * 100).toFixed(2) + "%";
+            }).style("opacity", 0); 
+
+    arcs.append("path")
+        .attr("fill", function(d, i) {
+            return color(d.data.Pageviews);
+        })
+        .attr("d", arc)
+		.style('stroke', 'white')
+    	.style('stroke-width', 1)
+		.on("mouseover", function(d) {
+			d3.select(this).transition()
+			.duration(500)
+			.attr("d", arcOver);
+		})
+		.on("mouseout", function(d) {
+			d3.select(this).transition()
+			  .duration(500)
+			  .attr("d", arc);
+		});
+
+    arcs.on("mouseover", function(d, i) {
+            d3.select(this).select("text").transition()
+			.duration(500).style("opacity", 1); 
+			
+		})
+		.on("mouseout", function(d, i) {
+            d3.select(this).select("text").transition()
+			.duration(500).style("opacity", 0);
+		});
+
+    var legendG = svg.selectAll(".legend")
+        .data(pie(browsersData))
+        .enter().append("g")
+        .attr("transform", function(d,i){
+            return "translate(" + (width  -15) + "," + (i * 15 + 20) + ")";
+        })
+        .attr("class", "legend");   
+
+    legendG.append("circle")
+        .attr("cx", 5)
+        .attr("cy", 6)
+		.attr("r", 5)
+        .attr("fill", function(d, i) {
+            return color(d.data.Pageviews);
+        });
+
+    legendG.append("text")
+        .text(function(d){
+            return d.data.Browser + ":  " + d.data.Pageviews.toLocaleString();
+        })
+        .style("font-size", 12)
+        .attr("y", 10)
+        .attr("x", 11);
+
+    
+    
+    
+    
+    
+    
+
+
+
+    var svg = d3.select("#devices-pie-chart")
+        .append("svg")
+		.attr("width", '100%')
+		.attr("height", '100%')
+		.attr('viewBox','0 0 '+ origDimension +' '+origDimension )
+        
+    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    var arc = d3.arc()
+                .innerRadius(50)
+                .outerRadius(radius);
+
+    var arcs = g.selectAll("arc")
+                .data(pie(formFactorData))
+                .enter()
+                .append("g")
+                .attr("class", "arc")
+
+    arcs.append("text")
+            .attr("x", (margin.top / 2) - 3)             
+            .attr("y", (margin.bottom / 2))
+            .attr("text-anchor", "middle")  
+            .style("font-size", "16px").text(function(d){
+            return (d.data.Pageviews/totalFormFactorData * 100).toFixed(2)  + "%";
+            }).style("opacity", 0); 
+
+    arcs.append("path")
+        .attr("fill", function(d, i) {
+            return color(d.data.Pageviews);
+        })
+        .attr("d", arc)
+		.style('stroke', 'white')
+    	.style('stroke-width', 1)
+		.on("mouseover", function(d) {
+			d3.select(this).transition()
+			.duration(500)
+			.attr("d", arcOver);
+		})
+		.on("mouseout", function(d) {
+			d3.select(this).transition()
+			  .duration(500)
+			  .attr("d", arc);
+		});
+
+    arcs.on("mouseover", function(d, i) {
+            d3.select(this).select("text").transition()
+			.duration(500).style("opacity", 1); 
+			
+		})
+		.on("mouseout", function(d, i) {
+            d3.select(this).select("text").transition()
+			.duration(500).style("opacity", 0);
+		});
+
+    var legendG = svg.selectAll(".legend")
+        .data(pie(formFactorData))
+        .enter().append("g")
+        .attr("transform", function(d,i){
+            return "translate(" + (width  -15) + "," + (i * 15 + 20) + ")";
+        })
+        .attr("class", "legend");   
+
+    legendG.append("circle")
+        .attr("cx", 5)
+        .attr("cy", 6)
+		.attr("r", 5)
+        .attr("fill", function(d, i) {
+            return color(d.data.Pageviews);
+        });
+
+    legendG.append("text")
+        .text(function(d){
+            return d.data.FormFactor + ":  " + d.data.Pageviews.toLocaleString();
+        })
+        .style("font-size", 12)
+        .attr("y", 10)
+        .attr("x", 11);
+
+	
+    
+    
+    
+    
+    
+
+
+
+
+
+
+	var svg = d3.select("#ref-domain-pie-chart")
+        .append("svg")
+		.attr("width", '100%')
+		.attr("height", '100%')
+		.attr('viewBox','0 0 '+ origDimension +' '+origDimension )
+        
+    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    var arc = d3.arc()
+                .innerRadius(50)
+                .outerRadius(radius);
+
+	var arc2 = d3.arc()
+			.innerRadius(radius - 20)
+			.outerRadius(radius - 10);
+
+    var arcs = g.selectAll("arc")
+                .data(pie(refDomainData))
+                .enter()
+                .append("g")
+                .attr("class", "arc")
+
+    arcs.append("text")
+            .attr("x", (margin.top / 2) - 3)             
+            .attr("y", (margin.bottom / 2))
+            .attr("text-anchor", "middle")
+			.attr("fill", "white")
+            .style("font-size", "16px").text(function(d){
+            return (d.data.Pageviews/totalRefDomainData * 100).toFixed(2)  + "%";
+            }).style("opacity", 0); 
+
+	arcs.append("path")
+		.attr("d", function (d) {
+          return arc2(d);
+      }).attr("fill", function(d, i){
+          return color[i];
+      }).style("opacity", "0.4");
+
+    arcs.append("path")
+        .attr("fill", function(d, i) {
+            return color(d.data.Pageviews);
+        })
+        .attr("d", arc)
+		.style('stroke', '#333')
+    	.style('stroke-width', 1)
+		.on("mouseover", function(d) {
+			d3.select(this).transition()
+			.duration(500)
+			.attr("d", arcOver);
+		})
+		.on("mouseout", function(d) {
+			d3.select(this).transition()
+			  .duration(500)
+			  .attr("d", arc);
+		});
+
+    arcs.on("mouseover", function(d, i) {
+            d3.select(this).select("text").transition()
+			.duration(500).style("opacity", 1); 
+			
+		})
+		.on("mouseout", function(d, i) {
+            d3.select(this).select("text").transition()
+			.duration(500).style("opacity", 0);
+		});
+
+    var legendG = svg.selectAll(".legend")
+        .data(pie(refDomainData))
+        .enter().append("g")
+        .attr("transform", function(d,i){
+            return "translate(" + (width  -15) + "," + (i * 15 + 20) + ")";
+        })
+        .attr("class", "legend");   
+
+    legendG.append("circle")
+        .attr("cx", 5)
+        .attr("cy", 6)
+		.attr("r", 5)
+        .attr("fill", function(d, i) {
+            return color(d.data.Pageviews);
+        });
+
+    legendG.append("text")
+        .text(function(d){
+            return d.data.ReferringDomain + ":  " + d.data.Pageviews.toLocaleString();
+        })
+        .style("font-size", 12)
+        .attr("y", 10)
+        .attr("x", 11)
+		.attr("fill", "white");
+
+	
+    
+    
+    
+    
+    
+	
+    });
+</script>

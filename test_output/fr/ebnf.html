@@ -1,0 +1,2785 @@
+<html lang="fr"><head><script>var __ezHttpConsent={setByCat:function(src,tagType,attributes,category,force,customSetScriptFn=null){var setScript=function(){if(force||window.ezTcfConsent[category]){if(typeof customSetScriptFn==='function'){customSetScriptFn();}else{var scriptElement=document.createElement(tagType);scriptElement.src=src;attributes.forEach(function(attr){for(var key in attr){if(attr.hasOwnProperty(key)){scriptElement.setAttribute(key,attr[key]);}}});var firstScript=document.getElementsByTagName(tagType)[0];firstScript.parentNode.insertBefore(scriptElement,firstScript);}}};if(force||(window.ezTcfConsent&&window.ezTcfConsent.loaded)){setScript();}else if(typeof getEzConsentData==="function"){getEzConsentData().then(function(ezTcfConsent){if(ezTcfConsent&&ezTcfConsent.loaded){setScript();}else{console.error("cannot get ez consent data");force=true;setScript();}});}else{force=true;setScript();console.error("getEzConsentData is not a function");}},};</script>
+<script>var ezTcfConsent=window.ezTcfConsent?window.ezTcfConsent:{loaded:false,store_info:false,develop_and_improve_services:false,measure_ad_performance:false,measure_content_performance:false,select_basic_ads:false,create_ad_profile:false,select_personalized_ads:false,create_content_profile:false,select_personalized_content:false,understand_audiences:false,use_limited_data_to_select_content:false,};function getEzConsentData(){return new Promise(function(resolve){document.addEventListener("ezConsentEvent",function(event){var ezTcfConsent=event.detail.ezTcfConsent;resolve(ezTcfConsent);});});}</script>
+<script>if(typeof _setEzCookies!=='function'){function _setEzCookies(ezConsentData){var cookies=window.ezCookieQueue;for(var i=0;i<cookies.length;i++){var cookie=cookies[i];if(ezConsentData&&ezConsentData.loaded&&ezConsentData[cookie.tcfCategory]){document.cookie=cookie.name+"="+cookie.value;}}}}
+window.ezCookieQueue=window.ezCookieQueue||[];if(typeof addEzCookies!=='function'){function addEzCookies(arr){window.ezCookieQueue=[...window.ezCookieQueue,...arr];}}
+addEzCookies([{name:"ezopvc_173770",value:"1; Path=/; Domain=plantuml.com; Expires=Fri, 16 Jan 2026 13:00:44 UTC",tcfCategory:"understand_audiences",isEzoic:"true",},{name:"ezoab_173770",value:"mod1-c; Path=/; Domain=plantuml.com; Max-Age=7200",tcfCategory:"store_info",isEzoic:"true",},{name:"active_template::173770",value:"pub_site.1768566644; Path=/; Domain=plantuml.com; Expires=Sun, 18 Jan 2026 12:30:44 UTC",tcfCategory:"store_info",isEzoic:"true",},{name:"ezoadgid_173770",value:"-2; Path=/; Domain=plantuml.com; Max-Age=1800",tcfCategory:"understand_audiences",isEzoic:"true",},{name:"ezosuibasgeneris-1",value:"b394c5f2-0eb5-4734-48dd-aec3a8c3e26c; Path=/; Domain=plantuml.com; Expires=Sat, 16 Jan 2027 12:30:44 UTC; Secure; SameSite=None",tcfCategory:"understand_audiences",isEzoic:"true",}]);if(window.ezTcfConsent&&window.ezTcfConsent.loaded){_setEzCookies(window.ezTcfConsent);}else if(typeof getEzConsentData==="function"){getEzConsentData().then(function(ezTcfConsent){if(ezTcfConsent&&ezTcfConsent.loaded){_setEzCookies(window.ezTcfConsent);}else{console.error("cannot get ez consent data");_setEzCookies(window.ezTcfConsent);}});}else{console.error("getEzConsentData is not a function");_setEzCookies(window.ezTcfConsent);}</script><script type="text/javascript" data-ezscrex='false' data-cfasync='false'>window._ezaq = Object.assign({"edge_cache_status":33,"edge_response_time":51,"url":"https://plantuml.com/fr/ebnf"}, typeof window._ezaq !== "undefined" ? window._ezaq : {});</script><script type="text/javascript" data-ezscrex='false' data-cfasync='false'>window._ezaq = Object.assign({"ab_test_id":"mod1-c"}, typeof window._ezaq !== "undefined" ? window._ezaq : {});window.__ez=window.__ez||{};window.__ez.tf={};</script><script data-ezscrex='false' data-cfasync='false' data-pagespeed-no-defer>var __ez=__ez||{};__ez.stms=Date.now();__ez.evt={};__ez.script={};__ez.ck=__ez.ck||{};__ez.template={};__ez.template.isOrig=false;window.__ezScriptHost="//www.ezojs.com";__ez.queue=__ez.queue||function(){var e=0,i=0,t=[],n=!1,o=[],r=[],s=!0,a=function(e,i,n,o,r,s,a){var l=arguments.length>7&&void 0!==arguments[7]?arguments[7]:window,d=this;this.name=e,this.funcName=i,this.parameters=null===n?null:w(n)?n:[n],this.isBlock=o,this.blockedBy=r,this.deleteWhenComplete=s,this.isError=!1,this.isComplete=!1,this.isInitialized=!1,this.proceedIfError=a,this.fWindow=l,this.isTimeDelay=!1,this.process=function(){f("... func = "+e),d.isInitialized=!0,d.isComplete=!0,f("... func.apply: "+e);var i=d.funcName.split("."),n=null,o=this.fWindow||window;i.length>3||(n=3===i.length?o[i[0]][i[1]][i[2]]:2===i.length?o[i[0]][i[1]]:o[d.funcName]),null!=n&&n.apply(null,this.parameters),!0===d.deleteWhenComplete&&delete t[e],!0===d.isBlock&&(f("----- F'D: "+d.name),m())}},l=function(e,i,t,n,o,r,s){var a=arguments.length>7&&void 0!==arguments[7]?arguments[7]:window,l=this;this.name=e,this.path=i,this.async=o,this.defer=r,this.isBlock=t,this.blockedBy=n,this.isInitialized=!1,this.isError=!1,this.isComplete=!1,this.proceedIfError=s,this.fWindow=a,this.isTimeDelay=!1,this.isPath=function(e){return"/"===e[0]&&"/"!==e[1]},this.getSrc=function(e){return void 0!==window.__ezScriptHost&&this.isPath(e)&&"banger.js"!==this.name?window.__ezScriptHost+e:e},this.process=function(){l.isInitialized=!0,f("... file = "+e);var i=this.fWindow?this.fWindow.document:document,t=i.createElement("script");t.src=this.getSrc(this.path),!0===o?t.async=!0:!0===r&&(t.defer=!0),t.onerror=function(){var e={url:window.location.href,name:l.name,path:l.path,user_agent:window.navigator.userAgent};"undefined"!=typeof _ezaq&&(e.pageview_id=_ezaq.page_view_id);var i=encodeURIComponent(JSON.stringify(e)),t=new XMLHttpRequest;t.open("GET","//g.ezoic.net/ezqlog?d="+i,!0),t.send(),f("----- ERR'D: "+l.name),l.isError=!0,!0===l.isBlock&&m()},t.onreadystatechange=t.onload=function(){var e=t.readyState;f("----- F'D: "+l.name),e&&!/loaded|complete/.test(e)||(l.isComplete=!0,!0===l.isBlock&&m())},i.getElementsByTagName("head")[0].appendChild(t)}},d=function(e,i){this.name=e,this.path="",this.async=!1,this.defer=!1,this.isBlock=!1,this.blockedBy=[],this.isInitialized=!0,this.isError=!1,this.isComplete=i,this.proceedIfError=!1,this.isTimeDelay=!1,this.process=function(){}};function c(e,i,n,s,a,d,c,u,f){var m=new l(e,i,n,s,a,d,c,f);!0===u?o[e]=m:r[e]=m,t[e]=m,h(m)}function h(e){!0!==u(e)&&0!=s&&e.process()}function u(e){if(!0===e.isTimeDelay&&!1===n)return f(e.name+" blocked = TIME DELAY!"),!0;if(w(e.blockedBy))for(var i=0;i<e.blockedBy.length;i++){var o=e.blockedBy[i];if(!1===t.hasOwnProperty(o))return f(e.name+" blocked = "+o),!0;if(!0===e.proceedIfError&&!0===t[o].isError)return!1;if(!1===t[o].isComplete)return f(e.name+" blocked = "+o),!0}return!1}function f(e){var i=window.location.href,t=new RegExp("[?&]ezq=([^&#]*)","i").exec(i);"1"===(t?t[1]:null)&&console.debug(e)}function m(){++e>200||(f("let's go"),p(o),p(r))}function p(e){for(var i in e)if(!1!==e.hasOwnProperty(i)){var t=e[i];!0===t.isComplete||u(t)||!0===t.isInitialized||!0===t.isError?!0===t.isError?f(t.name+": error"):!0===t.isComplete?f(t.name+": complete already"):!0===t.isInitialized&&f(t.name+": initialized already"):t.process()}}function w(e){return"[object Array]"==Object.prototype.toString.call(e)}return window.addEventListener("load",(function(){setTimeout((function(){n=!0,f("TDELAY -----"),m()}),5e3)}),!1),{addFile:c,addFileOnce:function(e,i,n,o,r,s,a,l,d){t[e]||c(e,i,n,o,r,s,a,l,d)},addDelayFile:function(e,i){var n=new l(e,i,!1,[],!1,!1,!0);n.isTimeDelay=!0,f(e+" ...  FILE! TDELAY"),r[e]=n,t[e]=n,h(n)},addFunc:function(e,n,s,l,d,c,u,f,m,p){!0===c&&(e=e+"_"+i++);var w=new a(e,n,s,l,d,u,f,p);!0===m?o[e]=w:r[e]=w,t[e]=w,h(w)},addDelayFunc:function(e,i,n){var o=new a(e,i,n,!1,[],!0,!0);o.isTimeDelay=!0,f(e+" ...  FUNCTION! TDELAY"),r[e]=o,t[e]=o,h(o)},items:t,processAll:m,setallowLoad:function(e){s=e},markLoaded:function(e){if(e&&0!==e.length){if(e in t){var i=t[e];!0===i.isComplete?f(i.name+" "+e+": error loaded duplicate"):(i.isComplete=!0,i.isInitialized=!0)}else t[e]=new d(e,!0);f("markLoaded dummyfile: "+t[e].name)}},logWhatsBlocked:function(){for(var e in t)!1!==t.hasOwnProperty(e)&&u(t[e])}}}();__ez.evt.add=function(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n()},__ez.evt.remove=function(e,t,n){e.removeEventListener?e.removeEventListener(t,n,!1):e.detachEvent?e.detachEvent("on"+t,n):delete e["on"+t]};__ez.script.add=function(e){var t=document.createElement("script");t.src=e,t.async=!0,t.type="text/javascript",document.getElementsByTagName("head")[0].appendChild(t)};__ez.dot=__ez.dot||{};__ez.queue.addFileOnce('/detroitchicago/boise.js', '/detroitchicago/boise.js?gcb=195-5&cb=5', true, [], true, false, true, false);__ez.queue.addFileOnce('/parsonsmaize/abilene.js', '/parsonsmaize/abilene.js?gcb=195-5&cb=b20dfef28c', true, [], true, false, true, false);__ez.queue.addFileOnce('/parsonsmaize/mulvane.js', '/parsonsmaize/mulvane.js?gcb=195-5&cb=e75e48eec0', true, ['/parsonsmaize/abilene.js'], true, false, true, false);__ez.queue.addFileOnce('/detroitchicago/birmingham.js', '/detroitchicago/birmingham.js?gcb=195-5&cb=539c47377c', true, ['/parsonsmaize/abilene.js'], true, false, true, false);</script>
+<script data-ezscrex="false" type="text/javascript" data-cfasync="false">window._ezaq = Object.assign({"ad_cache_level":1,"adpicker_placement_cnt":0,"ai_placeholder_cache_level":1,"ai_placeholder_placement_cnt":-1,"domain":"plantuml.com","domain_id":173770,"ezcache_level":2,"ezcache_skip_code":0,"has_bad_image":0,"has_bad_words":0,"is_sitespeed":0,"lt_cache_level":0,"response_size":98790,"response_size_orig":90045,"response_time_orig":3,"template_id":134,"url":"https://plantuml.com/fr/ebnf","word_count":3367,"worst_bad_word_level":0}, typeof window._ezaq !== "undefined" ? window._ezaq : {});__ez.queue.markLoaded('ezaqBaseReady');</script>
+<link rel='preload' as='script' href='//securepubads.g.doubleclick.net/tag/js/gpt.js'>
+<link rel='preload' as='script' href='//go.ezodn.com/hb/dall.js?cb=195-5-142'>
+<script type="text/javascript">(function(){function storageAvailable(type){var storage;try{storage=window[type];var x='__storage_test__';storage.setItem(x,x);storage.removeItem(x);return true;}
+catch(e){return e instanceof DOMException&&(e.code===22||e.code===1014||e.name==='QuotaExceededError'||e.name==='NS_ERROR_DOM_QUOTA_REACHED')&&(storage&&storage.length!==0);}}
+function remove_ama_config(){if(storageAvailable('localStorage')){localStorage.removeItem("google_ama_config");}}
+remove_ama_config()})()</script>
+<script type="text/javascript">var ezoicTestActive = true</script>
+<script type='text/javascript' data-ezscrex='false' data-cfasync='false'>
+window.ezAnalyticsStatic = true;
+
+function analyticsAddScript(script) {
+	var ezDynamic = document.createElement('script');
+	ezDynamic.type = 'text/javascript';
+	ezDynamic.innerHTML = script;
+	document.head.appendChild(ezDynamic);
+}
+function getCookiesWithPrefix() {
+    var allCookies = document.cookie.split(';');
+    var cookiesWithPrefix = {};
+
+    for (var i = 0; i < allCookies.length; i++) {
+        var cookie = allCookies[i].trim();
+
+        for (var j = 0; j < arguments.length; j++) {
+            var prefix = arguments[j];
+            if (cookie.indexOf(prefix) === 0) {
+                var cookieParts = cookie.split('=');
+                var cookieName = cookieParts[0];
+                var cookieValue = cookieParts.slice(1).join('=');
+                cookiesWithPrefix[cookieName] = decodeURIComponent(cookieValue);
+                break; // Once matched, no need to check other prefixes
+            }
+        }
+    }
+
+    return cookiesWithPrefix;
+}
+function productAnalytics() {
+	var d = {"pr":[6,3,1],"aop":{"14":0,"26":0,"4":134,"7":0},"omd5":"b90100d3a2ea025b093f9230a938c1ed"};
+	d.u = _ezaq.url;
+	d.p = _ezaq.page_view_id;
+	d.v = _ezaq.visit_uuid;
+	d.ab = _ezaq.ab_test_id;
+	d.e = JSON.stringify(_ezaq);
+	d.ref = document.referrer;
+	d.c = getCookiesWithPrefix('active_template', 'ez', 'lp_');
+	if(typeof ez_utmParams !== 'undefined') {
+		d.utm = ez_utmParams;
+	}
+
+	var dataText = JSON.stringify(d);
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST','/ezais/analytics?cb=1', true);
+	xhr.onload = function () {
+		if (xhr.status!=200) {
+            return;
+		}
+
+        if(document.readyState !== 'loading') {
+            analyticsAddScript(xhr.response);
+            return;
+        }
+
+        var eventFunc = function() {
+            if(document.readyState === 'loading') {
+                return;
+            }
+            document.removeEventListener('readystatechange', eventFunc, false);
+            analyticsAddScript(xhr.response);
+        };
+
+        document.addEventListener('readystatechange', eventFunc, false);
+	};
+	xhr.setRequestHeader('Content-Type','text/plain');
+	xhr.send(dataText);
+}
+__ez.queue.addFunc("productAnalytics", "productAnalytics", null, true, ['ezaqBaseReady'], false, false, false, true);
+</script><script type="text/javascript" data-ezscrex="false" data-cfasync="false" async="">
+function productEzoicAds() {
+if(window.ezDisableAds === true) {
+	return;
+}
+window.google_reactive_ads_global_state = {
+                adCount: {},
+                floatingAdsStacking: { maxZIndexListeners: [], maxZIndexRestrictions: {}, nextRestrictionId: 0 },
+                messageValidationEnabled: false,
+                reactiveTypeDisabledByPublisher: {},
+                reactiveTypeEnabledInAsfe: {},
+                sideRailAvailableSpace: [],
+                sideRailOverlappableElements: [],
+                stateForType: {},
+                tagSpecificState: {},
+                wasPlaTagProcessed: true,
+                wasReactiveAdConfigReceived: { 1: true, 2: true, 8: true },
+                wasReactiveAdVisible: {},
+                wasReactiveTagRequestSent: true,
+                description: "Can't disable auto ads programmatically on the page, so here we are!"
+            };
+var d = {"ab":"","km":{},"pv":"","vu":"42f46f5e-7c2a-40b3-4e83-0e04c820fe31","r":{"r":[{"p":" ezoic_pub_ad_placeholder-655-sidebar-336x280-655-nonexxxnonexxxxxxezmaxscaleval100 ","s":655,"h":280,"w":336,"r":true},{"p":" ezoic_pub_ad_placeholder-661-sidebar_bottom-120x600-661-nonexxxnonexxxxxxezmaxscaleval100 ","s":661},{"p":" ezoic_pub_ad_placeholder-661-sidebar_bottom-160x600-661-nonexxxnonexxxxxxezmaxscaleval100 ","s":661},{"p":" ezoic_pub_ad_placeholder-662-sidebar_bottom-120x600-662-nonexxxnonexxxxxxezmaxscaleval100 ","s":662},{"p":" ezoic_pub_ad_placeholder-662-sidebar_bottom-160x600-662-nonexxxnonexxxxxxezmaxscaleval100 ","s":662},{"p":" ezoic_pub_ad_placeholder-647-under_page_title-320x100-647-nonexxxnonexxxxxxezmaxscaleval100 ","s":647},{"p":" ezoic_pub_ad_placeholder-647-under_page_title-320x50-647-nonexxxnonexxxxxxezmaxscaleval100 ","s":647},{"p":" ezoic_pub_ad_placeholder-647-under_page_title-468x60-647-nonexxxnonexxxxxxezmaxscaleval100 ","s":647},{"p":" ezoic_pub_ad_placeholder-647-under_page_title-728x90-647-nonexxxnonexxxxxxezmaxscaleval100 ","s":647},{"p":" ezoic_pub_ad_placeholder-672-sidebar_middle-250x250-672-nonexxxnonexxxxxxezmaxscaleval100 ","s":672},{"p":" ezoic_pub_ad_placeholder-672-sidebar_middle-300x250-672-nonexxxnonexxxxxxezmaxscaleval100 ","s":672},{"p":" ezoic_pub_ad_placeholder-672-sidebar_middle-336x280-672-nonexxxnonexxxxxxezmaxscaleval100 ","s":672},{"p":" ezoic_pub_ad_placeholder-673-sidebar_middle-250x250-673-nonexxxnonexxxxxxezmaxscaleval100 ","s":673},{"p":" ezoic_pub_ad_placeholder-673-sidebar_middle-300x250-673-nonexxxnonexxxxxxezmaxscaleval100 ","s":673,"h":280,"w":336},{"p":" ezoic_pub_ad_placeholder-673-sidebar_middle-336x280-673-nonexxxnonexxxxxxezmaxscaleval100 ","s":673},{"p":" ezoic_pub_ad_placeholder-100-bottom_floating-970x90-100-nonexxxnonexxxxxxezmaxscaleval100 ","s":100,"h":90,"w":970,"r":true}],"a":{"100":true,"12":true,"6":true,"647":true,"655":true,"661":true,"662":true,"672":true,"673":true},"g":-2,"l":{"0":2,"1":3,"2":2,"3":1,"4":-1,"5":-1},"m":{"0":2,"1":3,"2":2,"3":1,"4":-1,"5":-1},"v":0,"ve":false,"hr":false,"sa":false},"cr":"","tid":134,"tn":"pub_site","url":"","wc":3367,"ff":1,"dhh":""};
+d.ab = _ezaq.ab_test_id;
+d.pv = _ezaq.page_view_id;
+d.vu = _ezaq.visit_uuid;
+d.url = window.location.href;
+var dynamicAddScript = function(script) {
+	if(window.ezFinishedStatic === true) {
+		console.error("attempted to load dynamic script again");
+		return;
+	}
+	var errorMessages = [];
+	function errorHandler(event) {
+	  var errorObj = event.error;
+	  if (errorObj && errorObj.stack && errorObj.stack.indexOf('dynamicAddScript') !== -1) {
+		var errorMessage = {
+		  Message: event.message,
+		  LineNo: event.lineno,
+		  ColumnNo: event.colno,
+		  Stack: errorObj.stack
+		};
+		errorMessages.push(errorMessage);
+	  }
+
+	  if (typeof window.onerror === 'function') {
+		window.onerror.apply(this, arguments);
+	  }
+	}
+ 	window.addEventListener('error', errorHandler);
+
+	var ezDynamic = document.createElement('script');
+	ezDynamic.type = 'text/javascript';
+	ezDynamic.innerHTML = script;
+	document.head.appendChild(ezDynamic);
+
+	window.removeEventListener('error', errorHandler);
+	if (window.ezFinishedStatic !== true || typeof window.ezstaticerrors !== 'undefined') {
+		d.Script = script;
+		d.ErrorMessages = JSON.stringify(errorMessages);
+		d.ErrorStaticMessages = window.ezstaticerrors || '';
+		var dataTxt = JSON.stringify(d);
+		if (dataTxt.length > 0) {
+			var logXHR = new XMLHttpRequest();
+			logXHR.open('POST','/ezais/log?cb=1', true);
+			logXHR.setRequestHeader('Content-Type','application/json');
+			logXHR.send(dataTxt);
+		}
+	}
+};
+var dataText = JSON.stringify(d);
+if (dataText.length > 0) {
+	var startTime = Date.now() - __ez.stms;
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST','/ezais/dynamic?cb=1', true);
+	xhr.onload = function () {
+		if (xhr.status!=200) {
+            return;
+		}
+
+        if(document.readyState !== 'loading') {
+            dynamicAddScript(xhr.response);
+            return;
+        }
+
+        var eventFunc = function() {
+            if(document.readyState === 'loading') {
+                return;
+            }
+            document.removeEventListener('readystatechange', eventFunc, false);
+            dynamicAddScript(xhr.response);
+        };
+
+        document.addEventListener('readystatechange', eventFunc, false);
+	};
+	xhr.setRequestHeader('Content-Type','text/plain');
+	xhr.send(dataText);
+}
+}
+
+function callDynamicAfterConsent() {
+	if (window.__tcfapi) {
+		window.__tcfapi("addEventListener", 2, function (tcdata, success) {
+			if (success) {
+				if(tcdata.gdprApplies == true) {
+					if(tcdata.eventStatus === "useractioncomplete" || tcdata.eventStatus === "tcloaded") {
+						__ez.queue.addFunc("productEzoicAds", "productEzoicAds", null, true, ['ezaqReady'], false, false, false, true);
+					}
+				} else {
+					__ez.queue.addFunc("productEzoicAds", "productEzoicAds", null, true, ['ezaqReady'], false, false, false, true);
+				}
+			}
+		});
+	} else {
+		__ez.queue.addFunc("productEzoicAds", "productEzoicAds", null, true, ['ezaqReady'], false, false, false, true);
+	}
+}
+
+
+if (window.__tcfapi) {
+	callDynamicAfterConsent();
+} else {
+	if (typeof window.ezCMPQueue !== "undefined") {
+		window.ezCMPQueue.push(callDynamicAfterConsent);
+	} else {
+		__ez.queue.addFunc("productEzoicAds", "productEzoicAds", null, true, ['ezaqReady'], false, false, false, true);
+	}
+}
+</script><base href="https://plantuml.com/fr/ebnf"/>
+<meta name="flattr:id" content="1ew3x0"/>
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "url": "https://plantuml.com",
+  "name": "PlantUML",
+  "sameAs" : ["https://twitter.com/plantuml","https://en.wikipedia.org/wiki/PlantUML","https://www.wikidata.org/wiki/Q18346546"],
+  "logo": "https://cdn-0.plantuml.com/logo3.png",
+  "contactPoint": [{
+    "@type": "ContactPoint",
+    "email": "plantuml@gmail.com",
+    "url": "https://plantuml.com",
+    "contactType": "customer service"
+  }]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "item": {
+      "@id": "https://plantuml.com",
+      "name": "Home"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "item": {
+      "@id": "https://plantuml.com/sitemap-language-specification",
+      "name": "Language specification"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "item": {
+      "@id": "https://plantuml.com/ebnf",
+      "name": "Extended Backus-Naur Form"
+  }
+  }]
+}
+</script>
+<link rel="canonical" href="https://plantuml.com/fr/ebnf"/>
+<link rel="alternate" hreflang="x-default" href="https://plantuml.com/ebnf"/>
+<link rel="alternate" hreflang="de" href="https://plantuml.com/de/ebnf"/>
+<link rel="alternate" hreflang="en" href="https://plantuml.com/ebnf"/>
+<link rel="alternate" hreflang="es" href="https://plantuml.com/es/ebnf"/>
+<link rel="alternate" hreflang="fr" href="https://plantuml.com/fr/ebnf"/>
+<link rel="alternate" hreflang="ja" href="https://plantuml.com/ja/ebnf"/>
+<link rel="alternate" hreflang="ko" href="https://plantuml.com/ko/ebnf"/>
+<link rel="alternate" hreflang="zh" href="https://plantuml.com/zh/ebnf"/>
+
+<link rel="shortcut icon" href="/favicon.ico"/>
+
+<link rel="preload" as="image" href="/svgrepo-house.svg"/>
+<link rel="preload" as="image" href="/svgrepo-text-news.svg"/>
+<link rel="preload" as="image" href="/svgrepo-rocket-3-start.svg"/>
+<link rel="preload" as="image" href="/svgrepo-server.svg"/>
+<link rel="preload" as="image" href="/svgrepo-play.svg"/>
+<link rel="preload" as="image" href="/svgrepo-forum.svg"/>
+<link rel="preload" as="image" href="/svgrepo-add-to-online-cart.svg"/>
+<link rel="preload" as="image" href="/svgrepo-forum-message.svg"/>
+<link rel="preload" as="image" href="/svgrepo-palette-fill.svg"/>
+<link rel="preload" as="image" href="/svgrepo-cpu.svg"/>
+<link rel="preload" as="image" href="/svgrepo-books-library.svg"/>
+<link rel="preload" as="image" href="/svgrepo-signpost-fill.svg"/>
+<link rel="preload" as="image" href="/svgrepo-library.svg"/>
+
+<link rel="preload" as="image" href="/flags22.png"/>
+
+<link rel="preload" as="image" href="/svgrepo-uxwing-light-mode-toggle.svg"/>
+
+
+<!-- link rel="preload" as="image" href="https://img.shields.io/liberapay/patrons/plantuml.svg?logo=liberapay" -->
+
+
+<title>Extended BackusâNaur Form diagram</title>
+<meta name="description" content="EBNF is a code that expresses the syntax of a formal language. An EBNF consists of terminal symbols and non-terminal production rules."/>
+
+<meta property="og:type" content="article"/>
+<!-- volt:dokuwiki titleog: -->
+<!-- volt:dokuwiki descriptionog: -->
+
+<meta property="og:url" content="https://plantuml.com/fr/ebnf"/>
+<meta property="og:site_name" content="PlantUML.com"/>
+
+<!-- meta property="og:image" content="https://plantuml.com/og-ebnf" -->
+<meta name="twitter:image" content="https://plantuml.com/og-ebnf"/>
+<meta property="og:locale" content="fr"/>
+
+<meta name="twitter:card" content="summary"/>
+<!-- volt:dokuwiki titletwitter: -->
+<!-- volt:dokuwiki descriptiontwitter: -->
+<meta name="twitter:site" content="@PlantUML"/>
+<meta name="twitter:creator" content="@PlantUML"/>
+
+
+
+
+
+
+
+<!-- https://www.w3schools.com/colors/colors_picker.asp -->
+<!-- filter css https://codepen.io/sosuke/pen/Pjoqqp -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+.scale {
+}
+
+li {
+	margin: 2px;
+}
+#external li {
+	margin: 13px;
+}
+
+
+.pezoic {
+margin:0;
+padding:0;
+max-width: calc(100vw - 420px);
+overflow-x: hidden;
+}
+@media screen and (max-width: 1190px) {
+.pezoic {
+max-width: calc(100vw - 250px);
+}
+}
+
+
+.coptable {
+	max-width: 90%;
+}
+
+.mytab {
+	display:inline-block;
+	border-radius: 3px;
+	border: 1px solid #e1e4e8;
+}
+
+.mytab:hover {
+	border: 1px dashed #0366d6;
+	cursor: pointer;
+	color: #0366d6;
+	background: #f6f8fa;
+}
+
+.cop {
+	margin: 25px 10px 0 10px;
+}
+.cop:hover {
+	cursor: pointer; 
+	filter: invert(30%) sepia(75%) saturate(4001%) hue-rotate(201deg) brightness(88%) contrast(98%);
+}
+.cop2 {
+	margin: 25px 10px 0 10px;
+}
+.cop2:hover {
+	cursor: pointer; 
+}
+.msg {
+	position: absolute;
+	color:#339966;
+	background-color: #FFF;
+	margin-top: 55px;
+	display:none;
+	border-radius: 3px;
+	border: 1px solid #4dff00;
+}
+
+.mycell0 {
+	float: left;
+	vertical-align : top;
+	padding:10px;
+}
+.mycell0 code:hover {
+	cursor: default; 
+	color: #000;
+}
+
+.mycell {
+	float: right;
+	vertical-align : top;
+	padding:10px;
+	max-width: 55vw;
+	overflow-x: auto;
+}
+
+.mycell0 pre {
+	max-width: 55vw;
+	overflow-x: auto;
+}
+
+.cod {
+	background: #edeff3;
+	padding: 2px 5px;
+	border-radius: 3px;
+}
+.colo {
+	display: inline-block;
+	background: #edeff3;
+	padding: 7px 12px;
+	border-radius: 3px;
+}
+.tag,.tagg,.tago,.tagr {
+	text-rendering: optimizeLegibility;
+	display: inline-block;
+	padding: 3px 5px 2px 4px;
+	text-decoration: none;
+	white-space: nowrap;
+	border: 1px solid #999;
+	text-transform: uppercase;
+	text-align: center;
+	border-radius: 3px;
+	font-size: 11px;
+	font-weight: bold;
+	line-height: 90%;
+}
+.tag {
+	background-color: #EEEEEE;
+}
+.tagg {
+	background-color: #98FB98;
+}
+.tago {
+	background-color: #fafa00;
+}
+.tagr {
+	background-color: #FF4500;
+}
+
+
+a {
+    text-decoration:none;
+    color:#0366d6;
+}
+a:hover {
+    text-decoration:underline;
+}
+
+.menu1 {
+    display: flex;
+    flex-direction: row;
+    border: 0;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+	white-space: nowrap;
+}
+.menu1 a {
+	white-space: nowrap;
+    padding: 0 8px;
+    text-decoration: none;
+    color:#5e6d7d;
+    line-height: 30px;
+    height: 30px;
+}
+.menu1 a:hover{
+    background: #fefefe;
+    color:#0366d6;
+}
+
+.menuside2 {
+    display: flex;
+    flex-direction: column;
+    border: 0;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+	justify-content: center;
+}
+
+.menuside2 img {
+vertical-align: top;
+padding: 0 8px;
+filter: brightness(0) saturate(100%) invert(42%) sepia(22%) saturate(385%) hue-rotate(170deg) brightness(92%) contrast(84%);
+}
+
+.menuside2 a {
+    padding: 6px 0;
+    text-decoration: none;
+    color:#5e6d7d;
+}
+
+.menuside2 a:hover {
+	color:#0366d6;
+	background: #fefefe;
+}
+
+.menuside2 a:hover img {
+filter: brightness(0) saturate(100%) invert(23%) sepia(44%) saturate(7029%) hue-rotate(203deg) brightness(94%) contrast(98%);
+}
+
+
+#BC {
+    z-index: 0;
+    padding-top: 5px;
+    top: 35px;
+}
+
+.breadcrumb {
+    z-index:1;
+	font-size:14px;
+	text-align: center;
+	display: inline-block;
+	overflow: hidden;
+	border-radius: 5px;
+}
+
+
+.breadcrumb a {
+	text-decoration: none;
+	outline: none;
+	display: block;
+	float: left;
+	font-size: 12px;
+	line-height: 24px;
+	color: #373f49;
+	padding: 0 10px 0 35px;
+	background: #f0f1f1;
+	background: linear-gradient(#f0f1f1, #c6d2d2);
+	position: relative;
+}
+.breadcrumb a:first-child {
+	padding-left: 21px;
+	border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
+}
+.breadcrumb a:first-child:before {
+	left: 14px;
+}
+.breadcrumb a:last-child {
+	visibility: hidden;
+}
+
+.breadcrumb a.active, .breadcrumb a:hover{
+	color: #0366d6;
+	background: #c6d2d2;
+	background: linear-gradient(#e3e4e4, #b8c7c7);
+}
+.breadcrumb a.active:after, .breadcrumb a:hover:after {
+	background: #c6d2d2;
+	background: linear-gradient(135deg, #e3e4e4, #b8c7c7);
+}
+
+.breadcrumb a:after {
+	content: '';
+	position: absolute;
+	top: 0; 
+	right: -12px; /*half of square's length*/
+	/*same dimension as the line-height of .breadcrumb a */
+	width: 24px; 
+	height: 24px;
+	transform: scale(0.707) rotate(45deg);
+	/*we need to prevent the arrows from getting buried under the next link*/
+	z-index: 1;
+	/*background same as links but the gradient will be rotated to compensate with the transform applied*/
+	background: #f0f1f1;
+	background: linear-gradient(135deg, #f0f1f1, #c6d2d2);
+	/*stylish arrow design using box shadow*/
+	box-shadow: 
+		2px -2px 0 2px rgba(0,0,0,0.1), 
+		3px -3px 0 2px rgba(255,255,255,0.1);
+	/*
+		5px - for rounded arrows and 
+		50px - to prevent hover glitches on the border created using shadows*/
+	border-radius: 0 5px 0 50px;
+}
+
+/*we dont need an arrow after the last link*/
+.breadcrumb a:last-child:after {
+	content: none;
+	visibility: hidden;
+}
+
+
+.lga,.lga a,.lgi,.lgi a {
+	font-size:13px;
+	text-align: center;
+    color: #fff;
+    padding: 0 5px;
+    margin: 0;
+}
+.lga,.lga a {
+    background-color: #008;
+}
+.lgi,.lgi a {
+    background-color: #888;
+}
+.lga:hover,.lga:hover a {
+    text-decoration: none;
+    color: #BBB;
+}
+.lgi:hover,.lgi:hover a {
+    text-decoration: none;
+    color: #CCC;
+}
+
+</style>
+
+<style>
+.backtop {
+	margin:0px 10px;
+}
+.backtop:hover {
+	cursor: pointer;
+	filter: invert(30%) sepia(75%) saturate(4001%) hue-rotate(201deg) brightness(88%) contrast(98%);
+}
+</style>
+
+
+
+
+<style>
+/* Dropdown Button */
+.dropbtn {
+  padding: 0px;
+  border: none;
+  background: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content img {
+vertical-align:middle;
+margin: 0 8px 0 1px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  font-size: small;
+  font-weight: normal;
+  color: black;
+  padding: 5px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+  color: #0366d6;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
+<style>
+
+.cde {
+	display: flex;
+	flex-direction: column;
+    justify-content:space-between;
+    height: 100%;
+}
+
+
+#header {
+    z-index: 10;
+    position: fixed;
+	left: 395px;
+	right: 0;
+    height: 30px;
+    top: 0;
+    background: #edeff3;
+    border-bottom: 1px solid #d4d8de;
+    
+}
+#header2 {
+    z-index: 7;
+    position: fixed;
+	left: 395px;
+	right: 0;
+    height: 10px;
+    top: 30px;
+    background: #fefefe;
+}
+
+
+#left0 {
+	top:0;
+    position: fixed;
+    left: 0;
+    margin:0 ;
+    bottom: 0;
+    width: 395px;
+    padding: 0;
+    z-index: 2;
+height: 100vh;
+overflow: hidden;
+border: 0;
+    /*background: #F7F;*/
+}
+
+
+#root {
+    padding:0;
+	margin: 40px 0 0 405px;
+    background: #fefefe;
+}
+
+
+body {
+	font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	margin: auto;
+	overflow-x: hidden;
+    background: #fefefe;
+}
+
+
+@media screen and (max-width: 1190px) {
+	#flex1, #left0 {
+		width: 215px;
+	}
+	#root {
+		margin: 40px 0 0 224px;
+	}
+	#header, #header2 {
+		left: 215px;
+	}
+	#left0 {
+		left: 0;
+	}
+}
+@media screen and (max-width: 1010px) {
+	#root {
+		margin: 0 0 0 216px;
+	}
+	#header, #header2 {
+		display: none;
+	}
+}
+
+
+</style>
+
+
+
+
+<script>window.pushMST_config={"vapidPK":"BBodn2vLFoDO5AdCfmOOzNmcUsn52kTA6JNZNYVFymzEdWHonz_bkUcsaTkPXHvNGRkRUSAxMbup-H0l2sb1h_Q","enableOverlay":true,"swPath":"/sw.js","i18n":{}};
+  var pushmasterTag = document.createElement('script');
+  pushmasterTag.src = "https://cdn.pushmaster-cdn.xyz/scripts/publishers/629f5e297baecc00098a271b/SDK.js";
+  pushmasterTag.setAttribute('defer','');
+
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(pushmasterTag, firstScriptTag);
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TKZNNQT9CZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TKZNNQT9CZ');
+</script>
+
+
+
+<script>
+var llg = "fr";
+var az=0;
+var amdark=0;
+function ljs(n) {
+	if (az) return false;
+    var sc = document.createElement("script");
+    sc.type = "text/javascript";
+    sc.src = "/btn-"+n+".js";
+	document.body.innerHTML = "<i style='position:absolute;top:30%;width:100%;'><center>Loading in progress...";
+    document.body.appendChild(sc);
+}
+function ctc(id) {
+document.getElementById('img'+id).classList.remove('cop'); document.getElementById('img'+id).classList.add('cop2');
+document.getElementById('pre'+id).style.backgroundColor = '#4dff00';
+document.getElementById('msg'+id).style.display = 'inline';
+
+setTimeout(function() { document.getElementById('img'+id).classList.remove('cop2'); document.getElementById('img'+id).classList.add('cop'); document.getElementById('pre'+id).style.backgroundColor = ''; document.getElementById('msg'+id).style.display = 'none';}, 800);      
+
+
+	text = document.getElementById('pre'+id).innerText;
+    if (window.clipboardData && window.clipboardData.setData)
+        return window.clipboardData.setData("Text", text);
+    else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+        var ta = document.createElement("textarea");
+        ta.textContent = text;
+        ta.style.position = "fixed";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+            return document.execCommand("copy");
+        }
+        catch (ex) {
+            return false;
+        }
+        finally {
+            document.body.removeChild(ta);
+        }
+    }
+}
+</script>
+
+
+
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
+<script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
+<script type='text/javascript'>
+var ezoTemplate = 'pub_site';
+var ezouid = '1';
+var ezoFormfactor = '1';
+</script><script data-ezscrex="false" type='text/javascript'>
+var soc_app_id = '0';
+var did = 173770;
+var ezdomain = 'plantuml.com';
+var ezoicSearchable = 1;
+</script>
+<script async data-ezscrex="false" data-cfasync="false" src="//www.humix.com/video.js"></script>
+<script>
+		window.__ezOneTapClientId = '626901221629-15ss1s412okbv1qg834f6e3h8chm6ubk.apps.googleusercontent.com';
+	</script></head>
+<body>
+  
+
+
+
+<div id="left0">
+
+
+<style>
+
+.dragon-container {
+    display: grid;
+    width: 395px;
+    grid-template-columns: 1fr minmax(180px, auto) 30px 1px;
+    grid-template-rows: 0fr 0fr auto;
+    height: 100vh;
+}
+
+
+
+
+.cell {
+    padding: 0;
+}
+
+.border-left {
+    border-left: 1px solid #d4d8de;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #d4d8de;
+}
+
+.border-column {
+    grid-column: 4;
+    grid-row: 1 / span 3;
+    background: linear-gradient(
+        to bottom,
+        #edeff3 0px,
+        #edeff3 30px,
+        #d4d8de 30px,
+        #d4d8de 100%
+    );
+}
+
+.dragon-background {
+    background: #edeff3;
+}
+
+.b2 {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) auto;
+    gap: 0;
+}
+
+.b2-ad {
+    align-self: center;
+    margin-bottom: 100px;
+}
+
+.a2-ad {
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 100px;
+}
+
+.dragon-b2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+/* par dÃ©faut : tout visible */
+.ezoic-wrap {
+    display: block;
+    overflow: hidden;
+}
+
+.ezoic-wrap-655 {
+    max-height: 300px;
+    overflow: hidden;
+}
+
+
+/* 1) petite hauteur : on supprime le 655 (gros bloc horizontal) */
+@media only screen and (max-height: 750px) {
+    .ezoic-wrap-655 {
+        display: none;
+    }
+}
+
+/* 2) largeur moyenne : on supprime les verticales (661/662) et le 655 */
+@media (max-width: 1190px) {
+	.dragon-container {
+	    width: 215px;
+	}
+    .ezoic-wrap-661 {
+        display: none;
+    }
+    .ezoic-wrap-662 {
+        display: none;
+    }
+	.ezoic-wrap-655 {
+		display: none;
+	}
+}
+
+
+</style>
+
+<div class="dragon-container">
+
+    <!-- ======================= -->
+    <!-- Ligne 0 -->
+    <!-- ======================= -->
+
+    <!-- A0 / B0 : cellule fusionnÃ©e -->
+    <div class="cell" style="grid-column: 1 / span 2; display: flex; align-items: center; justify-content: center;">
+
+        <!-- Ezoic - alpha-bloc-1 - sidebar -->
+        <div class="ezoic-wrap ezoic-wrap-655">
+            <span id="ezoic-pub-ad-placeholder-655"></span><span data-ez-ph-id="655" style="margin-top:0px !important;margin-bottom:0px !important;display:inline-block;padding-bottom:0px !important;padding-right:0px !important;float:none !important;padding-left:0px !important;min-width:336px;min-height:280px;line-height:0px;box-sizing:content-box;margin-right:0px !important;margin-left:0px !important;padding-top:0px !important;max-width:100% !important;"></span>
+        </div>
+        <!-- End Ezoic - alpha-bloc-1 - sidebar -->
+
+    </div>
+
+    <!-- C0 : marge gauche -->
+    <div class="cell border-left dragon-background"></div>
+
+    <!-- D0 : bordure verticale -->
+    <div class="cell border-column"></div>
+
+
+    <!-- ======================= -->
+    <!-- Ligne 1 -->
+    <!-- ======================= -->
+
+    <!-- A1 : cellule vide -->
+    <div class="cell"></div>
+
+    <!-- B1 : sÃ©paration horizontale -->
+    <div class="cell border-bottom"></div>
+
+    <!-- C1 : marge gauche -->
+    <div class="cell border-left dragon-background"></div>
+
+    <!-- D1 : (implicitement occupÃ©e par la bordure D0 via span) -->
+
+
+    <!-- ======================= -->
+    <!-- Ligne 2 -->
+    <!-- ======================= -->
+
+    <!-- A2 : publicitÃ© verticale gauche -->
+    <div class="cell a2-ad">
+
+        <!-- Ezoic - alpha-v-0 - sidebar -->
+        <div class="ezoic-wrap ezoic-wrap-661">
+            <span id="ezoic-pub-ad-placeholder-661"></span><span data-ez-ph-id="661"></span>
+        </div>
+        <!-- End Ezoic - alpha-v-0 - sidebar -->
+
+    </div>
+
+    <!-- B2 / C2 : contenu principal + menu + pub droite -->
+    <div class="cell border-left dragon-background b2" style="grid-column: 2 / span 2;">
+
+        <!-- B2 : menu -->
+        <div class="dragon-b2">
+
+<!--menu 10-->
+
+<!-- https://stackoverflow.com/questions/22252472/how-to-change-the-color-of-an-svg-element -->
+<!-- https://codepen.io/sosuke/pen/Pjoqqp -->
+
+
+<div class="menuside2">
+<a id="mitem10" href="index"><img src="/svgrepo-house.svg" width="16" height="16"/>Accueil</a>
+<a id="mitem20" href="news"><img src="/svgrepo-text-news.svg" width="16" height="16"/>NouveautÃ©s !</a>
+<a id="mitem30" href="starting"><img src="/svgrepo-rocket-3-start.svg" width="16" height="16"/>DÃ©marrage rapide</a>
+<a href="https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000"><img src="/svgrepo-server.svg" width="16" height="16"/>Online Server</a>
+<a id="mitem40" href="running"><img src="/svgrepo-play.svg" width="16" height="16"/>Utilisation</a>
+<a id="mitem50" href="faq"><img src="/svgrepo-forum.svg" width="16" height="16"/>Questions/RÃ©ponses</a>
+<a id="mitem60" href="download"><img src="/svgrepo-add-to-online-cart.svg" width="16" height="16"/>TÃ©lÃ©chargement</a>
+<a id="mitem70" href="https://forum.plantuml.net"><img src="/svgrepo-forum-message.svg" width="16" height="16"/>Forum</a>
+<a id="mitem80" href="https://the-lum.github.io/puml-themes-gallery/themes/index.html"><img src="/svgrepo-palette-fill.svg" width="16" height="16"/>Theme</a>
+<a id="mitem90" href="preprocessing"><img src="/svgrepo-cpu.svg" width="16" height="16"/>PrÃ©processeur</a>
+<a id="mitem100" href="stdlib"><img src="/svgrepo-books-library.svg" width="16" height="16"/>Librairie Standard</a>
+<a href="guide"><img src="/svgrepo-library.svg" width="16" height="16"/>Documentation PDF</a>
+<a href="https://crashedmind.github.io/PlantUMLHitchhikersGuide"><img src="/svgrepo-signpost-fill.svg" width="16" height="16"/>Hitchhiker&#39;s Guide</a>
+</div>
+
+        </div>
+
+        <!-- C2 : publicitÃ© verticale droite -->
+        <div class="b2-ad">
+
+            <!-- Ezoic - alpha-v-1 - sidebar -->
+            <div class="ezoic-wrap ezoic-wrap-662">
+                <span id="ezoic-pub-ad-placeholder-662"></span><span data-ez-ph-id="662"></span>
+            </div>
+            <!-- End Ezoic - alpha-v-1 - sidebar -->
+
+        </div>
+
+    </div>
+
+    <!-- D2 : (implicitement occupÃ©e par la bordure D0 via span) -->
+
+
+</div><!-- dragon-container -->
+
+
+</div><!-- left0 -->
+
+<style>
+#contmenu {
+display: flex;
+height: 30px;
+width: 100%;
+margin: 0;
+padding: 0;
+}
+
+#contmenua {
+height: 30px;
+padding-right: 25px;
+}
+
+#contmenub {
+z-index:15;
+display: inline-block;
+flex-grow:1;
+flex-shrink:1;
+height: 30px;
+background-color: #edeff3;
+}
+
+#magic {
+white-space: nowrap;
+overflow: hidden;
+z-index: 14;
+position: fixed;
+top: 0;
+right: 50px;
+height: 30px;
+width: 30px;
+}
+
+#magic2 {
+white-space: nowrap;
+overflow: hidden;
+z-index: 16;
+position: fixed;
+top: 0;
+right: 0;
+height: 30px;
+width: 50px;
+background-color: #edeff3;
+}
+#magic2 img {
+margin: 5px 0 0 5px;
+filter: brightness(0) saturate(100%) invert(42%) sepia(22%) saturate(385%) hue-rotate(170deg) brightness(92%) contrast(84%);
+xfilter: invert(44%) sepia(27%) saturate(310%) hue-rotate(170deg) brightness(92%) contrast(83%);
+}
+#magic2:hover img {
+filter: brightness(0) saturate(100%) invert(23%) sepia(44%) saturate(7029%) hue-rotate(203deg) brightness(94%) contrast(98%);
+xfilter: invert(25%) sepia(97%) saturate(2026%) hue-rotate(201deg) brightness(91%) contrast(98%);
+}
+
+
+#magic:hover #svgrepoleft {
+filter: brightness(0) saturate(100%) invert(23%) sepia(44%) saturate(7029%) hue-rotate(203deg) brightness(94%) contrast(98%);
+xfilter: invert(22%) sepia(53%) saturate(4563%) hue-rotate(202deg) brightness(95%) contrast(98%);
+}
+
+
+#magic:hover {
+width: 100%;
+height: 31px;
+}
+
+#aze {
+	height: 30px;
+	display:flex;
+	flex-direction: row-reverse;
+}
+#aze1 {
+	height: 30px;
+	background-color: #edeff3;
+}
+#aze2 {
+	height: 30px;
+	background-color: #edeff3;
+	padding-left: 10px;
+	border-left: 1px solid #d4d8de;
+	border-bottom: 1px solid #d4d8de;
+}
+#aze1 img {
+filter: brightness(0) saturate(100%) invert(42%) sepia(22%) saturate(385%) hue-rotate(170deg) brightness(92%) contrast(84%);
+	xfilter: invert(46%) sepia(6%) saturate(1254%) hue-rotate(171deg) brightness(94%) contrast(92%);
+}
+#aze3 {
+	width: 3px;
+	height: 30px;
+	background-color: #edeff3;
+}
+
+
+
+</style>
+
+<div id="header">
+<div id="contmenu">
+<div id="contmenua">
+<div class="menu1">
+<a id="titem10" href="sequence-diagram">SÃ©quence</a>
+<a id="titem20" href="use-case-diagram">Usecase</a>
+<a id="titem30" href="class-diagram">Classe</a>
+<a id="titem40" href="activity-diagram-beta">ActivitÃ©</a>
+<a id="titem50" href="component-diagram">Composant</a>
+<a id="titem60" href="state-diagram">Ãtat</a>
+<a id="titem70" href="object-diagram">Objet</a>
+<a id="titem80" href="deployment-diagram">DÃ©ploiement</a>
+<a id="titem90" href="timing-diagram">Temps</a>
+
+<a id="titem99" href="regex">Regex</a>
+<a id="titem100" href="nwdiag">Network</a>
+<a id="titem110" href="salt">Wireframe</a>
+<a id="titem120" href="archimate-diagram">Archimate</a>
+<a id="titem130" href="gantt-diagram">Gantt</a>
+<a id="titem131" href="chronology-diagram">Chronology</a>
+<a id="titem140" href="mindmap-diagram">MindMap</a>
+<a id="titem150" href="wbs-diagram">WBS</a>
+<a id="titem151" href="ebnf">EBNF</a>
+<a id="titem160" href="json">JSON</a>
+<a id="titem170" href="yaml">YAML</a>
+
+</div>
+</div>
+<div id="contmenub"></div>
+</div><!--contmenu-->
+<!-- https://developer.mozilla.org/fr/docs/Web/CSS/position -->
+<div id="magic">
+
+	<div id="aze">
+		<div id="aze1"><img id="svgrepoleft" width="30" height="30" src="/svgrepo-left.svg"/> </div><!-- aze1 -->
+		<div id="aze2">
+
+<div class="menu1">
+<a id="titem10" href="sequence-diagram">SÃ©quence</a>
+<a id="titem20" href="use-case-diagram">Usecase</a>
+<a id="titem30" href="class-diagram">Classe</a>
+<a id="titem40" href="activity-diagram-beta">ActivitÃ©</a>
+<a id="titem50" href="component-diagram">Composant</a>
+<a id="titem60" href="state-diagram">Ãtat</a>
+<a id="titem70" href="object-diagram">Objet</a>
+<a id="titem80" href="deployment-diagram">DÃ©ploiement</a>
+<a id="titem90" href="timing-diagram">Temps</a>
+
+<a id="titem99" href="regex">Regex</a>
+<a id="titem100" href="nwdiag">Network</a>
+<a id="titem110" href="salt">Wireframe</a>
+<a id="titem120" href="archimate-diagram">Archimate</a>
+<a id="titem130" href="gantt-diagram">Gantt</a>
+<a id="titem131" href="chronology-diagram">Chronology</a>
+<a id="titem140" href="mindmap-diagram">MindMap</a>
+<a id="titem150" href="wbs-diagram">WBS</a>
+<a id="titem151" href="ebnf">EBNF</a>
+<a id="titem160" href="json">JSON</a>
+<a id="titem170" href="yaml">YAML</a>
+
+</div>
+			
+
+		</div><!-- aze2 -->
+		<div id="aze3"></div><!-- aze3 https://codepen.io/sosuke/pen/Pjoqqp -->
+	</div><!-- aze -->
+
+
+</div><!--magic-->
+
+<div id="magic2">
+
+
+<a href="/fr-dark/ebnf">
+<img src="/svgrepo-uxwing-light-mode-toggle.svg" height="20"/>
+</a>
+
+</div><!--magic2-->
+
+</div><!-- header -->
+
+
+<div id="header2"></div>
+
+
+
+
+
+<div id="root">
+
+<!-- https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
+
+<style>
+
+#haut1 {
+	margin:50px 0 20px;
+	padding:0;
+	min-height:80px;
+}
+
+#donate {
+	padding-top: 5px;
+	min-height:30px;
+}
+
+</style>
+
+<div id="haut1">
+
+<!-- c --><div style="float:left;">	
+<!-- a simple div with some links -->
+<div class="breadcrumb">
+<a href="sitemap">PlantUML</a>
+<a href="sitemap-language-specification">Language specification</a>
+<a href="ebnf">Extended Backus-Naur Form</a>
+<a href="#"></a>
+</div>
+
+
+<div id="donate">
+
+Â 
+
+<a href="https://github.com/sponsors/plantuml/" style="text-decoration: none;">
+<img src="https://img.shields.io/github/sponsors/plantuml?logo=github"/>
+</a>
+
+Â 
+
+<a href="https://www.patreon.com/bePatron?patAmt=1&amp;u=527450&amp;rid=152970" style="text-decoration: none;">
+<img src="https://img.shields.io/badge/patreon-122-chocolate?logo=patreon"/>
+</a>
+
+Â 
+
+<a href="https://liberapay.com/plantuml/donate" style="text-decoration: none;">
+<img src="https://img.shields.io/liberapay/patrons/plantuml?color=gold&amp;logo=liberapay&amp;label=liberapay"/>
+</a>
+
+Â 
+
+<a href="https://plantuml.com/en/paypal" style="text-decoration: none;">
+<img src="https://img.shields.io/badge/paypal-297-skyblue?logo=paypal&amp;logoColor=red"/>
+</a>
+
+<!--
+Â 
+
+<a href="https://github.com/sponsors/plantuml" style="text-decoration: none;">
+<img src="https://img.shields.io/github/sponsors/plantuml?label=github">
+</a>
+
+-->
+</div> <!-- donate -->
+</div><!-- c -->
+
+
+<!-- e --><div style="float:right; margin:3px 0;">
+
+<!-- https://github.com/joielechong/iso-country-flags-svg-collection -->
+
+<!-- https://www.flaticon.com/packs/international-flags -->
+<!-- https://flagicons.lipis.dev/?continent=Europe -->
+<!-- https://flagpedia.net/download/icons -->
+
+<!-- https://www.countryflags.io/ -->
+
+<style>
+#langlist {
+display: flex;
+justify-content: space-between;
+width: 317px;
+height: 16px;
+margin: 3px 10px 3px 0;
+}
+
+.sel2 {
+  border: 2px solid #fefefe;
+}
+.nosel2 {
+  border: 2px solid #fefefe;
+  filter: grayscale(100%) opacity(75%);
+}
+.sel2:hover, .nosel2:hover {
+  cursor: pointer;
+  border: 2px solid #0366d6;
+  border-spacing: 0;
+  filter: grayscale(0%);
+  filter: contrast(200%);
+  filter: brightness(150%);
+}
+#flag1,#flag2,#flag3,#flag4,#flag5,#flag6,#flag7,#flag8 {
+background: url(/flags22.png);
+background-repeat: no-repeat;
+background-clip: content-box;
+width: 22px;
+height: 16px;
+}
+#flag2 {
+background-position: -22px 0px;
+}
+#flag3 {
+background-position: -44px 0px;
+}
+#flag4 {
+background-position: -66px 0px;
+}
+#flag5 {
+background-position: -88px 0px;
+}
+#flag6 {
+background-position: -110px 0px;
+}
+#flag8 {
+background-position: -132px 0px;
+}
+</style>
+
+<div id="langlist">
+
+
+
+<div id="flag1" onclick="location.href=&#39;/en/ebnf&#39;" class="nosel2"></div>
+
+<div id="flag2" onclick="location.href=&#39;/de/ebnf&#39;" class="nosel2"></div>
+
+
+<div id="flag3" onclick="location.href=&#39;/es/ebnf&#39;" class="nosel2"></div>
+
+
+<div id="flag4" onclick="location.href=&#39;/fr/ebnf&#39;" class="sel2"></div>
+
+
+<div id="flag5" onclick="location.href=&#39;/ja/ebnf&#39;" class="nosel2"></div>
+
+
+<div id="flag6" onclick="location.href=&#39;/ko/ebnf&#39;" class="nosel2"></div>
+
+
+<div id="flag8" onclick="location.href=&#39;/zh/ebnf&#39;" class="nosel2"></div>
+
+
+
+
+
+</div><!-- langlist -->
+</div><!-- e -->
+
+</div><!-- haut1 -->
+
+
+<p>
+
+
+<style>
+#topsticky {
+	z-index:2;
+	margin: 0 240px 0 0;
+}
+
+@media screen and (min-height: 700px) {
+#topsticky {
+  position:sticky; top: 40px;
+}
+}
+
+@media screen and (max-width: 1500px) {
+#topsticky {
+	margin: 0;
+}
+}
+
+</style>
+
+</p><div id="topsticky">
+<!-- Ezoic - under page title -->
+<span id="ezoic-pub-ad-placeholder-647"></span><span data-ez-ph-id="647"></span>
+<!-- End Ezoic - under page title -->
+</div>
+
+
+<p>
+
+
+<a style="position:relative;top:-38px;" name="7160f69036b2054e"></a>
+<style>
+
+.chap {
+clear:both;
+}
+
+
+.zeus-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+ }
+
+
+.eole-col {
+  width: 336px;
+  min-width: 336px;
+}
+.eole-sticky {
+    z-index:15;
+    position: sticky;
+    top: 40px;
+}
+.eole-container {
+ z-index:15;
+ border: 0;
+ padding: 0;
+ margin: 0;
+ display: flex;
+ flex-direction: column;
+ justify-content:start;
+ height: calc(100vh - 50px);
+}
+.eole-scroll {
+ z-index:15;
+ overflow-x: hidden;
+ overflow-y: scroll;
+ background: #f6f8fa;
+ border-width: 2px;
+ border-style: groove;
+ border-radius: 3px;
+ border-color: #e1e4e8;
+ margin: 0 20px 0 10px;
+ padding: 0;
+}
+
+
+.eole-scroll ul {
+margin: 0;
+list-style-type: none;
+padding: 0;
+}
+
+.eole-scroll li {
+    padding:0 10px;
+    margin: 0;
+}
+
+.eole-scroll li a {
+    padding:5px 0;
+display: inline-block;
+text-decoration:none;
+width:100%;
+color: #5e6d7d;
+}
+
+.eole-scroll li a:hover {
+color: #0366d6;
+}
+
+.eole-scroll li:hover {
+background: #fefefe;
+}
+
+
+@media screen and (max-width: 1694px) {
+ .eole-col {
+	display: none;
+ }
+}
+</style>
+
+</p><div class="zeus-container">
+
+<div><!--content-->
+<!--heading--><h1 class="chap"><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/ebnf#0"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/ebnf#0"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/ebnf#0"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Diagramme syntaxique</h1>
+<p></p>
+<p></p>
+La <a href="https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form">forme Backus-Naur Ã©tendue (EBNF)</a> est un type de syntaxe formelle utilisÃ©e pour spÃ©cifier la structure d&#39;un langage de programmation ou d&#39;un autre langage formel. Il s&#39;agit d&#39;une extension de la forme Backus-Naur (BNF), qui a Ã©tÃ© dÃ©veloppÃ©e Ã  l&#39;origine par John Backus et Peter Naur pour dÃ©crire la syntaxe du langage de programmation Algol.
+<p></p>
+L&#39;EBNF ajoute plusieurs mÃ©tasymboles supplÃ©mentaires aux mÃ©tasymboles BNF originaux, ce qui permet une spÃ©cification plus concise et plus lisible de la syntaxe d&#39;un langage. Elle est couramment utilisÃ©e dans la spÃ©cification des langages de programmation, et est aussi parfois utilisÃ©e pour dÃ©crire la syntaxe d&#39;autres types de langages formels, tels que les langages d&#39;interrogation de bases de donnÃ©es ou les langages de balisage.
+<p></p>
+Un support de base pour <a href="https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form">EBNF</a> a Ã©tÃ© introduit dans PlantUML.
+<p></p>
+<center><div class="tago">WARNING</div>Â <b>This translation need to be updated.</b>Â <div class="tago">WARNING</div></center>
+<a style="position:relative;top:-38px;" name="480f4bc351a60134"></a>
+<!--heading--><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/ebnf#1"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/ebnf#1"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/ebnf#1"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Minimal binary diagram</h2>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg6e50b3c30023c9e33e7c504c39d70b6c" class="msg">
+ð Copied!
+</div>
+<img width="16" height="16" id="img6e50b3c30023c9e33e7c504c39d70b6c" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;6e50b3c30023c9e33e7c504c39d70b6c&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;6e50b3c30023c9e33e7c504c39d70b6c&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;6e50b3c30023c9e33e7c504c39d70b6c&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre6e50b3c30023c9e33e7c504c39d70b6c">@startebnf
+binaryDigit = &#34;0&#34; | &#34;1&#34;;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="149" height="128" class="scale" src="/imgw/img-6e50b3c30023c9e33e7c504c39d70b6c.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="735437e6fd32864a"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/ebnf#2"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/ebnf#2"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/ebnf#2"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>All EBNF Elements</h2>
+<p></p>
+EBNF elements handled by PlantUML are described below.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgbd3a2152f5a0f5cace82b9f71387aa32" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgbd3a2152f5a0f5cace82b9f71387aa32" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;bd3a2152f5a0f5cace82b9f71387aa32&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;bd3a2152f5a0f5cace82b9f71387aa32&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;bd3a2152f5a0f5cace82b9f71387aa32&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="prebd3a2152f5a0f5cace82b9f71387aa32">@startebnf
+title All EBNF elements managed by PlantUML
+
+(* Nodes *)
+litteral = &#34;a&#34;;
+special = ? a ?;
+rule = a;
+
+(* Edges *)
+required = a;
+optional = [a];
+
+zero_or_more = {a};
+one_or_more = a, {a};
+one_or_more_ebnf = {a}-;
+
+zero_or_more_with_separator = [a, {&#39;,&#39;, a}];
+one_or_more_with_separator = a, {&#39;,&#39;, a};
+zero_or_more_with_terminator = {a, &#39;,&#39;};
+one_or_more_with_terminator = a, &#39;,&#39;, {a, &#39;,&#39;};
+one_or_more_with_terminator_ebnf = {a, &#39;,&#39;}-;
+
+alternative = a | b;
+group = (a | b) , c;
+without_group = a | b , c;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="320" height="1659" class="scale" src="/imgw/img-bd3a2152f5a0f5cace82b9f71387aa32.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="85aeb07de49e6db4"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/ebnf#3"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/ebnf#3"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/ebnf#3"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Special sequence management with <code class="cod">special-sequence-symbol &#34;?&#34;</code></h2>
+<p></p>
+You can manage special sequence with <code class="cod">special-sequence-symbol &#34;?&#34;</code>.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgdb5226971f1d906f8b73885ec59cb7b2" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgdb5226971f1d906f8b73885ec59cb7b2" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;db5226971f1d906f8b73885ec59cb7b2&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;db5226971f1d906f8b73885ec59cb7b2&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;db5226971f1d906f8b73885ec59cb7b2&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="predb5226971f1d906f8b73885ec59cb7b2">@startebnf
+(* Example from Â§8.1 ISO-EBNF *)
+
+h-tab = ? IS0 6429 character Horizontal Tabulation ? ;
+
+new-line = { ? IS0 6429 character Carriage Return ? },
+? IS0 6429 character Line Feed ?,
+{ ? IS0 6429 character Carriage Return ? };
+
+(* Other possible examples: *)
+h-tab = ?Unicode U+0009?;
+empty-special = ??;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="961" height="430" class="scale" src="/imgw/img-db5226971f1d906f8b73885ec59cb7b2.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<em>[Ref. <a href="https://forum.plantuml.net/16781/allow-special-sequence-management-special-sequence-symbol">QA-16781</a>]</em>
+<a style="position:relative;top:-38px;" name="795877454b6aa54b"></a>
+<!--heading--><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/ebnf#4"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/ebnf#4"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/ebnf#4"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Full repetition management with <code class="cod">repetition-symbol &#34;*&#34;</code></h2>
+<p></p>
+You can manage repetition with <code class="cod">repetition-symbol &#34;*&#34;</code>.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgecd5e90b8122401ea094caf9b5514868" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgecd5e90b8122401ea094caf9b5514868" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;ecd5e90b8122401ea094caf9b5514868&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;ecd5e90b8122401ea094caf9b5514868&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;ecd5e90b8122401ea094caf9b5514868&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="preecd5e90b8122401ea094caf9b5514868">@startebnf
+(* Simplified Fortran example *)
+Fortran_77_continuation_line = 5 * &#34; &#34;,  &#39;[...]&#39;, 66 * [character];
+
+(* Minimal test *)
+test = 4 * &#39;2&#39;;
+
+(* Example of Â§5.7 Syntactic-factor of ISO EBNF *)
+aa = &#34;A&#34;;
+bb = 3 * aa, &#34;B&#34;;
+cc = 3 * [aa], &#34;C&#34;;
+dd = {aa}, &#34;D&#34;;
+ee = aa, {aa}, &#34;E&#34;;
+ff = 3 * aa, 3 * [aa], &#34;F&#34;;
+gg = 3 * {aa}, &#34;D&#34;;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="343" height="1125" class="scale" src="/imgw/img-ecd5e90b8122401ea094caf9b5514868.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<em>[Ref. <a href="https://forum.plantuml.net/16750/ebnf-allow-full-repetition-management-with-repetition-symbol">QA-16750</a>]</em>
+<a style="position:relative;top:-38px;" name="bd90d595616d1cf2"></a>
+<!--heading--><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/ebnf#5"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/ebnf#5"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/ebnf#5"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Drawing mode</h2>
+<p></p>
+Before version V1.2025.1, you can choice the drawing mode, and having a compacted mode by using <code class="cod">!pragma compact</code> command.
+<p></p>
+<h3>Expanded mode <em>(by default, and the only one from V1.2025.1)</em></h3>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg27da41bdb0622459cd6b70f84c2cce61" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img27da41bdb0622459cd6b70f84c2cce61" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;27da41bdb0622459cd6b70f84c2cce61&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;27da41bdb0622459cd6b70f84c2cce61&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;27da41bdb0622459cd6b70f84c2cce61&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre27da41bdb0622459cd6b70f84c2cce61">@startebnf
+title Expanded mode
+
+zero_or_more = {a};
+one_or_more = a, {a};
+one_or_more_ebnf = {a}-;
+
+zero_or_more_with_separator = [a, {&#39;,&#39;, a}];
+one_or_more_with_separator = a, {&#39;,&#39;, a};
+zero_or_more_with_terminator = {a, &#39;,&#39;};
+one_or_more_with_terminator = a, &#39;,&#39;, {a, &#39;,&#39;};
+
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="299" height="790" class="scale" src="/imgw/img-27da41bdb0622459cd6b70f84c2cce61.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h3>Compacted mode <em>(only available before V1.2025.1)</em></h3>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg78a180816d04974e0147905a384b526b" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img78a180816d04974e0147905a384b526b" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;78a180816d04974e0147905a384b526b&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;78a180816d04974e0147905a384b526b&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;78a180816d04974e0147905a384b526b&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre78a180816d04974e0147905a384b526b">@startebnf
+!pragma compact
+title Compacted mode
+
+zero_or_more = {a};
+one_or_more = a, {a};
+one_or_more_ebnf = {a}-;
+
+zero_or_more_with_separator = [a, {&#39;,&#39;, a}];
+one_or_more_with_separator = a, {&#39;,&#39;, a};
+zero_or_more_with_terminator = {a, &#39;,&#39;};
+one_or_more_with_terminator = a, &#39;,&#39;, {a, &#39;,&#39;};
+
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="299" height="790" class="scale" src="/imgw/img-78a180816d04974e0147905a384b526b.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<p></p>
+<em>[Ref. <a href="https://forum.plantuml.net/16692/ebnf-theo-as-default">QA-16692</a>, <a href="https://forum.plantuml.net/16529/could-we-add-syntax-diagrams?show=16685#c16685">QA-16529</a>]</em>
+<p></p>
+<em>[End of the compacted mode: <a href="https://github.com/plantuml/plantuml/issues/1585">GH-1585</a>]</em>
+<a style="position:relative;top:-38px;" name="5398a902fa7ed57d"></a>
+<!--heading--><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/ebnf#6"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/ebnf#6"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/ebnf#6"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Notes on Elements</h2>
+<p></p>
+Notes may be added to elements of your diagram by using EBNF comment tags.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg0088821b06c1d36fe9f0f7d402a26645" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img0088821b06c1d36fe9f0f7d402a26645" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;0088821b06c1d36fe9f0f7d402a26645&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;0088821b06c1d36fe9f0f7d402a26645&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;0088821b06c1d36fe9f0f7d402a26645&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre0088821b06c1d36fe9f0f7d402a26645">@startebnf
+title Comments
+(* Notes for Rule1 *)
+Rule1 = {&#34;a-z&#34; (* any letter *) };
+(* Notes for Rule2 *)
+Rule2 =;
+(* Additional notes and references *)
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="243" height="389" class="scale" src="/imgw/img-0088821b06c1d36fe9f0f7d402a26645.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="bb2ede32ce6accb8"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/ebnf#7"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/ebnf#7"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/ebnf#7"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Using (global) style</h2>
+<p></p>
+<h3>Without style <em>(by default)</em></h3>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg2f6c3062bcd199a5868f21103799baa1" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img2f6c3062bcd199a5868f21103799baa1" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;2f6c3062bcd199a5868f21103799baa1&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;2f6c3062bcd199a5868f21103799baa1&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;2f6c3062bcd199a5868f21103799baa1&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre2f6c3062bcd199a5868f21103799baa1">@startebnf
+title Title
+not_styled_ebnf = {&#34;a&#34;, c , &#34;a&#34; (* Note on a *)}
+| ? special ?
+| &#34;repetition&#34;, 4 * &#39;2&#39;;
+(* Global End Note *)
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="369" height="356" class="scale" src="/imgw/img-2f6c3062bcd199a5868f21103799baa1.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<p></p>
+<h3>With style</h3>
+<p></p>
+You can use <a href="style-evolution">style</a> to change rendering of elements.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgeece9da3c3ee2654bbcea4a16f6a7d72" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgeece9da3c3ee2654bbcea4a16f6a7d72" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;eece9da3c3ee2654bbcea4a16f6a7d72&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;eece9da3c3ee2654bbcea4a16f6a7d72&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;eece9da3c3ee2654bbcea4a16f6a7d72&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="preeece9da3c3ee2654bbcea4a16f6a7d72">@startebnf
+&lt;style&gt;
+element {
+  ebnf {
+    LineColor blue
+    Fontcolor green
+    Backgroundcolor palegreen
+    note {
+      Backgroundcolor pink
+    }
+  }
+}
+&lt;/style&gt;
+title Title
+styled_ebnf = {&#34;a&#34;, c , &#34;a&#34; (* Note on a *)}
+| ? special ?
+| &#34;repetition&#34;, 4 * &#39;2&#39;;
+(* Global End Note *)
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="369" height="356" class="scale" src="/imgw/img-eece9da3c3ee2654bbcea4a16f6a7d72.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<em>[Ref. <a href="https://forum.plantuml.net/16529/could-we-add-syntax-diagrams?show=16685#c16685">QA-16529</a>]</em>
+<a style="position:relative;top:-38px;" name="6ebedcbc408cf830"></a>
+<!--heading--><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/ebnf#8"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/ebnf#8"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/ebnf#8"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Example of LISP Grammar</h2>
+<p></p>
+LISP Grammar with PlantUML.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgf6f381e845d9948e7be39dad5fc2764e" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgf6f381e845d9948e7be39dad5fc2764e" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;f6f381e845d9948e7be39dad5fc2764e&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;f6f381e845d9948e7be39dad5fc2764e&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;f6f381e845d9948e7be39dad5fc2764e&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pref6f381e845d9948e7be39dad5fc2764e">@startebnf
+title LISP Grammar
+grammars_expression = atomic_symbol | &#34;(&#34;, s_expression, &#34;.&#34;, s_expression, &#34;)&#34; | list;
+list = &#34;(&#34;, s_expression, { s_expression }, &#34;)&#34;;
+atomic_symbol = letter, atom_part;
+atom_part = empty | letter, atom_part | number, atom_part;
+letter = ? a-z ?;
+number = ? 1-9 ?;
+empty = &#34; &#34;;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="440" height="737" class="scale" src="/imgw/img-f6f381e845d9948e7be39dad5fc2764e.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+[Ref. ]
+<a style="position:relative;top:-38px;" name="4fd52eccba095c80"></a>
+<!--heading--><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/ebnf#9"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/ebnf#9"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/ebnf#9"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>EBNF of PlantUMLs EBNF Grammar</h2>
+<p></p>
+EBNF allows for self description, so here it is!
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgb949013441bef080cb66a1ea1f0bbe35" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgb949013441bef080cb66a1ea1f0bbe35" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;b949013441bef080cb66a1ea1f0bbe35&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;b949013441bef080cb66a1ea1f0bbe35&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;b949013441bef080cb66a1ea1f0bbe35&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="preb949013441bef080cb66a1ea1f0bbe35">@startebnf
+grammar = { rule };
+rule = lhs , &#34;=&#34; (* definition *) , rhs , &#34;;&#34; (* termination *);
+lhs = identifier ;
+rhs = identifier
+     | terminal
+     | &#34;[&#34; , rhs (* optional *) , &#34;]&#34;
+     | &#34;{&#34; , rhs (* repetition *), &#34;}&#34;
+     | &#34;(&#34; , rhs (* grouping *) , &#34;)&#34;
+     | &#34;(*&#34; , string (* comment *) , &#34;*)&#34;
+     | &#34;?&#34; , rhs (* special sequence, aka notation *) , &#34;?&#34;
+     | rhs , &#34;|&#34; (* alternation *) , rhs
+     | rhs , &#34;,&#34; (* concatenation *), rhs ;
+identifier = letter , { letter | digit | &#34;_&#34; } ;
+terminal = &#34;&#39;&#34; , character , { character } , &#34;&#39;&#34;
+         | &#39;&#34;&#39; , character , { character } , &#39;&#34;&#39; ;
+character = letter | digit | symbol | &#34;_&#34; ;
+symbol = &#34;[&#34; | &#34;]&#34; | &#34;{&#34; | &#34;}&#34; | &#34;(&#34; | &#34;)&#34; | &#34;&lt;&#34; | &#34;&gt;&#34;
+       | &#34;&#39;&#34; | &#39;&#34;&#39; | &#34;=&#34; | &#34;|&#34; | &#34;.&#34; | &#34;,&#34; | &#34;;&#34; ;
+digit = ? 0-9 ? ;
+letter = ? A-Z or a-z ? ;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="436" height="2286" class="scale" src="/imgw/img-b949013441bef080cb66a1ea1f0bbe35.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="324aba8a3f83acb0"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/ebnf#10"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/ebnf#10"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/ebnf#10"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Java Language Specification</h2>
+<p></p>
+A real world example of a detailed programming language.
+<p></p>
+<h3>Packages and Modules</h3>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg8b214f5a68a6207817ada8b1c5b3be06" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img8b214f5a68a6207817ada8b1c5b3be06" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;8b214f5a68a6207817ada8b1c5b3be06&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;8b214f5a68a6207817ada8b1c5b3be06&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;8b214f5a68a6207817ada8b1c5b3be06&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre8b214f5a68a6207817ada8b1c5b3be06">@startebnf
+CompilationUnit = OrdinaryCompilationUnit | ModularCompilationUnit;
+OrdinaryCompilationUnit = [PackageDeclaration], {ImportDeclaration}, {TopLevelClassOrInterfaceDeclaration};
+ModularCompilationUnit = {ImportDeclaration}, ModuleDeclaration;
+PackageDeclaration = {PackageModifier}, &#34;package&#34;, Identifier, {Identifier}, &#34;;&#34;;
+PackageModifier = Annotation;
+ImportDeclaration = SingleTypeImportDeclaration | TypeImportOnDemandDeclaration | SingleStaticImportDeclaration | StaticImportOnDemandDeclaration;
+SingleTypeImportDeclaration = &#34;import&#34;, TypeName, &#34;;&#34;;
+TypeImportOnDemandDeclaration = &#34;import&#34;, PackageOrTypeName, &#34;.*&#34;, &#34;;&#34;;
+SingleStaticImportDeclaration = &#34;import&#34;, &#34;static&#34;, TypeName, &#34;.&#34;, Identifier, &#34;;&#34;;
+StaticImportOnDemandDeclaration = &#34;import&#34;, &#34;static&#34;, TypeName, &#34;.*&#34;, &#34;;&#34;;
+TopLevelClassOrInterfaceDeclaration = (ClassDeclaration | InterfaceDeclaration), &#34;;&#34;;
+ModuleDeclaration = {Annotation}, [open], &#34;module&#34;, Identifier, {Identifier}, &#34;{&#34;, {ModuleDirective}, &#34;}&#34;;
+ModuleDirective = (&#34;requires&#34;, {RequiresModifier}, ModuleName, &#34;;&#34;) | (&#34;exports&#34;, PackageName, [&#34;to&#34;, ModuleName, {&#34;,&#34;, ModuleName}], &#34;;&#34;) | (&#34;opens&#34;, PackageName, [&#34;to&#34;, ModuleName, {&#34;,&#34;, ModuleName}], &#34;;&#34;) | (&#34;uses&#34;, TypeName, &#34;;&#34;) | (&#34;provides&#34;, TypeName, &#34;with&#34;, TypeName, {&#34;,&#34;, TypeName}, &#34;;&#34;);
+RequiresModifier = &#34;transitive&#34; | &#34;static&#34;;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="947" height="1710" class="scale" src="/imgw/img-8b214f5a68a6207817ada8b1c5b3be06.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h3>Lexical Structure</h3>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgb45ff6c7325a3990ddf63241fbc7678f" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgb45ff6c7325a3990ddf63241fbc7678f" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;b45ff6c7325a3990ddf63241fbc7678f&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;b45ff6c7325a3990ddf63241fbc7678f&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;b45ff6c7325a3990ddf63241fbc7678f&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="preb45ff6c7325a3990ddf63241fbc7678f">@startebnf
+Identifier = ?IdentifierChars but not a ReservedKeyword or BooleanLiteral or NullLiteral?;
+IdentifierChars = JavaLetter, {JavaLetterOrDigit};
+JavaLetter = ? any Unicode character that is a &#34;Java letter&#34; ?;
+JavaLetterOrDigit = ? any Unicode character that is a &#34;Java letter-or-digit&#34; ?;
+TypeIdentifier = ? Identifier but not permits, record, sealed, var, or yield ?;
+UnqualifiedMethodIdentifier = ? Identifier but not yield ?;
+Literal = IntegerLiteral | FloatingPointLiteral | BooleanLiteral | CharacterLiteral | StringLiteral | TextBlock | NullLiteral;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="553" height="773" class="scale" src="/imgw/img-b45ff6c7325a3990ddf63241fbc7678f.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h3>Types, Values, and Variables</h3>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg92956785702f469a17fb9e51dd8c22c1" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img92956785702f469a17fb9e51dd8c22c1" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;92956785702f469a17fb9e51dd8c22c1&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;92956785702f469a17fb9e51dd8c22c1&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;92956785702f469a17fb9e51dd8c22c1&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre92956785702f469a17fb9e51dd8c22c1">@startebnf
+Type = PrimitiveType | ReferenceType;
+PrimitiveType = [Annotation], (NumericType | boolean );
+NumericType = IntegralType | FloatingPointType;
+IntegralType = &#34;byte&#34; | &#34;short&#34; | &#34;int&#34; | &#34;long&#34; | &#34;char&#34;;
+FloatingPointType = &#34;float&#34; | &#34;double&#34;;
+ReferenceType = ClassOrInterfaceType | TypeVariable | ArrayType;
+ClassOrInterfaceType = ClassType | InterfaceType;
+ClassType = {Annotation}, TypeIdentifier, [TypeArguments];
+PackageName = {Annotation}, TypeIdentifier, [TypeArguments];
+ClassOrInterfaceType = {Annotation}, TypeIdentifier, [TypeArguments];
+InterfaceType = ClassType;
+TypeVariable = {Annotation}, TypeIdentifier;
+ArrayType = (PrimitiveType | ClassOrInterfaceType | TypeVariable), Dims;
+Dims=  {Annotation}, &#34;[&#34;, &#34;]&#34;, {{Annotation}, &#34;[&#34;, &#34;]&#34;};
+TypeParameter = {TypeParameterModifier}, TypeIdentifier, [TypeBound];
+TypeParameterModifier = Annotation;
+TypeBound = (&#34;extends&#34;, TypeVariable) | (&#34;extends&#34;, ClassOrInterfaceType, {AdditionalBound});
+AdditionalBound = &#34;&amp;&#34;, InterfaceType;
+TypeArguments = &#34;&lt;&#34;, TypeArgumentList, &#34;&gt;&#34;;
+TypeArgumentList = TypeArgument, {&#34;,&#34;, TypeArgument};
+TypeArgument = ReferenceType | Wildcard;
+Wildcard = {Annotation}, &#34;?&#34;, [WildcardBounds];
+WildcardBounds = (&#34;extends&#34; | &#34;super&#34;), ReferenceType;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="627" height="2595" class="scale" src="/imgw/img-92956785702f469a17fb9e51dd8c22c1.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h3>Names</h3>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg9be116a7211a9a87b224254f1441c370" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img9be116a7211a9a87b224254f1441c370" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;9be116a7211a9a87b224254f1441c370&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;9be116a7211a9a87b224254f1441c370&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;9be116a7211a9a87b224254f1441c370&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre9be116a7211a9a87b224254f1441c370">@startebnf
+ModuleName = Identifier | ( ModuleName, &#34;.&#34;, Identifier);
+PackageName = Identifier | (PackageName, &#34;.&#34;, Identifier);
+TypeName = TypeIdentifier | (PackageOrTypeName, &#34;.&#34;, TypeIdentifier);
+ExpressionName = Identifier | ( AmbiguousName, &#34;.&#34;, Identifier);
+MethodName = UnqualifiedMethodIdentifier;
+PackageOrTypeName = Identifier | (PackageOrTypeName, &#34;.&#34;, Identifier);
+AmbiguousName = Identifier | (AmbiguousName, &#34;.&#34;, Identifier);
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="429" height="738" class="scale" src="/imgw/img-9be116a7211a9a87b224254f1441c370.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h3>Classes</h3>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg073c52b029fb199ed7f45e9a76168895" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img073c52b029fb199ed7f45e9a76168895" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;073c52b029fb199ed7f45e9a76168895&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;073c52b029fb199ed7f45e9a76168895&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;073c52b029fb199ed7f45e9a76168895&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre073c52b029fb199ed7f45e9a76168895">@startebnf
+ClassDeclaration = NormalClassDeclaration | EnumDeclaration | RecordDeclaration;
+NormalClassDeclaration = {ClassModifier}, &#34;class&#34;, TypeIdentifier, [TypeParameters], [ClassExtends], [ClassImplements], [ClassPermits], ClassBody;
+ClassModifier = Annotation | &#34;public&#34; | &#34;protected&#34; | &#34;private&#34; | &#34;abstract&#34; | &#34;static&#34; | &#34;final&#34; | &#34;sealed&#34; | &#34;non-sealed&#34; | &#34;strictfp&#34;;
+TypeParameters = &#34;&lt;&#34;, TypeParameterList, &#34;&gt;&#34;;
+TypeParameterList = TypeParameter, {&#34;,&#34;, TypeParameter};
+ClassExtends = &#34;extends&#34;, ClassType;
+ClassImplements = &#34;implements&#34;, InterfaceTypeList;
+InterfaceTypeList = InterfaceType, {&#34;,&#34;, InterfaceType};
+ClassPermits = &#34;permits&#34;, TypeName, {&#34;,&#34;, TypeName};
+ClassBody = &#34;{&#34;, {ClassBodyDeclaration}, &#34;}&#34;;
+ClassBodyDeclaration = ClassMemberDeclaration | InstanceInitializer | StaticInitializer | ConstructorDeclaration;
+ClassMemberDeclaration = (FieldDeclaration | MethodDeclaration | ClassDeclaration | InterfaceDeclaration), &#34;;&#34;;
+FieldDeclaration = {FieldModifier}, UnannType, VariableDeclaratorList, &#34;;&#34;;
+FieldModifier = Annotation | &#34;public&#34; | &#34;protected&#34; | &#34;private&#34; | &#34;static&#34; | &#34;final&#34; | &#34;transient&#34; | &#34;volatile&#34;;
+VariableDeclaratorList = VariableDeclarator, {&#34;,&#34;, VariableDeclarator};
+VariableDeclarator = VariableDeclaratorId, [&#34;=&#34;, VariableInitializer];
+VariableDeclaratorId = Identifier, [Dims];
+VariableInitializer = Expression | ArrayInitializer;
+UnannType = UnannPrimitiveType | UnannReferenceType;
+UnannPrimitiveType = NumericType | boolean;
+UnannReferenceType = UnannClassOrInterfaceType | UnannTypeVariable | UnannArrayType;
+UnannClassOrInterfaceType = UnannClassType | UnannInterfaceType;
+UnannClassType = (TypeIdentifier, [TypeArguments]) | (PackageName, &#34;.&#34;, {Annotation}, TypeIdentifier, [TypeArguments]) | (UnannClassOrInterfaceType, &#34;.&#34;, {Annotation}, TypeIdentifier, [TypeArguments]) | (TypeIdentifier, [TypeArguments]) | (TypeIdentifier, [TypeArguments]);
+UnannInterfaceType = UnannClassType;
+UnannTypeVariable = TypeIdentifier;
+UnannArrayType = (UnannPrimitiveType, Dims) | (UnannClassOrInterfaceType, Dims) | (UnannTypeVariable, Dims);
+MethodDeclaration = {MethodModifier}, MethodHeader, MethodBody;
+MethodModifier = Annotation | &#34;public&#34; | &#34;protected&#34; | &#34;private&#34; | &#34;abstract&#34; | &#34;static&#34; | &#34;final&#34; | &#34;synchronized&#34; | &#34;native&#34; | &#34;strictfp&#34;;
+MethodHeader = (Result, MethodDeclarator, [Throws]) | (TypeParameters, {Annotation}, Result, MethodDeclarator, [Throws]);
+Result = UnannType | &#34;void&#34;;
+MethodDeclarator = Identifier, ( [ ReceiverParameter, &#34;,&#34; ], [FormalParameterList] ), [Dims];
+ReceiverParameter = {Annotation}, UnannType, [Identifier, &#34;.&#34;], &#34;this&#34;;
+FormalParameterList = FormalParameter, {&#34;,&#34;, FormalParameter};
+FormalParameter = ({VariableModifier}, UnannType, VariableDeclaratorId) | VariableArityParameter;
+VariableArityParameter = {VariableModifier}, UnannType, {Annotation}, &#34;...&#34;, Identifier;
+VariableModifier = Annotation | &#34;final&#34;;
+Throws = &#34;throws&#34;, ExceptionTypeList;
+ExceptionTypeList = ExceptionType, {&#34;,&#34;, ExceptionType};
+ExceptionType = ClassType | TypeVariable;
+MethodBody = Block | &#34;;&#34;;
+InstanceInitializer = Block;
+StaticInitializer = &#34;static&#34;, Block;
+ConstructorDeclaration = {ConstructorModifier}, ConstructorDeclarator, [Throws], ConstructorBody;
+ConstructorModifier = Annotation | &#34;public&#34; | &#34;protected&#34; | &#34;private&#34;;
+ConstructorDeclarator = [TypeParameters], SimpleTypeName, ( [ReceiverParameter, &#34;,&#34;], [FormalParameterList] );
+SimpleTypeName = TypeIdentifier;
+ConstructorBody = { [ExplicitConstructorInvocation], [BlockStatements] };
+ExplicitConstructorInvocation = ( [TypeArguments], &#34;this&#34;, &#34;(&#34;, [ArgumentList], &#34;)&#34;, &#34;;&#34; ) | ([TypeArguments], &#34;super&#34;, &#34;(&#34;, [ArgumentList], &#34;)&#34;, &#34;;&#34; ) | (ExpressionName, &#34;.&#34;, [TypeArguments], &#34;super&#34;, &#34;(&#34;, [ArgumentList], &#34;)&#34;, &#34;;&#34; ) | (Primary, &#34;.&#34; [TypeArguments], &#34;super&#34;, &#34;(&#34; [ArgumentList], &#34;)&#34;, &#34;;&#34;;
+EnumDeclaration = {ClassModifier}, &#34;enum&#34;, TypeIdentifier, [ClassImplements], EnumBody;
+EnumBody = &#34;{&#34;, [EnumConstantList], [&#34;,&#34;], [EnumBodyDeclarations], &#34;}&#34;;
+EnumConstantList = EnumConstant, {&#34;,&#34;, EnumConstant};
+EnumConstant = {EnumConstantModifier}, Identifier, [&#34;(&#34;, [ArgumentList], &#34;)&#34;], [ClassBody];
+EnumConstantModifier = Annotation;
+EnumBodyDeclarations = &#34;;&#34;, {ClassBodyDeclaration};
+RecordDeclaration = {ClassModifier}, &#34;record&#34;, TypeIdentifier, [TypeParameters], RecordHeader, [ClassImplements], RecordBody;
+RecordHeader = &#34;(&#34;, [RecordComponentList], &#34;)&#34;;
+RecordComponentList = RecordComponent, {&#34;,&#34;, RecordComponent};
+RecordComponent = (RecordComponentModifier}, UnannType, Identifier) | VariableArityRecordComponent;
+VariableArityRecordComponent = {RecordComponentModifier}, UnannType, {Annotation}, &#34;...&#34;, Identifier;
+RecordComponentModifier = Annotation;
+RecordBody = &#34;{&#34;, {RecordBodyDeclaration}, &#34;}&#34;;
+RecordBodyDeclaration = ClassBodyDeclaration | CompactConstructorDeclaration;
+CompactConstructorDeclaration = {ConstructorModifier}, SimpleTypeName, ConstructorBody;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="1221" height="4096" class="scale" src="/imgw/img-073c52b029fb199ed7f45e9a76168895.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h3>Interfaces</h3>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg62949bfecb69d26ff9d49ec2d004a8d5" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img62949bfecb69d26ff9d49ec2d004a8d5" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;62949bfecb69d26ff9d49ec2d004a8d5&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;62949bfecb69d26ff9d49ec2d004a8d5&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;62949bfecb69d26ff9d49ec2d004a8d5&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre62949bfecb69d26ff9d49ec2d004a8d5">@startebnf
+InterfaceDeclaration = NormalInterfaceDeclaration | AnnotationInterfaceDeclaration;
+NormalInterfaceDeclaration = {InterfaceModifier}, &#34;interface&#34;, TypeIdentifier, [TypeParameters], [InterfaceExtends], [InterfacePermits], InterfaceBody;
+InterfaceModifier = Annotation | &#34;public&#34; | &#34;protected&#34; | &#34;private&#34; | &#34;abstract&#34; | &#34;static&#34; | &#34;sealed&#34; | &#34;non-sealed&#34; | &#34;strictfp&#34;;
+InterfaceExtends = &#34;extends&#34;, InterfaceTypeList;
+InterfacePermits = &#34;permits&#34;, TypeName, {&#34;,&#34;, TypeName};
+InterfaceBody = &#34;{&#34;, {InterfaceMemberDeclaration}, &#34;}&#34;;
+InterfaceMemberDeclaration = ConstantDeclaration | InterfaceMethodDeclaration | ClassDeclaration | InterfaceDeclaration | &#34;;&#34;;
+ConstantDeclaration = {ConstantModifier}, UnannType, VariableDeclaratorList, &#34;;&#34;;
+ConstantModifier = Annotation | &#34;public&#34; | &#34;static&#34; | &#34;final&#34;;
+InterfaceMethodDeclaration = {InterfaceMethodModifier}, MethodHeader, MethodBody;
+InterfaceMethodModifier = Annotation | &#34;public&#34; | &#34;private&#34; | &#34;abstract&#34; | &#34;default&#34; | &#34;static&#34; | &#34;strictfp&#34;;
+AnnotationInterfaceDeclaration = {InterfaceModifier}, &#34;@&#34;, &#34;interface&#34;, TypeIdentifier, AnnotationInterfaceBody;
+AnnotationInterfaceBody = &#34;{&#34;, {AnnotationInterfaceMemberDeclaration}, &#34;}&#34;;
+AnnotationInterfaceMemberDeclaration = AnnotationInterfaceElementDeclaration | ConstantDeclaration | ClassDeclaration | InterfaceDeclaration, &#34;;&#34;;
+AnnotationInterfaceElementDeclaration = {AnnotationInterfaceElementModifier}, UnannType, Identifier, &#34;(&#34;, &#34;)&#34;, [Dims], [DefaultValue], &#34;;&#34;;
+AnnotationInterfaceElementModifier = Annotation | &#34;public&#34; | &#34;abstract&#34;;
+DefaultValue = &#34;default&#34;, ElementValue;
+Annotation = NormalAnnotation | MarkerAnnotation | SingleElementAnnotation;
+NormalAnnotation = &#34;@&#34;, TypeName, &#34;(&#34;, [ElementValuePairList], &#34;)&#34;;
+ElementValuePairList = ElementValuePair, {&#34;,&#34;, ElementValuePair};
+ElementValuePair = Identifier, &#34;=&#34;, ElementValue;
+ElementValue = ConditionalExpression | ElementValueArrayInitializer | Annotation;
+ElementValueArrayInitializer = &#34;{&#34;, [ElementValueList], [&#34;,&#34;], &#34;}&#34;;
+ElementValueList = ElementValue, {&#34;,&#34;, ElementValue};
+MarkerAnnotation = &#34;@&#34;, TypeName;
+SingleElementAnnotation = &#34;@&#34;, TypeName, &#34;(&#34;, ElementValue, &#34;)&#34;;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="1135" height="3418" class="scale" src="/imgw/img-62949bfecb69d26ff9d49ec2d004a8d5.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h3>Arrays</h3>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msga488c7c14c89d5bfcb9adfcc5be61f42" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imga488c7c14c89d5bfcb9adfcc5be61f42" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;a488c7c14c89d5bfcb9adfcc5be61f42&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;a488c7c14c89d5bfcb9adfcc5be61f42&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;a488c7c14c89d5bfcb9adfcc5be61f42&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="prea488c7c14c89d5bfcb9adfcc5be61f42">@startebnf
+ArrayInitializer = &#34;{&#34;, [VariableInitializerList], [&#34;,&#34;], &#34;}&#34;;
+VariableInitializerList = VariableInitializer, {&#34;,&#34;, VariableInitializer};
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="449" height="221" class="scale" src="/imgw/img-a488c7c14c89d5bfcb9adfcc5be61f42.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h3>Blocks, Statements, and Patterns</h3>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgeeb024cab11b22eaeaf9e430a0ae24da" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgeeb024cab11b22eaeaf9e430a0ae24da" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;eeb024cab11b22eaeaf9e430a0ae24da&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;eeb024cab11b22eaeaf9e430a0ae24da&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;eeb024cab11b22eaeaf9e430a0ae24da&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="preeeb024cab11b22eaeaf9e430a0ae24da">@startebnf
+Block = &#34;{&#34;, [BlockStatements], &#34;}&#34;;
+BlockStatements = BlockStatement, {BlockStatement};
+BlockStatement = LocalClassOrInterfaceDeclaration | LocalVariableDeclarationStatement | Statement;
+LocalClassOrInterfaceDeclaration = ClassDeclaration | NormalInterfaceDeclaration;
+LocalVariableDeclarationStatement = LocalVariableDeclaration, &#34;;&#34;;
+LocalVariableDeclaration = {VariableModifier}, LocalVariableType, VariableDeclaratorList;
+LocalVariableType = UnannType | &#34;var&#34;;
+Statement = StatementWithoutTrailingSubstatement | LabeledStatement | IfThenStatement | IfThenElseStatement | WhileStatement | ForStatement;
+StatementNoShortIf = StatementWithoutTrailingSubstatement | LabeledStatementNoShortIf | IfThenElseStatementNoShortIf | WhileStatementNoShortIf | ForStatementNoShortIf;
+StatementWithoutTrailingSubstatement = Block | EmptyStatement | ExpressionStatement | AssertStatement | SwitchStatement | DoStatement | BreakStatement | ContinueStatement | ReturnStatement | SynchronizedStatement | ThrowStatement | TryStatement | YieldStatement;
+EmptyStatement = &#34;;&#34;;
+LabeledStatement = Identifier, &#34;:&#34;, Statement;
+LabeledStatementNoShortIf = Identifier, &#34;:&#34;, StatementNoShortIf;
+ExpressionStatement = StatementExpression, &#34;;&#34;;
+StatementExpression = Assignment | PreIncrementExpression | PreDecrementExpression | PostIncrementExpression | PostDecrementExpression | MethodInvocation | ClassInstanceCreationExpression;
+IfThenStatement = &#34;if&#34;, &#34;(&#34;, Expression, &#34;)&#34;, Statement;
+IfThenElseStatement = &#34;if&#34;, &#34;(&#34;, Expression, &#34;)&#34;, StatementNoShortIf, &#34;else&#34;, Statement;
+IfThenElseStatementNoShortIf = &#34;if&#34;, &#34;(&#34;, Expression, &#34;)&#34;, StatementNoShortIf, &#34;else&#34;, StatementNoShortIf;
+AssertStatement = (&#34;assert&#34;, Expression, &#34;;&#34;) | (&#34;assert&#34;, Expression, &#34;:&#34;, Expression, &#34;;&#34;);
+SwitchStatement = &#34;switch&#34;, &#34;(&#34;, Expression, &#34;)&#34;, SwitchBlock;
+SwitchBlock = ( &#34;{&#34;, SwitchRule, {SwitchRule}, &#34;}&#34; ) | ( &#34;{&#34;, {SwitchBlockStatementGroup}, {SwitchLabel, &#34;:&#34;}, &#34;}&#34; );
+SwitchRule = (SwitchLabel, &#34;-&gt;&#34;, Expression, &#34;;&#34;) |(SwitchLabel, &#34;-&gt;&#34;, Block) | (SwitchLabel, &#34;-&gt;&#34;, ThrowStatement);
+SwitchBlockStatementGroup = SwitchLabel, &#34;:&#34;, {SwitchLabel, &#34;:&#34;}, BlockStatements;
+SwitchLabel = (&#34;case&#34;, CaseConstant, {&#34;,&#34;, CaseConstant}) | &#34;default&#34;;
+CaseConstant = ConditionalExpression;
+WhileStatement = &#34;while&#34;, &#34;(&#34;, Expression, &#34;)&#34;, Statement;
+WhileStatementNoShortIf = &#34;while&#34;, &#34;(&#34;, Expression, &#34;)&#34;, StatementNoShortIf;
+DoStatement = &#34;do&#34;, Statement, &#34;while&#34;, &#34;(&#34;, Expression, &#34;)&#34;, &#34;;&#34;;
+ForStatement = BasicForStatement | EnhancedForStatement | ForStatementNoShortIf | BasicForStatementNoShortIf | EnhancedForStatementNoShortIf;
+BasicForStatement = &#34;for&#34;, &#34;(&#34;, [ForInit], &#34;;&#34;, [Expression], &#34;;&#34;, [ForUpdate], &#34;)&#34;, Statement;
+BasicForStatementNoShortIf = &#34;for&#34;, &#34;(&#34;, [ForInit], &#34;;&#34;, [Expression], &#34;;&#34;, [ForUpdate], &#34;)&#34;, StatementNoShortIf;
+ForInit = StatementExpressionList | LocalVariableDeclaration;
+ForUpdate = StatementExpressionList;
+StatementExpressionList = StatementExpression, {&#34;,&#34;, StatementExpression};
+EnhancedForStatement = &#34;for&#34;, &#34;(&#34;, LocalVariableDeclaration, &#34;:&#34;, Expression, &#34;)&#34;, Statement;
+EnhancedForStatementNoShortIf = &#34;for&#34;, &#34;(&#34;, LocalVariableDeclaration, &#34;:&#34;, Expression, &#34;)&#34;, StatementNoShortIf;
+BreakStatement = break, [Identifier], &#34;;&#34;;
+YieldStatement = &#34;yield&#34;, Expression, &#34;;&#34;;
+ContinueStatement = &#34;continue&#34;, [Identifier], &#34;;&#34;;
+ReturnStatement = &#34;return&#34; [Expression], &#34;;&#34;;
+ThrowStatement = &#34;throw&#34;, Expression, &#34;;&#34;;
+SynchronizedStatement = &#34;synchronized&#34;, &#34;(&#34;, Expression, &#34;)&#34;, Block;
+TryStatement = (&#34;try&#34;, Block, Catches) | (&#34;try&#34;, Block, [Catches], Finally ) | TryWithResourcesStatement;
+Catches = CatchClause, {CatchClause};
+CatchClause = &#34;catch&#34;, &#34;(&#34;, CatchFormalParameter, &#34;)&#34;, Block;
+CatchFormalParameter = {VariableModifier}, CatchType, VariableDeclaratorId;
+CatchType = UnannClassType, {&#34;|&#34;, ClassType};
+Finally = &#34;finally&#34;, Block;
+TryWithResourcesStatement = &#34;try&#34;, ResourceSpecification, Block, [Catches], [Finally];
+ResourceSpecification = &#34;(&#34;, ResourceList, [&#34;;&#34;], &#34;)&#34;;
+ResourceList = Resource, {&#34;;&#34;, Resource};
+Resource = LocalVariableDeclaration | VariableAccess;
+Pattern = TypePattern;
+TypePattern = LocalVariableDeclaration;
+
+(* Expressions *)
+
+Primary = PrimaryNoNewArray | ArrayCreationExpression;
+PrimaryNoNewArray = Literal | ClassLiteral | &#34;this&#34; | (TypeName, &#34;.&#34;, &#34;this&#34;) | ( &#34;(&#34;, Expression, &#34;)&#34; ) | ClassInstanceCreationExpression | FieldAccess | ArrayAccess | MethodInvocation | MethodReference;
+ClassLiteral = (TypeName, { &#34;[&#34;, &#34;]&#34; }, &#34;.&#34;, &#34;class&#34;) | (NumericType, {&#34;[&#34;, &#34;]&#34;}, &#34;.&#34;, &#34;class&#34;) | (&#34;boolean&#34;, {&#34;[&#34;, &#34;]&#34;}, &#34;.&#34;, &#34;class&#34;) | (&#34;void&#34;, &#34;.&#34;, &#34;class&#34;);
+ClassInstanceCreationExpression = UnqualifiedClassInstanceCreationExpression | (ExpressionName, &#34;.&#34;, UnqualifiedClassInstanceCreationExpression) |(Primary, &#34;.&#34;, UnqualifiedClassInstanceCreationExpression);
+UnqualifiedClassInstanceCreationExpression = &#34;new&#34;, [TypeArguments], ClassOrInterfaceTypeToInstantiate, &#34;(&#34;, [ArgumentList], &#34;)&#34;, [ClassBody];
+ClassOrInterfaceTypeToInstantiate = {Annotation}, Identifier, {&#34;.&#34;, {Annotation}, Identifier}, [TypeArgumentsOrDiamond];
+TypeArgumentsOrDiamond = TypeArguments | (&#34;&lt;&#34;,&#34;&gt;&#34;);
+ArrayCreationExpression = ArrayCreationExpressionWithoutInitializer | ArrayCreationExpressionWithInitializer;
+ArrayCreationExpressionWithoutInitializer = (&#34;new&#34;, PrimitiveType, DimExprs, [Dims]) | (&#34;new&#34;, ClassOrInterfaceType, DimExprs, [Dims]);
+ArrayCreationExpressionWithInitializer = (&#34;new&#34;, PrimitiveType, Dims, ArrayInitializer) | (&#34;new&#34;, ClassOrInterfaceType, Dims, ArrayInitializer);
+DimExprs = DimExpr, {DimExpr};
+DimExpr = ({Annotation}, [ Expression ]) | (ArrayAccess, &#34;=&#34;, ExpressionName, &#34;[&#34;, Expression, &#34;]&#34;) | (PrimaryNoNewArray, &#34;[&#34;, Expression, &#34;]&#34;) | (ArrayCreationExpressionWithInitializer, &#34;[&#34;, Expression, &#34;]&#34;);
+FieldAccess = (Primary, &#34;.&#34;, Identifier), (&#34;super&#34;, &#34;.&#34;, Identifier), (TypeName, &#34;.&#34;, super, &#34;.&#34;, Identifier);
+MethodInvocation = (MethodName, &#34;(&#34;, [ArgumentList], &#34;)&#34;) | (TypeName, &#34;.&#34;, [TypeArguments], Identifier, &#34;(&#34;, [ArgumentList], &#34;)&#34;) | (ExpressionName, &#34;.&#34;, [TypeArguments], Identifier, &#34;(&#34;, [ArgumentList], &#34;)&#34;) | (Primary, &#34;.&#34;, [TypeArguments], Identifier, &#34;(&#34;, [ArgumentList], &#34;)&#34;) | (&#34;super&#34;, &#34;.&#34;, [TypeArguments], Identifier, &#34;(&#34;, [ArgumentList], &#34;)&#34;) | (TypeName, &#34;.&#34;, &#34;super&#34;, &#34;.&#34;, [TypeArguments], Identifier, &#34;(&#34;, [ArgumentList], &#34;)&#34;);
+ArgumentList = Expression, {&#34;,&#34;, Expression};
+MethodReference = (ExpressionName, &#34;::&#34;, [TypeArguments], Identifier) | (Primary, &#34;::&#34;, [TypeArguments], Identifier) | (ReferenceType, &#34;::&#34;, [TypeArguments], Identifier) | (&#34;super&#34;, &#34;::&#34;, [TypeArguments], Identifier) | (TypeName, &#34;.&#34;, super, &#34;::&#34;, [TypeArguments], Identifier) | (ClassType, &#34;::&#34;, [TypeArguments], &#34;new&#34;) | (ArrayType, &#34;::&#34;, &#34;new&#34;);
+Expression = LambdaExpression | AssignmentExpression;
+LambdaExpression = LambdaParameters, &#34;-&gt;&#34;, LambdaBody;
+LambdaParameters = (&#34;(&#34;, [LambdaParameterList], &#34;)&#34;) | Identifier;
+LambdaParameterList = (LambdaParameter, {&#34;,&#34;, LambdaParameter}) | (Identifier, {&#34;,&#34;, Identifier});
+LambdaParameter = ({VariableModifier}, LambdaParameterType, VariableDeclaratorId) | VariableArityParameter;
+LambdaParameterType = UnannType | &#34;var&#34;;
+LambdaBody = Expression | Block;
+AssignmentExpression = ConditionalExpression | Assignment;
+Assignment = LeftHandSide | AssignmentOperator | Expression;
+LeftHandSide = ExpressionName | FieldAccess | ArrayAccess;
+AssignmentOperator = &#34;=&#34; | &#34;*=&#34; | &#34;/=&#34; | &#34;%=&#34; | &#34;+=&#34; | &#34;-=&#34; | &#34;&lt;&lt;=&#34; | &#34;&gt;&gt;=&#34; | &#34;&gt;&gt;&gt;=&#34; | &#34;&amp;=&#34; | &#34;^=&#34; | &#34;|=&#34;;
+ConditionalExpression = ConditionalOrExpression | (ConditionalOrExpression, &#34;?&#34;, Expression, &#34;:&#34;, ConditionalExpression) | (ConditionalOrExpression, &#34;?&#34;, Expression, &#34;:&#34;, LambdaExpression);
+ConditionalOrExpression = ConditionalAndExpression | (ConditionalOrExpression, &#34;||&#34;, ConditionalAndExpression);
+ConditionalAndExpression = InclusiveOrExpression | (ConditionalAndExpression, &#34;&amp;&amp;&#34;, InclusiveOrExpression);
+InclusiveOrExpression = ExclusiveOrExpression | (InclusiveOrExpression, &#34;|&#34;, ExclusiveOrExpression);
+ExclusiveOrExpression = AndExpression | (ExclusiveOrExpression, &#34;^&#34;, AndExpression);
+AndExpression = EqualityExpression, (AndExpression, &#34;&amp;&#34;, EqualityExpression) | (EqualityExpression, &#34;=&#34;, RelationalExpression) | (EqualityExpression, &#34;==&#34;, RelationalExpression) | (EqualityExpression, &#34;!=&#34;, RelationalExpression);
+RelationalExpression = ShiftExpression | (RelationalExpression, &#34;&lt;&#34;, ShiftExpression) | (RelationalExpression, &#34;&gt;&#34;, ShiftExpression) | (RelationalExpression, &#34;&lt;=&#34;, ShiftExpression) | (RelationalExpression, &#34;&gt;=&#34;, ShiftExpression) | (InstanceofExpression);
+InstanceofExpression = (RelationalExpression, &#34;instanceof&#34;, ReferenceType) | (RelationalExpression, &#34;instanceof&#34;, Pattern);
+ShiftExpression = AdditiveExpression | (ShiftExpression, &#34;&lt;&lt;&#34;, AdditiveExpression) | (ShiftExpression, &#34;&gt;&gt;&#34;, AdditiveExpression) | (ShiftExpression, &#34;&gt;&gt;&gt;&#34;, AdditiveExpression);
+AdditiveExpression = MultiplicativeExpression | (AdditiveExpression, &#34;+&#34;, MultiplicativeExpression) | (AdditiveExpression, &#34;-&#34;, MultiplicativeExpression);
+MultiplicativeExpression = UnaryExpression | (MultiplicativeExpression, &#34;*&#34;, UnaryExpression) | (MultiplicativeExpression, &#34;/&#34;, UnaryExpression) | (MultiplicativeExpression, &#34;%&#34;, UnaryExpression);
+UnaryExpression = PreIncrementExpression | PreDecrementExpression | (&#34;+&#34;, UnaryExpression) | (&#34;-&#34;, UnaryExpression) | UnaryExpressionNotPlusMinus;
+PreIncrementExpression = &#34;++&#34;, UnaryExpression;
+PreDecrementExpression = &#34;--&#34;, UnaryExpression;
+UnaryExpressionNotPlusMinus = PostfixExpression | (&#34;~&#34;, UnaryExpression) | (&#34;!&#34;, UnaryExpression) | CastExpression | SwitchExpression;
+PostfixExpression = Primary | ExpressionName | PostIncrementExpression | PostDecrementExpression;
+PostIncrementExpression = PostfixExpression, &#34;++&#34;;
+PostDecrementExpression = PostfixExpression, &#34;--&#34;;
+CastExpression = (&#34;(&#34;, PrimitiveType, &#34;)&#34;, UnaryExpression) | (&#34;(&#34;, ReferenceType, {AdditionalBound}, &#34;)&#34;, UnaryExpressionNotPlusMinus) | (&#34;(&#34;, ReferenceType, {AdditionalBound}, &#34;)&#34;, LambdaExpression);
+SwitchExpression = &#34;switch&#34;, &#34;(&#34;, Expression, &#34;)&#34;, SwitchBlock;
+ConstantExpression = Expression;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="941" height="4096" class="scale" src="/imgw/img-eeb024cab11b22eaeaf9e430a0ae24da.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="6007bd14bc7a4d17"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/ebnf#11"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/ebnf#11"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/ebnf#11"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Remaining defects </h2>
+<p></p>
+<h3>Could you put &#39;arrow head&#39; on all rerouted lines?</h3>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgd1da959e1f2075abfc55627d837e5430" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgd1da959e1f2075abfc55627d837e5430" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;d1da959e1f2075abfc55627d837e5430&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;d1da959e1f2075abfc55627d837e5430&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;d1da959e1f2075abfc55627d837e5430&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pred1da959e1f2075abfc55627d837e5430">@startebnf
+title Could you put &#39;arrow head&#39; on all rerouted lines?
+test = [1], [12], [123], [1234];
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="453" height="149" class="scale" src="/imgw/img-d1da959e1f2075abfc55627d837e5430.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<em>Fixed by <a href="https://github.com/plantuml/plantuml/commit/5bbb5a8d27e56db31aec97617edfbda6e3082703">EBNF more arrow head</a> on <strong>V1.2024.8</strong></em>
+<p></p>
+<h3>Order issue</h3>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgcdbe6f7bf31ea96f3822d2ef6fdf7895" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgcdbe6f7bf31ea96f3822d2ef6fdf7895" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;cdbe6f7bf31ea96f3822d2ef6fdf7895&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;cdbe6f7bf31ea96f3822d2ef6fdf7895&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;cdbe6f7bf31ea96f3822d2ef6fdf7895&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="precdbe6f7bf31ea96f3822d2ef6fdf7895">@startebnf
+a = (one, two), three;
+b = (one (* 1 *), two (* 2 *)), three (* 3 *);
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="236" height="207" class="scale" src="/imgw/img-cdbe6f7bf31ea96f3822d2ef6fdf7895.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<p></p>
+<em>[Ref. <a href="https://forum.plantuml.net/17090/ebnf-perserve-the-order-of-element">QA-17090</a>, fixed by <a href="https://github.com/plantuml/plantuml/commit/9521f6c06f6fa3af96c3d12ceb897c54fb97541a">EBNF concatenation order</a> on <strong>V1.2024.8</strong>]</em>
+<p></p>
+<h3>Allow accentuated or Unicode char on EBNF meta-identifier or rule name.</h3>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg337d9ad61d4b08c66b499e5cee1ca7e7" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img337d9ad61d4b08c66b499e5cee1ca7e7" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;337d9ad61d4b08c66b499e5cee1ca7e7&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;337d9ad61d4b08c66b499e5cee1ca7e7&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;337d9ad61d4b08c66b499e5cee1ca7e7&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre337d9ad61d4b08c66b499e5cee1ca7e7">@startebnf
+(* Test of accentuated or Unicode char*)
+alt = Ã©tÃ© | hiver;
+hiver = &#39;froid&#39;;
+Ã©tÃ© = &#39;chaud&#39;;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="255" height="315" class="scale" src="/imgw/img-337d9ad61d4b08c66b499e5cee1ca7e7.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<em>[Ref. <a href="https://forum.plantuml.net/17145/ebnf-allow-accentuated-unicode-char-ebnf-meta-identifier-rule">QA-17145</a> , fixed by <a href="https://github.com/plantuml/plantuml/commit/99ea667a0c3b38fea848a208730d6776d668b5a6">EBNF better unicode support</a> on <strong>V1.2024.8</strong>]</em>
+</p><p></p>
+<h3>Allow full restriction management with <code class="cod">except-symbol &#34;-&#34;</code></h3>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg17b14df9ce6b6822cd75ddddbbc5be90" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img17b14df9ce6b6822cd75ddddbbc5be90" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;17b14df9ce6b6822cd75ddddbbc5be90&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;17b14df9ce6b6822cd75ddddbbc5be90&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;17b14df9ce6b6822cd75ddddbbc5be90&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre17b14df9ce6b6822cd75ddddbbc5be90">@startebnf
+title First [modified] example of Â§5.8 Syntactic-term of ISO-EBNF
+
+letter = ? &#34;A&#34; - &#34;Z&#34; ?;
+
+vowel = &#34;A&#34; | &#34;E&#34; | &#34;I&#34; | &#34;O&#34; | &#34;U&#34;;
+
+consonant = letter - vowel;
+@endebnf
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="441" height="420" class="scale" src="/imgw/img-17b14df9ce6b6822cd75ddddbbc5be90.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<p></p>
+<em>[Ref. <a href="https://forum.plantuml.net/16735/ebnf-allow-full-restriction-management-with-except-symbol">QA-16735</a>]</em>
+</div><!--content-->
+
+
+<!--B--><div class="eole-col">
+<div class="eole-sticky">
+<div class="eole-container">
+
+<div>
+<!-- Ezoic - middle336 - sidebar_middle -->
+<span id="ezoic-pub-ad-placeholder-672"></span><span data-ez-ph-id="672"></span>
+<!-- End Ezoic - middle336 - sidebar_middle -->
+</div>
+
+
+<!-- eole-scroll --><div class="eole-scroll">
+
+<!--toc-->
+<div id="toc">
+<ul>
+<li><a href="#480f4bc351a60134">Minimal binary diagram</a>
+</li><li><a href="#735437e6fd32864a">All EBNF Elements</a>
+</li><li><a href="#85aeb07de49e6db4">Special sequence management with `+special-sequence-symbol &#34;?&#34;+`</a>
+</li><li><a href="#795877454b6aa54b">Full repetition management with `+repetition-symbol &#34;*&#34;+`</a>
+</li><li><a href="#bd90d595616d1cf2">Drawing mode</a>
+</li><li><a href="#5398a902fa7ed57d">Notes on Elements</a>
+</li><li><a href="#bb2ede32ce6accb8">Using (global) style</a>
+</li><li><a href="#6ebedcbc408cf830">Example of LISP Grammar</a>
+</li><li><a href="#4fd52eccba095c80">EBNF of PlantUMLs EBNF Grammar</a>
+</li><li><a href="#324aba8a3f83acb0">Java Language Specification</a>
+</li><li><a href="#6007bd14bc7a4d17">Remaining defects</a>
+</li></ul>
+</div>
+
+
+</div><!--eole-scroll-->
+
+
+<div>
+<!-- Ezoic - middle336B - sidebar_middle -->
+<span id="ezoic-pub-ad-placeholder-673"></span><span data-ez-ph-id="673"></span>
+<!-- End Ezoic - middle336B - sidebar_middle -->
+</div>
+
+
+</div><!--eole-container -->
+</div><!--eole-sticky-->
+</div><!--B-->
+
+</div><!--zeus-container-->
+
+
+<p>
+
+</p></div>
+<!-- https://css-tricks.com/almanac/properties/f/float/ -->
+<!-- https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
+
+
+<style>
+.btm {
+text-align:center;
+}
+.btm a{
+    text-decoration:none;
+    color:#5e6d7d;
+}
+.btm a:hover{
+    color:#0366d6;
+}
+</style>
+
+<div class="btm">
+<hr/>
+<a href="https://g.ezoic.net/privacy/plantuml.com"><small>Privacy Policy</small></a>
+Â Â Â Â 
+<a href="https://plantuml.com/direct-sales.html"><small>Advertise</small></a>
+<p>
+</p></div><!--btm-->
+
+
+<!--root-->
+
+<!-- Start of StatCounter Code --><script type="text/javascript">
+var sc_project=11129411; var sc_invisible=1; var sc_security="957b00be";
+</script>
+<script async="" type="text/javascript" src="//www.statcounter.com/counter/counter.js"></script> <!-- End of StatCounter Code -->
+
+
+
+
+
+
+
+
+<!--[selectrongo:done]--><span id="ezoic-pub-ad-placeholder-100"></span><span data-ez-ph-id="100" style="display:inline-block;min-width:0px;float:none !important;min-height:0px;max-width:100% !important;line-height:0px;padding:0;box-sizing:content-box;"></span><script>!function(){function t(t,r){var n="undefined"!=typeof Symbol&&t[Symbol.iterator]||t["@@iterator"];if(!n){if(Array.isArray(t)||(n=function(t,r){if(t){if("string"==typeof t)return e(t,r);var n=Object.prototype.toString.call(t).slice(8,-1);return"Object"===n&&t.constructor&&(n=t.constructor.name),"Map"===n||"Set"===n?Array.from(t):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?e(t,r):void 0}}(t))||r&&t&&"number"==typeof t.length){n&&(t=n);var a=0,o=function(){};return{s:o,n:function(){return a>=t.length?{done:!0}:{done:!1,value:t[a++]}},e:function(t){throw t},f:o}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var i,u=!0,s=!1;return{s:function(){n=n.call(t)},n:function(){var t=n.next();return u=t.done,t},e:function(t){s=!0,i=t},f:function(){try{u||null==n.return||n.return()}finally{if(s)throw i}}}}function e(t,e){(null==e||e>t.length)&&(e=t.length);for(var r=0,n=new Array(e);r<e;r++)n[r]=t[r];return n}!function(){var e=function(t){var e=getComputedStyle(t);if(-1===parseInt(e.bottom,10)){var r=t.offsetHeight||300;t.style.bottom=-r+"px"}};function r(){return document.querySelector('ins[data-anchor-shown="true"][data-anchor-status="displayed"]')}function n(t){var e=t.querySelector("iframe");e&&requestAnimationFrame((function(){var r=parseFloat(getComputedStyle(e).height);isNaN(r)||t.style.setProperty("height","".concat(r+5,"px"),"important")}))}function a(t){t.style.setProperty("width","100%","important"),t.style.maxWidth="none"}function o(t){var e=t.querySelector("iframe");e&&(e.style.setProperty("display","block","important"),e.style.setProperty("margin","0 auto","important"));var r=t.querySelector("[id$='__container__']");r&&r.style.setProperty("display","contents","important")}new MutationObserver((function(r){var n,a=t(r);try{for(a.s();!(n=a.n()).done;){var o=n.value;if("attributes"===o.type){var i=o.target;i.matches("[data-anchor-status]")&&("data-anchor-status"===o.attributeName&&"dismissed"===i.getAttribute("data-anchor-status")&&e(i),"style"===o.attributeName&&"dismissed"===i.getAttribute("data-anchor-status")&&e(i))}}}catch(t){a.e(t)}finally{a.f()}})).observe(document.documentElement,{subtree:!0,attributes:!0,attributeFilter:["style","data-anchor-status"]});var i=new WeakSet;function u(e){e&&(i.has(e)||(i.add(e),new MutationObserver((function(r){var i,u=t(r);try{for(u.s();!(i=u.n()).done;){var s=i.value;"style"===s.attributeName?(n(e),a(e),o(e)):"attributes"===s.type&&"data-google-query-id"===s.attributeName&&o(e)}}catch(t){u.e(t)}finally{u.f()}})).observe(e,{attributes:!0,attributeFilter:["style","data-google-query-id"]})))}!function(){var t=r();if(t)return n(t),a(t),o(t),void u(t);var e=new MutationObserver((function(){var t=r();t&&(n(t),a(t),o(t),u(t),e.disconnect())}));e.observe(document.body,{attributes:!0,subtree:!0,childList:!0})}()}()}();</script>
+<script data-ezscrex="false" data-cfasync="false">
+		window.humixPlayers = window.humixPlayers || [];
+		window.humixPlayers.push({ target: 'autoinsert', isGenerated: true });
+	</script>
+<script type='text/javascript' style='display:none;' async>if (typeof window.__ez !== 'undefined' && window.__ez?.queue?.addFileOnce) {window.__ez.queue.addFileOnce('identity', 'https://go.ezodn.com/detroitchicago/indy.js?cb=88&gcb=0', true, [], true, false, false, true);} </script>
+<script src="/detroitchicago/ezonetap.js?gcb=195-5&cb=10"></script><script data-cfasync="false">function _emitEzConsentEvent(){var customEvent=new CustomEvent("ezConsentEvent",{detail:{ezTcfConsent:window.ezTcfConsent},bubbles:true,cancelable:true,});document.dispatchEvent(customEvent);}
+(function(window,document){function _setAllEzConsentTrue(){window.ezTcfConsent.loaded=true;window.ezTcfConsent.store_info=true;window.ezTcfConsent.develop_and_improve_services=true;window.ezTcfConsent.measure_ad_performance=true;window.ezTcfConsent.measure_content_performance=true;window.ezTcfConsent.select_basic_ads=true;window.ezTcfConsent.create_ad_profile=true;window.ezTcfConsent.select_personalized_ads=true;window.ezTcfConsent.create_content_profile=true;window.ezTcfConsent.select_personalized_content=true;window.ezTcfConsent.understand_audiences=true;window.ezTcfConsent.use_limited_data_to_select_content=true;window.ezTcfConsent.select_personalized_content=true;}
+function _clearEzConsentCookie(){document.cookie="ezCMPCookieConsent=tcf2;Domain=.plantuml.com;Path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT";}
+_clearEzConsentCookie();if(typeof window.__tcfapi!=="undefined"){window.ezgconsent=false;var amazonHasRun=false;function _ezAllowed(tcdata,purpose){return(tcdata.purpose.consents[purpose]||tcdata.purpose.legitimateInterests[purpose]);}
+function _handleConsentDecision(tcdata){window.ezTcfConsent.loaded=true;if(!tcdata.vendor.consents["347"]&&!tcdata.vendor.legitimateInterests["347"]){window._emitEzConsentEvent();return;}
+window.ezTcfConsent.store_info=_ezAllowed(tcdata,"1");window.ezTcfConsent.develop_and_improve_services=_ezAllowed(tcdata,"10");window.ezTcfConsent.measure_content_performance=_ezAllowed(tcdata,"8");window.ezTcfConsent.select_basic_ads=_ezAllowed(tcdata,"2");window.ezTcfConsent.create_ad_profile=_ezAllowed(tcdata,"3");window.ezTcfConsent.select_personalized_ads=_ezAllowed(tcdata,"4");window.ezTcfConsent.create_content_profile=_ezAllowed(tcdata,"5");window.ezTcfConsent.measure_ad_performance=_ezAllowed(tcdata,"7");window.ezTcfConsent.use_limited_data_to_select_content=_ezAllowed(tcdata,"11");window.ezTcfConsent.select_personalized_content=_ezAllowed(tcdata,"6");window.ezTcfConsent.understand_audiences=_ezAllowed(tcdata,"9");window._emitEzConsentEvent();}
+function _handleGoogleConsentV2(tcdata){if(!tcdata||!tcdata.purpose||!tcdata.purpose.consents){return;}
+var googConsentV2={};if(tcdata.purpose.consents[1]){googConsentV2.ad_storage='granted';googConsentV2.analytics_storage='granted';}
+if(tcdata.purpose.consents[3]&&tcdata.purpose.consents[4]){googConsentV2.ad_personalization='granted';}
+if(tcdata.purpose.consents[1]&&tcdata.purpose.consents[7]){googConsentV2.ad_user_data='granted';}
+if(googConsentV2.analytics_storage=='denied'){gtag('set','url_passthrough',true);}
+gtag('consent','update',googConsentV2);}
+__tcfapi("addEventListener",2,function(tcdata,success){if(!success||!tcdata){window._emitEzConsentEvent();return;}
+if(!tcdata.gdprApplies){_setAllEzConsentTrue();window._emitEzConsentEvent();return;}
+if(tcdata.eventStatus==="useractioncomplete"||tcdata.eventStatus==="tcloaded"){if(typeof gtag!='undefined'){_handleGoogleConsentV2(tcdata);}
+_handleConsentDecision(tcdata);if(tcdata.purpose.consents["1"]===true&&tcdata.vendor.consents["755"]!==false){window.ezgconsent=true;(adsbygoogle=window.adsbygoogle||[]).pauseAdRequests=0;}
+if(window.__ezconsent){__ezconsent.setEzoicConsentSettings(ezConsentCategories);}
+__tcfapi("removeEventListener",2,function(success){return null;},tcdata.listenerId);if(!(tcdata.purpose.consents["1"]===true&&_ezAllowed(tcdata,"2")&&_ezAllowed(tcdata,"3")&&_ezAllowed(tcdata,"4"))){if(typeof __ez=="object"&&typeof __ez.bit=="object"&&typeof window["_ezaq"]=="object"&&typeof window["_ezaq"]["page_view_id"]=="string"){__ez.bit.Add(window["_ezaq"]["page_view_id"],[new __ezDotData("non_personalized_ads",true),]);}}}});}else{_setAllEzConsentTrue();window._emitEzConsentEvent();}})(window,document);</script></body></html>

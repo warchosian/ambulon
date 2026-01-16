@@ -1,0 +1,3853 @@
+<html lang="fr"><head><script>var __ezHttpConsent={setByCat:function(src,tagType,attributes,category,force,customSetScriptFn=null){var setScript=function(){if(force||window.ezTcfConsent[category]){if(typeof customSetScriptFn==='function'){customSetScriptFn();}else{var scriptElement=document.createElement(tagType);scriptElement.src=src;attributes.forEach(function(attr){for(var key in attr){if(attr.hasOwnProperty(key)){scriptElement.setAttribute(key,attr[key]);}}});var firstScript=document.getElementsByTagName(tagType)[0];firstScript.parentNode.insertBefore(scriptElement,firstScript);}}};if(force||(window.ezTcfConsent&&window.ezTcfConsent.loaded)){setScript();}else if(typeof getEzConsentData==="function"){getEzConsentData().then(function(ezTcfConsent){if(ezTcfConsent&&ezTcfConsent.loaded){setScript();}else{console.error("cannot get ez consent data");force=true;setScript();}});}else{force=true;setScript();console.error("getEzConsentData is not a function");}},};</script>
+<script>var ezTcfConsent=window.ezTcfConsent?window.ezTcfConsent:{loaded:false,store_info:false,develop_and_improve_services:false,measure_ad_performance:false,measure_content_performance:false,select_basic_ads:false,create_ad_profile:false,select_personalized_ads:false,create_content_profile:false,select_personalized_content:false,understand_audiences:false,use_limited_data_to_select_content:false,};function getEzConsentData(){return new Promise(function(resolve){document.addEventListener("ezConsentEvent",function(event){var ezTcfConsent=event.detail.ezTcfConsent;resolve(ezTcfConsent);});});}</script>
+<script>if(typeof _setEzCookies!=='function'){function _setEzCookies(ezConsentData){var cookies=window.ezCookieQueue;for(var i=0;i<cookies.length;i++){var cookie=cookies[i];if(ezConsentData&&ezConsentData.loaded&&ezConsentData[cookie.tcfCategory]){document.cookie=cookie.name+"="+cookie.value;}}}}
+window.ezCookieQueue=window.ezCookieQueue||[];if(typeof addEzCookies!=='function'){function addEzCookies(arr){window.ezCookieQueue=[...window.ezCookieQueue,...arr];}}
+addEzCookies([{name:"ezopvc_173770",value:"1; Path=/; Domain=plantuml.com; Expires=Fri, 16 Jan 2026 00:04:31 UTC",tcfCategory:"understand_audiences",isEzoic:"true",},{name:"ezoab_173770",value:"mod275-c; Path=/; Domain=plantuml.com; Max-Age=7200",tcfCategory:"store_info",isEzoic:"true",},{name:"active_template::173770",value:"pub_site.1768566623; Path=/; Domain=plantuml.com; Expires=Sun, 18 Jan 2026 12:30:23 UTC",tcfCategory:"store_info",isEzoic:"true",},{name:"ezoadgid_173770",value:"-1; Path=/; Domain=plantuml.com; Max-Age=1800",tcfCategory:"understand_audiences",isEzoic:"true",},{name:"ezosuibasgeneris-1",value:"63ebf52e-3c5e-4b08-6f92-a0f2a3d0c2b6; Path=/; Domain=plantuml.com; Expires=Sat, 16 Jan 2027 12:30:23 UTC; Secure; SameSite=None",tcfCategory:"understand_audiences",isEzoic:"true",}]);if(window.ezTcfConsent&&window.ezTcfConsent.loaded){_setEzCookies(window.ezTcfConsent);}else if(typeof getEzConsentData==="function"){getEzConsentData().then(function(ezTcfConsent){if(ezTcfConsent&&ezTcfConsent.loaded){_setEzCookies(window.ezTcfConsent);}else{console.error("cannot get ez consent data");_setEzCookies(window.ezTcfConsent);}});}else{console.error("getEzConsentData is not a function");_setEzCookies(window.ezTcfConsent);}</script><script type="text/javascript" data-ezscrex='false' data-cfasync='false'>window._ezaq = Object.assign({"edge_cache_status":34,"edge_response_time":4,"url":"https://plantuml.com/fr/stdlib"}, typeof window._ezaq !== "undefined" ? window._ezaq : {});</script><script type="text/javascript" data-ezscrex='false' data-cfasync='false'>window._ezaq = Object.assign({"ezcache_level":2}, typeof window._ezaq !== "undefined" ? window._ezaq : {});</script><script type="text/javascript" data-ezscrex='false' data-cfasync='false'>window._ezaq = Object.assign({"ab_test_id":"mod275-c"}, typeof window._ezaq !== "undefined" ? window._ezaq : {});window.__ez=window.__ez||{};window.__ez.tf={};</script><script data-ezscrex='false' data-cfasync='false' data-pagespeed-no-defer>var __ez=__ez||{};__ez.stms=Date.now();__ez.evt={};__ez.script={};__ez.ck=__ez.ck||{};__ez.template={};__ez.template.isOrig=false;window.__ezScriptHost="//www.ezojs.com";__ez.queue=__ez.queue||function(){var e=0,i=0,t=[],n=!1,o=[],r=[],s=!0,a=function(e,i,n,o,r,s,a){var l=arguments.length>7&&void 0!==arguments[7]?arguments[7]:window,d=this;this.name=e,this.funcName=i,this.parameters=null===n?null:w(n)?n:[n],this.isBlock=o,this.blockedBy=r,this.deleteWhenComplete=s,this.isError=!1,this.isComplete=!1,this.isInitialized=!1,this.proceedIfError=a,this.fWindow=l,this.isTimeDelay=!1,this.process=function(){f("... func = "+e),d.isInitialized=!0,d.isComplete=!0,f("... func.apply: "+e);var i=d.funcName.split("."),n=null,o=this.fWindow||window;i.length>3||(n=3===i.length?o[i[0]][i[1]][i[2]]:2===i.length?o[i[0]][i[1]]:o[d.funcName]),null!=n&&n.apply(null,this.parameters),!0===d.deleteWhenComplete&&delete t[e],!0===d.isBlock&&(f("----- F'D: "+d.name),m())}},l=function(e,i,t,n,o,r,s){var a=arguments.length>7&&void 0!==arguments[7]?arguments[7]:window,l=this;this.name=e,this.path=i,this.async=o,this.defer=r,this.isBlock=t,this.blockedBy=n,this.isInitialized=!1,this.isError=!1,this.isComplete=!1,this.proceedIfError=s,this.fWindow=a,this.isTimeDelay=!1,this.isPath=function(e){return"/"===e[0]&&"/"!==e[1]},this.getSrc=function(e){return void 0!==window.__ezScriptHost&&this.isPath(e)&&"banger.js"!==this.name?window.__ezScriptHost+e:e},this.process=function(){l.isInitialized=!0,f("... file = "+e);var i=this.fWindow?this.fWindow.document:document,t=i.createElement("script");t.src=this.getSrc(this.path),!0===o?t.async=!0:!0===r&&(t.defer=!0),t.onerror=function(){var e={url:window.location.href,name:l.name,path:l.path,user_agent:window.navigator.userAgent};"undefined"!=typeof _ezaq&&(e.pageview_id=_ezaq.page_view_id);var i=encodeURIComponent(JSON.stringify(e)),t=new XMLHttpRequest;t.open("GET","//g.ezoic.net/ezqlog?d="+i,!0),t.send(),f("----- ERR'D: "+l.name),l.isError=!0,!0===l.isBlock&&m()},t.onreadystatechange=t.onload=function(){var e=t.readyState;f("----- F'D: "+l.name),e&&!/loaded|complete/.test(e)||(l.isComplete=!0,!0===l.isBlock&&m())},i.getElementsByTagName("head")[0].appendChild(t)}},d=function(e,i){this.name=e,this.path="",this.async=!1,this.defer=!1,this.isBlock=!1,this.blockedBy=[],this.isInitialized=!0,this.isError=!1,this.isComplete=i,this.proceedIfError=!1,this.isTimeDelay=!1,this.process=function(){}};function c(e,i,n,s,a,d,c,u,f){var m=new l(e,i,n,s,a,d,c,f);!0===u?o[e]=m:r[e]=m,t[e]=m,h(m)}function h(e){!0!==u(e)&&0!=s&&e.process()}function u(e){if(!0===e.isTimeDelay&&!1===n)return f(e.name+" blocked = TIME DELAY!"),!0;if(w(e.blockedBy))for(var i=0;i<e.blockedBy.length;i++){var o=e.blockedBy[i];if(!1===t.hasOwnProperty(o))return f(e.name+" blocked = "+o),!0;if(!0===e.proceedIfError&&!0===t[o].isError)return!1;if(!1===t[o].isComplete)return f(e.name+" blocked = "+o),!0}return!1}function f(e){var i=window.location.href,t=new RegExp("[?&]ezq=([^&#]*)","i").exec(i);"1"===(t?t[1]:null)&&console.debug(e)}function m(){++e>200||(f("let's go"),p(o),p(r))}function p(e){for(var i in e)if(!1!==e.hasOwnProperty(i)){var t=e[i];!0===t.isComplete||u(t)||!0===t.isInitialized||!0===t.isError?!0===t.isError?f(t.name+": error"):!0===t.isComplete?f(t.name+": complete already"):!0===t.isInitialized&&f(t.name+": initialized already"):t.process()}}function w(e){return"[object Array]"==Object.prototype.toString.call(e)}return window.addEventListener("load",(function(){setTimeout((function(){n=!0,f("TDELAY -----"),m()}),5e3)}),!1),{addFile:c,addFileOnce:function(e,i,n,o,r,s,a,l,d){t[e]||c(e,i,n,o,r,s,a,l,d)},addDelayFile:function(e,i){var n=new l(e,i,!1,[],!1,!1,!0);n.isTimeDelay=!0,f(e+" ...  FILE! TDELAY"),r[e]=n,t[e]=n,h(n)},addFunc:function(e,n,s,l,d,c,u,f,m,p){!0===c&&(e=e+"_"+i++);var w=new a(e,n,s,l,d,u,f,p);!0===m?o[e]=w:r[e]=w,t[e]=w,h(w)},addDelayFunc:function(e,i,n){var o=new a(e,i,n,!1,[],!0,!0);o.isTimeDelay=!0,f(e+" ...  FUNCTION! TDELAY"),r[e]=o,t[e]=o,h(o)},items:t,processAll:m,setallowLoad:function(e){s=e},markLoaded:function(e){if(e&&0!==e.length){if(e in t){var i=t[e];!0===i.isComplete?f(i.name+" "+e+": error loaded duplicate"):(i.isComplete=!0,i.isInitialized=!0)}else t[e]=new d(e,!0);f("markLoaded dummyfile: "+t[e].name)}},logWhatsBlocked:function(){for(var e in t)!1!==t.hasOwnProperty(e)&&u(t[e])}}}();__ez.evt.add=function(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n()},__ez.evt.remove=function(e,t,n){e.removeEventListener?e.removeEventListener(t,n,!1):e.detachEvent?e.detachEvent("on"+t,n):delete e["on"+t]};__ez.script.add=function(e){var t=document.createElement("script");t.src=e,t.async=!0,t.type="text/javascript",document.getElementsByTagName("head")[0].appendChild(t)};__ez.dot=__ez.dot||{};__ez.queue.addFileOnce('/detroitchicago/boise.js', '/detroitchicago/boise.js?gcb=195-5&cb=5', true, [], true, false, true, false);__ez.queue.addFileOnce('/parsonsmaize/abilene.js', '/parsonsmaize/abilene.js?gcb=195-5&cb=b20dfef28c', true, [], true, false, true, false);__ez.queue.addFileOnce('/parsonsmaize/mulvane.js', '/parsonsmaize/mulvane.js?gcb=195-5&cb=e75e48eec0', true, ['/parsonsmaize/abilene.js'], true, false, true, false);__ez.queue.addFileOnce('/detroitchicago/birmingham.js', '/detroitchicago/birmingham.js?gcb=195-5&cb=539c47377c', true, ['/parsonsmaize/abilene.js'], true, false, true, false);</script>
+<script data-ezscrex="false" type="text/javascript" data-cfasync="false">window._ezaq = Object.assign({"ad_cache_level":1,"adpicker_placement_cnt":0,"ai_placeholder_cache_level":1,"ai_placeholder_placement_cnt":-1,"domain":"plantuml.com","domain_id":173770,"ezcache_level":2,"ezcache_skip_code":0,"has_bad_image":0,"has_bad_words":0,"is_sitespeed":0,"lt_cache_level":0,"response_size":121441,"response_size_orig":112696,"response_time_orig":3,"template_id":134,"url":"https://plantuml.com/fr/stdlib","word_count":3455,"worst_bad_word_level":0}, typeof window._ezaq !== "undefined" ? window._ezaq : {});__ez.queue.markLoaded('ezaqBaseReady');</script>
+<link rel='preload' as='script' href='//securepubads.g.doubleclick.net/tag/js/gpt.js'>
+<link rel='preload' as='script' href='//go.ezodn.com/hb/dall.js?cb=195-5-142'>
+<script type="text/javascript">(function(){function storageAvailable(type){var storage;try{storage=window[type];var x='__storage_test__';storage.setItem(x,x);storage.removeItem(x);return true;}
+catch(e){return e instanceof DOMException&&(e.code===22||e.code===1014||e.name==='QuotaExceededError'||e.name==='NS_ERROR_DOM_QUOTA_REACHED')&&(storage&&storage.length!==0);}}
+function remove_ama_config(){if(storageAvailable('localStorage')){localStorage.removeItem("google_ama_config");}}
+remove_ama_config()})()</script>
+<script type="text/javascript">var ezoicTestActive = true</script>
+<script type='text/javascript' data-ezscrex='false' data-cfasync='false'>
+window.ezAnalyticsStatic = true;
+
+function analyticsAddScript(script) {
+	var ezDynamic = document.createElement('script');
+	ezDynamic.type = 'text/javascript';
+	ezDynamic.innerHTML = script;
+	document.head.appendChild(ezDynamic);
+}
+function getCookiesWithPrefix() {
+    var allCookies = document.cookie.split(';');
+    var cookiesWithPrefix = {};
+
+    for (var i = 0; i < allCookies.length; i++) {
+        var cookie = allCookies[i].trim();
+
+        for (var j = 0; j < arguments.length; j++) {
+            var prefix = arguments[j];
+            if (cookie.indexOf(prefix) === 0) {
+                var cookieParts = cookie.split('=');
+                var cookieName = cookieParts[0];
+                var cookieValue = cookieParts.slice(1).join('=');
+                cookiesWithPrefix[cookieName] = decodeURIComponent(cookieValue);
+                break; // Once matched, no need to check other prefixes
+            }
+        }
+    }
+
+    return cookiesWithPrefix;
+}
+function productAnalytics() {
+	var d = {"pr":[6,3,1],"aop":{"14":0,"26":0,"4":134,"7":0},"omd5":"e16149c97868530383cffffda8ee9585"};
+	d.u = _ezaq.url;
+	d.p = _ezaq.page_view_id;
+	d.v = _ezaq.visit_uuid;
+	d.ab = _ezaq.ab_test_id;
+	d.e = JSON.stringify(_ezaq);
+	d.ref = document.referrer;
+	d.c = getCookiesWithPrefix('active_template', 'ez', 'lp_');
+	if(typeof ez_utmParams !== 'undefined') {
+		d.utm = ez_utmParams;
+	}
+
+	var dataText = JSON.stringify(d);
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST','/ezais/analytics?cb=1', true);
+	xhr.onload = function () {
+		if (xhr.status!=200) {
+            return;
+		}
+
+        if(document.readyState !== 'loading') {
+            analyticsAddScript(xhr.response);
+            return;
+        }
+
+        var eventFunc = function() {
+            if(document.readyState === 'loading') {
+                return;
+            }
+            document.removeEventListener('readystatechange', eventFunc, false);
+            analyticsAddScript(xhr.response);
+        };
+
+        document.addEventListener('readystatechange', eventFunc, false);
+	};
+	xhr.setRequestHeader('Content-Type','text/plain');
+	xhr.send(dataText);
+}
+__ez.queue.addFunc("productAnalytics", "productAnalytics", null, true, ['ezaqBaseReady'], false, false, false, true);
+</script><script type="text/javascript" data-ezscrex="false" data-cfasync="false" async="">
+function productEzoicAds() {
+if(window.ezDisableAds === true) {
+	return;
+}
+window.google_reactive_ads_global_state = {
+                adCount: {},
+                floatingAdsStacking: { maxZIndexListeners: [], maxZIndexRestrictions: {}, nextRestrictionId: 0 },
+                messageValidationEnabled: false,
+                reactiveTypeDisabledByPublisher: {},
+                reactiveTypeEnabledInAsfe: {},
+                sideRailAvailableSpace: [],
+                sideRailOverlappableElements: [],
+                stateForType: {},
+                tagSpecificState: {},
+                wasPlaTagProcessed: true,
+                wasReactiveAdConfigReceived: { 1: true, 2: true, 8: true },
+                wasReactiveAdVisible: {},
+                wasReactiveTagRequestSent: true,
+                description: "Can't disable auto ads programmatically on the page, so here we are!"
+            };
+var d = {"ab":"","km":{},"pv":"","vu":"9cf3ce14-2012-464a-4162-ded900daebdf","r":{"r":[{"p":" ezoic_pub_ad_placeholder-655-sidebar-250x250-655-nonexxxnonexxxxxxezmaxscaleval100 ","s":655},{"p":" ezoic_pub_ad_placeholder-655-sidebar-300x250-655-nonexxxnonexxxxxxezmaxscaleval100 ","s":655},{"p":" ezoic_pub_ad_placeholder-655-sidebar-336x280-655-nonexxxnonexxxxxxezmaxscaleval100 ","s":655},{"p":" ezoic_pub_ad_placeholder-662-sidebar_bottom-160x600-662-nonexxxnonexxxxxxezmaxscaleval100 ","s":662,"h":600,"w":160,"r":true},{"p":" ezoic_pub_ad_placeholder-647-under_page_title-728x90-647-nonexxxnonexxxxxxezmaxscaleval100 ","s":647,"h":90,"w":728,"r":true},{"p":" ezoic_pub_ad_placeholder-672-sidebar_middle-250x250-672-nonexxxnonexxxxxxezmaxscaleval100 ","s":672},{"p":" ezoic_pub_ad_placeholder-672-sidebar_middle-300x250-672-nonexxxnonexxxxxxezmaxscaleval100 ","s":672},{"p":" ezoic_pub_ad_placeholder-672-sidebar_middle-336x280-672-nonexxxnonexxxxxxezmaxscaleval100 ","s":672},{"p":" ezoic_pub_ad_placeholder-673-sidebar_middle-250x250-673-nonexxxnonexxxxxxezmaxscaleval100 ","s":673},{"p":" ezoic_pub_ad_placeholder-673-sidebar_middle-300x250-673-nonexxxnonexxxxxxezmaxscaleval100 ","s":673},{"p":" ezoic_pub_ad_placeholder-673-sidebar_middle-336x280-673-nonexxxnonexxxxxxezmaxscaleval100 ","s":673},{"p":" ezoic_pub_ad_placeholder-100-bottom_floating-728x90-100-nonexxxnonexxxxxxezmaxscaleval100 ","s":100,"h":90,"w":970,"r":true}],"a":{"100":true,"12":true,"6":true,"647":true,"655":true,"661":true,"662":true,"672":true,"673":true},"g":-1,"l":{"0":2,"1":3,"2":2,"3":1,"4":-1,"5":-1},"m":{"0":2,"1":3,"2":2,"3":1,"4":-1,"5":-1},"v":0,"ve":false,"hr":false,"sa":false},"cr":"","tid":134,"tn":"pub_site","url":"","wc":3455,"ff":1,"dhh":""};
+d.ab = _ezaq.ab_test_id;
+d.pv = _ezaq.page_view_id;
+d.vu = _ezaq.visit_uuid;
+d.url = window.location.href;
+var dynamicAddScript = function(script) {
+	if(window.ezFinishedStatic === true) {
+		console.error("attempted to load dynamic script again");
+		return;
+	}
+	var errorMessages = [];
+	function errorHandler(event) {
+	  var errorObj = event.error;
+	  if (errorObj && errorObj.stack && errorObj.stack.indexOf('dynamicAddScript') !== -1) {
+		var errorMessage = {
+		  Message: event.message,
+		  LineNo: event.lineno,
+		  ColumnNo: event.colno,
+		  Stack: errorObj.stack
+		};
+		errorMessages.push(errorMessage);
+	  }
+
+	  if (typeof window.onerror === 'function') {
+		window.onerror.apply(this, arguments);
+	  }
+	}
+ 	window.addEventListener('error', errorHandler);
+
+	var ezDynamic = document.createElement('script');
+	ezDynamic.type = 'text/javascript';
+	ezDynamic.innerHTML = script;
+	document.head.appendChild(ezDynamic);
+
+	window.removeEventListener('error', errorHandler);
+	if (window.ezFinishedStatic !== true || typeof window.ezstaticerrors !== 'undefined') {
+		d.Script = script;
+		d.ErrorMessages = JSON.stringify(errorMessages);
+		d.ErrorStaticMessages = window.ezstaticerrors || '';
+		var dataTxt = JSON.stringify(d);
+		if (dataTxt.length > 0) {
+			var logXHR = new XMLHttpRequest();
+			logXHR.open('POST','/ezais/log?cb=1', true);
+			logXHR.setRequestHeader('Content-Type','application/json');
+			logXHR.send(dataTxt);
+		}
+	}
+};
+var dataText = JSON.stringify(d);
+if (dataText.length > 0) {
+	var startTime = Date.now() - __ez.stms;
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST','/ezais/dynamic?cb=1', true);
+	xhr.onload = function () {
+		if (xhr.status!=200) {
+            return;
+		}
+
+        if(document.readyState !== 'loading') {
+            dynamicAddScript(xhr.response);
+            return;
+        }
+
+        var eventFunc = function() {
+            if(document.readyState === 'loading') {
+                return;
+            }
+            document.removeEventListener('readystatechange', eventFunc, false);
+            dynamicAddScript(xhr.response);
+        };
+
+        document.addEventListener('readystatechange', eventFunc, false);
+	};
+	xhr.setRequestHeader('Content-Type','text/plain');
+	xhr.send(dataText);
+}
+}
+
+function callDynamicAfterConsent() {
+	if (window.__tcfapi) {
+		window.__tcfapi("addEventListener", 2, function (tcdata, success) {
+			if (success) {
+				if(tcdata.gdprApplies == true) {
+					if(tcdata.eventStatus === "useractioncomplete" || tcdata.eventStatus === "tcloaded") {
+						__ez.queue.addFunc("productEzoicAds", "productEzoicAds", null, true, ['ezaqReady'], false, false, false, true);
+					}
+				} else {
+					__ez.queue.addFunc("productEzoicAds", "productEzoicAds", null, true, ['ezaqReady'], false, false, false, true);
+				}
+			}
+		});
+	} else {
+		__ez.queue.addFunc("productEzoicAds", "productEzoicAds", null, true, ['ezaqReady'], false, false, false, true);
+	}
+}
+
+
+if (window.__tcfapi) {
+	callDynamicAfterConsent();
+} else {
+	if (typeof window.ezCMPQueue !== "undefined") {
+		window.ezCMPQueue.push(callDynamicAfterConsent);
+	} else {
+		__ez.queue.addFunc("productEzoicAds", "productEzoicAds", null, true, ['ezaqReady'], false, false, false, true);
+	}
+}
+</script><base href="https://plantuml.com/fr/stdlib"/>
+<meta name="flattr:id" content="1ew3x0"/>
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "url": "https://plantuml.com",
+  "name": "PlantUML",
+  "sameAs" : ["https://twitter.com/plantuml","https://en.wikipedia.org/wiki/PlantUML","https://www.wikidata.org/wiki/Q18346546"],
+  "logo": "https://cdn-0.plantuml.com/logo3.png",
+  "contactPoint": [{
+    "@type": "ContactPoint",
+    "email": "plantuml@gmail.com",
+    "url": "https://plantuml.com",
+    "contactType": "customer service"
+  }]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "item": {
+      "@id": "https://plantuml.com",
+      "name": "Home"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "item": {
+      "@id": "https://plantuml.com/sitemap-language-specification",
+      "name": "Language specification"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "item": {
+      "@id": "https://plantuml.com/stdlib",
+      "name": "Standard Library"
+  }
+  }]
+}
+</script>
+<link rel="canonical" href="https://plantuml.com/fr/stdlib"/>
+<link rel="alternate" hreflang="x-default" href="https://plantuml.com/stdlib"/>
+<link rel="alternate" hreflang="de" href="https://plantuml.com/de/stdlib"/>
+<link rel="alternate" hreflang="en" href="https://plantuml.com/stdlib"/>
+<link rel="alternate" hreflang="es" href="https://plantuml.com/es/stdlib"/>
+<link rel="alternate" hreflang="fr" href="https://plantuml.com/fr/stdlib"/>
+<link rel="alternate" hreflang="ja" href="https://plantuml.com/ja/stdlib"/>
+<link rel="alternate" hreflang="ko" href="https://plantuml.com/ko/stdlib"/>
+<link rel="alternate" hreflang="zh" href="https://plantuml.com/zh/stdlib"/>
+
+<link rel="shortcut icon" href="/favicon.ico"/>
+
+<link rel="preload" as="image" href="/svgrepo-house.svg"/>
+<link rel="preload" as="image" href="/svgrepo-text-news.svg"/>
+<link rel="preload" as="image" href="/svgrepo-rocket-3-start.svg"/>
+<link rel="preload" as="image" href="/svgrepo-server.svg"/>
+<link rel="preload" as="image" href="/svgrepo-play.svg"/>
+<link rel="preload" as="image" href="/svgrepo-forum.svg"/>
+<link rel="preload" as="image" href="/svgrepo-add-to-online-cart.svg"/>
+<link rel="preload" as="image" href="/svgrepo-forum-message.svg"/>
+<link rel="preload" as="image" href="/svgrepo-palette-fill.svg"/>
+<link rel="preload" as="image" href="/svgrepo-cpu.svg"/>
+<link rel="preload" as="image" href="/svgrepo-books-library.svg"/>
+<link rel="preload" as="image" href="/svgrepo-signpost-fill.svg"/>
+<link rel="preload" as="image" href="/svgrepo-library.svg"/>
+
+<link rel="preload" as="image" href="/flags22.png"/>
+
+<link rel="preload" as="image" href="/svgrepo-uxwing-light-mode-toggle.svg"/>
+
+
+<!-- link rel="preload" as="image" href="https://img.shields.io/liberapay/patrons/plantuml.svg?logo=liberapay" -->
+
+
+<title>BibliothÃ¨que Standard de PlantUML</title>
+<meta name="description" content="La BibliothÃ¨que Standard permet l&#39;utilisation d&#39;icÃ´nes, de sprites et de couleurs proposÃ©es par des contributeurs tiers.Vous pouvez ainsi disposer d&#39;images standard pour vos propres diagrammes."/>
+
+<meta property="og:type" content="article"/>
+<!-- volt:dokuwiki titleog: -->
+<!-- volt:dokuwiki descriptionog: -->
+
+<meta property="og:url" content="https://plantuml.com/fr/stdlib"/>
+<meta property="og:site_name" content="PlantUML.com"/>
+
+<!-- meta property="og:image" content="https://plantuml.com/og-stdlib" -->
+<meta name="twitter:image" content="https://plantuml.com/og-stdlib"/>
+<meta property="og:locale" content="fr"/>
+
+<meta name="twitter:card" content="summary"/>
+<!-- volt:dokuwiki titletwitter: -->
+<!-- volt:dokuwiki descriptiontwitter: -->
+<meta name="twitter:site" content="@PlantUML"/>
+<meta name="twitter:creator" content="@PlantUML"/>
+
+
+
+
+
+
+
+<!-- https://www.w3schools.com/colors/colors_picker.asp -->
+<!-- filter css https://codepen.io/sosuke/pen/Pjoqqp -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+.scale {
+}
+
+li {
+	margin: 2px;
+}
+#external li {
+	margin: 13px;
+}
+
+
+.pezoic {
+margin:0;
+padding:0;
+max-width: calc(100vw - 420px);
+overflow-x: hidden;
+}
+@media screen and (max-width: 1190px) {
+.pezoic {
+max-width: calc(100vw - 250px);
+}
+}
+
+
+.coptable {
+	max-width: 90%;
+}
+
+.mytab {
+	display:inline-block;
+	border-radius: 3px;
+	border: 1px solid #e1e4e8;
+}
+
+.mytab:hover {
+	border: 1px dashed #0366d6;
+	cursor: pointer;
+	color: #0366d6;
+	background: #f6f8fa;
+}
+
+.cop {
+	margin: 25px 10px 0 10px;
+}
+.cop:hover {
+	cursor: pointer; 
+	filter: invert(30%) sepia(75%) saturate(4001%) hue-rotate(201deg) brightness(88%) contrast(98%);
+}
+.cop2 {
+	margin: 25px 10px 0 10px;
+}
+.cop2:hover {
+	cursor: pointer; 
+}
+.msg {
+	position: absolute;
+	color:#339966;
+	background-color: #FFF;
+	margin-top: 55px;
+	display:none;
+	border-radius: 3px;
+	border: 1px solid #4dff00;
+}
+
+.mycell0 {
+	float: left;
+	vertical-align : top;
+	padding:10px;
+}
+.mycell0 code:hover {
+	cursor: default; 
+	color: #000;
+}
+
+.mycell {
+	float: right;
+	vertical-align : top;
+	padding:10px;
+	max-width: 55vw;
+	overflow-x: auto;
+}
+
+.mycell0 pre {
+	max-width: 55vw;
+	overflow-x: auto;
+}
+
+.cod {
+	background: #edeff3;
+	padding: 2px 5px;
+	border-radius: 3px;
+}
+.colo {
+	display: inline-block;
+	background: #edeff3;
+	padding: 7px 12px;
+	border-radius: 3px;
+}
+.tag,.tagg,.tago,.tagr {
+	text-rendering: optimizeLegibility;
+	display: inline-block;
+	padding: 3px 5px 2px 4px;
+	text-decoration: none;
+	white-space: nowrap;
+	border: 1px solid #999;
+	text-transform: uppercase;
+	text-align: center;
+	border-radius: 3px;
+	font-size: 11px;
+	font-weight: bold;
+	line-height: 90%;
+}
+.tag {
+	background-color: #EEEEEE;
+}
+.tagg {
+	background-color: #98FB98;
+}
+.tago {
+	background-color: #fafa00;
+}
+.tagr {
+	background-color: #FF4500;
+}
+
+
+a {
+    text-decoration:none;
+    color:#0366d6;
+}
+a:hover {
+    text-decoration:underline;
+}
+
+.menu1 {
+    display: flex;
+    flex-direction: row;
+    border: 0;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+	white-space: nowrap;
+}
+.menu1 a {
+	white-space: nowrap;
+    padding: 0 8px;
+    text-decoration: none;
+    color:#5e6d7d;
+    line-height: 30px;
+    height: 30px;
+}
+.menu1 a:hover{
+    background: #fefefe;
+    color:#0366d6;
+}
+
+.menuside2 {
+    display: flex;
+    flex-direction: column;
+    border: 0;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+	justify-content: center;
+}
+
+.menuside2 img {
+vertical-align: top;
+padding: 0 8px;
+filter: brightness(0) saturate(100%) invert(42%) sepia(22%) saturate(385%) hue-rotate(170deg) brightness(92%) contrast(84%);
+}
+
+.menuside2 a {
+    padding: 6px 0;
+    text-decoration: none;
+    color:#5e6d7d;
+}
+
+.menuside2 a:hover {
+	color:#0366d6;
+	background: #fefefe;
+}
+
+.menuside2 a:hover img {
+filter: brightness(0) saturate(100%) invert(23%) sepia(44%) saturate(7029%) hue-rotate(203deg) brightness(94%) contrast(98%);
+}
+
+
+#BC {
+    z-index: 0;
+    padding-top: 5px;
+    top: 35px;
+}
+
+.breadcrumb {
+    z-index:1;
+	font-size:14px;
+	text-align: center;
+	display: inline-block;
+	overflow: hidden;
+	border-radius: 5px;
+}
+
+
+.breadcrumb a {
+	text-decoration: none;
+	outline: none;
+	display: block;
+	float: left;
+	font-size: 12px;
+	line-height: 24px;
+	color: #373f49;
+	padding: 0 10px 0 35px;
+	background: #f0f1f1;
+	background: linear-gradient(#f0f1f1, #c6d2d2);
+	position: relative;
+}
+.breadcrumb a:first-child {
+	padding-left: 21px;
+	border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
+}
+.breadcrumb a:first-child:before {
+	left: 14px;
+}
+.breadcrumb a:last-child {
+	visibility: hidden;
+}
+
+.breadcrumb a.active, .breadcrumb a:hover{
+	color: #0366d6;
+	background: #c6d2d2;
+	background: linear-gradient(#e3e4e4, #b8c7c7);
+}
+.breadcrumb a.active:after, .breadcrumb a:hover:after {
+	background: #c6d2d2;
+	background: linear-gradient(135deg, #e3e4e4, #b8c7c7);
+}
+
+.breadcrumb a:after {
+	content: '';
+	position: absolute;
+	top: 0; 
+	right: -12px; /*half of square's length*/
+	/*same dimension as the line-height of .breadcrumb a */
+	width: 24px; 
+	height: 24px;
+	transform: scale(0.707) rotate(45deg);
+	/*we need to prevent the arrows from getting buried under the next link*/
+	z-index: 1;
+	/*background same as links but the gradient will be rotated to compensate with the transform applied*/
+	background: #f0f1f1;
+	background: linear-gradient(135deg, #f0f1f1, #c6d2d2);
+	/*stylish arrow design using box shadow*/
+	box-shadow: 
+		2px -2px 0 2px rgba(0,0,0,0.1), 
+		3px -3px 0 2px rgba(255,255,255,0.1);
+	/*
+		5px - for rounded arrows and 
+		50px - to prevent hover glitches on the border created using shadows*/
+	border-radius: 0 5px 0 50px;
+}
+
+/*we dont need an arrow after the last link*/
+.breadcrumb a:last-child:after {
+	content: none;
+	visibility: hidden;
+}
+
+
+.lga,.lga a,.lgi,.lgi a {
+	font-size:13px;
+	text-align: center;
+    color: #fff;
+    padding: 0 5px;
+    margin: 0;
+}
+.lga,.lga a {
+    background-color: #008;
+}
+.lgi,.lgi a {
+    background-color: #888;
+}
+.lga:hover,.lga:hover a {
+    text-decoration: none;
+    color: #BBB;
+}
+.lgi:hover,.lgi:hover a {
+    text-decoration: none;
+    color: #CCC;
+}
+
+</style>
+
+<style>
+.backtop {
+	margin:0px 10px;
+}
+.backtop:hover {
+	cursor: pointer;
+	filter: invert(30%) sepia(75%) saturate(4001%) hue-rotate(201deg) brightness(88%) contrast(98%);
+}
+</style>
+
+
+
+
+<style>
+/* Dropdown Button */
+.dropbtn {
+  padding: 0px;
+  border: none;
+  background: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content img {
+vertical-align:middle;
+margin: 0 8px 0 1px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  font-size: small;
+  font-weight: normal;
+  color: black;
+  padding: 5px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+  color: #0366d6;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
+<style>
+
+.cde {
+	display: flex;
+	flex-direction: column;
+    justify-content:space-between;
+    height: 100%;
+}
+
+
+#header {
+    z-index: 10;
+    position: fixed;
+	left: 395px;
+	right: 0;
+    height: 30px;
+    top: 0;
+    background: #edeff3;
+    border-bottom: 1px solid #d4d8de;
+    
+}
+#header2 {
+    z-index: 7;
+    position: fixed;
+	left: 395px;
+	right: 0;
+    height: 10px;
+    top: 30px;
+    background: #fefefe;
+}
+
+
+#left0 {
+	top:0;
+    position: fixed;
+    left: 0;
+    margin:0 ;
+    bottom: 0;
+    width: 395px;
+    padding: 0;
+    z-index: 2;
+height: 100vh;
+overflow: hidden;
+border: 0;
+    /*background: #F7F;*/
+}
+
+
+#root {
+    padding:0;
+	margin: 40px 0 0 405px;
+    background: #fefefe;
+}
+
+
+body {
+	font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	margin: auto;
+	overflow-x: hidden;
+    background: #fefefe;
+}
+
+
+@media screen and (max-width: 1190px) {
+	#flex1, #left0 {
+		width: 215px;
+	}
+	#root {
+		margin: 40px 0 0 224px;
+	}
+	#header, #header2 {
+		left: 215px;
+	}
+	#left0 {
+		left: 0;
+	}
+}
+@media screen and (max-width: 1010px) {
+	#root {
+		margin: 0 0 0 216px;
+	}
+	#header, #header2 {
+		display: none;
+	}
+}
+
+
+</style>
+
+
+
+
+<script>window.pushMST_config={"vapidPK":"BBodn2vLFoDO5AdCfmOOzNmcUsn52kTA6JNZNYVFymzEdWHonz_bkUcsaTkPXHvNGRkRUSAxMbup-H0l2sb1h_Q","enableOverlay":true,"swPath":"/sw.js","i18n":{}};
+  var pushmasterTag = document.createElement('script');
+  pushmasterTag.src = "https://cdn.pushmaster-cdn.xyz/scripts/publishers/629f5e297baecc00098a271b/SDK.js";
+  pushmasterTag.setAttribute('defer','');
+
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(pushmasterTag, firstScriptTag);
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TKZNNQT9CZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TKZNNQT9CZ');
+</script>
+
+
+
+<script>
+var llg = "fr";
+var az=0;
+var amdark=0;
+function ljs(n) {
+	if (az) return false;
+    var sc = document.createElement("script");
+    sc.type = "text/javascript";
+    sc.src = "/btn-"+n+".js";
+	document.body.innerHTML = "<i style='position:absolute;top:30%;width:100%;'><center>Loading in progress...";
+    document.body.appendChild(sc);
+}
+function ctc(id) {
+document.getElementById('img'+id).classList.remove('cop'); document.getElementById('img'+id).classList.add('cop2');
+document.getElementById('pre'+id).style.backgroundColor = '#4dff00';
+document.getElementById('msg'+id).style.display = 'inline';
+
+setTimeout(function() { document.getElementById('img'+id).classList.remove('cop2'); document.getElementById('img'+id).classList.add('cop'); document.getElementById('pre'+id).style.backgroundColor = ''; document.getElementById('msg'+id).style.display = 'none';}, 800);      
+
+
+	text = document.getElementById('pre'+id).innerText;
+    if (window.clipboardData && window.clipboardData.setData)
+        return window.clipboardData.setData("Text", text);
+    else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+        var ta = document.createElement("textarea");
+        ta.textContent = text;
+        ta.style.position = "fixed";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+            return document.execCommand("copy");
+        }
+        catch (ex) {
+            return false;
+        }
+        finally {
+            document.body.removeChild(ta);
+        }
+    }
+}
+</script>
+
+
+
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
+<script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
+<script type='text/javascript'>
+var ezoTemplate = 'pub_site';
+var ezouid = '1';
+var ezoFormfactor = '1';
+</script><script data-ezscrex="false" type='text/javascript'>
+var soc_app_id = '0';
+var did = 173770;
+var ezdomain = 'plantuml.com';
+var ezoicSearchable = 1;
+</script>
+<script async data-ezscrex="false" data-cfasync="false" src="//www.humix.com/video.js"></script>
+<script>
+		window.__ezOneTapClientId = '626901221629-15ss1s412okbv1qg834f6e3h8chm6ubk.apps.googleusercontent.com';
+	</script></head>
+<body>
+  
+
+
+
+<div id="left0">
+
+
+<style>
+
+.dragon-container {
+    display: grid;
+    width: 395px;
+    grid-template-columns: 1fr minmax(180px, auto) 30px 1px;
+    grid-template-rows: 0fr 0fr auto;
+    height: 100vh;
+}
+
+
+
+
+.cell {
+    padding: 0;
+}
+
+.border-left {
+    border-left: 1px solid #d4d8de;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #d4d8de;
+}
+
+.border-column {
+    grid-column: 4;
+    grid-row: 1 / span 3;
+    background: linear-gradient(
+        to bottom,
+        #edeff3 0px,
+        #edeff3 30px,
+        #d4d8de 30px,
+        #d4d8de 100%
+    );
+}
+
+.dragon-background {
+    background: #edeff3;
+}
+
+.b2 {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) auto;
+    gap: 0;
+}
+
+.b2-ad {
+    align-self: center;
+    margin-bottom: 100px;
+}
+
+.a2-ad {
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 100px;
+}
+
+.dragon-b2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+/* par dÃ©faut : tout visible */
+.ezoic-wrap {
+    display: block;
+    overflow: hidden;
+}
+
+.ezoic-wrap-655 {
+    max-height: 300px;
+    overflow: hidden;
+}
+
+
+/* 1) petite hauteur : on supprime le 655 (gros bloc horizontal) */
+@media only screen and (max-height: 750px) {
+    .ezoic-wrap-655 {
+        display: none;
+    }
+}
+
+/* 2) largeur moyenne : on supprime les verticales (661/662) et le 655 */
+@media (max-width: 1190px) {
+	.dragon-container {
+	    width: 215px;
+	}
+    .ezoic-wrap-661 {
+        display: none;
+    }
+    .ezoic-wrap-662 {
+        display: none;
+    }
+	.ezoic-wrap-655 {
+		display: none;
+	}
+}
+
+
+</style>
+
+<div class="dragon-container">
+
+    <!-- ======================= -->
+    <!-- Ligne 0 -->
+    <!-- ======================= -->
+
+    <!-- A0 / B0 : cellule fusionnÃ©e -->
+    <div class="cell" style="grid-column: 1 / span 2; display: flex; align-items: center; justify-content: center;">
+
+        <!-- Ezoic - alpha-bloc-1 - sidebar -->
+        <div class="ezoic-wrap ezoic-wrap-655">
+            <span id="ezoic-pub-ad-placeholder-655"></span><span data-ez-ph-id="655"></span>
+        </div>
+        <!-- End Ezoic - alpha-bloc-1 - sidebar -->
+
+    </div>
+
+    <!-- C0 : marge gauche -->
+    <div class="cell border-left dragon-background"></div>
+
+    <!-- D0 : bordure verticale -->
+    <div class="cell border-column"></div>
+
+
+    <!-- ======================= -->
+    <!-- Ligne 1 -->
+    <!-- ======================= -->
+
+    <!-- A1 : cellule vide -->
+    <div class="cell"></div>
+
+    <!-- B1 : sÃ©paration horizontale -->
+    <div class="cell border-bottom"></div>
+
+    <!-- C1 : marge gauche -->
+    <div class="cell border-left dragon-background"></div>
+
+    <!-- D1 : (implicitement occupÃ©e par la bordure D0 via span) -->
+
+
+    <!-- ======================= -->
+    <!-- Ligne 2 -->
+    <!-- ======================= -->
+
+    <!-- A2 : publicitÃ© verticale gauche -->
+    <div class="cell a2-ad">
+
+        <!-- Ezoic - alpha-v-0 - sidebar -->
+        <div class="ezoic-wrap ezoic-wrap-661">
+            <span id="ezoic-pub-ad-placeholder-661"></span>
+        </div>
+        <!-- End Ezoic - alpha-v-0 - sidebar -->
+
+    </div>
+
+    <!-- B2 / C2 : contenu principal + menu + pub droite -->
+    <div class="cell border-left dragon-background b2" style="grid-column: 2 / span 2;">
+
+        <!-- B2 : menu -->
+        <div class="dragon-b2">
+
+<!--menu 10-->
+
+<!-- https://stackoverflow.com/questions/22252472/how-to-change-the-color-of-an-svg-element -->
+<!-- https://codepen.io/sosuke/pen/Pjoqqp -->
+
+
+<div class="menuside2">
+<a id="mitem10" href="index"><img src="/svgrepo-house.svg" width="16" height="16"/>Accueil</a>
+<a id="mitem20" href="news"><img src="/svgrepo-text-news.svg" width="16" height="16"/>NouveautÃ©s !</a>
+<a id="mitem30" href="starting"><img src="/svgrepo-rocket-3-start.svg" width="16" height="16"/>DÃ©marrage rapide</a>
+<a href="https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000"><img src="/svgrepo-server.svg" width="16" height="16"/>Online Server</a>
+<a id="mitem40" href="running"><img src="/svgrepo-play.svg" width="16" height="16"/>Utilisation</a>
+<a id="mitem50" href="faq"><img src="/svgrepo-forum.svg" width="16" height="16"/>Questions/RÃ©ponses</a>
+<a id="mitem60" href="download"><img src="/svgrepo-add-to-online-cart.svg" width="16" height="16"/>TÃ©lÃ©chargement</a>
+<a id="mitem70" href="https://forum.plantuml.net"><img src="/svgrepo-forum-message.svg" width="16" height="16"/>Forum</a>
+<a id="mitem80" href="https://the-lum.github.io/puml-themes-gallery/themes/index.html"><img src="/svgrepo-palette-fill.svg" width="16" height="16"/>Theme</a>
+<a id="mitem90" href="preprocessing"><img src="/svgrepo-cpu.svg" width="16" height="16"/>PrÃ©processeur</a>
+<a id="mitem100" href="stdlib"><img src="/svgrepo-books-library.svg" width="16" height="16"/>Librairie Standard</a>
+<a href="guide"><img src="/svgrepo-library.svg" width="16" height="16"/>Documentation PDF</a>
+<a href="https://crashedmind.github.io/PlantUMLHitchhikersGuide"><img src="/svgrepo-signpost-fill.svg" width="16" height="16"/>Hitchhiker&#39;s Guide</a>
+</div>
+
+        </div>
+
+        <!-- C2 : publicitÃ© verticale droite -->
+        <div class="b2-ad">
+
+            <!-- Ezoic - alpha-v-1 - sidebar -->
+            <div class="ezoic-wrap ezoic-wrap-662">
+                <span id="ezoic-pub-ad-placeholder-662"></span><span data-ez-ph-id="662" style="margin-top:0px !important;margin-bottom:0px !important;flex-direction:column !important;max-width:100% !important;padding-right:0px !important;padding-top:0px !important;padding-left:0px !important;align-items:center;min-width:160px;line-height:0px;margin-right:0px !important;min-height:600px;float:none !important;box-sizing:content-box;margin-left:0px !important;display:flex !important;padding-bottom:0px !important;"></span>
+            </div>
+            <!-- End Ezoic - alpha-v-1 - sidebar -->
+
+        </div>
+
+    </div>
+
+    <!-- D2 : (implicitement occupÃ©e par la bordure D0 via span) -->
+
+
+</div><!-- dragon-container -->
+
+
+</div><!-- left0 -->
+
+<style>
+#contmenu {
+display: flex;
+height: 30px;
+width: 100%;
+margin: 0;
+padding: 0;
+}
+
+#contmenua {
+height: 30px;
+padding-right: 25px;
+}
+
+#contmenub {
+z-index:15;
+display: inline-block;
+flex-grow:1;
+flex-shrink:1;
+height: 30px;
+background-color: #edeff3;
+}
+
+#magic {
+white-space: nowrap;
+overflow: hidden;
+z-index: 14;
+position: fixed;
+top: 0;
+right: 50px;
+height: 30px;
+width: 30px;
+}
+
+#magic2 {
+white-space: nowrap;
+overflow: hidden;
+z-index: 16;
+position: fixed;
+top: 0;
+right: 0;
+height: 30px;
+width: 50px;
+background-color: #edeff3;
+}
+#magic2 img {
+margin: 5px 0 0 5px;
+filter: brightness(0) saturate(100%) invert(42%) sepia(22%) saturate(385%) hue-rotate(170deg) brightness(92%) contrast(84%);
+xfilter: invert(44%) sepia(27%) saturate(310%) hue-rotate(170deg) brightness(92%) contrast(83%);
+}
+#magic2:hover img {
+filter: brightness(0) saturate(100%) invert(23%) sepia(44%) saturate(7029%) hue-rotate(203deg) brightness(94%) contrast(98%);
+xfilter: invert(25%) sepia(97%) saturate(2026%) hue-rotate(201deg) brightness(91%) contrast(98%);
+}
+
+
+#magic:hover #svgrepoleft {
+filter: brightness(0) saturate(100%) invert(23%) sepia(44%) saturate(7029%) hue-rotate(203deg) brightness(94%) contrast(98%);
+xfilter: invert(22%) sepia(53%) saturate(4563%) hue-rotate(202deg) brightness(95%) contrast(98%);
+}
+
+
+#magic:hover {
+width: 100%;
+height: 31px;
+}
+
+#aze {
+	height: 30px;
+	display:flex;
+	flex-direction: row-reverse;
+}
+#aze1 {
+	height: 30px;
+	background-color: #edeff3;
+}
+#aze2 {
+	height: 30px;
+	background-color: #edeff3;
+	padding-left: 10px;
+	border-left: 1px solid #d4d8de;
+	border-bottom: 1px solid #d4d8de;
+}
+#aze1 img {
+filter: brightness(0) saturate(100%) invert(42%) sepia(22%) saturate(385%) hue-rotate(170deg) brightness(92%) contrast(84%);
+	xfilter: invert(46%) sepia(6%) saturate(1254%) hue-rotate(171deg) brightness(94%) contrast(92%);
+}
+#aze3 {
+	width: 3px;
+	height: 30px;
+	background-color: #edeff3;
+}
+
+
+
+</style>
+
+<div id="header">
+<div id="contmenu">
+<div id="contmenua">
+<div class="menu1">
+<a id="titem10" href="sequence-diagram">SÃ©quence</a>
+<a id="titem20" href="use-case-diagram">Usecase</a>
+<a id="titem30" href="class-diagram">Classe</a>
+<a id="titem40" href="activity-diagram-beta">ActivitÃ©</a>
+<a id="titem50" href="component-diagram">Composant</a>
+<a id="titem60" href="state-diagram">Ãtat</a>
+<a id="titem70" href="object-diagram">Objet</a>
+<a id="titem80" href="deployment-diagram">DÃ©ploiement</a>
+<a id="titem90" href="timing-diagram">Temps</a>
+
+<a id="titem99" href="regex">Regex</a>
+<a id="titem100" href="nwdiag">Network</a>
+<a id="titem110" href="salt">Wireframe</a>
+<a id="titem120" href="archimate-diagram">Archimate</a>
+<a id="titem130" href="gantt-diagram">Gantt</a>
+<a id="titem131" href="chronology-diagram">Chronology</a>
+<a id="titem140" href="mindmap-diagram">MindMap</a>
+<a id="titem150" href="wbs-diagram">WBS</a>
+<a id="titem151" href="ebnf">EBNF</a>
+<a id="titem160" href="json">JSON</a>
+<a id="titem170" href="yaml">YAML</a>
+
+</div>
+</div>
+<div id="contmenub"></div>
+</div><!--contmenu-->
+<!-- https://developer.mozilla.org/fr/docs/Web/CSS/position -->
+<div id="magic">
+
+	<div id="aze">
+		<div id="aze1"><img id="svgrepoleft" width="30" height="30" src="/svgrepo-left.svg"/> </div><!-- aze1 -->
+		<div id="aze2">
+
+<div class="menu1">
+<a id="titem10" href="sequence-diagram">SÃ©quence</a>
+<a id="titem20" href="use-case-diagram">Usecase</a>
+<a id="titem30" href="class-diagram">Classe</a>
+<a id="titem40" href="activity-diagram-beta">ActivitÃ©</a>
+<a id="titem50" href="component-diagram">Composant</a>
+<a id="titem60" href="state-diagram">Ãtat</a>
+<a id="titem70" href="object-diagram">Objet</a>
+<a id="titem80" href="deployment-diagram">DÃ©ploiement</a>
+<a id="titem90" href="timing-diagram">Temps</a>
+
+<a id="titem99" href="regex">Regex</a>
+<a id="titem100" href="nwdiag">Network</a>
+<a id="titem110" href="salt">Wireframe</a>
+<a id="titem120" href="archimate-diagram">Archimate</a>
+<a id="titem130" href="gantt-diagram">Gantt</a>
+<a id="titem131" href="chronology-diagram">Chronology</a>
+<a id="titem140" href="mindmap-diagram">MindMap</a>
+<a id="titem150" href="wbs-diagram">WBS</a>
+<a id="titem151" href="ebnf">EBNF</a>
+<a id="titem160" href="json">JSON</a>
+<a id="titem170" href="yaml">YAML</a>
+
+</div>
+			
+
+		</div><!-- aze2 -->
+		<div id="aze3"></div><!-- aze3 https://codepen.io/sosuke/pen/Pjoqqp -->
+	</div><!-- aze -->
+
+
+</div><!--magic-->
+
+<div id="magic2">
+
+
+<a href="/fr-dark/stdlib">
+<img src="/svgrepo-uxwing-light-mode-toggle.svg" height="20"/>
+</a>
+
+</div><!--magic2-->
+
+</div><!-- header -->
+
+
+<div id="header2"></div>
+
+
+
+
+
+<div id="root">
+
+<!-- https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
+
+<style>
+
+#haut1 {
+	margin:50px 0 20px;
+	padding:0;
+	min-height:80px;
+}
+
+#donate {
+	padding-top: 5px;
+	min-height:30px;
+}
+
+</style>
+
+<div id="haut1">
+
+<!-- c --><div style="float:left;">	
+<!-- a simple div with some links -->
+<div class="breadcrumb">
+<a href="sitemap">PlantUML</a>
+<a href="sitemap-language-specification">Language specification</a>
+<a href="stdlib">Standard Library</a>
+<a href="#"></a>
+</div>
+
+
+<div id="donate">
+
+Â 
+
+<a href="https://github.com/sponsors/plantuml/" style="text-decoration: none;">
+<img src="https://img.shields.io/github/sponsors/plantuml?logo=github"/>
+</a>
+
+Â 
+
+<a href="https://www.patreon.com/bePatron?patAmt=1&amp;u=527450&amp;rid=152970" style="text-decoration: none;">
+<img src="https://img.shields.io/badge/patreon-122-chocolate?logo=patreon"/>
+</a>
+
+Â 
+
+<a href="https://liberapay.com/plantuml/donate" style="text-decoration: none;">
+<img src="https://img.shields.io/liberapay/patrons/plantuml?color=gold&amp;logo=liberapay&amp;label=liberapay"/>
+</a>
+
+Â 
+
+<a href="https://plantuml.com/en/paypal" style="text-decoration: none;">
+<img src="https://img.shields.io/badge/paypal-297-skyblue?logo=paypal&amp;logoColor=red"/>
+</a>
+
+<!--
+Â 
+
+<a href="https://github.com/sponsors/plantuml" style="text-decoration: none;">
+<img src="https://img.shields.io/github/sponsors/plantuml?label=github">
+</a>
+
+-->
+</div> <!-- donate -->
+</div><!-- c -->
+
+
+<!-- e --><div style="float:right; margin:3px 0;">
+
+<!-- https://github.com/joielechong/iso-country-flags-svg-collection -->
+
+<!-- https://www.flaticon.com/packs/international-flags -->
+<!-- https://flagicons.lipis.dev/?continent=Europe -->
+<!-- https://flagpedia.net/download/icons -->
+
+<!-- https://www.countryflags.io/ -->
+
+<style>
+#langlist {
+display: flex;
+justify-content: space-between;
+width: 317px;
+height: 16px;
+margin: 3px 10px 3px 0;
+}
+
+.sel2 {
+  border: 2px solid #fefefe;
+}
+.nosel2 {
+  border: 2px solid #fefefe;
+  filter: grayscale(100%) opacity(75%);
+}
+.sel2:hover, .nosel2:hover {
+  cursor: pointer;
+  border: 2px solid #0366d6;
+  border-spacing: 0;
+  filter: grayscale(0%);
+  filter: contrast(200%);
+  filter: brightness(150%);
+}
+#flag1,#flag2,#flag3,#flag4,#flag5,#flag6,#flag7,#flag8 {
+background: url(/flags22.png);
+background-repeat: no-repeat;
+background-clip: content-box;
+width: 22px;
+height: 16px;
+}
+#flag2 {
+background-position: -22px 0px;
+}
+#flag3 {
+background-position: -44px 0px;
+}
+#flag4 {
+background-position: -66px 0px;
+}
+#flag5 {
+background-position: -88px 0px;
+}
+#flag6 {
+background-position: -110px 0px;
+}
+#flag8 {
+background-position: -132px 0px;
+}
+</style>
+
+<div id="langlist">
+
+
+
+<div id="flag1" onclick="location.href=&#39;/en/stdlib&#39;" class="nosel2"></div>
+
+<div id="flag2" onclick="location.href=&#39;/de/stdlib&#39;" class="nosel2"></div>
+
+
+<div id="flag3" onclick="location.href=&#39;/es/stdlib&#39;" class="nosel2"></div>
+
+
+<div id="flag4" onclick="location.href=&#39;/fr/stdlib&#39;" class="sel2"></div>
+
+
+<div id="flag5" onclick="location.href=&#39;/ja/stdlib&#39;" class="nosel2"></div>
+
+
+<div id="flag6" onclick="location.href=&#39;/ko/stdlib&#39;" class="nosel2"></div>
+
+
+<div id="flag8" onclick="location.href=&#39;/zh/stdlib&#39;" class="nosel2"></div>
+
+
+
+
+
+</div><!-- langlist -->
+</div><!-- e -->
+
+</div><!-- haut1 -->
+
+
+<p>
+
+
+<style>
+#topsticky {
+	z-index:2;
+	margin: 0 240px 0 0;
+}
+
+@media screen and (min-height: 700px) {
+#topsticky {
+  position:sticky; top: 40px;
+}
+}
+
+@media screen and (max-width: 1500px) {
+#topsticky {
+	margin: 0;
+}
+}
+
+</style>
+
+</p><div id="topsticky">
+<!-- Ezoic - under page title -->
+<span id="ezoic-pub-ad-placeholder-647"></span><span data-ez-ph-id="647" style="line-height:0px;float:none !important;margin-top:0px !important;margin-bottom:0px !important;margin-left:auto !important;text-align:center !important;padding-bottom:0px !important;min-width:728px;min-height:90px;box-sizing:content-box;margin-right:auto !important;display:block !important;padding-top:0px !important;max-width:100% !important;"></span>
+<!-- End Ezoic - under page title -->
+</div>
+
+
+<p>
+
+
+<style>
+#mitem100 {
+ color:#0366d6;
+ background-color: #fefefe;
+}
+#mitem100 img {
+filter: brightness(0) saturate(100%) invert(23%) sepia(44%) saturate(7029%) hue-rotate(203deg) brightness(94%) contrast(98%);
+}
+.menuside2:hover #mitem100 {
+	color:#5e6d7d;
+}
+.menuside2:hover #mitem100:hover {
+	color:#0366d6;
+}
+.menuside2:hover #mitem100 img {
+filter: brightness(0) saturate(100%) invert(42%) sepia(22%) saturate(385%) hue-rotate(170deg) brightness(92%) contrast(84%);
+}
+.menuside2:hover #mitem100:hover img {
+filter: brightness(0) saturate(100%) invert(23%) sepia(44%) saturate(7029%) hue-rotate(203deg) brightness(94%) contrast(98%);
+}
+</style>
+
+<a style="position:relative;top:-38px;" name="eb1e0aecf8ae1741"></a>
+<style>
+
+.chap {
+clear:both;
+}
+
+
+.zeus-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+ }
+
+
+.eole-col {
+  width: 336px;
+  min-width: 336px;
+}
+.eole-sticky {
+    z-index:15;
+    position: sticky;
+    top: 40px;
+}
+.eole-container {
+ z-index:15;
+ border: 0;
+ padding: 0;
+ margin: 0;
+ display: flex;
+ flex-direction: column;
+ justify-content:start;
+ height: calc(100vh - 50px);
+}
+.eole-scroll {
+ z-index:15;
+ overflow-x: hidden;
+ overflow-y: scroll;
+ background: #f6f8fa;
+ border-width: 2px;
+ border-style: groove;
+ border-radius: 3px;
+ border-color: #e1e4e8;
+ margin: 0 20px 0 10px;
+ padding: 0;
+}
+
+
+.eole-scroll ul {
+margin: 0;
+list-style-type: none;
+padding: 0;
+}
+
+.eole-scroll li {
+    padding:0 10px;
+    margin: 0;
+}
+
+.eole-scroll li a {
+    padding:5px 0;
+display: inline-block;
+text-decoration:none;
+width:100%;
+color: #5e6d7d;
+}
+
+.eole-scroll li a:hover {
+color: #0366d6;
+}
+
+.eole-scroll li:hover {
+background: #fefefe;
+}
+
+
+@media screen and (max-width: 1694px) {
+ .eole-col {
+	display: none;
+ }
+}
+</style>
+
+</p><div class="zeus-container">
+
+<div><!--content-->
+<!--heading--><h1 class="chap"><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#0"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#0"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#0"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>BibliothÃ¨que standard de PlantUML</h1>
+<p></p>
+Bienvenue au guide sur la <strong>bibliothÃ¨que standard</strong> officielle de PlantUML (<code class="cod">stdlib</code>). Ici, nous nous plongeons dans cette ressource intÃ©grale qui est maintenant incluse dans toutes les versions officielles de PlantUML, facilitant une expÃ©rience de crÃ©ation de diagramme plus riche. La bibliothÃ¨que emprunte sa convention d&#39;inclusion de fichiers Ã  la <a href="https://en.wikipedia.org/wiki/C_standard_library">&#34;bibliothÃ¨que standard C&#34;</a>, un protocole bien Ã©tabli dans le monde de la programmation.
+<p></p>
+<h3>Vue d&#39;ensemble de la bibliothÃ¨que standard</h3>
+<p></p>
+La <a href="https://github.com/plantuml/plantuml-stdlib">bibliothÃ¨que standard</a> est un dÃ©pÃ´t de fichiers et de ressources, constamment mis Ã  jour pour amÃ©liorer votre expÃ©rience de PlantUML. Elle forme l&#39;Ã©pine dorsale de PlantUML, offrant une gamme de fonctionnalitÃ©s et de caractÃ©ristiques Ã  explorer.
+<p></p>
+<h3>Contribution de la communautÃ©</h3>
+<p></p>
+Une partie importante du contenu de la bibliothÃ¨que est gÃ©nÃ©reusement fournie par des contributeurs tiers. Nous leur exprimons notre sincÃ¨re gratitude pour leurs contributions inestimables qui ont jouÃ© un rÃ´le essentiel dans l&#39;enrichissement de la bibliothÃ¨que.
+<p></p>
+Nous encourageons les utilisateurs Ã  se plonger dans les abondantes ressources offertes par la <a href="https://github.com/plantuml/plantuml-stdlib">bibliothÃ¨que standard</a>, non seulement pour amÃ©liorer leur expÃ©rience de crÃ©ation de diagrammes, mais aussi pour contribuer et faire partie de cet effort de collaboration.
+<a style="position:relative;top:-38px;" name="14add8003c6c84d4"></a>
+<!--heading--><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#1"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#1"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#1"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Contenu de la bibliothÃ¨que standard</h2>
+<p></p>
+Vous pouvez obtenir le contenu la bibliothÃ¨que standard Ã  l&#39;aide du diagramme spÃ©cial suivant:
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg1ef80327c7cfe8e1453fdf39aecbdc61" class="msg">
+ð Copied!
+</div>
+<img width="16" height="16" id="img1ef80327c7cfe8e1453fdf39aecbdc61" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;1ef80327c7cfe8e1453fdf39aecbdc61&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;1ef80327c7cfe8e1453fdf39aecbdc61&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;1ef80327c7cfe8e1453fdf39aecbdc61&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre1ef80327c7cfe8e1453fdf39aecbdc61">@startuml
+stdlib
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="582" height="2072" class="scale" src="/imgw/img-1ef80327c7cfe8e1453fdf39aecbdc61.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+Il est Ã©galement possible d&#39;utiliser la ligne de commande <code class="cod">java -jar plantuml.jar -stdlib</code> pour afficher cette mÃªme liste.
+<p></p>
+Enfin, vous pouvez extraire les sources complÃ¨tes de la bibliothÃ¨que standard en utilisant <code class="cod">java -jar plantuml.jar -extractstdlib</code>. Tous les fichiers seront extraits dans le dossier <code class="cod">stdlib</code>.
+<p></p>
+Les sources utilisÃ©es pour construire les versions officielles de PlantUML sont hÃ©bergÃ©es ici <a href="https://github.com/plantuml/plantuml-stdlib">https://github.com/plantuml/plantuml-stdlib</a>. Vous pouvez crÃ©er une demande pour mettre Ã  jour ou ajouter une bibliothÃ¨que si vous la trouvez pertinente.
+<a style="position:relative;top:-38px;" name="4ff66fed176e4ee1"></a>
+<!--heading--><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#2"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#2"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#2"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>ArchiMate [archimate]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Lien
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/archimate">https://github.com/plantuml/plantuml-stdlib/tree/master/archimate</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/ebbypeter/Archimate-PlantUML">https://github.com/ebbypeter/Archimate-PlantUML</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://en.wikipedia.org/wiki/ArchiMate">https://en.wikipedia.org/wiki/ArchiMate</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+Ce rÃ©fÃ©rentiel contient les macros PlantUML d&#39;ArchiMate et d&#39;autres inclusions pour crÃ©er des <a href="archimate-diagram">diagrammes Archimate</a> facilement et de maniÃ¨re cohÃ©rente.
+<p></p>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg8a3fb4f1158be1b76ce08b8242f3de20" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img8a3fb4f1158be1b76ce08b8242f3de20" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;8a3fb4f1158be1b76ce08b8242f3de20&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;8a3fb4f1158be1b76ce08b8242f3de20&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;8a3fb4f1158be1b76ce08b8242f3de20&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre8a3fb4f1158be1b76ce08b8242f3de20">@startuml
+!include &lt;archimate/Archimate&gt;
+
+title Archimate Sample - Internet Browser
+
+&#39; Elements
+Business_Object(businessObject, &#34;A Business Object&#34;)
+Business_Process(someBusinessProcess,&#34;Some Business Process&#34;)
+Business_Service(itSupportService, &#34;IT Support for Business (Application Service)&#34;)
+
+Application_DataObject(dataObject, &#34;Web Page Data \n &#39;on the fly&#39;&#34;)
+Application_Function(webpageBehaviour, &#34;Web page behaviour&#34;)
+Application_Component(ActivePartWebPage, &#34;Active Part of the web page \n &#39;on the fly&#39;&#34;)
+
+Technology_Artifact(inMemoryItem,&#34;in memory / &#39;on the fly&#39; html/javascript&#34;)
+Technology_Service(internetBrowser, &#34;Internet Browser Generic &amp; Plugin&#34;)
+Technology_Service(internetBrowserPlugin, &#34;Some Internet Browser Plugin&#34;)
+Technology_Service(webServer, &#34;Some web server&#34;)
+
+&#39;Relationships
+Rel_Flow_Left(someBusinessProcess, businessObject, &#34;&#34;)
+Rel_Serving_Up(itSupportService, someBusinessProcess, &#34;&#34;)
+Rel_Specialization_Up(webpageBehaviour, itSupportService, &#34;&#34;)
+Rel_Flow_Right(dataObject, webpageBehaviour, &#34;&#34;)
+Rel_Specialization_Up(dataObject, businessObject, &#34;&#34;)
+Rel_Assignment_Left(ActivePartWebPage, webpageBehaviour, &#34;&#34;)
+Rel_Specialization_Up(inMemoryItem, dataObject, &#34;&#34;)
+Rel_Realization_Up(inMemoryItem, ActivePartWebPage, &#34;&#34;)
+Rel_Specialization_Right(inMemoryItem,internetBrowser, &#34;&#34;)
+Rel_Serving_Up(internetBrowser, webpageBehaviour, &#34;&#34;)
+Rel_Serving_Up(internetBrowserPlugin, webpageBehaviour, &#34;&#34;)
+Rel_Aggregation_Right(internetBrowser, internetBrowserPlugin, &#34;&#34;)
+Rel_Access_Up(webServer, inMemoryItem, &#34;&#34;)
+Rel_Serving_Up(webServer, internetBrowser, &#34;&#34;)
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="780" height="638" class="scale" src="/imgw/img-8a3fb4f1158be1b76ce08b8242f3de20.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h3>Liste des sprites possibles</h3>
+<p></p>
+Vous pouvez lister tous les <a href="sprite">sprites</a> possibles pour Archimate en utilisant le diagramme suivant
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg362147d7ec56c66b24ffc637a2cc10c9" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img362147d7ec56c66b24ffc637a2cc10c9" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;362147d7ec56c66b24ffc637a2cc10c9&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;362147d7ec56c66b24ffc637a2cc10c9&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;362147d7ec56c66b24ffc637a2cc10c9&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre362147d7ec56c66b24ffc637a2cc10c9">@startuml
+listsprite
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="836" height="640" class="scale" src="/imgw/img-362147d7ec56c66b24ffc637a2cc10c9.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="a464d2f6236a5c23"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#3"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#3"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#3"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Amazon Labs AWS Library [awslib]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/awslib">https://github.com/plantuml/plantuml-stdlib/tree/master/awslib</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/awslabs/aws-icons-for-plantuml">https://github.com/awslabs/aws-icons-for-plantuml</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://aws.amazon.com/en/architecture/icons/">https://aws.amazon.com/en/architecture/icons/</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+The Amazon Labs AWS library provides PlantUML sprites, macros, and other includes for Amazon Web Services (AWS) services and resources.
+<p></p>
+Used to create PlantUML diagrams with AWS components. All elements are generated from the official <a href="https://aws.amazon.com/fr/architecture/icons/">AWS Architecture Icons</a> and when combined with PlantUML and the <a href="https://c4model.com/">C4 model</a>, are a great way to communicate your design, deployment, and topology as code.
+<p></p>
+<p></p>
+<p></p>
+<p>
+<code></code></p><pre class="colo"><code>@startuml
+!include &lt;awslib/AWSCommon&gt;
+!include &lt;awslib/InternetOfThings/IoTRule&gt;
+!include &lt;awslib/Analytics/KinesisDataStreams&gt;
+!include &lt;awslib/ApplicationIntegration/SimpleQueueService&gt;
+
+left to right direction
+
+agent &#34;Published Event&#34; as event #fff
+
+IoTRule(iotRule, &#34;Action Error Rule&#34;, &#34;error if Kinesis fails&#34;)
+KinesisDataStreams(eventStream, &#34;IoT Events&#34;, &#34;2 shards&#34;)
+SimpleQueueService(errorQueue, &#34;Rule Error Queue&#34;, &#34;failed Rule actions&#34;)
+
+event --&gt; iotRule : JSON message
+iotRule --&gt; eventStream : messages
+iotRule --&gt; errorQueue : Failed action message
+@enduml
+</code></pre>
+<p>
+</p><p></p>
+<p>
+</p><div class="plantumlimg">
+<img loading="lazy" src="http://cdn-0.plantuml.com/plantuml/png/RL9DImCn4BtdLuphfO9bmQD8iMY5AbXr2vxJtSdkG3OfcMp5VsycknQbFILvUVC-GkuvwX27tgeBShKT6eGx_SMMTkNoithmVU_TulHkxI86Xt5ZjXsvbikrttuC5izGbqxRxqWrbo_aa8aVTTHL3AXxFaVVxotLEf9tOjA6l2qhwlSMtmSSiC9me3fPAOicGlGGgEqYD1Im5h9IkaKNeNWRTfQummPMXmGKe1bGTd1fZ55g2ZqZ7sMzXcAP1M0LWWyWM950p2SoC1K0eyboSQLE2yso_7X8aybWj6RHkG7kT6XayhJEBBja9575UagH8HaNrrGbN-cSKvJKM6W-Ny1K0sxXkTgyGe_CwI7KBooKF_4IRMBmVyenHs8yZPwZtL7n7bqZN-O7"/>
+</div>
+<p>
+<a style="position:relative;top:-38px;" name="bf8b1cb709cb9f08"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#4"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#4"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#4"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Azure library [azure]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/azure">https://github.com/plantuml/plantuml-stdlib/tree/master/azure</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/RicardoNiepel/Azure-PlantUML/">https://github.com/RicardoNiepel/Azure-PlantUML/</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://docs.microsoft.com/en-us/azure/architecture/icons/">Microsoft Azure</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+The Azure library consists of <a href="https://docs.microsoft.com/en-us/azure/architecture/icons/">Microsoft Azure</a> icons.
+<p></p>
+Use it by including the file that contains the sprite, eg: <code class="cod">!include &lt;azure/Analytics/AzureEventHub&gt;</code>.
+When imported, you can use the sprite as normally you would, using <code class="cod">&lt;$sprite_name&gt;</code>.
+<p></p>
+You may also include the <code class="cod">AzureCommon.puml</code> file, eg: <code class="cod">!include &lt;azure/AzureCommon&gt;</code>, which contains helper macros defined.
+With the <code class="cod">AzureCommon.puml</code> imported, you can use the <code class="cod">NAME_OF_SPRITE(parameters...)</code> macro.
+<p></p>
+Example of usage:
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg47203b7d4ee4c7463f831cb6154a524c" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img47203b7d4ee4c7463f831cb6154a524c" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;47203b7d4ee4c7463f831cb6154a524c&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;47203b7d4ee4c7463f831cb6154a524c&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;47203b7d4ee4c7463f831cb6154a524c&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre47203b7d4ee4c7463f831cb6154a524c">@startuml
+!include &lt;azure/AzureCommon&gt;
+!include &lt;azure/Analytics/AzureEventHub&gt;
+!include &lt;azure/Analytics/AzureStreamAnalyticsJob&gt;
+!include &lt;azure/Databases/AzureCosmosDb&gt;
+
+left to right direction
+
+agent &#34;Device Simulator&#34; as devices #fff
+
+AzureEventHub(fareDataEventHub, &#34;Fare Data&#34;, &#34;PK: Medallion HackLicense VendorId; 3 TUs&#34;)
+AzureEventHub(tripDataEventHub, &#34;Trip Data&#34;, &#34;PK: Medallion HackLicense VendorId; 3 TUs&#34;)
+AzureStreamAnalyticsJob(streamAnalytics, &#34;Stream Processing&#34;, &#34;6 SUs&#34;)
+AzureCosmosDb(outputCosmosDb, &#34;Output Database&#34;, &#34;1,000 RUs&#34;)
+
+devices --&gt; fareDataEventHub
+devices --&gt; tripDataEventHub
+fareDataEventHub --&gt; streamAnalytics
+tripDataEventHub --&gt; streamAnalytics
+streamAnalytics --&gt; outputCosmosDb
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="808" height="368" class="scale" src="/imgw/img-47203b7d4ee4c7463f831cb6154a524c.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="062f75176513a666"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#5"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#5"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#5"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>C4 Library [C4]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/C4">https://github.com/plantuml/plantuml-stdlib/tree/master/C4</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/plantuml-stdlib/C4-PlantUML">https://github.com/plantuml-stdlib/C4-PlantUML</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://en.wikipedia.org/wiki/C4_model">https://en.wikipedia.org/wiki/C4_model</a><br/> <a href="https://c4model.com">https://c4model.com</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg1120149eae067deeb7b04eba46d0c777" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img1120149eae067deeb7b04eba46d0c777" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;1120149eae067deeb7b04eba46d0c777&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;1120149eae067deeb7b04eba46d0c777&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;1120149eae067deeb7b04eba46d0c777&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre1120149eae067deeb7b04eba46d0c777">@startuml
+!include &lt;C4/C4_Container&gt;
+
+Person(personAlias, &#34;Label&#34;, &#34;Optional Description&#34;)
+Container(containerAlias, &#34;Label&#34;, &#34;Technology&#34;, &#34;Optional Description&#34;)
+System(systemAlias, &#34;Label&#34;, &#34;Optional Description&#34;)
+
+System_Ext(extSystemAlias, &#34;Label&#34;, &#34;Optional Description&#34;)
+
+Rel(personAlias, containerAlias, &#34;Label&#34;, &#34;Optional Technology&#34;)
+
+Rel_U(systemAlias, extSystemAlias, &#34;Label&#34;, &#34;Optional Technology&#34;)
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="385" height="351" class="scale" src="/imgw/img-1120149eae067deeb7b04eba46d0c777.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="dfa1f2b2b70eb2be"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#6"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#6"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#6"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Cloud Insight [cloudinsight]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/cloudinsight">https://github.com/plantuml/plantuml-stdlib/tree/master/cloudinsight</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/rabelenda/cicon-plantuml-sprites">https://github.com/rabelenda/cicon-plantuml-sprites</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://github.com/cloudinsight/cicon">Cloudinsight icons</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+This repository contains PlantUML sprites generated from <a href="https://github.com/cloudinsight/cicon">Cloudinsight icons</a>, which can easily be used in PlantUML diagrams for nice visual representation of popular technologies.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgdd26df0be9861efd2d7abef3e992a966" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgdd26df0be9861efd2d7abef3e992a966" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;dd26df0be9861efd2d7abef3e992a966&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;dd26df0be9861efd2d7abef3e992a966&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;dd26df0be9861efd2d7abef3e992a966&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="predd26df0be9861efd2d7abef3e992a966">@startuml
+!include &lt;cloudinsight/tomcat&gt;
+!include &lt;cloudinsight/kafka&gt;
+!include &lt;cloudinsight/java&gt;
+!include &lt;cloudinsight/cassandra&gt;
+
+title Cloudinsight sprites example
+
+skinparam monochrome true
+
+rectangle &#34;&lt;$tomcat&gt;\nwebapp&#34; as webapp
+queue &#34;&lt;$kafka&gt;&#34; as kafka
+rectangle &#34;&lt;$java&gt;\ndaemon&#34; as daemon
+database &#34;&lt;$cassandra&gt;&#34; as cassandra
+
+webapp -&gt; kafka
+kafka -&gt; daemon
+daemon --&gt; cassandra
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="308" height="291" class="scale" src="/imgw/img-dd26df0be9861efd2d7abef3e992a966.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="5d13898d957d4524"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#7"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#7"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#7"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Cloudogu [cloudogu]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/cloudogu">https://github.com/plantuml/plantuml-stdlib/tree/master/cloudogu</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/cloudogu/plantuml-cloudogu-sprites">https://github.com/cloudogu/plantuml-cloudogu-sprites</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://cloudogu.com">https://cloudogu.com</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+The Cloudogu library provides PlantUML sprites, macros, and other includes for Cloudogu  services and resources. 
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg5e242524d08f9b66890c7f508892d80d" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img5e242524d08f9b66890c7f508892d80d" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;5e242524d08f9b66890c7f508892d80d&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;5e242524d08f9b66890c7f508892d80d&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;5e242524d08f9b66890c7f508892d80d&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre5e242524d08f9b66890c7f508892d80d">@startuml
+!include &lt;cloudogu/common&gt;
+!include &lt;cloudogu/dogus/jenkins&gt;
+!include &lt;cloudogu/dogus/cloudogu&gt;
+!include &lt;cloudogu/dogus/scm&gt;
+!include &lt;cloudogu/dogus/smeagol&gt;
+!include &lt;cloudogu/dogus/nexus&gt;
+!include &lt;cloudogu/tools/k8s&gt;
+
+node &#34;Cloudogu Ecosystem&#34; &lt;&lt;$cloudogu&gt;&gt; {
+	DOGU_JENKINS(jenkins, Jenkins) #ffffff
+	DOGU_SCM(scm, SCM-Manager) #ffffff
+	DOGU_SMEAGOL(smeagol, Smeagol) #ffffff
+	DOGU_NEXUS(nexus,Nexus) #ffffff
+}
+
+TOOL_K8S(k8s, Kubernetes) #ffffff
+
+actor developer
+
+developer --&gt; smeagol : &#34;Edit Slides&#34;
+smeagol -&gt; scm : Push
+scm -&gt; jenkins : Trigger
+jenkins -&gt; nexus : Deploy
+jenkins --&gt; k8s : Deploy
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="623" height="499" class="scale" src="/imgw/img-5e242524d08f9b66890c7f508892d80d.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<strong>All cloudogu sprites</strong>
+<p></p>
+See all possible cloudogu sprites on <a href="https://github.com/cloudogu/plantuml-cloudogu-sprites">plantuml-cloudogu-sprites</a>.
+<a style="position:relative;top:-38px;" name="7c3d1cde3762ae3b"></a>
+<!--heading--><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#8"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#8"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#8"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>EDGY: An Open Source tool for collaborative Enterprise Design [edgy]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/edgy">https://github.com/plantuml/plantuml-stdlib/tree/master/edgy</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/boessu/plantuml-stdlib/tree/master/edgy">https://github.com/boessu/plantuml-stdlib/tree/master/edgy</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://enterprise.design/">https://enterprise.design/</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+<blockquote>
+âTo become whole, enterprises must embrace a holistic, collaborative way of design:
+transcending silos, combining perspectives, looking for connections instead of divisions. An enterprise designed together works better together.â
+<p></p>
+â Bard Papegaaij, Wolfgang Goebl and Milan Guenther, curators of EDGY 23
+</blockquote>
+<p></p>
+EDGY helps to visualize, communicate, and co-design enterprises across different disciplines.
+EDGY is a design language that provides guidelines for enterprises to create effective and efficient digital products, services, and experiences. It was developed by the EDGY team with input from industry experts, researchers, and practitioners in order to address common challenges faced when developing complex systems.
+The foundation of Edgy is based on four key principles: simplicity, modularity, scalability, and adaptability. These principles are designed to help enterprises create products that can be easily maintained over time while also being able to scale up or down as needed. Additionally, the language provides a set of guidelines for designing user interfaces, data models, business processes, and more, making it an essential toolkit for any organization looking to improve their offerings.
+<p></p>
+<h3>Basic Elements and Interconnections</h3>
+EDGY is an open-source language for enterprise design that uses only four base elements: people, activity, object, and outcome. These elements can be specialized into facet and intersection elements, which describe the enterprise from different perspectives: identity, architecture, and experience.
+<p></p>
+<h4>Elements</h4>
+<p></p>
+The basic syntax of an element or a facet is:
+<p></p>
+<code class="cod">$element/facet(&#34;label&#34;, [identifier], [lightColor])</code>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Parameter
+</b></td>
+<td><b>
+Description
+</b></td>
+</tr>
+<tr>
+<td>
+label
+</td>
+<td>
+Mandatory: label of the element.
+</td>
+</tr>
+<tr>
+<td>
+identifier
+</td>
+<td>
+Dependant: Identifies the element (for creating relations). Optional if you don&#39;t link them to other elemets/facets.
+</td>
+</tr>
+<tr>
+<td>
+lightColor
+</td>
+<td>
+Optional: 0 sets the standared color. 1 sets a lighter color. As default, facets do have lighter colors than elements.
+</td>
+</tr>
+</tbody></table>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg727a037d0feab40cceb9f125097efb30" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img727a037d0feab40cceb9f125097efb30" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;727a037d0feab40cceb9f125097efb30&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;727a037d0feab40cceb9f125097efb30&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;727a037d0feab40cceb9f125097efb30&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre727a037d0feab40cceb9f125097efb30">@startuml
+!include &lt;edgy/edgy&gt;
+
+$baseFacet(&#34;Basic elements&#34;) {
+
+  $people(&#34;People&#34;)
+  note bottom
+    The individuals co-creating
+    the enterprise or using
+    products.
+  end note
+
+  $outcome(&#34;Outcome&#34;)
+  note bottom
+    A result or change that
+    occurs within our enterprise
+    or its ecosystem.
+  end note
+
+  $activity(&#34;Activity&#34;)
+  note bottom
+   What is being done or going
+   on in our enterprise or its
+   ecosystem.
+  end note
+
+  $object(&#34;Object&#34;)
+  note bottom
+    A structure that is
+    relevant to the enterprise.
+  end note
+}
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="857" height="253" class="scale" src="/imgw/img-727a037d0feab40cceb9f125097efb30.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h4>Relationships</h4>
+The elements (or facets) can be connected with three types of relationships: link, flow and tree.
+<p></p>
+<code class="cod">$link/flow/tree(fromIdentifier, toIdentifier, [&#34;Description&#34;])</code>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Parameter
+</b></td>
+<td><b>
+Description
+</b></td>
+</tr>
+<tr>
+<td>
+fromIdentifier
+</td>
+<td>
+Mandatory: Identifies the starting element of a relation.
+</td>
+</tr>
+<tr>
+<td>
+toIdentifier
+</td>
+<td>
+Mandatory: Identifies the ending element of a relation.
+</td>
+</tr>
+<tr>
+<td>
+label
+</td>
+<td>
+Optional: label of the element.
+</td>
+</tr>
+</tbody></table>
+<p></p>
+All relations can have a direction hint as a suffix (Up/Down/Left/Right). See examples in the chapter &#34;Facets&#34;. While it does often help to give PlantUML (basically GraphViz) a direction hint, it not always helps. if you don&#39;t get the exact result you expect: don&#39;t waste too much lifetime on it.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgd989ccc3f3861c285749b9ab53cd451d" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgd989ccc3f3861c285749b9ab53cd451d" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;d989ccc3f3861c285749b9ab53cd451d&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;d989ccc3f3861c285749b9ab53cd451d&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;d989ccc3f3861c285749b9ab53cd451d&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pred989ccc3f3861c285749b9ab53cd451d">@startuml
+!include &lt;edgy/edgy&gt;
+
+$outcome(&#34;Outcome&#34;, outcome)
+$activity(&#34;Activity&#34;, activity)
+$object(&#34;Object&#34;, object)
+
+$link(object, activity, &#34;just a link&#34;)
+$flow(activity, outcome, &#34;a flow with a direction&#34;)
+$tree(outcome, object, &#34;a hierarchical connection&#34;)
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="313" height="282" class="scale" src="/imgw/img-d989ccc3f3861c285749b9ab53cd451d.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+There are quite some hierarchical linking in edgy. Or maps. So it is also possible to group/nesting elements:
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgcec6d12f03aced7385ef017df2cec779" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgcec6d12f03aced7385ef017df2cec779" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;cec6d12f03aced7385ef017df2cec779&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;cec6d12f03aced7385ef017df2cec779&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;cec6d12f03aced7385ef017df2cec779&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="precec6d12f03aced7385ef017df2cec779">@startuml
+!include &lt;edgy/edgy&gt;
+
+left to right direction
+
+$activity(&#34;Parent Activity&#34;) {
+  $activity(&#34;Brother&#34;, child1, 1)
+  $activity(&#34;Sister&#34;, child2, 1)
+  $activity(&#34;Latecomer&#34;, child3, 1)
+}
+
+$flow(child1, child2)
+$flow(child2, child3)
+
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="432" height="117" class="scale" src="/imgw/img-cec6d12f03aced7385ef017df2cec779.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h3>Facets</h3>
+A facet is a perspective that relates to any enterprise, featuring a set of questions that an enterprise needs to answer in order to achieve a coherent design. There are three facets in EDGY: Identity, Architecture, and Experience. Each facet references five enterprise elements: three facet elements, and two intersection elements at the overlap with the neighbouring facets.
+<p></p>
+<h4>Identity</h4>
+The Identity Facet describes why the enterprise exists and what it stands for.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg0272cc27e3e36fb6c8724f05e2350a93" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img0272cc27e3e36fb6c8724f05e2350a93" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;0272cc27e3e36fb6c8724f05e2350a93&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;0272cc27e3e36fb6c8724f05e2350a93&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;0272cc27e3e36fb6c8724f05e2350a93&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre0272cc27e3e36fb6c8724f05e2350a93">@startuml
+!include &lt;edgy/edgy&gt;
+
+$identityFacet(Identity, identity) {
+	$content(Content, content)
+	$purpose(Purpose, purpose)
+	$story(Story, story)
+}
+
+$linkLeft(content, purpose)
+$linkDown(content, story)
+$linkDown(purpose, story)
+
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="225" height="250" class="scale" src="/imgw/img-0272cc27e3e36fb6c8724f05e2350a93.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h4>Architecture</h4>
+The Architecture facet is about the structures and processes that enable the enterprise to operate and deliver.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg1c258fcefb73800eee99f00738db4eb2" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img1c258fcefb73800eee99f00738db4eb2" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;1c258fcefb73800eee99f00738db4eb2&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;1c258fcefb73800eee99f00738db4eb2&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;1c258fcefb73800eee99f00738db4eb2&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre1c258fcefb73800eee99f00738db4eb2">@startuml
+!include &lt;edgy/edgy&gt;
+
+$architectureFacet(Architecture) {
+	$process(Process, process)
+	$asset(Asset, asset)
+	$capability(Capability, capability)
+}
+
+$linkRight(process, asset)
+$linkDown(process, capability)
+$linkDown(asset, capability)
+
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="221" height="250" class="scale" src="/imgw/img-1c258fcefb73800eee99f00738db4eb2.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h4>Experience</h4>
+The Experience Facet is about the impact that the enterprise has on people and their lives through its interactions.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgb4a99ba903c9d495bbe1b54408a518b3" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgb4a99ba903c9d495bbe1b54408a518b3" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;b4a99ba903c9d495bbe1b54408a518b3&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;b4a99ba903c9d495bbe1b54408a518b3&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;b4a99ba903c9d495bbe1b54408a518b3&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="preb4a99ba903c9d495bbe1b54408a518b3">@startuml
+!include &lt;edgy/edgy&gt;
+
+$experienceFacet(Experience) {
+	$task(Task, task)
+	$journey(Journey, journey)
+	$channel(Channel, channel)
+}
+
+$linkRight(task, journey)
+$linkDown(task, channel)
+$linkDown(journey, channel)
+
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="214" height="250" class="scale" src="/imgw/img-b4a99ba903c9d495bbe1b54408a518b3.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<h3>Intersections</h3>
+Intersections are lenses that connect facets and disciplines, such as organisation, product, and brand.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgac339f1c10b7cb66a25d61983b938bbe" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgac339f1c10b7cb66a25d61983b938bbe" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;ac339f1c10b7cb66a25d61983b938bbe&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;ac339f1c10b7cb66a25d61983b938bbe&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;ac339f1c10b7cb66a25d61983b938bbe&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="preac339f1c10b7cb66a25d61983b938bbe">@startuml
+!include &lt;edgy/edgy&gt;
+
+$experienceFacet(Experience, experience)
+$architectureFacet(Architecture, architecture)
+$identityFacet(Identity, identity)
+
+$organisationFacet(Organisation, org) {
+	$organisation(Organisation, organisation)
+}
+
+$brandFacet(Brand) {
+	$brand(Brand, brand)
+}
+
+$productFacet(Product){
+	$product(Product, product)
+}
+
+$flow(brand, identity, &#34;represents/evokes&#34;)
+$flow(brand, experience, &#34;Supports/appears in&#34;)
+
+$flowLeft(organisation, identity, &#34;pursues/authors&#34;)
+$flowRight(organisation, architecture, &#34;has/performs&#34;)
+
+$flow(product, experience, &#34;serves/features in&#34;)
+$linkUp(product, architecture, &#34;requires/creates&#34;)
+
+$flow(organisation, brand, &#34;builds&#34;)
+$flow(organisation, product, &#34;makes&#34;)
+$flowLeft(product, brand, &#34;embodies&#34;)
+
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="521" height="453" class="scale" src="/imgw/img-ac339f1c10b7cb66a25d61983b938bbe.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<p></p>
+<h3>Alternative visual styling</h3>
+<p></p>
+Finally, there is also an alternative representation that focuses on rectangles with stereotypes. The approach described above is 100% compatible. It can therefore be activated with a simple swap from <code class="cod">!include &lt;edgy/edgy&gt;</code> to <code class="cod">!include &lt;edgy/edgy2&gt;</code>.
+This can sometimes be useful if the people involved do not immediately know the color codes and concrete meanings of the EDGY elements by heart. Also color-blind people can benefit from this ;-)
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg856a67a2c4c61f7a82a641621052eaba" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img856a67a2c4c61f7a82a641621052eaba" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;856a67a2c4c61f7a82a641621052eaba&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;856a67a2c4c61f7a82a641621052eaba&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;856a67a2c4c61f7a82a641621052eaba&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre856a67a2c4c61f7a82a641621052eaba">@startuml
+!include &lt;edgy/edgy2&gt;
+
+$baseFacet(&#34;Basic elements&#34;) {
+  $people(&#34;People&#34;)
+  $outcome(&#34;Outcome&#34;)
+  $activity(&#34;Activity&#34;)
+  $object(&#34;Object&#34;)
+}
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="257" height="216" class="scale" src="/imgw/img-856a67a2c4c61f7a82a641621052eaba.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="1625302d65814e1d"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#9"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#9"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#9"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Elastic library [elastic]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/elastic">https://github.com/plantuml/plantuml-stdlib/tree/master/elastic</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/Crashedmind/PlantUML-Elastic-icons">https://github.com/Crashedmind/PlantUML-Elastic-icons</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://www.elastic.co">Elastic</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+The Elastic library consists of <a href="https://www.elastic.co">Elastic</a> icons.
+It is similar in use to the AWS and Azure libraries (it used the same tool to create them).
+<p></p>
+Use it by including the file that contains the sprite, eg: <code class="cod">!include elastic/elastic_search/elastic_search&gt;</code>.
+When imported, you can use the sprite as normally you would, using <code class="cod">&lt;$sprite_name&gt;</code>.
+<p></p>
+You may also include the <code class="cod">common.puml</code> file, eg: <code class="cod">!include &lt;elastic/common&gt;</code>, which contains helper macros defined.
+With the <code class="cod">common.puml</code> imported, you can use the <code class="cod">NAME//OF//SPRITE(parameters...)</code> macro.
+<p></p>
+Example of usage:
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgdf4fb3fab014a4fb02dff6a17bb6b50d" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgdf4fb3fab014a4fb02dff6a17bb6b50d" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;df4fb3fab014a4fb02dff6a17bb6b50d&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;df4fb3fab014a4fb02dff6a17bb6b50d&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;df4fb3fab014a4fb02dff6a17bb6b50d&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="predf4fb3fab014a4fb02dff6a17bb6b50d">@startuml
+!include &lt;elastic/common&gt;
+!include &lt;elastic/elasticsearch/elasticsearch&gt;
+!include &lt;elastic/logstash/logstash&gt;
+!include &lt;elastic/kibana/kibana&gt;
+
+ELASTICSEARCH(ElasticSearch, &#34;Search and Analyze&#34;,database)
+LOGSTASH(Logstash, &#34;Parse and Transform&#34;,node)
+KIBANA(Kibana, &#34;Visualize&#34;,agent) 
+
+Logstash -right-&gt; ElasticSearch: Transformed Data
+ElasticSearch -right-&gt; Kibana: Data to View
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="723" height="194" class="scale" src="/imgw/img-df4fb3fab014a4fb02dff6a17bb6b50d.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<strong>All Elastic Sprite Set</strong>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg74b9450d2d6214731d39f847faa167d1" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img74b9450d2d6214731d39f847faa167d1" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;74b9450d2d6214731d39f847faa167d1&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;74b9450d2d6214731d39f847faa167d1&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;74b9450d2d6214731d39f847faa167d1&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre74b9450d2d6214731d39f847faa167d1">@startuml
+&#39;Adapted from https://github.com/Crashedmind/PlantUML-Elastic-icons/blob/master/All.puml
+
+&#39;Elastic stuff here
+&#39;================================
+
+!include &lt;elastic/common&gt;
+!include &lt;elastic/apm/apm&gt;
+!include &lt;elastic/app_search/app_search&gt;
+!include &lt;elastic/beats/beats&gt;
+!include &lt;elastic/cloud/cloud&gt;
+!include &lt;elastic/cloud_in_kubernetes/cloud_in_kubernetes&gt;
+!include &lt;elastic/code_search/code_search&gt;
+!include &lt;elastic/ece/ece&gt;
+!include &lt;elastic/eck/eck&gt;
+&#39; Beware of the difference between Crashedmind and plantuml-stdlib version: with &#39;_&#39; usage!
+!include &lt;elastic/elasticsearch/elasticsearch&gt;
+!include &lt;elastic/endpoint/endpoint&gt;
+!include &lt;elastic/enterprise_search/enterprise_search&gt;
+!include &lt;elastic/kibana/kibana&gt;
+!include &lt;elastic/logging/logging&gt;
+!include &lt;elastic/logstash/logstash&gt;
+!include &lt;elastic/maps/maps&gt;
+!include &lt;elastic/metrics/metrics&gt;
+!include &lt;elastic/siem/siem&gt;
+!include &lt;elastic/site_search/site_search&gt;
+!include &lt;elastic/stack/stack&gt;
+!include &lt;elastic/uptime/uptime&gt;
+
+skinparam agentBackgroundColor White 
+
+APM(apm)
+APP_SEARCH(app_search)
+BEATS(beats)
+CLOUD(cloud)
+CLOUD_IN_KUBERNETES(cloud_in_kubernetes)
+CODE_SEARCH(code_search)
+ECE(ece)
+ECK(eck)
+ELASTICSEARCH(elastic_search)
+ENDPOINT(endpoint)
+ENTERPRISE_SEARCH(enterprise_search)
+KIBANA(kibana)
+LOGGING(logging)
+LOGSTASH(logstash)
+MAPS(maps)
+METRICS(metrics)
+SIEM(siem)
+SITE_SEARCH(site_search)
+STACK(stack)
+UPTIME(uptime)
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="832" height="772" class="scale" src="/imgw/img-74b9450d2d6214731d39f847faa167d1.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="df026e38d6a98559"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#10"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#10"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#10"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Google Material Icons [material]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/material">https://github.com/plantuml/plantuml-stdlib/tree/master/material</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/Templarian/MaterialDesign">https://github.com/Templarian/MaterialDesign</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://pictogrammers.com/library/mdi/">Material Design Icons</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+This library consists of a free Material style icons from Google and other artists.
+<p></p>
+Use it by including the file that contains the sprite, eg: <code class="cod">!include &lt;material/ma_folder_move&gt;</code>.
+When imported, you can use the sprite as normally you would, using <code class="cod">&lt;$ma_sprite_name&gt;</code>.
+Notice that this library requires an <code class="cod">ma_</code> prefix on sprites names, this is to avoid clash of names if multiple sprites have the same name on different libraries.
+<p></p>
+You may also include the <code class="cod">common.puml</code> file, eg: <code class="cod">!include &lt;material/common&gt;</code>, which contains helper macros defined.
+With the <code class="cod">common.puml</code> imported, you can use the <code class="cod">MA_NAME_OF_SPRITE(parameters...)</code> macro, note again the use of the prefix <code class="cod">MA_</code>.
+<p></p>
+Example of usage:
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg45e187edec9584b862c8bbbebe190ddd" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img45e187edec9584b862c8bbbebe190ddd" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;45e187edec9584b862c8bbbebe190ddd&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;45e187edec9584b862c8bbbebe190ddd&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;45e187edec9584b862c8bbbebe190ddd&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre45e187edec9584b862c8bbbebe190ddd">@startuml
+!include &lt;material2.1.19/common&gt;
+&#39; To import the sprite file you DON&#39;T need to place a prefix!
+!include &lt;material2.1.19/folder_move&gt;
+
+MA_FOLDER_MOVE(Red, 1, dir, rectangle, &#34;A label&#34;)
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="188" height="126" class="scale" src="/imgw/img-45e187edec9584b862c8bbbebe190ddd.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<strong>Notes:</strong>
+<p></p>
+When mixing sprites macros with other elements you may get a syntax error if, for example, trying to add a rectangle along with classes.
+In those cases, add <code class="cod">{</code> and <code class="cod">}</code> after the macro to create the empty rectangle.
+<p></p>
+Example of usage:
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg76e32b1d9feb065dc3ebdbd0e26750eb" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img76e32b1d9feb065dc3ebdbd0e26750eb" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;76e32b1d9feb065dc3ebdbd0e26750eb&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;76e32b1d9feb065dc3ebdbd0e26750eb&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;76e32b1d9feb065dc3ebdbd0e26750eb&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre76e32b1d9feb065dc3ebdbd0e26750eb">@startuml
+!include &lt;material2.1.19/common&gt;
+&#39; To import the sprite file you DON&#39;T need to place a prefix!
+!include &lt;material2.1.19/folder_move&gt;
+
+MA_FOLDER_MOVE(Red, 1, dir, rectangle, &#34;A label&#34;) {
+}
+
+class foo {
+    bar
+}
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="267" height="118" class="scale" src="/imgw/img-76e32b1d9feb065dc3ebdbd0e26750eb.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="a3af2a4e966c1bd7"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#11"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#11"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#11"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Kubernetes [kubernetes]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/kubernetes">https://github.com/plantuml/plantuml-stdlib/tree/master/kubernetes</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/michiel/plantuml-kubernetes-sprites">https://github.com/michiel/plantuml-kubernetes-sprites</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://en.wikipedia.org/wiki/Kubernetes">Kubernetes</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg9e181f2edeb00ecd4d09b1ace8920d49" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img9e181f2edeb00ecd4d09b1ace8920d49" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;9e181f2edeb00ecd4d09b1ace8920d49&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;9e181f2edeb00ecd4d09b1ace8920d49&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;9e181f2edeb00ecd4d09b1ace8920d49&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre9e181f2edeb00ecd4d09b1ace8920d49">@startuml
+!include &lt;kubernetes/k8s-sprites-unlabeled-25pct&gt;
+package &#34;Infrastructure&#34; {
+  component &#34;&lt;$master&gt;\nmaster&#34; as master
+  component &#34;&lt;$etcd&gt;\netcd&#34; as etcd
+  component &#34;&lt;$node&gt;\nnode&#34; as node
+}
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="298" height="354" class="scale" src="/imgw/img-9e181f2edeb00ecd4d09b1ace8920d49.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="1c5836677024f905"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#12"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#12"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#12"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Logos [logos]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/logos">https://github.com/plantuml/plantuml-stdlib/tree/master/logos</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/plantuml-stdlib/gilbarbara-plantuml-sprites">https://github.com/plantuml-stdlib/gilbarbara-plantuml-sprites</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://github.com/gilbarbara/logos">Gil Barbara&#39;s logos</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+<p></p>
+This repository contains PlantUML sprites generated from <a href="https://github.com/gilbarbara/logos">Gil Barbara&#39;s logos</a>, which can easily be used in PlantUML diagrams for nice visual aid.
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgde32934437d5e655dbe70de314ee60d5" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgde32934437d5e655dbe70de314ee60d5" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;de32934437d5e655dbe70de314ee60d5&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;de32934437d5e655dbe70de314ee60d5&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;de32934437d5e655dbe70de314ee60d5&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="prede32934437d5e655dbe70de314ee60d5">@startuml
+!include &lt;logos/flask&gt;
+!include &lt;logos/kafka&gt;
+!include &lt;logos/kotlin&gt;
+!include &lt;logos/cassandra&gt;
+
+title Gil Barbara&#39;s logos example
+
+skinparam monochrome true
+
+rectangle &#34;&lt;$flask&gt;\nwebapp&#34; as webapp
+queue &#34;&lt;$kafka&gt;&#34; as kafka
+rectangle &#34;&lt;$kotlin&gt;\ndaemon&#34; as daemon
+database &#34;&lt;$cassandra&gt;&#34; as cassandra
+
+webapp -&gt; kafka
+kafka -&gt; daemon
+daemon --&gt; cassandra
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="417" height="294" class="scale" src="/imgw/img-de32934437d5e655dbe70de314ee60d5.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgd3a54c718ae373538d0e5dcc5ed629e8" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgd3a54c718ae373538d0e5dcc5ed629e8" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;d3a54c718ae373538d0e5dcc5ed629e8&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;d3a54c718ae373538d0e5dcc5ed629e8&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;d3a54c718ae373538d0e5dcc5ed629e8&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pred3a54c718ae373538d0e5dcc5ed629e8">@startuml
+scale 0.7
+!include &lt;logos/apple-pay&gt;
+!include &lt;logos/dinersclub&gt;
+!include &lt;logos/discover&gt;
+!include &lt;logos/google-pay&gt;
+!include &lt;logos/jcb&gt;
+!include &lt;logos/maestro&gt;
+!include &lt;logos/mastercard&gt;
+!include &lt;logos/paypal&gt;
+!include &lt;logos/unionpay&gt;
+!include &lt;logos/visaelectron&gt;
+!include &lt;logos/visa&gt;
+&#39; ...
+
+title Gil Barbara&#39;s logos example - **Payment Scheme**
+
+actor customer
+rectangle &#34;&lt;$apple-pay&gt;&#34;    as ap
+rectangle &#34;&lt;$dinersclub&gt;&#34;   as dc
+rectangle &#34;&lt;$discover&gt;&#34;     as d
+rectangle &#34;&lt;$google-pay&gt;&#34;   as gp
+rectangle &#34;&lt;$jcb&gt;&#34;          as j
+rectangle &#34;&lt;$maestro&gt;&#34;      as ma
+rectangle &#34;&lt;$mastercard&gt;&#34;   as m
+rectangle &#34;&lt;$paypal&gt;&#34;       as p
+rectangle &#34;&lt;$unionpay&gt;&#34;     as up
+rectangle &#34;&lt;$visa&gt;&#34;         as v
+rectangle &#34;&lt;$visaelectron&gt;&#34; as ve
+rectangle &#34;...&#34; as etc
+
+customer --&gt; ap
+customer ---&gt; dc
+customer --&gt; d
+customer ---&gt; gp
+customer --&gt; j
+customer ---&gt; ma
+customer --&gt; m
+customer ---&gt; p
+customer --&gt; up
+customer ---&gt; v
+customer --&gt; ve
+customer ---&gt; etc
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="823" height="277" class="scale" src="/imgw/img-d3a54c718ae373538d0e5dcc5ed629e8.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="537cb543eaa27ca6"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#13"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#13"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#13"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Office [office]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/office">https://github.com/plantuml/plantuml-stdlib/tree/master/office</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/Roemer/plantuml-office">https://github.com/Roemer/plantuml-office</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+
+</td>
+</tr>
+</tbody></table>
+<p></p>
+There are sprites (*.puml) and colored png icons available. Be aware that the sprites are all only monochrome even if they have a color in their name (due to automatically generating the files). You can either color the sprites with the macro (see examples below) or directly use the fully colored pngs. See the following examples on how to use the sprites, the pngs and the macros.
+<p></p>
+Example of usage:
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg1669cc6e905535493eafd14dd2406372" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img1669cc6e905535493eafd14dd2406372" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;1669cc6e905535493eafd14dd2406372&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;1669cc6e905535493eafd14dd2406372&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;1669cc6e905535493eafd14dd2406372&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre1669cc6e905535493eafd14dd2406372">@startuml
+!include &lt;tupadr3/common&gt;
+
+!include &lt;office/Servers/database_server&gt;
+!include &lt;office/Servers/application_server&gt;
+!include &lt;office/Concepts/firewall_orange&gt;
+!include &lt;office/Clouds/cloud_disaster_red&gt;
+
+title Office Icons Example
+
+package &#34;Sprites&#34; {
+    OFF_DATABASE_SERVER(db,DB)
+    OFF_APPLICATION_SERVER(app,App-Server)
+    OFF_FIREWALL_ORANGE(fw,Firewall)
+    OFF_CLOUD_DISASTER_RED(cloud,Cloud)
+    db &lt;-&gt; app
+    app &lt;--&gt; fw
+    fw &lt;.left.&gt; cloud
+}
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="235" height="335" class="scale" src="/imgw/img-1669cc6e905535493eafd14dd2406372.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgd1a04c851a59a89ad0b65bb341f1af59" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgd1a04c851a59a89ad0b65bb341f1af59" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;d1a04c851a59a89ad0b65bb341f1af59&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;d1a04c851a59a89ad0b65bb341f1af59&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;d1a04c851a59a89ad0b65bb341f1af59&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pred1a04c851a59a89ad0b65bb341f1af59">@startuml
+!include &lt;tupadr3/common&gt;
+
+!include &lt;office/servers/database_server&gt;
+!include &lt;office/servers/application_server&gt;
+!include &lt;office/Concepts/firewall_orange&gt;
+!include &lt;office/Clouds/cloud_disaster_red&gt;
+
+&#39; Used to center the label under the images
+skinparam defaultTextAlignment center
+
+title Extended Office Icons Example
+
+package &#34;Use sprite directly&#34; {
+    [Some &lt;$cloud_disaster_red&gt; object]
+}
+
+package &#34;Different macro usages&#34; {
+    OFF_CLOUD_DISASTER_RED(cloud1)
+    OFF_CLOUD_DISASTER_RED(cloud2,Default with text)
+    OFF_CLOUD_DISASTER_RED(cloud3,Other shape,Folder)
+    OFF_CLOUD_DISASTER_RED(cloud4,Even another shape,Database)
+    OFF_CLOUD_DISASTER_RED(cloud5,Colored,Rectangle, red)
+    OFF_CLOUD_DISASTER_RED(cloud6,Colored background) #red
+}
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="717" height="347" class="scale" src="/imgw/img-d1a04c851a59a89ad0b65bb341f1af59.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="fff2b51d50b42912"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#14"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#14"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#14"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Open Security Architecture (OSA) [osa]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/osa">https://github.com/plantuml/plantuml-stdlib/tree/master/osa</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/Crashedmind/PlantUML-opensecurityarchitecture-icons">https://github.com/Crashedmind/PlantUML-opensecurityarchitecture-icons</a><br/> <a href="https://github.com/Crashedmind/PlantUML-opensecurityarchitecture2-icons">https://github.com/Crashedmind/PlantUML-opensecurityarchitecture2-icons</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://www.opensecurityarchitecture.org">https://www.opensecurityarchitecture.org</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgcb7163b84a7ebc8026b7a535e4f3f578" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgcb7163b84a7ebc8026b7a535e4f3f578" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;cb7163b84a7ebc8026b7a535e4f3f578&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;cb7163b84a7ebc8026b7a535e4f3f578&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;cb7163b84a7ebc8026b7a535e4f3f578&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="precb7163b84a7ebc8026b7a535e4f3f578">@startuml
+&#39;Adapted from https://github.com/Crashedmind/PlantUML-opensecurityarchitecture-icons/blob/master/all
+scale .5
+!include &lt;osa/arrow/green/left/left&gt;
+!include &lt;osa/arrow/yellow/right/right&gt;
+!include &lt;osa/awareness/awareness&gt;
+!include &lt;osa/contract/contract&gt;
+!include &lt;osa/database/database&gt;
+!include &lt;osa/desktop/desktop&gt;
+!include &lt;osa/desktop/imac/imac&gt;
+!include &lt;osa/device_music/device_music&gt;
+!include &lt;osa/device_scanner/device_scanner&gt;
+!include &lt;osa/device_usb/device_usb&gt;
+!include &lt;osa/device_wireless_router/device_wireless_router&gt;
+!include &lt;osa/disposal/disposal&gt;
+!include &lt;osa/drive_optical/drive_optical&gt;
+!include &lt;osa/firewall/firewall&gt;
+!include &lt;osa/hub/hub&gt;
+!include &lt;osa/ics/drive/drive&gt;
+!include &lt;osa/ics/plc/plc&gt;
+!include &lt;osa/ics/thermometer/thermometer&gt;
+!include &lt;osa/id/card/card&gt;
+!include &lt;osa/laptop/laptop&gt;
+!include &lt;osa/lifecycle/lifecycle&gt;
+!include &lt;osa/lightning/lightning&gt;
+!include &lt;osa/media_flash/media_flash&gt;
+!include &lt;osa/media_optical/media_optical&gt;
+!include &lt;osa/media_tape/media_tape&gt;
+!include &lt;osa/mobile/pda/pda&gt;
+!include &lt;osa/padlock/padlock&gt;
+!include &lt;osa/printer/printer&gt;
+!include &lt;osa/site_branch/site_branch&gt;
+!include &lt;osa/site_factory/site_factory&gt;
+!include &lt;osa/vpn/vpn&gt;
+!include &lt;osa/wireless/network/network&gt;
+
+rectangle &#34;OSA&#34; {
+rectangle &#34;Left:\n &lt;$left&gt;&#34;
+rectangle &#34;Right:\n &lt;$right&gt;&#34;
+rectangle &#34;Awareness:\n &lt;$awareness&gt;&#34;
+rectangle &#34;Contract:\n &lt;$contract&gt;&#34;
+rectangle &#34;Database:\n &lt;$database&gt;&#34;
+rectangle &#34;Desktop:\n &lt;$desktop&gt;&#34;
+rectangle &#34;Imac:\n &lt;$imac&gt;&#34;
+rectangle &#34;Device_music:\n &lt;$device_music&gt;&#34;
+rectangle &#34;Device_scanner:\n &lt;$device_scanner&gt;&#34;
+rectangle &#34;Device_usb:\n &lt;$device_usb&gt;&#34;
+rectangle &#34;Device_wireless_router:\n &lt;$device_wireless_router&gt;&#34;
+rectangle &#34;Disposal:\n &lt;$disposal&gt;&#34;
+rectangle &#34;Drive_optical:\n &lt;$drive_optical&gt;&#34;
+rectangle &#34;Firewall:\n &lt;$firewall&gt;&#34;
+rectangle &#34;Hub:\n &lt;$hub&gt;&#34;
+rectangle &#34;Drive:\n &lt;$drive&gt;&#34;
+rectangle &#34;Plc:\n &lt;$plc&gt;&#34;
+rectangle &#34;Thermometer:\n &lt;$thermometer&gt;&#34;
+rectangle &#34;Card:\n &lt;$card&gt;&#34;
+rectangle &#34;Laptop:\n &lt;$laptop&gt;&#34;
+rectangle &#34;Lifecycle:\n &lt;$lifecycle&gt;&#34;
+rectangle &#34;Lightning:\n &lt;$lightning&gt;&#34;
+rectangle &#34;Media_flash:\n &lt;$media_flash&gt;&#34;
+rectangle &#34;Media_optical:\n &lt;$media_optical&gt;&#34;
+rectangle &#34;Media_tape:\n &lt;$media_tape&gt;&#34;
+rectangle &#34;Pda:\n &lt;$pda&gt;&#34;
+rectangle &#34;Padlock:\n &lt;$padlock&gt;&#34;
+rectangle &#34;Printer:\n &lt;$printer&gt;&#34;
+rectangle &#34;Site_branch:\n &lt;$site_branch&gt;&#34;
+rectangle &#34;Site_factory:\n &lt;$site_factory&gt;&#34;
+rectangle &#34;Vpn:\n &lt;$vpn&gt;&#34;
+rectangle &#34;Network:\n &lt;$network&gt;&#34;
+}
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="599" height="707" class="scale" src="/imgw/img-cb7163b84a7ebc8026b7a535e4f3f578.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg89d6437e4877fdd022d157b95866c7fc" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img89d6437e4877fdd022d157b95866c7fc" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;89d6437e4877fdd022d157b95866c7fc&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;89d6437e4877fdd022d157b95866c7fc&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;89d6437e4877fdd022d157b95866c7fc&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre89d6437e4877fdd022d157b95866c7fc">@startuml
+scale .5
+!include &lt;osa/user/audit/audit&gt;
+&#39;beware of &#39;hat-sprite&#39;
+!include &lt;osa/user/black/hat/hat-sprite&gt;
+!include &lt;osa/user/blue/blue&gt;
+!include &lt;osa/user/blue/security/specialist/specialist&gt;
+!include &lt;osa/user/blue/sysadmin/sysadmin&gt;
+!include &lt;osa/user/blue/tester/tester&gt;
+!include &lt;osa/user/blue/tie/tie&gt;
+!include &lt;osa/user/green/architect/architect&gt;
+!include &lt;osa/user/green/business/manager/manager&gt;
+!include &lt;osa/user/green/developer/developer&gt;
+!include &lt;osa/user/green/green&gt;
+!include &lt;osa/user/green/operations/operations&gt;
+!include &lt;osa/user/green/project/manager/manager&gt;
+!include &lt;osa/user/green/service/manager/manager&gt;
+!include &lt;osa/user/green/warning/warning&gt;
+!include &lt;osa/user/large/group/group&gt;
+!include &lt;osa/users/blue/green/green&gt;
+!include &lt;osa/user/white/hat/hat&gt;
+
+listsprites
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="547" height="375" class="scale" src="/imgw/img-89d6437e4877fdd022d157b95866c7fc.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="652bcf3694664bc9"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#15"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#15"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#15"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>Tupadr3 library [tupadr3]</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/tupadr3">https://github.com/plantuml/plantuml-stdlib/tree/master/tupadr3</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/tupadr3/plantuml-icon-font-sprites">https://github.com/tupadr3/plantuml-icon-font-sprites</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://github.com/tupadr3/plantuml-icon-font-sprites#icon-sets">https://github.com/tupadr3/plantuml-icon-font-sprites#icon-sets</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+This library contains several libraries of icons (including Devicons and Font Awesome).
+<p></p>
+Use it by including the file that contains the sprite, eg: <code class="cod">!include &lt;font-awesome/align_center&gt;</code>.
+When imported, you can use the sprite as normally you would, using <code class="cod">&lt;$sprite_name&gt;</code>.
+<p></p>
+You may also include the <code class="cod">common.puml</code> file, eg: <code class="cod">!include &lt;font-awesome/common&gt;</code>, which contains helper macros defined.
+With the <code class="cod">common.puml</code> imported, you can use the <code class="cod">NAME_OF_SPRITE(parameters...)</code> macro.
+<p></p>
+Example of usage:
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg43b199ce99f989e932cc48a007cdd5a0" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img43b199ce99f989e932cc48a007cdd5a0" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;43b199ce99f989e932cc48a007cdd5a0&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;43b199ce99f989e932cc48a007cdd5a0&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;43b199ce99f989e932cc48a007cdd5a0&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre43b199ce99f989e932cc48a007cdd5a0">@startuml
+!include &lt;tupadr3/common&gt;
+!include &lt;tupadr3/font-awesome/server&gt;
+!include &lt;tupadr3/font-awesome/database&gt;
+
+title Styling example
+
+FA_SERVER(web1,web1) #Green
+FA_SERVER(web2,web2) #Yellow
+FA_SERVER(web3,web3) #Blue
+FA_SERVER(web4,web4) #YellowGreen
+
+FA_DATABASE(db1,LIVE,database,white) #RoyalBlue
+FA_DATABASE(db2,SPARE,database) #Red
+
+db1 &lt;--&gt; db2
+
+web1 &lt;--&gt; db1
+web2 &lt;--&gt; db1
+web3 &lt;--&gt; db1
+web4 &lt;--&gt; db1
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="404" height="466" class="scale" src="/imgw/img-43b199ce99f989e932cc48a007cdd5a0.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p><p></p>
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msg7d6e5b15604b14e6ac6355b006f84812" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="img7d6e5b15604b14e6ac6355b006f84812" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;7d6e5b15604b14e6ac6355b006f84812&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;7d6e5b15604b14e6ac6355b006f84812&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;7d6e5b15604b14e6ac6355b006f84812&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="pre7d6e5b15604b14e6ac6355b006f84812">@startuml
+!include &lt;tupadr3/common&gt;
+!include &lt;tupadr3/devicons/mysql&gt;
+
+DEV_MYSQL(db1)
+DEV_MYSQL(db2,label of db2)
+DEV_MYSQL(db3,label of db3,database)
+DEV_MYSQL(db4,label of db4,database,red) #DeepSkyBlue
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="249" height="270" class="scale" src="/imgw/img-7d6e5b15604b14e6ac6355b006f84812.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+<a style="position:relative;top:-38px;" name="3f4045fa72a6e17f"></a>
+<!--heading--></p><h2 class="chap"><img onclick="window.scrollTo(0,0);" title="Back to top" src="/backtop1.svg" width="20" height="20" class="backtop"/><div class="dropdown"><button class="dropbtn"><img width="16" height="16" src="/edit1.svg"/></button><div class="dropdown-content"><a href="http://alphadoc.plantuml.com/cmp/dokuwiki/fr/stdlib#16"><img width="20" height="20" src="/dokuwiki.png"/>Edit in Dokuwiki</a><a href="http://alphadoc.plantuml.com/cmp/asciidoc/fr/stdlib#16"><img width="20" height="20" src="/asciidoc32.png"/>Edit in Asciidoc</a><a href="http://alphadoc.plantuml.com/cmp/markdown/fr/stdlib#16"><img width="20" height="20" src="/markdown.png"/>Edit in Markdown</a></div></div>BibliothÃ¨que AWS</h2>
+<p></p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tbody><tr>
+<td><b>
+Type
+</b></td>
+<td><b>
+Link
+</b></td>
+</tr>
+<tr>
+<td>
+<code class="cod">stdlib</code>
+</td>
+<td>
+<a href="https://github.com/plantuml/plantuml-stdlib/tree/master/aws">https://github.com/plantuml/plantuml-stdlib/tree/master/aws</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">src</code>
+</td>
+<td>
+<a href="https://github.com/milo-minderbinder/AWS-PlantUML">https://github.com/milo-minderbinder/AWS-PlantUML</a>
+</td>
+</tr>
+<tr>
+<td>
+<code class="cod">orig</code>
+</td>
+<td>
+<a href="https://aws.amazon.com/en/architecture/icons/">https://aws.amazon.com/en/architecture/icons/</a>
+</td>
+</tr>
+</tbody></table>
+<p></p>
+<strong>Warning: We are thinking about deprecating this library. </strong>
+<p></p>
+So you should probably use <code class="cod">&lt;awslib&gt;</code> instead (see above).
+<p></p>
+<hr/>
+<p></p>
+La bibliothÃ¨que AWS est composÃ©e des icÃ´nes AWS en deux tailles diffÃ©rentes.
+<p></p>
+Pour l&#39;utiliser, il vous vaut inclure le ficheier qui contient le sprite (ex: <code class="cod">!include &lt;aws/Storage/AmazonS3/AmazonS3&gt;</code>).
+Une fois importÃ©, vous pouvez utiliser le sprite normallement en l&#39;appelant de la maniÃ¨re suivante <code class="cod">&lt;$nom_du_sprite&gt;</code>.
+<p></p>
+Vous pouvez aussi inclure le fichier <code class="cod">common.puml</code> qui contient plusieurs macros utiles avec la commande <code class="cod">!include &lt;aws/common&gt;</code>. Avec ce fichier importÃ©, vous pouvez par exmeple appeler la macro &#34;NOM_DU_SPRITE(parametres...).
+<p></p>
+Exemple d&#39;utilisation :
+<p></p>
+<p>
+<table class="coptable" valign="top" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td valign="top">
+<div id="msgab08121d13c78f4e1327cbe847ae8ba5" class="msg">
+ð Copied!
+</div>
+<img loading="lazy" width="16" height="16" id="imgab08121d13c78f4e1327cbe847ae8ba5" title="Copy to clipboard" class="cop" src="/clipboard1.svg" onclick="ctc(&#39;ab08121d13c78f4e1327cbe847ae8ba5&#39;)"/>
+<br/>
+<img loading="lazy" width="16" height="16" title="Edit online" class="cop" src="/edit1.svg" onclick="javascript:ljs(&#39;ab08121d13c78f4e1327cbe847ae8ba5&#39;)"/>
+</td>
+<td>
+<div class="mytab" onclick="javascript:ljs(&#39;ab08121d13c78f4e1327cbe847ae8ba5&#39;)">
+<div class="mycell0">
+<code onmouseover="az=1" onmouseout="az=0"><pre id="preab08121d13c78f4e1327cbe847ae8ba5">@startuml
+!include &lt;aws/common&gt;
+!include &lt;aws/Storage/AmazonS3/AmazonS3&gt;
+!include &lt;aws/Storage/AmazonS3/bucket/bucket&gt;
+
+AMAZONS3(s3_internal)
+AMAZONS3(s3_partner,&#34;Vendor&#39;s S3&#34;)
+s3_internal &lt;- s3_partner
+@enduml
+</pre></code>
+</div>
+<div class="mycell">
+<img loading="lazy" width="259" height="156" class="scale" src="/imgw/img-ab08121d13c78f4e1327cbe847ae8ba5.png"/>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</p><p>
+</p></div><!--content-->
+
+
+<!--B--><div class="eole-col">
+<div class="eole-sticky">
+<div class="eole-container">
+
+<div>
+<!-- Ezoic - middle336 - sidebar_middle -->
+<span id="ezoic-pub-ad-placeholder-672"></span><span data-ez-ph-id="672"></span>
+<!-- End Ezoic - middle336 - sidebar_middle -->
+</div>
+
+
+<!-- eole-scroll --><div class="eole-scroll">
+
+<!--toc-->
+<div id="toc">
+<ul>
+<li><a href="#14add8003c6c84d4">Contenu de la bibliothÃ¨que standard</a>
+</li><li><a href="#4ff66fed176e4ee1">ArchiMate [archimate]</a>
+</li><li><a href="#a464d2f6236a5c23">Amazon Labs AWS Library [awslib]</a>
+</li><li><a href="#bf8b1cb709cb9f08">Azure library [azure]</a>
+</li><li><a href="#062f75176513a666">C4 Library [C4]</a>
+</li><li><a href="#dfa1f2b2b70eb2be">Cloud Insight [cloudinsight]</a>
+</li><li><a href="#5d13898d957d4524">Cloudogu [cloudogu]</a>
+</li><li><a href="#7c3d1cde3762ae3b">EDGY: An Open Source tool for collaborative Enterprise Design [edgy]</a>
+</li><li><a href="#1625302d65814e1d">Elastic library [elastic]</a>
+</li><li><a href="#df026e38d6a98559">Google Material Icons [material]</a>
+</li><li><a href="#a3af2a4e966c1bd7">Kubernetes [kubernetes]</a>
+</li><li><a href="#1c5836677024f905">Logos [logos]</a>
+</li><li><a href="#537cb543eaa27ca6">Office [office]</a>
+</li><li><a href="#fff2b51d50b42912">Open Security Architecture (OSA) [osa]</a>
+</li><li><a href="#652bcf3694664bc9">Tupadr3 library [tupadr3]</a>
+</li><li><a href="#3f4045fa72a6e17f">BibliothÃ¨que AWS</a>
+</li></ul>
+</div>
+
+
+</div><!--eole-scroll-->
+
+
+<div>
+<!-- Ezoic - middle336B - sidebar_middle -->
+<span id="ezoic-pub-ad-placeholder-673"></span><span data-ez-ph-id="673"></span>
+<!-- End Ezoic - middle336B - sidebar_middle -->
+</div>
+
+
+</div><!--eole-container -->
+</div><!--eole-sticky-->
+</div><!--B-->
+
+</div><!--zeus-container-->
+
+
+<p>
+
+</p></div>
+<!-- https://css-tricks.com/almanac/properties/f/float/ -->
+<!-- https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
+
+
+<style>
+.btm {
+text-align:center;
+}
+.btm a{
+    text-decoration:none;
+    color:#5e6d7d;
+}
+.btm a:hover{
+    color:#0366d6;
+}
+</style>
+
+<div class="btm">
+<hr/>
+<a href="https://g.ezoic.net/privacy/plantuml.com"><small>Privacy Policy</small></a>
+Â Â Â Â 
+<a href="https://plantuml.com/direct-sales.html"><small>Advertise</small></a>
+<p>
+</p></div><!--btm-->
+
+
+<!--root-->
+
+<!-- Start of StatCounter Code --><script type="text/javascript">
+var sc_project=11129411; var sc_invisible=1; var sc_security="957b00be";
+</script>
+<script async="" type="text/javascript" src="//www.statcounter.com/counter/counter.js"></script> <!-- End of StatCounter Code -->
+
+
+
+
+
+
+
+
+<!--[selectrongo:done]--><span id="ezoic-pub-ad-placeholder-100"></span><span data-ez-ph-id="100" style="float:none !important;box-sizing:content-box;display:inline-block;min-width:0px;max-width:100% !important;padding:0;min-height:0px;line-height:0px;"></span><script>!function(){function t(t,r){var n="undefined"!=typeof Symbol&&t[Symbol.iterator]||t["@@iterator"];if(!n){if(Array.isArray(t)||(n=function(t,r){if(t){if("string"==typeof t)return e(t,r);var n=Object.prototype.toString.call(t).slice(8,-1);return"Object"===n&&t.constructor&&(n=t.constructor.name),"Map"===n||"Set"===n?Array.from(t):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?e(t,r):void 0}}(t))||r&&t&&"number"==typeof t.length){n&&(t=n);var a=0,o=function(){};return{s:o,n:function(){return a>=t.length?{done:!0}:{done:!1,value:t[a++]}},e:function(t){throw t},f:o}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var i,u=!0,s=!1;return{s:function(){n=n.call(t)},n:function(){var t=n.next();return u=t.done,t},e:function(t){s=!0,i=t},f:function(){try{u||null==n.return||n.return()}finally{if(s)throw i}}}}function e(t,e){(null==e||e>t.length)&&(e=t.length);for(var r=0,n=new Array(e);r<e;r++)n[r]=t[r];return n}!function(){var e=function(t){var e=getComputedStyle(t);if(-1===parseInt(e.bottom,10)){var r=t.offsetHeight||300;t.style.bottom=-r+"px"}};function r(){return document.querySelector('ins[data-anchor-shown="true"][data-anchor-status="displayed"]')}function n(t){var e=t.querySelector("iframe");e&&requestAnimationFrame((function(){var r=parseFloat(getComputedStyle(e).height);isNaN(r)||t.style.setProperty("height","".concat(r+5,"px"),"important")}))}function a(t){t.style.setProperty("width","100%","important"),t.style.maxWidth="none"}function o(t){var e=t.querySelector("iframe");e&&(e.style.setProperty("display","block","important"),e.style.setProperty("margin","0 auto","important"));var r=t.querySelector("[id$='__container__']");r&&r.style.setProperty("display","contents","important")}new MutationObserver((function(r){var n,a=t(r);try{for(a.s();!(n=a.n()).done;){var o=n.value;if("attributes"===o.type){var i=o.target;i.matches("[data-anchor-status]")&&("data-anchor-status"===o.attributeName&&"dismissed"===i.getAttribute("data-anchor-status")&&e(i),"style"===o.attributeName&&"dismissed"===i.getAttribute("data-anchor-status")&&e(i))}}}catch(t){a.e(t)}finally{a.f()}})).observe(document.documentElement,{subtree:!0,attributes:!0,attributeFilter:["style","data-anchor-status"]});var i=new WeakSet;function u(e){e&&(i.has(e)||(i.add(e),new MutationObserver((function(r){var i,u=t(r);try{for(u.s();!(i=u.n()).done;){var s=i.value;"style"===s.attributeName?(n(e),a(e),o(e)):"attributes"===s.type&&"data-google-query-id"===s.attributeName&&o(e)}}catch(t){u.e(t)}finally{u.f()}})).observe(e,{attributes:!0,attributeFilter:["style","data-google-query-id"]})))}!function(){var t=r();if(t)return n(t),a(t),o(t),void u(t);var e=new MutationObserver((function(){var t=r();t&&(n(t),a(t),o(t),u(t),e.disconnect())}));e.observe(document.body,{attributes:!0,subtree:!0,childList:!0})}()}()}();</script>
+<script data-ezscrex="false" data-cfasync="false">
+		window.humixPlayers = window.humixPlayers || [];
+		window.humixPlayers.push({ target: 'autoinsert', isGenerated: true });
+	</script>
+<script type='text/javascript' style='display:none;' async>if (typeof window.__ez !== 'undefined' && window.__ez?.queue?.addFileOnce) {window.__ez.queue.addFileOnce('identity', 'https://go.ezodn.com/detroitchicago/indy.js?cb=88&gcb=0', true, [], true, false, false, true);} </script>
+<script src="/detroitchicago/ezonetap.js?gcb=195-5&cb=10"></script><script data-cfasync="false">function _emitEzConsentEvent(){var customEvent=new CustomEvent("ezConsentEvent",{detail:{ezTcfConsent:window.ezTcfConsent},bubbles:true,cancelable:true,});document.dispatchEvent(customEvent);}
+(function(window,document){function _setAllEzConsentTrue(){window.ezTcfConsent.loaded=true;window.ezTcfConsent.store_info=true;window.ezTcfConsent.develop_and_improve_services=true;window.ezTcfConsent.measure_ad_performance=true;window.ezTcfConsent.measure_content_performance=true;window.ezTcfConsent.select_basic_ads=true;window.ezTcfConsent.create_ad_profile=true;window.ezTcfConsent.select_personalized_ads=true;window.ezTcfConsent.create_content_profile=true;window.ezTcfConsent.select_personalized_content=true;window.ezTcfConsent.understand_audiences=true;window.ezTcfConsent.use_limited_data_to_select_content=true;window.ezTcfConsent.select_personalized_content=true;}
+function _clearEzConsentCookie(){document.cookie="ezCMPCookieConsent=tcf2;Domain=.plantuml.com;Path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT";}
+_clearEzConsentCookie();if(typeof window.__tcfapi!=="undefined"){window.ezgconsent=false;var amazonHasRun=false;function _ezAllowed(tcdata,purpose){return(tcdata.purpose.consents[purpose]||tcdata.purpose.legitimateInterests[purpose]);}
+function _handleConsentDecision(tcdata){window.ezTcfConsent.loaded=true;if(!tcdata.vendor.consents["347"]&&!tcdata.vendor.legitimateInterests["347"]){window._emitEzConsentEvent();return;}
+window.ezTcfConsent.store_info=_ezAllowed(tcdata,"1");window.ezTcfConsent.develop_and_improve_services=_ezAllowed(tcdata,"10");window.ezTcfConsent.measure_content_performance=_ezAllowed(tcdata,"8");window.ezTcfConsent.select_basic_ads=_ezAllowed(tcdata,"2");window.ezTcfConsent.create_ad_profile=_ezAllowed(tcdata,"3");window.ezTcfConsent.select_personalized_ads=_ezAllowed(tcdata,"4");window.ezTcfConsent.create_content_profile=_ezAllowed(tcdata,"5");window.ezTcfConsent.measure_ad_performance=_ezAllowed(tcdata,"7");window.ezTcfConsent.use_limited_data_to_select_content=_ezAllowed(tcdata,"11");window.ezTcfConsent.select_personalized_content=_ezAllowed(tcdata,"6");window.ezTcfConsent.understand_audiences=_ezAllowed(tcdata,"9");window._emitEzConsentEvent();}
+function _handleGoogleConsentV2(tcdata){if(!tcdata||!tcdata.purpose||!tcdata.purpose.consents){return;}
+var googConsentV2={};if(tcdata.purpose.consents[1]){googConsentV2.ad_storage='granted';googConsentV2.analytics_storage='granted';}
+if(tcdata.purpose.consents[3]&&tcdata.purpose.consents[4]){googConsentV2.ad_personalization='granted';}
+if(tcdata.purpose.consents[1]&&tcdata.purpose.consents[7]){googConsentV2.ad_user_data='granted';}
+if(googConsentV2.analytics_storage=='denied'){gtag('set','url_passthrough',true);}
+gtag('consent','update',googConsentV2);}
+__tcfapi("addEventListener",2,function(tcdata,success){if(!success||!tcdata){window._emitEzConsentEvent();return;}
+if(!tcdata.gdprApplies){_setAllEzConsentTrue();window._emitEzConsentEvent();return;}
+if(tcdata.eventStatus==="useractioncomplete"||tcdata.eventStatus==="tcloaded"){if(typeof gtag!='undefined'){_handleGoogleConsentV2(tcdata);}
+_handleConsentDecision(tcdata);if(tcdata.purpose.consents["1"]===true&&tcdata.vendor.consents["755"]!==false){window.ezgconsent=true;(adsbygoogle=window.adsbygoogle||[]).pauseAdRequests=0;}
+if(window.__ezconsent){__ezconsent.setEzoicConsentSettings(ezConsentCategories);}
+__tcfapi("removeEventListener",2,function(success){return null;},tcdata.listenerId);if(!(tcdata.purpose.consents["1"]===true&&_ezAllowed(tcdata,"2")&&_ezAllowed(tcdata,"3")&&_ezAllowed(tcdata,"4"))){if(typeof __ez=="object"&&typeof __ez.bit=="object"&&typeof window["_ezaq"]=="object"&&typeof window["_ezaq"]["page_view_id"]=="string"){__ez.bit.Add(window["_ezaq"]["page_view_id"],[new __ezDotData("non_personalized_ads",true),]);}}}});}else{_setAllEzConsentTrue();window._emitEzConsentEvent();}})(window,document);</script></body></html>

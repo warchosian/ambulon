@@ -4,9 +4,9 @@ Utilizes core logic from app.wikisi.core.scraper.
 Handles CLI arguments, configuration loading, and logging.
 """
 
-import typer
+import sys
+import argparse
 import logging
-import os
 from pathlib import Path
 from typing import Optional
 
@@ -15,64 +15,68 @@ from ..core.scraper import WikiSIScraper, load_config
 
 logger = logging.getLogger(__name__)
 
-app = typer.Typer()
 
-@app.command(
-    help="""
-    Recursively scrapes a WikiSI website and downloads all HTML pages.
-    Supports configuration via YAML, environment variables, and CLI arguments.
+def main(argv=None):
+    """
+    Entry point for wikisi-scrape command.
 
-    Configuration Hierarchy (from highest to lowest priority):
-    1. Command-line arguments
-    2. YAML configuration file (`--config`)
-    3. Environment variables
-    4. Default values
-    """
-)
-def main(
-    url: Optional[str] = typer.Option(None, "--url", "-u", help="Starting URL (overrides config)."),
-    output_dir: Optional[Path] = typer.Option(None, "--output", "-o", help="Output directory (overrides config)."),
-    config_path: Optional[Path] = typer.Option(None, "--config", "-c", help="Path to a YAML configuration file."),
-    
-    # Global options
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging."),
-    quiet: bool = typer.Option(False, "--quiet", "-q", help="Suppress most output messages."),
+    Args:
+        argv: Command-line arguments (list), or None to use sys.argv
 
-    # Scraper specific options
-    max_depth: Optional[int] = typer.Option(None, "--depth", "-d", help="Maximum crawl depth (-1 for unlimited, overrides config)."),
-    delay: Optional[float] = typer.Option(None, "--delay", help="Delay between requests in seconds (overrides config)."),
-):
+    Returns:
+        Exit code (0 for success, non-zero for error)
     """
-    CLI for WikiSI website scraping.
-    """
+    parser = argparse.ArgumentParser(
+        description="""
+        Recursively scrapes a WikiSI website and downloads all HTML pages.
+        Supports configuration via YAML, environment variables, and CLI arguments.
+
+        Configuration Hierarchy (from highest to lowest priority):
+        1. Command-line arguments
+        2. YAML configuration file (--config)
+        3. Environment variables
+        4. Default values
+        """
+    )
+
+    parser.add_argument("--url", "-u", help="Starting URL (overrides config).")
+    parser.add_argument("--output", "-o", help="Output directory (overrides config).")
+    parser.add_argument("--config", "-c", help="Path to a YAML configuration file.")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose logging.")
+    parser.add_argument("--quiet", "-q", action="store_true", help="Suppress most output messages.")
+    parser.add_argument("--depth", "-d", type=int, help="Maximum crawl depth (-1 for unlimited, overrides config).")
+    parser.add_argument("--delay", type=float, help="Delay between requests in seconds (overrides config).")
+
+    args = parser.parse_args(argv)
+
     # Configure logging
-    log_level = logging.DEBUG if verbose else (logging.WARNING if quiet else logging.INFO)
+    log_level = logging.DEBUG if args.verbose else (logging.WARNING if args.quiet else logging.INFO)
     setup_logging(level=log_level, log_file_prefix="wikisi_scraper")
     logger.info("[START] Starting wikisi-scraper module.")
-    logger.debug(f"CLI arguments: {typer.Context.get_current().params}")
+    logger.debug(f"CLI arguments: {vars(args)}")
 
     try:
         # Load configuration (merges defaults, env vars, then YAML)
-        config = load_config(str(config_path) if config_path else None)
+        config = load_config(args.config if args.config else None)
 
         # Apply CLI overrides (highest priority)
-        if url:
-            config['site']['base_url'] = url
-        if output_dir:
-            config['output']['directory'] = str(output_dir) # Ensure it's a string for internal config
-        if max_depth is not None:
-            config['site']['max_depth'] = max_depth
-        if delay is not None:
-            config['site']['delay'] = delay
-        if verbose: # CLI verbose flag overrides config logging level
+        if args.url:
+            config['site']['base_url'] = args.url
+        if args.output:
+            config['output']['directory'] = args.output
+        if args.depth is not None:
+            config['site']['max_depth'] = args.depth
+        if args.delay is not None:
+            config['site']['delay'] = args.delay
+        if args.verbose:  # CLI verbose flag overrides config logging level
             config['logging']['level'] = 'debug'
-        elif quiet: # CLI quiet flag overrides config logging level
+        elif args.quiet:  # CLI quiet flag overrides config logging level
             config['logging']['level'] = 'warning'
 
         # Validate base URL
         if not config['site']['base_url'] or config['site']['base_url'] == 'https://wikisi.example.gouv.fr':
             logger.error("Error: Please configure base_url in config file, environment variable (WIKISI_BASE_URL), or provide --url argument.")
-            raise typer.Exit(code=1)
+            return 1
 
         # Create scraper instance
         scraper = WikiSIScraper(config)
@@ -97,15 +101,16 @@ def main(
             logger.warning(f"\nWarning: {stats['pages_failed']} pages failed to download.")
             logger.warning("Check the log file for details.")
 
-        raise typer.Exit(code=0)
+        return 0
 
     except KeyboardInterrupt:
         logger.warning("\nScraping interrupted by user.")
-        raise typer.Exit(code=1)
+        return 1
 
     except Exception as e:
         logger.error(f"Error: Scraping failed: {e}", exc_info=True)
-        raise typer.Exit(code=1)
+        return 1
+
 
 if __name__ == '__main__':
-    app()
+    sys.exit(main())

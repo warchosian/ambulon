@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "ambulon": {
+      "command": "python",
+      "args": ["mcp_server_standalone.py"],
+      "cwd": "G:/WarchoLife/WarchoDevplace/Gitlab_Applications/ambulon",
+      "env": {
+        "PYTHONPATH": "G:/WarchoLife/WarchoDevplace/Gitlab_Applications/ambulon/src"
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ from app.scan.commands.scan import main as scan_main
 from app.ocr.commands.ocr import main as ocr_main
 from app.mcp.commands.run_server import main as mcp_main
 from app.mcp.core.config import export_mcp_config, get_claude_config_path
-from app.gitlab.commands.gitlab_clone import app as gitlab_clone_app
+from app.gitlab.commands.gitlab_clone import main as gitlab_clone_main
 
 # Modules de conversion
 from app.conversion import (
@@ -43,8 +43,10 @@ from app.processing import (
     flatten_md_cli,
     make_html_interactive,
     merge_html_cli,
+    merge_md_cli,
+    md2project_cli,
+    project2md_cli,
     fusion_markdown_files,
-    md2project,
     project_to_markdown,
 )
 
@@ -718,96 +720,37 @@ def main():
                 sys.argv = original_argv
         elif command == 'check-utf8':
             # Vérifier l'encodage des fichiers Markdown
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                check_md_cli() # Call the typer app directly
-                return 0 # Typer handles exit codes internally
-            finally:
-                sys.argv = original_argv
+            return check_md_cli(sys.argv[2:])
         elif command == 'fix-utf8':
             # Corriger l'encodage des fichiers Markdown
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                return fix_md_cli()
-            finally:
-                sys.argv = original_argv
+            return fix_md_cli(sys.argv[2:])
         elif command == 'wikisi-extract':
             # Extraire et filtrer des applications depuis JSON
             from app.wikisi import wikisi_extract_json_cli
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                wikisi_extract_json_cli()
-                return 0
-            finally:
-                sys.argv = original_argv
+            return wikisi_extract_json_cli(sys.argv[2:])
         elif command == 'wikisi-md':
             # Convertir parc applicatif JSON en Markdown
             from app.wikisi import wikisi_json_to_md_cli
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                wikisi_json_to_md_cli()
-                return 0
-            finally:
-                sys.argv = original_argv
+            return wikisi_json_to_md_cli(sys.argv[2:])
         elif command == 'wikisi-scrape':
             # Aspirer récursivement un site web WikiSI
-            from app.wikisi import wikisi_scraper_cli
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                wikisi_scraper_cli()
-                return 0
-            finally:
-                sys.argv = original_argv
+            from app.wikisi.commands.wikisi_scraper import main as wikisi_scrape_main
+            return wikisi_scrape_main(sys.argv[2:])
         elif command == 'add-toc-html':
             # Ajouter TOC à HTML
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                add_toc4html_cli()
-                return 0
-            finally:
-                sys.argv = original_argv
+            return add_toc4html_cli(sys.argv[2:])
         elif command == 'add-toc-md':
             # Ajouter TOC à Markdown
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                add_toc4md_cli()
-                return 0
-            finally:
-                sys.argv = original_argv
+            return add_toc4md_cli(sys.argv[2:])
         elif command == 'concat-html':
             # Concaténer HTML
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                concat_html_cli()
-                return 0
-            finally:
-                sys.argv = original_argv
+            return concat_html_cli(sys.argv[2:])
         elif command == 'flatten-html':
             # Aplatir HTML
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                flatten_html_cli()
-                return 0
-            finally:
-                sys.argv = original_argv
+            return flatten_html_cli(sys.argv[2:])
         elif command == 'flatten-md':
             # Aplatir Markdown
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                flatten_md_cli()
-                return 0
-            finally:
-                sys.argv = original_argv
+            return flatten_md_cli(sys.argv[2:])
         elif command == 'wikisi-flatten':
             # Aplatir WikiSI
             from app.wikisi import flatten_wikisi_directory
@@ -849,52 +792,23 @@ def main():
             return make_html_interactive(input_file, output, verbose)
         elif command == 'merge-html':
             # Fusionner HTML
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                merge_html_cli()
-                return 0
-            finally:
-                sys.argv = original_argv
+            return merge_html_cli(sys.argv[2:])
         elif command == 'merge-md':
             # Fusionner Markdown
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                merge_md_cli()
-                return 0
-            finally:
-                sys.argv = original_argv
+            return merge_md_cli(sys.argv[2:])
         elif command == 'md2project':
             # Convertir Markdown en projet
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                md2project_cli()
-                return 0
-            finally:
-                sys.argv = original_argv
+            return md2project_cli(sys.argv[2:])
         elif command == 'project2md':
             # Convertir projet en Markdown
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                project2md_cli()
-                return 0
-            finally:
-                sys.argv = original_argv
+            return project2md_cli(sys.argv[2:])
         elif command == 'config':
             return handle_config_command()
         elif command == 'init':
             return handle_init_command()
         elif command == 'gitlab-clone':
-            # Retirer 'gitlab-clone' des arguments et lancer le module gitlab
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + ['clone'] + sys.argv[2:]
-            try:
-                return gitlab_clone_app()
-            finally:
-                sys.argv = original_argv
+            # Cloner des projets GitLab depuis la configuration
+            return gitlab_clone_main(sys.argv[2:])
         elif command == 'test':
             return handle_test_command()
         # Commandes RAG PIAG

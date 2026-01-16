@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang='fr'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>API PIAG - Informations - Intégration VSCode</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+    .page { margin-bottom: 40px; padding: 20px; border: 1px solid #ddd; background: #fff; }
+    .page-number { color: #666; font-style: italic; margin-bottom: 15px; }
+    p { margin: 10px 0; }
+    img { max-width: 100%; height: auto; margin: 15px 0; }
+    h1, h2, h3 { color: #333; }
+  </style>
+</head>
+<body>
+  <h1>API PIAG - Informations - Intégration VSCode</h1>
+  <div class='page'>
+    <div class='page-number'>Page 1</div>
+    <p> / Offre API PIAG / API PIAG - Appels CHAT<br>API PIAG - Appels CHAT<br>Phase d'expérimentations<br>L'offre API PIAG est en cours de construction.<br>Intégration dans VSCode<br>1- Installer l'extension "Continue - Codestral, Claude, and more" (https://www.continue.dev/) depuis l'onglet "Extensions" (barre verticale<br>gauche)<br>Warning<br>Tests effectués sur VSCode 1.99.3 avec la version 1.0.3 de cette extension.<br>2- Modifier le fichier de configuration "config.yaml" qui se trouve pour une installation windows sous "C:\Users\prenom.nom\.continue"<br>Note<br>Remplacer "sk-xxxxx" par une apiKey valide<br>name: Local Assistant<br>version: 1.0.0<br>schema: v1<br>models:<br>  - name: MTE-preprod-mistral-medium-latest<br>    provider: mistral<br>    model: mte-api-piag-mistral-medium-latest<br>    apiKey: sk-xxxxx<br>    apiBase: https://preprod.api.piag.e2.rie.gouv.fr/<br>context:<br>  - provider: code<br>  - provider: docs<br>  - provider: diff<br>  - provider: terminal<br>  - provider: problems<br>  - provider: folder<br>  - provider: codebase<br>3- cliquer sur l'onglet "Continue" (barre verticale gauche) et sélectionner l'assistant local configuré "MTE-preprod-mistral-medium-latest"<br></p>
+  </div>
+</body>
+</html>
