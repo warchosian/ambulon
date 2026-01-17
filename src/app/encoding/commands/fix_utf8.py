@@ -4,7 +4,8 @@ Utilizes the core fixing logic from app.encoding.core.fixer.
 Handles CLI arguments, configuration loading, and logging.
 """
 
-import typer
+import sys
+import argparse
 import logging
 import os
 from pathlib import Path
@@ -16,8 +17,6 @@ from ..core.fixer import fix_markdown_files
 
 logger = logging.getLogger(__name__)
 
-app = typer.Typer()
-
 DEFAULT_CONFIG = {
     'encoding': {
         'fix_utf8': {
@@ -26,9 +25,9 @@ DEFAULT_CONFIG = {
     }
 }
 
-@app.command(
-    help="""
-    Fixes UTF-8 encoding and common content issues in Markdown files.
+def main(argv=None):
+    """
+    CLI for fixing UTF-8 encoding and content issues in Markdown files.
 
     Configuration Hierarchy (from highest to lowest priority):
     1. Command-line arguments
@@ -36,40 +35,73 @@ DEFAULT_CONFIG = {
     3. Environment variables (e.g., FIX_UTF8_BACKUP)
     4. Default values
     """
-)
-def main(
-    patterns: List[str] = typer.Argument(..., help="Glob pattern(s) for Markdown files (e.g., 'si/**/*.md', 'docs/*.md')."),
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Not used for this command, but kept for compatibility."),
-    config_path: Optional[Path] = typer.Option(None, "--config", "-c", help="Path to a YAML configuration file (e.g., config/encoding.yaml)."),
-    
-    # Global options
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging."),
-    quiet: bool = typer.Option(False, "--quiet", "-q", help="Suppress most output messages."),
+    parser = argparse.ArgumentParser(
+        description="""
+Fixes UTF-8 encoding and common content issues in Markdown files.
 
-    # Fix specific options
-    dry_run: bool = typer.Option(False, "--dry-run", "-n", help="Simulate changes without modifying files."),
-    backup: Optional[bool] = typer.Option(None, "--backup", help="Create a .bak file before modification. Overrides config/env."),
-):
-    """
-    CLI for fixing UTF-8 encoding and content issues in Markdown files.
-    """
+Configuration Hierarchy (from highest to lowest priority):
+1. Command-line arguments
+2. YAML configuration file (--config, e.g., config/encoding.yaml)
+3. Environment variables (e.g., FIX_UTF8_BACKUP)
+4. Default values
+        """,
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+
+    parser.add_argument(
+        "patterns",
+        nargs='+',
+        help="Glob pattern(s) for Markdown files (e.g., 'si/**/*.md', 'docs/*.md')."
+    )
+    parser.add_argument(
+        "-o", "--output",
+        type=Path,
+        help="Not used for this command, but kept for compatibility."
+    )
+    parser.add_argument(
+        "-c", "--config",
+        type=Path,
+        help="Path to a YAML configuration file (e.g., config/encoding.yaml)."
+    )
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Enable verbose logging."
+    )
+    parser.add_argument(
+        "-q", "--quiet",
+        action="store_true",
+        help="Suppress most output messages."
+    )
+    parser.add_argument(
+        "-n", "--dry-run",
+        action="store_true",
+        help="Simulate changes without modifying files."
+    )
+    parser.add_argument(
+        "--backup",
+        action="store_true",
+        help="Create a .bak file before modification. Overrides config/env."
+    )
+
+    args = parser.parse_args(argv)
+
     # Configure logging
-    log_level = logging.DEBUG if verbose else (logging.WARNING if quiet else logging.INFO)
+    log_level = logging.DEBUG if args.verbose else (logging.WARNING if args.quiet else logging.INFO)
     setup_logging(level=log_level, log_file_prefix="fix_utf8")
     logger.info("[START] Starting fix-utf8 module.")
-    logger.debug(f"CLI arguments: {typer.Context.get_current().params}")
 
     # Load configuration
-    config = load_app_config(str(config_path) if config_path else None, DEFAULT_CONFIG)
+    config = load_app_config(str(args.config) if args.config else None, DEFAULT_CONFIG)
     fix_config = config['encoding']['fix_utf8']
 
     # Apply CLI overrides (highest priority) and resolve config
-    final_backup = backup if backup is not None else fix_config.get('backup', DEFAULT_CONFIG['encoding']['fix_utf8']['backup'])
+    final_backup = args.backup if args.backup else fix_config.get('backup', DEFAULT_CONFIG['encoding']['fix_utf8']['backup'])
 
     # Execute fixing logic
     results = fix_markdown_files(
-        patterns=patterns,
-        dry_run=dry_run,
+        patterns=args.patterns,
+        dry_run=args.dry_run,
         backup=final_backup
     )
 
@@ -77,17 +109,20 @@ def main(
     for r in results:
         status = "✅" if r.get('success', False) else "❌"
         msg = r.get('message', 'No message')
-        path_str = Path(r['path']).relative_to(Path.cwd()) if 'path' in r else 'Unknown Path'
+        try:
+            path_str = os.path.relpath(r['path']) if 'path' in r else 'Unknown Path'
+        except (ValueError, KeyError):
+            path_str = r.get('path', 'Unknown Path')
         logger.log(logging.INFO if r.get('success', False) else logging.ERROR, f"{status} {path_str} → {msg}")
         if not r.get('success', False):
             has_errors = True
-    
+
     if has_errors:
         logger.error("\nCompleted with errors.")
-        raise typer.Exit(code=1)
+        return 1
     else:
         logger.info("\nAll specified Markdown files processed successfully.")
-        raise typer.Exit(code=0)
+        return 0
 
 if __name__ == '__main__':
-    app()
+    sys.exit(main())

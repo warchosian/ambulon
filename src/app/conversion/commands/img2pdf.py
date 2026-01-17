@@ -6,12 +6,12 @@ Suit la hiérarchie de configuration standard et les pratiques de logging.
 
 import os
 import sys
+import argparse
 import logging
 from pathlib import Path
 from io import BytesIO
 from typing import List, Dict, Any, Optional
 
-import typer
 from app.core.config_loader import load_config as load_app_config
 from app.core.logging_config import setup_logging
 
@@ -24,8 +24,6 @@ except ImportError:
 
 # Setup logger for this module
 logger = logging.getLogger(__name__)
-
-app = typer.Typer()
 
 DEFAULT_CONFIG = {
     "conversion": {
@@ -123,9 +121,9 @@ def images_to_pdf(
         logger.error(f"Failed to create PDF: {e}", exc_info=True)
         return None
 
-@app.command(
-    help="""
-    Converts all images in a directory to a single PDF file.
+def main(argv=None):
+    """
+    CLI for converting images in a directory to a single PDF file.
 
     Configuration Hierarchy (from highest to lowest priority):
     1. Command-line arguments (e.g., --output)
@@ -133,53 +131,105 @@ def images_to_pdf(
     3. Environment variables (e.g., IMG2PDF_COMPRESS, IMG2PDF_QUALITY)
     4. Default values
     """
-)
-def main(
-    directory: Path = typer.Argument(..., help="Directory containing images to convert.", exists=True, file_okay=False, dir_okay=True, readable=True),
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Path to the output PDF file (default: <directory_name>.pdf in the source directory)."),
-    compress: Optional[bool] = typer.Option(None, "--compress", "-c", help="Enable compression to reduce PDF size. Overrides config/env."),
-    quality: Optional[int] = typer.Option(None, "--quality", "-q", min=1, max=100, help="JPEG quality for compression (1-100, default: 85). Lower values = smaller file but lower quality. Overrides config/env."),
-    config_path: Optional[Path] = typer.Option(None, "--config", help="Path to a YAML configuration file."),
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging.")
-):
-    """
-    CLI for converting images in a directory to a single PDF file.
-    """
+    parser = argparse.ArgumentParser(
+        description="""
+Converts all images in a directory to a single PDF file.
+
+Configuration Hierarchy (from highest to lowest priority):
+1. Command-line arguments (e.g., --output)
+2. YAML configuration file (--config)
+3. Environment variables (e.g., IMG2PDF_COMPRESS, IMG2PDF_QUALITY)
+4. Default values
+        """,
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+
+    parser.add_argument(
+        "directory",
+        type=Path,
+        help="Directory containing images to convert."
+    )
+    parser.add_argument(
+        "-o", "--output",
+        type=Path,
+        help="Path to the output PDF file (default: <directory_name>.pdf in the source directory)."
+    )
+    parser.add_argument(
+        "-c", "--compress",
+        action="store_true",
+        help="Enable compression to reduce PDF size. Overrides config/env."
+    )
+    parser.add_argument(
+        "-q", "--quality",
+        type=int,
+        help="JPEG quality for compression (1-100, default: 85). Lower values = smaller file but lower quality. Overrides config/env."
+    )
+    parser.add_argument(
+        "--config",
+        type=Path,
+        help="Path to a YAML configuration file."
+    )
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Enable verbose logging."
+    )
+
+    args = parser.parse_args(argv)
+
     # Setup logging
-    central_setup_logging(verbose)
+    setup_logging(logging.DEBUG if args.verbose else logging.INFO, log_file_prefix="img2pdf")
+
+    # Check if directory exists
+    if not args.directory.exists():
+        logger.error(f"Directory does not exist: {args.directory}")
+        return 1
+    if not args.directory.is_dir():
+        logger.error(f"Path is not a directory: {args.directory}")
+        return 1
 
     # Determine default config file path
+    config_path = args.config
     default_config_file = Path("config/img2pdf.yaml")
     if config_path is None and default_config_file.exists():
         config_path = default_config_file
 
     # Load config from YAML, substituting env vars, merged over defaults
     config = load_app_config(str(config_path) if config_path else None, DEFAULT_CONFIG)
-    
+
     # Extract values with hierarchy: CLI > Config > Env > Default
-    final_compress = compress if compress is not None else config['conversion']['img2pdf'].get('compress', DEFAULT_CONFIG['conversion']['img2pdf']['compress'])
-    final_quality = quality if quality is not None else config['conversion']['img2pdf'].get('quality', DEFAULT_CONFIG['conversion']['img2pdf']['quality'])
+    final_compress = args.compress if args.compress else config['conversion']['img2pdf'].get('compress', DEFAULT_CONFIG['conversion']['img2pdf']['compress'])
+    final_quality = args.quality if args.quality is not None else config['conversion']['img2pdf'].get('quality', DEFAULT_CONFIG['conversion']['img2pdf']['quality'])
+
+    # Validate quality range
+    if not 1 <= final_quality <= 100:
+        logger.error(f"Quality must be between 1 and 100, got: {final_quality}")
+        return 1
 
     # Determine output path if not provided
+    output = args.output
     if output is None:
-        output = directory / (directory.name + ".pdf")
+        output = args.directory / (args.directory.name + ".pdf")
 
     # Execute conversion
     result_path = images_to_pdf(
-        directory=directory,
+        directory=args.directory,
         output_path=output,
         compress=final_compress,
         quality=final_quality,
-        verbose=verbose
+        verbose=args.verbose
     )
 
     if result_path:
-        relative_path = os.path.relpath(result_path)
+        try:
+            relative_path = os.path.relpath(result_path)
+        except ValueError:
+            relative_path = result_path
         print(f"\n✓ Conversion réussie !\nFichier produit : {relative_path}")
-        raise typer.Exit(code=0)
+        return 0
     else:
         logger.error("Image to PDF conversion failed.")
-        raise typer.Exit(code=1)
+        return 1
 
 if __name__ == '__main__':
-    app()
+    sys.exit(main())

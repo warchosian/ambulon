@@ -6,11 +6,11 @@ Follows the standard configuration hierarchy and logging practices.
 
 import sys
 import os
+import argparse
 import logging
 from pathlib import Path
 from typing import Optional
 
-import typer
 from app.core.config_loader import load_config as load_app_config
 from app.core.logging_config import setup_logging
 
@@ -21,8 +21,6 @@ except ImportError:
 
 # Setup logger for this module
 logger = logging.getLogger(__name__)
-
-app = typer.Typer()
 
 DEFAULT_CONFIG = {
     "conversion": {
@@ -95,9 +93,9 @@ def convert_pdf_to_html(
         logger.error(f"An error occurred during PDF to HTML conversion: {e}", exc_info=True)
         return None
 
-@app.command(
-    help="""
-    Converts a PDF file to HTML.
+def main(argv=None):
+    """
+    CLI for converting a PDF file to HTML.
 
     Configuration Hierarchy (from highest to lowest priority):
     1. Command-line arguments (e.g., --output)
@@ -105,50 +103,94 @@ def convert_pdf_to_html(
     3. Environment variables (not yet implemented for this command)
     4. Default values
     """
-)
-def main(
-    input_file: Path = typer.Argument(..., help="Input PDF file.", exists=True, file_okay=True, dir_okay=False, readable=True),
-    output_file: Optional[Path] = typer.Option(None, "--output", "-o", help="Output HTML file (default: same name with .html extension)."),
-    include_images: bool = typer.Option(DEFAULT_CONFIG['conversion']['pdf2html']['include_images'], "--include-images", help="Include images from the PDF."),
-    page_numbers: bool = typer.Option(DEFAULT_CONFIG['conversion']['pdf2html']['page_numbers'], "--page-numbers", help="Include page numbers in the output."),
-    config_path: Optional[Path] = typer.Option(None, "--config", "-c", help="Path to a YAML configuration file."),
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging.")
-):
-    """
-    CLI for converting a PDF file to HTML.
-    """
+    parser = argparse.ArgumentParser(
+        description="""
+Converts a PDF file to HTML.
+
+Configuration Hierarchy (from highest to lowest priority):
+1. Command-line arguments (e.g., --output)
+2. YAML configuration file (--config)
+3. Environment variables (not yet implemented for this command)
+4. Default values
+        """,
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+
+    parser.add_argument(
+        "input_file",
+        type=Path,
+        help="Input PDF file."
+    )
+    parser.add_argument(
+        "-o", "--output",
+        type=Path,
+        help="Output HTML file (default: same name with .html extension)."
+    )
+    parser.add_argument(
+        "--include-images",
+        action="store_true",
+        help="Include images from the PDF."
+    )
+    parser.add_argument(
+        "--page-numbers",
+        action="store_true",
+        default=DEFAULT_CONFIG['conversion']['pdf2html']['page_numbers'],
+        help="Include page numbers in the output (default: True)."
+    )
+    parser.add_argument(
+        "-c", "--config",
+        type=Path,
+        help="Path to a YAML configuration file."
+    )
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Enable verbose logging."
+    )
+
+    args = parser.parse_args(argv)
+
     # Setup logging
-    setup_logging(verbose)
+    setup_logging(logging.DEBUG if args.verbose else logging.INFO, log_file_prefix="pdf2html")
+
+    # Check if input file exists
+    if not args.input_file.exists():
+        logger.error(f"Input file does not exist: {args.input_file}")
+        return 1
+    if not args.input_file.is_file():
+        logger.error(f"Path is not a file: {args.input_file}")
+        return 1
 
     # Determine output path if not provided
+    output_file = args.output
     if output_file is None:
-        output_file = input_file.with_suffix('.html')
+        output_file = args.input_file.with_suffix('.html')
 
-    # Config loading (example, though this command has few config options)
-    config = load_app_config(str(config_path) if config_path else None, DEFAULT_CONFIG)
-    final_include_images = include_images or config['conversion']['pdf2html'].get('include_images', False)
-    final_page_numbers = page_numbers or config['conversion']['pdf2html'].get('page_numbers', True)
+    # Config loading
+    config = load_app_config(str(args.config) if args.config else None, DEFAULT_CONFIG)
+    final_include_images = args.include_images or config['conversion']['pdf2html'].get('include_images', False)
+    final_page_numbers = args.page_numbers or config['conversion']['pdf2html'].get('page_numbers', True)
 
     # Execute conversion
     result_path = convert_pdf_to_html(
-        input_file=input_file,
+        input_file=args.input_file,
         output_file=output_file,
         include_images=final_include_images,
         page_numbers=final_page_numbers,
-        verbose=verbose
+        verbose=args.verbose
     )
 
     if result_path:
         try:
-            relative_path = result_path.relative_to(Path.cwd())
+            relative_path = os.path.relpath(result_path)
         except ValueError:
             relative_path = result_path.resolve()
-        
-        print(f"\n✓ Conversion successful!\nFile produced: {relative_path}")
-        raise typer.Exit(code=0)
+
+        print(f"\n✓ Conversion réussie !\nFichier produit : {relative_path}")
+        return 0
     else:
         logger.error("PDF to HTML conversion failed.")
-        raise typer.Exit(code=1)
+        return 1
 
 if __name__ == '__main__':
-    app()
+    sys.exit(main())
