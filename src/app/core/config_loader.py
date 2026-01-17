@@ -48,6 +48,39 @@ def _replace_env_var(match: re.Match) -> str:
             raise ValueError(f"Required environment variable '{var_name}' is not set.")
         return value
 
+def find_config_file(config_name: str) -> Optional[Path]:
+    """
+    Searches for a configuration file in multiple locations.
+
+    Search order:
+    1. Current directory: ./config/<config_name>.yaml
+    2. User config directory: ~/.config/ambulon/<config_name>.yaml
+    3. Environment variable: $AMBULON_CONFIG_DIR/<config_name>.yaml
+
+    Args:
+        config_name: Name of the config file (without .yaml extension)
+
+    Returns:
+        Path to the config file if found, None otherwise.
+    """
+    search_paths = [
+        # 1. Current directory
+        Path.cwd() / "config" / f"{config_name}.yaml",
+        # 2. User config directory
+        Path.home() / ".config" / "ambulon" / f"{config_name}.yaml",
+    ]
+
+    # 3. Environment variable directory
+    env_config_dir = os.getenv("AMBULON_CONFIG_DIR")
+    if env_config_dir:
+        search_paths.append(Path(env_config_dir) / f"{config_name}.yaml")
+
+    for path in search_paths:
+        if path.exists():
+            return path
+
+    return None
+
 def load_config(
     config_path: Optional[str] = None,
     default_config: Optional[Dict[str, Any]] = None
@@ -57,7 +90,10 @@ def load_config(
     Performs environment variable substitution in the YAML file.
 
     Args:
-        config_path: Path to the YAML configuration file.
+        config_path: Path to the YAML configuration file. Can be:
+                    - Absolute path (e.g., /home/user/config/gitlab.yaml)
+                    - Relative path (e.g., config/gitlab.yaml)
+                    - Config name only (e.g., gitlab) - will search in standard locations
         default_config: A dictionary containing default configuration values.
 
     Returns:
@@ -72,6 +108,15 @@ def load_config(
     if config_path:
         # Expand ~ and environment variables in the path
         expanded_path = Path(config_path).expanduser()
+
+        # If path doesn't exist and looks like just a name (no path separators),
+        # try to find it in standard locations
+        if not expanded_path.exists() and "/" not in config_path and "\\" not in config_path:
+            # Remove .yaml extension if present
+            config_name = config_path.replace(".yaml", "")
+            found_path = find_config_file(config_name)
+            if found_path:
+                expanded_path = found_path
 
         if expanded_path.exists():
             try:
@@ -90,5 +135,5 @@ def load_config(
                 print(f"Error loading or parsing config file at '{config_path}': {e}", file=sys.stderr)
                 # In case of error, we stick with the defaults
                 pass
-            
+
     return config
