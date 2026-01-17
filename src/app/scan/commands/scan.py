@@ -3,9 +3,10 @@ CLI command for TWAIN scanning with DPI profiles for Ambulon.
 Handles configuration hierarchy, logging, and displays generated file paths.
 """
 
-import typer
+import argparse
 import logging
 import os
+import re
 import sys
 import subprocess # Needed for Popen for NAPS2 GUI
 from pathlib import Path
@@ -17,8 +18,6 @@ from app.scan.core.scanning import scan_document
 from app.scan.core.ocr import process_existing_files
 
 logger = logging.getLogger(__name__)
-
-app = typer.Typer()
 
 DEFAULT_CONFIG = {
     'scan': {
@@ -62,10 +61,9 @@ DEFAULT_CONFIG = {
     }
 }
 
-@app.command(
-    help="""
-    Scans documents using TWAIN compatible scanners (via NAPS2 Console).
-    Supports various scan options, OCR, and file processing.
+def main(argv=None):
+    """
+    CLI for TWAIN scanning.
 
     Configuration Hierarchy (from highest to lowest priority):
     1. Command-line arguments
@@ -83,127 +81,145 @@ DEFAULT_CONFIG = {
       NAPS2_CONSOLE_COMMAND Path to NAPS2.Console.exe
       TESSERACT_COMMAND     Path to tesseract executable
     """
-)
-def main(
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output directory or base file name (e.g., scans/ or scans/document). Required for scanning.", show_default=False),
-    config_path: Optional[Path] = typer.Option(None, "--config", "-c", help="Path to a YAML configuration file (e.g., config/scan.yaml)."),
-    
+    parser = argparse.ArgumentParser(
+        description="Scans documents using TWAIN compatible scanners (via NAPS2 Console).",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Configuration Hierarchy (from highest to lowest priority):
+1. Command-line arguments
+2. YAML configuration file (--config)
+3. Environment variables (SCAN_*, NAPS2_*, TESSERACT_*)
+4. Default values
+
+Environment variables:
+  SCAN_RESOLUTION       Default scan resolution (DPI)
+  SCAN_PROFILE          Default TWAIN profile
+  SCAN_FORMAT           Default output format
+  SCAN_OCR              Enable OCR by default (True/False)
+  SCAN_OCR_LANG         Default OCR language
+  NAPS2_CONSOLE_COMMAND Path to NAPS2.Console.exe
+  TESSERACT_COMMAND     Path to tesseract executable
+        """
+    )
+
+    # Main options
+    parser.add_argument("-o", "--output", type=Path, help="Output directory or base file name (e.g., scans/ or scans/document). Required for scanning.")
+    parser.add_argument("-c", "--config", type=Path, help="Path to a YAML configuration file (e.g., config/scan.yaml).")
+
     # Global options
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging."),
-    quiet: bool = typer.Option(False, "--quiet", "-q", help="Suppress most output messages."),
-    
+    parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose logging.")
+    parser.add_argument("-q", "--quiet", action="store_true", help="Suppress most output messages.")
+
     # Scan options
-    resolution: Optional[int] = typer.Option(None, "-r", "--resolution", min=100, max=1200, help="Scan resolution in DPI."),
-    profile: Optional[str] = typer.Option(None, "-p", "--profile", help="Predefined TWAIN profile (e.g., TWAIN-300ppp)."),
-    device: Optional[str] = typer.Option(None, "--device", help="Scanner device to use."),
-    source: Optional[str] = typer.Option(None, "--source", help="Scanner source (flatbed, adf, duplex)."),
-    color_mode: Optional[str] = typer.Option(None, "--color-mode", help="Color mode (color, grayscale, bw)."),
-    paper_size: Optional[str] = typer.Option(None, "--paper-size", help="Paper size (A4, A3, Letter, Legal, Custom)."),
-    orientation: Optional[str] = typer.Option(None, "--orientation", help="Orientation (portrait, landscape)."),
-    brightness: Optional[int] = typer.Option(None, "--brightness", min=-100, max=100, help="Brightness (-100 to 100)."),
-    contrast: Optional[int] = typer.Option(None, "--contrast", min=-100, max=100, help="Contrast (-100 to 100)."),
-    gamma: Optional[float] = typer.Option(None, "--gamma", min=0.1, max=3.0, help="Gamma correction (0.1 to 3.0)."),
-    
+    parser.add_argument("-r", "--resolution", type=int, help="Scan resolution in DPI (100-1200).")
+    parser.add_argument("-p", "--profile", type=str, help="Predefined TWAIN profile (e.g., TWAIN-300ppp).")
+    parser.add_argument("--device", type=str, help="Scanner device to use.")
+    parser.add_argument("--source", type=str, help="Scanner source (flatbed, adf, duplex).")
+    parser.add_argument("--color-mode", type=str, help="Color mode (color, grayscale, bw).")
+    parser.add_argument("--paper-size", type=str, help="Paper size (A4, A3, Letter, Legal, Custom).")
+    parser.add_argument("--orientation", type=str, help="Orientation (portrait, landscape).")
+    parser.add_argument("--brightness", type=int, help="Brightness (-100 to 100).")
+    parser.add_argument("--contrast", type=int, help="Contrast (-100 to 100).")
+    parser.add_argument("--gamma", type=float, help="Gamma correction (0.1 to 3.0).")
+
     # Output options
-    format: Optional[str] = typer.Option(None, "-f", "--format", help="Output format (pdf, png, jpg, jpeg, tiff, svg)."),
-    quality: Optional[int] = typer.Option(None, "--quality", min=1, max=100, help="Compression quality (1-100)."),
-    naming: Optional[str] = typer.Option(None, "--naming", help="Naming convention (date, sequence, custom)."),
-    increment: Optional[bool] = typer.Option(None, "--increment", help="Enable auto-incrementation of filename."),
-    no_increment: bool = typer.Option(False, "--no-increment", help="Disable auto-incrementation (use filename as-is). Overrides --increment if set."),
+    parser.add_argument("-f", "--format", type=str, help="Output format (pdf, png, jpg, jpeg, tiff, svg).")
+    parser.add_argument("--quality", type=int, help="Compression quality (1-100).")
+    parser.add_argument("--naming", type=str, help="Naming convention (date, sequence, custom).")
+    parser.add_argument("--increment", action="store_true", help="Enable auto-incrementation of filename.")
+    parser.add_argument("--no-increment", action="store_true", help="Disable auto-incrementation (use filename as-is).")
 
     # Post-scan processing options
-    ocr: Optional[bool] = typer.Option(None, "--ocr", help="Enable OCR after scan."),
-    lang: Optional[str] = typer.Option(None, "--lang", help="Language for OCR (e.g., fra, eng, fra+eng)."),
-    deskew: Optional[bool] = typer.Option(None, "--deskew", help="Automatic deskewing."),
-    despeckle: Optional[bool] = typer.Option(None, "--despeckle", help="Despeckle images."),
-    crop: Optional[bool] = typer.Option(None, "--crop", help="Automatic cropping."),
-    
+    parser.add_argument("--ocr", action="store_true", help="Enable OCR after scan.")
+    parser.add_argument("--lang", type=str, help="Language for OCR (e.g., fra, eng, fra+eng).")
+    parser.add_argument("--deskew", action="store_true", help="Automatic deskewing.")
+    parser.add_argument("--despeckle", action="store_true", help="Despeckle images.")
+    parser.add_argument("--crop", action="store_true", help="Automatic cropping.")
+
     # Batch options
-    number: Optional[int] = typer.Option(None, "-n", "--number", min=1, help="Number of scans to perform."),
-    pages: Optional[int] = typer.Option(None, "--pages", min=1, help="Number of pages to scan (for ADF)."),
-    batch: Optional[bool] = typer.Option(None, "--batch", help="Batch mode for multiple documents."),
-    separator: Optional[bool] = typer.Option(None, "--separator", help="Separator page between documents."),
-    auto_feed: Optional[bool] = typer.Option(None, "--auto-feed", help="Automatic document feeder (ADF)."),
-    
+    parser.add_argument("-n", "--number", type=int, help="Number of scans to perform.")
+    parser.add_argument("--pages", type=int, help="Number of pages to scan (for ADF).")
+    parser.add_argument("--batch", action="store_true", help="Batch mode for multiple documents.")
+    parser.add_argument("--separator", action="store_true", help="Separator page between documents.")
+    parser.add_argument("--auto-feed", action="store_true", help="Automatic document feeder (ADF).")
+
     # Advanced options
-    calibrate: Optional[bool] = typer.Option(None, "--calibrate", help="Calibrate scanner."),
-    test_pattern: Optional[bool] = typer.Option(None, "--test-pattern", help="Scan a test pattern."),
-    manual: Optional[bool] = typer.Option(False, "--manual", help="Open NAPS2 GUI for manual configuration."),
-    timeout: Optional[int] = typer.Option(None, "--timeout", min=1, help="Timeout for scan operations in seconds."),
-):
-    """
-    CLI for TWAIN scanning.
-    """
+    parser.add_argument("--calibrate", action="store_true", help="Calibrate scanner.")
+    parser.add_argument("--test-pattern", action="store_true", help="Scan a test pattern.")
+    parser.add_argument("--manual", action="store_true", help="Open NAPS2 GUI for manual configuration.")
+    parser.add_argument("--timeout", type=int, help="Timeout for scan operations in seconds.")
+
+    args = parser.parse_args(argv)
+
     # Configure logging
-    log_level = logging.DEBUG if verbose else (logging.WARNING if quiet else logging.INFO)
+    log_level = logging.DEBUG if args.verbose else (logging.WARNING if args.quiet else logging.INFO)
     setup_logging(level=log_level, log_file_prefix="scan")
     logger.info("[START] Starting scan module.")
-    logger.debug(f"CLI arguments: {typer.Context.get_current().params}")
 
     # Load configuration
-    config = load_app_config(str(config_path) if config_path else None, DEFAULT_CONFIG)
+    config = load_app_config(str(args.config) if args.config else None, DEFAULT_CONFIG)
     scan_config = config['scan']
     tool_config = config['tools']
 
     # Handle manual NAPS2 GUI option (special case, bypasses scanning)
-    if manual:
+    if args.manual:
         try:
             naps2_gui_executable = tool_config.get('naps2_gui_command', DEFAULT_CONFIG['tools']['naps2_gui_command'])
             if not Path(naps2_gui_executable).exists():
                 logger.error(f"NAPS2 GUI not found: {naps2_gui_executable}")
-                raise typer.Exit(code=1)
-            
+                return 1
+
             logger.info(f"Opening NAPS2 GUI: {naps2_gui_executable}")
             subprocess.Popen([naps2_gui_executable])
             logger.info("NAPS2 GUI opened.")
-            raise typer.Exit(code=0)
+            return 0
         except Exception as e:
             logger.error(f"Error opening NAPS2 GUI: {e}")
-            raise typer.Exit(code=1)
+            return 1
 
     # Validate output path
-    if output is None:
+    if args.output is None:
         logger.error("Error: --output/-o is required.")
-        raise typer.Exit(code=1)
-    
-    output_str = str(output)
+        return 1
+
+    output_str = str(args.output)
     has_wildcards = '*' in output_str or '?' in output_str
     has_extension = '.' in Path(output_str).name
-    
+
     # Apply CLI overrides (highest priority) and resolve config
-    final_resolution = resolution if resolution is not None else scan_config.get('resolution', DEFAULT_CONFIG['scan']['resolution'])
-    final_profile = profile if profile is not None else scan_config.get('profile', DEFAULT_CONFIG['scan']['profile'])
-    final_device = device if device is not None else scan_config.get('device', DEFAULT_CONFIG['scan']['device'])
-    final_source = source if source is not None else scan_config.get('source', DEFAULT_CONFIG['scan']['source'])
-    final_color_mode = color_mode if color_mode is not None else scan_config.get('color_mode', DEFAULT_CONFIG['scan']['color_mode'])
-    final_paper_size = paper_size if paper_size is not None else scan_config.get('paper_size', DEFAULT_CONFIG['scan']['paper_size'])
-    final_orientation = orientation if orientation is not None else scan_config.get('orientation', DEFAULT_CONFIG['scan']['orientation'])
-    final_brightness = brightness if brightness is not None else scan_config.get('brightness', DEFAULT_CONFIG['scan']['brightness'])
-    final_contrast = contrast if contrast is not None else scan_config.get('contrast', DEFAULT_CONFIG['scan']['contrast'])
-    final_gamma = gamma if gamma is not None else scan_config.get('gamma', DEFAULT_CONFIG['scan']['gamma'])
-    final_format = format if format is not None else scan_config.get('format', DEFAULT_CONFIG['scan']['format'])
-    final_quality = quality if quality is not None else scan_config.get('quality', DEFAULT_CONFIG['scan']['quality'])
-    final_naming = naming if naming is not None else scan_config.get('naming', DEFAULT_CONFIG['scan']['naming'])
-    final_increment = increment if increment is not None else scan_config.get('increment', DEFAULT_CONFIG['scan']['increment'])
-    
+    final_resolution = args.resolution if args.resolution is not None else scan_config.get('resolution', DEFAULT_CONFIG['scan']['resolution'])
+    final_profile = args.profile if args.profile is not None else scan_config.get('profile', DEFAULT_CONFIG['scan']['profile'])
+    final_device = args.device if args.device is not None else scan_config.get('device', DEFAULT_CONFIG['scan']['device'])
+    final_source = args.source if args.source is not None else scan_config.get('source', DEFAULT_CONFIG['scan']['source'])
+    final_color_mode = getattr(args, 'color_mode', None) if getattr(args, 'color_mode', None) is not None else scan_config.get('color_mode', DEFAULT_CONFIG['scan']['color_mode'])
+    final_paper_size = getattr(args, 'paper_size', None) if getattr(args, 'paper_size', None) is not None else scan_config.get('paper_size', DEFAULT_CONFIG['scan']['paper_size'])
+    final_orientation = args.orientation if args.orientation is not None else scan_config.get('orientation', DEFAULT_CONFIG['scan']['orientation'])
+    final_brightness = args.brightness if args.brightness is not None else scan_config.get('brightness', DEFAULT_CONFIG['scan']['brightness'])
+    final_contrast = args.contrast if args.contrast is not None else scan_config.get('contrast', DEFAULT_CONFIG['scan']['contrast'])
+    final_gamma = args.gamma if args.gamma is not None else scan_config.get('gamma', DEFAULT_CONFIG['scan']['gamma'])
+    final_format = args.format if args.format is not None else scan_config.get('format', DEFAULT_CONFIG['scan']['format'])
+    final_quality = args.quality if args.quality is not None else scan_config.get('quality', DEFAULT_CONFIG['scan']['quality'])
+    final_naming = args.naming if args.naming is not None else scan_config.get('naming', DEFAULT_CONFIG['scan']['naming'])
+    final_increment = args.increment if args.increment else scan_config.get('increment', DEFAULT_CONFIG['scan']['increment'])
+
     # Override increment based on no_increment (CLI has highest priority)
-    if no_increment:
+    if args.no_increment:
         final_increment = False
 
-    final_ocr = ocr if ocr is not None else scan_config.get('ocr', DEFAULT_CONFIG['scan']['ocr'])
-    final_lang = lang if lang is not None else scan_config.get('lang', DEFAULT_CONFIG['scan']['lang'])
-    final_deskew = deskew if deskew is not None else scan_config.get('deskew', DEFAULT_CONFIG['scan']['deskew'])
-    final_despeckle = despeckle if despeckle is not None else scan_config.get('despeckle', DEFAULT_CONFIG['scan']['despeckle'])
-    final_crop = crop if crop is not None else scan_config.get('crop', DEFAULT_CONFIG['scan']['crop'])
-    final_number = number if number is not None else scan_config.get('number', DEFAULT_CONFIG['scan']['number'])
-    final_pages = pages if pages is not None else scan_config.get('pages', DEFAULT_CONFIG['scan']['pages'])
-    final_batch = batch if batch is not None else scan_config.get('batch', DEFAULT_CONFIG['scan']['batch'])
-    final_separator = separator if separator is not None else scan_config.get('separator', DEFAULT_CONFIG['scan']['separator'])
-    final_auto_feed = auto_feed if auto_feed is not None else scan_config.get('auto_feed', DEFAULT_CONFIG['scan']['auto_feed'])
-    final_preview = preview if preview is not None else scan_config.get('preview', DEFAULT_CONFIG['scan']['preview'])
-    final_calibrate = calibrate if calibrate is not None else scan_config.get('calibrate', DEFAULT_CONFIG['scan']['calibrate'])
-    final_test_pattern = test_pattern if test_pattern is not None else scan_config.get('test_pattern', DEFAULT_CONFIG['scan']['test_pattern'])
-    final_timeout = timeout if timeout is not None else scan_config.get('timeout', DEFAULT_CONFIG['scan']['timeout'])
+    final_ocr = args.ocr if args.ocr else scan_config.get('ocr', DEFAULT_CONFIG['scan']['ocr'])
+    final_lang = args.lang if args.lang is not None else scan_config.get('lang', DEFAULT_CONFIG['scan']['lang'])
+    final_deskew = args.deskew if args.deskew else scan_config.get('deskew', DEFAULT_CONFIG['scan']['deskew'])
+    final_despeckle = args.despeckle if args.despeckle else scan_config.get('despeckle', DEFAULT_CONFIG['scan']['despeckle'])
+    final_crop = args.crop if args.crop else scan_config.get('crop', DEFAULT_CONFIG['scan']['crop'])
+    final_number = args.number if args.number is not None else scan_config.get('number', DEFAULT_CONFIG['scan']['number'])
+    final_pages = args.pages if args.pages is not None else scan_config.get('pages', DEFAULT_CONFIG['scan']['pages'])
+    final_batch = args.batch if args.batch else scan_config.get('batch', DEFAULT_CONFIG['scan']['batch'])
+    final_separator = args.separator if args.separator else scan_config.get('separator', DEFAULT_CONFIG['scan']['separator'])
+    final_auto_feed = getattr(args, 'auto_feed', False) if getattr(args, 'auto_feed', False) else scan_config.get('auto_feed', DEFAULT_CONFIG['scan']['auto_feed'])
+    final_preview = scan_config.get('preview', DEFAULT_CONFIG['scan']['preview'])
+    final_calibrate = args.calibrate if args.calibrate else scan_config.get('calibrate', DEFAULT_CONFIG['scan']['calibrate'])
+    final_test_pattern = getattr(args, 'test_pattern', False) if getattr(args, 'test_pattern', False) else scan_config.get('test_pattern', DEFAULT_CONFIG['scan']['test_pattern'])
+    final_timeout = args.timeout if args.timeout is not None else scan_config.get('timeout', DEFAULT_CONFIG['scan']['timeout'])
 
 
     # Determine the resolution to use: positional arg (if it existed) > --resolution > config > default
@@ -279,20 +295,20 @@ def main(
                     except ValueError:
                         relative_path = f.resolve()
                     print(f"\n✓ Traitement réussi !\nFichier produit : {relative_path}")
-                raise typer.Exit(code=0)
+                return 0
             else:
                 logger.error("No files were processed successfully.")
-                raise typer.Exit(code=1)
+                return 1
         except Exception as e:
             logger.error(f"Error processing existing files: {e}", exc_info=True)
-            raise typer.Exit(code=1)
+            return 1
     else:
         # Mode: normal scan
         logger.info(f"Mode: Normal scan to: {output_str}")
         try:
             generated_files = scan_document(
                 dpi=dpi_to_use,
-                output_location=output,
+                output_location=args.output,
                 tool_config={
                     'naps2_console_command': tool_config['naps2_console_command']
                 },
@@ -315,13 +331,13 @@ def main(
                     except ValueError:
                         relative_path = f.resolve()
                     print(f"\n✓ Scan réussi !\nFichier produit : {relative_path}")
-                raise typer.Exit(code=0)
+                return 0
             else:
                 logger.error("Scan operation failed.")
-                raise typer.Exit(code=1)
+                return 1
         except Exception as e:
             logger.error(f"Unexpected error during scan operation: {e}", exc_info=True)
-            raise typer.Exit(code=1)
+            return 1
 
 if __name__ == '__main__':
-    app()
+    sys.exit(main())

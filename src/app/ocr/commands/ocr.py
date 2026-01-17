@@ -3,7 +3,7 @@ CLI command for OCR (Optical Character Recognition) for Ambulon.
 Handles configuration hierarchy, logging, and displays generated file paths.
 """
 
-import typer
+import argparse
 import logging
 import os
 import sys
@@ -16,8 +16,6 @@ from app.core.logging_config import setup_logging
 from app.ocr.core.ocr_logic import perform_ocr_single_file, process_multiple_files
 
 logger = logging.getLogger(__name__)
-
-app = typer.Typer()
 
 DEFAULT_CONFIG = {
     'ocr': {
@@ -34,9 +32,9 @@ DEFAULT_CONFIG = {
     }
 }
 
-@app.command(
-    help="""
-    Performs Optical Character Recognition (OCR) on image or PDF files.
+def main(argv=None):
+    """
+    CLI for Optical Character Recognition.
 
     Configuration Hierarchy (from highest to lowest priority):
     1. Command-line arguments
@@ -49,47 +47,56 @@ DEFAULT_CONFIG = {
       TESSERACT_COMMAND     Path to tesseract executable
       TESSERACT_ENABLED     Enable Tesseract (True/False)
     """
-)
-def main(
-    input: str = typer.Argument(..., help="Input file, directory, or glob pattern (e.g., image.jpg, folder/, \"*.png\")."),
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output file or directory (default: same folder as input, .txt extension)."),
-    config_path: Optional[Path] = typer.Option(None, "--config", "-c", help="Path to a YAML configuration file (e.g., config/ocr.yaml)."),
-    
+    parser = argparse.ArgumentParser(
+        description="Performs Optical Character Recognition (OCR) on image or PDF files.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Configuration Hierarchy (from highest to lowest priority):
+1. Command-line arguments
+2. YAML configuration file (--config)
+3. Environment variables (OCR_*, TESSERACT_*)
+4. Default values
+
+Environment variables:
+  OCR_LANGUAGE          Default OCR language
+  TESSERACT_COMMAND     Path to tesseract executable
+  TESSERACT_ENABLED     Enable Tesseract (True/False)
+        """
+    )
+
+    parser.add_argument("input", type=str, help="Input file, directory, or glob pattern (e.g., image.jpg, folder/, \"*.png\").")
+    parser.add_argument("-o", "--output", type=Path, help="Output file or directory (default: same folder as input, .txt extension).")
+    parser.add_argument("-c", "--config", type=Path, help="Path to a YAML configuration file (e.g., config/ocr.yaml).")
+
     # Global options
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging."),
-    quiet: bool = typer.Option(False, "--quiet", "-q", help="Suppress most output messages."),
+    parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose logging.")
+    parser.add_argument("-q", "--quiet", action="store_true", help="Suppress most output messages.")
 
     # OCR specific options
-    language: Optional[str] = typer.Option(None, "--lang", "-l", help="Language for OCR (e.g., fra, eng, fra+eng)."),
-    psm: Optional[str] = typer.Option(None, "--psm", help="Page Segmentation Mode (0-13)."),
-    oem: Optional[str] = typer.Option(None, "--oem", help="OCR Engine Mode (0-3)."),
-):
-    """
-    CLI for Optical Character Recognition.
-    """
+    parser.add_argument("-l", "--lang", type=str, help="Language for OCR (e.g., fra, eng, fra+eng).")
+    parser.add_argument("--psm", type=str, help="Page Segmentation Mode (0-13).")
+    parser.add_argument("--oem", type=str, help="OCR Engine Mode (0-3).")
+
+    args = parser.parse_args(argv)
+
     # Configure logging
-    log_level = logging.DEBUG if verbose else (logging.WARNING if quiet else logging.INFO)
-    logging.basicConfig(
-        level=log_level,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        stream=sys.stdout # Ensure output goes to console
-    )
+    log_level = logging.DEBUG if args.verbose else (logging.WARNING if args.quiet else logging.INFO)
+    setup_logging(level=log_level, log_file_prefix="ocr")
     logger.info("[START] Starting OCR module.")
-    logger.debug(f"CLI arguments: {typer.Context.get_current().params}")
 
     # Load configuration
-    config = load_app_config(str(config_path) if config_path else None, DEFAULT_CONFIG)
+    config = load_app_config(str(args.config) if args.config else None, DEFAULT_CONFIG)
     ocr_config = config['ocr']
     tool_config = config['tools']
 
     # Apply CLI overrides (highest priority) and resolve config
-    final_language = language if language is not None else ocr_config.get('language', DEFAULT_CONFIG['ocr']['language'])
-    final_psm = psm if psm is not None else ocr_config.get('psm', DEFAULT_CONFIG['ocr']['psm'])
-    final_oem = oem if oem is not None else ocr_config.get('oem', DEFAULT_CONFIG['ocr']['oem'])
+    final_language = args.lang if args.lang is not None else ocr_config.get('language', DEFAULT_CONFIG['ocr']['language'])
+    final_psm = args.psm if args.psm is not None else ocr_config.get('psm', DEFAULT_CONFIG['ocr']['psm'])
+    final_oem = args.oem if args.oem is not None else ocr_config.get('oem', DEFAULT_CONFIG['ocr']['oem'])
 
     # Determine input type
-    input_path = Path(input)
-    has_wildcards = '*' in input or '?' in input
+    input_path = Path(args.input)
+    has_wildcards = '*' in args.input or '?' in args.input
 
     ocr_tool_config = {
         'enabled': tool_config['tesseract_enabled'],
@@ -105,27 +112,27 @@ def main(
 
     if input_path.is_dir() or has_wildcards:
         # Mode: process multiple files (directory or glob pattern)
-        logger.info(f"Mode: Processing multiple files from pattern/directory: {input}")
+        logger.info(f"Mode: Processing multiple files from pattern/directory: {args.input}")
         generated_files = process_multiple_files(
-            file_pattern=input,
+            file_pattern=args.input,
             ocr_lang=final_language,
             ocr_tool_config=ocr_tool_config,
-            output_dir=output # This handles both file and dir output
+            output_dir=args.output # This handles both file and dir output
         )
     elif input_path.is_file():
         # Mode: single file
-        logger.info(f"Mode: Processing single file: {input}")
+        logger.info(f"Mode: Processing single file: {args.input}")
         result_file = perform_ocr_single_file(
             image_file=input_path,
             ocr_config=ocr_tool_config,
             language=final_language,
-            output_file=output
+            output_file=args.output
         )
         if result_file:
             generated_files = [result_file]
     else:
-        logger.error(f"Input '{input}' is not a valid file, directory or glob pattern.")
-        raise typer.Exit(code=1)
+        logger.error(f"Input '{args.input}' is not a valid file, directory or glob pattern.")
+        return 1
 
     if generated_files:
         logger.info(f"OCR operation successful. Generated {len(generated_files)} file(s).")
@@ -135,10 +142,10 @@ def main(
             except ValueError:
                 relative_path = f.resolve()
             print(f"\n✓ OCR réussi !\nFichier produit : {relative_path}")
-        raise typer.Exit(code=0)
+        return 0
     else:
         logger.error("OCR operation failed or no files were generated.")
-        raise typer.Exit(code=1)
+        return 1
 
 if __name__ == '__main__':
-    app()
+    sys.exit(main())
