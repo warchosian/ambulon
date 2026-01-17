@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 from typing import List, Optional
 
-from app.core.config_loader import load_config as load_app_config
+from app.core.config_loader import load_config as load_app_config, find_config_file
 from app.core.logging_config import setup_logging
 from app.gitlab.core.cloning import clone_repository
 
@@ -87,6 +87,18 @@ Exemples:
     setup_logging(level=log_level, log_file_prefix="gitlab_clone")
 
     # 1. Load config from YAML, substituting env vars, merged over defaults
+    # Determine if config file exists (check exact path or search standard locations)
+    config_file_path = Path(args.config).expanduser()
+
+    if config_file_path.exists():
+        config_file_found = config_file_path
+    elif "/" not in args.config and "\\" not in args.config:
+        # If just a name (no path separators), search standard locations
+        config_name = args.config.replace(".yaml", "")
+        config_file_found = find_config_file(config_name)
+    else:
+        config_file_found = None
+
     config = load_app_config(args.config, DEFAULT_CONFIG)
 
     # 2. Override with CLI arguments if they were provided
@@ -106,9 +118,58 @@ Exemples:
     final_base_dir_str = gitlab_config.get("base_clone_dir")
     repositories = gitlab_config.get("repositories", [])
 
-    if not all([final_token, final_username, final_base_dir_str, repositories]):
-        logger.error("Configuration is incomplete. Missing 'token', 'username', 'base_clone_dir', or 'repositories'.")
-        logger.error("Please provide them via CLI args, config/gitlab.yaml, or environment variables.")
+    # Detailed validation with clear error messages
+    missing = []
+    if not final_token:
+        missing.append("token")
+    if not final_username:
+        missing.append("username")
+    if not final_base_dir_str:
+        missing.append("base_clone_dir")
+    if not repositories:
+        missing.append("repositories")
+
+    if missing:
+        logger.error("Configuration incomplète. Impossible de continuer.")
+        logger.error("")
+
+        if config_file_found:
+            logger.error(f"Fichier de configuration trouvé : {config_file_found}")
+            logger.error("Mais il manque des valeurs obligatoires.")
+        else:
+            logger.error(f"Fichier de configuration introuvable : {args.config}")
+            logger.error("")
+            logger.error("Emplacements vérifiés :")
+            logger.error(f"  1. {Path.cwd() / 'config' / 'gitlab.yaml'}")
+            logger.error(f"  2. {Path.home() / '.config' / 'ambulon' / 'gitlab.yaml'}")
+            if os.getenv("AMBULON_CONFIG_DIR"):
+                logger.error(f"  3. {os.getenv('AMBULON_CONFIG_DIR')}/gitlab.yaml")
+        logger.error("")
+
+        logger.error(f"Valeurs manquantes : {', '.join(missing)}")
+        logger.error("")
+        logger.error("Solutions possibles :")
+
+        if "token" in missing:
+            logger.error("  • Via argument CLI : --token glpat-xxx")
+            logger.error("  • Via variable d'env : export GITLAB_PRIVATE_TOKEN=glpat-xxx")
+            logger.error("  • Via fichier YAML : gitlab.token: \"${GITLAB_PRIVATE_TOKEN}\"")
+
+        if "username" in missing:
+            logger.error("  • Via argument CLI : --username oauth2")
+            logger.error("  • Via variable d'env : export GITLAB_USERNAME=oauth2")
+            logger.error("  • Via fichier YAML : gitlab.username: \"${GITLAB_USERNAME:-oauth2}\"")
+
+        if "base_clone_dir" in missing:
+            logger.error("  • Via argument CLI : --output ./gitlab_clones")
+            logger.error("  • Via fichier YAML : gitlab.base_clone_dir: \"./gitlab_clones\"")
+
+        if "repositories" in missing:
+            logger.error("  • Via argument CLI : --repositories https://gitlab.example.com/user/project.git")
+            logger.error("  • Via fichier YAML : gitlab.repositories: [\"https://gitlab.example.com/...\"]")
+
+        logger.error("")
+        logger.error("Exemple de fichier de configuration : voir config/gitlab.yaml.example")
         return 1
 
     # 4. Execute business logic
