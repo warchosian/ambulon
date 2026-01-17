@@ -537,9 +537,9 @@ def handle_rag_module(module_name: str):
 def main():
     """Fonction principale appelée par la commande `ambulon`."""
     # Configure logging for the main CLI entry point
-    # We will pass a specific log_file_prefix
+    # Console output only (no log file) - each command creates its own log file
     verbose = '--verbose' in sys.argv or '-v' in sys.argv # Check for verbose early
-    setup_logging(level=logging.DEBUG if verbose else logging.INFO, log_file_prefix="ambulon_cli")
+    setup_logging(level=logging.DEBUG if verbose else logging.INFO, log_file_prefix=None)
 
     if len(sys.argv) > 1:
         command = sys.argv[1]
