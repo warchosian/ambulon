@@ -6,12 +6,12 @@ Suit la hiérarchie de configuration standard et les pratiques de logging.
 
 import os
 import sys
+import argparse
 import logging
 from pathlib import Path
 from io import BytesIO
 from typing import Dict, Any, Optional
 
-import typer
 from app.core.config_loader import load_config as load_app_config
 from app.core.logging_config import setup_logging
 
@@ -31,8 +31,6 @@ except ImportError:
 
 # Setup logger for this module
 logger = logging.getLogger(__name__)
-
-app = typer.Typer()
 
 DEFAULT_CONFIG = {
     "conversion": {
@@ -109,67 +107,112 @@ def compress_pdf(
         logger.info(f"Original size: {original_size / (1024*1024):.2f} MB")
         logger.info(f"Compressed size: {compressed_size / (1024*1024):.2f} MB")
         logger.info(f"Size reduction: {reduction:.1f}%")
-        
+
         return output_path
 
     except Exception as e:
         logger.error(f"Failed to compress PDF: {e}", exc_info=True)
         return None
 
-@app.command(
-    help="""
-    Compresses an existing PDF file to reduce its size.
+def main(argv=None):
+    """
+    CLI for compressing PDF files.
 
     Configuration Hierarchy (from highest to lowest priority):
     1. Command-line arguments (e.g., --output)
-    2. YAML configuration file (`--config`)
+    2. YAML configuration file (--config)
     3. Environment variables (e.g., COMPRESSPDF_QUALITY)
     4. Default values
     """
-)
-def main(
-    input_file: Path = typer.Argument(..., help="Input PDF file to compress.", exists=True, file_okay=True, dir_okay=False, readable=True),
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Path to the output compressed PDF file (default: <input>_compressed.pdf)."),
-    quality: Optional[int] = typer.Option(None, "--quality", "-q", min=1, max=100, help="JPEG quality for compression (1-100, default: 85). Lower values = smaller file but lower quality. Overrides config/env."),
-    config_path: Optional[Path] = typer.Option(None, "--config", help="Path to a YAML configuration file."),
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging.")
-):
-    """
-    CLI for compressing PDF files.
-    """
+    parser = argparse.ArgumentParser(
+        description="""
+Compresses an existing PDF file to reduce its size.
+
+Configuration Hierarchy (from highest to lowest priority):
+1. Command-line arguments (e.g., --output)
+2. YAML configuration file (--config)
+3. Environment variables (e.g., COMPRESSPDF_QUALITY)
+4. Default values
+        """,
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+
+    parser.add_argument(
+        "input_file",
+        type=Path,
+        help="Input PDF file to compress."
+    )
+    parser.add_argument(
+        "-o", "--output",
+        type=Path,
+        help="Path to the output compressed PDF file (default: <input>_compressed.pdf)."
+    )
+    parser.add_argument(
+        "-q", "--quality",
+        type=int,
+        help="JPEG quality for compression (1-100, default: 85). Lower values = smaller file but lower quality. Overrides config/env."
+    )
+    parser.add_argument(
+        "--config",
+        type=Path,
+        help="Path to a YAML configuration file."
+    )
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Enable verbose logging."
+    )
+
+    args = parser.parse_args(argv)
+
     # Setup logging
-    central_setup_logging(verbose)
+    setup_logging(logging.DEBUG if args.verbose else logging.INFO, log_file_prefix="compress_pdf")
+
+    # Check if input file exists
+    if not args.input_file.exists():
+        logger.error(f"Input file does not exist: {args.input_file}")
+        return 1
 
     # Determine default config file path
+    config_path = args.config
     default_config_file = Path("config/compress_pdf.yaml")
     if config_path is None and default_config_file.exists():
         config_path = default_config_file
 
     # Load config from YAML, substituting env vars, merged over defaults
     config = load_app_config(str(config_path) if config_path else None, DEFAULT_CONFIG)
-    
+
     # Extract values with hierarchy: CLI > Config > Env > Default
-    final_quality = quality if quality is not None else config['conversion']['compress_pdf'].get('quality', DEFAULT_CONFIG['conversion']['compress_pdf']['quality'])
+    final_quality = args.quality if args.quality is not None else config['conversion']['compress_pdf'].get('quality', DEFAULT_CONFIG['conversion']['compress_pdf']['quality'])
+
+    # Validate quality range
+    if not 1 <= final_quality <= 100:
+        logger.error(f"Quality must be between 1 and 100, got: {final_quality}")
+        return 1
 
     # Determine output path if not provided
+    output = args.output
     if output is None:
-        output = input_file.parent / f"{input_file.stem}_compressed{input_file.suffix}"
+        output = args.input_file.parent / f"{args.input_file.stem}_compressed{args.input_file.suffix}"
 
     # Execute compression
     result_path = compress_pdf(
-        input_path=input_file,
+        input_path=args.input_file,
         output_path=output,
         quality=final_quality,
-        verbose=verbose
+        verbose=args.verbose
     )
 
     if result_path:
-        relative_path = os.path.relpath(result_path)
+        try:
+            relative_path = os.path.relpath(result_path)
+        except ValueError:
+            relative_path = result_path
         print(f"\n✓ Compression réussie !\nFichier produit : {relative_path}")
-        raise typer.Exit(code=0)
+        return 0
     else:
         logger.error("PDF compression failed.")
-        raise typer.Exit(code=1)
+        return 1
 
 if __name__ == '__main__':
-    app()
+    sys.exit(main())
