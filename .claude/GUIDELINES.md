@@ -1,66 +1,39 @@
-# CLAUDE Project Guidelines
+# Claude Code - Directives Générales de Développement
 
-Ce projet utilise les outils suivants pour la gestion des modules Python et les commits conventionnels.
+Ce fichier contient les **directives générales applicables à tous les projets Python** développés avec Claude Code.
 
-## Architecture des Modules
+---
 
-Le projet est organisé en un seul package `app` avec des modules catégorisés :
+## ⚠️🚨 INTERDICTION ABSOLUE - FRAMEWORK TYPER 🚨⚠️
 
-```
-src/
-└── app/
-    ├── cli/              # CLI principal et framework
-    │   ├── main.py       # Point d'entrée de la commande
-    │   └── __init__.py
-    ├── piag/             # Module RAG PIAG
-    │   ├── commands/     # CLI pour les opérations PIAG
-    │   ├── core/         # Logique métier PIAG
-    │   └── __init__.py
-    ├── ocr/              # Module OCR
-    │   ├── commands/
-    │   ├── core/
-    │   └── __init__.py
-    ├── scan/             # Module Scanner
-    │   ├── commands/
-    │   ├── core/
-    │   └── __init__.py
-    └── conversion/       # Module conversion (PDF, images, compression)
-        ├── commands/
-        ├── core/
-        └── __init__.py
-```
+### **NE JAMAIS UTILISER TYPER - TOUJOURS UTILISER ARGPARSE**
 
-### Organisation par Catégories
+**Cette règle est NON NÉGOCIABLE et s'applique à TOUS les projets.**
 
-**`app/cli/`** : Framework CLI principal
-- Point d'entrée de la commande `ambulon`
-- Routage vers les différents modules
-- Utilitaires CLI communs
-- Gestion de configuration globale
+### Pourquoi Typer est Interdit
 
-**Modules métier** : `app/piag/`, `app/ocr/`, `app/scan/`, `app/conversion/`
-- Chaque module est une catégorie fonctionnelle indépendante
-- Structure standardisée : `commands/` et `core/`
-- Pas de dépendances croisées entre modules
+**Typer a été complètement banni** suite à des problèmes récurrents et graves :
 
-### 🚨 RÈGLE OBLIGATOIRE - Framework CLI
+- ❌ **RuntimeWarning** avec `runpy.run_module`
+- ❌ **Conflits** avec manipulation de `sys.argv`
+- ❌ **"Got unexpected extra arguments"** errors imprévisibles
+- ❌ **Complexité inutile** pour des cas d'usage CLI standards
+- ❌ **Dépendances externes** non nécessaires
+- ❌ **Debugging difficile** et comportements imprévisibles
 
-**TOUS les nouveaux modules CLI DOIVENT utiliser argparse de la bibliothèque standard Python.**
+### Solution Obligatoire : argparse
 
-**❌ INTERDIT : Utilisation de Typer ou autres frameworks CLI tiers**
+**`argparse`** est la SEULE solution autorisée pour les CLI :
 
-**Raisons :**
-- **Typer a été complètement retiré du projet en version 2.0.0** suite à des problèmes récurrents :
-  - RuntimeWarning avec `runpy.run_module`
-  - Conflits avec manipulation de `sys.argv`
-  - "Got unexpected extra arguments" errors
-  - Complexité inutile pour notre cas d'usage
-- **argparse** est la solution standard, stable, et bien documentée
-- Pas de dépendances externes
-- Contrôle total sur le parsing et la gestion des arguments
-- Facilite les tests et l'intégration
+- ✅ **Bibliothèque standard** Python (pas de dépendances)
+- ✅ **Stable** et largement documentée
+- ✅ **Contrôle total** sur le parsing et la gestion des arguments
+- ✅ **Testable** et prévisible
+- ✅ **Support intégré** dans l'écosystème Python
 
-**Pattern obligatoire pour tous les nouveaux CLI :**
+### Pattern CLI Obligatoire
+
+**TOUS les nouveaux modules CLI DOIVENT utiliser ce pattern :**
 
 ```python
 import sys
@@ -117,123 +90,41 @@ if __name__ == '__main__':
     sys.exit(main())
 ```
 
-**Points clés obligatoires :**
+### Points Clés Obligatoires
+
 - ✅ Fonction `main(argv=None)` pour testabilité
 - ✅ Retour d'un code de sortie (0 ou 1)
 - ✅ `if __name__ == '__main__': sys.exit(main())`
 - ✅ Documentation de la hiérarchie de configuration dans `--help`
 - ✅ Gestion d'exceptions avec logging
-- ❌ Jamais de `raise typer.Exit()` ou équivalent
-- ❌ Jamais de décorateurs `@app.command()`
+- ❌ **JAMAIS** de `import typer`
+- ❌ **JAMAIS** de `raise typer.Exit()`
+- ❌ **JAMAIS** de décorateurs `@app.command()`
 
-### Structure Interne d'une Catégorie
+### Sanctions
 
-Chaque catégorie sous `app/` suit cette structure :
+**Tout code utilisant Typer sera immédiatement rejeté, sans exception.**
 
-```
-app/<categorie>/
-├── commands/       # Scripts CLI et points d'entrée
-│   ├── cmd_operation1.py
-│   ├── cmd_operation2.py
-│   └── ...
-├── core/          # Logique métier réutilisable
-│   ├── config.py   # Gestion de configuration
-│   ├── client.py   # Client API/HTTP
-│   ├── models.py   # Classes métier
-│   └── utils.py    # Utilitaires spécifiques
-└── __init__.py    # Exports publics
-```
+---
 
-#### Répertoire `commands/`
+## Gestion des Logs et Affichage Console
 
-Contient les modules CLI exécutables via `python -m`. Chaque fichier gère :
-- Parsing des arguments CLI avec `argparse`
-- Hiérarchie de configuration : CLI > YAML > ENV > Défaut
-- Affichage formaté des résultats pour l'utilisateur
-- Gestion des erreurs et codes de sortie appropriés
-- Invocation des fonctions métier depuis `core/`
+### Principe Général
 
-#### Répertoire `core/`
+Toute application doit utiliser un gestionnaire de logs centralisé pour l'affichage console et la persistance des erreurs.
 
-Contient la logique métier pure et réutilisable :
-- Fonctions métier principales (sans CLI)
-- Clients HTTP/API
-- Gestion centralisée de la configuration
-- Modèles de données et classes métier
-- Utilitaires partagés entre commandes
-- Code testable indépendamment du CLI
-
-### Exemple : Module PIAG (RAG)
-
-```
-src/
-└── app/
-    ├── __init__.py
-    ├── cli/
-    │   ├── main.py                # CLI principal, route vers app.piag
-    │   └── __init__.py
-    └── piag/
-        ├── commands/
-        │   ├── collection_add.py      # CLI: créer collection
-        │   ├── collection_list.py     # CLI: lister collections
-        │   ├── doc_upload.py          # CLI: uploader document
-        │   └── search.py              # CLI: recherche RAG
-        ├── core/
-        │   ├── config.py              # Config YAML centralisée
-        │   ├── client.py              # Client HTTP PIAG
-        │   ├── collections.py         # Logique collections
-        │   └── documents.py           # Logique documents
-        └── __init__.py                # Exports: create_collection(), etc.
-```
-
-**Imports dans le code :**
-```python
-# Dans app/cli/main.py
-from app.piag import create_collection, search_rag
-
-# Dans app/piag/commands/collection_add.py
-from app.piag.core.config import load_config
-from app.piag.core.client import PIAGClient
-
-# Pour l'utilisateur final (API programmatique)
-from app.piag import create_collection, upload_document
-```
-
-### Principes de Séparation
-
-1. **Pas de duplication** : Le code commun (config, HTTP, logging) doit être dans `core/`, jamais dupliqué dans `commands/`.
-
-2. **Réutilisabilité** : Les fonctions dans `core/` doivent être utilisables :
-   - Par les CLI dans `commands/`
-   - Par d'autres modules Python
-   - Par des scripts externes
-   - Dans des notebooks Jupyter
-
-3. **Testabilité** : La logique métier dans `core/` doit être testable indépendamment du CLI.
-
-4. **Clarté** : Organisation prévisible pour tous les développeurs :
-   - Besoin d'une commande CLI → `app/<categorie>/commands/`
-   - Besoin de logique métier → `app/<categorie>/core/`
-   - Besoin du framework CLI → `app/cli/`
-
-5. **Indépendance** : Chaque catégorie sous `app/` est autonome et n'a pas de dépendances entre catégories.
-
-### Gestion des Logs et Affichage Console
-
-**Principe général** : Toute application doit utiliser un gestionnaire de logs centralisé pour l'affichage console et la persistance des erreurs.
-
-### Affichage du chemin des fichiers générés (OBLIGATOIRE)
+### Affichage du Chemin des Fichiers Générés (OBLIGATOIRE)
 
 **Toute commande générant un fichier en sortie DOIT afficher le chemin relatif de ce fichier à la fin de son exécution, dans un format cliquable par les terminaux modernes (ex: VS Code).**
 
-#### Format d'affichage obligatoire
+#### Format d'Affichage Obligatoire
 
 ```
 ✓ <Opération> réussie !
 Fichier produit : <chemin/relatif/vers/fichier.ext>
 ```
 
-#### Implémentation recommandée
+#### Implémentation Recommandée
 
 Pour garantir la cliquabilité et la portabilité (Windows/Linux), utilisez `os.path.relpath`.
 
@@ -264,7 +155,7 @@ else:
 2. **Cliquable** : Le format doit être reconnu par le terminal de l'utilisateur comme un lien (souvent, un simple chemin sur sa propre ligne est suffisant).
 3. **OS-agnostique** : `os.path.relpath` gère les séparateurs (`/` ou `\`) automatiquement.
 
-#### Configuration des Logs
+### Configuration des Logs
 
 ```python
 import logging
@@ -290,7 +181,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 ```
 
-#### Règles d'Utilisation
+### Règles d'Utilisation
 
 1. **Affichage Console** : Utiliser le logger, pas `print()`
    ```python
@@ -333,7 +224,7 @@ logger = logging.getLogger(__name__)
    )
    ```
 
-#### Exemple d'Implémentation
+### Exemple d'Implémentation
 
 ```python
 # Dans app/cli/logging_config.py
@@ -358,22 +249,18 @@ def setup_logging(application_name: str, level=logging.INFO):
     )
 
     return logging.getLogger(application_name)
-
-# Utilisation dans app/piag/commands/search.py
-from app.cli.logging_config import setup_logging
-
-logger = setup_logging("piag_search")
-logger.info("Démarrage de la recherche RAG...")
 ```
 
-#### Avantages
+### Avantages
 
 - **Traçabilité** : Tous les événements et erreurs sont enregistrés avec horodatage
 - **Débogage** : Fichiers de logs consultables après exécution
 - **Cohérence** : Format uniforme pour toutes les applications
 - **Performance** : Rotation automatique pour éviter les fichiers trop volumineux
 
-## Gestion des dépendances Python avec Poetry
+---
+
+## Gestion des Dépendances Python avec Poetry
 
 [Poetry](https://python-poetry.org/) est utilisé pour la gestion des dépendances et le packaging. Pour commencer :
 
@@ -388,9 +275,11 @@ logger.info("Démarrage de la recherche RAG...")
     poetry shell
     ```
 
+---
+
 ## Workflow de Versioning et de Release
 
-Ce projet suit le **Semantic Versioning (SemVer)** et utilise [Commitizen](https://commitizen-tool.github.io/commitizen/) pour automatiser la gestion des versions et la génération du changelog.
+Ce workflow suit le **Semantic Versioning (SemVer)** et utilise [Commitizen](https://commitizen-tool.github.io/commitizen/) pour automatiser la gestion des versions et la génération du changelog.
 
 ### Semantic Versioning (SemVer)
 
@@ -442,7 +331,7 @@ Le processus de création d'une nouvelle release est strict et doit suivre ces �
 5.  **Vérification Systématique du Build**: **Cette étape est obligatoire avant de pousser les changements.** Inspectez le contenu du fichier `.whl` pour garantir qu'il contient tous les fichiers attendus (modules Python, fichiers de configuration, etc.).
     ```bash
     # Remplacez x.y.z par la version que vous venez de créer
-    python -m zipfile -l dist/ambulon-x.y.z-py3-none-any.whl
+    python -m zipfile -l dist/package-x.y.z-py3-none-any.whl
     ```
     Si des fichiers manquent, retournez à la section "Vérification de l'Intégrité du Build" pour ajuster la configuration `pyproject.toml`, puis recommencez le build.
 
@@ -485,29 +374,25 @@ Le processus de création d'une nouvelle release est strict et doit suivre ces �
     git push --follow-tags
     ```
 
-## Vérification de l'Intégrité du Build (`.whl`)
+### Vérification de l'Intégrité du Build (`.whl`)
 
 Pour éviter de distribuer des packages incomplets, il est crucial de s'assurer que tous les fichiers nécessaires (y compris les fichiers de configuration, les données, etc.) sont inclus dans le fichier Wheel (`.whl`) généré par `poetry build`.
 
-### Inclusion des fichiers dans le build
+#### Inclusion des Fichiers dans le Build
 
 La configuration de ce qui est inclus se trouve dans `pyproject.toml`, sous la section `[tool.poetry]`.
 
-1.  **Packages Python**: La directive `packages` indique à Poetry où trouver les packages Python. La configuration actuelle `packages = [{include = "ambulon", from = "src"}]` inclut correctement tout le code source du répertoire `src/ambulon`.
+1.  **Packages Python**: La directive `packages` indique à Poetry où trouver les packages Python.
+    Exemple : `packages = [{include = "app", from = "src"}]`
 
 2.  **Autres fichiers**: Pour inclure des fichiers non-Python (comme des `.json`, `.md`, etc.), utilisez la directive `include`. Elle accepte une liste de chemins ou de motifs (globs).
 
-    Votre `pyproject.toml` contient déjà :
-    ```toml
-    include = ["config/mcp-config.json"]
-    ```
-
-    Si vous avez besoin d'inclure d'autres fichiers ou des répertoires entiers, vous pouvez l'étendre. Par exemple, pour inclure tous les fichiers `.json` du répertoire `config` :
+    Exemple :
     ```toml
     include = ["config/**/*.json"]
     ```
 
-### Vérifier le contenu du fichier Wheel
+#### Vérifier le Contenu du Fichier Wheel
 
 Après avoir généré le build avec `poetry build`, vous pouvez inspecter son contenu pour vérifier que tout y est. Un fichier `.whl` est une archive zip.
 
@@ -522,23 +407,11 @@ Cette commande affichera la liste de tous les fichiers embarqués dans la distri
 
 Si un fichier manque, ajustez la directive `include` dans votre `pyproject.toml`, reconstruisez avec `poetry build`, et vérifiez à nouveau.
 
-### Stratégie de Vérification des Dépendances de Modules
-
-Pour garantir qu'aucun module ne manque de ses composants nécessaires (fichiers de configuration, données, assets), il est recommandé d'adopter une stratégie de vérification en plusieurs étapes :
-
-1.  **Analyse Statique Manuelle**: Pour chaque module, le développeur doit identifier et lister tous les fichiers externes qu'il utilise. Par exemple, si `ambulon/ocr.py` charge un fichier de configuration ou des données d'entraînement, ces fichiers doivent être notés.
-
-2.  **Configuration de l'Inclusion**: Assurez-vous que chaque fichier identifié à l'étape 1 est bien couvert par la directive `include` dans votre `pyproject.toml`. Utilisez des motifs glob (ex: `config/**/*.json`) pour inclure des groupes de fichiers de manière fiable.
-
-3.  **Tests d'Intégration**: Créez des tests qui exercent spécifiquement les fonctionnalités qui dépendent de ces fichiers externes. L'exécution réussie de ces tests après une installation propre (`poetry install`) est la meilleure validation que les dépendances (code et fichiers) sont correctement gérées.
-
-4.  **Vérification Post-Build**: Après chaque `poetry build`, utilisez la commande `python -m zipfile -l dist/*.whl` pour confirmer que les fichiers identifiés à l'étape 1 sont bien présents dans l'archive finale. C'est votre filet de sécurité final avant la distribution.
-
-En combinant l'analyse du code, une configuration `pyproject.toml` explicite, des tests robustes et une inspection finale du livrable, vous réduirez considérablement le risque de distribuer un package incomplet.
+---
 
 ## Hooks Claude Code
 
-Ce projet utilise des **hooks Claude Code** pour automatiser certaines vérifications et afficher des informations visuelles avec des icônes personnalisées pendant le développement avec Claude.
+Les projets peuvent utiliser des **hooks Claude Code** pour automatiser certaines vérifications et afficher des informations visuelles avec des icônes personnalisées pendant le développement avec Claude.
 
 ### Qu'est-ce qu'un Hook Claude Code ?
 
@@ -549,9 +422,7 @@ Les hooks Claude Code sont des commandes shell qui s'exécutent automatiquement 
 - Valider automatiquement le code
 - Logger les actions de Claude
 
-### Hooks Configurés dans ce Projet
-
-Le projet utilise 3 hooks Python principaux, tous situés dans `.claude/hooks/` :
+### Exemples de Hooks Utiles
 
 #### 1. Event Logger (`event_logger.py`)
 
@@ -562,19 +433,8 @@ Affiche des icônes personnalisées pour chaque type d'événement Claude :
 | PreToolUse | 🔍 | Avant l'exécution d'un outil |
 | PostToolUse | ✅ | Après l'exécution d'un outil |
 | PermissionRequest | 🔐 | Demande d'autorisation |
-| Notification | 💬 | Notification générale |
-| UserPromptSubmit | 📝 | Soumission d'un prompt utilisateur |
-| Stop | ⛔ | Fin de réponse de Claude |
-| SubagentStop | 🤖 | Fin d'exécution d'un sous-agent |
 | SessionStart | 🚀 | Démarrage de session |
 | SessionEnd | 👋 | Fin de session |
-| PreCompact | 🗜️ | Compactage de conversation |
-
-**Exemple de sortie :**
-```
-🔍 [PRE-EXECUTION] Préparation: Edit
-   📄 Fichier: src/ambulon/ocr.py
-```
 
 #### 2. Protection des Fichiers Sensibles (`protect_sensitive_files.py`)
 
@@ -586,26 +446,13 @@ Bloque automatiquement toute tentative de modification de fichiers sensibles :
 - Fichiers contenant "credentials"
 - Répertoire `.ssh/`
 
-**Exemple de sortie :**
-```
-🔒 [PROTECTION] Fichier sensible détecté: .env
-⛔ Opération bloquée pour des raisons de sécurité
-```
-
 #### 3. Validateur Python (`python_validator.py`)
 
-Vérifie automatiquement la syntaxe Python après chaque modification de fichier `.py` :
-
-**Exemple de sortie :**
-```
-🐍 [PYTHON-CHECK] Vérification de la syntaxe Python
-   📄 Fichier: src/app/ocr/ocr.py
-   ✅ Syntaxe Python valide
-```
+Vérifie automatiquement la syntaxe Python après chaque modification de fichier `.py`.
 
 ### Configuration des Hooks
 
-La configuration se trouve dans `.claude/settings.json`. Voici la structure actuelle :
+La configuration se trouve dans `.claude/settings.json` :
 
 ```json
 {
@@ -632,55 +479,11 @@ La configuration se trouve dans `.claude/settings.json`. Voici la structure actu
             "timeout": 10
           }
         ]
-      },
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/event_logger.py",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/event_logger.py",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/event_logger.py",
-            "timeout": 5
-          }
-        ]
       }
     ]
   }
 }
 ```
-
-### Personnalisation des Hooks
-
-Pour personnaliser les hooks :
-
-1. **Modifier un hook existant** : Éditez le fichier Python correspondant dans `.claude/hooks/`
-2. **Ajouter un nouveau hook** :
-   - Créez un nouveau script Python dans `.claude/hooks/`
-   - Ajoutez-le dans `.claude/settings.json` en spécifiant l'événement et le matcher approprié
-3. **Désactiver un hook** : Commentez ou supprimez la section correspondante dans `.claude/settings.json`
 
 ### Matchers (Filtres d'Outils)
 
@@ -724,22 +527,24 @@ Cela ouvre un menu interactif pour configurer les hooks.
 - Guide des hooks : https://code.claude.com/docs/en/hooks-guide.md
 - Référence complète : https://code.claude.com/docs/en/hooks.md
 
+---
+
 ## Hiérarchie de Configuration
 
-### 🚨 RÈGLE OBLIGATOIRE DU PROJET
+### 🚨 RÈGLE OBLIGATOIRE
 
-**TOUS les modules, commandes et fonctionnalités du projet Ambulon DOIVENT impérativement respecter la hiérarchie de configuration standardisée définie ci-dessous.**
+**TOUS les modules CLI DOIVENT impérativement respecter la hiérarchie de configuration standardisée définie ci-dessous.**
 
 Cette règle s'applique à :
 - ✅ Toutes les nouvelles commandes CLI
-- ✅ Tous les nouveaux modules (app/*)
+- ✅ Tous les nouveaux modules
 - ✅ Toutes les modifications de commandes existantes
 - ✅ Toutes les intégrations d'API externes
 - ✅ Toute fonctionnalité nécessitant une configuration
 
-**Aucune exception n'est autorisée sans validation explicite dans les issues du projet.**
+**Aucune exception n'est autorisée sans validation explicite.**
 
-### Principe de la Hiérarchie (LOI DU PROJET)
+### Principe de la Hiérarchie (LOI)
 
 La configuration **DOIT** suivre cet ordre de priorité décroissant, du plus spécifique au plus général :
 
@@ -767,7 +572,7 @@ if cli_arg:
 
 # ❌ INTERDIT : Variables d'env non supportées
 def my_command(url: str):
-    # Impossible de configurer via WIKISI_URL
+    # Impossible de configurer via MODULE_URL
     pass
 
 # ❌ INTERDIT : Pas de valeurs par défaut
@@ -820,21 +625,19 @@ def my_command(
 
 Les fichiers YAML supportent la substitution de variables d'environnement avec la syntaxe `${VAR_NAME:-default_value}`.
 
-**Exemple : `config/wikisi.yaml`**
+**Exemple : `config/module.yaml`**
 ```yaml
-site:
+main:
   # URL de base - peut être définie par variable d'environnement
-  base_url: "${WIKISI_BASE_URL:-https://wikisi.example.gouv.fr}"
-  max_depth: -1
+  base_url: "${MODULE_BASE_URL:-https://example.com}"
   timeout: 30
 
 authentication:
-  type: "${WIKISI_AUTH_TYPE:-none}"
-  username: "${WIKISI_USERNAME:-}"
-  token: "${WIKISI_TOKEN:-}"
+  type: "${MODULE_AUTH_TYPE:-none}"
+  token: "${MODULE_TOKEN:-}"
 
 output:
-  directory: "./wikisi-downloaded"
+  directory: "./output"
 ```
 
 #### 2. Variables d'Environnement
@@ -843,12 +646,12 @@ Les variables d'environnement permettent de configurer l'application sans modifi
 
 ```bash
 # Définir les variables pour une session
-export WIKISI_BASE_URL="https://wikisi.production.fr"
-export WIKISI_AUTH_TYPE="bearer"
-export WIKISI_TOKEN="eyJhbGc..."
+export MODULE_BASE_URL="https://production.example.com"
+export MODULE_AUTH_TYPE="bearer"
+export MODULE_TOKEN="eyJhbGc..."
 
 # Lancer la commande (utilise les variables d'environnement)
-ambulon wikisi-scrape
+my-app my-command
 ```
 
 #### 3. Arguments CLI
@@ -857,55 +660,11 @@ Les arguments CLI ont toujours la priorité la plus haute :
 
 ```bash
 # Les arguments écrasent YAML et variables d'environnement
-ambulon wikisi-scrape \
-    --url https://wikisi.dev.fr \
+my-app my-command \
+    --url https://dev.example.com \
     --output ./data \
-    --depth 5 \
     --verbose
 ```
-
-### Ordre de Résolution - Exemple Complet
-
-Pour un paramètre `base_url`, le système recherche dans cet ordre :
-
-```python
-def get_base_url(cli_arg, config_dict, env_vars, defaults):
-    # 1. Argument CLI (priorité maximale)
-    if cli_arg is not None:
-        return cli_arg
-
-    # 2. Fichier YAML (avec substitution de variables d'env)
-    if 'base_url' in config_dict:
-        yaml_value = config_dict['base_url']
-        # Substitution ${VAR:-default}
-        return substitute_env_vars(yaml_value)
-
-    # 3. Variable d'environnement directe
-    if 'WIKISI_BASE_URL' in env_vars:
-        return env_vars['WIKISI_BASE_URL']
-
-    # 4. Valeur par défaut (priorité minimale)
-    return defaults.get('base_url', 'https://default.example.fr')
-```
-
-### Modules Utilisant Cette Hiérarchie
-
-Cette hiérarchie est implémentée dans :
-
-- **Module WikiSI** (`app/wikisi/`)
-  - `wikisi-scrape` : Aspiration de site web
-  - Configuration : `config/wikisi.yaml`
-  - Variables : `WIKISI_*`
-
-- **Module PIAG** (`app/piag/`)
-  - Toutes les commandes RAG
-  - Configuration : `config/piag.yaml`
-  - Variables : `PIAG_RAG_*`
-
-- **Module GitLab** (`app/gitlab/`)
-  - `gitlab-clone` : Clonage de projets
-  - Configuration : `config/gitlab.yaml`
-  - Variables : `GITLAB_*`
 
 ### Obligations de Documentation
 
@@ -916,9 +675,9 @@ Cette hiérarchie est implémentée dans :
 **Format obligatoire :**
 
 ```bash
-ambulon my-command --help
+my-app my-command --help
 
-Usage: ambulon my-command [OPTIONS]
+Usage: my-app my-command [OPTIONS]
 
 Description de la commande...
 
@@ -943,13 +702,13 @@ Variables d'environnement supportées:
 
 Exemples:
   # Via arguments CLI
-  ambulon my-command --url https://example.com --output ./data
+  my-app my-command --url https://example.com --output ./data
 
   # Via variables d'environnement
-  MY_MODULE_URL=https://example.com ambulon my-command
+  MY_MODULE_URL=https://example.com my-app my-command
 
   # Via fichier de configuration
-  ambulon my-command --config config/my-module.yaml
+  my-app my-command --config config/my-module.yaml
 ```
 
 **❌ L'absence de cette documentation dans --help est considérée comme une non-conformité bloquante.**
@@ -1077,30 +836,25 @@ WIKISI_OUTPUT_DIR
 WIKISI_MAX_DEPTH
 WIKISI_TOKEN
 
-# Module PIAG
-PIAG_RAG_API_TOKEN
-PIAG_RAG_PROJECT_ID
-PIAG_RAG_BASE_URL
-
-# Module GitLab
-GITLAB_PRIVATE_TOKEN
-GITLAB_BASE_URL
-GITLAB_GROUP_ID
+# Module API
+API_BASE_URL
+API_TIMEOUT
+API_TOKEN
 ```
 
 **❌ Exemples NON conformes :**
 ```bash
 # Mauvais : minuscules
-wikisi_url
+module_url
 
 # Mauvais : tirets
-WIKISI-BASE-URL
+MODULE-BASE-URL
 
 # Mauvais : pas de préfixe module
 BASE_URL
 
 # Mauvais : abréviation obscure
-WIKISI_BU
+MOD_BU
 ```
 
 ### Exemple de Code - Fonction de Chargement de Config
@@ -1179,8 +933,6 @@ def deep_merge(base: Dict, override: Dict) -> Dict:
 - [ ] Toutes les variables d'environnement listées dans `--help`
 - [ ] Au moins 3 exemples d'utilisation fournis (CLI, ENV, YAML)
 - [ ] Nommage des variables d'env conforme ({MODULE}_{SECTION}_{PARAM})
-- [ ] README.md mis à jour avec la nouvelle commande
-- [ ] CHANGELOG.md mis à jour
 
 #### Sécurité
 - [ ] Aucun token/secret hardcodé dans le code
@@ -1206,10 +958,12 @@ def deep_merge(base: Dict, override: Dict) -> Dict:
 
 - **Flexibilité** : Adapter la configuration selon le contexte (dev/prod/CI)
 - **Sécurité** : Secrets dans variables d'env, jamais dans le code
-- **Cohérence** : Même hiérarchie pour tous les modules (LOI DU PROJET)
+- **Cohérence** : Même hiérarchie pour tous les modules (LOI)
 - **Transparence** : Comportement prévisible et documenté
 - **Testabilité** : Facile à configurer pour les tests automatisés
 - **Maintenabilité** : Pattern standard reconnaissable immédiatement
+
+---
 
 ## Tests et Couverture de Code
 
@@ -1295,352 +1049,15 @@ def deep_merge(base: Dict, override: Dict) -> Dict:
 
 ### Structure des Tests
 
-Le projet utilise `pytest` comme framework de tests principal :
+Utiliser `pytest` comme framework de tests principal :
 
 ```
 tests/
 ├── unit/                    # Tests unitaires (logique métier isolée)
-│   ├── test_piag/
-│   │   ├── test_config.py
-│   │   ├── test_client.py
-│   │   └── test_collections.py
-│   ├── test_wikisi/
-│   │   ├── test_scraper.py
-│   │   ├── test_extract.py
-│   │   └── test_flatten.py
-│   └── test_conversion/
-│       ├── test_html2md.py
-│       └── test_pdf.py
 ├── integration/             # Tests d'intégration (modules combinés)
-│   ├── test_piag_workflow.py
-│   ├── test_wikisi_pipeline.py
-│   └── test_cli_integration.py
 ├── e2e/                     # Tests end-to-end (scénarios complets)
-│   ├── test_piag_e2e.py
-│   └── test_wikisi_e2e.py
 ├── fixtures/                # Données de test réutilisables
-│   ├── sample_data.json
-│   ├── mock_responses.py
-│   └── test_config.yaml
 └── conftest.py             # Configuration pytest globale
-```
-
-### Types de Tests
-
-#### 1. Tests Unitaires (`tests/unit/`)
-
-Testent des fonctions et classes isolées, sans dépendances externes :
-
-```python
-# tests/unit/test_wikisi/test_extract.py
-import pytest
-from app.wikisi.commands.wikisi_extract_json import parse_range_spec
-
-def test_parse_range_spec_simple():
-    """Test simple range parsing."""
-    result = parse_range_spec("1-3", 10)
-    assert result == [0, 1, 2]
-
-def test_parse_range_spec_last_n():
-    """Test last N elements range."""
-    result = parse_range_spec("-5", 10)
-    assert result == [5, 6, 7, 8, 9]
-
-def test_parse_range_spec_from_n():
-    """Test from N to end range."""
-    result = parse_range_spec("7-", 10)
-    assert result == [6, 7, 8, 9]
-
-def test_parse_range_spec_invalid():
-    """Test invalid range handling."""
-    with pytest.raises(ValueError):
-        parse_range_spec("invalid", 10)
-```
-
-**Caractéristiques** :
-- Tests rapides (< 1ms par test)
-- Pas de réseau, fichiers, ou base de données
-- Utilisent des mocks pour les dépendances
-- Testent les cas nominaux ET les cas d'erreur
-
-#### 2. Tests d'Intégration (`tests/integration/`)
-
-Testent l'interaction entre plusieurs modules :
-
-```python
-# tests/integration/test_wikisi_pipeline.py
-import pytest
-from pathlib import Path
-from app.wikisi import process_parkjson2json, process_parkjson2md
-
-def test_json_to_markdown_pipeline(tmp_path):
-    """Test complete JSON extraction -> Markdown conversion pipeline."""
-    # Setup
-    input_json = tmp_path / "input.json"
-    filtered_json = tmp_path / "filtered.json"
-    output_md = tmp_path / "output.md"
-
-    # Create test data
-    test_data = {
-        "applications": [
-            {"nom": "App1", "description": "Test app 1"},
-            {"nom": "App2", "description": "Test app 2"}
-        ]
-    }
-    input_json.write_text(json.dumps(test_data))
-
-    # Step 1: Extract/filter JSON
-    result = process_parkjson2json(
-        str(input_json),
-        str(filtered_json),
-        verbose=False,
-        range_spec="1-1"
-    )
-    assert result == 0
-    assert filtered_json.exists()
-
-    # Step 2: Convert to Markdown
-    result = process_parkjson2md(
-        str(filtered_json),
-        str(output_md),
-        verbose=False
-    )
-    assert result == 0
-    assert output_md.exists()
-
-    # Verify output
-    md_content = output_md.read_text()
-    assert "# App1" in md_content
-    assert "App2" not in md_content  # Filtered out
-```
-
-**Caractéristiques** :
-- Tests moyennement rapides (< 100ms par test)
-- Utilisent des fichiers temporaires (`tmp_path`)
-- Mockent les API externes
-- Testent les flux de données entre modules
-
-#### 3. Tests End-to-End (`tests/e2e/`)
-
-Testent des scénarios utilisateur complets, incluant CLI :
-
-```python
-# tests/e2e/test_wikisi_e2e.py
-import pytest
-import subprocess
-from pathlib import Path
-
-def test_wikisi_scrape_full_workflow(tmp_path):
-    """Test complete WikiSI scraping workflow via CLI."""
-    output_dir = tmp_path / "scraped"
-
-    # Run CLI command
-    result = subprocess.run(
-        [
-            "ambulon", "wikisi-scrape",
-            "--url", "https://example.com",
-            "--output", str(output_dir),
-            "--depth", "1"
-        ],
-        capture_output=True,
-        text=True
-    )
-
-    # Verify success
-    assert result.returncode == 0
-    assert output_dir.exists()
-    assert (output_dir / "index.html").exists()
-    assert (output_dir / "scrape_metadata.json").exists()
-```
-
-**Caractéristiques** :
-- Tests lents (> 100ms, parfois plusieurs secondes)
-- Testent l'application comme un utilisateur réel
-- Peuvent utiliser des services externes (avec mocks optionnels)
-- Validés en environnement de pré-production
-
-### Bonnes Pratiques de Tests
-
-#### 1. Utiliser des Fixtures
-
-```python
-# tests/conftest.py
-import pytest
-from pathlib import Path
-
-@pytest.fixture
-def sample_wikisi_json():
-    """Fixture providing sample WikiSI JSON data."""
-    return {
-        "applications": [
-            {
-                "nom": "Application Test",
-                "id": "APP001",
-                "description": "Application de test"
-            }
-        ]
-    }
-
-@pytest.fixture
-def temp_config(tmp_path):
-    """Fixture providing temporary config file."""
-    config = tmp_path / "config.yaml"
-    config.write_text("""
-    site:
-      base_url: "https://test.example.com"
-      max_depth: 2
-    """)
-    return config
-```
-
-#### 2. Mocker les Dépendances Externes
-
-```python
-# tests/unit/test_wikisi/test_scraper.py
-import pytest
-from unittest.mock import Mock, patch
-from app.wikisi.commands.wikisi_scraper import WikiSIScraper
-
-@patch('app.wikisi.commands.wikisi_scraper.requests.Session')
-def test_scraper_fetch_page(mock_session, sample_config):
-    """Test page fetching with mocked HTTP."""
-    # Setup mock
-    mock_response = Mock()
-    mock_response.text = "<html><body>Test</body></html>"
-    mock_response.status_code = 200
-    mock_session.return_value.get.return_value = mock_response
-
-    # Test
-    scraper = WikiSIScraper(sample_config)
-    content = scraper._fetch_page("https://test.example.com")
-
-    # Verify
-    assert "Test" in content
-    mock_session.return_value.get.assert_called_once()
-```
-
-#### 3. Tester les Cas d'Erreur
-
-```python
-def test_scraper_handles_network_error():
-    """Test scraper gracefully handles network errors."""
-    with patch('requests.Session.get', side_effect=requests.ConnectionError):
-        scraper = WikiSIScraper(config)
-        result = scraper.scrape()
-
-        assert result['pages_failed'] > 0
-        assert result['pages_downloaded'] == 0
-```
-
-#### 4. Tests Paramétrés
-
-```python
-@pytest.mark.parametrize("range_spec,total,expected", [
-    ("1-3", 10, [0, 1, 2]),
-    ("-5", 10, [5, 6, 7, 8, 9]),
-    ("7-", 10, [6, 7, 8, 9]),
-    ("1,3,5", 10, [0, 2, 4]),
-])
-def test_parse_range_variants(range_spec, total, expected):
-    """Test multiple range specification variants."""
-    result = parse_range_spec(range_spec, total)
-    assert result == expected
-```
-
-### Exécution des Tests
-
-```bash
-# Tous les tests
-pytest
-
-# Tests unitaires uniquement
-pytest tests/unit/
-
-# Tests avec couverture
-pytest --cov=app --cov-report=html
-
-# Tests avec détails
-pytest -v
-
-# Tests d'un module spécifique
-pytest tests/unit/test_wikisi/
-
-# Tests avec rapport de couverture
-pytest --cov=app --cov-report=term-missing
-
-# Tests en parallèle (plus rapide)
-pytest -n auto
-```
-
-### Intégration Continue (CI)
-
-Les tests doivent s'exécuter automatiquement dans la CI :
-
-```yaml
-# .github/workflows/tests.yml
-name: Tests
-
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-
-      - name: Install Poetry
-        run: pip install poetry
-
-      - name: Install dependencies
-        run: poetry install
-
-      - name: Run tests with coverage
-        run: |
-          poetry run pytest --cov=app --cov-report=xml --cov-report=term
-
-      - name: Check coverage threshold
-        run: |
-          poetry run coverage report --fail-under=80
-```
-
-### Couverture par Module - Objectifs
-
-| Module | Couverture Minimale | Couverture Cible | Notes |
-|--------|---------------------|------------------|-------|
-| `app/piag/` | 85% | 95% | Module critique (API externe) |
-| `app/wikisi/` | 80% | 90% | Web scraping complexe |
-| `app/conversion/` | 80% | 90% | Transformations de données |
-| `app/cli/` | 70% | 85% | CLI (testable via E2E) |
-| `app/encoding/` | 90% | 95% | Manipulation encodage (critique) |
-
-### Exclusions de Couverture
-
-Certaines parties peuvent être exclues de la couverture :
-
-```python
-# .coveragerc
-[run]
-omit =
-    tests/*
-    */migrations/*
-    */settings.py
-    */__pycache__/*
-
-[report]
-exclude_lines =
-    pragma: no cover
-    def __repr__
-    raise AssertionError
-    raise NotImplementedError
-    if __name__ == .__main__.:
-    if TYPE_CHECKING:
-    @abstractmethod
 ```
 
 ### 🚨 Obligations Avant CHAQUE Commit (BLOQUANT)
@@ -1680,21 +1097,6 @@ pytest --cov=app --cov-report=term | grep "TOTAL"
 - [ ] Tests des cas d'erreur
 
 **❌ Une fonctionnalité sans tests ne peut PAS être commitée.**
-
-#### 5. Checklist de Tests pour Modules de Configuration
-
-Pour tout module implémentant la hiérarchie de configuration :
-
-- [ ] Test CLI écrase tout
-- [ ] Test YAML écrase ENV et defaults
-- [ ] Test ENV écrase defaults
-- [ ] Test defaults utilisés en dernier recours
-- [ ] Test substitution de variables ${VAR:-default}
-- [ ] Test gestion des tokens (non affichés dans logs)
-- [ ] Test fichier config inexistant (utilise defaults)
-- [ ] Test valeurs invalides (gestion d'erreur)
-
-**❌ L'absence d'un seul de ces tests est bloquante.**
 
 ### Résumé des Règles de Tests
 
