@@ -52,20 +52,31 @@ Variables d'environnement supportées:
   GITLAB_USERNAME       GitLab username for PAT
 
 Exemples:
-  # Via arguments CLI
-  ambulon gitlab-clone --token glpat-xxx --output ./repos
+  # Via arguments CLI complets
+  ambulon gitlab-clone --token glpat-xxx --username oauth2 --output ./repos \\
+    --repositories https://gitlab.example.com/user/project1.git \\
+    --repositories https://gitlab.example.com/user/project2.git
 
-  # Via variables d'environnement
-  GITLAB_PRIVATE_TOKEN=glpat-xxx ambulon gitlab-clone
+  # Ou avec le raccourci -r
+  ambulon gitlab-clone -t glpat-xxx -u oauth2 -o ./repos \\
+    -r https://gitlab.example.com/user/project1.git \\
+    -r https://gitlab.example.com/user/project2.git
 
   # Via fichier de configuration
   ambulon gitlab-clone --config config/gitlab.yaml
+
+  # Via fichier avec tilde (home directory)
+  ambulon gitlab-clone --config ~/config/gitlab.yaml
+
+  # Via variables d'environnement + config file
+  GITLAB_PRIVATE_TOKEN=glpat-xxx ambulon gitlab-clone
 """
     )
 
     parser.add_argument("-t", "--token", type=str, help="GitLab Private Access Token. Overrides config file and env var.")
     parser.add_argument("-u", "--username", type=str, help="GitLab username for PAT. Overrides config file and env var.")
     parser.add_argument("-o", "--output", type=str, help="Base directory to clone projects into. Overrides config file.")
+    parser.add_argument("-r", "--repositories", action="append", help="Git repository URL to clone (can be used multiple times). Overrides config file.")
     parser.add_argument("-c", "--config", type=str, default="config/gitlab.yaml", help="Path to the gitlab.yaml configuration file.")
     parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose logging.")
 
@@ -85,6 +96,8 @@ Exemples:
         config['gitlab']['username'] = args.username
     if args.output:
         config['gitlab']['base_clone_dir'] = args.output
+    if args.repositories:
+        config['gitlab']['repositories'] = args.repositories
 
     # 3. Validate the final configuration
     gitlab_config = config.get("gitlab", {})

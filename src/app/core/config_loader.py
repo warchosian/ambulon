@@ -69,22 +69,26 @@ def load_config(
 
     config = default_config or {}
 
-    if config_path and Path(config_path).exists():
-        try:
-            with open(config_path, 'r', encoding='utf-8') as f:
-                yaml_content = f.read()
+    if config_path:
+        # Expand ~ and environment variables in the path
+        expanded_path = Path(config_path).expanduser()
 
-            # Substitute environment variables
-            yaml_content = re.sub(r'\$\{([^}]+)\}', _replace_env_var, yaml_content)
+        if expanded_path.exists():
+            try:
+                with open(expanded_path, 'r', encoding='utf-8') as f:
+                    yaml_content = f.read()
 
-            yaml_config = yaml.safe_load(yaml_content)
-            if yaml_config:
-                # Merge YAML config over the defaults
-                config = deep_merge(config, yaml_config)
+                # Substitute environment variables
+                yaml_content = re.sub(r'\$\{([^}]+)\}', _replace_env_var, yaml_content)
 
-        except Exception as e:
-            print(f"Error loading or parsing config file at '{config_path}': {e}", file=sys.stderr)
-            # In case of error, we stick with the defaults
-            pass
+                yaml_config = yaml.safe_load(yaml_content)
+                if yaml_config:
+                    # Merge YAML config over the defaults
+                    config = deep_merge(config, yaml_config)
+
+            except Exception as e:
+                print(f"Error loading or parsing config file at '{config_path}': {e}", file=sys.stderr)
+                # In case of error, we stick with the defaults
+                pass
             
     return config
