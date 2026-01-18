@@ -8,37 +8,39 @@ import sys
 import yaml
 from pathlib import Path
 from typing import Dict, Any, Optional
+from app.core.config_loader import find_config_file
 
 
 def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
     """
-    Charge la configuration depuis un fichier piag.yaml ou piag.yml.
+    Charge la configuration depuis un fichier piag.yaml.
+
+    Cherche dans les emplacements suivants (par ordre de priorité) :
+    1. Chemin explicite fourni (config_path)
+    2. ./config/piag.yaml (répertoire courant)
+    3. ~/.config/ambulon/piag.yaml (répertoire utilisateur)
+    4. $AMBULON_CONFIG_DIR/piag.yaml (variable d'environnement)
 
     Args:
         config_path: Chemin personnalisé vers le fichier de configuration.
-                     Si None, recherche config/piag.yaml puis config/piag.yml.
+                     Si None, recherche dans les emplacements standard.
 
     Returns:
-        Dictionnaire contenant la configuration.
+        Dictionnaire contenant la configuration, ou {} si aucun fichier trouvé.
 
     Raises:
-        FileNotFoundError: Si aucun fichier de configuration n'est trouvé.
+        FileNotFoundError: Si un chemin explicite est fourni mais n'existe pas.
         yaml.YAMLError: Si le fichier YAML est mal formé.
     """
     if config_path:
-        path_to_check = Path(config_path)
+        # Chemin explicite fourni
+        path_to_check = Path(config_path).expanduser()
         if not path_to_check.exists():
             raise FileNotFoundError(f"Fichier de configuration non trouvé: {config_path}")
     else:
-        # Cherche le fichier de config depuis le répertoire courant de l'utilisateur
-        # (où ambulon est lancé), pas depuis le répertoire d'installation du package
-        cwd = Path.cwd()
-
-        yaml_path = cwd / "config" / "piag.yaml"
-
-        if yaml_path.exists():
-            path_to_check = yaml_path
-        else:
+        # Recherche dans les emplacements standard
+        path_to_check = find_config_file("piag")
+        if path_to_check is None:
             # Retourne un dictionnaire vide si aucun fichier de config par défaut n'est trouvé.
             # Cela permet aux commandes de fonctionner uniquement avec les variables d'env / args CLI.
             return {}

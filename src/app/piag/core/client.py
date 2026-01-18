@@ -218,6 +218,39 @@ class PIAGClient:
 
     # Documents
 
+    def resolve_document_id(self, document_name_or_id: str, collection_id: str) -> str:
+        """
+        Résout un nom ou un ID de document en un ID de document.
+
+        Args:
+            document_name_or_id: Nom de fichier ou ID du document.
+            collection_id: ID de la collection contenant le document.
+
+        Returns:
+            L'ID du document.
+
+        Raises:
+            ValueError: Si le document n'est pas trouvé.
+        """
+        if not document_name_or_id:
+            raise ValueError("Le nom ou l'ID du document ne peut pas être vide.")
+
+        # Première tentative : l'argument est déjà un ID
+        try:
+            self.get_document(collection_id, document_name_or_id)
+            return document_name_or_id
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code != 404:
+                raise  # Renvoyer les erreurs autres que "Not Found"
+
+        # Deuxième tentative : l'argument est un nom de fichier
+        documents = self.list_documents(collection_id, limit=1000).get('items', [])
+        for document in documents:
+            if document.get('name') == document_name_or_id:
+                return document['id']
+
+        raise ValueError(f"Document '{document_name_or_id}' non trouvé dans la collection '{collection_id}'.")
+
     def upload_document(self, collection_id: str, file_path: str) -> Dict[str, Any]:
         """Téléverse un document vers une collection."""
         file_path_obj = Path(file_path)

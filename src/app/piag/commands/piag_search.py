@@ -18,7 +18,8 @@ def main(argv=None):
         int: Code de sortie (0 = succès, 1 = erreur)
     """
     parser = argparse.ArgumentParser(description="Effectue une recherche RAG dans une collection PIAG.")
-    parser.add_argument("--collection", help="Nom ou ID de la collection RAG à interroger.")
+    parser.add_argument("--collection", help="Nom ou ID de la collection RAG à interroger (résolution automatique).")
+    parser.add_argument("--collection-id", help="ID exact de la collection RAG (pas de résolution).")
     parser.add_argument("--project-id", help="ID du projet RAG.")
     parser.add_argument("--query", "-q", help="Question/requête de recherche.")
     parser.add_argument("--token", help="Token API RAG Bearer.")
@@ -35,7 +36,7 @@ def main(argv=None):
         config.setdefault('logging', {}).update({'enable_debug': True, 'log_requests': True, 'log_responses': True})
 
     # Hiérarchie de configuration
-    collection_name_or_id = args.collection or config.get('project', {}).get('collection_id') or os.getenv('PIAG_RAG_COLLECTION_ID')
+    collection_name_or_id = args.collection or args.collection_id or config.get('project', {}).get('collection_id') or os.getenv('PIAG_RAG_COLLECTION_ID')
     query = args.query or config.get('search', {}).get('query') or os.getenv('PIAG_RAG_SEARCH_QUERY')
     api_token = args.token or config.get('security', {}).get('token') or os.getenv('PIAG_RAG_API_TOKEN')
     project_id = args.project_id or config.get('project', {}).get('project_id') or os.getenv('PIAG_RAG_PROJECT_ID')
@@ -45,9 +46,10 @@ def main(argv=None):
 
     # Validations
     if not collection_name_or_id:
-        print("❌ Erreur: Le nom ou l'ID de la collection est requis", file=sys.stderr)
-        print("   Vous pouvez le fournir via:", file=sys.stderr)
-        print("   • --collection <name>", file=sys.stderr)
+        print("❌ Erreur: La collection est requise", file=sys.stderr)
+        print("   Vous pouvez la fournir via:", file=sys.stderr)
+        print("   • --collection <name> (résolution automatique)", file=sys.stderr)
+        print("   • --collection-id <id> (ID exact, pas de résolution)", file=sys.stderr)
         print("   • Variable d'env: PIAG_RAG_COLLECTION_ID", file=sys.stderr)
         print("   • Fichier de config: config/piag.yaml", file=sys.stderr)
         print("\n💡 Pour créer un fichier de configuration:", file=sys.stderr)
@@ -78,9 +80,12 @@ def main(argv=None):
 
     try:
         client = PIAGClient(api_token=api_token, base_url=base_url, config=config)
-        
-        # Résoudre le nom ou l'ID de la collection en ID
-        resolved_collection_id = client.resolve_collection_id(collection_name_or_id, project_id)
+
+        # Résoudre collection : si --collection-id fourni, utiliser directement, sinon résoudre
+        if args.collection_id:
+            resolved_collection_id = args.collection_id
+        else:
+            resolved_collection_id = client.resolve_collection_id(collection_name_or_id, project_id)
 
         result = client.search(resolved_collection_id, query, top_k=top_k)
 
