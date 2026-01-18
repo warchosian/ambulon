@@ -20,8 +20,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description="Effectue une recherche RAG dans une ou plusieurs collections PIAG.")
     parser.add_argument("--collection", help="UNE collection (nom ou ID, résolution automatique).")
     parser.add_argument("--collection-id", help="UNE collection (ID exact, pas de résolution).")
-    parser.add_argument("--collections", help="PLUSIEURS collections séparées par virgule (noms ou IDs, résolution automatique).")
-    parser.add_argument("--collections-id", help="PLUSIEURS collections séparées par virgule (IDs exacts, pas de résolution).")
+    parser.add_argument("--collection-list", help="LISTE de collections séparées par virgule (noms ou IDs, résolution automatique).")
+    parser.add_argument("--collection-list-id", help="LISTE de collections séparées par virgule (IDs exacts, pas de résolution).")
     parser.add_argument("--project-id", help="ID du projet RAG.")
     parser.add_argument("--query", "-q", help="Question/requête de recherche.")
     parser.add_argument("--token", help="Token API RAG Bearer.")
@@ -55,19 +55,19 @@ def main(argv=None):
     # Gestion des collections (4 sources possibles)
     collection_single = args.collection or os.getenv('PIAG_RAG_COLLECTION') or config.get('project', {}).get('collection')
     collection_id_single = args.collection_id or os.getenv('PIAG_RAG_COLLECTION_ID') or config.get('project', {}).get('collection_id')
-    collections_multi = args.collections or os.getenv('PIAG_RAG_COLLECTIONS')
-    collections_id_multi = args.collections_id or os.getenv('PIAG_RAG_COLLECTIONS_ID')
+    collection_list_multi = args.collection_list or os.getenv('PIAG_RAG_COLLECTION_LIST') or config.get('project', {}).get('collection_list')
+    collection_list_id_multi = args.collection_list_id or os.getenv('PIAG_RAG_COLLECTION_LIST_ID') or config.get('project', {}).get('collection_list_id')
 
     # Validation: au moins une collection fournie
-    if not any([collection_single, collection_id_single, collections_multi, collections_id_multi]):
+    if not any([collection_single, collection_id_single, collection_list_multi, collection_list_id_multi]):
         print("❌ Erreur: Au moins une collection est requise", file=sys.stderr)
         print("   Vous pouvez la fournir via:", file=sys.stderr)
         print("   • --collection <name> (1 collection, résolution auto)", file=sys.stderr)
         print("   • --collection-id <id> (1 collection, ID exact)", file=sys.stderr)
-        print("   • --collections <name1,name2> (plusieurs, résolution auto)", file=sys.stderr)
-        print("   • --collections-id <id1,id2> (plusieurs, IDs exacts)", file=sys.stderr)
+        print("   • --collection-list <name1,name2> (liste, résolution auto)", file=sys.stderr)
+        print("   • --collection-list-id <id1,id2> (liste, IDs exacts)", file=sys.stderr)
         print("   • Variable d'env: PIAG_RAG_COLLECTION, PIAG_RAG_COLLECTION_ID,", file=sys.stderr)
-        print("                     PIAG_RAG_COLLECTIONS, PIAG_RAG_COLLECTIONS_ID", file=sys.stderr)
+        print("                     PIAG_RAG_COLLECTION_LIST, PIAG_RAG_COLLECTION_LIST_ID", file=sys.stderr)
         print("   • Fichier de config: config/piag.yaml", file=sys.stderr)
         print("\n💡 Pour créer un fichier de configuration:", file=sys.stderr)
         print("   ambulon init piag", file=sys.stderr)
@@ -101,17 +101,17 @@ def main(argv=None):
         # Résoudre les collections en liste d'IDs
         resolved_collection_ids = []
 
-        if collections_id_multi:
-            # Plusieurs collections par IDs (pas de résolution)
-            resolved_collection_ids = [c.strip() for c in collections_id_multi.split(',')]
+        if collection_list_id_multi:
+            # Liste de collections par IDs (pas de résolution)
+            resolved_collection_ids = [c.strip() for c in collection_list_id_multi.split(',')]
             if args.debug:
-                print(f"[DEBUG] Utilisation de plusieurs collections (IDs exacts): {resolved_collection_ids}", file=sys.stderr)
+                print(f"[DEBUG] Utilisation de liste de collections (IDs exacts): {resolved_collection_ids}", file=sys.stderr)
 
-        elif collections_multi:
-            # Plusieurs collections par noms/IDs (avec résolution)
-            collection_names = [c.strip() for c in collections_multi.split(',')]
+        elif collection_list_multi:
+            # Liste de collections par noms/IDs (avec résolution)
+            collection_names = [c.strip() for c in collection_list_multi.split(',')]
             if args.debug:
-                print(f"[DEBUG] Résolution de plusieurs collections: {collection_names}", file=sys.stderr)
+                print(f"[DEBUG] Résolution de liste de collections: {collection_names}", file=sys.stderr)
             for cname in collection_names:
                 resolved_id = client.resolve_collection_id(cname, project_id)
                 resolved_collection_ids.append(resolved_id)
