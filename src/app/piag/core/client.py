@@ -317,21 +317,65 @@ class PIAGClient:
 
     def search(
         self,
-        collection_id: str,
-        query: str,
-        top_k: int = 5
+        collection_id: str = None,
+        collections: list = None,
+        query: str = None,
+        project_id: str = None,
+        top_k: int = 10,
+        rerank: bool = True,
+        k_rerank: int = 20,
+        mode: str = "hybrid"
     ) -> Dict[str, Any]:
-        """Effectue une recherche RAG dans une collection."""
+        """
+        Effectue une recherche RAG dans une ou plusieurs collections.
+
+        Args:
+            collection_id: ID d'une seule collection (converti en liste)
+            collections: Liste d'IDs de collections (prioritaire sur collection_id)
+            query: Question/requête de recherche
+            project_id: ID du projet RAG (requis, passé en query parameter)
+            top_k: Nombre de résultats à retourner
+            rerank: Activer le reranking des résultats
+            k_rerank: Nombre de résultats pour le reranking
+            mode: Mode de recherche ("hybrid", "semantic", "keyword")
+
+        Returns:
+            Résultats de recherche avec chunks pertinents
+        """
+        # Déterminer la liste de collections
+        if collections is not None:
+            # Utiliser la liste fournie
+            collection_list = collections
+        elif collection_id is not None:
+            # Convertir l'ID unique en liste
+            collection_list = [collection_id]
+        else:
+            raise ValueError("Vous devez fournir soit collection_id soit collections")
+
+        if not query:
+            raise ValueError("Le paramètre query est requis")
+
+        if not project_id:
+            raise ValueError("Le paramètre project_id est requis")
+
         endpoint = get_endpoint('search', self.config)
+
+        # project_id en query parameter (selon spec API page 5)
+        params = {'project_id': project_id}
+
         payload = {
-            'collection_id': collection_id,
+            'collections': collection_list,  # API attend "collections" (liste)
             'query': query,
-            'top_k': top_k
+            'k': top_k,                      # API attend "k" pas "top_k"
+            'rerank': rerank,
+            'k_rerank': k_rerank,
+            'mode': mode
         }
 
         return self._request(
             'POST',
             endpoint,
+            params=params,                   # project_id dans l'URL
             include_content_type=True,
             data=json.dumps(payload)
         )
