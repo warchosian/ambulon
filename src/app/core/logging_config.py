@@ -48,7 +48,6 @@ def setup_logging(level: Union[int, str] = logging.INFO, log_file_prefix: Option
                 pass
     
     # Ensure stdout/stderr encoding for Windows
-    import os
     os.environ['PYTHONIOENCODING'] = 'utf-8'
     if hasattr(sys.stdout, 'reconfigure'):
         sys.stdout.reconfigure(encoding='utf-8')
