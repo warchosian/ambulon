@@ -52,5 +52,8 @@ specs/
 # Scripts directory
 scripts/
 
+# Scans
+scans/
+
 # Logs
 logs/
