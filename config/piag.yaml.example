@@ -4,9 +4,15 @@
 # Ce fichier sert de template pour l'intégration avec l'API RAG PIAG
 #
 # INSTRUCTIONS:
-# 1. Copiez ce fichier vers config/piag_rag.yaml
+# 1. Copiez ce fichier vers config/piag.yaml (ou $AMBULON_HOME/config/piag.yaml)
 # 2. Remplissez les valeurs nécessaires (project_id, token, etc.)
-# 3. Le fichier config/piag_rag.yaml est dans .gitignore et ne sera pas commité
+# 3. Le fichier config/piag.yaml est dans .gitignore et ne sera pas commité
+#
+# EMPLACEMENTS RECHERCHÉS (par ordre de priorité):
+# 1. Chemin explicite avec --config
+# 2. $AMBULON_HOME/config/piag.yaml (si AMBULON_HOME est défini)
+# 3. ./config/piag.yaml (répertoire courant)
+# 4. $AMBULON_CONFIG_DIR/piag.yaml (si AMBULON_CONFIG_DIR est défini)
 #
 # HIÉRARCHIE DE PRIORITÉ: Arguments CLI > YAML > Variables d'environnement > Valeurs par défaut
 # ============================================================================
@@ -54,12 +60,21 @@ project:
   # Identifiant du projet (fourni par votre administrateur)
   # project_id: "VOTRE_PROJECT_ID"
 
-  # Nom et description par défaut pour les nouvelles collections (optionnel)
-  # name: "Ma Collection"
-  # description: "Description de la collection"
+  # Nom de la collection par défaut (résolution automatique vers ID) (optionnel)
+  # collection_name: "Ma Collection"
 
-  # Identifiant d'une collection par défaut (optionnel)
+  # Identifiant exact d'une collection par défaut (pas de résolution) (optionnel)
   # collection_id: ""
+
+  # Pour piag-search : liste de noms de collections séparés par virgule (optionnel)
+  # Exemple: "PNM3_FORMID,PNM3_AMBULON,PNM3_LAMBDA"
+  # collection_name_list: "PNM3_FORMID,PNM3_AMBULON,PNM3_LAMBDA"
+
+  # Pour piag-search : liste d'IDs de collections séparés par virgule (optionnel)
+  # collection_id_list: ""
+
+  # Description par défaut pour les nouvelles collections (optionnel)
+  # description: "Description de la collection"
 
 # ==========================
 # CONFIGURATION DE LA SÉCURITÉ

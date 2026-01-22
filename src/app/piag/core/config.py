@@ -17,9 +17,9 @@ def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
 
     Cherche dans les emplacements suivants (par ordre de priorité) :
     1. Chemin explicite fourni (config_path)
-    2. ./config/piag.yaml (répertoire courant)
-    3. ~/.config/ambulon/piag.yaml (répertoire utilisateur)
-    4. $AMBULON_CONFIG_DIR/piag.yaml (variable d'environnement)
+    2. Si AMBULON_HOME est défini : $AMBULON_HOME/config/piag.yaml
+       Sinon : ./config/piag.yaml (répertoire courant)
+    3. Si AMBULON_CONFIG_DIR est défini : $AMBULON_CONFIG_DIR/piag.yaml
 
     Args:
         config_path: Chemin personnalisé vers le fichier de configuration.

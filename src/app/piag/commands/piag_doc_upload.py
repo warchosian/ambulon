@@ -85,8 +85,8 @@ def main(argv=None):
         client = PIAGClient(api_token=api_token, base_url=base_url, config=config)
 
         # Résoudre collection : si --collection-id fourni, utiliser directement, sinon résoudre
-        if args.collection_id:
-            resolved_collection_id = args.collection_id
+        if collection_id:
+            resolved_collection_id = collection_id
         else:
             resolved_collection_id = client.resolve_collection_id(collection_name_or_id, project_id)
 
