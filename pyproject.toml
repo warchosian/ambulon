@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ambulon"
-version = "2.0.7"
+version = "2.1.0"
 description = "Suite complète d'outils de numérisation avec serveur MCP pour assistants IA."
 authors = ["Votre Nom <votre.email@example.com>"]
 license = "MIT"
@@ -26,6 +26,7 @@ beautifulsoup4 = "^4.12.0"
 lxml = "^5.0.0"
 markdown = "^3.5.0"
 python-slugify = "^8.0.0"
+playwright = "^1.47.0"
 
 [tool.poetry.group.dev.dependencies]
 commitizen = "^3.13.0"
@@ -45,7 +46,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "2.0.7"
+version = "2.1.0"
 tag_format = "$version"
 version_files = [
     "pyproject.toml:version",

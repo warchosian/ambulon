@@ -1,5 +1,31 @@
 Tree paragraphs wrapped: 0
-Total paragraphs: 1
+Total paragraphs: 44
 
-Para 0: has_tree=False, len=16550, start=___HTML_TAG_0___
-<svg id="container" width="934.94921875" xmlns="http://www.w3.org/2000/svg" class="
+Para 0: has_tree=False, len=29, start=<h1>📚 Table des matières</h1>
+
+Para 1: has_tree=False, len=67, start=<blockquote>
+Document fusionné généré automatiquement
+</blockquote>
+
+Para 2: has_tree=False, len=168, start=<ul>
+<li>___HTML_TAG_6___</li>
+<li>___HTML_TAG_7___</li>
+<li>___HTML_TAG_8___</li>
+<li>___HTML_TAG_9
+
+Para 3: has_tree=False, len=4, start=<hr>
+
+Para 4: has_tree=False, len=5, start=
+<hr>
+
+Para 5: has_tree=False, len=16, start=___HTML_TAG_0___
+
+Para 6: has_tree=False, len=38, start=<h1>📄 ADO-Documentation-technique</h1>
+
+Para 7: has_tree=False, len=96, start=<blockquote>
+<strong>Source :</strong> <code>ADO-Documentation-technique.md</code>
+</blockquote>
+
+Para 8: has_tree=False, len=18, start=!___HTML_TAG_12___
+
+Para 9: has_tree=False, len=42, start=<strong>Historique des évolutions</strong>

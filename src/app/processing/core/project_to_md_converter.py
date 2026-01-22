@@ -127,24 +127,28 @@ def should_exclude_dir_logic(dir_name: str, exclude_dirs: Set[str]) -> bool:
 
 class ProjectIgnore:
     """
-    Parser and matcher for .projectignore files.
+    Parser and matcher for .projectignore and .gitignore files.
     Supports gitignore-style patterns with exclusion and inclusion rules.
     """
 
-    def __init__(self, root_dir: Path):
+    def __init__(self, root_dir: Path, use_gitignore: bool = True):
         self.root_dir = root_dir
         self.patterns: List[Tuple[str, bool, bool]] = []  # List of (pattern, is_negation, is_dir_only)
-        self._load_patterns()
+        
+        # Always load .projectignore as it's specific to this tool
+        self._load_patterns_from_file(self.root_dir / '.projectignore')
+        
+        # Conditionally load .gitignore
+        if use_gitignore:
+            self._load_patterns_from_file(self.root_dir / '.gitignore')
 
-    def _load_patterns(self):
-        """Load patterns from .projectignore file."""
-        projectignore_file = self.root_dir / '.projectignore'
-
-        if not projectignore_file.exists():
+    def _load_patterns_from_file(self, file_path: Path):
+        """Load patterns from a given ignore-style file."""
+        if not file_path.exists():
             return
 
         try:
-            with open(projectignore_file, 'r', encoding='utf-8') as f:
+            with open(file_path, 'r', encoding='utf-8') as f:
                 for line in f:
                     line = line.strip()
 
@@ -164,8 +168,7 @@ class ProjectIgnore:
 
                     self.patterns.append((line, is_negation, is_dir_only))
         except Exception as e:
-            logger.warning(f"Error reading .projectignore file: {e}")
-            # Silently ignore errors reading .projectignore
+            logger.warning(f"Error reading ignore file {file_path}: {e}")
 
     def _match_pattern(self, path_str: str, pattern: str, is_dir: bool, is_dir_only: bool) -> bool:
         """
@@ -236,24 +239,6 @@ class ProjectIgnore:
         return ignored
 
 
-def load_gitignore_patterns(root_dir: Path) -> Set[str]:
-    """Load patterns from .gitignore file."""
-    gitignore_file = root_dir / '.gitignore'
-    patterns = set()
-
-    if gitignore_file.exists():
-        try:
-            with open(gitignore_file, 'r', encoding='utf-8') as f:
-                for line in f:
-                    line = line.strip()
-                    if line and not line.startswith('#'):
-                        patterns.add(line)
-        except Exception as e:
-            logger.warning(f"Error reading .gitignore file: {e}")
-
-    return patterns
-
-
 def scan_directory_logic(
     root_dir: Path,
     exclude_dirs: Set[str],
@@ -274,12 +259,12 @@ def scan_directory_logic(
     """
     files = []
 
-    # Load .projectignore patterns if requested
-    projectignore = ProjectIgnore(root_dir) if use_gitignore else None
+    # ProjectIgnore now handles both .projectignore and .gitignore patterns
+    projectignore = ProjectIgnore(root_dir, use_gitignore)
 
     logger.info(f"Scanning directory: {root_dir}")
     if projectignore and projectignore.patterns:
-        logger.info(f"Using .projectignore with {len(projectignore.patterns)} patterns.")
+        logger.info(f"Using ignore patterns with {len(projectignore.patterns)} rules.")
 
     for root, dirs, filenames in os.walk(root_dir):
         root_path = Path(root)
@@ -713,17 +698,12 @@ def project_to_markdown_logic(
     if output_file is None:
         output_file_resolved = Path(f"{root_dir.name}_project.md")
     else:
-        output_file_resolved = output
+        output_file_resolved = output_file
 
     # Build exclude set
     exclude_set = DEFAULT_EXCLUDE_DIRS.copy()
     if exclude_dirs:
         exclude_set.update(exclude_dirs)
-
-    # Load gitignore if requested
-    if use_gitignore:
-        gitignore_patterns = load_gitignore_patterns(root_dir)
-        exclude_set.update(gitignore_patterns)
 
     logger.info(f"Project: {root_dir}")
     logger.info(f"Output: {output_file_resolved}")

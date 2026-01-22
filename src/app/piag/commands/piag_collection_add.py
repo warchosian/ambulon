@@ -24,7 +24,7 @@ def main(argv=None):
         epilog="HIÉRARCHIE DE PRIORITÉ: Arguments CLI > Fichier YAML > Variables d'environnement > Valeurs par défaut"
     )
     parser.add_argument("--project-id", help="ID du projet RAG (écrase YAML et env).")
-    parser.add_argument("--collection", help="Nom de la collection (écrase YAML et env).")
+    parser.add_argument("--collection-name", help="Nom de la collection (écrase YAML et env).")
     parser.add_argument("--description", help="Description de la collection (écrase YAML et env).")
     parser.add_argument("--token", help="Token API RAG Bearer (écrase YAML et env).")
     parser.add_argument("--base-url", help="URL de base de l'API RAG (écrase YAML).")
@@ -69,13 +69,13 @@ def main(argv=None):
         return 1
 
     # 2. NAME
-    name = args.collection  # Argument CLI (priorité 1)
+    name = args.collection_name  # Argument CLI (priorité 1)
     if not name:
-        name = config.get('project', {}).get('name')  # YAML (priorité 2)
+        name = config.get('project', {}).get('collection_name')  # YAML (priorité 2)
     if not name:
         name = os.getenv('PIAG_RAG_COLLECTION_NAME')  # Variable d'env (priorité 3)
     if not name:
-        print("Erreur: name requis. Utilisez --collection, définissez-le dans le YAML, ou via PIAG_RAG_COLLECTION_NAME", file=sys.stderr)
+        print("Erreur: name requis. Utilisez --collection-name, définissez-le dans le YAML, ou via PIAG_RAG_COLLECTION_NAME", file=sys.stderr)
         return 1
 
     # 3. DESCRIPTION

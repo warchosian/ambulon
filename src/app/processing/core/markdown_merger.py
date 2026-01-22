@@ -74,6 +74,13 @@ def check_code_blocks_balanced(file_path: Path) -> Tuple[bool, int]:
     return is_balanced, backtick_count
 
 
+def natural_sort_key(s: str) -> List[Any]:
+    """
+    Create a sort key for natural string sorting (e.g., "file2.md" comes before "file10.md").
+    """
+    return [int(text) if text.isdigit() else text.lower() for text in re.split(r'([0-9]+)', s)]
+
+
 def collect_markdown_files_for_merging(
     source_dir: Path,
 ) -> List[Tuple[Path, str]]:
@@ -301,8 +308,12 @@ def fusion_markdown_files_logic(
     # Fix encoding for Windows console (moved from CLI to here as it's a core concern)
     if sys.platform == 'win32':
         import codecs
-        sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, 'strict')
-        sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
+        stdout_buffer = getattr(sys.stdout, "buffer", None)
+        stderr_buffer = getattr(sys.stderr, "buffer", None)
+        if stdout_buffer is not None:
+            sys.stdout = codecs.getwriter('utf-8')(stdout_buffer, 'strict')
+        if stderr_buffer is not None:
+            sys.stderr = codecs.getwriter('utf-8')(stderr_buffer, 'strict')
 
     source_path = source_dir.resolve()
 

@@ -28,12 +28,23 @@ def setup_logging(level: Union[int, str] = logging.INFO, log_file_prefix: Option
     now = datetime.now()
     timestamp = now.strftime("%Y-%m-%d_%Hh%Mm%Ss")
     
-    logs_dir = Path("logs")
-    logs_dir.mkdir(exist_ok=True)
-    
     log_file: Optional[Path] = None
-    if log_file_prefix:
-        log_file = logs_dir / f"{log_file_prefix}.{timestamp}.log"
+    logs_dir = None
+    # Allow disabling file logs via environment variable
+    no_file_logs = os.getenv("AMBULON_NO_FILE_LOGS", "").strip().lower() in {"1", "true", "yes"}
+
+    if log_file_prefix and not no_file_logs:
+        try:
+            logs_dir = Path("logs")
+            logs_dir.mkdir(exist_ok=True)
+            log_file = logs_dir / f"{log_file_prefix}.{timestamp}.log"
+        except Exception as e:
+            # Fallback: disable file logging if we cannot create logs directory
+            log_file = None
+            try:
+                print(f"[WARNING] Logging disabled (cannot create logs/): {e}", file=sys.stderr)
+            except Exception:
+                pass
     
     # Ensure stdout/stderr encoding for Windows
     import os

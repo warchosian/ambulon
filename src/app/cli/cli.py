@@ -11,6 +11,7 @@ from app.ocr.commands.ocr import main as ocr_main
 from app.mcp.commands.run_server import main as mcp_main
 from app.mcp.core.config import export_mcp_config, get_claude_config_path
 from app.gitlab.commands.gitlab_clone import main as gitlab_clone_main
+from app.gitlab.commands.gitlab_monofile import main as gitlab_monofile_main
 
 # Modules de conversion
 from app.conversion import (
@@ -70,6 +71,7 @@ def show_help():
     print("  config                Gestion de la configuration MCP")
     print("  init                  Générer les fichiers de configuration (piag, gitlab, wikisi)")
     print("  gitlab-clone          Cloner des projets GitLab depuis la configuration")
+    print("  gitlab-monofile       Generer un monofile a partir d'un repo clone")
     print("  test                  Tests des modules Ambulon")
     print()
     print("Modules de conversion:")
@@ -124,6 +126,7 @@ def show_help():
     print("Options générales:")
     print("  -h, --help    Afficher cette aide")
     print("  --version     Afficher la version")
+    print("  --no-log-file Désactiver les logs fichier (console uniquement)")
     print()
     print("Exemples:")
     print("  ambulon scan --help                 Aide du module scan")
@@ -138,6 +141,7 @@ def show_help():
     print("  ambulon wikisi-md apps.json -o apps.md --verbose")
     print("  ambulon mcp                         Démarrer le serveur MCP")
     print("  ambulon gitlab-clone                Cloner les projets configurés")
+    print("  ambulon gitlab-monofile G:\\repos\\my-project")
     print()
     print("Pour plus d'informations sur un module spécifique:")
     print("  ambulon [MODULE] --help")
@@ -535,9 +539,15 @@ def handle_rag_module(module_name: str):
 
 
 def main():
+    print("DEBUG: app.cli.cli main() function entered.", file=sys.stderr)
     """Fonction principale appelée par la commande `ambulon`."""
     # Configure logging for the main CLI entry point
     # Console output only (no log file) - each command creates its own log file
+    if '--no-log-file' in sys.argv:
+        import os
+        os.environ["AMBULON_NO_FILE_LOGS"] = "1"
+        # Remove the flag so subcommand parsers don't reject it
+        sys.argv = [arg for arg in sys.argv if arg != '--no-log-file']
     verbose = '--verbose' in sys.argv or '-v' in sys.argv # Check for verbose early
     setup_logging(level=logging.DEBUG if verbose else logging.INFO, log_file_prefix=None)
 
@@ -809,6 +819,9 @@ def main():
         elif command == 'gitlab-clone':
             # Cloner des projets GitLab depuis la configuration
             return gitlab_clone_main(sys.argv[2:])
+        elif command == 'gitlab-monofile':
+            # Generer un monofile depuis un repo clone
+            return gitlab_monofile_main(sys.argv[2:])
         elif command == 'test':
             return handle_test_command()
         # Commandes RAG PIAG

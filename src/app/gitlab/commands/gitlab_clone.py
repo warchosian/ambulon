@@ -13,6 +13,7 @@ from typing import List, Optional
 from app.core.config_loader import load_config as load_app_config, find_config_file
 from app.core.logging_config import setup_logging
 from app.gitlab.core.cloning import clone_repository
+from app.gitlab.core.monofile import generate_code_monofile, generate_wiki_monofile, infer_repo_mode
 
 # Default configuration for this module
 DEFAULT_CONFIG = {
@@ -113,10 +114,17 @@ Exemples:
 
     # 3. Validate the final configuration
     gitlab_config = config.get("gitlab", {})
+    automation_config = gitlab_config.get("automation", {})
     final_token = gitlab_config.get("token")
     final_username = gitlab_config.get("username")
     final_base_dir_str = gitlab_config.get("base_clone_dir")
     repositories = gitlab_config.get("repositories", [])
+    if isinstance(repositories, str):
+        repositories = [
+            line.strip()
+            for line in repositories.splitlines()
+            if line.strip() and not line.strip().startswith("#")
+        ]
 
     # Detailed validation with clear error messages
     missing = []
@@ -179,6 +187,31 @@ Exemples:
     logger.info(f"Found {len(repositories)} repositories to process.")
 
     has_errors = False
+    auto_enabled = bool(automation_config.get("enabled", False))
+    code_auto = automation_config.get("code_monofile", {}) if auto_enabled else {}
+    wiki_auto = automation_config.get("wiki_monofile", {}) if auto_enabled else {}
+
+    def _derive_repo_name(repo_url: str) -> str:
+        repo_url_clean = repo_url
+        if repo_url_clean.startswith("https://"):
+            repo_url_clean = repo_url_clean[8:]
+        elif repo_url_clean.startswith("http://"):
+            repo_url_clean = repo_url_clean[7:]
+        return Path(repo_url_clean).stem
+
+    def _ensure_dir(path_value: Optional[str]) -> Optional[Path]:
+        if not path_value:
+            return None
+        path = Path(path_value)
+        path.mkdir(parents=True, exist_ok=True)
+        return path
+
+    def _log_output_path(output_path: Path) -> None:
+        try:
+            relative_path = output_path.relative_to(Path.cwd())
+        except ValueError:
+            relative_path = output_path.resolve()
+        logger.info(f"File produced: {relative_path}")
     for repo_url in repositories:
         for result in clone_repository(repo_url, final_base_dir, final_username, final_token):
             status = result.get("status")
@@ -195,6 +228,43 @@ Exemples:
                 logger.info(message)
             elif status == "success":
                 logger.info(message)
+            if status in ("success", "skipped") and auto_enabled:
+                repo_name = result.get("repo_name") or _derive_repo_name(repo_url)
+                repo_path_str = result.get("target_path")
+                repo_path = Path(repo_path_str) if repo_path_str else final_base_dir / repo_name
+
+                mode = infer_repo_mode(repo_path)
+                if mode == "wiki":
+                    if not wiki_auto.get("enabled", False):
+                        continue
+                    output_dir = _ensure_dir(wiki_auto.get("output_dir"))
+                    filename_template = wiki_auto.get("filename_template")
+                    exit_code, output_path = generate_wiki_monofile(
+                        repo_dir=repo_path,
+                        output_dir=output_dir,
+                        filename_template=filename_template,
+                    )
+                else:
+                    if not code_auto.get("enabled", False):
+                        continue
+                    output_dir = _ensure_dir(code_auto.get("output_dir"))
+                    filename_template = code_auto.get("filename_template")
+                    exit_code, output_path = generate_code_monofile(
+                        repo_dir=repo_path,
+                        output_dir=output_dir,
+                        filename_template=filename_template,
+                    )
+
+                if exit_code == 0 and output_path:
+                    _log_output_path(output_path)
+                    html_path = Path(str(output_path)).with_suffix(".html")
+                    if html_path.exists():
+                        _log_output_path(html_path)
+                elif exit_code == 0 and output_path is None:
+                    logger.warning(f"Monofile skipped (no Markdown files) for {repo_path}")
+                else:
+                    logger.error(f"Monofile generation failed for {repo_path}")
+                    has_errors = True
 
     if has_errors:
         logger.error("\nCompleted with errors.")

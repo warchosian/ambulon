@@ -160,9 +160,10 @@ def adapt_markdown_links(
 
     adapted_count = 0
     external_count = 0
+    preserved_count = 0
 
     def replace_link(match):
-        nonlocal adapted_count, external_count
+        nonlocal adapted_count, external_count, preserved_count
 
         link_text = match.group(1)
         link_url = match.group(2)
@@ -253,8 +254,12 @@ def flatten_markdown_directory_logic(
     # Fix encoding for Windows console (moved from CLI to here as it's a core concern)
     if sys.platform == 'win32':
         import codecs
-        sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, 'strict')
-        sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
+        stdout_buffer = getattr(sys.stdout, "buffer", None)
+        stderr_buffer = getattr(sys.stderr, "buffer", None)
+        if stdout_buffer is not None:
+            sys.stdout = codecs.getwriter('utf-8')(stdout_buffer, 'strict')
+        if stderr_buffer is not None:
+            sys.stderr = codecs.getwriter('utf-8')(stderr_buffer, 'strict')
 
     source_path = source_dir.resolve()
 

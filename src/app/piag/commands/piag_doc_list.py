@@ -18,8 +18,8 @@ def main(argv=None):
         int: Code de sortie (0 = succès, 1 = erreur)
     """
     parser = argparse.ArgumentParser(description="Liste les documents d'une collection RAG PIAG.")
-    parser.add_argument("--collection", help="Nom ou ID de la collection RAG (résolution automatique).")
-    parser.add_argument("--collection-id", help="ID exact de la collection RAG (pas de résolution).")
+    parser.add_argument("--collection-name", help="Nom de la collection RAG (résolution automatique vers ID).")
+    parser.add_argument("--collection-id", help="ID exact de la collection RAG (pas de résolution, plus rapide).")
     parser.add_argument("--project-id", help="ID du projet RAG.")
     parser.add_argument("--token", help="Token API RAG Bearer.")
     parser.add_argument("--limit", type=int, help="Nombre maximum de résultats.")
@@ -36,7 +36,8 @@ def main(argv=None):
         config.setdefault('logging', {}).update({'enable_debug': True, 'log_requests': True, 'log_responses': True})
 
     # Hiérarchie de configuration pour les paramètres
-    collection_name_or_id = args.collection or args.collection_id or config.get('project', {}).get('collection_id') or os.getenv('PIAG_RAG_COLLECTION_ID')
+    collection_name_or_id = args.collection_name or os.getenv('PIAG_RAG_COLLECTION_NAME') or config.get('project', {}).get('collection_name')
+    collection_id = args.collection_id or os.getenv('PIAG_RAG_COLLECTION_ID') or config.get('project', {}).get('collection_id')
     project_id = args.project_id or config.get('project', {}).get('project_id') or os.getenv('PIAG_RAG_PROJECT_ID')
     api_token = args.token or config.get('security', {}).get('token') or os.getenv('PIAG_RAG_API_TOKEN')
     base_url = args.base_url or config.get('api', {}).get('base_url') or os.getenv('PIAG_RAG_BASE_URL')
@@ -44,8 +45,8 @@ def main(argv=None):
     offset = args.offset or config.get('listing', {}).get('default_offset') or os.getenv('PIAG_RAG_OFFSET') or 0
 
     # Validations
-    if not collection_name_or_id:
-        print("Erreur: La collection est requise (--collection, --collection-id, config, ou PIAG_RAG_COLLECTION_ID)", file=sys.stderr)
+    if not collection_name_or_id and not collection_id:
+        print("Erreur: La collection est requise (--collection-name, --collection-id, config, ou PIAG_RAG_COLLECTION_NAME/PIAG_RAG_COLLECTION_ID)", file=sys.stderr)
         return 1
     if not api_token:
         print("Erreur: Token API requis (--token, config, ou PIAG_RAG_API_TOKEN)", file=sys.stderr)
@@ -58,13 +59,10 @@ def main(argv=None):
         client = PIAGClient(api_token=api_token, base_url=base_url, config=config)
 
         # Résoudre collection : si --collection-id fourni, utiliser directement, sinon résoudre
-        if args.collection_id:
-            resolved_collection_id = args.collection_id
-            print(f"Utilisation de l'ID de collection fourni: {resolved_collection_id}")
+        if collection_id:
+            resolved_collection_id = collection_id
         else:
-            print(f"Recherche de la collection '{collection_name_or_id}' dans le projet '{project_id}'...")
             resolved_collection_id = client.resolve_collection_id(collection_name_or_id, project_id)
-            print(f"Collection trouvée avec l'ID: {resolved_collection_id}")
 
         # Lister les documents avec l'ID résolu
         result = client.list_documents(resolved_collection_id, limit=int(limit), offset=int(offset))

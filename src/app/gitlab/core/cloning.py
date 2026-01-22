@@ -35,7 +35,12 @@ def clone_repository(repo_url_suffix: str, base_clone_dir: Path, username: str, 
         target_path = base_clone_dir / repo_name
 
         if target_path.exists():
-            yield {"status": "skipped", "message": f"Repository '{repo_name}' already exists at '{target_path}'."}
+            yield {
+                "status": "skipped",
+                "message": f"Repository '{repo_name}' already exists at '{target_path}'.",
+                "repo_name": repo_name,
+                "target_path": str(target_path),
+            }
             return
 
         display_url = f"https://{domain}/{path_in_gitlab}"
@@ -50,18 +55,21 @@ def clone_repository(repo_url_suffix: str, base_clone_dir: Path, username: str, 
         )
         
         yield {
-            "status": "success", 
+            "status": "success",
             "message": f"Successfully cloned '{repo_name}'.",
             "stdout": result.stdout,
-            "stderr": result.stderr
+            "stderr": result.stderr,
+            "repo_name": repo_name,
+            "target_path": str(target_path),
         }
 
     except subprocess.CalledProcessError as e:
         yield {
-            "status": "error", 
+            "status": "error",
             "message": f"Error cloning '{repo_name}': {e}",
             "stdout": e.stdout,
-            "stderr": e.stderr
+            "stderr": e.stderr,
+            "repo_name": repo_name,
         }
     except FileNotFoundError:
         yield {"status": "error", "message": "Error: 'git' command not found. Please ensure Git is installed and in your PATH."}

@@ -4,14 +4,15 @@ Utilizes core logic from app.processing.core.project_to_md_converter.
 Handles CLI arguments, configuration loading, and logging.
 """
 
-import sys
 import argparse
 import logging
+import sys
 from pathlib import Path
 from typing import List, Optional, Set
 
 from app.core.config_loader import load_config as load_app_config
 from app.core.logging_config import setup_logging
+
 from ..core.project_to_md_converter import project_to_markdown_logic
 
 logger = logging.getLogger(__name__)
@@ -28,6 +29,7 @@ DEFAULT_CONFIG = {
 }
 
 def main(argv=None):
+    print("DEBUG: project2md.py main() function entered.", file=sys.stderr)
     """
     Entry point with argv parameter for testability.
 

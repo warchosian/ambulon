@@ -10,6 +10,8 @@ This module uses Playwright + Chromium to convert HTML to PDF with full support 
 """
 
 import sys
+import shutil
+import subprocess
 from pathlib import Path
 from typing import Optional
 
@@ -38,13 +40,28 @@ def convert_html_to_pdf(
     Returns:
         Exit code (0 for success, 1 for error)
     """
-    # Check if Playwright is available
-    if not PLAYWRIGHT_AVAILABLE:
-        print("Error: Playwright is not installed.", file=sys.stderr)
-        print("Install it with:", file=sys.stderr)
-        print("  pip install playwright", file=sys.stderr)
-        print("  playwright install chromium", file=sys.stderr)
-        return 1
+    def try_wkhtmltopdf(src: Path, dst: Path) -> int:
+        wkhtmltopdf = shutil.which("wkhtmltopdf")
+        if not wkhtmltopdf:
+            return 1
+        try:
+            cmd = [
+                wkhtmltopdf,
+                "--orientation",
+                "Landscape" if orientation == "landscape" else "Portrait",
+                str(src),
+                str(dst),
+            ]
+            if verbose:
+                print("[INFO] Using wkhtmltopdf fallback (Chromium not available).")
+            result = subprocess.run(cmd, check=True, capture_output=True, text=True, shell=False)
+            if verbose and result.stdout:
+                print(result.stdout)
+            return 0
+        except subprocess.CalledProcessError as e:
+            if verbose and e.stderr:
+                print(e.stderr, file=sys.stderr)
+            return 1
 
     input_file = Path(input_path).resolve()
 
@@ -72,6 +89,18 @@ def convert_html_to_pdf(
         print(f"Processing: {input_file}")
         print(f"Output: {output_file}")
         print(f"Orientation: {orientation}")
+
+    # If Playwright is missing, try wkhtmltopdf fallback
+    if not PLAYWRIGHT_AVAILABLE:
+        if try_wkhtmltopdf(input_file, output_file) == 0:
+            print(f"\n[SUCCESS] PDF created (wkhtmltopdf): {output_file}")
+            return 0
+        print("Error: Playwright is not installed, and wkhtmltopdf is not available.", file=sys.stderr)
+        print("Install Playwright + Chromium:", file=sys.stderr)
+        print("  pip install playwright", file=sys.stderr)
+        print("  playwright install chromium", file=sys.stderr)
+        print("Or install wkhtmltopdf and ensure it is in PATH.", file=sys.stderr)
+        return 1
 
     try:
         if verbose:
@@ -136,10 +165,14 @@ def convert_html_to_pdf(
         error_msg = str(e)
 
         if "executable doesn't exist" in error_msg or "Executable doesn't exist" in error_msg:
+            # Try wkhtmltopdf fallback if Chromium isn't installed
+            if try_wkhtmltopdf(input_file, output_file) == 0:
+                print(f"\n[SUCCESS] PDF created (wkhtmltopdf): {output_file}")
+                return 0
             print("Error: Chromium browser is not installed.", file=sys.stderr)
             print("\nPlease install Chromium:", file=sys.stderr)
             print("  playwright install chromium", file=sys.stderr)
-            print("\nThis will download Chromium (~100MB) once.", file=sys.stderr)
+            print("\nOr install wkhtmltopdf and ensure it is in PATH.", file=sys.stderr)
         else:
             print(f"Error: Failed to convert HTML to PDF: {e}", file=sys.stderr)
 
@@ -159,8 +192,10 @@ def register_html2pdf_command(subparsers):
     parser = subparsers.add_parser(
         'html2pdf',
         help='Convert HTML file to PDF with vector SVG (via Chromium)',
-        description='Convert HTML to PDF using Chromium browser. Preserves SVG diagrams as vectors '
-                    'and maintains all internal/external hyperlinks. Supports portrait and landscape.'
+        description='Convert HTML to PDF using Chromium (Playwright). If Chromium is unavailable, '
+                    'the command will try wkhtmltopdf if it is installed in PATH. '
+                    'Preserves SVG diagrams as vectors and maintains all internal/external hyperlinks. '
+                    'Supports portrait and landscape.'
     )
 
     parser.add_argument(

@@ -19,8 +19,8 @@ def main(argv=None):
         int: Code de sortie (0 = succès, 1 = erreur)
     """
     parser = argparse.ArgumentParser(description="Téléverse un ou plusieurs documents vers une collection RAG PIAG.")
-    parser.add_argument("--collection", help="Nom ou ID de la collection RAG (résolution automatique).")
-    parser.add_argument("--collection-id", help="ID exact de la collection RAG (pas de résolution).")
+    parser.add_argument("--collection-name", help="Nom de la collection RAG (résolution automatique vers ID).")
+    parser.add_argument("--collection-id", help="ID exact de la collection RAG (pas de résolution, plus rapide).")
     parser.add_argument("--project-id", help="ID du projet RAG.")
     parser.add_argument("--file", help="Chemin vers le fichier à téléverser.")
     parser.add_argument("--folder", help="Chemin vers un répertoire contenant les fichiers à téléverser.")
@@ -44,13 +44,14 @@ def main(argv=None):
         return 1
 
     # Hiérarchie de configuration
-    collection_name_or_id = args.collection or args.collection_id or config.get('upload', {}).get('collection_id') or os.getenv('PIAG_RAG_COLLECTION_ID')
+    collection_name_or_id = args.collection_name or os.getenv('PIAG_RAG_COLLECTION_NAME') or config.get('project', {}).get('collection_name')
+    collection_id = args.collection_id or os.getenv('PIAG_RAG_COLLECTION_ID') or config.get('project', {}).get('collection_id')
     api_token = args.token or config.get('security', {}).get('token') or os.getenv('PIAG_RAG_API_TOKEN')
     project_id = args.project_id or config.get('project', {}).get('project_id') or os.getenv('PIAG_RAG_PROJECT_ID')
     base_url = args.base_url or config.get('api', {}).get('base_url') or os.getenv('PIAG_RAG_BASE_URL')
 
-    if not collection_name_or_id:
-        print("Erreur: La collection est requise (--collection, --collection-id, config, ou PIAG_RAG_COLLECTION_ID)", file=sys.stderr)
+    if not collection_name_or_id and not collection_id:
+        print("Erreur: La collection est requise (--collection-name, --collection-id, config, ou PIAG_RAG_COLLECTION_NAME/PIAG_RAG_COLLECTION_ID)", file=sys.stderr)
         return 1
     if not api_token:
         print("Erreur: Token API requis (--token, config, ou PIAG_RAG_API_TOKEN)", file=sys.stderr)

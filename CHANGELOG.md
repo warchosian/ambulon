@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.1.0 (2026-01-22)
+
+### Feat
+
+- **piag**: Add flexible argument handling for collections and documents
+
+### Fix
+
+- **piag**: Fix search API to match PIAG RAG spec (page 5)
+
+### Refactor
+
+- **piag**: Rename --collections to --collection-list for clarity
+
 ## 2.0.7 (2026-01-17)
 
 ### Fix
