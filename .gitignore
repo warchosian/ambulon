@@ -39,6 +39,7 @@ build/
 .aider*
 
 response_to_user.txt
+nul
 
 # Configuration files with sensitive data
 config/*
@@ -46,7 +47,7 @@ config/*
 !config/README.md
 
 # Specs
-specs/parameters.md
+specs/
 
 # Scripts directory
 scripts/
