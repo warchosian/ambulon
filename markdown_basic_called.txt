@@ -1,3 +1,0 @@
-Function called
-Content length: 2147022
-Has tree chars: True

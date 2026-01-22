@@ -189,6 +189,7 @@ Exemples:
 
     has_errors = False
     auto_enabled = bool(automation_config.get("enabled", False))
+    output_mode = automation_config.get("output_mode", "separate")
     code_auto = automation_config.get("code_monofile", {}) if auto_enabled else {}
     wiki_auto = automation_config.get("wiki_monofile", {}) if auto_enabled else {}
 
@@ -240,20 +241,26 @@ Exemples:
                         continue
                     output_dir = _ensure_dir(wiki_auto.get("output_dir"))
                     filename_template = wiki_auto.get("filename_template")
+                    templates = wiki_auto.get("templates")
                     exit_code, output_path = generate_wiki_monofile(
                         repo_dir=repo_path,
                         output_dir=output_dir,
+                        output_mode=output_mode,
                         filename_template=filename_template,
+                        templates=templates,
                     )
                 else:
                     if not code_auto.get("enabled", False):
                         continue
                     output_dir = _ensure_dir(code_auto.get("output_dir"))
                     filename_template = code_auto.get("filename_template")
+                    templates = code_auto.get("templates")
                     exit_code, output_path = generate_code_monofile(
                         repo_dir=repo_path,
                         output_dir=output_dir,
+                        output_mode=output_mode,
                         filename_template=filename_template,
+                        templates=templates,
                     )
 
                 if exit_code == 0 and output_path:

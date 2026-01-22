@@ -85,20 +85,25 @@ stop
 gitlab:
   automation:
     enabled: true
+    output_mode: "separate" # separate|shared
     code_monofile:
       enabled: true
       output_dir: null # par defaut: <repo>.rag a cote du repo
-      filename_template: "{project}.code.md"
+      templates:
+        - "{project}.code.md"
+        - "{project}.code.html"
       pipeline: ["project2md"]
     wiki_monofile:
       enabled: true
       output_dir: null # par defaut: <repo>.rag a cote du repo
-      filename_template: "{project}.md"
+      templates:
+        - "{project}.md"
+        - "{project}.html"
       pipeline: ["flatten-md", "merge-md"]
 ```
 
-Note: tout repo clone se terminant par `.wiki` est traite via le pipeline wiki
-et genere un fichier `<nom-repertoire-wiki-clone>.md` par defaut, dans `<repo>.rag`.
+Note: output_mode "separate" cree <repo>.rag et <repo>.wiki.rag.
+output_mode "shared" place code + wiki dans <repo>.rag (pas de <repo>.wiki.rag).
 
 ---
 

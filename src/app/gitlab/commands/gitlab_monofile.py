@@ -49,6 +49,18 @@ Examples:
         help="Output directory for the monofile (default: <repo>.rag directory)."
     )
     parser.add_argument(
+        "--output-mode",
+        choices=["separate", "shared"],
+        default="separate",
+        help="Output mode: separate (<repo>.rag and <repo>.wiki.rag) or shared (<repo>.rag only)."
+    )
+    parser.add_argument(
+        "--template",
+        action="append",
+        dest="templates",
+        help="Output template(s). Can be used multiple times (e.g., {project}.code.md, {project}.code.html)."
+    )
+    parser.add_argument(
         "--name",
         dest="filename_template",
         help="Filename template, e.g. '{project}.code.md' or '{project}.md'."
@@ -75,12 +87,16 @@ Examples:
             mode="code",
             output_dir=args.output,
             filename_template=args.filename_template or "{project}.code.md",
+            output_mode=args.output_mode,
+            templates=args.templates,
         )
         wiki_exit, wiki_output = generate_monofile(
             repo_dir=args.repo_dir,
             mode="wiki",
             output_dir=args.output,
             filename_template=args.filename_template or "{project}.md",
+            output_mode=args.output_mode,
+            templates=args.templates,
         )
         if code_output:
             outputs.append(code_output)
@@ -94,6 +110,8 @@ Examples:
             mode=mode,
             output_dir=args.output,
             filename_template=args.filename_template,
+            output_mode=args.output_mode,
+            templates=args.templates,
         )
         if output_path:
             outputs.append(output_path)

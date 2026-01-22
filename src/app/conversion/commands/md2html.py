@@ -7,6 +7,7 @@ import re
 import sys
 import subprocess
 import tempfile
+import logging
 from pathlib import Path
 from typing import List, Tuple, Optional
 import markdown
@@ -400,11 +401,13 @@ def markdown_to_html_basic(content: str) -> str:
     Returns:
         HTML content
     """
-    # DEBUG: Confirm function is called
-    with open('markdown_basic_called.txt', 'w', encoding='utf-8') as f:
-        f.write('Function called\n')
-        f.write(f'Content length: {len(content)}\n')
-        f.write(f'Has tree chars: {any(c in content for c in ["├──", "└──", "│"])}\n')
+    logger = logging.getLogger(__name__)
+    logger.debug("markdown_to_html_basic called")
+    logger.debug("Content length: %s", len(content))
+    logger.debug(
+        "Has tree chars: %s",
+        any(c in content for c in ["├──", "└──", "│"])
+    )
 
     # Clean anchor tags with empty href attributes first
     # This fixes navigation issues from markdown-preview-enhanced and similar tools
@@ -569,14 +572,14 @@ def markdown_to_html_basic(content: str) -> str:
             # Regular paragraph
             html_paragraphs.append(f'<p>{para_stripped}</p>')
 
-    # DEBUG: Write tree count to file
-    with open('md2html_debug.txt', 'w', encoding='utf-8') as debug_file:
-        debug_file.write(f'Tree paragraphs wrapped: {tree_count}\n')
-        debug_file.write(f'Total paragraphs: {len(paragraphs)}\n')
-        # Write sample of first few paragraphs
-        for i, p in enumerate(paragraphs[:10]):
-            has_tree_chars = any(char in p for char in ['├──', '└──', '│'])
-            debug_file.write(f'\nPara {i}: has_tree={has_tree_chars}, len={len(p)}, start={p[:100]}\n')
+    logger.debug("Tree paragraphs wrapped: %s", tree_count)
+    logger.debug("Total paragraphs: %s", len(paragraphs))
+    for i, p in enumerate(paragraphs[:10]):
+        has_tree_chars = any(char in p for char in ['├──', '└──', '│'])
+        logger.debug(
+            "Para %s: has_tree=%s, len=%s, start=%s",
+            i, has_tree_chars, len(p), p[:100]
+        )
 
     content = '\n\n'.join(html_paragraphs)
 

@@ -4,15 +4,20 @@ gitlab:
   base_clone_dir: "${GITLAB_CLONE_DIR:-./gitlab_clones}" # Base directory where projects will be cloned
   automation:
     enabled: true
+    output_mode: "shared" # separate|shared
     code_monofile:
       enabled: true
       output_dir: null # default: <repo>.rag next to the repo
-      filename_template: "{project}.code.md"
+      templates:
+        - "{project}.code.md"
+        - "{project}.code.html"
       pipeline: ["project2md"]
     wiki_monofile:
       enabled: true
       output_dir: null # default: <repo>.rag next to the repo
-      filename_template: "{project}.md"
+      templates:
+        - "{project}.md"
+        - "{project}.html"
       pipeline: ["flatten-md", "merge-md"]
   repositories:
     - "gitlab.example.com/group/project.git" # Git repository URL (with or without https://)
