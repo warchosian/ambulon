@@ -12,6 +12,7 @@ sources, following a defined hierarchy:
 import os
 import re
 import sys
+import logging
 from pathlib import Path
 from typing import Dict, Any, Optional
 
@@ -19,6 +20,8 @@ try:
     import yaml
 except ImportError:
     yaml = None
+
+logger = logging.getLogger(__name__)
 
 def deep_merge(base: Dict, override: Dict) -> Dict:
     """Recursively merges two dictionaries."""
@@ -53,9 +56,9 @@ def find_config_file(config_name: str) -> Optional[Path]:
     Searches for a configuration file in multiple locations.
 
     Search order:
-    1. Current directory: ./config/<config_name>.yaml
-    2. User config directory: ~/.config/ambulon/<config_name>.yaml
-    3. Environment variable: $AMBULON_CONFIG_DIR/<config_name>.yaml
+    1. If AMBULON_HOME is set: $AMBULON_HOME/config/<config_name>.yaml
+       Otherwise: ./config/<config_name>.yaml (current working directory)
+    2. Environment variable override: $AMBULON_CONFIG_DIR/<config_name>.yaml
 
     Args:
         config_name: Name of the config file (without .yaml extension)
@@ -63,20 +66,21 @@ def find_config_file(config_name: str) -> Optional[Path]:
     Returns:
         Path to the config file if found, None otherwise.
     """
+    # 1. AMBULON_HOME or current working directory
+    env_home = os.getenv("AMBULON_HOME")
+    base_dir = Path(env_home).expanduser() if env_home else Path.cwd()
     search_paths = [
-        # 1. Current directory
-        Path.cwd() / "config" / f"{config_name}.yaml",
-        # 2. User config directory
-        Path.home() / ".config" / "ambulon" / f"{config_name}.yaml",
+        base_dir / "config" / f"{config_name}.yaml",
     ]
 
-    # 3. Environment variable directory
+    # 2. Environment variable directory
     env_config_dir = os.getenv("AMBULON_CONFIG_DIR")
     if env_config_dir:
         search_paths.append(Path(env_config_dir) / f"{config_name}.yaml")
 
     for path in search_paths:
         if path.exists():
+            logger.info(f"Config resolved: {path}")
             return path
 
     return None
@@ -119,6 +123,19 @@ def load_config(
                 expanded_path = found_path
 
         if expanded_path.exists():
+            try:
+                try:
+                    from app import __version__ as app_version
+                except Exception:
+                    app_version = "unknown"
+                env_home = os.getenv("AMBULON_HOME")
+                base_dir = Path(env_home).expanduser() if env_home else Path.cwd()
+                logger.info(
+                    f"[CONFIG] v{app_version} resolved: {expanded_path} "
+                    f"(base={base_dir}, source={'AMBULON_HOME' if env_home else 'cwd'})"
+                )
+            except Exception:
+                logger.info(f"[CONFIG] resolved: {expanded_path}")
             try:
                 with open(expanded_path, 'r', encoding='utf-8') as f:
                     yaml_content = f.read()

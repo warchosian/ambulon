@@ -148,10 +148,11 @@ Exemples:
             logger.error(f"Fichier de configuration introuvable : {args.config}")
             logger.error("")
             logger.error("Emplacements vérifiés :")
-            logger.error(f"  1. {Path.cwd() / 'config' / 'gitlab.yaml'}")
-            logger.error(f"  2. {Path.home() / '.config' / 'ambulon' / 'gitlab.yaml'}")
+            env_home = os.getenv("AMBULON_HOME")
+            base_dir = Path(env_home).expanduser() if env_home else Path.cwd()
+            logger.error(f"  1. {base_dir / 'config' / 'gitlab.yaml'}")
             if os.getenv("AMBULON_CONFIG_DIR"):
-                logger.error(f"  3. {os.getenv('AMBULON_CONFIG_DIR')}/gitlab.yaml")
+                logger.error(f"  2. {os.getenv('AMBULON_CONFIG_DIR')}/gitlab.yaml")
         logger.error("")
 
         logger.error(f"Valeurs manquantes : {', '.join(missing)}")

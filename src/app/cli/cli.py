@@ -128,6 +128,10 @@ def show_help():
     print("  --version     Afficher la version")
     print("  --no-log-file Désactiver les logs fichier (console uniquement)")
     print()
+    print("Résolution du répertoire config:")
+    print("  - Si AMBULON_HOME est défini: $AMBULON_HOME/config")
+    print("  - Sinon: <répertoire de lancement>/config")
+    print()
     print("Exemples:")
     print("  ambulon scan --help                 Aide du module scan")
     print("  ambulon img2pdf scans/              Convertir images en PDF")
@@ -561,6 +565,16 @@ def main():
         elif command == '--version':
             from . import __version__
             print(f"Ambulon version {__version__}")
+            import os
+            from pathlib import Path
+            env_home = os.getenv("AMBULON_HOME")
+            base_dir = Path(env_home).expanduser() if env_home else Path.cwd()
+            config_dir = base_dir / "config"
+            status = "OK" if config_dir.exists() else "NON"
+            origin = "AMBULON_HOME" if env_home else "répertoire de lancement"
+            print(f"AMBULON_HOME: {env_home if env_home else '<non défini>'}")
+            print(f"Config base: {base_dir} (source: {origin})")
+            print(f"Config dir:  {config_dir} [{status}]")
             return 0
         elif command == 'scan':
             # Retirer 'scan' des arguments et lancer le module scan
