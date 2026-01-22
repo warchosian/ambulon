@@ -112,6 +112,12 @@ def load_config(
     if config_path:
         # Expand ~ and environment variables in the path
         expanded_path = Path(config_path).expanduser()
+        env_home = os.getenv("AMBULON_HOME")
+        base_dir = Path(env_home).expanduser() if env_home else Path.cwd()
+
+        # If relative, resolve against AMBULON_HOME (or cwd if not set)
+        if not expanded_path.is_absolute():
+            expanded_path = base_dir / expanded_path
 
         # If path doesn't exist and looks like just a name (no path separators),
         # try to find it in standard locations
