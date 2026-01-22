@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Feat
 
 - **piag**: Add flexible argument handling for collections and documents
+- **gitlab**: Generate .rag directories with monofiles (code + wiki) for RAG ingestion
 
 ### Fix
 
