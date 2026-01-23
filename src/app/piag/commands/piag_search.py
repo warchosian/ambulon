@@ -34,6 +34,8 @@ def main(argv=None):
     parser.add_argument("--k-rerank", type=int, help="Nombre de résultats pour le reranking (défaut: 20).")
     parser.add_argument("--mode", choices=['hybrid', 'semantic', 'keyword'], help="Mode de recherche (défaut: hybrid).")
     parser.add_argument("--base-url", help="URL de base de l'API RAG.")
+    parser.add_argument("--timeout", type=int, help="Timeout HTTP en secondes (défaut: 120).")
+    parser.add_argument("--max-retries", type=int, help="Nombre maximum de tentatives en cas d'échec (défaut: 3).")
     parser.add_argument("--config", help="Chemin vers un fichier de configuration personnalisé.")
     parser.add_argument("--debug", action="store_true", help="Active le mode debug.")
     parser.add_argument("--format", choices=['json', 'text'], default='text', help="Format de sortie: json ou text (défaut: text).")
@@ -44,7 +46,6 @@ def main(argv=None):
     # Affichage visible de la config si --debug (le log INFO n'est pas toujours visible)
     if args.debug and config:
         from pathlib import Path
-        import os
         env_home = os.getenv("AMBULON_HOME")
         base_dir = Path(env_home).expanduser() if env_home else Path.cwd()
         config_source = f"$AMBULON_HOME/config/piag.yaml" if env_home else "./config/piag.yaml"
@@ -63,6 +64,17 @@ def main(argv=None):
     k_rerank = args.k_rerank or config.get('search', {}).get('k_rerank') or 20
     k_rerank = int(k_rerank)
     mode = args.mode or config.get('search', {}).get('mode') or 'hybrid'
+
+    # Hiérarchie pour timeout et max_retries
+    timeout = args.timeout or config.get('api', {}).get('timeout') or os.getenv('PIAG_RAG_TIMEOUT') or 120
+    timeout = int(timeout)
+    max_retries = args.max_retries or config.get('api', {}).get('max_retries') or os.getenv('PIAG_RAG_MAX_RETRIES') or 3
+    max_retries = int(max_retries)
+
+    # Injecter dans la config pour le client
+    config.setdefault('api', {})
+    config['api']['timeout'] = timeout
+    config['api']['max_retries'] = max_retries
 
     # Gestion des collections (4 sources possibles)
     collection_name_single = args.collection_name or os.getenv('PIAG_RAG_COLLECTION_NAME') or config.get('project', {}).get('collection_name')

@@ -6,6 +6,7 @@ HTTP vers l'API PIAG avec gestion centralisée de la configuration et des erreur
 
 import json
 import sys
+import time
 import requests
 from pathlib import Path
 from typing import Dict, Any, Optional
@@ -43,6 +44,7 @@ class PIAGClient:
         self.config = get_config(config)
         self.base_url = get_base_url(base_url, self.config)
         self.timeout = get_timeout(self.config)
+        self.max_retries = self.config.get('api', {}).get('max_retries', 3)
 
     def _log_request(self, method: str, url: str, **kwargs):
         """Log une requête HTTP si le logging est activé."""
@@ -91,26 +93,44 @@ class PIAGClient:
 
         self._log_request(method, url, **kwargs)
 
-        try:
-            response = requests.request(
-                method,
-                url,
-                headers=headers,
-                timeout=self.timeout,
-                **kwargs
-            )
-            response.raise_for_status()
+        last_exception = None
+        for attempt in range(1, self.max_retries + 1):
+            try:
+                if attempt > 1:
+                    print(f"[RETRY] Tentative {attempt}/{self.max_retries}...", file=sys.stderr)
 
-            result = response.json()
-            self._log_response(response)
+                response = requests.request(
+                    method,
+                    url,
+                    headers=headers,
+                    timeout=self.timeout,
+                    **kwargs
+                )
+                response.raise_for_status()
 
-            return result
+                result = response.json()
+                self._log_response(response)
 
-        except requests.exceptions.RequestException as e:
-            print(f"Erreur lors de la requête {method} {endpoint}: {e}", file=sys.stderr)
-            if hasattr(e, 'response') and e.response is not None:
-                print(f"Réponse API: {e.response.text}", file=sys.stderr)
-            raise
+                return result
+
+            except requests.exceptions.Timeout as e:
+                last_exception = e
+                print(f"Erreur lors de la requête {method} {endpoint}: Timeout après {self.timeout}s", file=sys.stderr)
+                if attempt < self.max_retries:
+                    print(f"[INFO] Nouvelle tentative dans 2 secondes...", file=sys.stderr)
+                    time.sleep(2)
+                continue
+
+            except requests.exceptions.RequestException as e:
+                # Pour les autres erreurs (404, 500, etc.), on ne retry pas
+                print(f"Erreur lors de la requête {method} {endpoint}: {e}", file=sys.stderr)
+                if hasattr(e, 'response') and e.response is not None:
+                    print(f"Réponse API: {e.response.text}", file=sys.stderr)
+                raise
+
+        # Si on arrive ici, toutes les tentatives ont échoué
+        print(f"[ERROR] Échec après {self.max_retries} tentatives", file=sys.stderr)
+        raise last_exception
 
     # Collections
 

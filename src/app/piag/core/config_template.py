@@ -6,9 +6,15 @@ PIAG_CONFIG_TEMPLATE = """# ====================================================
 # Ce fichier sert de template pour l'intégration avec l'API RAG PIAG
 #
 # INSTRUCTIONS:
-# 1. Copiez ce fichier vers config/piag.yaml
+# 1. Copiez ce fichier vers config/piag.yaml (ou $AMBULON_HOME/config/piag.yaml)
 # 2. Remplissez les valeurs nécessaires (project_id, token, etc.)
 # 3. Le fichier config/piag.yaml est dans .gitignore et ne sera pas commité
+#
+# EMPLACEMENTS RECHERCHÉS (par ordre de priorité):
+# 1. Chemin explicite avec --config
+# 2. $AMBULON_HOME/config/piag.yaml (si AMBULON_HOME est défini)
+# 3. ./config/piag.yaml (répertoire courant)
+# 4. $AMBULON_CONFIG_DIR/piag.yaml (si AMBULON_CONFIG_DIR est défini)
 #
 # HIÉRARCHIE DE PRIORITÉ: Arguments CLI > YAML > Variables d'environnement > Valeurs par défaut
 # ============================================================================
@@ -18,10 +24,19 @@ PIAG_CONFIG_TEMPLATE = """# ====================================================
 # ==========================
 api:
   # URL de base de l'API RAG
+  # Variable d'environnement: PIAG_RAG_BASE_URL
   base_url: "https://preprod.api.piag.e2.rie.gouv.fr/rag/"
   version: "v1"
-  timeout: 30  # Timeout en secondes pour les requêtes HTTP
-  max_retries: 3  # Nombre maximum de tentatives en cas d'échec
+
+  # Timeout en secondes pour les requêtes HTTP (120s recommandé pour la recherche RAG)
+  # Variable d'environnement: PIAG_RAG_TIMEOUT
+  # Argument CLI: --timeout
+  timeout: 120
+
+  # Nombre maximum de tentatives en cas de timeout
+  # Variable d'environnement: PIAG_RAG_MAX_RETRIES
+  # Argument CLI: --max-retries
+  max_retries: 3
 
 # ==========================
 # ENDPOINTS DE L'API
@@ -56,12 +71,21 @@ project:
   # Identifiant du projet (fourni par votre administrateur)
   # project_id: "VOTRE_PROJECT_ID"
 
-  # Nom et description par défaut pour les nouvelles collections (optionnel)
-  # name: "Ma Collection"
-  # description: "Description de la collection"
+  # Nom de la collection par défaut (résolution automatique vers ID) (optionnel)
+  # collection_name: "Ma Collection"
 
-  # Identifiant d'une collection par défaut (optionnel)
+  # Identifiant exact d'une collection par défaut (pas de résolution) (optionnel)
   # collection_id: ""
+
+  # Pour piag-search : liste de noms de collections séparés par virgule (optionnel)
+  # Exemple: "PNM3_FORMID,PNM3_AMBULON,PNM3_LAMBDA"
+  # collection_name_list: "PNM3_FORMID,PNM3_AMBULON,PNM3_LAMBDA"
+
+  # Pour piag-search : liste d'IDs de collections séparés par virgule (optionnel)
+  # collection_id_list: ""
+
+  # Description par défaut pour les nouvelles collections (optionnel)
+  # description: "Description de la collection"
 
 # ==========================
 # CONFIGURATION DE LA SÉCURITÉ
@@ -152,7 +176,7 @@ search:
 #    ambulon piag-collection-list --token $PIAG_RAG_API_TOKEN
 #
 # 2. Créer une nouvelle collection:
-#    ambulon piag-collection-add --name "Ma Collection" --description "Test" --token $PIAG_RAG_API_TOKEN
+#    ambulon piag-collection-add --collection-name "Ma Collection" --description "Test" --token $PIAG_RAG_API_TOKEN
 #
 # 3. Upload un document:
 #    ambulon piag-doc-upload --collection-id <id> --file document.pdf --token $PIAG_RAG_API_TOKEN

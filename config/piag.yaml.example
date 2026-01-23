@@ -22,10 +22,19 @@
 # ==========================
 api:
   # URL de base de l'API RAG
+  # Variable d'environnement: PIAG_RAG_BASE_URL
   base_url: "https://preprod.api.piag.e2.rie.gouv.fr/rag/"
   version: "v1"
-  timeout: 120  # Timeout en secondes pour les requêtes HTTP (120s pour la recherche RAG)
-  max_retries: 3  # Nombre maximum de tentatives en cas d'échec
+
+  # Timeout en secondes pour les requêtes HTTP (120s recommandé pour la recherche RAG)
+  # Variable d'environnement: PIAG_RAG_TIMEOUT
+  # Argument CLI: --timeout
+  timeout: 120
+
+  # Nombre maximum de tentatives en cas de timeout
+  # Variable d'environnement: PIAG_RAG_MAX_RETRIES
+  # Argument CLI: --max-retries
+  max_retries: 3
 
 # ==========================
 # ENDPOINTS DE L'API
@@ -165,7 +174,7 @@ search:
 #    ambulon piag-collection-list --token $PIAG_RAG_API_TOKEN
 #
 # 2. Créer une nouvelle collection:
-#    ambulon piag-collection-add --name "Ma Collection" --description "Test" --token $PIAG_RAG_API_TOKEN
+#    ambulon piag-collection-add --collection-name "Ma Collection" --description "Test" --token $PIAG_RAG_API_TOKEN
 #
 # 3. Upload un document:
 #    ambulon piag-doc-upload --collection-id <id> --file document.pdf --token $PIAG_RAG_API_TOKEN
