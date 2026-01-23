@@ -17,7 +17,10 @@ def main(argv=None):
     Returns:
         int: Code de sortie (0 = succès, 1 = erreur)
     """
-    parser = argparse.ArgumentParser(description="Effectue une recherche RAG dans une ou plusieurs collections PIAG.")
+    parser = argparse.ArgumentParser(
+        prog='ambulon piag-search',
+        description="Effectue une recherche RAG dans une ou plusieurs collections PIAG."
+    )
     parser.add_argument("--collection-name", help="UNE collection par nom (résolution automatique vers ID).")
     parser.add_argument("--collection-id", help="UNE collection par ID exact (pas de résolution, plus rapide).")
     parser.add_argument("--collection-name-list", help="LISTE de collections par noms séparés par virgule (résolution automatique).")
@@ -37,6 +40,15 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     config = load_config(args.config)
+
+    # Affichage visible de la config si --debug (le log INFO n'est pas toujours visible)
+    if args.debug and config:
+        from pathlib import Path
+        import os
+        env_home = os.getenv("AMBULON_HOME")
+        base_dir = Path(env_home).expanduser() if env_home else Path.cwd()
+        config_source = f"$AMBULON_HOME/config/piag.yaml" if env_home else "./config/piag.yaml"
+        print(f"[DEBUG] Configuration chargée depuis: {config_source} (base={base_dir})", file=sys.stderr)
 
     if args.debug:
         config.setdefault('logging', {}).update({'enable_debug': True, 'log_requests': True, 'log_responses': True})
@@ -134,6 +146,9 @@ def main(argv=None):
                 print(f"[DEBUG]   '{collection_name_single}' → {resolved_id}", file=sys.stderr)
 
         # Appel à l'API de recherche
+        print(f"\n[INFO] Recherche RAG en cours dans {len(resolved_collection_ids)} collection(s)...", file=sys.stderr)
+        print(f"[INFO] (Cela peut prendre jusqu'à 2 minutes selon le volume de données)", file=sys.stderr, flush=True)
+
         result = client.search(
             collections=resolved_collection_ids,
             query=query,
@@ -143,6 +158,8 @@ def main(argv=None):
             k_rerank=k_rerank,
             mode=mode
         )
+
+        print(f"[INFO] Recherche terminée.\n", file=sys.stderr)
 
         if args.format == 'json':
             print("Résultats de la recherche RAG :")

@@ -24,7 +24,7 @@ api:
   # URL de base de l'API RAG
   base_url: "https://preprod.api.piag.e2.rie.gouv.fr/rag/"
   version: "v1"
-  timeout: 30  # Timeout en secondes pour les requêtes HTTP
+  timeout: 120  # Timeout en secondes pour les requêtes HTTP (120s pour la recherche RAG)
   max_retries: 3  # Nombre maximum de tentatives en cas d'échec
 
 # ==========================

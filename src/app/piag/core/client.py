@@ -186,6 +186,9 @@ class PIAGClient:
         """
         Résout un nom ou un ID de collection en un ID de collection.
 
+        Optimisation : Détecte si l'argument ressemble à un ID (alphanumérique pur)
+        ou à un nom (contient _, espaces, etc.) pour éviter des requêtes GET inutiles.
+
         Args:
             collection_name_or_id: Nom ou ID de la collection.
             project_id: ID du projet auquel la collection appartient.
@@ -199,19 +202,39 @@ class PIAGClient:
         if not collection_name_or_id:
             raise ValueError("Le nom ou l'ID de la collection ne peut pas être vide.")
 
-        # Première tentative : l'argument est déjà un ID
-        try:
-            self.get_collection(collection_name_or_id)
-            return collection_name_or_id
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code != 404:
-                raise # Renvoyer les erreurs autres que "Not Found"
+        # Heuristique : les IDs sont alphanumériques purs de 10-20 caractères
+        # Les noms contiennent souvent des underscores, espaces ou caractères spéciaux
+        looks_like_id = (
+            10 <= len(collection_name_or_id) <= 20 and
+            collection_name_or_id.isalnum() and
+            '_' not in collection_name_or_id and
+            ' ' not in collection_name_or_id
+        )
 
-        # Deuxième tentative : l'argument est un nom
+        if looks_like_id:
+            # Probable ID : essayer d'abord le GET
+            try:
+                self.get_collection(collection_name_or_id)
+                return collection_name_or_id
+            except requests.exceptions.HTTPError as e:
+                if e.response.status_code != 404:
+                    raise
+                # Si 404, fallback sur recherche par nom
+
+        # Chercher par nom dans la liste des collections
         collections = self.list_collections(project_id, limit=1000).get('items', [])
         for collection in collections:
             if collection.get('name') == collection_name_or_id:
                 return collection['id']
+
+        # Si pas trouvé et qu'on n'avait pas testé comme ID, essayer maintenant
+        if not looks_like_id:
+            try:
+                self.get_collection(collection_name_or_id)
+                return collection_name_or_id
+            except requests.exceptions.HTTPError as e:
+                if e.response.status_code != 404:
+                    raise
 
         raise ValueError(f"Collection '{collection_name_or_id}' non trouvée dans le projet '{project_id}'.")
 
