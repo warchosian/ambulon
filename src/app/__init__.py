@@ -1,3 +1,3 @@
 """Package principal app - tous les modules métier d'Ambulon."""
 
-__version__ = "2.1.4"
+__version__ = "3.0.0"
