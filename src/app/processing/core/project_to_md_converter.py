@@ -3,14 +3,14 @@ Core logic to convert a project directory to a single Markdown file for AI analy
 Scans a directory, generates a Markdown file with file tree, and code blocks for non-binary files.
 """
 
-import os
-import sys
-import re
-import logging
-from pathlib import Path
-from typing import List, Set, Optional, Tuple, Any
-import mimetypes
 import fnmatch
+import logging
+import mimetypes
+import os
+import re
+import sys
+from pathlib import Path
+from typing import Any, List, Optional, Set, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -751,7 +751,7 @@ def project_to_markdown_logic(
         logger.info(f"\nMarkdown created: {output_file_resolved}")
         logger.info(f"Files processed: {len(files)}")
         logger.info(f"Size: {output_size_formatted} ({output_size / 1024:.1f} KB)")
-        logger.info("\nTIP: Use this file for AI analysis (ChatGPT, DeepSeek, Qwen).")
+        logger.info("\nTIP: Use this file for AI analysis.")
 
         return 0, output_file_resolved
 

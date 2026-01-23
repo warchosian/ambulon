@@ -192,7 +192,7 @@ Examples:
                 except ValueError:
                     relative_path = generated_path.resolve()
                 print(f"\n✓ Project to Markdown conversion successful!\nFile produced: {relative_path}")
-                logger.info("\nTIP: Use this file for AI analysis (ChatGPT, DeepSeek, Qwen).")
+                logger.info("\nTIP: Use this file for AI analysis.")
             else:
                 print("\n✓ Project to Markdown conversion successful, but no specific output file generated (e.g., no non-binary files found).")
             return 0
