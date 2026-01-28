@@ -14,23 +14,25 @@ logger = logging.getLogger(__name__)
 # Default configuration to be merged with YAML and ENV.
 # Values are defaults, but can be overridden by ENV vars using ${ENV_VAR:-default_value} in YAML.
 DEFAULT_CONFIG: Dict[str, Any] = {
-    'api': {
-        'url': os.getenv('WIKISI_API_URL', 'https://wikisi.e2.rie.gouv.fr/wikisi/api'),
-        'token': os.getenv('WIKISI_API_TOKEN', ''),
-        'user_agent': os.getenv('WIKISI_API_USER_AGENT', 'Ambulon Wiki SI Sync API/1.0'),
-        'page_limit': int(os.getenv('WIKISI_API_PAGE_LIMIT', '25')),
-    },
-    'output': {
-        'directory': os.getenv('WIKISI_OUTPUT_DIR', './wikisi-data'),
-        'enumerations_file': os.getenv('WIKISI_ENUMERATIONS_FILE', 'enumerations.json'),
-        'applications_file': os.getenv('WIKISI_APPLICATIONS_FILE', 'applications.json'),
-        'applications_ia_file': os.getenv('WIKISI_APPLICATIONS_IA_FILE', 'applicationsIA.json'),
-        'applications_ia_mini_file': os.getenv('WIKISI_APPLICATIONS_IA_MINI_FILE', 'applicationsIA_mini.json'),
-    },
-    'logging': {
-        'level': os.getenv('WIKISI_LOG_LEVEL', 'info'),
-        'log_to_file': os.getenv('WIKISI_LOG_TO_FILE', 'true').lower() == 'true',
-        'log_file': os.getenv('WIKISI_LOG_FILE', './wikisi-sync-api.log'),
+    'wikisi': {
+        'api': {
+            'url': os.getenv('WIKISI_API_URL', 'https://wikisi.e2.rie.gouv.fr/wikisi/api'),
+            'token': os.getenv('WIKISI_API_TOKEN', ''),
+            'user_agent': os.getenv('WIKISI_API_USER_AGENT', 'Ambulon Wiki SI Sync API/1.0'),
+            'page_limit': int(os.getenv('WIKISI_API_PAGE_LIMIT', '25')),
+        },
+        'output': {
+            'directory': os.getenv('WIKISI_OUTPUT_DIR', './wikisi-data'),
+            'enumerations_file': os.getenv('WIKISI_ENUMERATIONS_FILE', 'enumerations.json'),
+            'applications_file': os.getenv('WIKISI_APPLICATIONS_FILE', 'applications.json'),
+            'applications_ia_file': os.getenv('WIKISI_APPLICATIONS_IA_FILE', 'applicationsIA.json'),
+            'applications_ia_mini_file': os.getenv('WIKISI_APPLICATIONS_IA_MINI_FILE', 'applicationsIA_mini.json'),
+        },
+        'logging': {
+            'level': os.getenv('WIKISI_LOG_LEVEL', 'info'),
+            'log_to_file': os.getenv('WIKISI_LOG_TO_FILE', 'true').lower() == 'true',
+            'log_file': os.getenv('WIKISI_LOG_FILE', './wikisi-sync-api.log'),
+        }
     }
 }
 
