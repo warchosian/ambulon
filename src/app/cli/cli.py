@@ -93,6 +93,7 @@ def show_help():
     print("  wikisi-extract        Extraire et filtrer des applications depuis JSON")
     print("  wikisi-md             Convertir parc applicatif JSON en Markdown (RAG)")
     print("  wikisi-scrape         Aspirer récursivement un site web WikiSI")
+    print("  wikisi-sync-api       Synchroniser les données (énumérations, applications) depuis l'API WikiSI")
     print()
     print("Modules Processing (Traitement de documents):")
     print("  add-toc-html          Ajouter une table des matières à HTML")
@@ -760,6 +761,15 @@ def main():
             # Aspirer récursivement un site web WikiSI
             from app.wikisi.commands.wikisi_scraper import main as wikisi_scrape_main
             return wikisi_scrape_main(sys.argv[2:])
+        elif command == 'wikisi-sync-api':
+            # Synchroniser les données (énumérations, applications) depuis l'API WikiSI
+            from app.wikisi.commands.wikisi_sync_api import main as wikisi_sync_api_main
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                return wikisi_sync_api_main()
+            finally:
+                sys.argv = original_argv
         elif command == 'add-toc-html':
             # Ajouter TOC à HTML
             return add_toc4html_cli(sys.argv[2:])
