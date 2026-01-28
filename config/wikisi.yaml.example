@@ -1,97 +1,59 @@
-# Configuration WikiSI Scraper - Example Template
-# Copiez ce fichier vers wikisi.yaml et ajustez les valeurs
+# Configuration WikiSI API Sync - Example Template
+# Copiez ce fichier vers config/wikisi.yaml et ajustez les valeurs.
+# Les valeurs peuvent être surchargées par les arguments CLI et les variables d'environnement.
 
-# Configuration du site WikiSI à aspirer
-site:
-  # URL de base du site WikiSI
-  base_url: "https://example.wikisi.gouv.fr"
+wikisi:
+  # Configuration pour l'API WikiSI
+  api:
+    # URL de base de l'API WikiSI.
+    # Peut être surchargée par l'argument CLI --api-url ou la variable d'environnement WIKISI_API_URL.
+    url: "${WIKISI_API_URL:-https://wikisi.e2.rie.gouv.fr/wikisi/api}"
 
-  # Profondeur maximale de récursion (0 = page de base uniquement, -1 = illimité)
-  max_depth: -1
+    # Jeton d'authentification pour l'API WikiSI.
+    # Ne PAS committer de tokens sensibles. Utilisez WIKISI_API_TOKEN comme variable d'environnement.
+    # Peut être surchargée par l'argument CLI --api-token ou la variable d'environnement WIKISI_API_TOKEN.
+    token: "${WIKISI_API_TOKEN:-}"
 
-  # Délai entre les requêtes (en secondes) pour éviter de surcharger le serveur
-  delay: 1.0
+    # User-Agent pour les requêtes API.
+    # Peut être surchargée par la variable d'environnement WIKISI_API_USER_AGENT.
+    user_agent: "${WIKISI_API_USER_AGENT:-Ambulon Wiki SI Sync API/1.0}"
 
-  # Timeout pour chaque requête (en secondes)
-  timeout: 30
+    # Limite d'éléments par page pour les appels API paginés (par exemple, pour les applications).
+    # Peut être surchargée par l'argument CLI --page-limit ou la variable d'environnement WIKISI_API_PAGE_LIMIT.
+    page_limit: "${WIKISI_API_PAGE_LIMIT:-25}"
 
-# Filtres pour limiter l'aspiration
-filters:
-  # Patterns d'URLs à inclure (regex, laissez vide pour tout inclure)
-  include_patterns:
-    - ".*"
+  # Configuration de sortie pour les fichiers JSON générés
+  output:
+    # Répertoire de destination pour les fichiers JSON synchronisés.
+    # Peut être surchargée par l'argument CLI --output-dir ou la variable d'environnement WIKISI_OUTPUT_DIR.
+    directory: "${WIKISI_OUTPUT_DIR:-./wikisi-data}"
 
-  # Patterns d'URLs à exclure (regex)
-  exclude_patterns:
-    - '.*/logout.*'
-    - '.*/admin.*'
-    - '.*\.pdf$'
-    - '.*\.zip$'
+    # Nom du fichier pour les énumérations.
+    # Peut être surchargée par la variable d'environnement WIKISI_ENUMERATIONS_FILE.
+    enumerations_file: "${WIKISI_ENUMERATIONS_FILE:-enumerations.json}"
 
-  # Extensions de fichiers à télécharger
-  allowed_extensions:
-    - ".html"
-    - ".htm"
+    # Nom du fichier pour la liste complète des applications.
+    # Peut être surchargée par la variable d'environnement WIKISI_APPLICATIONS_FILE.
+    applications_file: "${WIKISI_APPLICATIONS_FILE:-applications.json}"
 
-  # Suivre uniquement les liens du même domaine
-  same_domain_only: true
+    # Nom du fichier pour les applications formatées pour l'IA.
+    # Peut être surchargée par la variable d'environnement WIKISI_APPLICATIONS_IA_FILE.
+    applications_ia_file: "${WIKISI_APPLICATIONS_IA_FILE:-applicationsIA.json}"
 
-# Configuration de sortie
-output:
-  # Répertoire de destination pour les fichiers téléchargés
-  directory: "./wikisi-downloaded"
+    # Nom du fichier pour les applications formatées pour l'IA (version mini sans champs vides).
+    # Peut être surchargée par la variable d'environnement WIKISI_APPLICATIONS_IA_MINI_FILE.
+    applications_ia_mini_file: "${WIKISI_APPLICATIONS_IA_MINI_FILE:-applicationsIA_mini.json}"
 
-  # Préserver la structure du site (arborescence)
-  preserve_structure: true
+  # Logging (commun à tous les modules)
+  logging:
+    # Niveau de log: "debug", "info", "warning", "error"
+    # Peut être surchargée par l'argument CLI --verbose/--quiet ou la variable d'environnement WIKISI_LOG_LEVEL.
+    level: "${WIKISI_LOG_LEVEL:-info}"
 
-  # Sauvegarder les métadonnées (JSON avec URLs, timestamps, etc.)
-  save_metadata: true
+    # Sauvegarder les logs dans un fichier
+    # Peut être surchargée par la variable d'environnement WIKISI_LOG_TO_FILE.
+    log_to_file: "${WIKISI_LOG_TO_FILE:-true}"
 
-  # Format de nommage pour les fichiers
-  # Options: "original" (nom du fichier d'origine), "sanitized" (nettoyé), "hash" (hash MD5)
-  filename_format: "sanitized"
-
-# En-têtes HTTP personnalisés
-headers:
-  User-Agent: "Ambulon WikiSI Scraper/1.0"
-  Accept-Language: "fr-FR,fr;q=0.9"
-
-# Authentification (optionnel)
-authentication:
-  # Type: "none", "basic", "bearer"
-  type: "none"
-
-  # Pour basic auth
-  username: ""
-  password: ""
-
-  # Pour bearer token
-  token: ""
-
-# Options avancées
-advanced:
-  # Nombre maximum de tentatives en cas d'échec
-  max_retries: 3
-
-  # Respecter robots.txt
-  respect_robots_txt: true
-
-  # Vérifier les certificats SSL
-  verify_ssl: true
-
-  # Nombre de threads pour le téléchargement parallèle
-  threads: 1
-
-  # Taille maximale de fichier à télécharger (en Mo, 0 = illimité)
-  max_file_size_mb: 50
-
-# Logging
-logging:
-  # Niveau de log: "debug", "info", "warning", "error"
-  level: "info"
-
-  # Sauvegarder les logs dans un fichier
-  log_to_file: true
-
-  # Chemin du fichier de log
-  log_file: "./wikisi-scraper.log"
+    # Chemin du fichier de log
+    # Peut être surchargée par la variable d'environnement WIKISI_LOG_FILE.
+    log_file: "${WIKISI_LOG_FILE:-./wikisi-sync-api.log}"
