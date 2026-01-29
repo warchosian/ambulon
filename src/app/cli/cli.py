@@ -107,6 +107,7 @@ def show_help():
     print("  merge-md              Fusionner plusieurs fichiers Markdown")
     print("  md2project            Convertir Markdown en structure de projet")
     print("  project2md            Convertir structure de projet en Markdown")
+    print("  code2md               Encapsuler du code dans des blocs Markdown")
     print()
     print("Modules RAG PIAG (Retrieval Augmented Generation):")
     print("  Collections:")
@@ -142,6 +143,7 @@ def show_help():
     print("  ambulon add-toc-md doc.md           Ajouter une TOC à Markdown")
     print("  ambulon flatten-md docs/            Aplatir arborescence Markdown")
     print("  ambulon merge-html dir/ -o out.html Fusionner HTML")
+    print("  ambulon code2md script.py           Encapsuler code dans Markdown")
     print("  ambulon wikisi-extract apps.json -o subset.json -r 1-10")
     print("  ambulon wikisi-md apps.json -o apps.md --verbose")
     print("  ambulon mcp                         Démarrer le serveur MCP")
@@ -836,6 +838,10 @@ def main():
         elif command == 'project2md':
             # Convertir projet en Markdown
             return project2md_cli(sys.argv[2:])
+        elif command == 'code2md':
+            # Encapsuler du code dans des blocs Markdown
+            from app.processing.commands.code2md import main as code2md_main
+            return code2md_main(sys.argv[2:])
         elif command == 'config':
             return handle_config_command()
         elif command == 'init':
