@@ -5,6 +5,56 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-01-28
+
+### BREAKING CHANGES
+- **piag**: Refonte complète des arguments avec suffixes explicites `-name`/`-id`
+  - `--collection` devient `--collection-name` ou `--collection-id`
+  - `--collection-list` devient `--collection-name-list` ou `--collection-id-list`
+  - Améliore la clarté et évite les ambiguïtés de résolution
+  - Migration requise pour les scripts existants
+
+### Added
+- **wikisi**: Nouveau module `wikisi-sync-api` pour synchronisation avec l'API WikiSI
+  - Récupération automatique des énumérations et applications
+  - Génération de formats IA-ready (applicationsIA.json, applicationsIA_mini.json)
+  - Support de la configuration hiérarchique (CLI > YAML > ENV > defaults)
+  - Token API optionnel selon les endpoints
+- **processing**: Nouveau module `code2md` pour encapsuler du code dans des blocs Markdown
+  - Détection automatique de format (30+ langages supportés)
+  - Support python, bash, json, yaml, plantuml, mermaid, graphviz, sql, etc.
+  - Interface cohérente avec les autres modules de conversion
+  - Génération automatique du nom de sortie: `<nom>.<format>.md`
+- **piag**: Configuration timeout et retry
+  - Argument CLI `--timeout` (défaut: 120s pour RAG)
+  - Argument CLI `--max-retries` (défaut: 3)
+  - Support variables d'env: `PIAG_RAG_TIMEOUT`, `PIAG_RAG_MAX_RETRIES`
+  - Mécanisme de retry avec backoff pour les timeouts
+
+### Fixed
+- **piag**: Optimisation de la résolution des collections
+  - Heuristique pour éviter les 404 inutiles (détection noms vs IDs)
+  - Les noms avec underscore vont directement à la recherche liste
+  - Améliore les performances et réduit les logs d'erreur
+- **piag**: UX améliorée pour la recherche RAG
+  - Affichage de la source de configuration en mode debug
+  - Messages de progression pendant les opérations longues
+  - Help display corrigé avec nom de commande complet
+- **piag**: Synchronisation des templates de configuration
+  - Mise à jour de `config_template.py` avec nouveaux paramètres
+  - Documentation AMBULON_HOME
+  - Exemples de commandes corrigés
+- **wikisi**: Corrections multiples de configuration
+  - Suppression du paramètre inexistant `env_prefix`
+  - Ajout du wrapper `wikisi:` dans la structure YAML
+  - Extraction correcte de `wikisi` depuis `loaded_config`
+  - Correction de `setup_logging()` sans paramètre `log_file`
+  - Ajout de l'import `requests` manquant
+
+### Refactored
+- **processing**: Nettoyage du formatage project2md
+- **piag**: Standardisation complète de la nomenclature des arguments
+
 ## 2.1.4 (2026-01-22)
 
 ## 2.1.3 (2026-01-22)

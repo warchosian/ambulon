@@ -9,10 +9,10 @@ Ambulon offre des fonctionnalités de scan, OCR, et traitement PDF, le tout acce
 ### Modules principaux
 - **📄 Scan** : Scanner des documents avec NAPS2 et profils DPI configurables
 - **🔍 OCR** : Reconnaissance optique de caractères avec Tesseract
-- **📑 Conversion** : Conversions multiformats (HTML↔MD, JSON→MD, HTML→PDF, JSON→JSONL)
+- **📑 Conversion** : Conversions multiformats (HTML↔MD, JSON→MD, HTML→PDF, JSON→JSONL, Code→MD)
 - **🗜️ Compression PDF** : Compression et manipulation de fichiers PDF
-- **🌐 WikiSI** : Extraction, transformation et aspiration de données du parc applicatif
-- **📝 Processing** : Traitement de documents (TOC, fusion, aplatissement, interactivité)
+- **🌐 WikiSI** : API sync, extraction, transformation et aspiration de données du parc applicatif
+- **📝 Processing** : Traitement de documents (TOC, fusion, aplatissement, code wrapping, interactivité)
 - **🔤 Encoding** : Vérification et correction d'encodage UTF-8
 - **🦊 GitLab** : Clonage de projets GitLab par groupes
 - **🤖 Serveur MCP** : Intégration avec assistants IA (Claude, OpenRouter, Aider, Continue)
@@ -84,7 +84,14 @@ ambulon compress-pdf gros_fichier.pdf -q 60
 # Configuration initiale
 ambulon init wikisi              # Génère config/wikisi.yaml avec des exemples
 
-# Aspirer un site WikiSI complet
+# Synchroniser depuis l'API WikiSI (recommandé)
+ambulon wikisi-sync-api --verbose
+# Génère : wikisi-data/enumerations.json
+#          wikisi-data/applications.json
+#          wikisi-data/applicationsIA.json
+#          wikisi-data/applicationsIA_mini.json
+
+# Aspirer un site WikiSI complet (web scraping)
 ambulon wikisi-scrape --url https://wikisi.example.fr --output ./data --depth 2
 
 # Aspirer avec configuration (recommandé)
@@ -106,6 +113,11 @@ ambulon wikisi-flatten ./wikisi-nested -o ./wikisi-flat --verbose
 # Ajouter une table des matières
 ambulon add-toc-html document.html -o document-toc.html
 ambulon add-toc-md document.md -o document-toc.md
+
+# Encapsuler du code dans des blocs Markdown
+ambulon code2md script.py              # Auto-détection → génère script.python.md
+ambulon code2md data.json -t json      # Format explicite
+ambulon code2md config.yaml -o doc.md  # Sortie personnalisée
 
 # Fusionner plusieurs fichiers
 ambulon merge-html dir/ -o merged.html
@@ -321,7 +333,31 @@ Convertis les images du dossier "documents" en PDF
 → L'assistant utilise images_to_pdf
 ```
 
-### Workflow WikiSI : Aspiration et conversion pour RAG
+### Workflow WikiSI : Synchronisation API et indexation RAG
+
+```bash
+# 1. Synchroniser depuis l'API WikiSI (méthode recommandée)
+ambulon wikisi-sync-api --verbose
+
+# Génère automatiquement dans wikisi-data/ :
+#   - enumerations.json (référentiels)
+#   - applications.json (données brutes)
+#   - applicationsIA.json (format IA avec énumérations décodées)
+#   - applicationsIA_mini.json (format IA allégé, sans champs vides)
+
+# 2. (Optionnel) Extraire un sous-ensemble spécifique
+ambulon wikisi-extract wikisi-data/applications.json -o apps-subset.json -r 1-50
+
+# 3. Convertir en Markdown pour RAG
+ambulon wikisi-md wikisi-data/applicationsIA_mini.json -o apps-rag.md --verbose
+
+# 4. Uploader vers PIAG RAG
+ambulon piag-doc-upload --folder wikisi-data/ --collection-name WIKISI_APPS
+
+# Résultat : Parc applicatif indexé et interrogeable par recherche sémantique
+```
+
+### Workflow WikiSI : Web Scraping (méthode alternative)
 
 ```bash
 # 1. Générer le fichier de configuration
