@@ -10,7 +10,6 @@ import tempfile
 import logging
 from pathlib import Path
 from typing import List, Tuple, Optional
-import markdown
 
 
 def extract_code_blocks(content: str) -> List[Tuple[str, str, int]]:
