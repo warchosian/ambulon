@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.1] - 2026-01-29
+
+### Fixed
+- **conversion**: Remove unused `markdown` import from md2html module
+  - Fixes `ModuleNotFoundError` when markdown package not installed
+  - md2html uses custom conversion logic, not markdown library
+- **cli**: Remove unused `requests` and `json` imports
+  - Prevents import errors when optional dependencies are missing
+  - Cleaner module-level imports
+
 ## [3.0.0] - 2026-01-28
 
 ### BREAKING CHANGES
