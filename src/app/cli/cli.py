@@ -51,8 +51,6 @@ from app.processing import (
     project_to_markdown,
 )
 
-import requests # NEW
-import json # NEW
 from app.core.logging_config import setup_logging
 from app.cli.commands import handle_init_command
 
