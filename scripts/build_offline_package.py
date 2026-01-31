@@ -239,6 +239,22 @@ echo.
 echo Cette operation peut prendre 1-2 minutes...
 echo.
 
+REM Etape 1 : Installer TOUTES les dependances AVANT ambulon
+echo [Etape 1/2] Installation des dependances...
+pip install --no-index --find-links=.\\wheels ^
+    importlib-resources pillow pymupdf requests pyyaml mcp chardet ^
+    beautifulsoup4 lxml markdown python-slugify playwright
+
+if errorlevel 1 (
+    echo.
+    echo [ERREUR] L'installation des dependances a echoue
+    echo.
+    pause
+    exit /b 1
+)
+
+echo.
+echo [Etape 2/2] Installation d'Ambulon...
 pip install --no-index --find-links=.\\wheels ambulon
 
 if errorlevel 1 (
@@ -641,10 +657,13 @@ Methode manuelle (ligne de commande) :
 
 1. Ouvrez un terminal dans le dossier ambulon-{version}-offline-install/
 
-2. Installer la nouvelle version :
+2. Installer les dependances AVANT ambulon :
+   > pip install --no-index --find-links=.\\wheels importlib-resources pillow pymupdf requests pyyaml mcp chardet beautifulsoup4 lxml markdown python-slugify playwright
+
+3. Installer ambulon :
    > pip install --no-index --find-links=.\\wheels ambulon
 
-3. Verifier :
+4. Verifier :
    > ambulon --version
 
 
