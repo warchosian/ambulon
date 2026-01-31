@@ -49,8 +49,9 @@ config/*
 # Specs
 specs/
 
-# Scripts directory
-scripts/
+# Scripts directory (except build_offline_package.py)
+scripts/*
+!scripts/build_offline_package.py
 
 # Scans
 scans/
