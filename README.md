@@ -28,7 +28,7 @@ Ambulon offre des fonctionnalités de scan, OCR, et traitement PDF, le tout acce
 
 **Pour les environnements sans accès PyPI**, téléchargez le package offline complet depuis GitHub :
 
-📥 **[Télécharger ambulon-3.0.1-offline-install.zip](https://github.com/warchosian/ambulon/raw/prod/v3.0.1-stable/dist-offline/ambulon-3.0.1-offline-install.zip)** (80.7 MB)
+📥 **[Télécharger ambulon-3.0.1-offline-install.zip](https://github.com/warchosian/ambulon/raw/preprod/v3.0.1-stable/dist-offline/ambulon-3.0.1-offline-install.zip)** (80.7 MB)
 
 Ce package contient **Ambulon + toutes ses dépendances** (50 wheels) pour une installation complètement offline.
 
@@ -251,11 +251,11 @@ poetry build
 python scripts/build_offline_package.py
 # Crée dist-offline/ambulon-3.0.2-offline-install.zip
 
-# 5. Commit et push vers branche prod
-git checkout -b prod/v3.0.2-stable
+# 5. Commit et push vers branche preprod
+git checkout -b preprod/v3.0.2-stable
 git add dist-offline/
 git commit -m "build: Add v3.0.2 offline installation package"
-git push origin prod/v3.0.2-stable
+git push origin preprod/v3.0.2-stable
 ```
 
 ### Dépendances
