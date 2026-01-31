@@ -28,16 +28,43 @@ Ambulon offre des fonctionnalités de scan, OCR, et traitement PDF, le tout acce
 
 ## 📦 Installation
 
+### 🔌 Installation Offline (Sans connexion Internet)
+
+**Pour les environnements sans accès PyPI**, téléchargez le package offline complet depuis GitHub :
+
+📥 **[Télécharger ambulon-3.0.1-offline-install.zip](dist-offline/ambulon-3.0.1-offline-install.zip)** (80.7 MB)
+
+Ce package contient **Ambulon + toutes ses dépendances** (50 wheels) pour une installation complètement offline.
+
+**Installation :**
+
+1. Téléchargez et décompressez le fichier ZIP
+2. **Important :** Si vous avez une version précédente, désinstallez-la d'abord :
+   ```bash
+   cd ambulon-3.0.1-offline-install/scripts
+   ./uninstall-ambulon.bat    # Windows
+   ```
+3. Installez la nouvelle version :
+   ```bash
+   ./install-ambulon-offline.bat    # Windows
+   # OU en ligne de commande :
+   pip install --no-index --find-links=../wheels ambulon
+   ```
+
+Voir [README-OFFLINE.txt](dist-offline/ambulon-3.0.1-offline-install.zip) pour les instructions complètes.
+
+---
+
+### 🌐 Installation Standard (Avec connexion Internet)
+
 ```bash
-# Cloner le projet
-git clone <repository-url>
-cd ambulon
-
-# Installer avec Poetry
-poetry install
-
-# Ou installer directement
+# Installer depuis PyPI (quand disponible)
 pip install ambulon
+
+# Ou cloner et installer avec Poetry
+git clone https://github.com/warchosian/ambulon.git
+cd ambulon
+poetry install
 ```
 
 ## 🎯 Utilisation
@@ -462,6 +489,49 @@ cz commit
 
 # Créer une nouvelle version
 cz bump
+```
+
+### Générer le package d'installation offline
+
+Pour créer un package offline (utile pour les environnements sans accès Internet) :
+
+```bash
+# Générer le package offline dans dist-offline/
+python scripts/build_offline_package.py
+```
+
+Le script :
+- ✅ Détecte automatiquement la version depuis `pyproject.toml`
+- ✅ Utilise la wheel existante dans `dist/` (pas de rebuild inutile)
+- ✅ Télécharge toutes les dépendances depuis PyPI
+- ✅ Génère les scripts `install-ambulon-offline.bat` et `uninstall-ambulon.bat`
+- ✅ Crée un README complet avec instructions
+- ✅ Produit `dist-offline/ambulon-<version>-offline-install.zip` prêt pour distribution
+
+**Workflow de release avec package offline :**
+
+```bash
+# 1. Développement
+git checkout -b feature/ma-fonctionnalite
+# ... modifications ...
+git commit -m "feat: ma nouvelle fonctionnalité"
+
+# 2. Bump version
+cz bump
+# Génère nouveau tag (ex: 3.0.2)
+
+# 3. Build wheel
+poetry build
+
+# 4. Générer package offline
+python scripts/build_offline_package.py
+# Crée dist-offline/ambulon-3.0.2-offline-install.zip
+
+# 5. Commit et push vers branche prod
+git checkout -b prod/v3.0.2-stable
+git add dist-offline/
+git commit -m "build: Add v3.0.2 offline installation package"
+git push origin prod/v3.0.2-stable
 ```
 
 ### Dépendances
