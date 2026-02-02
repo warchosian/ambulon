@@ -32,7 +32,7 @@ Ambulon offre des fonctionnalités de scan, OCR, et traitement PDF, le tout acce
 
 **Pour les environnements sans accès PyPI**, téléchargez le package offline complet depuis GitHub :
 
-📥 **[Télécharger ambulon-3.0.1-offline-install.zip](https://github.com/warchosian/ambulon/raw/preprod/v3.0.1-stable/dist-offline/ambulon-3.0.1-offline-install.zip)** (80.7 MB)
+📥 **[Télécharger ambulon-3.0.2-offline-install.zip](https://github.com/warchosian/ambulon/raw/preprod/v3.0.2-stable/dist-offline/ambulon-3.0.2-offline-install.zip)** (80.7 MB)
 
 Ce package contient **Ambulon + toutes ses dépendances** (50 wheels) pour une installation complètement offline.
 
@@ -41,7 +41,7 @@ Ce package contient **Ambulon + toutes ses dépendances** (50 wheels) pour une i
 1. Téléchargez et décompressez le fichier ZIP
 2. **Important :** Si vous avez une version précédente, désinstallez-la d'abord :
    ```bash
-   cd ambulon-3.0.1-offline-install/scripts
+   cd ambulon-3.0.2-offline-install/scripts
    ./uninstall-ambulon.bat    # Windows
    ```
 3. Installez la nouvelle version :
