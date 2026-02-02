@@ -277,6 +277,142 @@ def setup_logging(application_name: str, level=logging.INFO):
 
 ---
 
+## Workflow des Branches Git
+
+### Architecture des Branches (Option B - Production First)
+
+Le projet Ambulon utilise une architecture de branches **orientée production** où `main` est strictement un miroir de la dernière version stable en production.
+
+```
+feature branches → preprod/vX.X.X-stable (validation & tests)
+                        ↓
+                   prod/vX.X.X-stable (production déployée)
+                        ↓
+                   main (= dernière version stable uniquement)
+```
+
+### Rôles des Branches
+
+**1. Branches `feature/*`** - Développement de fonctionnalités
+- Créées depuis la dernière `preprod` ou directement pour développement
+- Nommage : `feature/<nom-descriptif>` (ex: `feature/gitlab-piag-v1`)
+- Commits conventionnels requis
+- Supprimées après merge dans preprod
+
+**2. Branches `preprod/vX.X.X-stable`** - Pré-production
+- **Rôle** : Validation, tests, stabilisation avant production
+- **Contenu** : Code + package offline + documentation
+- **Nommage** : `preprod/v3.0.2-stable` (version sémantique)
+- **Lifecycle** :
+  - Créée depuis feature branch avec nouvelle version
+  - Tests et validations effectués
+  - Une fois validée → création de `prod/vX.X.X-stable`
+  - Conservée sur GitHub pour historique
+
+**3. Branches `prod/vX.X.X-stable`** - Production
+- **Rôle** : Version déployée en production, immuable
+- **Contenu** : Exactement identique à preprod validée
+- **Nommage** : `prod/v3.0.2-stable` (même version que preprod)
+- **Lifecycle** :
+  - Créée depuis `preprod/vX.X.X-stable` après validation complète
+  - Ne reçoit JAMAIS de commits directs
+  - Tagguée avec `vX.X.X`
+  - Conservée indéfiniment sur GitHub
+
+**4. Branche `main`** - Miroir de Production
+- **Rôle** : Branche par défaut GitHub, reflète la dernière prod stable
+- **Contenu** : Copie exacte de la dernière branche `prod/vX.X.X-stable`
+- **MAJ** : Uniquement après création d'une branche prod
+- **Interdiction** : NE JAMAIS développer directement sur `main`
+- **Visiteurs GitHub** : Voient toujours la dernière version stable
+
+### Workflow Complet de Release
+
+**Étape 1 : Développement sur feature branch**
+```bash
+git checkout -b feature/ma-nouvelle-fonctionnalite
+# ... développement ...
+git add .
+cz commit  # Commits conventionnels
+git push origin feature/ma-nouvelle-fonctionnalite
+```
+
+**Étape 2 : Création de la branche preprod**
+```bash
+# Depuis la feature branch
+cz bump  # Bump version (ex: 3.0.1 → 3.0.2)
+poetry build  # Générer la wheel
+python scripts/build_offline_package.py  # Générer package offline
+
+git checkout -b preprod/v3.0.2-stable
+git add dist/ dist-offline/ pyproject.toml src/app/__init__.py CHANGELOG.md
+git commit -m "bump: version 3.0.1 → 3.0.2"
+git tag -a 3.0.2 -m "Release v3.0.2"
+git push origin preprod/v3.0.2-stable --tags
+```
+
+**Étape 3 : Validation en preprod**
+- Tester l'installation offline
+- Vérifier toutes les fonctionnalités
+- Valider la documentation
+- Tests d'intégration
+- **SI problème** : fixer sur preprod, bumper en 3.0.3, recommencer
+- **SI OK** : passer à l'étape 4
+
+**Étape 4 : Promotion vers production**
+```bash
+# Créer la branche prod depuis preprod validée
+git checkout preprod/v3.0.2-stable
+git checkout -b prod/v3.0.2-stable
+git push origin prod/v3.0.2-stable --tags
+
+# Supprimer l'ancienne preprod sur GitHub (optionnel)
+git push origin --delete preprod/v3.0.1-stable
+```
+
+**Étape 5 : Mise à jour de `main`** (UNIQUEMENT après prod)
+```bash
+# Mettre à jour main pour refléter la prod
+git checkout main
+git merge --ff-only prod/v3.0.2-stable  # Fast-forward uniquement
+# OU
+git reset --hard prod/v3.0.2-stable  # Force sync avec prod
+
+git push origin main
+```
+
+### Règles Strictes
+
+**✅ AUTORISÉ**
+- Créer des feature branches pour développement
+- Créer preprod depuis feature après version bump
+- Créer prod depuis preprod validée
+- Mettre à jour main depuis prod uniquement
+- Conserver les branches preprod/prod sur GitHub
+
+**❌ INTERDIT**
+- Commiter directement sur `main`
+- Créer prod sans passer par preprod
+- Mettre à jour main avant création de prod
+- Modifier une branche prod existante
+- Pusher des secrets/tokens
+
+### FAQ Workflow
+
+**Q: Pourquoi ne pas développer sur `main` ?**
+A: `main` est un miroir de production, pas une branche de développement. Cela évite confusion et commits accidentels.
+
+**Q: Que faire si je trouve un bug en preprod ?**
+A: Fixer sur preprod, bumper la version patch, recréer le package offline, retester.
+
+**Q: Dois-je conserver toutes les branches preprod/prod ?**
+A: Oui pour prod (historique des releases), optionnel pour preprod (on peut supprimer les anciennes).
+
+**Q: Comment revenir à une version précédente ?**
+A: Checkout de la branche `prod/vX.X.X-stable` correspondante, puis créer nouvelle preprod depuis là.
+
+---
+
 ## Workflow de Versioning et de Release
 
 Ce workflow suit le **Semantic Versioning (SemVer)** et utilise [Commitizen](https://commitizen-tool.github.io/commitizen/) pour automatiser la gestion des versions et la génération du changelog.
