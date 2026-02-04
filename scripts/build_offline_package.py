@@ -167,6 +167,7 @@ def download_dependencies(dependencies, wheels_dir):
             *dependencies,
             "-d", str(wheels_dir),
             "--python-version", py_version,
+            "--only-binary", ":all:",
             "--no-cache-dir"
         ]
 
