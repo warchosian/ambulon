@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ambulon"
-version = "3.0.2"
+version = "3.0.3"
 description = "Suite complète d'outils de numérisation avec serveur MCP pour assistants IA."
 authors = ["Hervé Marchal <herve.marchal@hotmail.fr>"]
 license = "MIT"
@@ -46,7 +46,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "3.0.2"
+version = "3.0.3"
 tag_format = "$version"
 version_files = [
     "pyproject.toml:version",
