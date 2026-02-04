@@ -5,13 +5,17 @@ Script de génération du package d'installation offline d'Ambulon.
 Ce script :
 1. Lit la version depuis pyproject.toml
 2. Build la wheel ambulon
-3. Télécharge toutes les dépendances
+3. Télécharge toutes les dépendances pour Python 3.10, 3.11, 3.12
 4. Copie les scripts d'installation/désinstallation
 5. Génère le README
 6. Crée l'archive ZIP dans dist-offline/
 
 Usage:
     python build_offline_package.py
+
+Note:
+    Le package généré sera compatible avec Python 3.10, 3.11 et 3.12.
+    Les wheels pour chaque version sont téléchargées automatiquement.
 """
 
 import os
@@ -143,7 +147,7 @@ def copy_ambulon_wheel(wheel_file, wheels_dir):
 
 
 def download_dependencies(dependencies, wheels_dir):
-    """Télécharge toutes les dépendances."""
+    """Télécharge toutes les dépendances pour plusieurs versions Python."""
     print("\n" + "="*60)
     print("Étape 4/6 : Téléchargement des dépendances")
     print("="*60)
@@ -152,27 +156,37 @@ def download_dependencies(dependencies, wheels_dir):
     print(f"       {', '.join(dependencies)}")
     print()
 
-    cmd = [
-        "pip", "download",
-        *dependencies,
-        "-d", str(wheels_dir),
-        "--no-cache-dir"
-    ]
+    # Télécharger pour Python 3.10, 3.11, 3.12 (versions courantes)
+    python_versions = ["3.10", "3.11", "3.12"]
 
-    print(f"[INFO] Exécution de: {' '.join(cmd[:4])} ...")
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    for py_version in python_versions:
+        print(f"\n[INFO] Téléchargement pour Python {py_version}...")
 
-    if result.returncode != 0:
-        print("[ERREUR] Échec du téléchargement")
-        print(result.stderr)
-        sys.exit(1)
+        cmd = [
+            "pip", "download",
+            *dependencies,
+            "-d", str(wheels_dir),
+            "--python-version", py_version,
+            "--no-cache-dir"
+        ]
 
-    # Compter les wheels téléchargées
+        result = subprocess.run(cmd, capture_output=True, text=True)
+
+        if result.returncode != 0:
+            print(f"[AVERTISSEMENT] Échec du téléchargement pour Python {py_version}")
+            print(result.stderr)
+            # Continue avec les autres versions au lieu d'abandonner
+            continue
+
+        print(f"[OK] Téléchargement Python {py_version} réussi")
+
+    # Compter les wheels téléchargées (en dédupliquant par nom)
     wheels = list(wheels_dir.glob("*.whl"))
     total_size = sum(w.stat().st_size for w in wheels)
 
-    print(f"[OK] {len(wheels)} wheels téléchargées")
+    print(f"\n[OK] {len(wheels)} wheels téléchargées (toutes versions Python confondues)")
     print(f"     Taille totale: {total_size / 1024 / 1024:.1f} MB")
+    print(f"     Compatible avec: Python 3.10, 3.11, 3.12")
 
 
 def copy_scripts(scripts_dir, version):
@@ -202,8 +216,10 @@ python --version >nul 2>&1
 if errorlevel 1 (
     echo [ERREUR] Python n'est pas installe ou pas dans le PATH
     echo.
-    echo Veuillez installer Python 3.10 ou superieur depuis:
+    echo Veuillez installer Python 3.10, 3.11 ou 3.12 depuis:
     echo https://www.python.org/downloads/
+    echo.
+    echo IMPORTANT: Ce package contient des wheels pour Python 3.10, 3.11 et 3.12
     echo.
     pause
     exit /b 1
@@ -574,9 +590,12 @@ Si c'est une nouvelle installation (pas de version precedente) :
   PREREQUIS (sur la machine cible)
 ================================================================================
 
-1. Python 3.10 ou superieur doit etre installe
+1. Python 3.10, 3.11 ou 3.12 doit etre installe
 
-   Pour verifier:
+   Ce package contient des wheels pour Python 3.10, 3.11 et 3.12.
+   Utilisez l'une de ces versions pour garantir la compatibilite.
+
+   Pour verifier votre version:
    > python --version
 
    Si Python n'est pas installe, telechargez-le depuis:
@@ -718,6 +737,51 @@ ambulon --help
 
 
 ================================================================================
+  DEPANNAGE
+================================================================================
+
+Probleme : "ERROR: xxx-cp310-win_amd64.whl is not a supported wheel"
+------------------------------------------------------------------------
+Cause: Vous utilisez une version Python differente (ex: 3.9, 3.13)
+
+Solution:
+1. Verifiez votre version Python:
+   > python --version
+
+2. Si vous avez Python 3.9 ou 3.13:
+   - Installez Python 3.10, 3.11 ou 3.12
+   - OU telechargez les wheels manquantes depuis PyPI:
+     > pip download <package-manquant> --python-version <votre-version>
+     Puis copiez les .whl dans le dossier wheels/
+
+3. Relancez l'installation:
+   > cd scripts
+   > install-ambulon-offline.bat
+
+
+Probleme : "ERROR: No matching distribution found for greenlet"
+------------------------------------------------------------------------
+Cause: La wheel greenlet pour votre version Python est manquante
+
+Solution:
+1. Si vous avez internet temporairement:
+   > pip install greenlet
+   Puis relancez: install-ambulon-offline.bat
+
+2. OU telechargez manuellement la wheel greenlet pour votre Python:
+   https://pypi.org/project/greenlet/#files
+   Puis copiez-la dans wheels/ et relancez l'installation
+
+
+Probleme : La commande 'ambulon' n'est pas reconnue apres installation
+------------------------------------------------------------------------
+Solution:
+1. Redemarrez votre terminal (PowerShell, CMD)
+2. Verifiez que Python Scripts/ est dans votre PATH
+3. Ou utilisez: python -m app.cli.cli --help
+
+
+================================================================================
   SUPPORT ET DOCUMENTATION
 ================================================================================
 
@@ -778,10 +842,194 @@ def cleanup_temp(temp_dir):
     shutil.rmtree(temp_dir, ignore_errors=True)
 
 
+def build_zip_package(version, dependencies):
+    """Build le package offline au format ZIP (ancien mode)."""
+    # 1. Build la wheel
+    wheel_file = build_wheel(version)
+
+    # 2. Créer la structure temporaire
+    temp_dir, package_dir, wheels_dir, scripts_dir = create_temp_structure(version)
+
+    # 3. Copier la wheel ambulon
+    copy_ambulon_wheel(wheel_file, wheels_dir)
+
+    # 4. Télécharger les dépendances
+    download_dependencies(dependencies, wheels_dir)
+
+    # 5. Générer les scripts
+    copy_scripts(scripts_dir, version)
+    generate_readme(package_dir, version)
+
+    # 6. Créer l'archive ZIP dans dist-offline/
+    dist_fat_dir = Path("dist-offline")
+    zip_path = create_zip_archive(package_dir, version, dist_fat_dir)
+
+    # 7. Nettoyage
+    cleanup_temp(temp_dir)
+
+    # Résumé final
+    print("\n" + "="*60)
+    print("  BUILD TERMINÉ AVEC SUCCÈS (MODE ZIP)")
+    print("="*60)
+    print(f"\nPackage offline créé dans:")
+    print(f"  {zip_path.absolute()}")
+    print(f"  Taille: {zip_path.stat().st_size / 1024 / 1024:.1f} MB")
+    print(f"\nCe fichier peut être commité dans GitHub et distribué")
+    print(f"pour une installation offline d'Ambulon v{version}")
+    print()
+
+
+def build_exposed_package(version, dependencies):
+    """Build le package offline avec wheels exposées (nouveau mode)."""
+    # 1. Build la wheel
+    wheel_file = build_wheel(version)
+
+    # 2. Créer la structure dist-offline/
+    dist_offline_dir = Path("dist-offline")
+    wheels_dir = dist_offline_dir / "wheels"
+    dist_offline_dir.mkdir(exist_ok=True)
+    wheels_dir.mkdir(exist_ok=True)
+
+    print("\n" + "="*60)
+    print("Étape 2/5 : Structure dist-offline/ créée")
+    print("="*60)
+    print(f"[OK] {dist_offline_dir}/")
+    print(f"[OK] {wheels_dir}/")
+
+    # 3. Copier la wheel ambulon
+    print("\n" + "="*60)
+    print("Étape 3/5 : Copie de la wheel Ambulon")
+    print("="*60)
+    dest = wheels_dir / wheel_file.name
+    shutil.copy2(wheel_file, dest)
+    print(f"[OK] {wheel_file.name} copiée")
+
+    # 4. Télécharger les dépendances
+    download_dependencies(dependencies, wheels_dir)
+
+    # 5. Copier les scripts d'installation/désinstallation
+    print("\n" + "="*60)
+    print("Étape 5/5 : Copie des scripts d'installation")
+    print("="*60)
+
+    scripts_source_dir = Path("dist-offline")
+    install_script = scripts_source_dir / "install_offline.py"
+    uninstall_script = scripts_source_dir / "uninstall_offline.py"
+
+    if not install_script.exists():
+        print(f"[ERREUR] {install_script} introuvable")
+        sys.exit(1)
+
+    if not uninstall_script.exists():
+        print(f"[ERREUR] {uninstall_script} introuvable")
+        sys.exit(1)
+
+    print(f"[OK] Scripts déjà en place:")
+    print(f"     {install_script}")
+    print(f"     {uninstall_script}")
+
+    # 6. Créer un README
+    readme_path = dist_offline_dir / "README.md"
+    readme_content = f"""# Ambulon {version} - Installation Offline (Wheels Exposées)
+
+## Installation
+
+1. Téléchargez `install_offline.py`
+2. Exécutez :
+   ```bash
+   python install_offline.py
+   ```
+
+Le script téléchargera automatiquement les wheels compatibles avec votre version Python depuis ce dossier et les installera.
+
+## Désinstallation
+
+```bash
+python uninstall_offline.py
+```
+
+## Versions Python supportées
+
+- Python 3.10
+- Python 3.11
+- Python 3.12
+
+## Structure
+
+```
+dist-offline/
+├── wheels/              # Wheels pour toutes les versions Python
+│   ├── ambulon-{version}-py3-none-any.whl
+│   ├── pillow-*-cp310-*.whl
+│   ├── pillow-*-cp311-*.whl
+│   ├── pillow-*-cp312-*.whl
+│   └── ...
+├── install_offline.py   # Script d'installation intelligent
+├── uninstall_offline.py # Script de désinstallation
+└── README.md           # Ce fichier
+```
+
+## Utilisation
+
+Après installation :
+```bash
+ambulon --version
+ambulon --help
+```
+
+---
+**Version**: {version}
+**Licence**: MIT
+"""
+
+    with open(readme_path, "w", encoding="utf-8") as f:
+        f.write(readme_content)
+
+    print(f"[OK] README créé: {readme_path.name}")
+
+    # Compter les wheels
+    wheels_count = len(list(wheels_dir.glob("*.whl")))
+    total_size = sum(w.stat().st_size for w in wheels_dir.glob("*.whl")) / 1024 / 1024
+
+    # Résumé final
+    print("\n" + "="*60)
+    print("  BUILD TERMINÉ AVEC SUCCÈS (MODE EXPOSED)")
+    print("="*60)
+    print(f"\nWheels exposées dans:")
+    print(f"  {wheels_dir.absolute()}")
+    print(f"  {wheels_count} wheels ({total_size:.1f} MB)")
+    print(f"\nScripts d'installation:")
+    print(f"  {install_script.absolute()}")
+    print(f"  {uninstall_script.absolute()}")
+    print(f"\nPour distribuer:")
+    print(f"  1. Committez dist-offline/ dans votre dépôt")
+    print(f"  2. Les utilisateurs téléchargent install_offline.py")
+    print(f"  3. Exécutent: python install_offline.py")
+    print()
+
+
 def main():
     """Point d'entrée principal."""
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Build package offline d'Ambulon"
+    )
+    parser.add_argument(
+        "--mode",
+        choices=["zip", "exposed"],
+        default="exposed",
+        help=(
+            "Mode de packaging : "
+            "'zip' = créer un ZIP massif (ancien mode), "
+            "'exposed' = exposer les wheels dans dist-offline/ (nouveau mode, par défaut)"
+        )
+    )
+    args = parser.parse_args()
+
     print("\n" + "="*60)
     print("  BUILD PACKAGE OFFLINE AMBULON")
+    print(f"  Mode: {args.mode.upper()}")
     print("="*60)
 
     # Vérifier qu'on est à la racine du projet
@@ -798,41 +1046,12 @@ def main():
     dependencies = read_dependencies_from_pyproject()
     print(f"[INFO] Dependances detectees: {len(dependencies)}")
 
-    # Étapes de construction
+    # Dispatcher selon le mode
     try:
-        # 1. Build la wheel
-        wheel_file = build_wheel(version)
-
-        # 2. Créer la structure temporaire
-        temp_dir, package_dir, wheels_dir, scripts_dir = create_temp_structure(version)
-
-        # 3. Copier la wheel ambulon
-        copy_ambulon_wheel(wheel_file, wheels_dir)
-
-        # 4. Télécharger les dépendances
-        download_dependencies(dependencies, wheels_dir)
-
-        # 5. Générer les scripts
-        copy_scripts(scripts_dir, version)
-        generate_readme(package_dir, version)
-
-        # 6. Créer l'archive ZIP dans dist-offline/
-        dist_fat_dir = Path("dist-offline")
-        zip_path = create_zip_archive(package_dir, version, dist_fat_dir)
-
-        # 7. Nettoyage
-        cleanup_temp(temp_dir)
-
-        # Résumé final
-        print("\n" + "="*60)
-        print("  BUILD TERMINÉ AVEC SUCCÈS")
-        print("="*60)
-        print(f"\nPackage offline créé dans:")
-        print(f"  {zip_path.absolute()}")
-        print(f"\nCe fichier peut être commité dans GitHub et distribué")
-        print(f"pour une installation offline d'Ambulon v{version}")
-        print()
-
+        if args.mode == "zip":
+            build_zip_package(version, dependencies)
+        else:  # exposed
+            build_exposed_package(version, dependencies)
     except KeyboardInterrupt:
         print("\n\n[INFO] Build interrompu par l'utilisateur")
         sys.exit(1)
