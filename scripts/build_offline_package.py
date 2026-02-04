@@ -243,7 +243,7 @@ REM Etape 1 : Installer TOUTES les dependances AVANT ambulon
 echo [Etape 1/2] Installation des dependances...
 pip install --no-index --find-links=.\\wheels ^
     importlib-resources pillow pymupdf requests pyyaml mcp chardet ^
-    beautifulsoup4 lxml markdown python-slugify playwright
+    beautifulsoup4 lxml markdown python-slugify greenlet playwright
 
 if errorlevel 1 (
     echo.
@@ -658,7 +658,7 @@ Methode manuelle (ligne de commande) :
 1. Ouvrez un terminal dans le dossier ambulon-{version}-offline-install/
 
 2. Installer les dependances AVANT ambulon :
-   > pip install --no-index --find-links=.\\wheels importlib-resources pillow pymupdf requests pyyaml mcp chardet beautifulsoup4 lxml markdown python-slugify playwright
+   > pip install --no-index --find-links=.\\wheels importlib-resources pillow pymupdf requests pyyaml mcp chardet beautifulsoup4 lxml markdown python-slugify greenlet playwright
 
 3. Installer ambulon :
    > pip install --no-index --find-links=.\\wheels ambulon
