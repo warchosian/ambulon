@@ -1,4 +1,4 @@
-# Ambulon 3.0.2 - Installation Offline (Wheels Exposées)
+# Ambulon 3.0.3 - Installation Offline (Wheels Exposées)
 
 ## Installation
 
@@ -27,7 +27,7 @@ python uninstall_offline.py
 ```
 dist-offline/
 ├── wheels/              # Wheels pour toutes les versions Python
-│   ├── ambulon-3.0.2-py3-none-any.whl
+│   ├── ambulon-3.0.3-py3-none-any.whl
 │   ├── pillow-*-cp310-*.whl
 │   ├── pillow-*-cp311-*.whl
 │   ├── pillow-*-cp312-*.whl
@@ -46,5 +46,5 @@ ambulon --help
 ```
 
 ---
-**Version**: 3.0.2
+**Version**: 3.0.3
 **Licence**: MIT

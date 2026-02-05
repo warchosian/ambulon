@@ -6,17 +6,55 @@
 - Python 3.10, 3.11 ou 3.12
 - pip installé
 
-### Étapes
+---
+
+## 🚀 Option A : Installation Automatique (Plus Simple)
+
+**1. Télécharger le script d'installation**
+
+```bash
+# Télécharger install_from_github.py
+curl -O https://raw.githubusercontent.com/warchosian/ambulon/preprod/v3.0.2-stable/dist-offline/install_from_github.py
+
+# Ou avec wget
+wget https://raw.githubusercontent.com/warchosian/ambulon/preprod/v3.0.2-stable/dist-offline/install_from_github.py
+```
+
+**2. Exécuter le script**
+
+```bash
+python install_from_github.py
+```
+
+**C'est tout ! ✓**
+
+Le script va automatiquement :
+- Créer le répertoire `wheels/`
+- Télécharger les 70 wheels depuis GitHub (~130 MB)
+- Installer ambulon en mode offline
+
+**Options** :
+```bash
+# Mode offline : installer depuis wheels déjà téléchargées
+python install_from_github.py --offline
+
+# Le script détecte automatiquement si wheels/ existe déjà
+# et propose de sauter le téléchargement
+```
+
+---
+
+## 📥 Option B : Installation Manuelle
 
 **1. Télécharger le dossier `wheels/`**
 
-Récupérer les 69 wheels depuis GitHub :
+Récupérer les 70 wheels depuis GitHub :
 ```bash
-# Option A : Cloner le dépôt (si git disponible)
+# Option 1 : Cloner le dépôt (si git disponible)
 git clone --depth 1 https://github.com/warchosian/ambulon.git -b preprod/v3.0.2-stable
 cd ambulon/dist-offline
 
-# Option B : Télécharger le ZIP
+# Option 2 : Télécharger le ZIP
 # https://github.com/warchosian/ambulon/archive/refs/heads/preprod/v3.0.2-stable.zip
 # Extraire et aller dans dist-offline/
 ```
@@ -61,7 +99,7 @@ pip uninstall ambulon mcp playwright greenlet markdown beautifulsoup4 python-slu
 
 ## 📂 Contenu du dossier wheels/
 
-**69 wheels** (129.5 MB) pour Python 3.10, 3.11, 3.12 :
+**70 wheels** (129.8 MB) pour Python 3.10, 3.11, 3.12 :
 
 ### Wheels spécifiques par version Python
 - `greenlet-3.3.1-cp310-*.whl` (Python 3.10)
