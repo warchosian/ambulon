@@ -3,16 +3,16 @@
 Installation d'Ambulon depuis GitHub.
 
 Ce script :
-1. Crée le répertoire wheels/
-2. Télécharge les wheels depuis GitHub
+1. Cree le repertoire wheels/
+2. Telecharge les wheels depuis GitHub
 3. Installe ambulon depuis les wheels locales (offline)
 
 Usage:
     python install_from_github.py
 
-Prérequis:
+Prerequis:
     - Python 3.10, 3.11 ou 3.12
-    - Connexion internet (pour le téléchargement)
+    - Connexion internet (pour le telechargement)
 """
 
 import sys
@@ -98,72 +98,72 @@ WHEELS_TO_DOWNLOAD = [
 
 
 def check_python_version():
-    """Vérifie que Python 3.10+ est installé."""
+    """Verifie que Python 3.10+ est installe."""
     version = sys.version_info
     if version < (3, 10):
         print(f"[ERREUR] Python 3.10+ requis, vous avez Python {version.major}.{version.minor}")
-        print("\nTéléchargez Python depuis: https://www.python.org/downloads/")
+        print("\nTelechargez Python depuis: https://www.python.org/downloads/")
         sys.exit(1)
 
-    print(f"[OK] Python {version.major}.{version.minor}.{version.micro} détecté")
+    print(f"[OK] Python {version.major}.{version.minor}.{version.micro} detecte")
     if version.major == 3 and version.minor in (10, 11, 12):
-        print(f"     Version compatible ✓")
+        print(f"     Version compatible OK")
     else:
-        print(f"[AVERTISSEMENT] Python {version.major}.{version.minor} non testé")
+        print(f"[AVERTISSEMENT] Python {version.major}.{version.minor} non teste")
 
 
 def check_pip():
-    """Vérifie que pip est installé."""
+    """Verifie que pip est installe."""
     try:
         subprocess.run(
             [sys.executable, "-m", "pip", "--version"],
             capture_output=True,
             check=True
         )
-        print(f"[OK] pip détecté")
+        print(f"[OK] pip detecte")
         return True
     except subprocess.CalledProcessError:
-        print("[ERREUR] pip n'est pas installé")
+        print("[ERREUR] pip n'est pas installe")
         sys.exit(1)
 
 
 def create_wheels_dir():
-    """Crée le répertoire wheels/ s'il n'existe pas."""
+    """Cree le repertoire wheels/ s'il n'existe pas."""
     script_dir = Path(__file__).parent
     wheels_dir = script_dir / "wheels"
 
     wheels_dir.mkdir(exist_ok=True)
-    print(f"[OK] Répertoire wheels/ créé: {wheels_dir}")
+    print(f"[OK] Repertoire wheels/ cree: {wheels_dir}")
     return wheels_dir
 
 
 def download_wheel(wheel_name, wheels_dir):
-    """Télécharge une wheel depuis GitHub."""
+    """Telecharge une wheel depuis GitHub."""
     url = f"{GITHUB_BASE_URL}/{wheel_name}"
     dest = wheels_dir / wheel_name
 
-    # Skip si déjà téléchargée
+    # Skip si deja telechargee
     if dest.exists():
         return True
 
     try:
-        print(f"  Téléchargement: {wheel_name}...", end='', flush=True)
+        print(f"  Telechargement: {wheel_name}...", end='', flush=True)
         urllib.request.urlretrieve(url, dest)
-        print(" ✓")
+        print(" OK")
         return True
     except urllib.error.HTTPError as e:
-        print(f" ✗ (HTTP {e.code})")
+        print(f" X (HTTP {e.code})")
         return False
     except Exception as e:
-        print(f" ✗ ({e})")
+        print(f" X ({e})")
         return False
 
 
 def download_all_wheels(wheels_dir):
-    """Télécharge toutes les wheels depuis GitHub (CONNEXION INTERNET REQUISE)."""
-    print(f"\n[INFO] Téléchargement de {len(WHEELS_TO_DOWNLOAD)} wheels depuis GitHub...")
+    """Telecharge toutes les wheels depuis GitHub (CONNEXION INTERNET REQUISE)."""
+    print(f"\n[INFO] Telechargement de {len(WHEELS_TO_DOWNLOAD)} wheels depuis GitHub...")
     print(f"       URL: {GITHUB_BASE_URL}")
-    print(f"       ⚠️  CONNEXION INTERNET REQUISE")
+    print(f"       !  CONNEXION INTERNET REQUISE")
     print()
 
     failed = []
@@ -177,11 +177,11 @@ def download_all_wheels(wheels_dir):
 
     print()
     if failed:
-        print(f"[AVERTISSEMENT] {len(failed)} wheel(s) ont échoué:")
+        print(f"[AVERTISSEMENT] {len(failed)} wheel(s) ont echoue:")
         for wheel in failed:
             print(f"  - {wheel}")
 
-    print(f"[OK] {success}/{len(WHEELS_TO_DOWNLOAD)} wheels téléchargées")
+    print(f"[OK] {success}/{len(WHEELS_TO_DOWNLOAD)} wheels telechargees")
 
     # Calculer la taille totale
     total_size = sum(f.stat().st_size for f in wheels_dir.glob("*.whl"))
@@ -209,30 +209,30 @@ def install_ambulon(wheels_dir):
         "ambulon"
     ]
 
-    # Afficher la commande complète
+    # Afficher la commande complete
     cmd_str = ' '.join(cmd)
     print(f"[CMD] {cmd_str}")
     print()
 
-    # Afficher la commande simplifiée
+    # Afficher la commande simplifiee
     simple_cmd = f"pip install --no-index --find-links={wheels_dir} ambulon"
-    print(f"[INFO] Équivalent simplifié:")
+    print(f"[INFO] Equivalent simplifie:")
     print(f"       {simple_cmd}")
     print()
 
     try:
         subprocess.run(cmd, check=True)
-        print("\n[OK] Installation terminée avec succès ! ✓")
+        print("\n[OK] Installation terminee avec succes ! OK")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"\n[ERREUR] Installation échouée: {e}")
+        print(f"\n[ERREUR] Installation echouee: {e}")
         return False
 
 
 def verify_installation():
-    """Vérifie que l'installation a réussi."""
+    """Verifie que l'installation a reussi."""
     print("\n" + "="*70)
-    print("  VÉRIFICATION")
+    print("  VERIFICATION")
     print("="*70)
 
     try:
@@ -244,7 +244,7 @@ def verify_installation():
         )
         print(f"\n[OK] {result.stdout.strip()}")
     except (subprocess.CalledProcessError, FileNotFoundError):
-        print("\n[INFO] Redémarrez votre terminal puis utilisez:")
+        print("\n[INFO] Redemarrez votre terminal puis utilisez:")
         print("       ambulon --version")
 
     print("\nCommandes disponibles:")
@@ -252,7 +252,7 @@ def verify_installation():
 
 
 def check_existing_wheels(wheels_dir):
-    """Vérifie si des wheels sont déjà présentes."""
+    """Verifie si des wheels sont deja presentes."""
     if not wheels_dir.exists():
         return False
 
@@ -260,19 +260,19 @@ def check_existing_wheels(wheels_dir):
     if len(existing) == 0:
         return False
 
-    print(f"[INFO] {len(existing)} wheel(s) déjà présente(s) dans {wheels_dir}")
+    print(f"[INFO] {len(existing)} wheel(s) deja presente(s) dans {wheels_dir}")
 
-    # Vérifier si ambulon est présent
+    # Verifier si ambulon est present
     ambulon_wheels = [w for w in existing if w.name.startswith("ambulon-")]
     if ambulon_wheels:
-        print(f"       Ambulon wheel trouvée: {ambulon_wheels[0].name}")
+        print(f"       Ambulon wheel trouvee: {ambulon_wheels[0].name}")
         return True
 
     return False
 
 
 def main():
-    """Point d'entrée principal."""
+    """Point d'entree principal."""
     print("="*70)
     print("  INSTALLATION D'AMBULON DEPUIS GITHUB")
     print("="*70)
@@ -284,64 +284,64 @@ def main():
     # Afficher les modes disponibles
     print("[INFO] Modes d'installation disponibles:")
     print()
-    print("  1. Mode AUTOMATIQUE (par défaut)")
-    print("     → Télécharge les wheels depuis GitHub (internet requis)")
-    print("     → Puis installe en mode offline")
+    print("  1. Mode AUTOMATIQUE (par defaut)")
+    print("     - Telecharge les wheels depuis GitHub (internet requis)")
+    print("     - Puis installe en mode offline")
     print()
     print("  2. Mode OFFLINE (--offline)")
-    print("     → Utilise les wheels déjà téléchargées")
-    print("     → Aucune connexion internet requise")
+    print("     - Utilise les wheels deja telechargees")
+    print("     - Aucune connexion internet requise")
     print()
 
     if offline_mode:
-        print("[INFO] Mode sélectionné: OFFLINE")
+        print("[INFO] Mode selectionne: OFFLINE")
     else:
-        print("[INFO] Mode sélectionné: AUTOMATIQUE")
+        print("[INFO] Mode selectionne: AUTOMATIQUE")
     print()
 
-    # Phase 1 : Vérifications
+    # Phase 1 : Verifications
     check_python_version()
     check_pip()
     print()
 
-    # Phase 2 : Création du répertoire
+    # Phase 2 : Creation du repertoire
     print("="*70)
-    print("  PHASE 1 : CRÉATION DU RÉPERTOIRE")
+    print("  PHASE 1 : CREATION DU REPERTOIRE")
     print("="*70)
     print()
     wheels_dir = create_wheels_dir()
 
-    # Vérifier si wheels déjà présentes
+    # Verifier si wheels deja presentes
     has_wheels = check_existing_wheels(wheels_dir)
 
     if has_wheels and offline_mode:
-        print("\n[INFO] Mode offline activé : téléchargement ignoré")
+        print("\n[INFO] Mode offline active : telechargement ignore")
         skip_download = True
     elif has_wheels:
-        print("\n[QUESTION] Des wheels sont déjà présentes.")
-        response = input("           Voulez-vous les télécharger à nouveau ? (o/N) : ").strip().lower()
+        print("\n[QUESTION] Des wheels sont deja presentes.")
+        response = input("           Voulez-vous les telecharger a nouveau ? (o/N) : ").strip().lower()
         skip_download = response not in ['o', 'oui', 'y', 'yes']
     else:
         skip_download = False
 
-    # Phase 2 : Téléchargement (si nécessaire)
+    # Phase 2 : Telechargement (si necessaire)
     if not skip_download:
         print("\n" + "="*70)
-        print("  PHASE 2 : TÉLÉCHARGEMENT DES WHEELS (ONLINE)")
+        print("  PHASE 2 : TELECHARGEMENT DES WHEELS (ONLINE)")
         print("="*70)
         print()
-        print("[INFO] ⚠️  Cette phase nécessite une CONNEXION INTERNET")
-        print("       Les wheels seront téléchargées depuis GitHub")
+        print("[INFO] !  Cette phase necessite une CONNEXION INTERNET")
+        print("       Les wheels seront telechargees depuis GitHub")
 
         if not download_all_wheels(wheels_dir):
-            print("\n[AVERTISSEMENT] Certaines wheels n'ont pas pu être téléchargées")
-            print("                L'installation peut échouer")
+            print("\n[AVERTISSEMENT] Certaines wheels n'ont pas pu etre telechargees")
+            print("                L'installation peut echouer")
     else:
         print("\n" + "="*70)
-        print("  PHASE 2 : TÉLÉCHARGEMENT (IGNORÉ - MODE OFFLINE)")
+        print("  PHASE 2 : TELECHARGEMENT (IGNORÉ - MODE OFFLINE)")
         print("="*70)
         print()
-        print("[INFO] ✓ Utilisation des wheels existantes")
+        print("[INFO] OK Utilisation des wheels existantes")
         print("       Aucune connexion internet requise")
 
     # Phase 3 : Installation offline
@@ -349,13 +349,13 @@ def main():
     print("  PHASE 3 : INSTALLATION (MODE OFFLINE)")
     print("="*70)
     print()
-    print("[INFO] ✓ Cette phase fonctionne HORS LIGNE")
+    print("[INFO] OK Cette phase fonctionne HORS LIGNE")
     print("       Installation depuis les wheels locales uniquement")
 
     if install_ambulon(wheels_dir):
         verify_installation()
     else:
-        print("\n[ERREUR] Installation échouée")
+        print("\n[ERREUR] Installation echouee")
         sys.exit(1)
 
 
@@ -363,7 +363,7 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n\n[INFO] Installation annulée par l'utilisateur")
+        print("\n\n[INFO] Installation annulee par l'utilisateur")
         sys.exit(1)
     except Exception as e:
         print(f"\n[ERREUR] Exception inattendue: {e}")
