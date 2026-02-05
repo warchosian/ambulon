@@ -1,308 +1,188 @@
 #!/usr/bin/env python3
 """
-Script d'installation offline intelligent d'Ambulon.
+Installation offline d'Ambulon depuis wheels locales.
 
-Ce script :
-1. Détecte votre version Python
-2. Télécharge uniquement les wheels compatibles depuis GitHub
-3. Installe les dépendances dans le bon ordre
-4. Installe Ambulon
+Ce script installe Ambulon depuis le dossier wheels/ (OFFLINE).
+Pour telecharger les wheels, utilisez d'abord download_wheels.py.
 
 Usage:
     python install_offline.py
 
-    # Ou avec une URL personnalisée :
-    python install_offline.py --base-url https://mon-serveur.com/wheels/
+Prerequis:
+    - Python 3.10, 3.11 ou 3.12
+    - pip installe
+    - Dossier wheels/ avec les 70 wheels
+    - Aucune connexion internet requise
 """
 
 import sys
 import subprocess
-import urllib.request
-import urllib.error
 from pathlib import Path
-import argparse
-import tempfile
-import shutil
-
-
-# URL de base des wheels sur GitHub (raw)
-DEFAULT_BASE_URL = "https://github.com/warchosian/ambulon/raw/preprod/dist-offline/wheels/"
-
-
-def get_python_version():
-    """Retourne la version Python sous forme (major, minor)."""
-    return sys.version_info.major, sys.version_info.minor
 
 
 def check_python_version():
-    """Vérifie que Python 3.10+ est installé."""
-    major, minor = get_python_version()
-
-    print(f"[OK] Python {major}.{minor}.{sys.version_info.micro} détecté")
-
-    if major != 3 or minor < 10:
-        print(f"\n[ERREUR] Python 3.10+ requis")
-        print(f"Téléchargez Python depuis: https://www.python.org/downloads/")
+    """Verifie que Python 3.10+ est installe."""
+    version = sys.version_info
+    if version < (3, 10):
+        print(f"[ERREUR] Python 3.10+ requis, vous avez Python {version.major}.{version.minor}")
+        print("\nTelechargez Python depuis: https://www.python.org/downloads/")
         sys.exit(1)
 
-    if minor in (10, 11, 12):
-        print(f"     Version compatible ✓")
+    print(f"[OK] Python {version.major}.{version.minor}.{version.micro} detecte")
+    if version.major == 3 and version.minor in (10, 11, 12):
+        print(f"     Version compatible OK")
     else:
-        print(f"     [AVERTISSEMENT] Python 3.{minor} non testé (recommandé: 3.10, 3.11, 3.12)")
+        print(f"[AVERTISSEMENT] Python {version.major}.{version.minor} non teste")
 
 
 def check_pip():
-    """Vérifie que pip est installé."""
+    """Verifie que pip est installe."""
     try:
-        result = subprocess.run(
+        subprocess.run(
             [sys.executable, "-m", "pip", "--version"],
             capture_output=True,
-            text=True,
             check=True
         )
-        print(f"[OK] pip détecté")
+        print(f"[OK] pip detecte")
         return True
     except subprocess.CalledProcessError:
-        print("[ERREUR] pip n'est pas installé")
+        print("[ERREUR] pip n'est pas installe")
         sys.exit(1)
 
 
-def get_cp_tag():
-    """Retourne le tag CPython (ex: cp310, cp311, cp312)."""
-    major, minor = get_python_version()
-    return f"cp{major}{minor}"
+def check_wheels_dir():
+    """Verifie que le dossier wheels/ existe."""
+    script_dir = Path(__file__).parent
+    wheels_dir = script_dir / "wheels"
+
+    if not wheels_dir.exists():
+        print(f"[ERREUR] Dossier wheels/ introuvable: {wheels_dir}")
+        print()
+        print("Solution:")
+        print("  1. Telechargez les wheels d'abord:")
+        print("     python download_wheels.py")
+        print()
+        print("  2. Ou clonez le depot avec les wheels:")
+        print("     git clone https://github.com/warchosian/ambulon.git -b preprod/v3.0.2-stable")
+        sys.exit(1)
+
+    wheels_count = len(list(wheels_dir.glob("*.whl")))
+    if wheels_count == 0:
+        print(f"[ERREUR] Dossier wheels/ vide: {wheels_dir}")
+        print()
+        print("Solution:")
+        print("  Telechargez les wheels d'abord:")
+        print("  python download_wheels.py")
+        sys.exit(1)
+
+    print(f"[OK] Dossier wheels/ trouve: {wheels_dir}")
+    print(f"     {wheels_count} wheels disponibles")
+
+    # Verifier qu'ambulon est present
+    ambulon_wheels = list(wheels_dir.glob("ambulon-*.whl"))
+    if not ambulon_wheels:
+        print(f"[ERREUR] Wheel ambulon introuvable dans {wheels_dir}")
+        sys.exit(1)
+
+    print(f"     Ambulon wheel: {ambulon_wheels[0].name}")
+
+    return wheels_dir
 
 
-def download_wheel(base_url, wheel_name, dest_dir):
-    """Télécharge une wheel depuis l'URL."""
-    url = base_url.rstrip('/') + '/' + wheel_name
-    dest_path = dest_dir / wheel_name
-
-    if dest_path.exists():
-        print(f"  [CACHE] {wheel_name} (déjà téléchargée)")
-        return dest_path
-
-    print(f"  [DOWNLOAD] {wheel_name}...", end='', flush=True)
-
-    try:
-        with urllib.request.urlopen(url, timeout=30) as response:
-            with open(dest_path, 'wb') as f:
-                shutil.copyfileobj(response, f)
-        print(" ✓")
-        return dest_path
-    except urllib.error.HTTPError as e:
-        if e.code == 404:
-            print(f" ✗ (404 Not Found)")
-            return None
-        else:
-            print(f" ✗ (HTTP {e.code})")
-            raise
-    except Exception as e:
-        print(f" ✗ ({e})")
-        raise
-
-
-def find_compatible_wheel(base_url, package_name, dest_dir, cp_tag):
-    """
-    Cherche une wheel compatible avec la version Python.
-    Essaie d'abord les wheels spécifiques (cp310, cp311, etc.),
-    puis les wheels universelles (py3-none-any).
-    """
-    # Pattern 1: Wheel binaire spécifique (ex: pillow-10.0.0-cp311-cp311-win_amd64.whl)
-    # On va essayer les patterns courants
-
-    # D'abord, on essaie de deviner le nom exact en listant depuis un manifest
-    # Pour simplifier, on va essayer quelques patterns courants
-
-    patterns = [
-        f"{package_name}-*-{cp_tag}-{cp_tag}-win_amd64.whl",
-        f"{package_name}-*-{cp_tag}-{cp_tag}-manylinux*.whl",
-        f"{package_name}-*-py3-none-any.whl",
-        f"{package_name}-*.whl",
-    ]
-
-    # Comme on ne peut pas lister le répertoire distant, on va utiliser
-    # une liste prédéfinie des versions connues
-    # Pour l'instant, on retourne None et on laissera pip download faire le travail
-    return None
-
-
-def install_package(package_name, wheels_dir):
-    """Installe un package depuis le dossier wheels/."""
-    print(f"\n[INSTALL] {package_name}...")
+def install_ambulon(wheels_dir):
+    """Installe ambulon depuis les wheels locales (MODE OFFLINE)."""
+    print()
+    print("="*70)
+    print("  INSTALLATION D'AMBULON (MODE OFFLINE)")
+    print("="*70)
+    print()
+    print("[INFO] Mode: OFFLINE (pas de connexion internet requise)")
+    print("       Installation depuis les wheels locales uniquement")
+    print()
 
     cmd = [
         sys.executable, "-m", "pip", "install",
         "--no-index",
         "--find-links", str(wheels_dir),
-        package_name
+        "ambulon"
     ]
+
+    # Afficher la commande complete
+    cmd_str = ' '.join(cmd)
+    print(f"[CMD] {cmd_str}")
+    print()
+
+    # Afficher la commande simplifiee
+    simple_cmd = f"pip install --no-index --find-links={wheels_dir.name} ambulon"
+    print(f"[INFO] Equivalent simplifie:")
+    print(f"       {simple_cmd}")
+    print()
+
+    try:
+        subprocess.run(cmd, check=True)
+        print("\n[OK] Installation terminee avec succes ! OK")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"\n[ERREUR] Installation echouee: {e}")
+        return False
+
+
+def verify_installation():
+    """Verifie que l'installation a reussi."""
+    print("\n" + "="*70)
+    print("  VERIFICATION")
+    print("="*70)
 
     try:
         result = subprocess.run(
-            cmd,
+            ["ambulon", "--version"],
             capture_output=True,
             text=True,
             check=True
         )
-        print(f"[OK] {package_name} installé ✓")
-        return True
-    except subprocess.CalledProcessError as e:
-        print(f"[ERREUR] Échec de l'installation de {package_name}")
-        print(f"\nStderr:\n{e.stderr}")
-        return False
+        print(f"\n[OK] {result.stdout.strip()}")
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        print("\n[INFO] Redemarrez votre terminal puis utilisez:")
+        print("       ambulon --version")
 
-
-def get_dependencies_order():
-    """Retourne l'ordre d'installation des dépendances."""
-    return [
-        # Niveau 1: Pas de dépendances
-        "importlib-resources",
-        "pillow",
-        "pymupdf",
-        "requests",
-        "pyyaml",
-        "chardet",
-        "lxml",
-        "python-slugify",
-
-        # Niveau 2
-        "beautifulsoup4",
-        "markdown",
-
-        # Niveau 3
-        "greenlet",
-
-        # Niveau 4
-        "playwright",
-        "mcp",
-    ]
-
-
-def create_manifest_from_pyproject():
-    """
-    Retourne un manifest des wheels avec leurs versions depuis pyproject.toml.
-    Simplifié : on va juste télécharger avec pip download.
-    """
-    # Pour l'instant, on retourne un dict vide
-    # L'implémentation complète nécessiterait de parser pyproject.toml
-    return {}
+    print("\nCommandes disponibles:")
+    print("  ambulon --help")
+    print("  ambulon process <fichier.pdf>")
+    print("  ambulon server")
 
 
 def main():
-    """Point d'entrée principal."""
-    parser = argparse.ArgumentParser(
-        description="Installation offline intelligente d'Ambulon"
-    )
-    parser.add_argument(
-        "--base-url",
-        default=DEFAULT_BASE_URL,
-        help=f"URL de base des wheels (défaut: {DEFAULT_BASE_URL})"
-    )
-    args = parser.parse_args()
-
+    """Point d'entree principal."""
     print("="*70)
-    print("  INSTALLATION OFFLINE INTELLIGENTE D'AMBULON")
+    print("  INSTALLATION OFFLINE D'AMBULON")
     print("="*70)
     print()
 
-    # 1. Vérifications
+    # Verifications
     check_python_version()
     check_pip()
-
-    cp_tag = get_cp_tag()
-    print(f"[INFO] Tag Python: {cp_tag}")
     print()
 
-    # 2. Créer un dossier temporaire pour les wheels
-    temp_dir = Path(tempfile.mkdtemp(prefix="ambulon_wheels_"))
-    print(f"[INFO] Dossier temporaire: {temp_dir}")
+    # Verification du dossier wheels
+    print("="*70)
+    print("  VERIFICATION DES WHEELS")
+    print("="*70)
     print()
+    wheels_dir = check_wheels_dir()
 
-    try:
-        # 3. Télécharger et installer les dépendances
-        print("="*70)
-        print("  TÉLÉCHARGEMENT ET INSTALLATION DES DÉPENDANCES")
-        print("="*70)
-
-        dependencies = get_dependencies_order()
-        failed = []
-
-        # Pour cette version simplifiée, on va utiliser pip download
-        # qui gérera automatiquement la sélection des bonnes wheels
-        print("\n[INFO] Téléchargement des wheels avec pip...")
-
-        download_cmd = [
-            sys.executable, "-m", "pip", "download",
-            *dependencies,
-            "ambulon",
-            "-d", str(temp_dir),
-            "--no-cache-dir"
-        ]
-
-        try:
-            subprocess.run(download_cmd, check=True, capture_output=True, text=True)
-            print("[OK] Toutes les wheels téléchargées ✓")
-        except subprocess.CalledProcessError as e:
-            print(f"[ERREUR] Échec du téléchargement")
-            print(e.stderr)
-            sys.exit(1)
-
-        print()
-
-        # 4. Installation dans le bon ordre
-        print("="*70)
-        print("  INSTALLATION")
-        print("="*70)
-
-        for dep in dependencies:
-            if not install_package(dep, temp_dir):
-                failed.append(dep)
-
-        # 5. Installer Ambulon
-        if not install_package("ambulon", temp_dir):
-            failed.append("ambulon")
-
-        # 6. Résumé
-        print()
-        print("="*70)
-        print("  RÉSUMÉ")
-        print("="*70)
-
-        if failed:
-            print(f"\n[ERREUR] {len(failed)} package(s) ont échoué:")
-            for pkg in failed:
-                print(f"  - {pkg}")
-            sys.exit(1)
-        else:
-            print("\n[OK] Installation terminée avec succès ! ✓")
-            print("\nVérification:")
-            try:
-                result = subprocess.run(
-                    ["ambulon", "--version"],
-                    capture_output=True,
-                    text=True,
-                    check=True
-                )
-                print(f"  {result.stdout.strip()}")
-            except (subprocess.CalledProcessError, FileNotFoundError):
-                print("  [INFO] Redémarrez votre terminal puis utilisez:")
-                print("         ambulon --version")
-
-            print("\nCommandes disponibles:")
-            print("  ambulon --help")
-
-    finally:
-        # Nettoyage
-        print(f"\n[INFO] Nettoyage du dossier temporaire...")
-        shutil.rmtree(temp_dir, ignore_errors=True)
+    # Installation
+    if install_ambulon(wheels_dir):
+        verify_installation()
+    else:
+        print("\n[ERREUR] Installation echouee")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n\n[INFO] Installation annulée par l'utilisateur")
+        print("\n\n[INFO] Installation annulee par l'utilisateur")
         sys.exit(1)
     except Exception as e:
         print(f"\n[ERREUR] Exception inattendue: {e}")

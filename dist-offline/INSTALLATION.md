@@ -8,39 +8,39 @@
 
 ---
 
-## 🚀 Option A : Installation Automatique (Plus Simple)
+## 🚀 Option A : Installation Automatique (Séparée)
 
-**1. Télécharger le script d'installation**
+### Etape 1 : Télécharger les wheels (ONLINE)
 
 ```bash
-# Télécharger install_from_github.py
-curl -O https://raw.githubusercontent.com/warchosian/ambulon/preprod/v3.0.2-stable/dist-offline/install_from_github.py
+# Télécharger le script de téléchargement
+curl -O https://raw.githubusercontent.com/warchosian/ambulon/preprod/v3.0.2-stable/dist-offline/download_wheels.py
 
 # Ou avec wget
-wget https://raw.githubusercontent.com/warchosian/ambulon/preprod/v3.0.2-stable/dist-offline/install_from_github.py
+wget https://raw.githubusercontent.com/warchosian/ambulon/preprod/v3.0.2-stable/dist-offline/download_wheels.py
+
+# Exécuter le téléchargement
+python download_wheels.py
 ```
 
-**2. Exécuter le script**
+Le script téléchargera les 70 wheels (~130 MB) depuis GitHub et affichera la liste.
+
+### Etape 2 : Installer Ambulon (OFFLINE)
 
 ```bash
-python install_from_github.py
+pip install --no-index --find-links=wheels ambulon
 ```
 
 **C'est tout ! ✓**
 
-Le script va automatiquement :
-- Créer le répertoire `wheels/`
-- Télécharger les 70 wheels depuis GitHub (~130 MB)
-- Installer ambulon en mode offline
+Pip installera automatiquement ambulon + toutes les dépendances depuis les wheels locales.
 
-**Options** :
-```bash
-# Mode offline : installer depuis wheels déjà téléchargées
-python install_from_github.py --offline
-
-# Le script détecte automatiquement si wheels/ existe déjà
-# et propose de sauter le téléchargement
-```
+**Avantages de cette approche** :
+- **Séparation claire** : téléchargement (online) vs installation (offline)
+- **Simple** : une commande pip standard, pas de script supplémentaire
+- **Réutilisable** : téléchargez une fois, installez plusieurs fois
+- **Offline complet** : installation sans internet après téléchargement
+- **Transparent** : liste complète des wheels téléchargées par download_wheels.py
 
 ---
 
