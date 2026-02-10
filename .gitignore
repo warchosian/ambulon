@@ -39,8 +39,22 @@ build/
 .aider*
 
 response_to_user.txt
+nul
 
 # Configuration files with sensitive data
-config/piag_rag.yaml
-specs/parameters.md
-scripts/
+config/*
+!config/*.example
+!config/README.md
+
+# Specs
+specs/
+
+# Scripts directory (except build_offline_package.py)
+scripts/*
+!scripts/build_offline_package.py
+
+# Scans
+scans/
+
+# Logs
+logs/

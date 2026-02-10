@@ -1,0 +1,188 @@
+"""Template de configuration PIAG embarqué dans le code."""
+
+PIAG_CONFIG_TEMPLATE = """# ============================================================================
+# FICHIER DE CONFIGURATION EXEMPLE - API RAG PIAG
+# ============================================================================
+# Ce fichier sert de template pour l'intégration avec l'API RAG PIAG
+#
+# INSTRUCTIONS:
+# 1. Copiez ce fichier vers config/piag.yaml (ou $AMBULON_HOME/config/piag.yaml)
+# 2. Remplissez les valeurs nécessaires (project_id, token, etc.)
+# 3. Le fichier config/piag.yaml est dans .gitignore et ne sera pas commité
+#
+# EMPLACEMENTS RECHERCHÉS (par ordre de priorité):
+# 1. Chemin explicite avec --config
+# 2. $AMBULON_HOME/config/piag.yaml (si AMBULON_HOME est défini)
+# 3. ./config/piag.yaml (répertoire courant)
+# 4. $AMBULON_CONFIG_DIR/piag.yaml (si AMBULON_CONFIG_DIR est défini)
+#
+# HIÉRARCHIE DE PRIORITÉ: Arguments CLI > YAML > Variables d'environnement > Valeurs par défaut
+# ============================================================================
+
+# ==========================
+# CONFIGURATION DE L'API
+# ==========================
+api:
+  # URL de base de l'API RAG
+  # Variable d'environnement: PIAG_RAG_BASE_URL
+  base_url: "https://preprod.api.piag.e2.rie.gouv.fr/rag/"
+  version: "v1"
+
+  # Timeout en secondes pour les requêtes HTTP (120s recommandé pour la recherche RAG)
+  # Variable d'environnement: PIAG_RAG_TIMEOUT
+  # Argument CLI: --timeout
+  timeout: 120
+
+  # Nombre maximum de tentatives en cas de timeout
+  # Variable d'environnement: PIAG_RAG_MAX_RETRIES
+  # Argument CLI: --max-retries
+  max_retries: 3
+
+# ==========================
+# ENDPOINTS DE L'API
+# ==========================
+endpoints:
+  # Collections (corpus documentaires)
+  collections: "/api/v1/collections"
+  collection_detail: "/api/v1/collections/{collection_id}"
+
+  # Documents
+  documents_upload: "/api/v1/collections/{collection_id}/documents-upload-slow"
+  document_detail: "/api/v1/documents/{document_id}"
+  collection_documents: "/api/v1/collections/{collection_id}/documents"
+  document_chunks: "/api/v1/documents/{document_id}/chunks"
+
+  # Recherche RAG
+  search: "/api/v1/search"
+
+# ==========================
+# HEADERS HTTP PAR DÉFAUT
+# ==========================
+headers:
+  accept: "application/json"
+  content_type: "application/json"
+  user_agent: "Ambulon RAG Client/1.0"
+
+# ==========================
+# CONFIGURATION DU PROJET
+# ==========================
+# Ces valeurs ÉCRASENT les variables d'environnement si définies
+project:
+  # Identifiant du projet (fourni par votre administrateur)
+  # project_id: "VOTRE_PROJECT_ID"
+
+  # Nom de la collection par défaut (résolution automatique vers ID) (optionnel)
+  # collection_name: "Ma Collection"
+
+  # Identifiant exact d'une collection par défaut (pas de résolution) (optionnel)
+  # collection_id: ""
+
+  # Pour piag-search : liste de noms de collections séparés par virgule (optionnel)
+  # Exemple: "PNM3_FORMID,PNM3_AMBULON,PNM3_LAMBDA"
+  # collection_name_list: "PNM3_FORMID,PNM3_AMBULON,PNM3_LAMBDA"
+
+  # Pour piag-search : liste d'IDs de collections séparés par virgule (optionnel)
+  # collection_id_list: ""
+
+  # Description par défaut pour les nouvelles collections (optionnel)
+  # description: "Description de la collection"
+
+# ==========================
+# CONFIGURATION DE LA SÉCURITÉ
+# ==========================
+security:
+  # ⚠️ ATTENTION: Stocker le token ici n'est PAS recommandé pour des raisons de sécurité
+  # Préférez utiliser les variables d'environnement ou les arguments CLI
+  #
+  # Token d'authentification (JWT Bearer Token)
+  # ⚠️ NE PAS COMMITER CE TOKEN DANS UN DÉPÔT PUBLIC ⚠️
+  #
+  # Pour utiliser ce token, décommentez la ligne ci-dessous UNIQUEMENT pour des tests locaux:
+  # token: "VOTRE_TOKEN_ICI"
+
+  # Variable d'environnement à utiliser si le token n'est pas fourni en argument ou dans le YAML
+  # Recommandation: Exporter la variable d'environnement avec:
+  #   export PIAG_RAG_API_TOKEN="VOTRE_TOKEN"
+  token_env_var: "PIAG_RAG_API_TOKEN"
+
+# ==========================
+# CONFIGURATION DU LOGGING
+# ==========================
+logging:
+  enable_debug: false  # Active les logs détaillés
+  log_requests: true   # Affiche les requêtes HTTP envoyées
+  log_responses: true  # Affiche les réponses HTTP reçues
+  log_to_file: false   # Écrire les logs dans un fichier
+  log_file_path: "logs/piag_rag.log"  # Chemin du fichier de log
+
+# ==========================
+# CONFIGURATION DU LISTING
+# ==========================
+listing:
+  # Paramètres par défaut pour la pagination et le tri
+  default_limit: 20  # Nombre maximum de résultats par page
+  default_offset: 0  # Nombre de résultats à sauter
+  default_order_by: "name"  # Champ de tri (name, created_at, updated_at, etc.)
+  default_order: "asc"  # Ordre de tri: asc ou desc
+
+# ==========================
+# CONFIGURATION DES DOCUMENTS
+# ==========================
+document:
+  # Identifiant du document par défaut (optionnel)
+  # document_id: ""
+
+upload:
+  # collection_id: ""  # Collection cible (optionnel)
+  # file_path: ""  # Chemin du fichier à téléverser (optionnel)
+
+  # Types MIME autorisés
+  allowed_mime_types:
+    - "application/pdf"
+    - "text/plain"
+    - "text/markdown"
+    - "application/vnd.openxmlformats-officedocument.wordprocessingml.document"  # DOCX
+    - "application/msword"  # DOC
+    - "text/html"
+
+  # Taille maximale de fichier en Mo
+  max_file_size_mb: 50
+
+# ==========================
+# CONFIGURATION DES CHUNKS
+# ==========================
+chunks:
+  # Paramètres par défaut pour la récupération de chunks
+  default_from_index: 0   # Index de départ
+  default_to_index: 10    # Index de fin
+  max_chunks_per_request: 100  # Nombre maximum de chunks par requête
+
+# ==========================
+# CONFIGURATION DE LA RECHERCHE RAG
+# ==========================
+search:
+  # collection_id: ""  # Collection à interroger (optionnel)
+  # query: ""  # Question/requête de recherche (optionnel)
+  default_top_k: 5  # Nombre de résultats à retourner par défaut
+  min_score: 0.5    # Score de similarité minimum (0.0 à 1.0)
+  output_format: "json"  # Format de sortie: json ou text
+
+# ==========================
+# EXEMPLES D'UTILISATION
+# ==========================
+# Voici quelques exemples de commandes CLI avec cette configuration:
+#
+# 1. Lister les collections:
+#    ambulon piag-collection-list --token $PIAG_RAG_API_TOKEN
+#
+# 2. Créer une nouvelle collection:
+#    ambulon piag-collection-add --collection-name "Ma Collection" --description "Test" --token $PIAG_RAG_API_TOKEN
+#
+# 3. Upload un document:
+#    ambulon piag-doc-upload --collection-id <id> --file document.pdf --token $PIAG_RAG_API_TOKEN
+#
+# 4. Recherche RAG:
+#    ambulon piag-search --collection-id <id> --query "Quelle est la procédure?" --token $PIAG_RAG_API_TOKEN
+#
+# Note: Le project_id est automatiquement récupéré depuis cette configuration si non fourni en CLI
+"""

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='fr'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>API_PIAG_CURL</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+    .page { margin-bottom: 40px; padding: 20px; border: 1px solid #ddd; background: #fff; }
+    .page-number { color: #666; font-style: italic; margin-bottom: 15px; }
+    p { margin: 10px 0; }
+    img { max-width: 100%; height: auto; margin: 15px 0; }
+    h1, h2, h3 { color: #333; }
+  </style>
+</head>
+<body>
+  <h1>API_PIAG_CURL</h1>
+  <div class='page'>
+    <div class='page-number'>Page 1</div>
+    <p> / Offre API PIAG / API PIAG - Appels RAG<br>API PIAG - Appels RAG<br>Phase d'expérimentations<br>L'offre API PIAG est en cours de construction.<br>Caractéristiques<br>Prérequis<br>Demande de création d'un projet RAG pour obtenir un identifiant et un token d'accès au projet<br>apiBase: https://preprod.api.piag.e2.rie.gouv.fr/rag/<br>Appels API supportés<br>Note<br>Remplacer dans les requêtes:<br>"my_project_token" par un token de projet valide<br>"my_project_id" par un id de projet valide<br>Corpus documentaires<br>Note</p>
+  </div>
+  <div class='page'>
+    <div class='page-number'>Page 2</div>
+    <p>Remplacer dans les requêtes "my_collection_id" par l'identifiant de collection retouné au moment de la création de celle-ci<br>Créer une collection (corpus) - endpoint "api/v1/collections"<br>curl -X POST 'https://preprod.api.piag.e2.rie.gouv.fr/rag/api/v1/collections?project_id=my_project_id' \<br>  -H 'accept: application/json' \<br>  -H 'Authorization: Bearer my_project_token' \<br>  -H 'Content-Type: application/json' \<br>  -d '{<br>  "name": "Mon premier corpus",<br>  "description": "Description de mon premier corpus"<br>}'<br>==&gt; Retoune l'identifiant de la collection<br>Lister les collections - endpoint "api/v1/collections"<br>curl -X GET 'https://preprod.api.piag.e2.rie.gouv.fr/rag/api/v1/collections?project_id=my_project_id&amp;limit=20&amp;offset=0&amp;order_by=name&amp;order=asc' \<br>  -H 'accept: application/json' \<br>  -H 'Authorization: Bearer my_project_token'<br>Récupérer les informations sur une collection - endpoint "api/v1/collections/{collection_id}"<br>curl -X GET 'https://preprod.api.piag.e2.rie.gouv.fr/rag/api/v1/collections/my_collection_id' \<br>  -H 'accept: application/json' \<br>  -H 'Authorization: Bearer my_project_token'<br>Modifier une collection - endpoint "api/v1/collections/{collection_id}"<br><br><br></p>
+  </div>
+  <div class='page'>
+    <div class='page-number'>Page 3</div>
+    <p>curl -X PUT 'https://preprod.api.piag.e2.rie.gouv.fr/rag/api/v1/collections/my_collection_id' \<br>  -H 'accept: application/json' \<br>  -H 'Authorization: Bearer my_project_token' \<br>  -H 'Content-Type: application/json' \<br>  -d '{<br>  "name": "Mon premier corpus modifié",<br>  "description": "Description de mon premier corpus modifié"<br>}'<br>Supprimer une collection - endpoint "api/v1/collections/{collection_id}"<br>curl -X DELETE 'https://preprod.api.piag.e2.rie.gouv.fr/rag/api/v1/collections/my_collection_id' \<br>  -H 'accept: */*' \<br>  -H 'Authorization: Bearer my_project_token'<br>Documents<br>Note<br>Remplacer dans les requêtes:<br>"my_collection_id" par l'identifiant de collection retouné au moment de la création de celle-ci<br>"my_document_id" par l'identifiant de document récupéré au moment de la création de celui-ci<br>Téléverser un document - endpoint "api/v1/collections/{collection_id}/documents-upload-slow"<br>curl -X POST 'https://preprod.api.piag.e2.rie.gouv.fr/rag/api/v1/collections/my_collection_id/documents-upload-slow' \<br>  -H 'accept: application/json' \<br>  -H 'Authorization: Bearer my_project_token' \<br>  -H 'Content-Type: multipart/form-data' \<br>  -F 'file=@mondocument.pdf;type=application/pdf'<br>==&gt; Retoune l'identifiant du document<br><br><br></p>
+  </div>
+  <div class='page'>
+    <div class='page-number'>Page 4</div>
+    <p>Récupérer les informations d'un document - endpoint "/api/v1/documents/{document_id}"<br>curl -X GET 'https://preprod.api.piag.e2.rie.gouv.fr/rag/api/v1/documents/my_document_id' \<br>  -H 'accept: application/json' \<br>  -H 'Authorization: Bearer my_project_token'<br>Vérifier le status des documents d'une collection (corpus) - endpoint "api/v1/collections/{collection_id}/documents"<br>curl -X GET 'https://preprod.api.piag.e2.rie.gouv.fr/rag/api/v1/collections/my_collection_id/documents?limit=20&amp;offset=0&amp;order_by=name&amp;order=asc' \<br>  -H 'accept: application/json' \<br>  -H 'Authorization: Bearer my_project_token'<br>Supprimer d'un document - endpoint "api/v1/documents/{document_id}"<br>curl -X DELETE 'https://preprod.api.piag.e2.rie.gouv.fr/rag/api/v1/documents/my_document_id' \<br>  -H 'accept: */*' \<br>  -H 'Authorization: Bearer my_project_token'<br>Récupérer les "chunks" d'un document - endpoint "api/v1/documents/{document_id}/chunks"<br>curl -X GET 'https://preprod.api.piag.e2.rie.gouv.fr/rag/api/v1/documents/my_document_id/chunks?from_index=0&amp;to_index=10' \<br>  -H 'accept: application/json' \<br>  -H 'Authorization: Bearer my_project_token'<br>Recherche<br>Rechercher/récupérer les chunks significatifs d'un corpus documentaire par rapport à une question - endpoint "api/v1/search"<br>Note<br>Remplacer dans la requête "my_query" par une "query" en rapport avec le contenu de votre corpus.<br><br><br><br></p>
+  </div>
+  <div class='page'>
+    <div class='page-number'>Page 5</div>
+    <p>curl -X POST 'https://preprod.api.piag.e2.rie.gouv.fr/rag/api/v1/search?project_id=my_project_id' \<br>  -H 'accept: application/json' \<br>  -H 'Authorization: Bearer my_project_token' \<br>  -H 'Content-Type: application/json' \<br>  -d '{<br>  "collections": [<br>    "my_collection_id"<br>  ],<br>  "query": "my_query",<br>  "rerank": true,<br>  "k_rerank": 20,<br>  "k": 10,<br>  "mode": "hybrid"<br>}'<br></p>
+  </div>
+</body>
+</html>

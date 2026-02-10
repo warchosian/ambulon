@@ -1,0 +1,128 @@
+================================================================================
+POUR VOTRE PROJET GEMINI - LISTER LES OUTILS MCP EN 3 ETAPES
+================================================================================
+
+
+ETAPE 1 : Installer le SDK MCP
+--------------------------------------------------------------------------------
+
+Dans votre projet Gemini, executez:
+
+    pip install mcp
+
+
+ETAPE 2 : Copier ce code dans votre projet
+--------------------------------------------------------------------------------
+
+Creez un fichier list_ambulon_tools.py avec ce contenu:
+
+----[ DEBUT DU CODE ]--------------------------------------------------------
+
+import asyncio
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+
+async def list_tools():
+    # Configuration du serveur MCP Ambulon
+    server_params = StdioServerParameters(
+        command="python",
+        args=["mcp_server_standalone.py"],
+        cwd="G:/WarchoLife/WarchoDevplace/Gitlab_Applications/ambulon"
+    )
+    
+    # Connexion au serveur
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            
+            # Lister les outils
+            tools = await session.list_tools()
+            
+            print(f"\nOutils MCP disponibles: {len(tools.tools)}\n")
+            
+            for i, tool in enumerate(tools.tools, 1):
+                print(f"{i}. {tool.name}")
+                print(f"   {tool.description}")
+                print()
+
+# Executer
+asyncio.run(list_tools())
+
+----[ FIN DU CODE ]----------------------------------------------------------
+
+
+ETAPE 3 : Executer
+--------------------------------------------------------------------------------
+
+    python list_ambulon_tools.py
+
+
+RESULTAT ATTENDU
+--------------------------------------------------------------------------------
+
+Vous devriez voir:
+
+    Outils MCP disponibles: 3
+
+    1. html_to_markdown
+       Convertit un fichier HTML en Markdown
+
+    2. markdown_to_html
+       Convertit un fichier Markdown en HTML
+
+    3. scan_document
+       Scanner un document avec NAPS2
+
+
+================================================================================
+UTILISER UN OUTIL
+================================================================================
+
+Une fois que vous avez liste les outils, utilisez-les comme ceci:
+
+----[ EXEMPLE ]--------------------------------------------------------------
+
+import asyncio
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+
+async def convert_html():
+    server_params = StdioServerParameters(
+        command="python",
+        args=["mcp_server_standalone.py"],
+        cwd="G:/WarchoLife/WarchoDevplace/Gitlab_Applications/ambulon"
+    )
+    
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            
+            # Appeler l'outil
+            result = await session.call_tool(
+                "html_to_markdown",
+                arguments={
+                    "input_file": "mon_fichier.html",
+                    "output_file": "resultat.md"
+                }
+            )
+            
+            print(result.content[0].text)
+
+asyncio.run(convert_html())
+
+----[ FIN EXEMPLE ]----------------------------------------------------------
+
+
+================================================================================
+PLUS D'INFORMATIONS
+================================================================================
+
+Consultez ces fichiers pour plus de details:
+
+  - GEMINI-QUICKSTART.md       Guide complet avec exemples
+  - test_list_tools_gemini.py  Script de test detaille
+  - mcp-server-for-gemini.md   Documentation complete MCP
+
+
+C'est tout ! Vous pouvez maintenant utiliser les outils Ambulon dans Gemini.
+================================================================================

@@ -1,18 +1,33 @@
 [tool.poetry]
 name = "ambulon"
-version = "0.5.1"
+version = "3.0.4"
 description = "Suite complète d'outils de numérisation avec serveur MCP pour assistants IA."
-authors = ["Votre Nom <votre.email@example.com>"]
+authors = ["Hervé Marchal <herve.marchal@hotmail.fr>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "ambulon", from = "src"}]
+packages = [{include = "app", from = "src"}]
+include = [
+    "config/piag.yaml.example",
+    "config/gitlab.yaml.example",
+    "config/wikisi.yaml.example",
+    "config/README.md"
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-importlib-resources = "^6.0.0"
-pillow = "^10.0.0"
-pymupdf = "^1.23.0"
-requests = "^2.32.5"
+importlib-resources = ">=6.0.0"
+pillow = ">=10.0.0"
+pymupdf = ">=1.23.0"
+requests = ">=2.32.0"
+pyyaml = ">=6.0.0"
+mcp = ">=1.0.0"
+chardet = ">=5.2.0"
+beautifulsoup4 = ">=4.12.0"
+lxml = ">=5.0.0"
+markdown = ">=3.5.0"
+python-slugify = ">=8.0.0"
+playwright = ">=1.47.0"
+kroki = "*"
 
 [tool.poetry.group.dev.dependencies]
 commitizen = "^3.13.0"
@@ -24,7 +39,7 @@ pytesseract = "^0.3.10"
 pillow = "^10.0.0"
 
 [tool.poetry.scripts]
-ambulon = "ambulon.cli:main"
+ambulon = "app.cli.cli:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -32,10 +47,10 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.5.1"
+version = "3.0.4"
 tag_format = "$version"
 version_files = [
     "pyproject.toml:version",
-    "src/ambulon/__init__.py:__version__"
+    "src/app/__init__.py:__version__"
 ]
 

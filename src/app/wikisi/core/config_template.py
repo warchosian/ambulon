@@ -1,0 +1,100 @@
+"""Template de configuration WikiSI embarqué dans le code."""
+
+WIKISI_CONFIG_TEMPLATE = """# Configuration WikiSI Scraper - Example Template
+# Copiez ce fichier vers config/wikisi.yaml et ajustez les valeurs
+
+# Configuration du site WikiSI à aspirer
+site:
+  # URL de base du site WikiSI
+  base_url: "https://example.wikisi.gouv.fr"
+
+  # Profondeur maximale de récursion (0 = page de base uniquement, -1 = illimité)
+  max_depth: -1
+
+  # Délai entre les requêtes (en secondes) pour éviter de surcharger le serveur
+  delay: 1.0
+
+  # Timeout pour chaque requête (en secondes)
+  timeout: 30
+
+# Filtres pour limiter l'aspiration
+filters:
+  # Patterns d'URLs à inclure (regex, laissez vide pour tout inclure)
+  include_patterns:
+    - ".*"
+
+  # Patterns d'URLs à exclure (regex)
+  exclude_patterns:
+    - ".*/logout.*"
+    - ".*/admin.*"
+    - ".*\\.pdf$"
+    - ".*\\.zip$"
+
+  # Extensions de fichiers à télécharger
+  allowed_extensions:
+    - ".html"
+    - ".htm"
+
+  # Suivre uniquement les liens du même domaine
+  same_domain_only: true
+
+# Configuration de sortie
+output:
+  # Répertoire de destination pour les fichiers téléchargés
+  directory: "./wikisi-downloaded"
+
+  # Préserver la structure du site (arborescence)
+  preserve_structure: true
+
+  # Sauvegarder les métadonnées (JSON avec URLs, timestamps, etc.)
+  save_metadata: true
+
+  # Format de nommage pour les fichiers
+  # Options: "original" (nom du fichier d'origine), "sanitized" (nettoyé), "hash" (hash MD5)
+  filename_format: "sanitized"
+
+# En-têtes HTTP personnalisés
+headers:
+  User-Agent: "Ambulon WikiSI Scraper/1.0"
+  Accept-Language: "fr-FR,fr;q=0.9"
+
+# Authentification (optionnel)
+authentication:
+  # Type: "none", "basic", "bearer"
+  type: "none"
+
+  # Pour basic auth
+  username: ""
+  password: ""
+
+  # Pour bearer token
+  token: ""
+
+# Options avancées
+advanced:
+  # Nombre maximum de tentatives en cas d'échec
+  max_retries: 3
+
+  # Respecter robots.txt
+  respect_robots_txt: true
+
+  # Vérifier les certificats SSL
+  verify_ssl: true
+
+  # Nombre de threads pour le téléchargement parallèle
+  threads: 1
+
+  # Taille maximale de fichier à télécharger (en Mo, 0 = illimité)
+  max_file_size_mb: 50
+
+# Logging
+logging:
+  # Niveau de log: "debug", "info", "warning", "error"
+  level: "info"
+
+  # Sauvegarder les logs dans un fichier
+  log_to_file: true
+
+  # Chemin du fichier de log
+  log_file: "./wikisi-scraper.log"
+"""

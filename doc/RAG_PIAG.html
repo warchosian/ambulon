@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG_PIAG</title>
+    <style>
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 2em;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #34495e;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+            line-height: 1.4;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+        pre.tree {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        li {
+            margin: 0.5em 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding: 0.5em 0 0.5em 1em;
+            color: #555;
+            background: #f8f9fa;
+            border-radius: 0 3px 3px 0;
+        }
+        blockquote p {
+            margin: 0.5em 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+    </style>
+</head>
+<body>
+<h1>RAG PIAG - Workflow et commandes CLI</h1>
+
+<p>Ce document associe les etapes du workflow RAG PIAG aux commandes CLI disponibles dans Ambulon,
+et conserve le diagramme d'origine.</p>
+
+<hr>
+
+<h2>Diagramme (PlantUML)</h2>
+
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="903px" preserveAspectRatio="none" style="width:883px;height:903px;background:#FFFFFF;" version="1.1" viewBox="0 0 883 903" width="883px" zoomAndPan="magnify"><defs/><g><rect fill="none" height="88.3984" style="stroke:#000000;stroke-width:1.5;" width="459.4229" x="408.3438" y="269.9609"/><rect fill="none" height="232.9297" style="stroke:#000000;stroke-width:1.5;" width="479.4229" x="398.3438" y="372.3594"/><rect fill="none" height="88.3984" style="stroke:#000000;stroke-width:1.5;" width="459.4229" x="408.3438" y="509.8906"/><g><title>D.veloppeur</title><rect fill="#000000" fill-opacity="0.00000" height="741.7891" width="8" x="48.8813" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="52" x2="52" y1="81.2969" y2="823.0859"/></g><g><title>Chef de Produit</title><rect fill="#000000" fill-opacity="0.00000" height="741.7891" width="8" x="164.0093" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="167.7627" x2="167.7627" y1="81.2969" y2="823.0859"/></g><g><title>GitLab Repository</title><rect fill="#000000" fill-opacity="0.00000" height="741.7891" width="8" x="300.7637" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="304.2559" x2="304.2559" y1="81.2969" y2="823.0859"/></g><g><title>GitLab CI.CD</title><rect fill="#000000" fill-opacity="0.00000" height="741.7891" width="8" x="465.9038" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="469.3438" x2="469.3438" y1="81.2969" y2="823.0859"/></g><g><title>PIAG RAG System</title><rect fill="#000000" fill-opacity="0.00000" height="741.7891" width="8" x="784.6382" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="788.5098" x2="788.5098" y1="81.2969" y2="823.0859"/></g><g class="participant participant-head" data-participant="Dev"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.7627" x="5" y="77.9951">D&#233;veloppeur</text><ellipse cx="52.8813" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M52.8813,21.5 L52.8813,48.5 M39.8813,29.5 L65.8813,29.5 M52.8813,48.5 L39.8813,63.5 M52.8813,48.5 L65.8813,63.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-tail" data-participant="Dev"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.7627" x="5" y="835.0811">D&#233;veloppeur</text><ellipse cx="52.8813" cy="846.8828" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M52.8813,854.8828 L52.8813,881.8828 M39.8813,862.8828 L65.8813,862.8828 M52.8813,881.8828 L39.8813,896.8828 M52.8813,881.8828 L65.8813,896.8828" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-head" data-participant="PO"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108.4932" x="110.7627" y="77.9951">Chef de Produit</text><ellipse cx="168.0093" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M168.0093,21.5 L168.0093,48.5 M155.0093,29.5 L181.0093,29.5 M168.0093,48.5 L155.0093,63.5 M168.0093,48.5 L181.0093,63.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-tail" data-participant="PO"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108.4932" x="110.7627" y="835.0811">Chef de Produit</text><ellipse cx="168.0093" cy="846.8828" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M168.0093,854.8828 L168.0093,881.8828 M155.0093,862.8828 L181.0093,862.8828 M168.0093,881.8828 L155.0093,896.8828 M168.0093,881.8828 L181.0093,896.8828" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-head" data-participant="Repo"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="139.0156" x="235.2559" y="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="125.0156" x="242.2559" y="69.9951">GitLab Repository</text></g><g class="participant participant-tail" data-participant="Repo"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="139.0156" x="235.2559" y="822.0859"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="125.0156" x="242.2559" y="842.0811">GitLab Repository</text></g><g class="participant participant-head" data-participant="CI"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.1201" x="418.3438" y="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.1201" x="425.3438" y="69.9951">GitLab CI/CD</text></g><g class="participant participant-tail" data-participant="CI"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.1201" x="418.3438" y="822.0859"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.1201" x="425.3438" y="842.0811">GitLab CI/CD</text></g><g class="participant participant-head" data-participant="RAG"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.2568" x="719.5098" y="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="124.2568" x="726.5098" y="69.9951">PIAG RAG System</text></g><g class="participant participant-tail" data-participant="RAG"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.2568" x="719.5098" y="822.0859"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="124.2568" x="726.5098" y="842.0811">PIAG RAG System</text></g><g class="message" data-participant-1="Dev" data-participant-2="Repo"><polygon fill="#181818" points="292.7637,108.4297,302.7637,112.4297,292.7637,116.4297,296.7637,112.4297" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="52.8813" x2="298.7637" y1="112.4297" y2="112.4297"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="127.0356" x="59.8813" y="107.3638">Push nouveau code</text></g><g class="message" data-participant-1="Repo" data-participant-2="CI"><polygon fill="#181818" points="457.9038,137.5625,467.9038,141.5625,457.9038,145.5625,461.9038,141.5625" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="304.7637" x2="463.9038" y1="141.5625" y2="141.5625"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="141.1401" x="311.7637" y="136.4966">D&#233;clenche pipeline CI</text></g><g class="message" data-participant-1="CI" data-participant-2="CI"><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="511.9038" y1="170.6953" y2="170.6953"/><line style="stroke:#181818;stroke-width:1;" x1="511.9038" x2="511.9038" y1="170.6953" y2="183.6953"/><line style="stroke:#181818;stroke-width:1;" x1="470.9038" x2="511.9038" y1="183.6953" y2="183.6953"/><polygon fill="#181818" points="480.9038,179.6953,470.9038,183.6953,480.9038,187.6953,476.9038,183.6953" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="160.8242" x="476.9038" y="165.6294">R&#233;cup&#232;re le code source</text></g><g class="message" data-participant-1="CI" data-participant-2="CI"><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="511.9038" y1="212.8281" y2="212.8281"/><line style="stroke:#181818;stroke-width:1;" x1="511.9038" x2="511.9038" y1="212.8281" y2="225.8281"/><line style="stroke:#181818;stroke-width:1;" x1="470.9038" x2="511.9038" y1="225.8281" y2="225.8281"/><polygon fill="#181818" points="480.9038,221.8281,470.9038,225.8281,480.9038,229.8281,476.9038,225.8281" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="241.8076" x="476.9038" y="207.7622">G&#233;n&#232;re un monofichier plat du projet</text></g><g class="message" data-participant-1="CI" data-participant-2="RAG"><polygon fill="#181818" points="776.6382,250.9609,786.6382,254.9609,776.6382,258.9609,780.6382,254.9609" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="782.6382" y1="254.9609" y2="254.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="193.394" x="476.9038" y="249.895">Envoie le monofichier au RAG</text></g><path d="M408.3438,269.9609 L477.7949,269.9609 L477.7949,277.0938 L467.7949,287.0938 L408.3438,287.0938 L408.3438,269.9609" fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/><rect fill="none" height="88.3984" style="stroke:#000000;stroke-width:1.5;" width="459.4229" x="408.3438" y="269.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="24.4512" x="423.3438" y="283.0278">opt</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="170.0166" x="492.7949" y="282.1714">[Si d&#233;p&#244;t pr&#233;c&#233;dent existe]</text><g class="message" data-participant-1="CI" data-participant-2="CI"><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="511.9038" y1="308.2266" y2="308.2266"/><line style="stroke:#181818;stroke-width:1;" x1="511.9038" x2="511.9038" y1="308.2266" y2="321.2266"/><line style="stroke:#181818;stroke-width:1;" x1="470.9038" x2="511.9038" y1="321.2266" y2="321.2266"/><polygon fill="#181818" points="480.9038,317.2266,470.9038,321.2266,480.9038,325.2266,476.9038,321.2266" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="279.8555" x="476.9038" y="303.1606">Calcule delta code (nouveau vs pr&#233;c&#233;dent)</text></g><g class="message" data-participant-1="CI" data-participant-2="RAG"><polygon fill="#181818" points="776.6382,346.3594,786.6382,350.3594,776.6382,354.3594,780.6382,350.3594" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="782.6382" y1="350.3594" y2="350.3594"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="168.7207" x="476.9038" y="345.2935">Envoie delta code au RAG</text></g><path d="M398.3438,372.3594 L467.7949,372.3594 L467.7949,379.4922 L457.7949,389.4922 L398.3438,389.4922 L398.3438,372.3594" fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/><rect fill="none" height="232.9297" style="stroke:#000000;stroke-width:1.5;" width="479.4229" x="398.3438" y="372.3594"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="24.4512" x="413.3438" y="385.4263">opt</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="123.3311" x="482.7949" y="384.5698">[Si wiki mise &#224; jour]</text><g class="message" data-participant-1="CI" data-participant-2="CI"><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="511.9038" y1="410.625" y2="410.625"/><line style="stroke:#181818;stroke-width:1;" x1="511.9038" x2="511.9038" y1="410.625" y2="423.625"/><line style="stroke:#181818;stroke-width:1;" x1="470.9038" x2="511.9038" y1="423.625" y2="423.625"/><polygon fill="#181818" points="480.9038,419.625,470.9038,423.625,480.9038,427.625,476.9038,423.625" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="233.7651" x="476.9038" y="405.5591">R&#233;cup&#232;re tous les fichiers de la wiki</text></g><g class="message" data-participant-1="CI" data-participant-2="CI"><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="511.9038" y1="452.7578" y2="452.7578"/><line style="stroke:#181818;stroke-width:1;" x1="511.9038" x2="511.9038" y1="452.7578" y2="465.7578"/><line style="stroke:#181818;stroke-width:1;" x1="470.9038" x2="511.9038" y1="465.7578" y2="465.7578"/><polygon fill="#181818" points="480.9038,461.7578,470.9038,465.7578,480.9038,469.7578,476.9038,465.7578" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="270.1118" x="476.9038" y="447.6919">Met &#224; plat la wiki en un document unique</text></g><g class="message" data-participant-1="CI" data-participant-2="RAG"><polygon fill="#181818" points="776.6382,490.8906,786.6382,494.8906,776.6382,498.8906,780.6382,494.8906" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="782.6382" y1="494.8906" y2="494.8906"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="247.895" x="476.9038" y="489.8247">Envoie contenu plat de la wiki au RAG</text></g><path d="M408.3438,509.8906 L477.7949,509.8906 L477.7949,517.0234 L467.7949,527.0234 L408.3438,527.0234 L408.3438,509.8906" fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/><rect fill="none" height="88.3984" style="stroke:#000000;stroke-width:1.5;" width="459.4229" x="408.3438" y="509.8906"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="24.4512" x="423.3438" y="522.9575">opt</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="250.25" x="492.7949" y="522.1011">[Si version pr&#233;c&#233;dente de la wiki existe]</text><g class="message" data-participant-1="CI" data-participant-2="CI"><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="511.9038" y1="548.1563" y2="548.1563"/><line style="stroke:#181818;stroke-width:1;" x1="511.9038" x2="511.9038" y1="548.1563" y2="561.1563"/><line style="stroke:#181818;stroke-width:1;" x1="470.9038" x2="511.9038" y1="561.1563" y2="561.1563"/><polygon fill="#181818" points="480.9038,557.1563,470.9038,561.1563,480.9038,565.1563,476.9038,561.1563" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="171.2725" x="476.9038" y="543.0903">Calcule delta contenu wiki</text></g><g class="message" data-participant-1="CI" data-participant-2="RAG"><polygon fill="#181818" points="776.6382,586.2891,786.6382,590.2891,776.6382,594.2891,780.6382,590.2891" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="782.6382" y1="590.2891" y2="590.2891"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="162.7539" x="476.9038" y="585.2231">Envoie delta wiki au RAG</text></g><g class="message" data-participant-1="CI" data-participant-2="CI"><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="511.9038" y1="633.4219" y2="633.4219"/><line style="stroke:#181818;stroke-width:1;" x1="511.9038" x2="511.9038" y1="633.4219" y2="646.4219"/><line style="stroke:#181818;stroke-width:1;" x1="470.9038" x2="511.9038" y1="646.4219" y2="646.4219"/><polygon fill="#181818" points="480.9038,642.4219,470.9038,646.4219,480.9038,650.4219,476.9038,646.4219" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="162.6333" x="476.9038" y="628.356">Ex&#233;cute analyse de code</text></g><g class="message" data-participant-1="CI" data-participant-2="RAG"><polygon fill="#181818" points="776.6382,671.5547,786.6382,675.5547,776.6382,679.5547,780.6382,675.5547" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="782.6382" y1="675.5547" y2="675.5547"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="221.5015" x="476.9038" y="670.4888">Envoie rapports d'analyse au RAG</text></g><g class="message" data-participant-1="CI" data-participant-2="CI"><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="511.9038" y1="704.6875" y2="704.6875"/><line style="stroke:#181818;stroke-width:1;" x1="511.9038" x2="511.9038" y1="704.6875" y2="717.6875"/><line style="stroke:#181818;stroke-width:1;" x1="470.9038" x2="511.9038" y1="717.6875" y2="717.6875"/><polygon fill="#181818" points="480.9038,713.6875,470.9038,717.6875,480.9038,721.6875,476.9038,717.6875" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="189.4712" x="476.9038" y="699.6216">G&#233;n&#232;re documents (ex: DAT)</text></g><g class="message" data-participant-1="CI" data-participant-2="RAG"><polygon fill="#181818" points="776.6382,742.8203,786.6382,746.8203,776.6382,750.8203,780.6382,746.8203" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="469.9038" x2="782.6382" y1="746.8203" y2="746.8203"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="294.7344" x="476.9038" y="741.7544">Envoie documents g&#233;n&#233;r&#233;s (ex: DAT) au RAG</text></g><g class="message" data-participant-1="PO" data-participant-2="RAG"><polygon fill="#181818" points="776.6382,771.9531,786.6382,775.9531,776.6382,779.9531,780.6382,775.9531" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="168.0093" x2="782.6382" y1="775.9531" y2="775.9531"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="424.3154" x="175.0093" y="770.8872">Interroge le RAG (ex: &#233;tat du projet, changements, conformit&#233;&#8230;)</text></g><g class="message" data-participant-1="RAG" data-participant-2="PO"><polygon fill="#181818" points="179.0093,801.0859,169.0093,805.0859,179.0093,809.0859,175.0093,805.0859" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="173.0093" x2="787.6382" y1="805.0859" y2="805.0859"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="406.7832" x="185.0093" y="800.02">Retourne r&#233;ponse contextualis&#233;e (code, wiki, DAT, rapports&#8230;)</text></g><!--SRC=[VLDBRjim5Dph50_UD0OST9z50KCE304j8ZYz04izMqmaakL7jNSzIbT5jUyDT9EUf8-qfD20a8KMrfkPDpD-Ojmf0wlTq7VOAAtHcnKm2pliCdQTvJKUeK8eZQgyS75SFcMQ6IUuq4mwMEs5-yo-mG6rie9ObuWAFnTnUV4ntqL8Njm2ocAxXmCzpnVhiBtARFTPHeRW_bEKX0SelQr1AjyXyy1LXLaSt1CYBsXEUNY3ajS8McXiXCImAgFX13aGnElXZq5eC6g0LTvmJ47xePSHuYMqIggZuBL00xfX3YeFsgWNT2CZs7w0Hzaf4JLJ0jcCCPHsy2oW6dez_7N49nT3No5bnxEWo1b0iZzd3VSaLM7ZsDNatHIxiobzFHDlR2J4qGBA2iZ5REM7U1NG2eim_88NQk3MGLAJKzvIBWjZA1kkec5HuPRq1LrGYosD040PIgmKzsr8wwNuxd7PD5VIeVHZo_EEkKI0qNj79eIIQG-O4kPAtotrkcnCyKwBgGU0gSUvpsJ3upcqHbwOPCt5Ha_nIXUq3TDQ6KTbVfZGKywbGvmAj727PphqxTVrakeRx1IOFHMKCEODvTCRiw0UZ56dUBlXLOGFlKjFVGEyPlA4KNiJoZigqmetzFz-_bvdWHO-GjAbqq6w64DV7YtNIjhnZpqxpnfXXvvkEPIoYSLkWh7Dt4PK-my0]--></g></svg>
+</div>
+
+<hr>
+
+<h2>Schema automation GitLab -> monofichiers</h2>
+
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="615px" preserveAspectRatio="none" style="width:585px;height:615px;background:#FFFFFF;" version="1.1" viewBox="0 0 585 615" width="585px" zoomAndPan="magnify"><defs/><g><ellipse cx="216.3669" cy="20" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1;"/><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="154.168" x="139.283" y="50"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="134.168" x="149.283" y="71.1387">Lire config/gitlab.yaml</text><path d="M281.6433,149.6792 L281.6433,173.3784 L261.6433,177.3784 L281.6433,181.3784 L281.6433,205.0776 A0,0 0 0 0 281.6433,205.0776 L549.3958,205.0776 A0,0 0 0 0 549.3958,205.0776 L549.3958,159.6792 L539.3958,149.6792 L281.6433,149.6792 A0,0 0 0 0 281.6433,149.6792" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><path d="M539.3958,149.6792 L539.3958,159.6792 L549.3958,159.6792 L539.3958,149.6792" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="246.7524" x="287.6433" y="166.7461">Les repos clon&#233;s avec le suffixe *.wiki</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="163.3125" x="287.6433" y="181.8789">sont trait&#233;s pour generer</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="109.1035" x="287.6433" y="197.0117">un wiki_monofile</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="90.5527" x="171.0906" y="160.394"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="70.5527" x="181.0906" y="181.5327">gitlab-clone</text><rect fill="#555555" height="6" rx="2.5" ry="2.5" style="stroke:#555555;stroke-width:1;" width="422.7339" x="11" y="225.0776"/><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="88.8535" x="69.6992" y="299.48"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="68.8535" x="79.6992" y="320.6187">project2md</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="82.6426" x="72.8047" y="360.2339"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="62.6426" x="82.8047" y="381.3726">merge-md</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="182.252" x="23" y="414.2026"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="162.252" x="33" y="435.3413">&lt;nom-projet-git&gt;.code.md</text><polygon fill="#F1F1F1" points="47.3606,251.0776,180.8914,251.0776,192.8914,263.0776,180.8914,275.0776,47.3606,275.0776,35.3606,263.0776,47.3606,251.0776" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="16.7578" x="118.126" y="285.2881">oui</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="133.5308" x="47.3606" y="266.8857">code_monofile.enabled?</text><polygon fill="#F1F1F1" points="114.126,468.1714,126.126,480.1714,114.126,492.1714,102.126,480.1714,114.126,468.1714" style="stroke:#181818;stroke-width:0.5;"/><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="82.9473" x="290.0193" y="299.48"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="62.9473" x="300.0193" y="320.6187">flatten-md</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="82.6426" x="290.1716" y="360.2339"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="62.6426" x="300.1716" y="381.3726">merge-md</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="101.6855" x="280.6501" y="414.2026"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="81.6855" x="290.6501" y="435.3413">wiki_monofile</text><polygon fill="#F1F1F1" points="267.252,251.0776,395.7339,251.0776,407.7339,263.0776,395.7339,275.0776,267.252,275.0776,255.252,263.0776,267.252,251.0776" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="16.7578" x="335.4929" y="285.2881">oui</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="128.4819" x="267.252" y="266.8857">wiki_monofile.enabled?</text><polygon fill="#F1F1F1" points="331.4929,468.1714,343.4929,480.1714,331.4929,492.1714,319.4929,480.1714,331.4929,468.1714" style="stroke:#181818;stroke-width:0.5;"/><rect fill="#555555" height="6" rx="2.5" ry="2.5" style="stroke:#555555;stroke-width:1;" width="422.7339" x="11" y="512.1714"/><polygon fill="#F1F1F1" points="157.9241,103.9688,274.8098,103.9688,286.8098,115.9688,274.8098,127.9688,157.9241,127.9688,145.9241,115.9688,157.9241,103.9688" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="16.7578" x="220.3669" y="138.1792">oui</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="116.8857" x="157.9241" y="119.7769">automation.enabled?</text><polygon fill="#F1F1F1" points="216.3669,538.1714,228.3669,550.1714,216.3669,562.1714,204.3669,550.1714,216.3669,538.1714" style="stroke:#181818;stroke-width:0.5;"/><ellipse cx="216.3669" cy="593.1714" fill="none" rx="11" ry="11" style="stroke:#222222;stroke-width:1;"/><ellipse cx="216.3669" cy="593.1714" fill="#222222" rx="6" ry="6" style="stroke:#222222;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="216.3669" x2="216.3669" y1="30" y2="50"/><polygon fill="#181818" points="212.3669,40,216.3669,50,220.3669,40,216.3669,44" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="114.126" x2="114.126" y1="333.4487" y2="360.2339"/><polygon fill="#181818" points="110.126,350.2339,114.126,360.2339,118.126,350.2339,114.126,354.2339" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="114.126" x2="114.126" y1="394.2026" y2="414.2026"/><polygon fill="#181818" points="110.126,404.2026,114.126,414.2026,118.126,404.2026,114.126,408.2026" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="114.126" x2="114.126" y1="275.0776" y2="299.48"/><polygon fill="#181818" points="110.126,289.48,114.126,299.48,118.126,289.48,114.126,293.48" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="192.8914" x2="215.252" y1="263.0776" y2="263.0776"/><polygon fill="#181818" points="211.252,367.2183,215.252,377.2183,219.252,367.2183,215.252,371.2183" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="215.252" x2="215.252" y1="263.0776" y2="480.1714"/><line style="stroke:#181818;stroke-width:1;" x1="215.252" x2="126.126" y1="480.1714" y2="480.1714"/><polygon fill="#181818" points="136.126,476.1714,126.126,480.1714,136.126,484.1714,132.126,480.1714" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="114.126" x2="114.126" y1="448.1714" y2="468.1714"/><polygon fill="#181818" points="110.126,458.1714,114.126,468.1714,118.126,458.1714,114.126,462.1714" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="331.4929" x2="331.4929" y1="333.4487" y2="360.2339"/><polygon fill="#181818" points="327.4929,350.2339,331.4929,360.2339,335.4929,350.2339,331.4929,354.2339" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="331.4929" x2="331.4929" y1="394.2026" y2="414.2026"/><polygon fill="#181818" points="327.4929,404.2026,331.4929,414.2026,335.4929,404.2026,331.4929,408.2026" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="331.4929" x2="331.4929" y1="275.0776" y2="299.48"/><polygon fill="#181818" points="327.4929,289.48,331.4929,299.48,335.4929,289.48,331.4929,293.48" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="407.7339" x2="419.7339" y1="263.0776" y2="263.0776"/><polygon fill="#181818" points="415.7339,367.2183,419.7339,377.2183,423.7339,367.2183,419.7339,371.2183" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="419.7339" x2="419.7339" y1="263.0776" y2="480.1714"/><line style="stroke:#181818;stroke-width:1;" x1="419.7339" x2="343.4929" y1="480.1714" y2="480.1714"/><polygon fill="#181818" points="353.4929,476.1714,343.4929,480.1714,353.4929,484.1714,349.4929,480.1714" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="331.4929" x2="331.4929" y1="448.1714" y2="468.1714"/><polygon fill="#181818" points="327.4929,458.1714,331.4929,468.1714,335.4929,458.1714,331.4929,462.1714" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="114.126" x2="114.126" y1="231.0776" y2="251.0776"/><polygon fill="#181818" points="110.126,241.0776,114.126,251.0776,118.126,241.0776,114.126,245.0776" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="331.4929" x2="331.4929" y1="231.0776" y2="251.0776"/><polygon fill="#181818" points="327.4929,241.0776,331.4929,251.0776,335.4929,241.0776,331.4929,245.0776" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="114.126" x2="114.126" y1="492.1714" y2="512.1714"/><polygon fill="#181818" points="110.126,502.1714,114.126,512.1714,118.126,502.1714,114.126,506.1714" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="331.4929" x2="331.4929" y1="492.1714" y2="512.1714"/><polygon fill="#181818" points="327.4929,502.1714,331.4929,512.1714,335.4929,502.1714,331.4929,506.1714" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="216.3669" x2="216.3669" y1="194.3628" y2="225.0776"/><polygon fill="#181818" points="212.3669,215.0776,216.3669,225.0776,220.3669,215.0776,216.3669,219.0776" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="216.3669" x2="216.3669" y1="127.9688" y2="160.394"/><polygon fill="#181818" points="212.3669,150.394,216.3669,160.394,220.3669,150.394,216.3669,154.394" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="286.8098" x2="559.3958" y1="115.9688" y2="115.9688"/><polygon fill="#181818" points="555.3958,330.2339,559.3958,340.2339,563.3958,330.2339,559.3958,334.2339" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="559.3958" x2="559.3958" y1="115.9688" y2="550.1714"/><line style="stroke:#181818;stroke-width:1;" x1="559.3958" x2="228.3669" y1="550.1714" y2="550.1714"/><polygon fill="#181818" points="238.3669,546.1714,228.3669,550.1714,238.3669,554.1714,234.3669,550.1714" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="216.3669" x2="216.3669" y1="518.1714" y2="538.1714"/><polygon fill="#181818" points="212.3669,528.1714,216.3669,538.1714,220.3669,528.1714,216.3669,532.1714" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="216.3669" x2="216.3669" y1="83.9688" y2="103.9688"/><polygon fill="#181818" points="212.3669,93.9688,216.3669,103.9688,220.3669,93.9688,216.3669,97.9688" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="216.3669" x2="216.3669" y1="562.1714" y2="582.1714"/><polygon fill="#181818" points="212.3669,572.1714,216.3669,582.1714,220.3669,572.1714,216.3669,576.1714" style="stroke:#181818;stroke-width:1;"/><!--SRC=[VP1DRiD028NtFWNBf99TgKkxQY-G8qIA9ZOpePa1Yy7zELBFqOlLKpTHlMZO83qUy44sfrQrErA4NjXJk0zaqHsR3vTYLv67ZPjCaZCIRf3TCUBml0Kx8SD69jfM0EtIK_TH6BjPO344fN2o5dQOGN6K3ANyzPd1lM8F4I5FtjCxmbtpHcVQSnOsC7LanJNAf12GKL7tF34Kqo49YwU8yn8lUfuJG87iPS1hyJ_E4kseyeAzFQIXkqW9DM3zHtXaIVMFqUhvjgUcZ6yk1kI1_2y0kE28hnWhnfiOFZepvFeMnchQUlUSbmSiGZOPlm40]--></g></svg>
+</div>
+
+<h2>Options d'automatisation (config/gitlab.yaml)</h2>
+
+<p><pre><code class="language-yaml">gitlab:
+  automation:
+    enabled: true
+    code_monofile:
+      enabled: true
+      output_dir: null # par defaut: &lt;repo&gt;.rag a cote du repo
+      filename_template: "{project}.code.md"
+      pipeline: ["project2md", "merge-md"]
+    wiki_monofile:
+      enabled: true
+      output_dir: null # par defaut: &lt;repo&gt;.rag a cote du repo
+      filename_template: "{project}.md"
+      pipeline: ["flatten-md", "merge-md"]
+</code></pre>
+Note: tout repo clone se terminant par <code>.wiki</code> est traite via le pipeline wiki
+et genere un fichier <code><nom-repertoire-wiki-clone>.md</code> par defaut, dans <code><repo>.rag</code>.</p>
+
+<hr>
+
+<h2>1) Flux principal (code -> RAG)</h2>
+
+<p>0. Recuperer le code (depuis GitLab)
+   - <code>ambulon gitlab-clone</code></p>
+
+<p>1. Generer un monofichier plat du projet
+   - <code>ambulon project2md <repertoire_projet> -o <output.md></code>
+   - ou <code>ambulon gitlab-monofile <repo_clone></code> (mode auto)
+   - ou <code>ambulon gitlab-monofile <repo_clone> --mode code|wiki|both</code>
+   - un fichier HTML est genere automatiquement via <code>md2html</code>
+   - Alternatives selon le format:
+     - <code>ambulon flatten-md <dossier_md> -o <output_dir></code>
+     - <code>ambulon merge-md <dossier_md> -o <output.md></code>
+     - <code>ambulon flatten-html <dossier_html> -o <output_dir></code>
+     - <code>ambulon merge-html <dossier_html> -o <output.html></code></p>
+
+<p>2. Envoyer le monofichier au RAG
+   - <code>ambulon piag-doc-upload --file <output.md></code></p>
+
+<hr>
+
+<h2>2) Flux Wiki (wiki -> RAG)</h2>
+
+<p>0. Recuperer le code (si la wiki est dans GitLab)
+   - <code>ambulon gitlab-clone</code></p>
+
+<p>1. Recuperer le contenu WikiSI
+   - <code>ambulon wikisi-scrape <url> -o <dossier_sortie></code></p>
+
+<p>2. Mettre a plat le contenu
+   - <code>ambulon wikisi-flatten <dossier_wikisi> -o <dossier_sortie></code></p>
+
+<p>3. Envoyer le contenu plat au RAG
+   - <code>ambulon piag-doc-upload --folder <dossier_sortie></code></p>
+
+<hr>
+
+<h2>3) Interroger le RAG</h2>
+
+<ul>
+<li><code>ambulon piag-search --query "<question>" --collection-name "<collection>"</code></li>
+<li>ou <code>ambulon piag-search --query "<question>" --collection-id "<id>"</code></li>
+</ul>
+
+<hr>
+
+<h2>4) Commandes RAG PIAG disponibles</h2>
+
+<p>Collections:
+<ul>
+<li><code>ambulon piag-collection-add</code></li>
+<li><code>ambulon piag-collection-list</code></li>
+<li><code>ambulon piag-collection-get</code></li>
+<li><code>ambulon piag-collection-update</code></li>
+<li><code>ambulon piag-collection-rm</code></li>
+</ul></p>
+
+<p>Documents:
+<ul>
+<li><code>ambulon piag-doc-upload</code></li>
+<li><code>ambulon piag-doc-list</code></li>
+<li><code>ambulon piag-doc-get</code></li>
+<li><code>ambulon piag-doc-rm</code></li>
+<li><code>ambulon piag-doc-chunks</code></li>
+</ul></p>
+
+<p>Recherche:
+<ul>
+<li><code>ambulon piag-search</code></li>
+</ul></p>
+
+<hr>
+
+<h2>5) Modules sans commande directe</h2>
+
+<p>Les etapes suivantes n'ont pas de commande CLI dediee dans Ambulon:
+<ul>
+<li>Calcul de delta code (nouveau vs precedent)</li>
+<li>Calcul de delta wiki</li>
+<li>Analyse de code pour rapports</li>
+<li>Generation de documents "DAT"</li>
+</ul></p>
+
+<hr>
+
+<h2>6) Cas concrets</h2>
+
+<h3>A) Projet -> monofichier -> upload RAG</h3>
+
+<p><pre><code class="language-bash"># 0) Cloner les repos GitLab definis dans config/gitlab.yaml
+ambulon gitlab-clone
+
+# 1) Transformer un depot en Markdown unique
+ambulon project2md G:\repos\mon-projet -o out\project.md
+
+# 1b) Variante directe via gitlab-monofile
+ambulon gitlab-monofile G:\repos\mon-projet
+
+# 1c) Variante explicite: code / wiki / les deux
+ambulon gitlab-monofile G:\repos\mon-projet --mode code
+ambulon gitlab-monofile G:\repos\mon-projet.wiki --mode wiki
+ambulon gitlab-monofile G:\repos\mon-projet --mode both
+
+# 1d) Exemple avec Gitlab2 (chemin reel)
+ambulon gitlab-monofile G:\WarchoLife\WarchoDevplace\Gitlab2\admin_ep --mode code
+ambulon gitlab-monofile G:\WarchoLife\WarchoDevplace\Gitlab2\admin_ep.wiki --mode wiki
+
+# 2) Uploader dans la collection
+ambulon piag-doc-upload --file out\project.md --collection-name "ambulon" --project-id "12345"
+</code></pre>
+<h3>B) WikiSI -> aplatir -> upload RAG</h3></p>
+
+<p><pre><code class="language-bash"># 0) Cloner les repos GitLab si la wiki est versionnee
+ambulon gitlab-clone
+
+# 1) Aspirer le site WikiSI
+ambulon wikisi-scrape https://wiki.example.fr -o out\wikisi
+
+# 2) Aplatir l'arborescence
+ambulon wikisi-flatten out\wikisi -o out\wikisi_flat
+
+# 3) Uploader tous les fichiers
+ambulon piag-doc-upload --folder out\wikisi_flat --collection-name "ambulon" --project-id "12345"
+</code></pre>
+<h3>C) Recherche RAG</h3></p>
+
+<p><pre><code class="language-bash"># Recherche par nom de collection
+ambulon piag-search --query "etat du projet" --collection-name "ambulon" --project-id "12345"
+
+# Recherche par ID de collection
+ambulon piag-search --query "changements depuis hier" --collection-id "col_abc123" --project-id "12345"
+</code></pre>
+<h3>D) Variante avec config YAML</h3></p>
+
+<p><pre><code class="language-bash"># Utilise config\piag.yaml pour base_url/token/project_id
+ambulon piag-search --query "risques" --collection-name "ambulon" --config config\piag.yaml
+</code></pre>
+<h3>E) Variante full CLI (sans config)</h3></p>
+
+<p><pre><code class="language-bash">ambulon piag-doc-upload ^
+  --file out\project.md ^
+  --collection-id "col_abc123" ^
+  --project-id "12345" ^
+  --base-url "https://preprod.api.piag.e2.rie.gouv.fr/rag/" ^
+  --token "VOTRE_TOKEN_ICI"
+</code></pre>
+<h3>F) Recherche avec token explicite</h3></p>
+
+<pre><code class="language-bash">ambulon piag-search ^
+  --query "etat de la collection" ^
+  --collection-id "col_abc123" ^
+  --project-id "12345" ^
+  --base-url "https://preprod.api.piag.e2.rie.gouv.fr/rag/" ^
+  --token "VOTRE_TOKEN_ICI"
+</code></pre>
+</body>
+</html>

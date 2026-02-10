@@ -1,0 +1,397 @@
+{
+  "config": {
+    "site": {
+      "base_url": "https://plantuml.com/fr/",
+      "max_depth": 1,
+      "delay": 1.0,
+      "timeout": 30
+    },
+    "filters": {
+      "include_patterns": [
+        ".*"
+      ],
+      "exclude_patterns": [
+        ".*/logout.*",
+        ".*/admin.*",
+        ".*\\.pdf$",
+        ".*\\.zip$"
+      ],
+      "allowed_extensions": [
+        ".html",
+        ".htm"
+      ],
+      "same_domain_only": true
+    },
+    "output": {
+      "directory": "test_output",
+      "preserve_structure": true,
+      "save_metadata": true,
+      "filename_format": "sanitized"
+    },
+    "headers": {
+      "User-Agent": "Ambulon WikiSI Scraper/1.0",
+      "Accept-Language": "fr-FR,fr;q=0.9"
+    },
+    "authentication": {
+      "type": "none",
+      "username": "",
+      "password": "",
+      "token": ""
+    },
+    "advanced": {
+      "max_retries": 3,
+      "respect_robots_txt": true,
+      "verify_ssl": true,
+      "threads": 1,
+      "max_file_size_mb": 50
+    },
+    "logging": {
+      "level": "info",
+      "log_to_file": true,
+      "log_file": "./wikisi-scraper.log"
+    }
+  },
+  "statistics": {
+    "start_url": "https://plantuml.com/fr/",
+    "start_time": "2026-01-16T13:30:13.189993",
+    "end_time": "2026-01-16T13:31:14.057061",
+    "duration_seconds": 60.867068,
+    "pages_visited": 55,
+    "pages_downloaded": 55,
+    "pages_failed": 0,
+    "total_size_bytes": 5435039
+  },
+  "downloaded_files": [
+    {
+      "url": "https://plantuml.com/fr/",
+      "path": "test_output\\fr.html",
+      "size": 72881,
+      "timestamp": "2026-01-16T13:30:13.622953"
+    },
+    {
+      "url": "https://plantuml.com/fr/index",
+      "path": "test_output\\fr\\index.html",
+      "size": 72885,
+      "timestamp": "2026-01-16T13:30:15.560570"
+    },
+    {
+      "url": "https://plantuml.com/fr/news",
+      "path": "test_output\\fr\\news.html",
+      "size": 62562,
+      "timestamp": "2026-01-16T13:30:16.614036"
+    },
+    {
+      "url": "https://plantuml.com/fr/starting",
+      "path": "test_output\\fr\\starting.html",
+      "size": 73443,
+      "timestamp": "2026-01-16T13:30:17.677363"
+    },
+    {
+      "url": "https://plantuml.com/fr/running",
+      "path": "test_output\\fr\\running.html",
+      "size": 83446,
+      "timestamp": "2026-01-16T13:30:18.726798"
+    },
+    {
+      "url": "https://plantuml.com/fr/faq",
+      "path": "test_output\\fr\\faq.html",
+      "size": 109198,
+      "timestamp": "2026-01-16T13:30:19.788041"
+    },
+    {
+      "url": "https://plantuml.com/fr/download",
+      "path": "test_output\\fr\\download.html",
+      "size": 70191,
+      "timestamp": "2026-01-16T13:30:20.842675"
+    },
+    {
+      "url": "https://plantuml.com/fr/preprocessing",
+      "path": "test_output\\fr\\preprocessing.html",
+      "size": 156816,
+      "timestamp": "2026-01-16T13:30:21.922038"
+    },
+    {
+      "url": "https://plantuml.com/fr/stdlib",
+      "path": "test_output\\fr\\stdlib.html",
+      "size": 146946,
+      "timestamp": "2026-01-16T13:30:22.995344"
+    },
+    {
+      "url": "https://plantuml.com/fr/guide",
+      "path": "test_output\\fr\\guide.html",
+      "size": 35541,
+      "timestamp": "2026-01-16T13:30:24.066185"
+    },
+    {
+      "url": "https://plantuml.com/fr/sequence-diagram",
+      "path": "test_output\\fr\\sequence-diagram.html",
+      "size": 233357,
+      "timestamp": "2026-01-16T13:30:25.154395"
+    },
+    {
+      "url": "https://plantuml.com/fr/use-case-diagram",
+      "path": "test_output\\fr\\use-case-diagram.html",
+      "size": 115233,
+      "timestamp": "2026-01-16T13:30:26.221561"
+    },
+    {
+      "url": "https://plantuml.com/fr/class-diagram",
+      "path": "test_output\\fr\\class-diagram.html",
+      "size": 227057,
+      "timestamp": "2026-01-16T13:30:27.347322"
+    },
+    {
+      "url": "https://plantuml.com/fr/activity-diagram-beta",
+      "path": "test_output\\fr\\activity-diagram-beta.html",
+      "size": 184099,
+      "timestamp": "2026-01-16T13:30:28.439587"
+    },
+    {
+      "url": "https://plantuml.com/fr/component-diagram",
+      "path": "test_output\\fr\\component-diagram.html",
+      "size": 122431,
+      "timestamp": "2026-01-16T13:30:29.505111"
+    },
+    {
+      "url": "https://plantuml.com/fr/state-diagram",
+      "path": "test_output\\fr\\state-diagram.html",
+      "size": 134868,
+      "timestamp": "2026-01-16T13:30:30.575987"
+    },
+    {
+      "url": "https://plantuml.com/fr/object-diagram",
+      "path": "test_output\\fr\\object-diagram.html",
+      "size": 86107,
+      "timestamp": "2026-01-16T13:30:31.639318"
+    },
+    {
+      "url": "https://plantuml.com/fr/deployment-diagram",
+      "path": "test_output\\fr\\deployment-diagram.html",
+      "size": 169348,
+      "timestamp": "2026-01-16T13:30:32.714960"
+    },
+    {
+      "url": "https://plantuml.com/fr/timing-diagram",
+      "path": "test_output\\fr\\timing-diagram.html",
+      "size": 144569,
+      "timestamp": "2026-01-16T13:30:33.769246"
+    },
+    {
+      "url": "https://plantuml.com/fr/regex",
+      "path": "test_output\\fr\\regex.html",
+      "size": 97972,
+      "timestamp": "2026-01-16T13:30:34.834277"
+    },
+    {
+      "url": "https://plantuml.com/fr/nwdiag",
+      "path": "test_output\\fr\\nwdiag.html",
+      "size": 129239,
+      "timestamp": "2026-01-16T13:30:35.903949"
+    },
+    {
+      "url": "https://plantuml.com/fr/salt",
+      "path": "test_output\\fr\\salt.html",
+      "size": 139829,
+      "timestamp": "2026-01-16T13:30:36.972495"
+    },
+    {
+      "url": "https://plantuml.com/fr/archimate-diagram",
+      "path": "test_output\\fr\\archimate-diagram.html",
+      "size": 86886,
+      "timestamp": "2026-01-16T13:30:38.030162"
+    },
+    {
+      "url": "https://plantuml.com/fr/gantt-diagram",
+      "path": "test_output\\fr\\gantt-diagram.html",
+      "size": 237988,
+      "timestamp": "2026-01-16T13:30:39.089166"
+    },
+    {
+      "url": "https://plantuml.com/fr/chronology-diagram",
+      "path": "test_output\\fr\\chronology-diagram.html",
+      "size": 63041,
+      "timestamp": "2026-01-16T13:30:40.142287"
+    },
+    {
+      "url": "https://plantuml.com/fr/mindmap-diagram",
+      "path": "test_output\\fr\\mindmap-diagram.html",
+      "size": 107508,
+      "timestamp": "2026-01-16T13:30:41.213326"
+    },
+    {
+      "url": "https://plantuml.com/fr/wbs-diagram",
+      "path": "test_output\\fr\\wbs-diagram.html",
+      "size": 92784,
+      "timestamp": "2026-01-16T13:30:42.781903"
+    },
+    {
+      "url": "https://plantuml.com/fr/ebnf",
+      "path": "test_output\\fr\\ebnf.html",
+      "size": 125728,
+      "timestamp": "2026-01-16T13:30:43.962066"
+    },
+    {
+      "url": "https://plantuml.com/fr/json",
+      "path": "test_output\\fr\\json.html",
+      "size": 108417,
+      "timestamp": "2026-01-16T13:30:45.080754"
+    },
+    {
+      "url": "https://plantuml.com/fr/yaml",
+      "path": "test_output\\fr\\yaml.html",
+      "size": 78929,
+      "timestamp": "2026-01-16T13:30:46.143157"
+    },
+    {
+      "url": "https://plantuml.com/fr-dark/",
+      "path": "test_output\\fr-dark.html",
+      "size": 73026,
+      "timestamp": "2026-01-16T13:30:47.242211"
+    },
+    {
+      "url": "https://plantuml.com/fr/sitemap",
+      "path": "test_output\\fr\\sitemap.html",
+      "size": 68698,
+      "timestamp": "2026-01-16T13:30:48.310384"
+    },
+    {
+      "url": "https://plantuml.com/fr/sitemap-news-and-information",
+      "path": "test_output\\fr\\sitemap-news-and-information.html",
+      "size": 61481,
+      "timestamp": "2026-01-16T13:30:49.376354"
+    },
+    {
+      "url": "https://plantuml.com/en/paypal",
+      "path": "test_output\\en\\paypal.html",
+      "size": 20839,
+      "timestamp": "2026-01-16T13:30:50.997133"
+    },
+    {
+      "url": "https://plantuml.com/fr/activity-diagram-legacy",
+      "path": "test_output\\fr\\activity-diagram-legacy.html",
+      "size": 92225,
+      "timestamp": "2026-01-16T13:30:52.066077"
+    },
+    {
+      "url": "https://plantuml.com/fr/ditaa",
+      "path": "test_output\\fr\\ditaa.html",
+      "size": 72449,
+      "timestamp": "2026-01-16T13:30:53.239813"
+    },
+    {
+      "url": "https://plantuml.com/fr/ascii-math",
+      "path": "test_output\\fr\\ascii-math.html",
+      "size": 69093,
+      "timestamp": "2026-01-16T13:30:54.339318"
+    },
+    {
+      "url": "https://plantuml.com/fr/ie-diagram",
+      "path": "test_output\\fr\\ie-diagram.html",
+      "size": 70259,
+      "timestamp": "2026-01-16T13:30:55.407264"
+    },
+    {
+      "url": "https://plantuml.com/fr/er-diagram",
+      "path": "test_output\\fr\\er-diagram.html",
+      "size": 85019,
+      "timestamp": "2026-01-16T13:30:56.459318"
+    },
+    {
+      "url": "https://plantuml.com/fr/link",
+      "path": "test_output\\fr\\link.html",
+      "size": 108468,
+      "timestamp": "2026-01-16T13:30:57.550768"
+    },
+    {
+      "url": "https://plantuml.com/fr/creole",
+      "path": "test_output\\fr\\creole.html",
+      "size": 133407,
+      "timestamp": "2026-01-16T13:30:58.616510"
+    },
+    {
+      "url": "https://plantuml.com/fr/openiconic",
+      "path": "test_output\\fr\\openiconic.html",
+      "size": 62895,
+      "timestamp": "2026-01-16T13:30:59.723612"
+    },
+    {
+      "url": "https://plantuml.com/fr/sprite",
+      "path": "test_output\\fr\\sprite.html",
+      "size": 84865,
+      "timestamp": "2026-01-16T13:31:00.769453"
+    },
+    {
+      "url": "https://plantuml.com/fr/sources",
+      "path": "test_output\\fr\\sources.html",
+      "size": 73605,
+      "timestamp": "2026-01-16T13:31:01.835347"
+    },
+    {
+      "url": "https://plantuml.com/fr/text-encoding",
+      "path": "test_output\\fr\\text-encoding.html",
+      "size": 69791,
+      "timestamp": "2026-01-16T13:31:02.978762"
+    },
+    {
+      "url": "https://plantuml.com/fr/layout-engines",
+      "path": "test_output\\fr\\layout-engines.html",
+      "size": 66191,
+      "timestamp": "2026-01-16T13:31:04.091397"
+    },
+    {
+      "url": "https://plantuml.com/fr/graphviz-dot",
+      "path": "test_output\\fr\\graphviz-dot.html",
+      "size": 71388,
+      "timestamp": "2026-01-16T13:31:05.184256"
+    },
+    {
+      "url": "https://plantuml.com/fr/smetana02",
+      "path": "test_output\\fr\\smetana02.html",
+      "size": 64942,
+      "timestamp": "2026-01-16T13:31:06.297252"
+    },
+    {
+      "url": "https://plantuml.com/fr/elk",
+      "path": "test_output\\fr\\elk.html",
+      "size": 65867,
+      "timestamp": "2026-01-16T13:31:07.403175"
+    },
+    {
+      "url": "https://plantuml.com/fr/teoz",
+      "path": "test_output\\fr\\teoz.html",
+      "size": 69654,
+      "timestamp": "2026-01-16T13:31:08.504757"
+    },
+    {
+      "url": "https://plantuml.com/fr/svg",
+      "path": "test_output\\fr\\svg.html",
+      "size": 73410,
+      "timestamp": "2026-01-16T13:31:09.611425"
+    },
+    {
+      "url": "https://plantuml.com/fr/latex",
+      "path": "test_output\\fr\\latex.html",
+      "size": 66920,
+      "timestamp": "2026-01-16T13:31:10.739664"
+    },
+    {
+      "url": "https://plantuml.com/fr/eps",
+      "path": "test_output\\fr\\eps.html",
+      "size": 60894,
+      "timestamp": "2026-01-16T13:31:11.831962"
+    },
+    {
+      "url": "https://plantuml.com/fr/ascii-art",
+      "path": "test_output\\fr\\ascii-art.html",
+      "size": 81540,
+      "timestamp": "2026-01-16T13:31:12.940955"
+    },
+    {
+      "url": "https://plantuml.com/direct-sales.html",
+      "path": "test_output\\direct-sales.html",
+      "size": 98814,
+      "timestamp": "2026-01-16T13:31:14.057061"
+    }
+  ],
+  "failed_urls": {}
+}
