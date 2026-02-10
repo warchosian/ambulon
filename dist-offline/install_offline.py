@@ -18,6 +18,7 @@ Prerequis:
 import sys
 import subprocess
 from pathlib import Path
+from typing import List, Set, Optional
 
 
 def check_python_version():
@@ -87,6 +88,123 @@ def check_wheels_dir():
     print(f"     Ambulon wheel: {ambulon_wheels[0].name}")
 
     return wheels_dir
+
+
+def install_package(package_name, wheels_dir, no_deps=False):
+    """Installe un package depuis le dossier wheels/."""
+    print(f"\n[INFO] Installation de {package_name}...")
+
+    cmd = [
+        sys.executable, "-m", "pip", "install",
+        "--no-index",
+        "--find-links", str(wheels_dir),
+        package_name
+    ]
+
+    if no_deps:
+        cmd.append("--no-deps")
+
+    try:
+        subprocess.run(cmd, check=True)
+        print(f"[OK] {package_name} installe")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"[ERREUR] Echec de l'installation de {package_name}: {e}")
+        return False
+
+
+def _parse_poetry_lock(lock_path: Path) -> List[str]:
+    """Parse poetry.lock for main dependencies (best-effort, no external deps)."""
+    deps: List[str] = []
+    seen: Set[str] = set()
+    if not lock_path.exists():
+        return deps
+
+    current_name: Optional[str] = None
+    current_category: Optional[str] = None
+
+    for raw_line in lock_path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if line == "[[package]]":
+            if current_name and (current_category in (None, "main")) and current_name not in seen:
+                deps.append(current_name)
+                seen.add(current_name)
+            current_name = None
+            current_category = None
+            continue
+
+        if line.startswith("name = "):
+            value = line.split("=", 1)[1].strip().strip('"').strip("'")
+            current_name = value
+            continue
+
+        if line.startswith("category = "):
+            value = line.split("=", 1)[1].strip().strip('"').strip("'")
+            current_category = value
+            continue
+
+    if current_name and (current_category in (None, "main")) and current_name not in seen:
+        deps.append(current_name)
+        seen.add(current_name)
+
+    return deps
+
+
+def _parse_pyproject_dependencies(pyproject_path: Path) -> List[str]:
+    """Parse pyproject.toml for [tool.poetry.dependencies] (best-effort)."""
+    if not pyproject_path.exists():
+        return []
+
+    try:
+        import tomllib  # Python 3.11+
+    except Exception:
+        tomllib = None
+
+    if tomllib is not None:
+        data = tomllib.loads(pyproject_path.read_text(encoding="utf-8"))
+        deps = data.get("tool", {}).get("poetry", {}).get("dependencies", {})
+        return [name for name in deps.keys() if name != "python"]
+
+    # Fallback simple parser (Python 3.10 without tomllib)
+    deps: List[str] = []
+    in_section = False
+    for raw_line in pyproject_path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if line.startswith("[") and line.endswith("]"):
+            in_section = (line == "[tool.poetry.dependencies]")
+            continue
+        if in_section and "=" in line:
+            name = line.split("=", 1)[0].strip()
+            if name != "python":
+                deps.append(name)
+    return deps
+
+
+def resolve_dependencies(project_root: Path) -> List[str]:
+    """Resolve dependencies with best effort: poetry.lock -> pyproject.toml."""
+    lock_path = project_root / "poetry.lock"
+    pyproject_path = project_root / "pyproject.toml"
+
+    deps = _parse_poetry_lock(lock_path)
+    source = "poetry.lock"
+    if not deps:
+        deps = _parse_pyproject_dependencies(pyproject_path)
+        source = "pyproject.toml"
+
+    if not deps:
+        print("[AVERTISSEMENT] Aucun lock/pyproject trouve. Installation directe d'ambulon.")
+        return []
+
+    # Ensure kroki is included in offline install
+    if "kroki" not in deps:
+        deps.append("kroki")
+
+    # Ensure ambulon is installed last (separate step)
+    deps = [d for d in deps if d != "ambulon"]
+    print(f"[INFO] Dependances resolues depuis: {source}")
+    return deps
 
 
 def install_ambulon(wheels_dir):
@@ -169,6 +287,20 @@ def main():
     print("="*70)
     print()
     wheels_dir = check_wheels_dir()
+
+    # Installation des dependances (si resolues)
+    deps = resolve_dependencies(Path(__file__).resolve().parent.parent)
+    failed = []
+    for package in deps:
+        if not install_package(package, wheels_dir):
+            failed.append(package)
+
+    if failed:
+        print(f"\n[ERREUR] {len(failed)} dependance(s) ont echoue:")
+        for pkg in failed:
+            print(f"  - {pkg}")
+        print("\nL'installation est incomplete.")
+        sys.exit(1)
 
     # Installation
     if install_ambulon(wheels_dir):
