@@ -8,8 +8,14 @@ import sys
 import subprocess
 import tempfile
 import logging
+from importlib.util import find_spec
 from pathlib import Path
 from typing import List, Tuple, Optional
+import markdown
+
+from app.core.output_paths import format_output_path
+
+logger = logging.getLogger(__name__)
 
 
 def extract_code_blocks(content: str) -> List[Tuple[str, str, int]]:
@@ -39,6 +45,117 @@ def extract_code_blocks(content: str) -> List[Tuple[str, str, int]]:
     return blocks
 
 
+def _kroki_module_available() -> bool:
+    """Check if the optional kroki Python package is available."""
+    return find_spec("kroki") is not None
+
+
+def _try_kroki_module_render(
+    diagram_type: str,
+    diagram_code: str,
+    verbose: bool = False
+) -> Optional[str]:
+    """
+    Try rendering via the optional kroki Python package.
+
+    Returns SVG content on success, or None if unavailable/unsupported.
+    """
+    if not _kroki_module_available():
+        return None
+
+    try:
+        import kroki as kroki_module
+    except Exception:
+        return None
+
+    try:
+        if hasattr(kroki_module, "Kroki"):
+            client = kroki_module.Kroki()
+            return client.diagram(diagram_type, diagram_code, "svg")
+        if hasattr(kroki_module, "Client"):
+            client = kroki_module.Client()
+            return client.diagram(diagram_type, diagram_code, "svg")
+        if hasattr(kroki_module, "get_diagram"):
+            return kroki_module.get_diagram(diagram_type, diagram_code, "svg")
+    except Exception:
+        return None
+
+    return None
+
+
+def _java_available(min_major: int = 8, verbose: bool = False) -> bool:
+    """Check that Java is available and meets minimum major version."""
+    try:
+        result = subprocess.run(
+            ['java', '-version'],
+            capture_output=True,
+            timeout=10
+        )
+    except Exception as e:
+        if verbose:
+            print(f"Warning: Java not available: {e}", file=sys.stderr)
+        return False
+
+    output = (result.stderr or b'') + (result.stdout or b'')
+    text = output.decode('utf-8', errors='ignore')
+
+    version_match = re.search(r'version "([^"]+)"', text)
+    if not version_match:
+        if verbose:
+            print("Warning: Unable to parse Java version", file=sys.stderr)
+        return False
+
+    version_str = version_match.group(1)
+    if version_str.startswith('1.'):
+        # Java 8 and earlier: 1.8.x
+        parts = version_str.split('.')
+        major = int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else 0
+    else:
+        # Java 9+ : 9, 11, 17, ...
+        major = int(version_str.split('.')[0]) if version_str.split('.')[0].isdigit() else 0
+
+    if major < min_major:
+        if verbose:
+            print(f"Warning: Java version {major} < {min_major}", file=sys.stderr)
+        return False
+
+    return True
+
+
+def _log_plantuml_context(method: str, jar_path: Optional[str]) -> None:
+    """Log PlantUML context for md2html execution."""
+    java_available = _java_available(min_major=8, verbose=False)
+
+    env_checked = java_available
+    env_jar_value = None
+    env_jar_present = None
+    env_jar_exists = None
+
+    if env_checked:
+        env_jar_value = os.environ.get('PLANTUML_JAR')
+        env_jar_present = bool(env_jar_value)
+        env_jar_exists = bool(env_jar_value) and os.path.exists(env_jar_value)
+
+    cli_jar_present = bool(jar_path)
+    cli_jar_exists = bool(jar_path) and os.path.exists(jar_path)
+
+    logger.info(
+        "md2html PlantUML context: method=%s, java_available=%s, env_checked=%s, "
+        "env_jar_present=%s, env_jar_exists=%s, env_jar_path=%s, "
+        "cli_jar_present=%s, cli_jar_exists=%s, cli_jar_path=%s",
+        method,
+        java_available,
+        env_checked,
+        env_jar_present,
+        env_jar_exists,
+        env_jar_value,
+        cli_jar_present,
+        cli_jar_exists,
+        jar_path,
+    )
+    logger.info("md2html PlantUML mode: %s", method)
+
+
 def convert_graphviz_to_svg(dot_code: str, verbose: bool = False) -> Optional[str]:
     """
     Convert Graphviz DOT code to SVG using the dot command.
@@ -50,10 +167,20 @@ def convert_graphviz_to_svg(dot_code: str, verbose: bool = False) -> Optional[st
     Returns:
         SVG content as string, or None if conversion fails
     """
+    # Try system 'dot' command first
+    dot_command = 'dot'
+
+    # Check for GRAPHVIZ_EXE environment variable
+    graphviz_exe = os.environ.get('GRAPHVIZ_EXE')
+    if graphviz_exe and os.path.exists(graphviz_exe):
+        dot_command = graphviz_exe
+        if verbose:
+            print(f"Info: Using Graphviz from GRAPHVIZ_EXE: {graphviz_exe}", file=sys.stderr)
+
     try:
         # Run dot command to convert to SVG
         result = subprocess.run(
-            ['dot', '-Tsvg'],
+            [dot_command, '-Tsvg'],
             input=dot_code.encode('utf-8'),
             capture_output=True,
             timeout=30
@@ -65,11 +192,36 @@ def convert_graphviz_to_svg(dot_code: str, verbose: bool = False) -> Optional[st
             return None
 
         svg_content = result.stdout.decode('utf-8')
+        if verbose:
+            print("Info: ✓ Graphviz conversion successful", file=sys.stderr)
         return svg_content
 
     except FileNotFoundError:
+        # Show installation instructions
         if verbose:
-            print("Warning: 'dot' command not found. Please install Graphviz.", file=sys.stderr)
+            print("\n" + "="*60, file=sys.stderr)
+            print("Graphviz 'dot' command not found!", file=sys.stderr)
+            print("="*60, file=sys.stderr)
+
+            if not graphviz_exe:
+                print("\nThe GRAPHVIZ_EXE environment variable is not set.", file=sys.stderr)
+            else:
+                print(f"\nThe specified executable does not exist: {graphviz_exe}", file=sys.stderr)
+
+            print("\nTo download and configure Graphviz:", file=sys.stderr)
+            print("1. Download Graphviz from:", file=sys.stderr)
+            print("   https://graphviz.org/download/", file=sys.stderr)
+
+            if os.name == 'nt':  # Windows
+                print("\n2. Install and add to PATH, or set:", file=sys.stderr)
+                print("   set GRAPHVIZ_EXE=C:\\Program Files\\Graphviz\\bin\\dot.exe", file=sys.stderr)
+            else:  # Linux/Mac
+                print("\n2. Install via package manager:", file=sys.stderr)
+                print("   Ubuntu/Debian: sudo apt-get install graphviz", file=sys.stderr)
+                print("   Mac: brew install graphviz", file=sys.stderr)
+                print("\n   Or set: export GRAPHVIZ_EXE=/usr/local/bin/dot", file=sys.stderr)
+
+            print("="*60 + "\n", file=sys.stderr)
         return None
     except Exception as e:
         if verbose:
@@ -77,43 +229,72 @@ def convert_graphviz_to_svg(dot_code: str, verbose: bool = False) -> Optional[st
         return None
 
 
-def convert_plantuml_to_svg(plantuml_code: str, verbose: bool = False) -> Optional[str]:
+def convert_plantuml_to_svg(
+    plantuml_code: str,
+    verbose: bool = False,
+    method: str = 'kroki',
+    jar_path: str = None
+) -> Optional[str]:
     """
     Convert PlantUML code to SVG using plantuml command or online service.
 
     Args:
         plantuml_code: PlantUML source code
         verbose: Print verbose output
+        method: Conversion method ('auto', 'jar', or 'kroki')
+        jar_path: Path to PlantUML JAR file (overrides PLANTUML_JAR env var)
 
     Returns:
         SVG content as string, or None if conversion fails
     """
     try:
+        # Remove diagram name from @startuml to ensure consistent output filename
+        # PlantUML uses the diagram name (@startuml DiagramName) for the output filename
+        # We want to use the temp file name instead
+        import re as regex_module
+        # Use [ \t]+ instead of \s+ to match only spaces/tabs, not newlines
+        plantuml_code_clean = regex_module.sub(
+            r'@startuml[ \t]+\S+',
+            '@startuml',
+            plantuml_code,
+            count=1
+        )
+
         # Try using local plantuml command first
         with tempfile.NamedTemporaryFile(mode='w', suffix='.puml', delete=False, encoding='utf-8') as f:
-            f.write(plantuml_code)
+            f.write(plantuml_code_clean)
             temp_input = f.name
 
         temp_output = temp_input.replace('.puml', '.svg')
 
-        try:
-            # Try plantuml command
-            result = subprocess.run(
-                ['plantuml', '-tsvg', temp_input],
-                capture_output=True,
-                timeout=30
-            )
+        if verbose:
+            print(f"DEBUG convert_plantuml_to_svg: method={method}, jar_path={jar_path}", file=sys.stderr)
 
-            if result.returncode == 0 and os.path.exists(temp_output):
-                with open(temp_output, 'r', encoding='utf-8') as f:
-                    svg_content = f.read()
+        # Determine PlantUML JAR path: CLI arg > env var
+        plantuml_jar = None
+        if _java_available(min_major=8, verbose=verbose):
+            plantuml_jar = jar_path if jar_path else os.environ.get('PLANTUML_JAR')
+        elif verbose:
+            print("Warning: Java unavailable or version too low; skipping PLANTUML_JAR check", file=sys.stderr)
+
+        # ========================================
+        # Strategy depends on method:
+        # - 'auto' (default): Try Kroki first, then JAR
+        # - 'jar': Try JAR only
+        # - 'kroki': Try Kroki only
+        # ========================================
+
+        # ========================================
+        # Method 1: Try Kroki (for 'auto' and 'kroki' ONLY)
+        # ========================================
+        if method != 'jar' and method in ('auto', 'kroki'):
+            kroki_svg = _try_kroki_module_render("plantuml", plantuml_code_clean, verbose=verbose)
+            if kroki_svg:
                 os.unlink(temp_input)
-                os.unlink(temp_output)
-                return svg_content
-        except FileNotFoundError:
-            # plantuml command not found, try kroki online service
+                return kroki_svg
+
             if verbose:
-                print("Info: Using Kroki online service for PlantUML conversion", file=sys.stderr)
+                print("Info: Trying Kroki online service for PlantUML conversion", file=sys.stderr)
 
             import urllib.request
             import urllib.parse
@@ -121,24 +302,100 @@ def convert_plantuml_to_svg(plantuml_code: str, verbose: bool = False) -> Option
             import zlib
 
             # Compress and encode for Kroki
-            compressed = zlib.compress(plantuml_code.encode('utf-8'), 9)
+            compressed = zlib.compress(plantuml_code_clean.encode('utf-8'), 9)
             encoded = base64.urlsafe_b64encode(compressed).decode('utf-8')
-
             url = f'https://kroki.io/plantuml/svg/{encoded}'
 
             try:
-                with urllib.request.urlopen(url, timeout=30) as response:
+                req = urllib.request.Request(url)
+                req.add_header('User-Agent', 'Mozilla/5.0 (Ambulon md2html)')
+                with urllib.request.urlopen(req, timeout=10) as response:
                     svg_content = response.read().decode('utf-8')
                 os.unlink(temp_input)
+                if verbose:
+                    print("Info: ✓ Kroki conversion successful", file=sys.stderr)
                 return svg_content
             except Exception as e:
                 if verbose:
-                    print(f"Warning: Kroki service error: {e}", file=sys.stderr)
-        finally:
-            if os.path.exists(temp_input):
-                os.unlink(temp_input)
-            if os.path.exists(temp_output):
-                os.unlink(temp_output)
+                    print(f"Warning: Kroki service failed: {e}", file=sys.stderr)
+
+                # If method is 'kroki' only, don't try fallback
+                if method == 'kroki':
+                    os.unlink(temp_input)
+                    return None
+
+        # ========================================
+        # Method 2: Try JAR (for 'auto' fallback and 'jar')
+        # ========================================
+        if method in ('auto', 'jar'):
+            # Check if JAR is available
+            if plantuml_jar and os.path.exists(plantuml_jar):
+                try:
+                    if verbose:
+                        print(f"Info: Trying PlantUML JAR: {plantuml_jar}", file=sys.stderr)
+
+                    result = subprocess.run(
+                        ['java', '-jar', plantuml_jar, '-tsvg', temp_input],
+                        capture_output=True,
+                        timeout=30
+                    )
+
+                    if result.returncode == 0:
+                        # Give PlantUML time to write the file
+                        import time
+                        for i in range(10):
+                            if os.path.exists(temp_output):
+                                break
+                            time.sleep(0.1)
+
+                        if os.path.exists(temp_output):
+                            with open(temp_output, 'r', encoding='utf-8') as f:
+                                svg_content = f.read()
+                            os.unlink(temp_input)
+                            os.unlink(temp_output)
+                            if verbose:
+                                print("Info: ✓ PlantUML JAR conversion successful", file=sys.stderr)
+                            return svg_content
+
+                    if verbose:
+                        print(f"Warning: PlantUML JAR failed (returncode={result.returncode})", file=sys.stderr)
+                except Exception as e:
+                    if verbose:
+                        print(f"Warning: PlantUML JAR exception: {e}", file=sys.stderr)
+            else:
+                # JAR not found - show instructions
+                if verbose or method == 'jar':
+                    print("\n" + "="*60, file=sys.stderr)
+                    print("PlantUML JAR not found!", file=sys.stderr)
+                    print("="*60, file=sys.stderr)
+
+                    if not plantuml_jar:
+                        print("\nThe PLANTUML_JAR environment variable is not set.", file=sys.stderr)
+                    else:
+                        print(f"\nThe specified JAR file does not exist: {plantuml_jar}", file=sys.stderr)
+
+                    print("\nTo download and configure PlantUML JAR:", file=sys.stderr)
+                    print("1. Download PlantUML JAR from:", file=sys.stderr)
+                    print("   https://github.com/plantuml/plantuml/releases/latest", file=sys.stderr)
+                    print("   (Look for 'plantuml-X.X.X.jar')", file=sys.stderr)
+                    print("\n2. Set the environment variable:", file=sys.stderr)
+
+                    # Use OS-specific path separators
+                    if os.name == 'nt':  # Windows
+                        print("   set PLANTUML_JAR=C:\\tools\\plantuml\\plantuml.jar", file=sys.stderr)
+                    else:  # Linux/Mac
+                        print("   export PLANTUML_JAR=/usr/local/bin/plantuml.jar", file=sys.stderr)
+
+                    print("\n3. Or use the --plantuml-jar option:", file=sys.stderr)
+                    example_path = "C:\\tools\\plantuml.jar" if os.name == 'nt' else "/usr/local/bin/plantuml.jar"
+                    print(f"   ambulon md2html file.md --plantuml-jar {example_path}", file=sys.stderr)
+                    print("="*60 + "\n", file=sys.stderr)
+
+        # Clean up temp files if still exist
+        if os.path.exists(temp_input):
+            os.unlink(temp_input)
+        if os.path.exists(temp_output):
+            os.unlink(temp_output)
 
     except Exception as e:
         if verbose:
@@ -218,7 +475,9 @@ def process_markdown_to_html(
     markdown_path: str,
     output_path: str = None,
     verbose: bool = False,
-    standalone: bool = True
+    standalone: bool = True,
+    plantuml_method: str = 'kroki',
+    plantuml_jar: str = None
 ) -> int:
     """
     Convert a Markdown file with diagrams to HTML with embedded SVG.
@@ -228,10 +487,16 @@ def process_markdown_to_html(
         output_path: Optional output HTML path. If None, uses same name with .html extension
         verbose: Print verbose output
         standalone: Generate standalone HTML with CSS and full page structure
+        plantuml_method: Method to convert PlantUML ('auto', 'jar', or 'kroki')
+        plantuml_jar: Path to PlantUML JAR file (overrides PLANTUML_JAR env var)
 
     Returns:
         Exit code (0 for success, 1 for error)
     """
+    _log_plantuml_context(plantuml_method, plantuml_jar)
+    if verbose:
+        print(f"DEBUG process_markdown_to_html: plantuml_method={plantuml_method}", file=sys.stderr)
+
     md_path = Path(markdown_path).resolve()
 
     # Check if markdown file exists
@@ -292,7 +557,7 @@ def process_markdown_to_html(
             if block_type in ('dot', 'graphviz'):
                 svg_content = convert_graphviz_to_svg(code, verbose)
             elif block_type == 'plantuml':
-                svg_content = convert_plantuml_to_svg(code, verbose)
+                svg_content = convert_plantuml_to_svg(code, verbose, plantuml_method, plantuml_jar)
             elif block_type == 'mermaid':
                 svg_content = convert_mermaid_to_svg(code, verbose)
 
@@ -324,19 +589,22 @@ def process_markdown_to_html(
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
 
-        # Display results
-        print(f"\n[SUCCESS] HTML created: {output_path}")
+        rel_path = format_output_path(output_path)
+
+        # Display results (logger)
+        logger.info("✓ Conversion md2html reussie !")
+        logger.info("Fichier produit : %s", rel_path)
 
         if len(blocks) > 0:
             if svg_count == len(blocks):
-                print(f"[OK] All {svg_count} diagrams converted to SVG successfully")
+                logger.info("All %s diagrams converted to SVG successfully", svg_count)
             elif svg_count > 0:
-                print(f"[WARNING] Converted {svg_count} out of {len(blocks)} diagrams to SVG")
-                print(f"  ({len(blocks) - svg_count} diagram(s) failed to convert)")
+                logger.warning("Converted %s out of %s diagrams to SVG", svg_count, len(blocks))
+                logger.warning("%s diagram(s) failed to convert", len(blocks) - svg_count)
             else:
-                print(f"[ERROR] No diagrams were converted ({len(blocks)} found)")
+                logger.error("No diagrams were converted (%s found)", len(blocks))
         else:
-            print("[INFO] No diagrams found in the markdown file")
+            logger.info("No diagrams found in the markdown file")
 
         return 0
 
@@ -400,13 +668,11 @@ def markdown_to_html_basic(content: str) -> str:
     Returns:
         HTML content
     """
-    logger = logging.getLogger(__name__)
-    logger.debug("markdown_to_html_basic called")
-    logger.debug("Content length: %s", len(content))
-    logger.debug(
-        "Has tree chars: %s",
-        any(c in content for c in ["├──", "└──", "│"])
-    )
+    # DEBUG: Confirm function is called
+    with open('markdown_basic_called.txt', 'w', encoding='utf-8') as f:
+        f.write('Function called\n')
+        f.write(f'Content length: {len(content)}\n')
+        f.write(f'Has tree chars: {any(c in content for c in ["├──", "└──", "│"])}\n')
 
     # Clean anchor tags with empty href attributes first
     # This fixes navigation issues from markdown-preview-enhanced and similar tools
@@ -571,14 +837,14 @@ def markdown_to_html_basic(content: str) -> str:
             # Regular paragraph
             html_paragraphs.append(f'<p>{para_stripped}</p>')
 
-    logger.debug("Tree paragraphs wrapped: %s", tree_count)
-    logger.debug("Total paragraphs: %s", len(paragraphs))
-    for i, p in enumerate(paragraphs[:10]):
-        has_tree_chars = any(char in p for char in ['├──', '└──', '│'])
-        logger.debug(
-            "Para %s: has_tree=%s, len=%s, start=%s",
-            i, has_tree_chars, len(p), p[:100]
-        )
+    # DEBUG: Write tree count to file
+    with open('md2html_debug.txt', 'w', encoding='utf-8') as debug_file:
+        debug_file.write(f'Tree paragraphs wrapped: {tree_count}\n')
+        debug_file.write(f'Total paragraphs: {len(paragraphs)}\n')
+        # Write sample of first few paragraphs
+        for i, p in enumerate(paragraphs[:10]):
+            has_tree_chars = any(char in p for char in ['├──', '└──', '│'])
+            debug_file.write(f'\nPara {i}: has_tree={has_tree_chars}, len={len(p)}, start={p[:100]}\n')
 
     content = '\n\n'.join(html_paragraphs)
 
@@ -790,9 +1056,31 @@ def register_md2html_command(subparsers):
         help='Generate HTML fragment without full document structure'
     )
 
-    parser.set_defaults(func=lambda args: process_markdown_to_html(
-        args.markdown,
-        args.output,
-        args.verbose,
-        not args.no_standalone
-    ))
+    parser.add_argument(
+        '--plantuml-method',
+        type=str,
+        choices=['auto', 'jar', 'kroki'],
+        default='kroki',
+        help='Method to convert PlantUML diagrams: kroki (default), auto (try kroki then jar), jar (local JAR only)'
+    )
+
+    parser.add_argument(
+        '--plantuml-jar',
+        type=str,
+        default=None,
+        help='Path to PlantUML JAR file (overrides PLANTUML_JAR environment variable)'
+    )
+
+    def _md2html_handler(args):
+        print(f"DEBUG _md2html_handler: args.plantuml_method={getattr(args, 'plantuml_method', 'MISSING')}", file=sys.stderr)
+        print(f"DEBUG _md2html_handler: args.__dict__={args.__dict__}", file=sys.stderr)
+        return process_markdown_to_html(
+            args.markdown,
+            args.output,
+            args.verbose,
+            not args.no_standalone,
+            args.plantuml_method,
+            args.plantuml_jar
+        )
+
+    parser.set_defaults(func=_md2html_handler)

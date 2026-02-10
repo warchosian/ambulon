@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 
 from app.core.logging_config import setup_logging
+from app.core.output_paths import format_output_path
 from app.gitlab.core.monofile import generate_monofile
 
 logger = logging.getLogger(__name__)
@@ -117,20 +118,14 @@ Examples:
             outputs.append(output_path)
 
     if exit_code == 0 and outputs:
-        print(f"\n✓ Monofile generated!")
+        logger.info("✓ Monofile generated!")
         for output_path in outputs:
-            try:
-                relative_path = output_path.relative_to(Path.cwd())
-            except ValueError:
-                relative_path = output_path.resolve()
-            print(f"Fichier produit : {relative_path}")
+            relative_path = format_output_path(output_path)
+            logger.info("Fichier produit : %s", relative_path)
             html_path = Path(str(output_path)).with_suffix(".html")
             if html_path.exists():
-                try:
-                    html_relative = html_path.relative_to(Path.cwd())
-                except ValueError:
-                    html_relative = html_path.resolve()
-                print(f"Fichier produit : {html_relative}")
+                html_relative = format_output_path(html_path)
+                logger.info("Fichier produit : %s", html_relative)
         return 0
 
     logger.error("Monofile generation failed.")

@@ -9,6 +9,7 @@ import re
 from pathlib import Path
 from typing import Optional
 
+from app.core.output_paths import format_output_path
 # Mapping des extensions vers formats
 EXTENSION_TO_FORMAT = {
     '.py': 'python',
@@ -279,9 +280,9 @@ Formats supportés:
             f.write(markdown_content)
 
         if args.verbose:
-            print(f"[SUCCESS] Fichier généré: {output_file}", file=sys.stderr)
+            print(f"[SUCCESS] Fichier généré: {format_output_path(output_file)}", file=sys.stderr)
         else:
-            print(f"Fichier généré: {output_file}")
+            print(f"Fichier généré: {format_output_path(output_file)}")
 
         return 0
 

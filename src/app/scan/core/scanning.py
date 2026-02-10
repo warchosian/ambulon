@@ -13,6 +13,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 
+from app.core.output_paths import format_output_path
+
 def setup_logging(verbose: bool = False):
     """Configure le système de logging"""
     now = datetime.now()
@@ -389,7 +391,7 @@ def _perform_twain_scan(output_file: Path, dpi: int, **kwargs) -> bool:
             print(f"Nombre de scans : {number_of_scans}")
         else:
             print(f"Pages : {pages}")
-        print(f"Fichier de sortie : {output_file}")
+        print(f"Fichier de sortie : {format_output_path(output_file)}")
         
         # Exécuter la commande NAPS2
         import subprocess
@@ -429,7 +431,7 @@ def _perform_twain_scan(output_file: Path, dpi: int, **kwargs) -> bool:
                 print(f"Fichiers générés : {len(generated_files)}/{number_of_scans}")
                 for i, file_path in enumerate(generated_files, 1):
                     file_size = file_path.stat().st_size
-                    print(f"  {i}. {file_path} ({file_size} octets)")
+                    print(f"  {i}. {format_output_path(file_path)} ({file_size} octets)")
                 
                 if ocr_enabled:
                     print(f"OCR terminé pour {len(generated_files)} fichier(s) !")
@@ -553,7 +555,7 @@ def _perform_ocr(image_file: Path, language: str = 'fra') -> bool:
         logging.info(f"[OCR] Commande : {' '.join(cmd)}")
         print(f"Lancement de l'OCR avec Tesseract...")
         print(f"Langue : {language}")
-        print(f"Fichier de sortie OCR : {ocr_output_file}")
+        print(f"Fichier de sortie OCR : {format_output_path(ocr_output_file)}")
         
         # Exécuter la commande Tesseract
         result = subprocess.run(
@@ -568,7 +570,7 @@ def _perform_ocr(image_file: Path, language: str = 'fra') -> bool:
         if ocr_output_file.exists():
             ocr_size = ocr_output_file.stat().st_size
             logging.info(f"[OCR] OCR réussi : {ocr_output_file} ({ocr_size} octets)")
-            print(f"Fichier OCR créé : {ocr_output_file}")
+            print(f"Fichier OCR créé : {format_output_path(ocr_output_file)}")
             print(f"Taille du fichier OCR : {ocr_size} octets")
             return True
         else:
@@ -636,7 +638,7 @@ def _perform_ocr_python(image_file: Path, language: str = 'fra') -> bool:
         if ocr_output_file.exists():
             ocr_size = ocr_output_file.stat().st_size
             logging.info(f"[OCR] OCR réussi avec pytesseract : {ocr_output_file} ({ocr_size} octets)")
-            print(f"Fichier OCR créé avec pytesseract : {ocr_output_file}")
+            print(f"Fichier OCR créé avec pytesseract : {format_output_path(ocr_output_file)}")
             print(f"Taille du fichier OCR : {ocr_size} octets")
             return True
         else:
@@ -690,7 +692,7 @@ def _simulate_scan(output_file: Path, dpi: int, settings: Dict[str, Any]) -> Dic
                         f.write(f"Timestamp: {datetime.now()}\n")
                         f.write("Ce fichier a été généré en mode simulation.\n")
                         f.write("Pour un vrai scan, installez : pip install python-twain\n")
-                    print(f"Fichier OCR simulé créé : {ocr_file}")
+                    print(f"Fichier OCR simulé créé : {format_output_path(ocr_file)}")
                 
             except ImportError:
                 # Fallback vers fichier texte
@@ -727,7 +729,7 @@ def _simulate_scan(output_file: Path, dpi: int, settings: Dict[str, Any]) -> Dic
                     f.write("Mode simulation actif\n")
                     f.write("Fichier OCR simulé\n")
                     f.write(f"Timestamp: {datetime.now()}\n")
-                print(f"Fichier OCR simulé créé : {ocr_file}")
+                print(f"Fichier OCR simulé créé : {format_output_path(ocr_file)}")
         
         return {
             'success': True,
@@ -1196,9 +1198,9 @@ Profils TWAIN disponibles:
                         
                         for file_info in result['processed_files']:
                             if file_info['success']:
-                                print(f"  ✓ {file_info['file']}")
+                                print(f"  ✓ {format_output_path(file_info['file'])}")
                                 if 'ocr_file' in file_info:
-                                    print(f"    → OCR : {file_info['ocr_file']}")
+                                    print(f"    → OCR : {format_output_path(file_info['ocr_file'])}")
                         
                         if result.get('errors'):
                             print("  Erreurs :")
@@ -1277,9 +1279,9 @@ Profils TWAIN disponibles:
                             print(f"  Langue OCR : {scan_options.get('lang', 'fra')}")
                             # Ajouter le fichier OCR généré
                             ocr_file = result['output_file'].with_suffix('.txt')
-                            print(f"  Fichier OCR : {ocr_file}")
+                        print(f"  Fichier OCR : {format_output_path(ocr_file)}")
                         
-                        print(f"  Fichier de sortie : {result['output_file']}")
+                        print(f"  Fichier de sortie : {format_output_path(result['output_file'])}")
                         
                         try:
                             relative_log = log_file.relative_to(Path.cwd())

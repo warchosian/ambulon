@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.2] - 2026-01-31
 
+## [3.0.4] - 2026-02-10
+
+### Changed
+- **conversion**: Consolidation md2html and contextual logging for PlantUML/Kroki
+- **dependencies**: Make Kroki mandatory and include it in offline install (pyproject + dist-offline)
+
 ### Fixed
 - **offline-install**: Fix dependency resolution errors in offline installation
   - Install all dependencies BEFORE ambulon to avoid pip resolution failures

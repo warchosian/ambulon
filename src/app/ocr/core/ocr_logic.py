@@ -12,6 +12,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 
+from app.core.output_paths import format_output_path
+
 def setup_logging(verbose: bool = False):
     """Configure le système de logging"""
     now = datetime.now()
@@ -142,7 +144,7 @@ def perform_ocr(input_path: Path, language: str = 'fra', output_path: Path = Non
         logging.info(f"[OCR] Commande : {' '.join(cmd)}")
         print(f"Lancement de l'OCR avec Tesseract...")
         print(f"Langue : {language}")
-        print(f"Fichier de sortie OCR : {ocr_output_file}")
+        print(f"Fichier de sortie OCR : {format_output_path(ocr_output_file)}")
         
         # Exécuter la commande Tesseract
         result = subprocess.run(
@@ -157,7 +159,7 @@ def perform_ocr(input_path: Path, language: str = 'fra', output_path: Path = Non
         if ocr_output_file.exists():
             ocr_size = ocr_output_file.stat().st_size
             logging.info(f"[OCR] OCR réussi : {ocr_output_file} ({ocr_size} octets)")
-            print(f"Fichier OCR créé : {ocr_output_file}")
+            print(f"Fichier OCR créé : {format_output_path(ocr_output_file)}")
             print(f"Taille du fichier OCR : {ocr_size} octets")
             return {
                 'success': True,
@@ -253,7 +255,7 @@ def _perform_ocr_python(image_file: Path, language: str = 'fra', output_file: Pa
         if ocr_output_file.exists():
             ocr_size = ocr_output_file.stat().st_size
             logging.info(f"[OCR] OCR réussi avec pytesseract : {ocr_output_file} ({ocr_size} octets)")
-            print(f"Fichier OCR créé avec pytesseract : {ocr_output_file}")
+            print(f"Fichier OCR créé avec pytesseract : {format_output_path(ocr_output_file)}")
             print(f"Taille du fichier OCR : {ocr_size} octets")
             return {
                 'success': True,
@@ -545,7 +547,7 @@ def perform_ocr_single_file(image_file: Path, language: str = 'fra', output_file
         logging.info(f"[OCR] Commande : {' '.join(cmd)}")
         print(f"Lancement de l'OCR avec Tesseract...")
         print(f"Langue : {language}")
-        print(f"Fichier de sortie OCR : {ocr_output_file}")
+        print(f"Fichier de sortie OCR : {format_output_path(ocr_output_file)}")
         
         # Exécuter la commande Tesseract
         result = subprocess.run(
@@ -560,7 +562,7 @@ def perform_ocr_single_file(image_file: Path, language: str = 'fra', output_file
         if ocr_output_file.exists():
             ocr_size = ocr_output_file.stat().st_size
             logging.info(f"[OCR] OCR réussi : {ocr_output_file} ({ocr_size} octets)")
-            print(f"Fichier OCR créé : {ocr_output_file}")
+            print(f"Fichier OCR créé : {format_output_path(ocr_output_file)}")
             print(f"Taille du fichier OCR : {ocr_size} octets")
             return {
                 'success': True,
