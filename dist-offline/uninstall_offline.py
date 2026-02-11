@@ -1,14 +1,23 @@
 #!/usr/bin/env python3
+# ============================================================================
+# FICHIER AUTO-GENERE par scripts/build_offline_package.py
+# Date de generation: 2026-02-11 13:54:27
+# Ne pas modifier manuellement - vos modifications seront ecrasees
+# ============================================================================
 """
-Script de désinstallation d'Ambulon.
+Script de desinstallation d'Ambulon.
 
-Ce script désinstalle Ambulon et optionnellement ses dépendances.
+Ce script desinstalle Ambulon et optionnellement ses dependances.
 
 Usage:
     python uninstall_offline.py
 
-    # Garder les dépendances (désinstaller uniquement Ambulon)
+    # Garder les dependances (desinstaller uniquement Ambulon)
     python uninstall_offline.py --keep-deps
+
+IMPORTANT:
+    Ce script a ete genere automatiquement par build_offline_package.py
+    Date de generation: 2026-02-11 13:54:27
 """
 
 import sys
@@ -16,8 +25,25 @@ import subprocess
 import argparse
 
 
+def check_virtual_env():
+    """Verifie et informe sur l'environnement virtuel."""
+    in_venv = hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
+
+    if not in_venv:
+        print("[AVERTISSEMENT] Vous n'etes pas dans un environnement virtuel Python")
+        print("                La desinstallation affectera l'installation globale")
+        print()
+        response = input("Continuer quand meme? (oui/non): ")
+        if response.lower() not in ['oui', 'o', 'yes', 'y']:
+            print("[INFO] Desinstallation annulee par l'utilisateur")
+            sys.exit(0)
+        print()
+    else:
+        print("[OK] Environnement virtuel detecte")
+
+
 def check_pip():
-    """Vérifie que pip est installé."""
+    """Verifie que pip est installe."""
     try:
         subprocess.run(
             [sys.executable, "-m", "pip", "--version"],
@@ -25,15 +51,15 @@ def check_pip():
             text=True,
             check=True
         )
-        print(f"[OK] pip détecté")
+        print(f"[OK] pip detecte")
         return True
     except subprocess.CalledProcessError:
-        print("[ERREUR] pip n'est pas installé")
+        print("[ERREUR] pip n'est pas installe")
         sys.exit(1)
 
 
 def is_package_installed(package_name):
-    """Vérifie si un package est installé."""
+    """Verifie si un package est installe."""
     try:
         subprocess.run(
             [sys.executable, "-m", "pip", "show", package_name],
@@ -46,9 +72,9 @@ def is_package_installed(package_name):
 
 
 def uninstall_package(package_name):
-    """Désinstalle un package."""
+    """Desinstalle un package."""
     if not is_package_installed(package_name):
-        print(f"[SKIP] {package_name} (non installé)")
+        print(f"[SKIP] {package_name} (non installe)")
         return True
 
     print(f"[UNINSTALL] {package_name}...", end='', flush=True)
@@ -60,97 +86,106 @@ def uninstall_package(package_name):
             text=True,
             check=True
         )
-        print(" ✓")
+        print(" [OK]")
         return True
     except subprocess.CalledProcessError as e:
-        print(f" ✗")
+        print(f" [ERR]")
         print(f"  Erreur: {e.stderr}")
         return False
 
 
 def main():
-    """Point d'entrée principal."""
+    """Point d'entree principal."""
     parser = argparse.ArgumentParser(
-        description="Désinstallation d'Ambulon"
+        description="Desinstallation d'Ambulon"
     )
     parser.add_argument(
         "--keep-deps",
         action="store_true",
-        help="Garder les dépendances, désinstaller uniquement Ambulon"
+        help="Garder les dependances, desinstaller uniquement Ambulon"
     )
     args = parser.parse_args()
 
     print("="*70)
-    print("  DÉSINSTALLATION D'AMBULON")
+    print("  DESINSTALLATION D'AMBULON")
     print("="*70)
     print()
+    print("[INFO] Script auto-genere le 2026-02-11 13:54:27")
+    print("[INFO] Par scripts/build_offline_package.py")
+    print()
 
-    # Vérification
+    # Verification
     check_pip()
+    print()
+
+    check_virtual_env()
+    print()
 
     if not is_package_installed("ambulon"):
-        print("[INFO] Ambulon n'est pas installé")
+        print("[INFO] Ambulon n'est pas installe")
         sys.exit(0)
 
     print()
 
-    # Packages à désinstaller (ordre inverse de l'installation)
+    # Packages a desinstaller (ordre inverse de l'installation)
     packages = ["ambulon"]
 
     if not args.keep_deps:
-        print("[INFO] Désinstallation d'Ambulon ET de ses dépendances")
+        print("[INFO] Desinstallation d'Ambulon ET de ses dependances")
         packages.extend([
-            "mcp",
-            "playwright",
-            "greenlet",
-            "markdown",
+            "annotated-types",
+            "anyio",
+            "argcomplete",
+            "asttokens",
+            "attrs",
             "beautifulsoup4",
-            "python-slugify",
-            "lxml",
+            "black",
+            "certifi",
+            "cffi",
             "chardet",
-            "pyyaml",
-            "requests",
-            "pymupdf",
-            "pillow",
-            "importlib-resources",
+            "charset-normalizer",
+            "click",
+            "colorama",
+            "commitizen",
+            "cryptography"
         ])
     else:
-        print("[INFO] Désinstallation d'Ambulon uniquement")
+        print("[INFO] Desinstallation d'Ambulon uniquement")
 
     print()
 
-    # Désinstallation
+    # Desinstallation
     failed = []
 
     for package in packages:
         if not uninstall_package(package):
             failed.append(package)
 
-    # Résumé
+    # Resume
     print()
     print("="*70)
-    print("  RÉSUMÉ")
+    print("  RESUME")
     print("="*70)
 
     if failed:
-        print(f"\n[ERREUR] {len(failed)} package(s) ont échoué:")
+        print(f"\n[ERREUR] {len(failed)} package(s) ont echoue:")
         for pkg in failed:
             print(f"  - {pkg}")
         sys.exit(1)
     else:
-        print("\n[OK] Désinstallation terminée avec succès ! ✓")
+        print("\n[OK] Desinstallation terminee avec succes !")
 
         if not args.keep_deps:
-            print("\nAmbulonà et ses dépendances ont été supprimés.")
+            print("\nAmbulon et ses dependances ont ete supprimes.")
         else:
-            print("\nAmbulonà été supprimé (dépendances conservées).")
+            print("\nAmbulon a ete supprime (dependances conservees).")
 
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n\n[INFO] Désinstallation annulée par l'utilisateur")
+        print("\n\n[INFO] Desinstallation annulee par l'utilisateur")
         sys.exit(1)
     except Exception as e:
         print(f"\n[ERREUR] Exception inattendue: {e}")

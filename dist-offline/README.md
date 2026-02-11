@@ -1,14 +1,14 @@
-# Ambulon 3.0.3 - Installation Offline (Wheels Exposées)
+# Ambulon 3.0.4 - Installation Offline (Wheels Exposées)
 
 ## Installation
 
-1. Téléchargez `install_offline.py`
-2. Exécutez :
+1. Assurez-vous que le dossier `wheels/` contient toutes les wheels (dont `kroki`)
+2. Exécutez la commande suivante :
    ```bash
-   python install_offline.py
+   python -m pip install --no-index --find-links=wheels ambulon
    ```
 
-Le script téléchargera automatiquement les wheels compatibles avec votre version Python depuis ce dossier et les installera.
+Cette commande installe Ambulon et toutes les dépendances depuis les wheels locales.
 
 ## Désinstallation
 
@@ -27,7 +27,7 @@ python uninstall_offline.py
 ```
 dist-offline/
 ├── wheels/              # Wheels pour toutes les versions Python
-│   ├── ambulon-3.0.3-py3-none-any.whl
+│   ├── ambulon-3.0.4-py3-none-any.whl
 │   ├── pillow-*-cp310-*.whl
 │   ├── pillow-*-cp311-*.whl
 │   ├── pillow-*-cp312-*.whl
@@ -46,5 +46,5 @@ ambulon --help
 ```
 
 ---
-**Version**: 3.0.3
+**Version**: 3.0.4
 **Licence**: MIT

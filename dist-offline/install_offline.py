@@ -1,272 +1,157 @@
 #!/usr/bin/env python3
+# ============================================================================
+# FICHIER AUTO-GENERE par scripts/build_offline_package.py
+# Date de generation: 2026-02-11 13:54:27
+# Ne pas modifier manuellement - vos modifications seront ecrasees
+# ============================================================================
 """
-Installation offline d'Ambulon depuis wheels locales.
+Installation offline simplifiee d'Ambulon en UNE SEULE COMMANDE.
 
-Ce script installe Ambulon depuis le dossier wheels/ (OFFLINE).
-Pour telecharger les wheels, utilisez d'abord download_wheels.py.
+Phase 1 (ONLINE) : python download_wheels.py
+Phase 2 (OFFLINE): python install_offline.py
 
-Usage:
-    python install_offline.py
+Ce script installe ambulon + toutes dependances depuis wheels/
+pip resout automatiquement l'ordre des dependances.
 
-Prerequis:
-    - Python 3.10, 3.11 ou 3.12
-    - pip installe
-    - Dossier wheels/ avec les 70 wheels
-    - Aucune connexion internet requise
+IMPORTANT:
+    Ce script a ete genere automatiquement par build_offline_package.py
+    Date de generation: 2026-02-11 13:54:27
 """
 
 import sys
 import subprocess
 from pathlib import Path
-from typing import List, Set, Optional
+
+
+def check_virtual_env():
+    """Verifie et demande confirmation pour environnement virtuel."""
+    in_venv = hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
+
+    if not in_venv:
+        print("[AVERTISSEMENT] Vous n'etes pas dans un environnement virtuel Python")
+        print("                Il est FORTEMENT recommande d'utiliser un environnement virtuel")
+        print()
+        print("Pour creer un environnement virtuel:")
+        print("  python -m venv .venv")
+        print("  .venv\\Scripts\\activate  (Windows)")
+        print("  source .venv/bin/activate  (Linux/Mac)")
+        print()
+        response = input("Continuer quand meme sans environnement virtuel? (oui/non): ")
+        if response.lower() not in ['oui', 'o', 'yes', 'y']:
+            print("[INFO] Installation annulee par l'utilisateur")
+            sys.exit(0)
+        print()
+    else:
+        print("[OK] Environnement virtuel detecte")
 
 
 def check_python_version():
     """Verifie que Python 3.10+ est installe."""
     version = sys.version_info
     if version < (3, 10):
-        print(f"[ERREUR] Python 3.10+ requis, vous avez Python {version.major}.{version.minor}")
+        print(f"[ERREUR] Python 3.10+ requis, vous avez Python {{version.major}}.{{version.minor}}")
         print("\nTelechargez Python depuis: https://www.python.org/downloads/")
         sys.exit(1)
 
-    print(f"[OK] Python {version.major}.{version.minor}.{version.micro} detecte")
-    if version.major == 3 and version.minor in (10, 11, 12):
-        print(f"     Version compatible OK")
-    else:
-        print(f"[AVERTISSEMENT] Python {version.major}.{version.minor} non teste")
+    print(f"[OK] Python {{version.major}}.{{version.minor}}.{{version.micro}} detecte")
 
 
-def check_pip():
-    """Verifie que pip est installe."""
-    try:
-        subprocess.run(
-            [sys.executable, "-m", "pip", "--version"],
-            capture_output=True,
-            check=True
-        )
-        print(f"[OK] pip detecte")
-        return True
-    except subprocess.CalledProcessError:
-        print("[ERREUR] pip n'est pas installe")
-        sys.exit(1)
-
-
-def check_wheels_dir():
-    """Verifie que le dossier wheels/ existe."""
+def find_wheels_dir():
+    """Trouve le dossier wheels/ a cote du script."""
     script_dir = Path(__file__).parent
     wheels_dir = script_dir / "wheels"
 
     if not wheels_dir.exists():
-        print(f"[ERREUR] Dossier wheels/ introuvable: {wheels_dir}")
-        print()
-        print("Solution:")
-        print("  1. Telechargez les wheels d'abord:")
-        print("     python download_wheels.py")
-        print()
-        print("  2. Ou clonez le depot avec les wheels:")
-        print("     git clone https://github.com/warchosian/ambulon.git -b preprod/v3.0.2-stable")
+        print("[ERREUR] Dossier wheels/ introuvable")
+        print(f"Attendu: {{wheels_dir}}")
+        print("\nExecutez d'abord : python download_wheels.py")
         sys.exit(1)
 
     wheels_count = len(list(wheels_dir.glob("*.whl")))
     if wheels_count == 0:
-        print(f"[ERREUR] Dossier wheels/ vide: {wheels_dir}")
-        print()
-        print("Solution:")
-        print("  Telechargez les wheels d'abord:")
-        print("  python download_wheels.py")
+        print("[ERREUR] Aucune wheel trouvee dans wheels/")
+        print("\nExecutez d'abord : python download_wheels.py")
         sys.exit(1)
 
-    print(f"[OK] Dossier wheels/ trouve: {wheels_dir}")
-    print(f"     {wheels_count} wheels disponibles")
-
-    # Verifier qu'ambulon est present
-    ambulon_wheels = list(wheels_dir.glob("ambulon-*.whl"))
-    if not ambulon_wheels:
-        print(f"[ERREUR] Wheel ambulon introuvable dans {wheels_dir}")
-        sys.exit(1)
-
-    print(f"     Ambulon wheel: {ambulon_wheels[0].name}")
-
+    print(f"[OK] {{wheels_count}} wheels trouvees dans: {{wheels_dir}}")
     return wheels_dir
 
 
-def install_package(package_name, wheels_dir, no_deps=False):
-    """Installe un package depuis le dossier wheels/."""
-    print(f"\n[INFO] Installation de {package_name}...")
-
-    cmd = [
-        sys.executable, "-m", "pip", "install",
-        "--no-index",
-        "--find-links", str(wheels_dir),
-        package_name
-    ]
-
-    if no_deps:
-        cmd.append("--no-deps")
-
-    try:
-        subprocess.run(cmd, check=True)
-        print(f"[OK] {package_name} installe")
-        return True
-    except subprocess.CalledProcessError as e:
-        print(f"[ERREUR] Echec de l'installation de {package_name}: {e}")
-        return False
-
-
-def _parse_poetry_lock(lock_path: Path) -> List[str]:
-    """Parse poetry.lock for main dependencies (best-effort, no external deps)."""
-    deps: List[str] = []
-    seen: Set[str] = set()
-    if not lock_path.exists():
-        return deps
-
-    current_name: Optional[str] = None
-    current_category: Optional[str] = None
-
-    for raw_line in lock_path.read_text(encoding="utf-8").splitlines():
-        line = raw_line.strip()
-        if line == "[[package]]":
-            if current_name and (current_category in (None, "main")) and current_name not in seen:
-                deps.append(current_name)
-                seen.add(current_name)
-            current_name = None
-            current_category = None
-            continue
-
-        if line.startswith("name = "):
-            value = line.split("=", 1)[1].strip().strip('"').strip("'")
-            current_name = value
-            continue
-
-        if line.startswith("category = "):
-            value = line.split("=", 1)[1].strip().strip('"').strip("'")
-            current_category = value
-            continue
-
-    if current_name and (current_category in (None, "main")) and current_name not in seen:
-        deps.append(current_name)
-        seen.add(current_name)
-
-    return deps
-
-
-def _parse_pyproject_dependencies(pyproject_path: Path) -> List[str]:
-    """Parse pyproject.toml for [tool.poetry.dependencies] (best-effort)."""
-    if not pyproject_path.exists():
-        return []
-
-    try:
-        import tomllib  # Python 3.11+
-    except Exception:
-        tomllib = None
-
-    if tomllib is not None:
-        data = tomllib.loads(pyproject_path.read_text(encoding="utf-8"))
-        deps = data.get("tool", {}).get("poetry", {}).get("dependencies", {})
-        return [name for name in deps.keys() if name != "python"]
-
-    # Fallback simple parser (Python 3.10 without tomllib)
-    deps: List[str] = []
-    in_section = False
-    for raw_line in pyproject_path.read_text(encoding="utf-8").splitlines():
-        line = raw_line.strip()
-        if not line or line.startswith("#"):
-            continue
-        if line.startswith("[") and line.endswith("]"):
-            in_section = (line == "[tool.poetry.dependencies]")
-            continue
-        if in_section and "=" in line:
-            name = line.split("=", 1)[0].strip()
-            if name != "python":
-                deps.append(name)
-    return deps
-
-
-def resolve_dependencies(project_root: Path) -> List[str]:
-    """Resolve dependencies with best effort: poetry.lock -> pyproject.toml."""
-    lock_path = project_root / "poetry.lock"
-    pyproject_path = project_root / "pyproject.toml"
-
-    deps = _parse_poetry_lock(lock_path)
-    source = "poetry.lock"
-    if not deps:
-        deps = _parse_pyproject_dependencies(pyproject_path)
-        source = "pyproject.toml"
-
-    if not deps:
-        print("[AVERTISSEMENT] Aucun lock/pyproject trouve. Installation directe d'ambulon.")
-        return []
-
-    # Ensure kroki is included in offline install
-    if "kroki" not in deps:
-        deps.append("kroki")
-
-    # Ensure ambulon is installed last (separate step)
-    deps = [d for d in deps if d != "ambulon"]
-    print(f"[INFO] Dependances resolues depuis: {source}")
-    return deps
-
-
 def install_ambulon(wheels_dir):
-    """Installe ambulon depuis les wheels locales (MODE OFFLINE)."""
-    print()
-    print("="*70)
-    print("  INSTALLATION D'AMBULON (MODE OFFLINE)")
-    print("="*70)
-    print()
-    print("[INFO] Mode: OFFLINE (pas de connexion internet requise)")
-    print("       Installation depuis les wheels locales uniquement")
+    """Installe ambulon + toutes dependances en une seule commande."""
+    print("\n[INFO] Installation d'ambulon + dependances...")
+    print("       Mode OFFLINE : aucun acces internet requis")
     print()
 
     cmd = [
         sys.executable, "-m", "pip", "install",
-        "--no-index",
-        "--find-links", str(wheels_dir),
-        "ambulon"
+        "--no-index",                    # Pas d'acces internet
+        "--find-links", str(wheels_dir), # Cherche dans wheels/
+        "ambulon"                        # Package principal
     ]
 
-    # Afficher la commande complete
-    cmd_str = ' '.join(cmd)
-    print(f"[CMD] {cmd_str}")
-    print()
-
-    # Afficher la commande simplifiee
-    simple_cmd = f"pip install --no-index --find-links={wheels_dir.name} ambulon"
-    print(f"[INFO] Equivalent simplifie:")
-    print(f"       {simple_cmd}")
+    # Afficher la commande qui va etre executee
+    cmd_str = " ".join(cmd)
+    print(f"Commande executee :")
+    print(f"  {cmd_str}")
     print()
 
     try:
-        subprocess.run(cmd, check=True)
-        print("\n[OK] Installation terminee avec succes ! OK")
+        result = subprocess.run(
+            cmd,
+            check=True,
+            text=True,
+            capture_output=True  # Capture la sortie pour ne pas polluer
+        )
+
+        # Afficher uniquement les lignes importantes
+        output_lines = result.stdout.strip().split('\n')
+        print("[INFO] Installation en cours...")
+
+        # Afficher les packages installes/deja presents
+        for line in output_lines:
+            if 'Successfully installed' in line or 'Requirement already satisfied' in line:
+                print(f"  {line}")
+            elif 'Installing collected packages' in line:
+                print(f"  {line}")
+
+        print()
+        print("[OK] Installation terminee")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"\n[ERREUR] Installation echouee: {e}")
+        print(f"\n[ERREUR] Installation echouee (code {e.returncode})")
+        print("\nSortie pip :")
+        print(e.stdout)
+        if e.stderr:
+            print("\nErreurs :")
+            print(e.stderr)
         return False
 
 
 def verify_installation():
-    """Verifie que l'installation a reussi."""
+    """Verifie que ambulon est installe correctement."""
     print("\n" + "="*70)
     print("  VERIFICATION")
     print("="*70)
+    print()
+    print("Commande executee : ambulon --version")
+    print()
 
     try:
         result = subprocess.run(
             ["ambulon", "--version"],
             capture_output=True,
             text=True,
-            check=True
+            check=True,
+            timeout=10
         )
-        print(f"\n[OK] {result.stdout.strip()}")
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        print("\n[INFO] Redemarrez votre terminal puis utilisez:")
-        print("       ambulon --version")
-
-    print("\nCommandes disponibles:")
-    print("  ambulon --help")
-    print("  ambulon process <fichier.pdf>")
-    print("  ambulon server")
+        print(f"[OK] {result.stdout.strip()}")
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
+        print("[INFO] La commande 'ambulon' n'est pas encore reconnue")
+        print("       Redemarrez votre terminal ou utilisez:")
+        print("       python -m app.cli.cli --version")
+        return False
 
 
 def main():
@@ -275,39 +160,43 @@ def main():
     print("  INSTALLATION OFFLINE D'AMBULON")
     print("="*70)
     print()
+    print("[INFO] Script auto-genere le 2026-02-11 13:54:27")
+    print("[INFO] Par scripts/build_offline_package.py")
+    print()
 
     # Verifications
     check_python_version()
-    check_pip()
     print()
 
-    # Verification du dossier wheels
+    check_virtual_env()
+    print()
+
+    wheels_dir = find_wheels_dir()
+    print()
+
+    # Installation en UNE SEULE COMMANDE
     print("="*70)
-    print("  VERIFICATION DES WHEELS")
+    print("  INSTALLATION")
+    print("="*70)
+
+    if not install_ambulon(wheels_dir):
+        print("\n[ERREUR] Installation incomplete")
+        sys.exit(1)
+
+    # Verification
+    verify_installation()
+
+    print()
+    print("="*70)
+    print("  INSTALLATION TERMINEE")
     print("="*70)
     print()
-    wheels_dir = check_wheels_dir()
-
-    # Installation des dependances (si resolues)
-    deps = resolve_dependencies(Path(__file__).resolve().parent.parent)
-    failed = []
-    for package in deps:
-        if not install_package(package, wheels_dir):
-            failed.append(package)
-
-    if failed:
-        print(f"\n[ERREUR] {len(failed)} dependance(s) ont echoue:")
-        for pkg in failed:
-            print(f"  - {pkg}")
-        print("\nL'installation est incomplete.")
-        sys.exit(1)
-
-    # Installation
-    if install_ambulon(wheels_dir):
-        verify_installation()
-    else:
-        print("\n[ERREUR] Installation echouee")
-        sys.exit(1)
+    print("[OK] Ambulon est installe !")
+    print()
+    print("Commandes disponibles:")
+    print("  ambulon --help")
+    print("  ambulon md2html fichier.md")
+    print()
 
 
 if __name__ == "__main__":
@@ -317,7 +206,7 @@ if __name__ == "__main__":
         print("\n\n[INFO] Installation annulee par l'utilisateur")
         sys.exit(1)
     except Exception as e:
-        print(f"\n[ERREUR] Exception inattendue: {e}")
+        print(f"\n[ERREUR] Exception inattendue: {{e}}")
         import traceback
         traceback.print_exc()
         sys.exit(1)

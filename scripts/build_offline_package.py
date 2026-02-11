@@ -26,6 +26,7 @@ import zipfile
 import tempfile
 from pathlib import Path
 import re
+from typing import List, Optional, Set
 
 
 def read_version_from_pyproject():
@@ -44,13 +45,48 @@ def read_version_from_pyproject():
         return match.group(1)
 
 
-def read_dependencies_from_pyproject():
-    """Extrait les dépendances depuis pyproject.toml."""
-    pyproject_path = Path("pyproject.toml")
+def _parse_poetry_lock(lock_path: Path) -> List[str]:
+    """Parse poetry.lock for main dependencies (best-effort, no external deps)."""
+    deps: List[str] = []
+    seen: Set[str] = set()
+    if not lock_path.exists():
+        return deps
+
+    current_name: Optional[str] = None
+    current_category: Optional[str] = None
+
+    for raw_line in lock_path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if line == "[[package]]":
+            if current_name and (current_category in (None, "main")) and current_name not in seen:
+                deps.append(current_name)
+                seen.add(current_name)
+            current_name = None
+            current_category = None
+            continue
+
+        if line.startswith("name = "):
+            value = line.split("=", 1)[1].strip().strip('"').strip("'")
+            current_name = value
+            continue
+
+        if line.startswith("category = "):
+            value = line.split("=", 1)[1].strip().strip('"').strip("'")
+            current_category = value
+            continue
+
+    if current_name and (current_category in (None, "main")) and current_name not in seen:
+        deps.append(current_name)
+        seen.add(current_name)
+
+    return deps
+
+
+def _parse_pyproject_dependencies(pyproject_path: Path) -> List[str]:
+    """Parse pyproject.toml for [tool.poetry.dependencies] (best-effort)."""
     with open(pyproject_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Extraire la section [tool.poetry.dependencies]
     match = re.search(
         r'\[tool\.poetry\.dependencies\](.*?)(?=\n\[|\Z)',
         content,
@@ -69,10 +105,28 @@ def read_dependencies_from_pyproject():
             continue
         if '=' in line:
             dep_name = line.split('=')[0].strip()
-            # Ignorer python
             if dep_name != 'python':
                 dependencies.append(dep_name)
 
+    return dependencies
+
+
+def resolve_dependencies() -> List[str]:
+    """Résout les dépendances: poetry.lock -> pyproject.toml."""
+    lock_path = Path("poetry.lock")
+    pyproject_path = Path("pyproject.toml")
+
+    dependencies = _parse_poetry_lock(lock_path)
+    source = "poetry.lock"
+    if not dependencies:
+        dependencies = _parse_pyproject_dependencies(pyproject_path)
+        source = "pyproject.toml"
+
+    # S'assurer que kroki est présent (obligatoire)
+    if "kroki" not in dependencies:
+        dependencies.append("kroki")
+
+    print(f"[INFO] Dépendances résolues depuis: {source}")
     return dependencies
 
 
@@ -880,6 +934,202 @@ def build_zip_package(version, dependencies):
     print()
 
 
+def _generate_download_wheels_script(dist_offline_dir: Path, github_base_url: str) -> None:
+    """Generate dist-offline/download_wheels.py from current wheels/."""
+    wheels_dir = dist_offline_dir / "wheels"
+    wheels = sorted([w.name for w in wheels_dir.glob("*.whl")])
+    ambulon_wheels = sorted([w for w in wheels if w.startswith("ambulon-")])
+    if not ambulon_wheels:
+        print("[ERREUR] Aucune wheel ambulon trouvée dans dist-offline/wheels")
+        sys.exit(1)
+    other_wheels = [w for w in wheels if not w.startswith("ambulon-")]
+    wheels = ambulon_wheels + other_wheels
+
+    if not wheels:
+        print("[ERREUR] Aucun wheel trouve pour generer download_wheels.py")
+        sys.exit(1)
+
+    script_path = dist_offline_dir / "download_wheels.py"
+    wheels_lines = ",\n    ".join([f"\"{w}\"" for w in wheels])
+
+    content = f"""#!/usr/bin/env python3
+\"\"\"
+Telechargement des wheels Ambulon depuis GitHub.
+
+Ce script telecharge uniquement les wheels (ONLINE).
+Pour installer, utilisez ensuite install_offline.py.
+
+Usage:
+    python download_wheels.py
+
+Prerequis:
+    - Python 3.10, 3.11 ou 3.12
+    - Connexion internet REQUISE
+\"\"\"
+
+import sys
+import urllib.request
+import urllib.error
+from pathlib import Path
+
+
+# Configuration
+GITHUB_BASE_URL = \"{github_base_url}\"
+WHEELS_TO_DOWNLOAD = [
+    {wheels_lines}
+]
+
+
+def check_python_version():
+    \"\"\"Verifie que Python 3.10+ est installe.\"\"\"
+    version = sys.version_info
+    if version < (3, 10):
+        print(f\"[ERREUR] Python 3.10+ requis, vous avez Python {{version.major}}.{{version.minor}}\")
+        print(\"\\nTelechargez Python depuis: https://www.python.org/downloads/\")
+        sys.exit(1)
+
+    print(f\"[OK] Python {{version.major}}.{{version.minor}}.{{version.micro}} detecte\")
+
+
+def create_wheels_dir():
+    \"\"\"Cree le repertoire wheels/ s'il n'existe pas.\"\"\"
+    script_dir = Path(__file__).parent
+    wheels_dir = script_dir / \"wheels\"
+
+    wheels_dir.mkdir(exist_ok=True)
+    print(f\"[OK] Repertoire wheels/ cree: {{wheels_dir}}\")
+    return wheels_dir
+
+
+def download_wheel(wheel_name, wheels_dir):
+    \"\"\"Telecharge une wheel depuis GitHub.\"\"\"
+    url = f\"{{GITHUB_BASE_URL}}/{{wheel_name}}\"
+    dest = wheels_dir / wheel_name
+
+    if dest.exists():
+        print(f\"  [SKIP] {{wheel_name}} (deja presente)\")
+        return True
+
+    try:
+        print(f\"  [DOWN] {{wheel_name}}...\", end='', flush=True)
+        urllib.request.urlretrieve(url, dest)
+        print(\" OK\")
+        return True
+    except urllib.error.HTTPError as e:
+        print(f\" X (HTTP {{e.code}})\")
+        return False
+    except Exception as e:
+        print(f\" X ({{e}})\")
+        return False
+
+
+def download_all_wheels(wheels_dir):
+    \"\"\"Telecharge toutes les wheels depuis GitHub.\"\"\"
+    print(f\"\\n[INFO] Telechargement de {{len(WHEELS_TO_DOWNLOAD)}} wheels depuis GitHub...\")
+    print(f\"       URL: {{GITHUB_BASE_URL}}\")
+    print(f\"       ! CONNEXION INTERNET REQUISE\")
+    print()
+
+    failed = []
+    success = 0
+    skipped = 0
+
+    for wheel_name in WHEELS_TO_DOWNLOAD:
+        dest = wheels_dir / wheel_name
+        if dest.exists():
+            skipped += 1
+            if download_wheel(wheel_name, wheels_dir):
+                continue
+        else:
+            if download_wheel(wheel_name, wheels_dir):
+                success += 1
+            else:
+                failed.append(wheel_name)
+
+    print()
+    if failed:
+        print(f\"[ERREUR] {{len(failed)}} wheel(s) ont echoue:\")
+        for wheel in failed:
+            print(f\"  - {{wheel}}\")
+        return False
+
+    if skipped > 0:
+        print(f\"[OK] {{success}} wheels telechargees, {{skipped}} deja presentes\")
+    else:
+        print(f\"[OK] {{success}}/{{len(WHEELS_TO_DOWNLOAD)}} wheels telechargees\")
+
+    total_size = sum(f.stat().st_size for f in wheels_dir.glob(\"*.whl\"))
+    total_mb = total_size / (1024 * 1024)
+    print(f\"     Taille totale: {{total_mb:.1f}} MB\")
+
+    return True
+
+
+def main():
+    \"\"\"Point d'entree principal.\"\"\"
+    print(\"=\"*70)
+    print(\"  TELECHARGEMENT DES WHEELS AMBULON\")
+    print(\"=\"*70)
+    print()
+
+    check_python_version()
+    print()
+
+    print(\"=\"*70)
+    print(\"  PHASE 1 : CREATION DU REPERTOIRE\")
+    print(\"=\"*70)
+    print()
+    wheels_dir = create_wheels_dir()
+
+    print(\"\\n\" + \"=\"*70)
+    print(\"  PHASE 2 : TELECHARGEMENT DES WHEELS (ONLINE)\")
+    print(\"=\"*70)
+
+    if not download_all_wheels(wheels_dir):
+        print(\"\\n[ERREUR] Telechargement echoue\")
+        sys.exit(1)
+
+    print(\"\\n\" + \"=\"*70)
+    print(\"  TELECHARGEMENT TERMINE\")
+    print(\"=\"*70)
+    print()
+    print(\"[OK] Les wheels sont pretes dans: wheels/\")
+    print()
+
+    print(\"Wheels telechargees:\")
+    wheels_list = sorted(wheels_dir.glob(\"*.whl\"))
+    for wheel in wheels_list:
+        size_kb = wheel.stat().st_size / 1024
+        print(f\"  - {{wheel.name}} ({{size_kb:.1f}} KB)\")
+
+    print()
+    print(\"=\"*70)
+    print(\"  PROCHAINE ETAPE : INSTALLATION (OFFLINE)\")
+    print(\"=\"*70)
+    print()
+    print(\"Pour installer Ambulon (sans connexion internet), executez:\")
+    print()
+    print(\"  python install_offline.py\")
+    print()
+
+
+if __name__ == \"__main__\":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print(\"\\n\\n[INFO] Telechargement annule par l'utilisateur\")
+        sys.exit(1)
+    except Exception as e:
+        print(f\"\\n[ERREUR] Exception inattendue: {{e}}\")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+"""
+
+    script_path.write_text(content, encoding="utf-8")
+    print(f"[OK] download_wheels.py mis a jour: {script_path}")
+
+
 def build_exposed_package(version, dependencies):
     """Build le package offline avec wheels exposées (nouveau mode)."""
     # 1. Build la wheel
@@ -913,35 +1163,48 @@ def build_exposed_package(version, dependencies):
     print("Étape 5/5 : Copie des scripts d'installation")
     print("="*60)
 
-    scripts_source_dir = Path("dist-offline")
-    install_script = scripts_source_dir / "install_offline.py"
-    uninstall_script = scripts_source_dir / "uninstall_offline.py"
+    scripts_source_dir = Path("scripts")
+    dist_scripts_dir = Path("dist-offline")
+    install_src = scripts_source_dir / "install_offline.py"
+    uninstall_src = dist_scripts_dir / "uninstall_offline.py"
 
-    if not install_script.exists():
-        print(f"[ERREUR] {install_script} introuvable")
+    install_dst = dist_scripts_dir / "install_offline.py"
+    uninstall_dst = dist_scripts_dir / "uninstall_offline.py"
+
+    if install_src.exists():
+        shutil.copy2(install_src, install_dst)
+        print(f"[OK] install_offline.py mis à jour depuis scripts/")
+    elif install_dst.exists():
+        print(f"[OK] install_offline.py déjà présent dans dist-offline/")
+    else:
+        print(f"[ERREUR] install_offline.py introuvable (scripts/ ou dist-offline/)")
         sys.exit(1)
 
-    if not uninstall_script.exists():
-        print(f"[ERREUR] {uninstall_script} introuvable")
+    if not uninstall_src.exists():
+        print(f"[ERREUR] {uninstall_src} introuvable")
         sys.exit(1)
 
-    print(f"[OK] Scripts déjà en place:")
-    print(f"     {install_script}")
-    print(f"     {uninstall_script}")
+    print(f"[OK] Scripts prêts:")
+    print(f"     {install_dst}")
+    print(f"     {uninstall_dst}")
 
-    # 6. Créer un README
+    # 6. Mettre a jour download_wheels.py depuis les wheels actuelles
+    github_base_url = f"https://raw.githubusercontent.com/warchosian/ambulon/main/dist-offline/wheels"
+    _generate_download_wheels_script(dist_offline_dir, github_base_url)
+
+    # 7. Créer un README
     readme_path = dist_offline_dir / "README.md"
     readme_content = f"""# Ambulon {version} - Installation Offline (Wheels Exposées)
 
 ## Installation
 
-1. Téléchargez `install_offline.py`
-2. Exécutez :
+1. Assurez-vous que le dossier `wheels/` contient toutes les wheels (dont `kroki`)
+2. Exécutez la commande suivante :
    ```bash
-   python install_offline.py
+   python -m pip install --no-index --find-links=wheels ambulon
    ```
 
-Le script téléchargera automatiquement les wheels compatibles avec votre version Python depuis ce dossier et les installera.
+Cette commande installe Ambulon et toutes les dépendances depuis les wheels locales.
 
 ## Désinstallation
 
@@ -1000,12 +1263,12 @@ ambulon --help
     print(f"  {wheels_dir.absolute()}")
     print(f"  {wheels_count} wheels ({total_size:.1f} MB)")
     print(f"\nScripts d'installation:")
-    print(f"  {install_script.absolute()}")
-    print(f"  {uninstall_script.absolute()}")
+    print(f"  {install_dst.absolute()}")
+    print(f"  {uninstall_dst.absolute()}")
     print(f"\nPour distribuer:")
     print(f"  1. Committez dist-offline/ dans votre dépôt")
-    print(f"  2. Les utilisateurs téléchargent install_offline.py")
-    print(f"  3. Exécutent: python install_offline.py")
+    print(f"  2. Les utilisateurs téléchargent dist-offline/")
+    print(f"  3. Exécutent: python -m pip install --no-index --find-links=wheels ambulon")
     print()
 
 
@@ -1044,7 +1307,7 @@ def main():
     print(f"\n[INFO] Version detectee: {version}")
 
     # Lire les dépendances
-    dependencies = read_dependencies_from_pyproject()
+    dependencies = resolve_dependencies()
     print(f"[INFO] Dependances detectees: {len(dependencies)}")
 
     # Dispatcher selon le mode
