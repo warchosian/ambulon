@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # ============================================================================
 # FICHIER AUTO-GENERE par scripts/build_offline_package.py
-# Date de generation: 2026-02-11 13:54:27
+# Date de generation: 2026-02-12 11:18:13
 # Ne pas modifier manuellement - vos modifications seront ecrasees
 # ============================================================================
 """
@@ -17,7 +17,7 @@ Usage:
 
 IMPORTANT:
     Ce script a ete genere automatiquement par build_offline_package.py
-    Date de generation: 2026-02-11 13:54:27
+    Date de generation: 2026-02-12 11:18:13
 """
 
 import sys
@@ -110,7 +110,7 @@ def main():
     print("  DESINSTALLATION D'AMBULON")
     print("="*70)
     print()
-    print("[INFO] Script auto-genere le 2026-02-11 13:54:27")
+    print("[INFO] Script auto-genere le 2026-02-12 11:18:13")
     print("[INFO] Par scripts/build_offline_package.py")
     print()
 

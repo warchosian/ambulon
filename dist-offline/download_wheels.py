@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # ============================================================================
 # FICHIER AUTO-GENERE par scripts/build_offline_package.py
-# Date de generation: 2026-02-11 13:54:27
+# Date de generation: 2026-02-12 11:18:13
 # Ne pas modifier manuellement - vos modifications seront ecrasees
 # ============================================================================
 """
@@ -28,7 +28,7 @@ from pathlib import Path
 
 
 # Configuration
-GITHUB_BASE_URL = "https://raw.githubusercontent.com/warchosian/ambulon/main/dist-offline/wheels"
+GITHUB_BASE_URL = "https://github.com/warchosian/ambulon/raw/main/dist-offline/wheels"
 WHEELS_TO_DOWNLOAD = [
     "ambulon-3.0.2-py3-none-any.whl",
     "ambulon-3.0.3-py3-none-any.whl",
@@ -121,6 +121,7 @@ WHEELS_TO_DOWNLOAD = [
     "pygments-2.19.2-py3-none-any.whl",
     "pyjwt-2.11.0-py3-none-any.whl",
     "pymupdf-1.26.7-cp310-abi3-win_amd64.whl",
+    "pymupdf-1.27.1-cp310-abi3-win_amd64.whl",
     "pytesseract-0.3.13-py3-none-any.whl",
     "pytest-8.4.2-py3-none-any.whl",
     "pytest-9.0.2-py3-none-any.whl",
@@ -257,7 +258,7 @@ def main():
     print("  TELECHARGEMENT DES WHEELS AMBULON")
     print("="*70)
     print()
-    print("[INFO] Script auto-genere le 2026-02-11 13:54:27")
+    print("[INFO] Script auto-genere le 2026-02-12 11:18:13")
     print("[INFO] Par scripts/build_offline_package.py")
     print()
 
@@ -288,8 +289,24 @@ def main():
     print("Wheels telechargees:")
     wheels_list = sorted(wheels_dir.glob("*.whl"))
     for wheel in wheels_list:
-        size_kb = wheel.stat().st_size / 1024
-        print(f"  - {wheel.name} ({size_kb:.1f} KB)")
+        size_bytes = wheel.stat().st_size
+        size_formatted = f"{size_bytes:,}".replace(",", " ")
+        print(f"  - {wheel.name} ({size_formatted} octets)")
+
+    # Calcul taille totale
+    total_bytes = sum(w.stat().st_size for w in wheels_list)
+    total_formatted = f"{total_bytes:,}".replace(",", " ")
+    total_mb = total_bytes / (1024 * 1024)
+
+    print()
+    print("="*70)
+    print("  RECAPITULATIF")
+    print("="*70)
+    print()
+    print(f"Source GitHub : {GITHUB_BASE_URL}")
+    print(f"Stockees dans : {wheels_dir.absolute()}")
+    print(f"Nombre        : {len(wheels_list)} wheels")
+    print(f"Taille totale : {total_formatted} octets ({total_mb:.1f} MB)")
 
     print()
     print("="*70)

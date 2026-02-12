@@ -936,6 +936,8 @@ def build_zip_package(version, dependencies):
 
 def _generate_download_wheels_script(dist_offline_dir: Path, github_base_url: str) -> None:
     """Generate dist-offline/download_wheels.py from current wheels/."""
+    from datetime import datetime
+
     wheels_dir = dist_offline_dir / "wheels"
     wheels = sorted([w.name for w in wheels_dir.glob("*.whl")])
     ambulon_wheels = sorted([w for w in wheels if w.startswith("ambulon-")])
@@ -951,8 +953,14 @@ def _generate_download_wheels_script(dist_offline_dir: Path, github_base_url: st
 
     script_path = dist_offline_dir / "download_wheels.py"
     wheels_lines = ",\n    ".join([f"\"{w}\"" for w in wheels])
+    generation_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     content = f"""#!/usr/bin/env python3
+# ============================================================================
+# FICHIER AUTO-GENERE par scripts/build_offline_package.py
+# Date de generation: {generation_date}
+# Ne pas modifier manuellement - vos modifications seront ecrasees
+# ============================================================================
 \"\"\"
 Telechargement des wheels Ambulon depuis GitHub.
 
@@ -965,6 +973,9 @@ Usage:
 Prerequis:
     - Python 3.10, 3.11 ou 3.12
     - Connexion internet REQUISE
+
+IMPORTANT:
+    Ce script a ete genere automatiquement par build_offline_package.py
 \"\"\"
 
 import sys
@@ -1071,6 +1082,9 @@ def main():
     print(\"  TELECHARGEMENT DES WHEELS AMBULON\")
     print(\"=\"*70)
     print()
+    print(\"[INFO] Script auto-genere le {generation_date}\")
+    print(\"[INFO] Par scripts/build_offline_package.py\")
+    print()
 
     check_python_version()
     print()
@@ -1099,8 +1113,24 @@ def main():
     print(\"Wheels telechargees:\")
     wheels_list = sorted(wheels_dir.glob(\"*.whl\"))
     for wheel in wheels_list:
-        size_kb = wheel.stat().st_size / 1024
-        print(f\"  - {{wheel.name}} ({{size_kb:.1f}} KB)\")
+        size_bytes = wheel.stat().st_size
+        size_formatted = f\"{{size_bytes:,}}\".replace(\",\", \" \")
+        print(f\"  - {{wheel.name}} ({{size_formatted}} octets)\")
+
+    # Calcul taille totale
+    total_bytes = sum(w.stat().st_size for w in wheels_list)
+    total_formatted = f\"{{total_bytes:,}}\".replace(\",\", \" \")
+    total_mb = total_bytes / (1024 * 1024)
+
+    print()
+    print(\"=\"*70)
+    print(\"  RECAPITULATIF\")
+    print(\"=\"*70)
+    print()
+    print(f\"Source GitHub : {{GITHUB_BASE_URL}}\")
+    print(f\"Stockees dans : {{wheels_dir.absolute()}}\")
+    print(f\"Nombre        : {{len(wheels_list)}} wheels\")
+    print(f\"Taille totale : {{total_formatted}} octets ({{total_mb:.1f}} MB)\")
 
     print()
     print(\"=\"*70)
@@ -1128,6 +1158,434 @@ if __name__ == \"__main__\":
 
     script_path.write_text(content, encoding="utf-8")
     print(f"[OK] download_wheels.py mis a jour: {script_path}")
+
+
+def _generate_install_offline_script(dist_offline_dir: Path) -> None:
+    """Generate dist-offline/install_offline.py."""
+    from datetime import datetime
+
+    script_path = dist_offline_dir / "install_offline.py"
+    generation_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Template sans f-string pour éviter les problèmes d'échappement
+    template = '''#!/usr/bin/env python3
+# ============================================================================
+# FICHIER AUTO-GENERE par scripts/build_offline_package.py
+# Date de generation: __GENERATION_DATE__
+# Ne pas modifier manuellement - vos modifications seront ecrasees
+# ============================================================================
+"""
+Installation offline simplifiee d'Ambulon en UNE SEULE COMMANDE.
+
+Phase 1 (ONLINE) : python download_wheels.py
+Phase 2 (OFFLINE): python install_offline.py
+
+Ce script installe ambulon + toutes dependances depuis wheels/
+pip resout automatiquement l'ordre des dependances.
+
+IMPORTANT:
+    Ce script a ete genere automatiquement par build_offline_package.py
+    Date de generation: __GENERATION_DATE__
+"""
+
+import sys
+import subprocess
+from pathlib import Path
+
+
+def check_virtual_env():
+    """Verifie et demande confirmation pour environnement virtuel."""
+    in_venv = hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
+
+    if not in_venv:
+        print("[AVERTISSEMENT] Vous n'etes pas dans un environnement virtuel Python")
+        print("                Il est FORTEMENT recommande d'utiliser un environnement virtuel")
+        print()
+        print("Pour creer un environnement virtuel:")
+        print("  python -m venv .venv")
+        print("  .venv\\\\Scripts\\\\activate  (Windows)")
+        print("  source .venv/bin/activate  (Linux/Mac)")
+        print()
+        response = input("Continuer quand meme sans environnement virtuel? (oui/non): ")
+        if response.lower() not in ['oui', 'o', 'yes', 'y']:
+            print("[INFO] Installation annulee par l'utilisateur")
+            sys.exit(0)
+        print()
+    else:
+        print("[OK] Environnement virtuel detecte")
+
+
+def check_python_version():
+    \"\"\"Verifie que Python 3.10+ est installe.\"\"\"
+    version = sys.version_info
+    if version < (3, 10):
+        print(f\"[ERREUR] Python 3.10+ requis, vous avez Python {{version.major}}.{{version.minor}}\")
+        print(\"\\nTelechargez Python depuis: https://www.python.org/downloads/\")
+        sys.exit(1)
+
+    print(f\"[OK] Python {{version.major}}.{{version.minor}}.{{version.micro}} detecte\")
+
+
+def find_wheels_dir():
+    \"\"\"Trouve le dossier wheels/ a cote du script.\"\"\"
+    script_dir = Path(__file__).parent
+    wheels_dir = script_dir / \"wheels\"
+
+    if not wheels_dir.exists():
+        print(\"[ERREUR] Dossier wheels/ introuvable\")
+        print(f\"Attendu: {{wheels_dir}}\")
+        print(\"\\nExecutez d'abord : python download_wheels.py\")
+        sys.exit(1)
+
+    wheels_count = len(list(wheels_dir.glob(\"*.whl\")))
+    if wheels_count == 0:
+        print(\"[ERREUR] Aucune wheel trouvee dans wheels/\")
+        print(\"\\nExecutez d'abord : python download_wheels.py\")
+        sys.exit(1)
+
+    print(f\"[OK] {{wheels_count}} wheels trouvees dans: {{wheels_dir}}\")
+    return wheels_dir
+
+
+def install_ambulon(wheels_dir):
+    \"\"\"Installe ambulon + toutes dependances en une seule commande.\"\"\"
+    print(\"\\n[INFO] Installation d'ambulon + dependances...\")
+    print(\"       Mode OFFLINE : aucun acces internet requis\")
+    print()
+
+    cmd = [
+        sys.executable, \"-m\", \"pip\", \"install\",
+        \"--no-index\",                    # Pas d'acces internet
+        \"--find-links\", str(wheels_dir), # Cherche dans wheels/
+        \"ambulon\"                        # Package principal
+    ]
+
+    # Afficher la commande qui va etre executee
+    cmd_str = \" \".join(cmd)
+    print(f\"Commande executee :\")
+    print(f\"  {cmd_str}\")
+    print()
+
+    try:
+        result = subprocess.run(
+            cmd,
+            check=True,
+            text=True,
+            capture_output=True  # Capture la sortie pour ne pas polluer
+        )
+
+        # Afficher uniquement les lignes importantes
+        output_lines = result.stdout.strip().split('\\n')
+        print(\"[INFO] Installation en cours...\")
+
+        # Afficher les packages installes/deja presents
+        for line in output_lines:
+            if 'Successfully installed' in line or 'Requirement already satisfied' in line:
+                print(f\"  {line}\")
+            elif 'Installing collected packages' in line:
+                print(f\"  {line}\")
+
+        print()
+        print(\"[OK] Installation terminee\")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f\"\\n[ERREUR] Installation echouee (code {e.returncode})\")
+        print(\"\\nSortie pip :\")
+        print(e.stdout)
+        if e.stderr:
+            print(\"\\nErreurs :\")
+            print(e.stderr)
+        return False
+
+
+def verify_installation():
+    \"\"\"Verifie que ambulon est installe correctement.\"\"\"
+    print(\"\\n\" + \"=\"*70)
+    print(\"  VERIFICATION\")
+    print(\"=\"*70)
+    print()
+    print(\"Commande executee : ambulon --version\")
+    print()
+
+    try:
+        result = subprocess.run(
+            [\"ambulon\", \"--version\"],
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=10
+        )
+        print(f\"[OK] {result.stdout.strip()}\")
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
+        print(\"[INFO] La commande 'ambulon' n'est pas encore reconnue\")
+        print(\"       Redemarrez votre terminal ou utilisez:\")
+        print(\"       python -m app.cli.cli --version\")
+        return False
+
+
+def main():
+    \"\"\"Point d'entree principal.\"\"\"
+    print(\"=\"*70)
+    print(\"  INSTALLATION OFFLINE D'AMBULON\")
+    print(\"=\"*70)
+    print()
+    print(\"[INFO] Script auto-genere le {generation_date}\")
+    print(\"[INFO] Par scripts/build_offline_package.py\")
+    print()
+
+    # Verifications
+    check_python_version()
+    print()
+
+    check_virtual_env()
+    print()
+
+    wheels_dir = find_wheels_dir()
+    print()
+
+    # Installation en UNE SEULE COMMANDE
+    print(\"=\"*70)
+    print(\"  INSTALLATION\")
+    print(\"=\"*70)
+
+    if not install_ambulon(wheels_dir):
+        print(\"\\n[ERREUR] Installation incomplete\")
+        sys.exit(1)
+
+    # Verification
+    verify_installation()
+
+    print()
+    print(\"=\"*70)
+    print(\"  INSTALLATION TERMINEE\")
+    print(\"=\"*70)
+    print()
+    print(\"[OK] Ambulon est installe !\")
+    print()
+    print(\"Commandes disponibles:\")
+    print(\"  ambulon --help\")
+    print(\"  ambulon md2html fichier.md\")
+    print()
+
+
+if __name__ == \"__main__\":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print(\"\\n\\n[INFO] Installation annulee par l'utilisateur\")
+        sys.exit(1)
+    except Exception as e:
+        print(f\"\\n[ERREUR] Exception inattendue: {{e}}\")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+'''
+
+    # Remplacer les placeholders
+    content = template.replace("__GENERATION_DATE__", generation_date)
+    content = content.replace("{generation_date}", generation_date)
+
+    script_path.write_text(content, encoding="utf-8")
+    print(f"[OK] install_offline.py mis a jour: {script_path}")
+
+
+def _generate_uninstall_offline_script(dist_offline_dir: Path, dependencies: List[str]) -> None:
+    """Generate dist-offline/uninstall_offline.py with current dependencies."""
+    from datetime import datetime
+
+    script_path = dist_offline_dir / "uninstall_offline.py"
+    generation_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Extract main dependency names (exclude 'python')
+    dep_names = [d for d in dependencies if d != "python"]
+    # Format as Python list with proper indentation
+    deps_lines = ",\n            ".join([f'"{dep}"' for dep in dep_names[:15]])  # Top 15 deps
+
+    content = f"""#!/usr/bin/env python3
+# ============================================================================
+# FICHIER AUTO-GENERE par scripts/build_offline_package.py
+# Date de generation: {generation_date}
+# Ne pas modifier manuellement - vos modifications seront ecrasees
+# ============================================================================
+\"\"\"
+Script de desinstallation d'Ambulon.
+
+Ce script desinstalle Ambulon et optionnellement ses dependances.
+
+Usage:
+    python uninstall_offline.py
+
+    # Garder les dependances (desinstaller uniquement Ambulon)
+    python uninstall_offline.py --keep-deps
+
+IMPORTANT:
+    Ce script a ete genere automatiquement par build_offline_package.py
+    Date de generation: {generation_date}
+\"\"\"
+
+import sys
+import subprocess
+import argparse
+
+
+def check_virtual_env():
+    \"\"\"Verifie et informe sur l'environnement virtuel.\"\"\"
+    in_venv = hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
+
+    if not in_venv:
+        print(\"[AVERTISSEMENT] Vous n'etes pas dans un environnement virtuel Python\")
+        print(\"                La desinstallation affectera l'installation globale\")
+        print()
+        response = input(\"Continuer quand meme? (oui/non): \")
+        if response.lower() not in ['oui', 'o', 'yes', 'y']:
+            print(\"[INFO] Desinstallation annulee par l'utilisateur\")
+            sys.exit(0)
+        print()
+    else:
+        print(\"[OK] Environnement virtuel detecte\")
+
+
+def check_pip():
+    \"\"\"Verifie que pip est installe.\"\"\"
+    try:
+        subprocess.run(
+            [sys.executable, \"-m\", \"pip\", \"--version\"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print(f\"[OK] pip detecte\")
+        return True
+    except subprocess.CalledProcessError:
+        print(\"[ERREUR] pip n'est pas installe\")
+        sys.exit(1)
+
+
+def is_package_installed(package_name):
+    \"\"\"Verifie si un package est installe.\"\"\"
+    try:
+        subprocess.run(
+            [sys.executable, \"-m\", \"pip\", \"show\", package_name],
+            capture_output=True,
+            check=True
+        )
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+
+def uninstall_package(package_name):
+    \"\"\"Desinstalle un package.\"\"\"
+    if not is_package_installed(package_name):
+        print(f\"[SKIP] {{package_name}} (non installe)\")
+        return True
+
+    print(f\"[UNINSTALL] {{package_name}}...\", end='', flush=True)
+
+    try:
+        subprocess.run(
+            [sys.executable, \"-m\", \"pip\", \"uninstall\", \"-y\", package_name],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print(\" [OK]\")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f\" [ERR]\")
+        print(f\"  Erreur: {{e.stderr}}\")
+        return False
+
+
+def main():
+    \"\"\"Point d'entree principal.\"\"\"
+    parser = argparse.ArgumentParser(
+        description=\"Desinstallation d'Ambulon\"
+    )
+    parser.add_argument(
+        \"--keep-deps\",
+        action=\"store_true\",
+        help=\"Garder les dependances, desinstaller uniquement Ambulon\"
+    )
+    args = parser.parse_args()
+
+    print(\"=\"*70)
+    print(\"  DESINSTALLATION D'AMBULON\")
+    print(\"=\"*70)
+    print()
+    print(\"[INFO] Script auto-genere le {generation_date}\")
+    print(\"[INFO] Par scripts/build_offline_package.py\")
+    print()
+
+    # Verification
+    check_pip()
+    print()
+
+    check_virtual_env()
+    print()
+
+    if not is_package_installed(\"ambulon\"):
+        print(\"[INFO] Ambulon n'est pas installe\")
+        sys.exit(0)
+
+    print()
+
+    # Packages a desinstaller (ordre inverse de l'installation)
+    packages = [\"ambulon\"]
+
+    if not args.keep_deps:
+        print(\"[INFO] Desinstallation d'Ambulon ET de ses dependances\")
+        packages.extend([
+            {deps_lines}
+        ])
+    else:
+        print(\"[INFO] Desinstallation d'Ambulon uniquement\")
+
+    print()
+
+    # Desinstallation
+    failed = []
+
+    for package in packages:
+        if not uninstall_package(package):
+            failed.append(package)
+
+    # Resume
+    print()
+    print(\"=\"*70)
+    print(\"  RESUME\")
+    print(\"=\"*70)
+
+    if failed:
+        print(f\"\\n[ERREUR] {{len(failed)}} package(s) ont echoue:\")
+        for pkg in failed:
+            print(f\"  - {{pkg}}\")
+        sys.exit(1)
+    else:
+        print(\"\\n[OK] Desinstallation terminee avec succes !\")
+
+        if not args.keep_deps:
+            print(\"\\nAmbulon et ses dependances ont ete supprimes.\")
+        else:
+            print(\"\\nAmbulon a ete supprime (dependances conservees).\")
+
+
+if __name__ == \"__main__\":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print(\"\\n\\n[INFO] Desinstallation annulee par l'utilisateur\")
+        sys.exit(1)
+    except Exception as e:
+        print(f\"\\n[ERREUR] Exception inattendue: {{e}}\")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+"""
+
+    script_path.write_text(content, encoding="utf-8")
+    print(f"[OK] uninstall_offline.py mis a jour: {script_path}")
 
 
 def build_exposed_package(version, dependencies):
@@ -1158,39 +1616,19 @@ def build_exposed_package(version, dependencies):
     # 4. Télécharger les dépendances
     download_dependencies(dependencies, wheels_dir)
 
-    # 5. Copier les scripts d'installation/désinstallation
+    # 5. Generer les scripts d'installation/desinstallation
     print("\n" + "="*60)
-    print("Étape 5/5 : Copie des scripts d'installation")
+    print("Etape 5/5 : Generation des scripts")
     print("="*60)
 
-    scripts_source_dir = Path("scripts")
-    dist_scripts_dir = Path("dist-offline")
-    install_src = scripts_source_dir / "install_offline.py"
-    uninstall_src = dist_scripts_dir / "uninstall_offline.py"
+    github_base_url = f"https://github.com/warchosian/ambulon/raw/main/dist-offline/wheels"
+    print(f"[INFO] URL des wheels GitHub: {github_base_url}")
 
-    install_dst = dist_scripts_dir / "install_offline.py"
-    uninstall_dst = dist_scripts_dir / "uninstall_offline.py"
-
-    if install_src.exists():
-        shutil.copy2(install_src, install_dst)
-        print(f"[OK] install_offline.py mis à jour depuis scripts/")
-    elif install_dst.exists():
-        print(f"[OK] install_offline.py déjà présent dans dist-offline/")
-    else:
-        print(f"[ERREUR] install_offline.py introuvable (scripts/ ou dist-offline/)")
-        sys.exit(1)
-
-    if not uninstall_src.exists():
-        print(f"[ERREUR] {uninstall_src} introuvable")
-        sys.exit(1)
-
-    print(f"[OK] Scripts prêts:")
-    print(f"     {install_dst}")
-    print(f"     {uninstall_dst}")
-
-    # 6. Mettre a jour download_wheels.py depuis les wheels actuelles
-    github_base_url = f"https://raw.githubusercontent.com/warchosian/ambulon/main/dist-offline/wheels"
     _generate_download_wheels_script(dist_offline_dir, github_base_url)
+    _generate_install_offline_script(dist_offline_dir)
+    _generate_uninstall_offline_script(dist_offline_dir, dependencies)
+
+    print(f"[OK] Tous les scripts ont ete generes avec succes")
 
     # 7. Créer un README
     readme_path = dist_offline_dir / "README.md"
@@ -1262,13 +1700,14 @@ ambulon --help
     print(f"\nWheels exposées dans:")
     print(f"  {wheels_dir.absolute()}")
     print(f"  {wheels_count} wheels ({total_size:.1f} MB)")
-    print(f"\nScripts d'installation:")
-    print(f"  {install_dst.absolute()}")
-    print(f"  {uninstall_dst.absolute()}")
+    print(f"\nScripts générés:")
+    print(f"  {(dist_offline_dir / 'download_wheels.py').absolute()}")
+    print(f"  {(dist_offline_dir / 'install_offline.py').absolute()}")
+    print(f"  {(dist_offline_dir / 'uninstall_offline.py').absolute()}")
     print(f"\nPour distribuer:")
-    print(f"  1. Committez dist-offline/ dans votre dépôt")
-    print(f"  2. Les utilisateurs téléchargent dist-offline/")
-    print(f"  3. Exécutent: python -m pip install --no-index --find-links=wheels ambulon")
+    print(f"  1. Committez dist-offline/ dans votre depot Git")
+    print(f"  2. Les utilisateurs executent: python download_wheels.py (ONLINE)")
+    print(f"  3. Puis: python install_offline.py (OFFLINE)")
     print()
 
 
