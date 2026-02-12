@@ -1188,6 +1188,7 @@ IMPORTANT:
     Date de generation: __GENERATION_DATE__
 """
 
+import os
 import sys
 import subprocess
 from pathlib import Path
@@ -1195,7 +1196,12 @@ from pathlib import Path
 
 def check_virtual_env():
     """Verifie et demande confirmation pour environnement virtuel."""
-    in_venv = hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
+    # Detection robuste : variable d'env, real_prefix (virtualenv), base_prefix (venv)
+    in_venv = (
+        os.getenv('VIRTUAL_ENV') is not None or
+        hasattr(sys, 'real_prefix') or
+        (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
+    )
 
     if not in_venv:
         print("[AVERTISSEMENT] Vous n'etes pas dans un environnement virtuel Python")
@@ -1424,6 +1430,7 @@ IMPORTANT:
     Date de generation: {generation_date}
 \"\"\"
 
+import os
 import sys
 import subprocess
 import argparse
@@ -1431,7 +1438,12 @@ import argparse
 
 def check_virtual_env():
     \"\"\"Verifie et informe sur l'environnement virtuel.\"\"\"
-    in_venv = hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
+    # Detection robuste : variable d'env, real_prefix (virtualenv), base_prefix (venv)
+    in_venv = (
+        os.getenv('VIRTUAL_ENV') is not None or
+        hasattr(sys, 'real_prefix') or
+        (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
+    )
 
     if not in_venv:
         print(\"[AVERTISSEMENT] Vous n'etes pas dans un environnement virtuel Python\")

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # ============================================================================
 # FICHIER AUTO-GENERE par scripts/build_offline_package.py
-# Date de generation: 2026-02-12 11:18:13
+# Date de generation: 2026-02-12 11:49:16
 # Ne pas modifier manuellement - vos modifications seront ecrasees
 # ============================================================================
 """
@@ -15,9 +15,10 @@ pip resout automatiquement l'ordre des dependances.
 
 IMPORTANT:
     Ce script a ete genere automatiquement par build_offline_package.py
-    Date de generation: 2026-02-12 11:18:13
+    Date de generation: 2026-02-12 11:49:16
 """
 
+import os
 import sys
 import subprocess
 from pathlib import Path
@@ -25,7 +26,12 @@ from pathlib import Path
 
 def check_virtual_env():
     """Verifie et demande confirmation pour environnement virtuel."""
-    in_venv = hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
+    # Detection robuste : variable d'env, real_prefix (virtualenv), base_prefix (venv)
+    in_venv = (
+        os.getenv('VIRTUAL_ENV') is not None or
+        hasattr(sys, 'real_prefix') or
+        (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
+    )
 
     if not in_venv:
         print("[AVERTISSEMENT] Vous n'etes pas dans un environnement virtuel Python")
@@ -160,7 +166,7 @@ def main():
     print("  INSTALLATION OFFLINE D'AMBULON")
     print("="*70)
     print()
-    print("[INFO] Script auto-genere le 2026-02-12 11:18:13")
+    print("[INFO] Script auto-genere le 2026-02-12 11:49:16")
     print("[INFO] Par scripts/build_offline_package.py")
     print()
 
