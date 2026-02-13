@@ -173,11 +173,29 @@ Variables d'environnement supportées:
         logger.info("[SUCCESS] WikiSI API synchronization completed.")
         return 0
 
+    except requests.exceptions.ConnectionError as e:
+        # Check if it's a DNS resolution error (common when not on VPN)
+        error_str = str(e).lower()
+        if 'failed to resolve' in error_str or 'getaddrinfo failed' in error_str or 'nameresolutionerror' in error_str:
+            logger.error("=" * 80)
+            logger.error("Erreur de connexion: Impossible de résoudre le nom de domaine WikiSI")
+            logger.error("")
+            logger.error("CAUSE PROBABLE:")
+            logger.error("  - Vous devez être connecté au VPN pour accéder au serveur WikiSI")
+            logger.error("  - Vérifiez que votre connexion VPN est active")
+            logger.error("")
+            logger.error("SI LE PROBLEME PERSISTE:")
+            logger.error("  - Le serveur WikiSI (wikisi.e2.rie.gouv.fr) n'est peut-être pas atteignable")
+            logger.error("  - Contactez l'administrateur système")
+            logger.error("=" * 80)
+        else:
+            logger.error(f"Erreur de connexion à l'API: {e}", exc_info=True)
+        return 1
     except requests.exceptions.RequestException as e:
-        logger.error(f"API request failed: {e}", exc_info=True)
+        logger.error(f"Erreur lors de la requête API: {e}", exc_info=True)
         return 1
     except Exception as e:
-        logger.error(f"An unexpected error occurred: {e}", exc_info=True)
+        logger.error(f"Une erreur inattendue s'est produite: {e}", exc_info=True)
         return 1
 
 if __name__ == '__main__':

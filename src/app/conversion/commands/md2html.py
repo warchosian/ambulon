@@ -8,6 +8,8 @@ import sys
 import subprocess
 import tempfile
 import logging
+import urllib.request
+import urllib.error
 from importlib.util import find_spec
 from pathlib import Path
 from typing import List, Tuple, Optional
@@ -315,7 +317,19 @@ def convert_plantuml_to_svg(
                 if verbose:
                     print("Info: ✓ Kroki conversion successful", file=sys.stderr)
                 return svg_content
+            except urllib.error.URLError as e:
+                # Erreur de connexion réseau
+                print(f"Erreur: Impossible de contacter le service Kroki (https://kroki.io)", file=sys.stderr)
+                print(f"Vérifiez votre connexion Internet ou utilisez --plantuml-method jar", file=sys.stderr)
+                if verbose:
+                    print(f"Détails: {e}", file=sys.stderr)
+
+                # If method is 'kroki' only, don't try fallback
+                if method == 'kroki':
+                    os.unlink(temp_input)
+                    return None
             except Exception as e:
+                print(f"Erreur: Échec du service Kroki: {e}", file=sys.stderr)
                 if verbose:
                     print(f"Warning: Kroki service failed: {e}", file=sys.stderr)
 
@@ -545,6 +559,61 @@ def process_markdown_to_html(
         if verbose:
             print(f"\nFound {len(blocks)} diagram blocks")
 
+        # Si on est en mode kroki et qu'il y a des diagrammes, vérifier que Kroki est accessible
+        if len(blocks) > 0 and plantuml_method == 'kroki':
+            if verbose:
+                print("Mode kroki détecté avec des diagrammes, vérification de la disponibilité de Kroki...", file=sys.stderr)
+
+            try:
+                # Test simple avec un diagramme minimal PlantUML
+                import base64
+                import zlib
+
+                # Diagramme PlantUML minimal valide: @startuml\n@enduml
+                test_diagram = '@startuml\n@enduml'
+                compressed = zlib.compress(test_diagram.encode('utf-8'), 9)
+                encoded = base64.urlsafe_b64encode(compressed).decode('utf-8')
+                test_url = f'https://kroki.io/plantuml/svg/{encoded}'
+
+                req = urllib.request.Request(test_url)
+                req.add_header('User-Agent', 'Mozilla/5.0 (Ambulon md2html)')
+                with urllib.request.urlopen(req, timeout=5) as response:
+                    _ = response.read()
+                if verbose:
+                    print("✓ Service Kroki accessible", file=sys.stderr)
+            except urllib.error.HTTPError as e:
+                # Une erreur HTTP 400/5xx signifie que Kroki répond mais il y a un problème avec la requête
+                # On considère que le service est disponible
+                if e.code >= 400 and e.code < 600:
+                    if verbose:
+                        print(f"⚠ Service Kroki répond (code {e.code}), tentative de conversion...", file=sys.stderr)
+                else:
+                    print("\n" + "="*80, file=sys.stderr)
+                    print("ERREUR: Service Kroki inaccessible", file=sys.stderr)
+                    print("="*80, file=sys.stderr)
+                    print(f"\nKroki a retourné une erreur HTTP {e.code}", file=sys.stderr)
+                    print("\nSOLUTIONS:", file=sys.stderr)
+                    print("  1. Vérifiez votre connexion Internet", file=sys.stderr)
+                    print("  2. Utilisez --plantuml-method auto pour essayer le JAR en fallback", file=sys.stderr)
+                    print("  3. Utilisez --plantuml-method jar pour utiliser uniquement le JAR local", file=sys.stderr)
+                    print("="*80 + "\n", file=sys.stderr)
+                    return 1
+            except urllib.error.URLError as e:
+                # Erreur réseau (DNS, timeout, connexion refusée, etc.) - vraiment inaccessible
+                print("\n" + "="*80, file=sys.stderr)
+                print("ERREUR: Service Kroki inaccessible", file=sys.stderr)
+                print("="*80, file=sys.stderr)
+                print(f"\nImpossible de contacter https://kroki.io", file=sys.stderr)
+                print(f"Détails: {e}", file=sys.stderr)
+                print("\nSOLUTIONS:", file=sys.stderr)
+                print("  1. Vérifiez votre connexion Internet", file=sys.stderr)
+                print("  2. Utilisez --plantuml-method auto pour essayer le JAR en fallback", file=sys.stderr)
+                print("  3. Utilisez --plantuml-method jar pour utiliser uniquement le JAR local", file=sys.stderr)
+                print("="*80 + "\n", file=sys.stderr)
+                return 1
+            except Exception as e:
+                print(f"\nAvertissement: Impossible de vérifier la disponibilité de Kroki: {e}", file=sys.stderr)
+                print("Tentative de conversion malgré tout...\n", file=sys.stderr)
 
         # Convert diagrams to SVG and replace in content (inline, to handle identical blocks)
         result_content = content

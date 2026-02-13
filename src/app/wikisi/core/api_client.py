@@ -7,6 +7,30 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
+def clean_unicode_separators(data: Any) -> Any:
+    """
+    Nettoie récursivement les caractères Unicode Line Separator (U+2028) et
+    Paragraph Separator (U+2029) qui peuvent causer des problèmes dans les éditeurs.
+
+    Ces caractères sont parfois présents dans les données d'API et causent des
+    avertissements dans VSCode et d'autres éditeurs.
+
+    Args:
+        data: Structure de données (dict, list, str, etc.) à nettoyer
+
+    Returns:
+        La même structure avec les caractères LS/PS remplacés par des espaces
+    """
+    if isinstance(data, str):
+        # Remplacer Line Separator (U+2028) et Paragraph Separator (U+2029) par des espaces
+        return data.replace('\u2028', ' ').replace('\u2029', ' ')
+    elif isinstance(data, dict):
+        return {key: clean_unicode_separators(value) for key, value in data.items()}
+    elif isinstance(data, list):
+        return [clean_unicode_separators(item) for item in data]
+    else:
+        return data
+
 class WikiSIAPIClient:
     def __init__(self, config: Dict[str, Any]):
         self.config = config
@@ -40,8 +64,10 @@ class WikiSIAPIClient:
     def _fetch_and_save_enumerations(self) -> Dict[str, Any]:
         data = self.extract_enumerations_dict()
         enum_file = self.output_dir / self.config['output']['enumerations_file']
+        # Nettoyer les caractères Unicode problématiques avant la sauvegarde
+        cleaned_data = clean_unicode_separators(data)
         with open(enum_file, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=3)
+            json.dump(cleaned_data, f, ensure_ascii=False, indent=3)
         logger.info(f"Fichier '{enum_file}' construit et chargé.")
         return data
 
@@ -83,8 +109,10 @@ class WikiSIAPIClient:
         app_list = self.extract_applications_list()
         app_file = self.output_dir / self.config['output']['applications_file']
         data = {'applications': app_list}
+        # Nettoyer les caractères Unicode problématiques avant la sauvegarde
+        cleaned_data = clean_unicode_separators(data)
         with open(app_file, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=3)
+            json.dump(cleaned_data, f, ensure_ascii=False, indent=3)
         logger.info(f"Fichier '{app_file}' construit et chargé.")
         return app_list
 
@@ -298,8 +326,10 @@ class WikiSIAPIClient:
         data = {
             'applicationsIA': app_ia_list
         }
+        # Nettoyer les caractères Unicode problématiques avant la sauvegarde
+        cleaned_data = clean_unicode_separators(data)
         with open(fileName, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=3)
+            json.dump(cleaned_data, f, ensure_ascii=False, indent=3)
         logger.info(f"Fichier '{fileName}' construit et chargé.")
 
     def generate_application_ia_mini(self, app_json: Dict[str, Any]) -> Dict[str, Any]:
@@ -1040,8 +1070,10 @@ class WikiSIAPIClient:
         data = {
             'applicationsIA': app_ia_list
         }
+        # Nettoyer les caractères Unicode problématiques avant la sauvegarde
+        cleaned_data = clean_unicode_separators(data)
         with open(fileName, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=3)
+            json.dump(cleaned_data, f, ensure_ascii=False, indent=3)
         logger.info(f"Fichier '{fileName}' construit et chargé.")
 
     def generate_application_ia_mini(self, app_json: Dict[str, Any]) -> Dict[str, Any]:
@@ -1782,6 +1814,8 @@ class WikiSIAPIClient:
         data = {
             'applicationsIA_mini': app_ia_mini_list
         }
+        # Nettoyer les caractères Unicode problématiques avant la sauvegarde
+        cleaned_data = clean_unicode_separators(data)
         with open(fileName, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=3)
+            json.dump(cleaned_data, f, ensure_ascii=False, indent=3)
         logger.info(f"Fichier '{fileName}' construit et chargé.")

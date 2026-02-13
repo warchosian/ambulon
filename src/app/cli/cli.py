@@ -639,12 +639,14 @@ def main():
         elif command == 'md2html':
             # Convertir Markdown en HTML
             if len(sys.argv) < 3:
-                print("Usage: ambulon md2html <input.md> [-o <output.html>] [--verbose] [--no-standalone]")
+                print("Usage: ambulon md2html <input.md> [-o <output.html>] [--verbose] [--no-standalone] [--plantuml-method auto|jar|kroki] [--plantuml-jar <path>]")
                 return 1
             input_file = sys.argv[2]
             output_file = None
             verbose = False
             standalone = True
+            plantuml_method = 'kroki'
+            plantuml_jar = None
             i = 3
             while i < len(sys.argv):
                 if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
@@ -656,9 +658,15 @@ def main():
                 elif sys.argv[i] == '--no-standalone':
                     standalone = False
                     i += 1
+                elif sys.argv[i] == '--plantuml-method' and i + 1 < len(sys.argv):
+                    plantuml_method = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--plantuml-jar' and i + 1 < len(sys.argv):
+                    plantuml_jar = sys.argv[i + 1]
+                    i += 2
                 else:
                     i += 1
-            return process_markdown_to_html(input_file, output_file, verbose, standalone)
+            return process_markdown_to_html(input_file, output_file, verbose, standalone, plantuml_method, plantuml_jar)
         elif command == 'html2pdf':
             # Convertir HTML en PDF
             if len(sys.argv) < 3:
