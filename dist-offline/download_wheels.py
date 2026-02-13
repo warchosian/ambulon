@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # ============================================================================
 # FICHIER AUTO-GENERE par scripts/build_offline_package.py
-# Date de generation: 2026-02-12 11:18:13
+# Date de generation: 2026-02-12 11:49:16
 # Ne pas modifier manuellement - vos modifications seront ecrasees
 # ============================================================================
 """
@@ -258,7 +258,7 @@ def main():
     print("  TELECHARGEMENT DES WHEELS AMBULON")
     print("="*70)
     print()
-    print("[INFO] Script auto-genere le 2026-02-12 11:18:13")
+    print("[INFO] Script auto-genere le 2026-02-12 11:49:16")
     print("[INFO] Par scripts/build_offline_package.py")
     print()
 
