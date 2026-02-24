@@ -491,7 +491,8 @@ def process_markdown_to_html(
     verbose: bool = False,
     standalone: bool = True,
     plantuml_method: str = 'kroki',
-    plantuml_jar: str = None
+    plantuml_jar: str = None,
+    page_orientation: str = 'portrait'
 ) -> int:
     """
     Convert a Markdown file with diagrams to HTML with embedded SVG.
@@ -503,6 +504,8 @@ def process_markdown_to_html(
         standalone: Generate standalone HTML with CSS and full page structure
         plantuml_method: Method to convert PlantUML ('auto', 'jar', or 'kroki')
         plantuml_jar: Path to PlantUML JAR file (overrides PLANTUML_JAR env var)
+        page_orientation: Page orientation for PDF generation ('portrait' or 'landscape')
+                         Affects SVG diagram dimensions for optimal PDF rendering
 
     Returns:
         Exit code (0 for success, 1 for error)
@@ -652,7 +655,7 @@ def process_markdown_to_html(
 
         # Wrap in full HTML if standalone
         if standalone:
-            html_content = wrap_html_document(html_content, md_path.stem)
+            html_content = wrap_html_document(html_content, md_path.stem, page_orientation)
 
         # Write output
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -932,17 +935,23 @@ def markdown_to_html_basic(content: str) -> str:
     return content
 
 
-def wrap_html_document(content: str, title: str = "Document") -> str:
+def wrap_html_document(content: str, title: str = "Document", page_orientation: str = "portrait") -> str:
     """
     Wrap HTML content in a full HTML document with CSS.
 
     Args:
         content: HTML content
         title: Document title
+        page_orientation: Page orientation for PDF ('portrait' or 'landscape')
 
     Returns:
         Complete HTML document
     """
+    # Define diagram width constraints based on orientation
+    # Portrait: narrower width (suitable for A4 portrait)
+    # Landscape: wider width (suitable for A4 landscape)
+    diagram_max_width = "900px" if page_orientation == "landscape" else "700px"
+
     css = """
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -1014,7 +1023,8 @@ def wrap_html_document(content: str, title: str = "Document") -> str:
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .diagram svg {
-            max-width: 100%;
+            max-width: """ + diagram_max_width + """;
+            width: 100%;
             height: auto;
         }
         ul, ol {

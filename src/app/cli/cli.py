@@ -630,19 +630,52 @@ def main():
         elif command == 'md2html':
             # Convertir Markdown en HTML
             from app.conversion import process_markdown_to_html
-            if len(sys.argv) < 3:
-                print("Usage: ambulon md2html <input.md> [-o <output.html>] [--verbose] [--no-standalone] [--plantuml-method auto|jar|kroki] [--plantuml-jar <path>]")
-                return 1
+            if len(sys.argv) < 3 or sys.argv[2] in ['-h', '--help']:
+                print("Usage: ambulon md2html <input.md> [-o <output.html>] [-p <orientation>] [--verbose] [--no-standalone] [--plantuml-method auto|jar|kroki] [--plantuml-jar <path>]")
+                print()
+                print("Convertit un fichier Markdown en HTML avec support PlantUML")
+                print()
+                print("Arguments:")
+                print("  <input.md>                    Fichier Markdown source")
+                print()
+                print("Options:")
+                print("  -o, --output <file>           Fichier HTML de sortie (défaut: <input>.html)")
+                print("  -p, --page-orientation <mode> Orientation pour génération PDF future:")
+                print("                                  portrait  - Format vertical (défaut)")
+                print("                                  landscape - Format horizontal")
+                print("                                Ajuste automatiquement les dimensions des diagrammes SVG")
+                print("  --verbose                     Mode verbeux (affiche les détails)")
+                print("  --no-standalone               Génère un fragment HTML au lieu d'un document complet")
+                print("  --plantuml-method <mode>      Méthode de rendu PlantUML:")
+                print("                                  auto   - Détection automatique")
+                print("                                  jar    - Utilise PlantUML.jar local (plus fiable)")
+                print("                                  kroki  - Utilise le service Kroki en ligne (défaut)")
+                print("  --plantuml-jar <path>         Chemin vers le fichier PlantUML.jar")
+                print()
+                print("Exemples:")
+                print("  ambulon md2html document.md")
+                print("  ambulon md2html document.md -o result.html")
+                print("  ambulon md2html document.md -p landscape")
+                print("  ambulon md2html document.md --page-orientation landscape --plantuml-method jar")
+                print("  ambulon md2html document.md --no-standalone --verbose")
+                print()
+                print("Note:")
+                print("  Si vous avez des problèmes de connexion avec Kroki, utilisez --plantuml-method jar")
+                return 0 if len(sys.argv) > 2 and sys.argv[2] in ['-h', '--help'] else 1
             input_file = sys.argv[2]
             output_file = None
             verbose = False
             standalone = True
+            page_orientation = 'portrait'
             plantuml_method = 'kroki'
             plantuml_jar = None
             i = 3
             while i < len(sys.argv):
                 if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
                     output_file = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] in ['-p', '--page-orientation'] and i + 1 < len(sys.argv):
+                    page_orientation = sys.argv[i + 1]
                     i += 2
                 elif sys.argv[i] == '--verbose':
                     verbose = True
@@ -658,7 +691,7 @@ def main():
                     i += 2
                 else:
                     i += 1
-            return process_markdown_to_html(input_file, output_file, verbose, standalone, plantuml_method, plantuml_jar)
+            return process_markdown_to_html(input_file, output_file, verbose, standalone, plantuml_method, plantuml_jar, page_orientation)
         elif command == 'html2pdf':
             # Convertir HTML en PDF
             from app.conversion import convert_html_to_pdf
