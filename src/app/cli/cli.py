@@ -5,29 +5,21 @@ import logging
 from datetime import datetime
 from pathlib import Path
 
-from . import hello
-from app.scan.commands.scan import main as scan_main
-from app.ocr.commands.ocr import main as ocr_main
-from app.mcp.commands.run_server import main as mcp_main
-from app.mcp.core.config import export_mcp_config, get_claude_config_path
-from app.gitlab.commands.gitlab_clone import main as gitlab_clone_main
-from app.gitlab.commands.gitlab_monofile import main as gitlab_monofile_main
+# LAZY LOADING - Tous les imports sont faits à la demande
+# from . import hello
+# from app.scan.commands.scan import main as scan_main
+# from app.ocr.commands.ocr import main as ocr_main
+# from app.mcp.commands.run_server import main as mcp_main
+# from app.mcp.core.config import export_mcp_config, get_claude_config_path
+# from app.gitlab.commands.gitlab_clone import main as gitlab_clone_main
+# from app.gitlab.commands.gitlab_monofile import main as gitlab_monofile_main
 
-# Modules de conversion
-from app.conversion import (
-    compress_pdf_main,
-    img2pdf_main,
-    process_html_to_markdown,
-    process_markdown_to_html,
-    convert_html_to_pdf,
-    json_to_jsonl,
-    process_json_to_markdown,
-    pdf2html_main,
-    pdf2md_main,
-)
+# Modules de conversion - LAZY LOADING pour éviter le blocage au démarrage
+# Les imports sont faits dans les fonctions qui en ont besoin
+# from app.conversion import (...)
 
-# Modules d'encoding
-from app.encoding import check_md_cli, fix_md_cli
+# Modules d'encoding - LAZY LOADING
+# from app.encoding import check_md_cli, fix_md_cli
 
 
 
@@ -35,29 +27,17 @@ from app.encoding import check_md_cli, fix_md_cli
 
 
 
-# Module Processing
-from app.processing import (
-    add_toc4html_cli,
-    add_toc4md_cli,
-    concat_html_cli,
-    flatten_html_cli,
-    flatten_md_cli,
-    make_html_interactive,
-    merge_html_cli,
-    merge_md_cli,
-    md2project_cli,
-    project2md_cli,
-    fusion_markdown_files,
-    project_to_markdown,
-)
+# Module Processing - LAZY LOADING
+# from app.processing import (...)
 
-from app.core.logging_config import setup_logging
-from app.cli.commands import handle_init_command
+# from app.core.logging_config import setup_logging
+# from app.cli.commands import handle_init_command
 
 
 
 def show_help():
     """Affiche l'aide principale avec les modules disponibles."""
+    from . import hello
     print(hello())
     print()
     print("Usage: ambulon [MODULE] [OPTIONS]")
@@ -204,6 +184,7 @@ def handle_config_command():
     if subcommand == 'export':
         try:
             from pathlib import Path
+            from app.mcp.core.config import export_mcp_config, get_claude_config_path
             output_file = Path(sys.argv[3]) if len(sys.argv) > 3 else Path("mcp-config.json")
             exported_path = export_mcp_config(output_file)
             print(f"Configuration MCP exportee vers: {exported_path}")
@@ -359,6 +340,7 @@ def handle_config_command():
         return 0
     
     elif subcommand == 'claude-path':
+        from app.mcp.core.config import get_claude_config_path
         claude_path = get_claude_config_path()
         print(f"Chemin de configuration Claude Desktop:")
         print(f"  {claude_path}")
@@ -544,17 +526,20 @@ def handle_rag_module(module_name: str):
 
 
 def main():
-    print("DEBUG: app.cli.cli main() function entered.", file=sys.stderr)
     """Fonction principale appelée par la commande `ambulon`."""
-    # Configure logging for the main CLI entry point
-    # Console output only (no log file) - each command creates its own log file
+    # Logging minimal sans fichier pour éviter les blocages
+    import os
     if '--no-log-file' in sys.argv:
-        import os
         os.environ["AMBULON_NO_FILE_LOGS"] = "1"
-        # Remove the flag so subcommand parsers don't reject it
         sys.argv = [arg for arg in sys.argv if arg != '--no-log-file']
-    verbose = '--verbose' in sys.argv or '-v' in sys.argv # Check for verbose early
-    setup_logging(level=logging.DEBUG if verbose else logging.INFO, log_file_prefix=None)
+    verbose = '--verbose' in sys.argv or '-v' in sys.argv
+
+    # Configuration logging basique
+    logging.basicConfig(
+        level=logging.DEBUG if verbose else logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        handlers=[logging.StreamHandler(sys.stdout)]
+    )
 
     if len(sys.argv) > 1:
         command = sys.argv[1]
@@ -579,6 +564,7 @@ def main():
             return 0
         elif command == 'scan':
             # Retirer 'scan' des arguments et lancer le module scan
+            from app.scan.commands.scan import main as scan_main
             original_argv = sys.argv
             sys.argv = [sys.argv[0]] + sys.argv[2:]  # Garder le nom du programme et les arguments après 'scan'
             try:
@@ -587,6 +573,7 @@ def main():
                 sys.argv = original_argv
         elif command == 'ocr':
             # Retirer 'ocr' des arguments et lancer le module ocr
+            from app.ocr.commands.ocr import main as ocr_main
             original_argv = sys.argv
             sys.argv = [sys.argv[0]] + sys.argv[2:]  # Garder le nom du programme et les arguments après 'ocr'
             try:
@@ -595,6 +582,7 @@ def main():
                 sys.argv = original_argv
         elif command == 'mcp':
             # Retirer 'mcp' des arguments et lancer le module mcp
+            from app.mcp.commands.run_server import main as mcp_main
             original_argv = sys.argv
             sys.argv = [sys.argv[0]] + sys.argv[2:]  # Garder le nom du programme et les arguments après 'mcp'
             try:
@@ -603,6 +591,7 @@ def main():
                 sys.argv = original_argv
         elif command == 'img2pdf':
             # Retirer 'img2pdf' des arguments et lancer le module img2pdf
+            from app.conversion import img2pdf_main
             original_argv = sys.argv
             sys.argv = [sys.argv[0]] + sys.argv[2:]
             try:
@@ -611,6 +600,7 @@ def main():
                 sys.argv = original_argv
         elif command == 'compress-pdf':
             # Retirer 'compress-pdf' des arguments et lancer le module compress_pdf
+            from app.conversion import compress_pdf_main
             original_argv = sys.argv
             sys.argv = [sys.argv[0]] + sys.argv[2:]
             try:
@@ -619,6 +609,7 @@ def main():
                 sys.argv = original_argv
         elif command == 'html2md':
             # Convertir HTML en Markdown
+            from app.conversion import process_html_to_markdown
             if len(sys.argv) < 3:
                 print("Usage: ambulon html2md <input.html> [-o <output.md>] [--verbose]")
                 return 1
@@ -638,6 +629,7 @@ def main():
             return process_html_to_markdown(input_file, output_file, verbose)
         elif command == 'md2html':
             # Convertir Markdown en HTML
+            from app.conversion import process_markdown_to_html
             if len(sys.argv) < 3:
                 print("Usage: ambulon md2html <input.md> [-o <output.html>] [--verbose] [--no-standalone] [--plantuml-method auto|jar|kroki] [--plantuml-jar <path>]")
                 return 1
@@ -669,9 +661,28 @@ def main():
             return process_markdown_to_html(input_file, output_file, verbose, standalone, plantuml_method, plantuml_jar)
         elif command == 'html2pdf':
             # Convertir HTML en PDF
-            if len(sys.argv) < 3:
+            from app.conversion import convert_html_to_pdf
+            if len(sys.argv) < 3 or sys.argv[2] in ['-h', '--help']:
                 print("Usage: ambulon html2pdf <input.html> [-o <output.pdf>] [--orientation portrait|landscape] [--verbose]")
-                return 1
+                print()
+                print("Convertit un fichier HTML en PDF avec Playwright")
+                print()
+                print("Arguments:")
+                print("  <input.html>              Fichier HTML source")
+                print()
+                print("Options:")
+                print("  -o, --output <file>       Fichier PDF de sortie (défaut: <input>.pdf)")
+                print("  --orientation <mode>      Orientation de la page:")
+                print("                              portrait  - Format vertical (défaut)")
+                print("                              landscape - Format horizontal")
+                print("  --verbose                 Mode verbeux (affiche les détails)")
+                print()
+                print("Exemples:")
+                print("  ambulon html2pdf document.html")
+                print("  ambulon html2pdf document.html -o result.pdf")
+                print("  ambulon html2pdf document.html --orientation landscape")
+                print("  ambulon html2pdf document.html -o result.pdf --orientation landscape --verbose")
+                return 0 if len(sys.argv) > 2 and sys.argv[2] in ['-h', '--help'] else 1
             input_file = sys.argv[2]
             output_file = None
             orientation = 'portrait'
@@ -692,6 +703,7 @@ def main():
             return convert_html_to_pdf(input_file, output_file, orientation, verbose)
         elif command == 'json2jsonl':
             # Convertir JSON en JSONL
+            from app.conversion import json_to_jsonl
             if len(sys.argv) < 3:
                 print("Usage: ambulon json2jsonl <input.json> -o <output.jsonl> [--array-key KEY] [--verbose]")
                 return 1
@@ -718,6 +730,7 @@ def main():
             return json_to_jsonl(input_file, output_file, array_key, verbose)
         elif command == 'json2md':
             # Convertir JSON en Markdown
+            from app.conversion import process_json_to_markdown
             if len(sys.argv) < 3:
                 print("Usage: ambulon json2md <input.json> [-o <output.md>] [--verbose]")
                 return 1
@@ -737,6 +750,7 @@ def main():
             return process_json_to_markdown(input_file, output_file, verbose)
         elif command == 'pdf2html':
             # Convertir PDF en HTML
+            from app.conversion import pdf2html_main
             original_argv = sys.argv
             sys.argv = [sys.argv[0]] + sys.argv[2:]
             try:
@@ -745,6 +759,7 @@ def main():
                 sys.argv = original_argv
         elif command == 'pdf2md':
             # Convertir PDF en Markdown
+            from app.conversion import pdf2md_main
             original_argv = sys.argv
             sys.argv = [sys.argv[0]] + sys.argv[2:]
             try:
@@ -753,9 +768,11 @@ def main():
                 sys.argv = original_argv
         elif command == 'check-utf8':
             # Vérifier l'encodage des fichiers Markdown
+            from app.encoding import check_md_cli
             return check_md_cli(sys.argv[2:])
         elif command == 'fix-utf8':
             # Corriger l'encodage des fichiers Markdown
+            from app.encoding import fix_md_cli
             return fix_md_cli(sys.argv[2:])
         elif command == 'wikisi-extract':
             # Extraire et filtrer des applications depuis JSON
@@ -780,18 +797,23 @@ def main():
                 sys.argv = original_argv
         elif command == 'add-toc-html':
             # Ajouter TOC à HTML
+            from app.processing import add_toc4html_cli
             return add_toc4html_cli(sys.argv[2:])
         elif command == 'add-toc-md':
             # Ajouter TOC à Markdown
+            from app.processing import add_toc4md_cli
             return add_toc4md_cli(sys.argv[2:])
         elif command == 'concat-html':
             # Concaténer HTML
+            from app.processing import concat_html_cli
             return concat_html_cli(sys.argv[2:])
         elif command == 'flatten-html':
             # Aplatir HTML
+            from app.processing import flatten_html_cli
             return flatten_html_cli(sys.argv[2:])
         elif command == 'flatten-md':
             # Aplatir Markdown
+            from app.processing import flatten_md_cli
             return flatten_md_cli(sys.argv[2:])
         elif command == 'wikisi-flatten':
             # Aplatir WikiSI
@@ -815,6 +837,7 @@ def main():
             return flatten_wikisi_directory(source, output, verbose)
         elif command == 'make-html-interactive':
             # Rendre HTML interactif
+            from app.processing import make_html_interactive
             if len(sys.argv) < 3:
                 print("Usage: ambulon make-interactive <input.html> [-o <output.html>] [--verbose]")
                 return 1
@@ -834,15 +857,19 @@ def main():
             return make_html_interactive(input_file, output, verbose)
         elif command == 'merge-html':
             # Fusionner HTML
+            from app.processing import merge_html_cli
             return merge_html_cli(sys.argv[2:])
         elif command == 'merge-md':
             # Fusionner Markdown
+            from app.processing import merge_md_cli
             return merge_md_cli(sys.argv[2:])
         elif command == 'md2project':
             # Convertir Markdown en projet
+            from app.processing import md2project_cli
             return md2project_cli(sys.argv[2:])
         elif command == 'project2md':
             # Convertir projet en Markdown
+            from app.processing import project2md_cli
             return project2md_cli(sys.argv[2:])
         elif command == 'code2md':
             # Encapsuler du code dans des blocs Markdown
@@ -851,12 +878,15 @@ def main():
         elif command == 'config':
             return handle_config_command()
         elif command == 'init':
+            from app.cli.commands import handle_init_command
             return handle_init_command()
         elif command == 'gitlab-clone':
             # Cloner des projets GitLab depuis la configuration
+            from app.gitlab.commands.gitlab_clone import main as gitlab_clone_main
             return gitlab_clone_main(sys.argv[2:])
         elif command == 'gitlab-monofile':
             # Generer un monofile depuis un repo clone
+            from app.gitlab.commands.gitlab_monofile import main as gitlab_monofile_main
             return gitlab_monofile_main(sys.argv[2:])
         elif command == 'test':
             return handle_test_command()
@@ -873,3 +903,7 @@ def main():
     else:
         show_help()
         return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

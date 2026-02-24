@@ -259,7 +259,93 @@ rectangle "Container" {
 
 ---
 
-### ✅ Règle #6 : Mettre la couleur après l'alias
+### ✅ Règle #6 : Indenter les Packages sur Plusieurs Lignes
+
+**TOUJOURS formater les packages avec accolades sur plusieurs lignes avec indentation correcte.**
+
+#### ❌ Mauvais exemple (tout sur une ligne)
+
+```text
+package "controller" {
+    package "accueil" { [AccueilAction] }
+    package "agents" { [AgentRechercheAction] }
+}
+```
+
+```plantuml
+@startuml
+skinparam componentStyle rectangle
+
+package "controller" {
+    package "accueil" { [AccueilAction] }
+    package "agents" { [AgentRechercheAction] }
+}
+@enduml
+```
+
+**Pourquoi** : Le formatage sur une seule ligne rend le code difficile à lire et à maintenir, surtout avec plusieurs niveaux d'imbrication.
+
+#### ✅ Bon exemple (indentation sur plusieurs lignes)
+
+```text
+package "controller" {
+    package "accueil" {
+        [AccueilAction]
+    }
+    package "agents" {
+        [AgentRechercheAction]
+    }
+}
+```
+
+```plantuml
+@startuml
+skinparam componentStyle rectangle
+
+package "controller" {
+    package "accueil" {
+        [AccueilAction]
+    }
+    package "agents" {
+        [AgentRechercheAction]
+    }
+}
+@enduml
+```
+
+**Pourquoi** :
+- Meilleure lisibilité du code
+- Structure hiérarchique claire
+- Facilite les modifications et la maintenance
+- Permet d'ajouter facilement du contenu dans les packages
+
+#### 🔧 Comment corriger
+
+**Transformation** : `package "nom" { [Element] }` → formatter sur plusieurs lignes
+
+**Avant** :
+```text
+package "services" { package "auth" { [AuthService] } }
+```
+
+**Après** :
+```text
+package "services" {
+    package "auth" {
+        [AuthService]
+    }
+}
+```
+
+**Règles d'indentation** :
+- Utiliser 4 espaces par niveau d'indentation (ou 2 espaces de manière cohérente)
+- Accolade ouvrante `{` à la fin de la ligne du package
+- Contenu indenté d'un niveau
+- Accolade fermante `}` alignée avec le début du package parent
+
+---
+
+### ✅ Règle #7 : Mettre la couleur après l'alias
 
 #### ❌ Mauvais exemple
 
