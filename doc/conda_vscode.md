@@ -167,3 +167,22 @@ Dans VS Code, lors de l’ouverture d’un terminal :
 > ✨ Avec cette configuration, vous avez un **contrôle total, propre et reproductible** de vos environnements Python par projet — sans magie noire, sans doublons, et sans dépendance à l’initialisation globale de Conda.
 
 *Document rédigé pour Hervé Marchal – Janvier 2026*
+
+---
+
+## 💡 Bonus : Ajouter un `activate.bat` à un env Conda existant (via venv)
+
+Les environnements Conda ne disposent pas de `activate.bat` standard. Pour en obtenir un (utile dans certaines configurations VS Code sans conda), on peut superposer un venv Python sur l'env Conda existant :
+
+```bash
+python -m venv --without-pip G:\WarchoLife\WarchoPortable\PortableWork\Anaconda\anaconda-3\envs\ambulon
+```
+
+- `--without-pip` : ne réinstalle pas pip (déjà présent dans l'env Conda)
+- Le dossier `Scripts\` de l'env Conda recevra `activate.bat`, `activate`, `Activate.ps1`
+- Python et les packages existants ne sont **pas touchés**
+
+Après cette opération, l'activation sans conda devient possible :
+```bash
+G:\WarchoLife\WarchoPortable\PortableWork\Anaconda\anaconda-3\envs\ambulon\Scripts\activate.bat
+```

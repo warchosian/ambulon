@@ -640,10 +640,10 @@ def main():
                 print()
                 print("Options:")
                 print("  -o, --output <file>           Fichier HTML de sortie (défaut: <input>.html)")
-                print("  -p, --page-orientation <mode> Orientation pour génération PDF future:")
-                print("                                  portrait  - Format vertical (défaut)")
-                print("                                  landscape - Format horizontal")
-                print("                                Ajuste automatiquement les dimensions des diagrammes SVG")
+                print("  -p, --page-orientation <mode> Optimisation pour génération PDF:")
+                print("                                  portrait  - 700px max (A4 portrait)")
+                print("                                  landscape - 900px max (A4 landscape)")
+                print("                                  (par défaut: taille naturelle des SVG, aucune contrainte)")
                 print("  --verbose                     Mode verbeux (affiche les détails)")
                 print("  --no-standalone               Génère un fragment HTML au lieu d'un document complet")
                 print("  --plantuml-method <mode>      Méthode de rendu PlantUML:")
@@ -666,7 +666,7 @@ def main():
             output_file = None
             verbose = False
             standalone = True
-            page_orientation = 'portrait'
+            page_orientation = None  # None = taille naturelle, 'portrait' ou 'landscape' = optimisé
             plantuml_method = 'kroki'
             plantuml_jar = None
             i = 3
@@ -696,25 +696,30 @@ def main():
             # Convertir HTML en PDF
             from app.conversion import convert_html_to_pdf
             if len(sys.argv) < 3 or sys.argv[2] in ['-h', '--help']:
-                print("Usage: ambulon html2pdf <input.html> [-o <output.pdf>] [--orientation portrait|landscape] [--verbose]")
+                print("Usage: ambulon html2pdf <input.html> [-o <output.pdf>] [-p <orientation>] [--verbose]")
                 print()
                 print("Convertit un fichier HTML en PDF avec Playwright")
                 print()
                 print("Arguments:")
-                print("  <input.html>              Fichier HTML source")
+                print("  <input.html>                  Fichier HTML source")
                 print()
                 print("Options:")
-                print("  -o, --output <file>       Fichier PDF de sortie (défaut: <input>.pdf)")
-                print("  --orientation <mode>      Orientation de la page:")
-                print("                              portrait  - Format vertical (défaut)")
-                print("                              landscape - Format horizontal")
-                print("  --verbose                 Mode verbeux (affiche les détails)")
+                print("  -o, --output <file>           Fichier PDF de sortie (défaut: <input>.pdf)")
+                print("  -p, --page-orientation <mode> Orientation de la page:")
+                print("                                  portrait  - Format vertical (défaut)")
+                print("                                  landscape - Format horizontal")
+                print("  --verbose                     Mode verbeux (affiche les détails)")
                 print()
                 print("Exemples:")
                 print("  ambulon html2pdf document.html")
                 print("  ambulon html2pdf document.html -o result.pdf")
-                print("  ambulon html2pdf document.html --orientation landscape")
-                print("  ambulon html2pdf document.html -o result.pdf --orientation landscape --verbose")
+                print("  ambulon html2pdf document.html -p landscape")
+                print("  ambulon html2pdf document.html -o result.pdf -p landscape --verbose")
+                print()
+                print("Note:")
+                print("  Pour un workflow optimal, utilisez la même orientation dans md2html et html2pdf:")
+                print("    ambulon md2html doc.md -p landscape")
+                print("    ambulon html2pdf doc.html -p landscape")
                 return 0 if len(sys.argv) > 2 and sys.argv[2] in ['-h', '--help'] else 1
             input_file = sys.argv[2]
             output_file = None
@@ -725,7 +730,7 @@ def main():
                 if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
                     output_file = sys.argv[i + 1]
                     i += 2
-                elif sys.argv[i] == '--orientation' and i + 1 < len(sys.argv):
+                elif sys.argv[i] in ['-p', '--page-orientation', '--orientation'] and i + 1 < len(sys.argv):
                     orientation = sys.argv[i + 1]
                     i += 2
                 elif sys.argv[i] == '--verbose':
