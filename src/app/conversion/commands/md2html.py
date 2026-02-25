@@ -506,8 +506,9 @@ def process_markdown_to_html(
         plantuml_jar: Path to PlantUML JAR file (overrides PLANTUML_JAR env var)
         page_orientation: Page orientation for PDF optimization:
                          - None: Natural SVG size (default)
-                         - 'portrait': Optimized for A4 portrait (700px max)
-                         - 'landscape': Optimized for A4 landscape (900px max)
+                         - 'portrait': 700px max width for A4 portrait
+                         - 'landscape': 900px max width for A4 landscape
+                         SVG height adjusts automatically to preserve proportions
 
     Returns:
         Exit code (0 for success, 1 for error)
@@ -948,26 +949,24 @@ def wrap_html_document(content: str, title: str = "Document", page_orientation: 
                          - None: Natural SVG size, no constraints (default)
                          - 'portrait': 700px max width (optimized for A4 portrait)
                          - 'landscape': 900px max width (optimized for A4 landscape)
+                         Height adjusts automatically to preserve SVG proportions
 
     Returns:
         Complete HTML document
     """
-    # Define diagram size constraints based on orientation
-    # None: No constraint, use natural SVG size
-    # Portrait: optimized for A4 portrait (210mm × 297mm, ratio ≈ 1.414)
-    # Landscape: optimized for A4 landscape (297mm × 210mm, ratio ≈ 0.707)
-    # Height is proportional to width to avoid distortion while fitting the page
+    # Define diagram width constraint based on orientation
+    # Height will adjust automatically to preserve SVG natural proportions
+    # None: No constraint, use natural SVG size (100%)
+    # Portrait: 700px max width (optimized for A4 portrait)
+    # Landscape: 900px max width (optimized for A4 landscape)
     if page_orientation == "landscape":
         diagram_max_width = "900px"
-        diagram_max_height = "636px"  # 900 × 0.707 (A4 landscape ratio)
         diagram_width = "auto"
     elif page_orientation == "portrait":
         diagram_max_width = "700px"
-        diagram_max_height = "990px"  # 700 × 1.414 (A4 portrait ratio)
         diagram_width = "auto"
     else:  # None or any other value = natural size
         diagram_max_width = "100%"
-        diagram_max_height = ""  # No max-height constraint
         diagram_width = "100%"
 
     css = """
@@ -1041,8 +1040,7 @@ def wrap_html_document(content: str, title: str = "Document", page_orientation: 
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .diagram svg {
-            max-width: """ + diagram_max_width + """;""" + (f"""
-            max-height: {diagram_max_height};""" if diagram_max_height else "") + """
+            max-width: """ + diagram_max_width + """;
             width: """ + diagram_width + """;
             height: auto;
         }
