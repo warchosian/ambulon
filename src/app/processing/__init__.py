@@ -37,6 +37,13 @@ except ImportError as e:
     add_toc4md_cli = None
 
 try:
+    from .commands.add_toc_backlinks4md import main as add_toc_backlinks4md_cli
+except ImportError as e:
+    import logging
+    logging.getLogger(__name__).warning(f"Could not load add_toc_backlinks4md_cli: {e}")
+    add_toc_backlinks4md_cli = None
+
+try:
     from .commands.concat_html import main as concat_html_cli
 except ImportError as e:
     import logging
@@ -91,6 +98,7 @@ def get_cli_apps():
     return {
         'add_toc4html_cli': add_toc4html_cli,
         'add_toc4md_cli': add_toc4md_cli,
+        'add_toc_backlinks4md_cli': add_toc_backlinks4md_cli,
         'concat_html_cli': concat_html_cli,
         'flatten_html_cli': flatten_html_cli,
         'flatten_md_cli': flatten_md_cli,
@@ -115,6 +123,7 @@ __all__ = [
     # CLI apps
     'add_toc4html_cli',
     'add_toc4md_cli',
+    'add_toc_backlinks4md_cli',
     'concat_html_cli',
     'flatten_html_cli',
     'flatten_md_cli',

@@ -508,7 +508,8 @@ def process_markdown_to_html(
     standalone: bool = True,
     plantuml_method: str = 'kroki',
     plantuml_jar: str = None,
-    page_orientation: str = None
+    page_orientation: str = None,
+    add_toc_backlinks: bool = False
 ) -> int:
     """
     Convert a Markdown file with diagrams to HTML with embedded SVG.
@@ -525,6 +526,7 @@ def process_markdown_to_html(
                          - 'portrait': 700px max width for A4 portrait
                          - 'landscape': 900px max width for A4 landscape
                          SVG height adjusts automatically to preserve proportions
+        add_toc_backlinks: Add back-to-TOC links (↑) after each heading
 
     Returns:
         Exit code (0 for success, 1 for error)
@@ -670,7 +672,7 @@ def process_markdown_to_html(
                     print(f"    [FAILED] Failed to convert, keeping original code block")
 
         # Convert remaining markdown to HTML (basic conversion with full support)
-        html_content = markdown_to_html_basic(result_content)
+        html_content = markdown_to_html_basic(result_content, add_toc_backlinks=add_toc_backlinks)
 
         # Wrap in full HTML if standalone
         if standalone:
@@ -707,6 +709,25 @@ def process_markdown_to_html(
         return 1
 
 
+def convert_inline_markdown(text: str) -> str:
+    """
+    Convert inline markdown (bold, italic, code) to HTML.
+
+    Args:
+        text: Text with inline markdown
+
+    Returns:
+        HTML text
+    """
+    # Convert inline code first (before bold/italic)
+    text = re.sub(r'`([^`]+)`', r'<code>\1</code>', text)
+    # Convert bold
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    # Convert italic
+    text = re.sub(r'\*(.+?)\*', r'<em>\1</em>', text)
+    return text
+
+
 def convert_markdown_table(table_text: str) -> str:
     """
     Convert a markdown table to HTML table.
@@ -736,25 +757,80 @@ def convert_markdown_table(table_text: str) -> str:
     # Build HTML table
     html = '<table>\n<thead>\n<tr>\n'
     for cell in header_cells:
-        html += f'<th>{cell}</th>\n'
+        # Convert inline markdown in header cells
+        html += f'<th>{convert_inline_markdown(cell)}</th>\n'
     html += '</tr>\n</thead>\n<tbody>\n'
 
     for row in data_rows:
         html += '<tr>\n'
         for cell in row:
-            html += f'<td>{cell}</td>\n'
+            # Convert inline markdown in data cells
+            html += f'<td>{convert_inline_markdown(cell)}</td>\n'
         html += '</tr>\n'
 
     html += '</tbody>\n</table>'
     return html
 
 
-def markdown_to_html_basic(content: str) -> str:
+def generate_toc(content: str) -> str:
+    """
+    Generate a Table of Contents from markdown headers.
+
+    Args:
+        content: Markdown content
+
+    Returns:
+        HTML table of contents
+    """
+    toc_items = []
+
+    # Extract all headers (# to ####) with their text and potential IDs
+    header_pattern = r'^(#{1,4})\s+(.+?)(?:\s*\{#([a-z0-9\-_]+)\})?\s*$'
+
+    for match in re.finditer(header_pattern, content, re.MULTILINE | re.IGNORECASE):
+        level = len(match.group(1))  # Number of # characters
+        text = match.group(2).strip()
+        explicit_id = match.group(3)
+
+        # Use explicit ID or generate from text
+        if explicit_id:
+            heading_id = explicit_id
+        else:
+            # Generate ID: "My Title" -> "my-title"
+            heading_id = re.sub(r'[^\w\s-]', '', text.lower())
+            heading_id = re.sub(r'[\s_]+', '-', heading_id).strip('-')
+
+        toc_items.append({
+            'level': level,
+            'text': text,
+            'id': heading_id
+        })
+
+    if not toc_items:
+        return ''
+
+    # Build HTML table of contents with ID for back-to-top links
+    toc_html = ['<nav class="table-of-contents" id="table-of-contents">']
+    toc_html.append('<h2>Table des matières</h2>')
+    toc_html.append('<ul>')
+
+    for item in toc_items:
+        indent = '  ' * (item['level'] - 1)
+        toc_html.append(f'{indent}<li><a href="#{item["id"]}">{item["text"]}</a></li>')
+
+    toc_html.append('</ul>')
+    toc_html.append('</nav>')
+
+    return '\n'.join(toc_html)
+
+
+def markdown_to_html_basic(content: str, add_toc_backlinks: bool = False) -> str:
     """
     Basic markdown to HTML conversion for common elements.
 
     Args:
         content: Markdown content
+        add_toc_backlinks: Add back-to-TOC links (↑) after each heading
 
     Returns:
         HTML content
@@ -824,11 +900,39 @@ def markdown_to_html_basic(content: str) -> str:
         table_placeholders[placeholder] = convert_markdown_table(table)
         content = content.replace(table, placeholder, 1)
 
-    # Convert headings
-    content = re.sub(r'^# (.+)$', r'<h1>\1</h1>', content, flags=re.MULTILINE)
-    content = re.sub(r'^## (.+)$', r'<h2>\1</h2>', content, flags=re.MULTILINE)
-    content = re.sub(r'^### (.+)$', r'<h3>\1</h3>', content, flags=re.MULTILINE)
-    content = re.sub(r'^#### (.+)$', r'<h4>\1</h4>', content, flags=re.MULTILINE)
+    # Generate Table of Contents if [TOC] marker is present
+    toc_html = ''
+    if '[TOC]' in content:
+        toc_html = generate_toc(content)
+        content = content.replace('[TOC]', '___TOC_PLACEHOLDER___')
+
+    # Convert headings with IDs for TOC anchors and optional back-to-TOC links
+    def convert_heading(match, level):
+        text = match.group(1).strip()
+        # Extract explicit ID if present: {#custom-id}
+        id_match = re.search(r'\s*\{#([a-z0-9\-_]+)\}\s*$', text, re.IGNORECASE)
+        if id_match:
+            heading_id = id_match.group(1)
+            text = text[:id_match.start()].strip()
+        else:
+            # Generate ID from text: "My Title" -> "my-title"
+            heading_id = re.sub(r'[^\w\s-]', '', text.lower())
+            heading_id = re.sub(r'[\s_]+', '-', heading_id).strip('-')
+
+        # Add back-to-TOC link if enabled
+        if add_toc_backlinks:
+            return f'<h{level} id="{heading_id}">{text} <a href="#table-of-contents" class="back-to-toc" title="Retour à la table des matières">↑</a></h{level}>'
+        else:
+            return f'<h{level} id="{heading_id}">{text}</h{level}>'
+
+    content = re.sub(r'^# (.+)$', lambda m: convert_heading(m, 1), content, flags=re.MULTILINE)
+    content = re.sub(r'^## (.+)$', lambda m: convert_heading(m, 2), content, flags=re.MULTILINE)
+    content = re.sub(r'^### (.+)$', lambda m: convert_heading(m, 3), content, flags=re.MULTILINE)
+    content = re.sub(r'^#### (.+)$', lambda m: convert_heading(m, 4), content, flags=re.MULTILINE)
+
+    # Replace TOC placeholder with generated TOC
+    if toc_html:
+        content = content.replace('___TOC_PLACEHOLDER___', toc_html)
 
     # Note: Markdown links already converted earlier (before HTML protection)
 
@@ -1086,6 +1190,18 @@ def wrap_html_document(content: str, title: str = "Document", page_orientation: 
             color: #2980b9;
             text-decoration: underline;
         }
+        a.back-to-toc {
+            font-size: 0.7em;
+            color: #95a5a6;
+            text-decoration: none;
+            margin-left: 0.5em;
+            vertical-align: super;
+            transition: color 0.2s;
+        }
+        a.back-to-toc:hover {
+            color: #3498db;
+            text-decoration: none;
+        }
         blockquote {
             border-left: 4px solid #3498db;
             margin: 1em 0;
@@ -1196,6 +1312,12 @@ def register_md2html_command(subparsers):
         help='Path to PlantUML JAR file (overrides PLANTUML_JAR environment variable)'
     )
 
+    parser.add_argument(
+        '--toc-backlinks',
+        action='store_true',
+        help='Add back-to-TOC links (↑) after each heading'
+    )
+
     def _md2html_handler(args):
         print(f"DEBUG _md2html_handler: args.plantuml_method={getattr(args, 'plantuml_method', 'MISSING')}", file=sys.stderr)
         print(f"DEBUG _md2html_handler: args.__dict__={args.__dict__}", file=sys.stderr)
@@ -1205,7 +1327,9 @@ def register_md2html_command(subparsers):
             args.verbose,
             not args.no_standalone,
             args.plantuml_method,
-            args.plantuml_jar
+            args.plantuml_jar,
+            getattr(args, 'page_orientation', None),
+            getattr(args, 'toc_backlinks', False)
         )
 
     parser.set_defaults(func=_md2html_handler)

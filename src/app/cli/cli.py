@@ -76,6 +76,7 @@ def show_help():
     print("Modules Processing (Traitement de documents):")
     print("  add-toc-html          Ajouter une table des matières à HTML")
     print("  add-toc-md            Ajouter une table des matières à Markdown")
+    print("  add-toc-backlinks-md  Ajouter des liens retour (↑) après les titres Markdown")
     print("  concat-html           Concaténer plusieurs fichiers HTML")
     print("  flatten-html          Aplatir une arborescence HTML")
     print("  flatten-md            Aplatir une arborescence Markdown")
@@ -119,6 +120,7 @@ def show_help():
     print("  ambulon pdf2md doc.pdf -o doc.md   Convertir PDF en Markdown")
     print("  ambulon html2md doc.html            Convertir HTML en Markdown")
     print("  ambulon add-toc-md doc.md           Ajouter une TOC à Markdown")
+    print("  ambulon add-toc-backlinks-md doc.md Ajouter liens retour à la TOC")
     print("  ambulon flatten-md docs/            Aplatir arborescence Markdown")
     print("  ambulon merge-html dir/ -o out.html Fusionner HTML")
     print("  ambulon code2md script.py           Encapsuler code dans Markdown")
@@ -631,7 +633,7 @@ def main():
             # Convertir Markdown en HTML
             from app.conversion import process_markdown_to_html
             if len(sys.argv) < 3 or sys.argv[2] in ['-h', '--help']:
-                print("Usage: ambulon md2html <input.md> [-o <output.html>] [-p <orientation>] [--verbose] [--no-standalone] [--plantuml-method auto|jar|kroki] [--plantuml-jar <path>]")
+                print("Usage: ambulon md2html <input.md> [-o <output.html>] [-p <orientation>] [--verbose] [--no-standalone] [--toc-backlinks] [--plantuml-method auto|jar|kroki] [--plantuml-jar <path>]")
                 print()
                 print("Convertit un fichier Markdown en HTML avec support PlantUML")
                 print()
@@ -646,6 +648,7 @@ def main():
                 print("                                  (par défaut: taille naturelle des SVG, aucune contrainte)")
                 print("  --verbose                     Mode verbeux (affiche les détails)")
                 print("  --no-standalone               Génère un fragment HTML au lieu d'un document complet")
+                print("  --toc-backlinks               Ajoute des liens retour (↑) après chaque titre")
                 print("  --plantuml-method <mode>      Méthode de rendu PlantUML:")
                 print("                                  auto   - Détection automatique")
                 print("                                  jar    - Utilise PlantUML.jar local (plus fiable)")
@@ -669,6 +672,7 @@ def main():
             page_orientation = None  # None = taille naturelle, 'portrait' ou 'landscape' = optimisé
             plantuml_method = 'kroki'
             plantuml_jar = None
+            toc_backlinks = False
             i = 3
             while i < len(sys.argv):
                 if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
@@ -683,6 +687,9 @@ def main():
                 elif sys.argv[i] == '--no-standalone':
                     standalone = False
                     i += 1
+                elif sys.argv[i] == '--toc-backlinks':
+                    toc_backlinks = True
+                    i += 1
                 elif sys.argv[i] == '--plantuml-method' and i + 1 < len(sys.argv):
                     plantuml_method = sys.argv[i + 1]
                     i += 2
@@ -691,7 +698,7 @@ def main():
                     i += 2
                 else:
                     i += 1
-            return process_markdown_to_html(input_file, output_file, verbose, standalone, plantuml_method, plantuml_jar, page_orientation)
+            return process_markdown_to_html(input_file, output_file, verbose, standalone, plantuml_method, plantuml_jar, page_orientation, toc_backlinks)
         elif command == 'html2pdf':
             # Convertir HTML en PDF
             from app.conversion import convert_html_to_pdf
@@ -841,6 +848,10 @@ def main():
             # Ajouter TOC à Markdown
             from app.processing import add_toc4md_cli
             return add_toc4md_cli(sys.argv[2:])
+        elif command == 'add-toc-backlinks-md':
+            # Ajouter liens retour à Markdown
+            from app.processing import add_toc_backlinks4md_cli
+            return add_toc_backlinks4md_cli(sys.argv[2:])
         elif command == 'concat-html':
             # Concaténer HTML
             from app.processing import concat_html_cli
