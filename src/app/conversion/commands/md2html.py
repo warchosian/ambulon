@@ -972,21 +972,29 @@ def wrap_html_document(content: str, title: str = "Document", page_orientation: 
     """
     # Define diagram width constraint based on orientation
     # SVG will scale to fit width while preserving aspect ratio via viewBox
-    # None: No constraint, use natural SVG size (100%)
+    # None: Natural size from viewBox, may overflow with horizontal scroll
     # Portrait: 700px max width (optimized for A4 portrait)
     # Landscape: 900px max width (optimized for A4 landscape)
     if page_orientation == "landscape":
         diagram_max_width = "900px"
+        diagram_width = "100%"
     elif page_orientation == "portrait":
         diagram_max_width = "700px"
-    else:  # None or any other value = natural size
-        diagram_max_width = "100%"
+        diagram_width = "100%"
+    else:  # None or any other value = natural size from viewBox
+        diagram_max_width = "none"
+        diagram_width = "auto"
+
+    # Adjust body max-width based on page orientation
+    # Natural mode: no constraint to allow horizontal scroll for large diagrams
+    # Portrait/Landscape modes: constrained to 1200px for better readability
+    body_max_width = "none" if page_orientation is None else "1200px"
 
     css = """
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            max-width: 1200px;
+            max-width: __BODY_MAX_WIDTH__;
             margin: 0 auto;
             padding: 20px;
             color: #333;
@@ -1052,12 +1060,17 @@ def wrap_html_document(content: str, title: str = "Document", page_orientation: 
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .diagram svg {
-            max-width: """ + diagram_max_width + """;
-            width: 100%;
-            height: auto;
-        }
-        ul, ol {
+    """
+
+    # Build diagram SVG CSS based on orientation
+    css += "        .diagram svg {\n"
+    if diagram_max_width != "none":
+        css += f"            max-width: {diagram_max_width};\n"
+    css += f"            width: {diagram_width};\n"
+    css += "            height: auto;\n"
+    css += "        }\n"
+
+    css += """        ul, ol {
             margin: 1em 0;
             padding-left: 2em;
         }
@@ -1108,6 +1121,9 @@ def wrap_html_document(content: str, title: str = "Document", page_orientation: 
             background-color: #f9f9f9;
         }
     """
+
+    # Replace placeholders with actual values
+    css = css.replace("__BODY_MAX_WIDTH__", body_max_width)
 
     html = f"""<!DOCTYPE html>
 <html lang="fr">
