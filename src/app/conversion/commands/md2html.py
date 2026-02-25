@@ -459,13 +459,13 @@ def convert_mermaid_to_svg(mermaid_code: str, verbose: bool = False) -> Optional
 
 def clean_svg_content(svg_content: str) -> str:
     """
-    Clean SVG content by removing XML declaration and unnecessary comments.
+    Clean SVG content and make it responsive while preserving proportions.
 
     Args:
         svg_content: Raw SVG content
 
     Returns:
-        Cleaned SVG content
+        Cleaned and responsive SVG content
     """
     # Remove XML declaration
     svg_content = re.sub(r'<\?xml[^>]*\?>\s*', '', svg_content)
@@ -478,6 +478,22 @@ def clean_svg_content(svg_content: str) -> str:
 
     # Remove other XML comments (but keep them if they might be important for rendering)
     svg_content = re.sub(r'<!--\s*Title:[^>]*-->\s*', '', svg_content)
+
+    # FIX: PlantUML generates preserveAspectRatio="none" which causes distortion
+    # Replace with "xMidYMid meet" to preserve proportions
+    svg_content = re.sub(r'preserveAspectRatio="none"', 'preserveAspectRatio="xMidYMid meet"', svg_content)
+
+    # Remove fixed width and height attributes from <svg> tag to make it responsive
+    # Keep viewBox which defines the aspect ratio
+    svg_content = re.sub(r'<svg([^>]*)\swidth="[^"]*"', r'<svg\1', svg_content)
+    svg_content = re.sub(r'<svg([^>]*)\sheight="[^"]*"', r'<svg\1', svg_content)
+
+    # Remove inline width/height styles that override CSS
+    svg_content = re.sub(r'style="([^"]*?)width:\s*\d+px;?([^"]*)"', r'style="\1\2"', svg_content)
+    svg_content = re.sub(r'style="([^"]*?)height:\s*\d+px;?([^"]*)"', r'style="\1\2"', svg_content)
+
+    # Clean up empty style attributes
+    svg_content = re.sub(r'style="\s*;?\s*"', '', svg_content)
 
     # Strip leading/trailing whitespace
     svg_content = svg_content.strip()
@@ -955,19 +971,16 @@ def wrap_html_document(content: str, title: str = "Document", page_orientation: 
         Complete HTML document
     """
     # Define diagram width constraint based on orientation
-    # Height will adjust automatically to preserve SVG natural proportions
+    # SVG will scale to fit width while preserving aspect ratio via viewBox
     # None: No constraint, use natural SVG size (100%)
     # Portrait: 700px max width (optimized for A4 portrait)
     # Landscape: 900px max width (optimized for A4 landscape)
     if page_orientation == "landscape":
         diagram_max_width = "900px"
-        diagram_width = "auto"
     elif page_orientation == "portrait":
         diagram_max_width = "700px"
-        diagram_width = "auto"
     else:  # None or any other value = natural size
         diagram_max_width = "100%"
-        diagram_width = "100%"
 
     css = """
         body {
@@ -1041,7 +1054,7 @@ def wrap_html_document(content: str, title: str = "Document", page_orientation: 
         }
         .diagram svg {
             max-width: """ + diagram_max_width + """;
-            width: """ + diagram_width + """;
+            width: 100%;
             height: auto;
         }
         ul, ol {
