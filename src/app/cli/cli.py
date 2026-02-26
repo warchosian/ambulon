@@ -74,9 +74,11 @@ def show_help():
     print("  wikisi-sync-api       Synchroniser les données (énumérations, applications) depuis l'API WikiSI")
     print()
     print("Modules Processing (Traitement de documents):")
-    print("  add-toc-html          Ajouter une table des matières à HTML")
-    print("  add-toc-md            Ajouter une table des matières à Markdown")
-    print("  add-toc-backlinks-md  Ajouter des liens retour (↑) après les titres Markdown")
+    print("  add-toc4html          Ajouter une table des matières à HTML")
+    print("  add-toc4md            Ajouter une table des matières à Markdown")
+    print("  add-itoc4md           Ajouter des liens retour (iTOC ↑) après les titres Markdown")
+    print("  check-toc4md          Vérifier si une TOC existe dans un fichier Markdown")
+    print("  check-itoc4md         Vérifier si des liens iTOC (↑) existent dans un fichier Markdown")
     print("  concat-html           Concaténer plusieurs fichiers HTML")
     print("  flatten-html          Aplatir une arborescence HTML")
     print("  flatten-md            Aplatir une arborescence Markdown")
@@ -119,8 +121,8 @@ def show_help():
     print("  ambulon pdf2html doc.pdf -o doc.html Convertir PDF en HTML")
     print("  ambulon pdf2md doc.pdf -o doc.md   Convertir PDF en Markdown")
     print("  ambulon html2md doc.html            Convertir HTML en Markdown")
-    print("  ambulon add-toc-md doc.md           Ajouter une TOC à Markdown")
-    print("  ambulon add-toc-backlinks-md doc.md Ajouter liens retour à la TOC")
+    print("  ambulon add-toc4md doc.md           Ajouter une TOC à Markdown")
+    print("  ambulon add-itoc4md doc.md          Ajouter liens retour (iTOC) à la TOC")
     print("  ambulon flatten-md docs/            Aplatir arborescence Markdown")
     print("  ambulon merge-html dir/ -o out.html Fusionner HTML")
     print("  ambulon code2md script.py           Encapsuler code dans Markdown")
@@ -840,18 +842,26 @@ def main():
                 return wikisi_sync_api_main()
             finally:
                 sys.argv = original_argv
-        elif command == 'add-toc-html':
+        elif command == 'add-toc4html':
             # Ajouter TOC à HTML
-            from app.processing import add_toc4html_cli
+            from app.toc import add_toc4html_cli
             return add_toc4html_cli(sys.argv[2:])
-        elif command == 'add-toc-md':
+        elif command == 'add-toc4md':
             # Ajouter TOC à Markdown
-            from app.processing import add_toc4md_cli
+            from app.toc import add_toc4md_cli
             return add_toc4md_cli(sys.argv[2:])
-        elif command == 'add-toc-backlinks-md':
-            # Ajouter liens retour à Markdown
-            from app.processing import add_toc_backlinks4md_cli
-            return add_toc_backlinks4md_cli(sys.argv[2:])
+        elif command == 'add-itoc4md':
+            # Ajouter liens retour (iTOC) à Markdown
+            from app.toc import add_itoc4md_cli
+            return add_itoc4md_cli(sys.argv[2:])
+        elif command == 'check-toc4md':
+            # Vérifier si TOC existe dans Markdown
+            from app.toc import check_toc4md_cli
+            return check_toc4md_cli(sys.argv[2:])
+        elif command == 'check-itoc4md':
+            # Vérifier si liens iTOC existent dans Markdown
+            from app.toc import check_itoc4md_cli
+            return check_itoc4md_cli(sys.argv[2:])
         elif command == 'concat-html':
             # Concaténer HTML
             from app.processing import concat_html_cli

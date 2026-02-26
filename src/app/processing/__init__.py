@@ -22,26 +22,41 @@ from .commands import (
 
 # Les CLI apps sont importées directement
 # Si l'import échoue, on crée des dummy apps
+# Les apps TOC sont maintenant dans app.toc
 try:
-    from .commands.add_toc4html import main as add_toc4html_cli
+    from app.toc import add_toc4html_cli
 except ImportError as e:
     import logging
     logging.getLogger(__name__).warning(f"Could not load add_toc4html_cli: {e}")
     add_toc4html_cli = None
 
 try:
-    from .commands.add_toc4md import main as add_toc4md_cli
+    from app.toc import add_toc4md_cli
 except ImportError as e:
     import logging
     logging.getLogger(__name__).warning(f"Could not load add_toc4md_cli: {e}")
     add_toc4md_cli = None
 
 try:
-    from .commands.add_toc_backlinks4md import main as add_toc_backlinks4md_cli
+    from app.toc import add_itoc4md_cli
 except ImportError as e:
     import logging
-    logging.getLogger(__name__).warning(f"Could not load add_toc_backlinks4md_cli: {e}")
-    add_toc_backlinks4md_cli = None
+    logging.getLogger(__name__).warning(f"Could not load add_itoc4md_cli: {e}")
+    add_itoc4md_cli = None
+
+try:
+    from app.toc import check_toc4md_cli
+except ImportError as e:
+    import logging
+    logging.getLogger(__name__).warning(f"Could not load check_toc4md_cli: {e}")
+    check_toc4md_cli = None
+
+try:
+    from app.toc import check_itoc4md_cli
+except ImportError as e:
+    import logging
+    logging.getLogger(__name__).warning(f"Could not load check_itoc4md_cli: {e}")
+    check_itoc4md_cli = None
 
 try:
     from .commands.concat_html import main as concat_html_cli
@@ -98,7 +113,9 @@ def get_cli_apps():
     return {
         'add_toc4html_cli': add_toc4html_cli,
         'add_toc4md_cli': add_toc4md_cli,
-        'add_toc_backlinks4md_cli': add_toc_backlinks4md_cli,
+        'add_itoc4md_cli': add_itoc4md_cli,
+        'check_toc4md_cli': check_toc4md_cli,
+        'check_itoc4md_cli': check_itoc4md_cli,
         'concat_html_cli': concat_html_cli,
         'flatten_html_cli': flatten_html_cli,
         'flatten_md_cli': flatten_md_cli,
@@ -123,7 +140,9 @@ __all__ = [
     # CLI apps
     'add_toc4html_cli',
     'add_toc4md_cli',
-    'add_toc_backlinks4md_cli',
+    'add_itoc4md_cli',
+    'check_toc4md_cli',
+    'check_itoc4md_cli',
     'concat_html_cli',
     'flatten_html_cli',
     'flatten_md_cli',

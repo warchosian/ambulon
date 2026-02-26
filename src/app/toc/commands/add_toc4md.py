@@ -1,6 +1,6 @@
 """
 CLI command to add a Table of Contents (TOC) to Markdown files for Ambulon.
-Utilizes core logic from app.processing.core.markdown_toc_generator.
+Utilizes core logic from app.toc.core.markdown_toc_generator.
 Handles CLI arguments, configuration loading, and logging.
 """
 
@@ -17,7 +17,7 @@ from ..core.markdown_toc_generator import add_toc_to_markdown_logic
 logger = logging.getLogger(__name__)
 
 DEFAULT_CONFIG = {
-    'processing': {
+    'toc': {
         'add_toc_md': {
             'min_level': 1,
             'max_level': 6,
@@ -43,15 +43,15 @@ def main(argv=None):
 
         Configuration Hierarchy (from highest to lowest priority):
         1. Command-line arguments
-        2. YAML configuration file (--config, e.g., config/processing.yaml)
+        2. YAML configuration file (--config, e.g., config/toc.yaml)
         3. Environment variables
         4. Default values
         """
     )
 
     parser.add_argument("input_file", type=Path, help="Path to input Markdown file.")
-    parser.add_argument("--output", "-o", type=Path, help="Output Markdown file path (default: <input>-tocced.md).")
-    parser.add_argument("--config", "-c", type=Path, help="Path to a YAML configuration file (e.g., config/processing.yaml).")
+    parser.add_argument("--output", "-o", type=Path, help="Output Markdown file path (default: <input>-toced.md).")
+    parser.add_argument("--config", "-c", type=Path, help="Path to a YAML configuration file (e.g., config/toc.yaml).")
     parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose logging.")
     parser.add_argument("--quiet", "-q", action="store_true", help="Suppress most output messages.")
     parser.add_argument("--min-level", type=int, help="Minimum heading level to include in TOC (1-6). Overrides config/env.")
@@ -67,15 +67,15 @@ def main(argv=None):
 
     # Load configuration
     config = load_app_config(str(args.config) if args.config else None, DEFAULT_CONFIG)
-    add_toc_md_config = config['processing']['add_toc_md']
+    add_toc_md_config = config['toc']['add_toc_md']
 
     # Determine output path
     if args.output is None:
-        args.output = args.input_file.parent / f"{args.input_file.stem}-tocced.md"
+        args.output = args.input_file.parent / f"{args.input_file.stem}-toced.md"
 
     # Apply CLI overrides (highest priority) and resolve config
-    final_min_level = args.min_level if args.min_level is not None else add_toc_md_config.get('min_level', DEFAULT_CONFIG['processing']['add_toc_md']['min_level'])
-    final_max_level = args.max_level if args.max_level is not None else add_toc_md_config.get('max_level', DEFAULT_CONFIG['processing']['add_toc_md']['max_level'])
+    final_min_level = args.min_level if args.min_level is not None else add_toc_md_config.get('min_level', DEFAULT_CONFIG['toc']['add_toc_md']['min_level'])
+    final_max_level = args.max_level if args.max_level is not None else add_toc_md_config.get('max_level', DEFAULT_CONFIG['toc']['add_toc_md']['max_level'])
 
     # Execute core logic
     exit_code, generated_path = add_toc_to_markdown_logic(

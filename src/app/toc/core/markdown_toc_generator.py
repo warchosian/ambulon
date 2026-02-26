@@ -27,14 +27,14 @@ def extract_headings(md_content: str) -> List[Dict[str, Any]]:
 
     # Pattern to match markdown headings: # Heading, ## Heading, etc.
     # Optionally captures custom IDs in {#id} format
-    heading_pattern = re.compile(r'^(#{1,6})\s+(.+?)(?:\s*\{#[a-zA-Z0-9\-_]+\})?$')
+    heading_pattern = re.compile(r'^(#{1,6})\s+(.+?)(?:\s*\{#([a-zA-Z0-9\-_]+)\})?$')
 
     for line_num, line in enumerate(lines):
         match = heading_pattern.match(line)
         if match:
             level = len(match.group(1))  # Count number of #
             text = match.group(2).strip()
-            custom_id = match.group(3)  # Custom ID if specified
+            custom_id = match.group(3) if match.lastindex >= 3 else None  # Custom ID if specified
 
             headings.append({
                 'level': level,

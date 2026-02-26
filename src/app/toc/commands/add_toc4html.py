@@ -1,6 +1,6 @@
 """
 CLI command to add a Table of Contents (TOC) to HTML files for Ambulon.
-Utilizes core logic from app.processing.core.html_toc_generator.
+Utilizes core logic from app.toc.core.html_toc_generator.
 Handles CLI arguments, configuration loading, and logging.
 """
 
@@ -17,7 +17,7 @@ from ..core.html_toc_generator import add_toc_to_html_logic
 logger = logging.getLogger(__name__)
 
 DEFAULT_CONFIG = {
-    'processing': {
+    'toc': {
         'add_toc_html': {
             # No specific config options for now
         }

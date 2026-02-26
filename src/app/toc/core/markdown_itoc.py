@@ -53,6 +53,8 @@ def add_backlinks_to_headings(
     """
     Add back-to-TOC links after Markdown headings.
 
+    Properly handles custom IDs {#id} by inserting the link BEFORE the ID.
+
     Args:
         md_content: Original Markdown content
         headings: List of headings with line numbers
@@ -69,9 +71,23 @@ def add_backlinks_to_headings(
         line_num = heading['line']
         original_line = lines[line_num]
 
-        # Add back-to-TOC link after heading text
-        # Format: ## Heading [↑](#table-of-contents)
-        modified_line = f"{original_line} [{link_text}](#{toc_id})"
+        # Check if the heading has a custom ID {#custom-id}
+        # If yes, insert the link BEFORE the ID
+        # If no, insert at the end
+        import re
+        custom_id_pattern = r'\s*\{#([a-zA-Z0-9\-_]+)\}\s*$'
+        match = re.search(custom_id_pattern, original_line)
+
+        if match:
+            # Insert link before the custom ID
+            # Format: ## Heading [↑](#toc) {#custom-id}
+            insert_pos = match.start()
+            modified_line = original_line[:insert_pos] + f" [{link_text}](#{toc_id})" + original_line[insert_pos:]
+        else:
+            # No custom ID, append at the end
+            # Format: ## Heading [↑](#toc)
+            modified_line = f"{original_line} [{link_text}](#{toc_id})"
+
         lines[line_num] = modified_line
 
     return '\n'.join(lines)
