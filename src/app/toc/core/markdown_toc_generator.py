@@ -75,7 +75,10 @@ def generate_id(text: str, existing_ids: Set[str]) -> str:
 
 def generate_toc_markdown(headings: List[Dict[str, Any]], min_level: int = 1, max_level: int = 6) -> str:
     """
-    Generate Markdown table of contents.
+    Generate Markdown table of contents with anchor IDs for each line.
+
+    Each TOC line gets an ID like 'toc-{heading-id}' so back-to-TOC links
+    can point to the specific line, not just the TOC in general.
 
     Args:
         headings: List of heading dictionaries
@@ -83,7 +86,7 @@ def generate_toc_markdown(headings: List[Dict[str, Any]], min_level: int = 1, ma
         max_level: Maximum heading level to include (default: 6)
 
     Returns:
-        Markdown string for TOC
+        Markdown string for TOC with HTML anchor IDs
     """
     if not headings:
         return ""
@@ -107,8 +110,10 @@ def generate_toc_markdown(headings: List[Dict[str, Any]], min_level: int = 1, ma
         # Calculate indentation (2 spaces per level)
         indent = '  ' * (level - base_level)
 
-        # Create TOC entry
-        toc_lines.append(f'{indent}- [{text}](#{heading_id})')
+        # Create TOC entry with anchor ID for this specific line
+        # Format: - <a id="toc-{heading-id}"></a>[Text](#heading-id)
+        toc_line_id = f"toc-{heading_id}"
+        toc_lines.append(f'{indent}- <a id="{toc_line_id}"></a>[{text}](#{heading_id})')
 
     toc_lines.append('')  # Empty line after TOC
     toc_lines.append('---')  # Separator

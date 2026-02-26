@@ -63,7 +63,7 @@ class TestAddBacklinksToHeadings:
     """Tests pour add_backlinks_to_headings()"""
 
     def test_add_simple_backlinks(self):
-        """Test ajout de liens retour simples"""
+        """Test ajout de liens retour vers lignes TOC spécifiques"""
         content = """# Titre 1
 Contenu
 ## Titre 2
@@ -74,18 +74,20 @@ Contenu
         ]
 
         result = add_backlinks_to_headings(content, headings)
-        assert '# Titre 1 [↑](#table-of-contents)' in result
-        assert '## Titre 2 [↑](#table-of-contents)' in result
+        # Les liens pointent vers les lignes TOC spécifiques, pas vers la TOC en général
+        assert '# Titre 1 [↑](#toc-titre-1)' in result
+        assert '## Titre 2 [↑](#toc-titre-2)' in result
 
     def test_add_backlinks_custom_toc_id(self):
-        """Test avec ID TOC personnalisé"""
+        """Test avec ID TOC personnalisé (deprecated - links always point to toc-{heading-id})"""
         content = "# Titre"
         headings = [
             {'level': 1, 'text': 'Titre', 'line': 0, 'original_line': '# Titre'},
         ]
 
+        # Le paramètre toc_id est ignoré maintenant - les liens pointent vers toc-{heading-id}
         result = add_backlinks_to_headings(content, headings, toc_id="my-toc")
-        assert '[↑](#my-toc)' in result
+        assert '[↑](#toc-titre)' in result
 
     def test_add_backlinks_custom_link_text(self):
         """Test avec texte de lien personnalisé"""
@@ -95,7 +97,7 @@ Contenu
         ]
 
         result = add_backlinks_to_headings(content, headings, link_text="⬆")
-        assert '[⬆](#table-of-contents)' in result
+        assert '[⬆](#toc-titre)' in result
 
     def test_add_backlinks_preserves_content(self):
         """Test que le contenu non-titre est préservé"""
@@ -120,7 +122,7 @@ Autre paragraphe
         assert result == content  # Contenu inchangé
 
     def test_add_backlinks_with_custom_ids(self):
-        """Test avec IDs personnalisés - le lien doit être AVANT l'ID"""
+        """Test avec IDs personnalisés - le lien doit être AVANT l'ID et pointer vers la ligne TOC"""
         content = """# Titre Principal {#main}
 ## Section A {#section-a}
 ### Sous-section sans ID
@@ -134,9 +136,10 @@ Autre paragraphe
         result = add_backlinks_to_headings(content, headings)
 
         # Vérifier que les liens iTOC sont AVANT les IDs personnalisés
-        assert '# Titre Principal [↑](#table-of-contents) {#main}' in result
-        assert '## Section A [↑](#table-of-contents) {#section-a}' in result
-        assert '### Sous-section sans ID [↑](#table-of-contents)' in result
+        # ET pointent vers les lignes TOC spécifiques (toc-{custom-id})
+        assert '# Titre Principal [↑](#toc-main) {#main}' in result
+        assert '## Section A [↑](#toc-section-a) {#section-a}' in result
+        assert '### Sous-section sans ID [↑](#toc-sous-section-sans-id)' in result
 
         # Vérifier qu'il n'y a PAS de liens APRÈS les IDs
         assert '{#main} [↑]' not in result
@@ -176,9 +179,10 @@ Plus de contenu
         assert output_file.exists()
 
         content = output_file.read_text(encoding='utf-8')
-        assert '[↑](#table-of-contents)' in content
-        assert '# Introduction [↑](#table-of-contents)' in content
-        assert '## Section A [↑](#table-of-contents)' in content
+        # Les liens pointent vers les lignes TOC spécifiques
+        assert '[↑](#toc-introduction)' in content
+        assert '# Introduction [↑](#toc-introduction)' in content
+        assert '## Section A [↑](#toc-section-a)' in content
 
     def test_add_backlinks_file_not_found(self):
         """Test fichier non trouvé"""
@@ -238,14 +242,14 @@ Plus de contenu
         assert h1_line == '# H1'  # Pas de lien retour
         assert h4_line == '#### H4'  # Pas de lien retour
 
-        # H2 et H3 devraient avoir des liens retour
+        # H2 et H3 devraient avoir des liens retour vers leurs lignes TOC spécifiques
         h2_line = lines[1]
         h3_line = lines[2]
-        assert '[↑](#table-of-contents)' in h2_line
-        assert '[↑](#table-of-contents)' in h3_line
+        assert '[↑](#toc-h2)' in h2_line
+        assert '[↑](#toc-h3)' in h3_line
 
     def test_add_backlinks_custom_toc_id(self):
-        """Test avec ID TOC personnalisé"""
+        """Test avec ID TOC personnalisé (deprecated - always points to toc-{heading-id})"""
         input_file = self.temp_dir / "test.md"
         output_file = self.temp_dir / "test-itoced.md"
 
@@ -254,12 +258,13 @@ Plus de contenu
         exit_code, result_path = add_toc_backlinks_logic(
             input_file=input_file,
             output_file=output_file,
-            toc_id="custom-toc"
+            toc_id="custom-toc"  # This parameter is now ignored
         )
 
         assert exit_code == 0
         content = output_file.read_text(encoding='utf-8')
-        assert '[↑](#custom-toc)' in content
+        # Liens pointent toujours vers toc-{heading-id}
+        assert '[↑](#toc-titre)' in content
 
     def test_add_backlinks_custom_link_text(self):
         """Test avec texte de lien personnalisé"""
@@ -276,4 +281,4 @@ Plus de contenu
 
         assert exit_code == 0
         content = output_file.read_text(encoding='utf-8')
-        assert '[⬆ Retour](#table-of-contents)' in content
+        assert '[⬆ Retour](#toc-titre)' in content

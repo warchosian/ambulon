@@ -53,40 +53,54 @@ def add_backlinks_to_headings(
     """
     Add back-to-TOC links after Markdown headings.
 
+    Links point to the SPECIFIC LINE in the TOC (toc-{heading-id}), not just
+    the TOC in general. This allows users to return to the exact TOC entry.
+
     Properly handles custom IDs {#id} by inserting the link BEFORE the ID.
 
     Args:
         md_content: Original Markdown content
         headings: List of headings with line numbers
-        toc_id: ID of the table of contents anchor (default: "table-of-contents")
+        toc_id: Base ID for TOC (unused, kept for compatibility)
         link_text: Text for the back link (default: "↑")
 
     Returns:
         Modified Markdown content with back-to-TOC links
     """
+    import re
     lines = md_content.split('\n')
 
     # Process headings in reverse order to avoid line number shifts
     for heading in reversed(headings):
         line_num = heading['line']
         original_line = lines[line_num]
+        heading_text = heading['text']
 
-        # Check if the heading has a custom ID {#custom-id}
-        # If yes, insert the link BEFORE the ID
-        # If no, insert at the end
-        import re
+        # Extract or generate the heading ID to build the TOC line ID
         custom_id_pattern = r'\s*\{#([a-zA-Z0-9\-_]+)\}\s*$'
         match = re.search(custom_id_pattern, original_line)
 
         if match:
+            # Use the custom ID
+            heading_id = match.group(1)
+        else:
+            # Generate ID from heading text (same logic as TOC generation)
+            heading_id = re.sub(r'[^\w\s-]', '', heading_text.lower())
+            heading_id = re.sub(r'[\s_]+', '-', heading_id).strip('-')
+
+        # Build the TOC line ID: toc-{heading-id}
+        toc_line_id = f"toc-{heading_id}"
+
+        # Insert the backlink
+        if match:
             # Insert link before the custom ID
-            # Format: ## Heading [↑](#toc) {#custom-id}
+            # Format: ## Heading [↑](#toc-heading-id) {#heading-id}
             insert_pos = match.start()
-            modified_line = original_line[:insert_pos] + f" [{link_text}](#{toc_id})" + original_line[insert_pos:]
+            modified_line = original_line[:insert_pos] + f" [{link_text}](#{toc_line_id})" + original_line[insert_pos:]
         else:
             # No custom ID, append at the end
-            # Format: ## Heading [↑](#toc)
-            modified_line = f"{original_line} [{link_text}](#{toc_id})"
+            # Format: ## Heading [↑](#toc-heading-id)
+            modified_line = f"{original_line} [{link_text}](#{toc_line_id})"
 
         lines[line_num] = modified_line
 
