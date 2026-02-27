@@ -79,6 +79,7 @@ def show_help():
     print("  add-itoc4md           Ajouter des liens retour (iTOC) vers lignes TOC specifiques")
     print("  check-toc4md          Verifier si une TOC existe dans un fichier Markdown")
     print("  check-itoc4md         Verifier si des liens iTOC existent dans un fichier Markdown")
+    print("  diagram2svg4md        Convertir diagrammes en SVG dans Markdown")
     print("  concat-html           Concaténer plusieurs fichiers HTML")
     print("  flatten-html          Aplatir une arborescence HTML")
     print("  flatten-md            Aplatir une arborescence Markdown")
@@ -862,6 +863,10 @@ def main():
             # Vérifier si liens iTOC existent dans Markdown
             from app.toc import check_itoc4md_cli
             return check_itoc4md_cli(sys.argv[2:])
+        elif command == 'diagram2svg4md':
+            # Convertir diagrammes en SVG dans Markdown
+            from app.diagrams import diagram2svg4md_cli
+            return diagram2svg4md_cli(sys.argv[2:])
         elif command == 'concat-html':
             # Concaténer HTML
             from app.processing import concat_html_cli

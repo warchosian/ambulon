@@ -199,6 +199,9 @@ def add_toc_to_markdown_logic(
         with open(input_file, 'r', encoding='utf-8') as f:
             md_content = f.read()
 
+        # Remove [TOC] marker if present (will be replaced with generated TOC)
+        md_content = re.sub(r'^\[TOC\]\s*$', '', md_content, flags=re.MULTILINE)
+
         # Extract headings
         headings = extract_headings(md_content)
 
