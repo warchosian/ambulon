@@ -8,7 +8,43 @@ import logging
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 
+from .markdown_itoc_checker import detect_itoc_links
+
 logger = logging.getLogger(__name__)
+
+
+def remove_existing_backlinks(md_content: str, link_pattern: str = r'\[↑\]\(#[^\)]+\)') -> str:
+    """
+    Remove existing iTOC (back-to-TOC) links from markdown content.
+    
+    Args:
+        md_content: Markdown content that may contain backlink links
+        link_pattern: Regex pattern for iTOC links to remove
+        
+    Returns:
+        Content with backlinks removed
+    """
+    # Remove backlink patterns from headings
+    content = re.sub(r'\s*' + link_pattern, '', md_content)
+    
+    # Clean up excessive empty lines left behind
+    content = re.sub(r'\n{3,}', '\n\n', content)
+    
+    return content
+
+
+def is_toc_heading(text: str) -> bool:
+    """Check if a heading is the TOC title itself (should be excluded from backlinks)."""
+    toc_patterns = [
+        r'table\s+(?:des\s+)?mati[èe]res',  # Table des matières
+        r'table\s+of\s+contents',           # Table of Contents
+        r'sommaire',                         # Sommaire
+    ]
+    text_lower = text.lower()
+    for pattern in toc_patterns:
+        if re.search(pattern, text_lower):
+            return True
+    return False
 
 
 def extract_headings_with_positions(md_content: str) -> List[Dict[str, Any]]:
@@ -34,6 +70,10 @@ def extract_headings_with_positions(md_content: str) -> List[Dict[str, Any]]:
             level = len(match.group(1))  # Count number of #
             text = match.group(2).strip()
 
+            # Skip TOC headings (don't add backlinks to the TOC title itself)
+            if is_toc_heading(text):
+                continue
+
             headings.append({
                 'level': level,
                 'text': text,
@@ -57,6 +97,7 @@ def add_backlinks_to_headings(
     the TOC in general. This allows users to return to the exact TOC entry.
 
     Properly handles custom IDs {#id} by inserting the link BEFORE the ID.
+    Skips headings that already have a backlink to prevent duplicates.
 
     Args:
         md_content: Original Markdown content
@@ -75,6 +116,10 @@ def add_backlinks_to_headings(
         line_num = heading['line']
         original_line = lines[line_num]
         heading_text = heading['text']
+
+        # Skip if backlink already exists (check for [↑](#toc-...) pattern)
+        if re.search(r'\[↑\]\(#toc-[^)]+\)', original_line):
+            continue
 
         # Extract or generate the heading ID to build the TOC line ID
         custom_id_pattern = r'\s*\{#([a-zA-Z0-9\-_]+)\}\s*$'
@@ -114,6 +159,7 @@ def add_toc_backlinks_logic(
     link_text: str = "↑",
     min_level: int = 1,
     max_level: int = 6,
+    force: bool = False,
 ) -> Tuple[int, Optional[Path]]:
     """
     Core logic to add back-to-TOC links to a Markdown file.
@@ -125,6 +171,7 @@ def add_toc_backlinks_logic(
         link_text: Text for the back link
         min_level: Minimum heading level to add backlinks (1-6)
         max_level: Maximum heading level to add backlinks (1-6)
+        force: If True, add links even if some already exist; if False, skip if links exist
 
     Returns:
         A tuple: (exit_code: int, generated_path: Optional[Path])
@@ -144,6 +191,22 @@ def add_toc_backlinks_logic(
         # Read Markdown content
         with open(input_file, 'r', encoding='utf-8') as f:
             md_content = f.read()
+
+        # Check if iTOC links already exist
+        itoc_check = detect_itoc_links(md_content)
+        if itoc_check['has_itoc_links'] and not force:
+            logger.info(f"iTOC links already exist: {itoc_check['itoc_count']}/{itoc_check['total_headings']} headings (use --force to add anyway)")
+            # Copy file as-is
+            output_file.parent.mkdir(parents=True, exist_ok=True)
+            with open(output_file, 'w', encoding='utf-8') as f:
+                f.write(md_content)
+            logger.info(f"File copied without changes: {output_file}")
+            return 0, output_file
+
+        # Remove existing backlinks if force mode
+        if force and itoc_check['has_itoc_links']:
+            logger.info(f"Removing {itoc_check['itoc_count']} existing backlinks (force mode)")
+            md_content = remove_existing_backlinks(md_content)
 
         # Extract headings
         all_headings = extract_headings_with_positions(md_content)

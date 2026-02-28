@@ -1,8 +1,11 @@
 """Commandes de traitement de documents - Ambulon"""
 
 # Import des fonctions métier depuis core/ (architecture GEMINI)
-from ..core.html_toc_generator import add_toc_to_html_logic as add_toc_to_html
-from ..core.markdown_toc_generator import add_toc_to_markdown_logic as add_toc_to_markdown
+# TODO: Ces modules n'existent pas encore
+# from ..core.html_toc_generator import add_toc_to_html_logic as add_toc_to_html
+# from ..core.markdown_toc_generator import add_toc_to_markdown_logic as add_toc_to_markdown
+add_toc_to_html = None
+add_toc_to_markdown = None
 from ..core.html_concatenator import concatenate_html_files_logic as concatenate_html_files
 from ..core.html_flattener import flatten_html_directory_logic as flatten_html_directory
 from ..core.markdown_flattener import flatten_markdown_directory_logic as flatten_markdown_directory
@@ -13,14 +16,16 @@ from ..core.project_to_md_converter import project_to_markdown_logic as project_
 
 # make_html_interactive n'a pas de core/ séparé, c'est dans le command
 from .make_html_interactive import make_html_interactive
+from .md_to_interactive_html import md_to_interactive_html
 
 __all__ = [
-    'add_toc_to_html',
-    'add_toc_to_markdown',
+    # 'add_toc_to_html',  # TODO: module n'existe pas encore
+    # 'add_toc_to_markdown',  # TODO: module n'existe pas encore
     'concatenate_html_files',
     'flatten_html_directory',
     'flatten_markdown_directory',
     'make_html_interactive',
+    'md_to_interactive_html',
     'fusion_html_files',
     'fusion_markdown_files',
     'md2project',

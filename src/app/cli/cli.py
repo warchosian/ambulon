@@ -56,12 +56,16 @@ def show_help():
     print("  img2pdf               Convertir images en PDF")
     print("  compress-pdf          Compresser un fichier PDF")
     print("  html2md               Convertir HTML en Markdown")
-    print("  md2html               Convertir Markdown en HTML")
+    print("  md2html               Convertir Markdown en HTML (SANS diagrammes)")
     print("  html2pdf              Convertir HTML en PDF (avec Playwright)")
     print("  pdf2html              Convertir PDF en HTML")
     print("  pdf2md                Convertir PDF en Markdown")
     print("  json2jsonl            Convertir JSON array en JSONL")
     print("  json2md               Convertir JSON en Markdown")
+    print()
+    print("Modules de diagrammes (conversion MD/HTML avec SVG):")
+    print("  md2html-diagrams      Convertir Markdown en HTML AVEC diagrammes en SVG")
+    print("  diagram2svg4md        Convertir diagrammes en SVG inline dans Markdown")
     print()
     print("Modules d'encoding:")
     print("  check-utf8            Vérifier l'encodage des fichiers Markdown")
@@ -74,6 +78,7 @@ def show_help():
     print("  wikisi-sync-api       Synchroniser les données (énumérations, applications) depuis l'API WikiSI")
     print()
     print("Modules Processing (Traitement de documents):")
+    print("  add-toc               Ajouter une TOC (détection auto MD/HTML)")
     print("  add-toc4html          Ajouter une table des matières à HTML")
     print("  add-toc4md            Ajouter une table des matières à Markdown")
     print("  add-itoc4md           Ajouter des liens retour (iTOC) vers lignes TOC specifiques")
@@ -85,6 +90,7 @@ def show_help():
     print("  flatten-md            Aplatir une arborescence Markdown")
     print("  wikisi-flatten        Aplatir une arborescence WikiSI")
     print("  make-html-interactive Rendre HTML interactif (anchors, navigation)")
+    print("  md2interactive        Convertir MD en HTML interactif complet")
     print("  merge-html            Fusionner plusieurs fichiers HTML")
     print("  merge-md              Fusionner plusieurs fichiers Markdown")
     print("  md2project            Convertir Markdown en structure de projet")
@@ -633,12 +639,60 @@ def main():
                     i += 1
             return process_html_to_markdown(input_file, output_file, verbose)
         elif command == 'md2html':
-            # Convertir Markdown en HTML
-            from app.conversion import process_markdown_to_html
+            # Convertir Markdown en HTML SANS conversion des diagrammes
+            from app.conversion.commands.md2html import process_markdown_to_html_simple
             if len(sys.argv) < 3 or sys.argv[2] in ['-h', '--help']:
-                print("Usage: ambulon md2html <input.md> [-o <output.html>] [-p <orientation>] [--verbose] [--no-standalone] [--toc-backlinks] [--plantuml-method auto|jar|kroki] [--plantuml-jar <path>]")
+                print("Usage: ambulon md2html <input.md> [-o <output.html>] [--verbose] [--no-standalone] [--toc-backlinks]")
                 print()
-                print("Convertit un fichier Markdown en HTML avec support PlantUML")
+                print("Convertit un fichier Markdown en HTML (SANS conversion des diagrammes)")
+                print("Les blocs PlantUML/Mermaid restent en texte.")
+                print()
+                print("Pour convertir AVEC les diagrammes en SVG, utilisez:")
+                print("  ambulon md2html-diagrams <input.md>")
+                print()
+                print("Arguments:")
+                print("  <input.md>                    Fichier Markdown source")
+                print()
+                print("Options:")
+                print("  -o, --output <file>           Fichier HTML de sortie (défaut: <input>.html)")
+                print("  --verbose                     Mode verbeux (affiche les détails)")
+                print("  --no-standalone               Génère un fragment HTML au lieu d'un document complet")
+                print("  --toc-backlinks               Ajoute des liens retour (↑) après chaque titre")
+                print()
+                print("Exemples:")
+                print("  ambulon md2html document.md")
+                print("  ambulon md2html document.md -o result.html --toc-backlinks")
+                return 0 if len(sys.argv) > 2 and sys.argv[2] in ['-h', '--help'] else 1
+            input_file = sys.argv[2]
+            output_file = None
+            verbose = False
+            standalone = True
+            toc_backlinks = False
+            i = 3
+            while i < len(sys.argv):
+                if sys.argv[i] in ['-o', '--output'] and i + 1 < len(sys.argv):
+                    output_file = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--verbose':
+                    verbose = True
+                    i += 1
+                elif sys.argv[i] == '--no-standalone':
+                    standalone = False
+                    i += 1
+                elif sys.argv[i] == '--toc-backlinks':
+                    toc_backlinks = True
+                    i += 1
+                else:
+                    i += 1
+            return process_markdown_to_html_simple(input_file, output_file, verbose, standalone, toc_backlinks)
+        elif command == 'md2html-diagrams':
+            # Convertir Markdown en HTML AVEC conversion des diagrammes
+            from app.diagrams import process_markdown_to_html
+            if len(sys.argv) < 3 or sys.argv[2] in ['-h', '--help']:
+                print("Usage: ambulon md2html-diagrams <input.md> [-o <output.html>] [-p <orientation>] [--verbose] [--no-standalone] [--toc-backlinks] [--plantuml-method auto|jar|kroki] [--plantuml-jar <path>]")
+                print()
+                print("Convertit un fichier Markdown en HTML AVEC conversion des diagrammes en SVG")
+                print("Supporte: PlantUML, Mermaid, Graphviz")
                 print()
                 print("Arguments:")
                 print("  <input.md>                    Fichier Markdown source")
@@ -659,11 +713,9 @@ def main():
                 print("  --plantuml-jar <path>         Chemin vers le fichier PlantUML.jar")
                 print()
                 print("Exemples:")
-                print("  ambulon md2html document.md")
-                print("  ambulon md2html document.md -o result.html")
-                print("  ambulon md2html document.md -p landscape")
-                print("  ambulon md2html document.md --page-orientation landscape --plantuml-method jar")
-                print("  ambulon md2html document.md --no-standalone --verbose")
+                print("  ambulon md2html-diagrams document.md")
+                print("  ambulon md2html-diagrams document.md -o result.html")
+                print("  ambulon md2html-diagrams document.md -p landscape --plantuml-method jar")
                 print()
                 print("Note:")
                 print("  Si vous avez des problèmes de connexion avec Kroki, utilisez --plantuml-method jar")
@@ -672,7 +724,7 @@ def main():
             output_file = None
             verbose = False
             standalone = True
-            page_orientation = None  # None = taille naturelle, 'portrait' ou 'landscape' = optimisé
+            page_orientation = None
             plantuml_method = 'kroki'
             plantuml_jar = None
             toc_backlinks = False
@@ -704,11 +756,16 @@ def main():
             return process_markdown_to_html(input_file, output_file, verbose, standalone, plantuml_method, plantuml_jar, page_orientation, toc_backlinks)
         elif command == 'html2pdf':
             # Convertir HTML en PDF
-            from app.conversion import convert_html_to_pdf
+            from app.conversion.commands.html2pdf import convert_html_to_pdf, install_chromium_guide
             if len(sys.argv) < 3 or sys.argv[2] in ['-h', '--help']:
-                print("Usage: ambulon html2pdf <input.html> [-o <output.pdf>] [-p <orientation>] [--verbose]")
+                print("Usage: ambulon html2pdf <input.html> [-o <output.pdf>] [-p <orientation>] [-m <method>] [--wkhtmltopdf-path <path>] [--verbose]")
                 print()
-                print("Convertit un fichier HTML en PDF avec Playwright")
+                print("Convertit un fichier HTML en PDF")
+                print()
+                print("Méthodes de rendu disponibles:")
+                print("  - chromium    : Chromium via Playwright (meilleure qualité)")
+                print("  - wkhtmltopdf : wkhtmltopdf (pas d'installation requise)")
+                print("  - auto        : Essaye chromium, sinon wkhtmltopdf (défaut)")
                 print()
                 print("Arguments:")
                 print("  <input.html>                  Fichier HTML source")
@@ -718,22 +775,36 @@ def main():
                 print("  -p, --page-orientation <mode> Orientation de la page:")
                 print("                                  portrait  - Format vertical (défaut)")
                 print("                                  landscape - Format horizontal")
+                print("  -m, --method <method>         Méthode de rendu: auto, chromium, wkhtmltopdf")
+                print("  --wkhtmltopdf-path <path>     Chemin vers l'exécutable wkhtmltopdf")
                 print("  --verbose                     Mode verbeux (affiche les détails)")
+                print("  --install-chromium            Affiche le guide d'installation de Chromium")
                 print()
                 print("Exemples:")
                 print("  ambulon html2pdf document.html")
                 print("  ambulon html2pdf document.html -o result.pdf")
-                print("  ambulon html2pdf document.html -p landscape")
-                print("  ambulon html2pdf document.html -o result.pdf -p landscape --verbose")
+                print("  ambulon html2pdf document.html -p landscape -m wkhtmltopdf")
+                print("  ambulon html2pdf document.html --method wkhtmltopdf --wkhtmltopdf-path \"C:\\tools\\wkhtmltopdf.exe\"")
                 print()
                 print("Note:")
                 print("  Pour un workflow optimal, utilisez la même orientation dans md2html et html2pdf:")
                 print("    ambulon md2html doc.md -p landscape")
                 print("    ambulon html2pdf doc.html -p landscape")
+                print()
+                print("Installation de Chromium (pour un meilleur rendu SVG):")
+                print("    poetry run playwright install chromium")
+                print("    ou: ambulon html2pdf --install-chromium")
                 return 0 if len(sys.argv) > 2 and sys.argv[2] in ['-h', '--help'] else 1
+            
+            # Check for --install-chromium
+            if '--install-chromium' in sys.argv:
+                install_chromium_guide()
+                return 0
             input_file = sys.argv[2]
             output_file = None
             orientation = 'portrait'
+            method = 'auto'
+            wkhtmltopdf_path = None
             verbose = False
             i = 3
             while i < len(sys.argv):
@@ -743,12 +814,18 @@ def main():
                 elif sys.argv[i] in ['-p', '--page-orientation', '--orientation'] and i + 1 < len(sys.argv):
                     orientation = sys.argv[i + 1]
                     i += 2
+                elif sys.argv[i] in ['-m', '--method'] and i + 1 < len(sys.argv):
+                    method = sys.argv[i + 1]
+                    i += 2
+                elif sys.argv[i] == '--wkhtmltopdf-path' and i + 1 < len(sys.argv):
+                    wkhtmltopdf_path = sys.argv[i + 1]
+                    i += 2
                 elif sys.argv[i] == '--verbose':
                     verbose = True
                     i += 1
                 else:
                     i += 1
-            return convert_html_to_pdf(input_file, output_file, orientation, verbose)
+            return convert_html_to_pdf(input_file, output_file, orientation, method, wkhtmltopdf_path, verbose)
         elif command == 'json2jsonl':
             # Convertir JSON en JSONL
             from app.conversion import json_to_jsonl
@@ -843,6 +920,10 @@ def main():
                 return wikisi_sync_api_main()
             finally:
                 sys.argv = original_argv
+        elif command == 'add-toc':
+            # Ajouter TOC (détection auto MD/HTML)
+            from app.toc import add_toc_cli
+            return add_toc_cli(sys.argv[2:])
         elif command == 'add-toc4html':
             # Ajouter TOC à HTML
             from app.toc import add_toc4html_cli
@@ -919,6 +1000,10 @@ def main():
                 else:
                     i += 1
             return make_html_interactive(input_file, output, verbose)
+        elif command == 'md2interactive':
+            # Convertir MD en HTML interactif complet (TOC + iTOC + HTML + interactif)
+            from app.processing.commands.md_to_interactive_html import main as md_to_interactive_main
+            return md_to_interactive_main(sys.argv[2:])
         elif command == 'merge-html':
             # Fusionner HTML
             from app.processing import merge_html_cli

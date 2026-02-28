@@ -1,3 +1,1 @@
-"""
-Tests unitaires pour le module TOC (Table of Contents).
-"""
+# Tests unitaires pour le module TOC

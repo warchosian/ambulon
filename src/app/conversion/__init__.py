@@ -9,7 +9,7 @@ from .commands.pdf2md import main as pdf2md_main
 
 # HTML <-> Markdown
 from .commands.html2md import process_html_to_markdown
-from .commands.md2html import process_markdown_to_html
+from .commands.md2html import process_markdown_to_html_simple
 
 # HTML -> PDF
 from .commands.html2pdf import convert_html_to_pdf
@@ -27,7 +27,7 @@ __all__ = [
     'pdf2md_main',
     # HTML <-> Markdown
     'process_html_to_markdown',
-    'process_markdown_to_html',
+    'process_markdown_to_html_simple',  # Simple MD->HTML (no diagrams)
     # HTML -> PDF
     'convert_html_to_pdf',
     # JSON

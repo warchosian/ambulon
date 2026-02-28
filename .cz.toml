@@ -4,5 +4,5 @@ version = "0.1.0"
 tag_format = "$version"
 version_files = [
     "pyproject.toml:version",
-    "src/ambulon/__init__.py:__version__"
+    "src/app/__init__.py:__version__"
 ]

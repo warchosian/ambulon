@@ -448,7 +448,7 @@ def make_html_interactive(
 
     # Determine output path
     if output_path is None:
-        output_file = input_file.parent / f"{input_file.stem}.interactive{input_file.suffix}"
+        output_file = input_file.parent / f"{input_file.stem}-interactive{input_file.suffix}"
     else:
         output_file = Path(output_path).resolve()
 

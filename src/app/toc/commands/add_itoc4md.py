@@ -21,7 +21,7 @@ DEFAULT_CONFIG = {
         'add_itoc_md': {
             'toc_id': 'table-of-contents',
             'link_text': '↑',
-            'min_level': 1,
+            'min_level': 2,  # Skip H1 (main title), start backlinks from H2
             'max_level': 6,
         }
     }
@@ -58,8 +58,9 @@ def main(argv=None):
     parser.add_argument("--quiet", "-q", action="store_true", help="Suppress most output messages.")
     parser.add_argument("--toc-id", type=str, help="ID of the TOC anchor to link to (default: table-of-contents).")
     parser.add_argument("--link-text", type=str, help="Text for the back link (default: ↑).")
-    parser.add_argument("--min-level", type=int, help="Minimum heading level to add backlinks (1-6). Overrides config/env.")
+    parser.add_argument("--min-level", type=int, help="Minimum heading level to add backlinks (1-6, default: 2 to skip main title). Overrides config/env.")
     parser.add_argument("--max-level", type=int, help="Maximum heading level to add backlinks (1-6). Overrides config/env.")
+    parser.add_argument("--force", "-f", action="store_true", help="Add links even if some already exist.")
 
     args = parser.parse_args(argv)
 
@@ -96,7 +97,8 @@ def main(argv=None):
         toc_id=final_toc_id,
         link_text=final_link_text,
         min_level=final_min_level,
-        max_level=final_max_level
+        max_level=final_max_level,
+        force=args.force
     )
 
     if exit_code == 0:

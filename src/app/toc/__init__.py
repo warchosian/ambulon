@@ -7,6 +7,13 @@ Génération, ajout, vérification et navigation de TOC.
 
 # Import des CLI apps
 try:
+    from .commands.add_toc import add_toc_cli
+except ImportError as e:
+    import logging
+    logging.getLogger(__name__).warning(f"Could not load add_toc_cli: {e}")
+    add_toc_cli = None
+
+try:
     from .commands.add_toc4html import main as add_toc4html_cli
 except ImportError as e:
     import logging
@@ -45,6 +52,7 @@ except ImportError as e:
 def get_cli_apps():
     """Retourne les CLI apps disponibles pour la TOC"""
     return {
+        'add_toc_cli': add_toc_cli,
         'add_toc4html_cli': add_toc4html_cli,
         'add_toc4md_cli': add_toc4md_cli,
         'add_itoc4md_cli': add_itoc4md_cli,
@@ -54,6 +62,7 @@ def get_cli_apps():
 
 __all__ = [
     # CLI apps
+    'add_toc_cli',
     'add_toc4html_cli',
     'add_toc4md_cli',
     'add_itoc4md_cli',

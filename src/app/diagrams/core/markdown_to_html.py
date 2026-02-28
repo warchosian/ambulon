@@ -1,119 +1,36 @@
 """
-Command to convert Markdown files to HTML (simple conversion, no diagrams).
+Markdown to HTML conversion utilities.
 
-This module provides basic Markdown to HTML conversion WITHOUT diagram support.
-For conversion with diagram support (PlantUML, Mermaid, Graphviz), use:
-    ambulon md2html-diagrams document.md
+Core functions for converting Markdown content to HTML,
+separated from the CLI command for reusability.
 """
 
-import sys
-import argparse
 import re
-import logging
-from pathlib import Path
 from typing import Optional
-
-from app.core.logging_config import setup_logging
-from app.core.output_paths import format_output_path
-
-logger = logging.getLogger(__name__)
-
-
-def process_markdown_to_html_simple(
-    markdown_path: str,
-    output_path: Optional[str] = None,
-    verbose: bool = False,
-    standalone: bool = True,
-    add_toc_backlinks: bool = False,
-) -> int:
-    """
-    Convert a Markdown file to HTML (simple conversion, no diagrams).
-
-    This is the basic Markdown to HTML converter that does NOT process
-    PlantUML, Mermaid, or Graphviz diagrams. For diagram support, use
-    the 'md2html-diagrams' command from the diagrams module.
-
-    Args:
-        markdown_path: Path to the input Markdown file
-        output_path: Optional output HTML path. If None, uses same name with .html extension
-        verbose: Print verbose output
-        standalone: Generate standalone HTML with CSS and full page structure
-        add_toc_backlinks: Add back-to-TOC links (↑) after each heading
-
-    Returns:
-        Exit code (0 for success, 1 for error)
-    """
-    md_path = Path(markdown_path).resolve()
-
-    # Check if markdown file exists
-    if not md_path.exists():
-        logger.error(f"Markdown file '{markdown_path}' does not exist.")
-        return 1
-
-    if not md_path.is_file():
-        logger.error(f"'{markdown_path}' is not a file.")
-        return 1
-
-    # Determine output path
-    if output_path is None:
-        output_path = md_path.parent / (md_path.stem + ".html")
-    else:
-        output_path = Path(output_path)
-
-    output_path = output_path.resolve()
-
-    logger.info(f"Processing: {md_path}")
-    logger.info(f"Output: {output_path}")
-
-    try:
-        # Read markdown content with encoding detection
-        content = _read_file_with_encoding(md_path, verbose)
-        if content is None:
-            return 1
-
-        # Convert markdown to HTML
-        html_content = markdown_to_html_basic(content, add_toc_backlinks=add_toc_backlinks)
-
-        # Wrap in full HTML if standalone
-        if standalone:
-            html_content = wrap_html_document(html_content, md_path.stem)
-
-        # Write output
-        with open(output_path, 'w', encoding='utf-8') as f:
-            f.write(html_content)
-
-        rel_path = format_output_path(output_path)
-        logger.info("✓ Conversion md2html reussie !")
-        logger.info("Fichier produit : %s", rel_path)
-
-        return 0
-
-    except Exception as e:
-        logger.error(f"Failed to convert markdown: {e}", exc_info=verbose)
-        return 1
-
-
-def _read_file_with_encoding(file_path: Path, verbose: bool = False) -> Optional[str]:
-    """Read file trying multiple encodings."""
-    encodings_to_try = ['utf-8', 'cp1252', 'latin-1', 'iso-8859-1']
-
-    for encoding in encodings_to_try:
-        try:
-            with open(file_path, 'r', encoding=encoding) as f:
-                content = f.read()
-            if verbose and encoding != 'utf-8':
-                logger.info(f"File was read with {encoding} encoding (not UTF-8)")
-            return content
-        except UnicodeDecodeError:
-            continue
-
-    logger.error(f"Could not decode file with any supported encoding: {', '.join(encodings_to_try)}")
-    return None
 
 
 def markdown_to_html_basic(content: str, add_toc_backlinks: bool = False) -> str:
     """
     Basic markdown to HTML conversion for common elements.
+
+    Supports:
+    - Headers (# to ####) with anchor IDs
+    - Bold (**text**) and italic (*text*)
+    - Inline code (`code`)
+    - Code blocks (```lang...```)
+    - Links ([text](url))
+    - Tables
+    - Lists (unordered)
+    - Blockquotes
+    - Horizontal rules
+    - TOC generation with [TOC]
+
+    Args:
+        content: Markdown content
+        add_toc_backlinks: Add back-to-TOC links (↑) after each heading
+
+    Returns:
+        HTML content
     """
     # Clean anchor tags with empty href attributes
     content = re.sub(r'<a\s+id="([^"]+)"\s+href=""\s*></a>', r'<a id="\1"></a>', content)
@@ -163,15 +80,76 @@ def markdown_to_html_basic(content: str, add_toc_backlinks: bool = False) -> str
         table_placeholders[placeholder] = convert_markdown_table(table)
         content = content.replace(table, placeholder, 1)
 
-    # Generate TOC if [TOC] marker present
+    # Generate TOC
+    # 1. If [TOC] marker present, replace it (and surrounding formatting like **)
+    # 2. If TOC already exists (## Table des matières), don't generate another one
+    # 3. Otherwise, auto-insert after first H1 (to keep title/version/date before TOC)
     toc_html = ''
-    if '[TOC]' in content:
+    has_toc_marker = '[TOC]' in content
+    
+    # Check if TOC already exists in the markdown (from add-toc4md)
+    # Pattern to match ## Table des matieres/matieres (with or without accent)
+    toc_exists_pattern = r'^##\s+Table des mati'
+    has_existing_toc = re.search(toc_exists_pattern, content, re.MULTILINE | re.IGNORECASE)
+    
+    if has_existing_toc:
+        # TOC already exists in markdown (from add-toc4md), don't generate another one
+        # But still remove [TOC] marker if present
+        if has_toc_marker:
+            content = re.sub(r'\*\*\[TOC\]\*\*', '', content)
+            content = re.sub(r'\*\[TOC\]\*', '', content)
+            content = re.sub(r'\[TOC\]', '', content)
+        toc_html = ''
+    elif has_toc_marker:
         toc_html = generate_toc(content)
-        content = content.replace('[TOC]', '___TOC_PLACEHOLDER___')
+        # Replace [TOC] even if surrounded by formatting (**, *, __, _)
+        content = re.sub(r'\*?\*?\[TOC\]\*?\*?', '___TOC_PLACEHOLDER___', content)
+        content = re.sub(r'_?\_?\[TOC\]_?\_?', '___TOC_PLACEHOLDER___', content)
+    else:
+        # Auto-insert TOC after first H1
+        toc_html = generate_toc(content)
+        if toc_html:
+            # Find first H1 and insert TOC after it
+            h1_pattern = r'^(# .+)$'
+            h1_match = re.search(h1_pattern, content, re.MULTILINE)
+            if h1_match:
+                h1_end = h1_match.end()
+                # Find the end of the line (including following metadata lines)
+                lines = content.split('\n')
+                h1_line_idx = content[:h1_end].count('\n')
+                insert_idx = h1_line_idx + 1
+                
+                # Skip empty lines and metadata lines after H1
+                while insert_idx < len(lines):
+                    line = lines[insert_idx].strip()
+                    if not line:
+                        insert_idx += 1
+                        break  # Keep one empty line as separator
+                    if any(line.startswith(prefix) for prefix in ['Version', 'Date', 'Auteur', 'Author', 'Mise à jour', 'Updated']):
+                        insert_idx += 1
+                    else:
+                        break
+                
+                # Insert TOC placeholder at the calculated position
+                lines.insert(insert_idx, '___TOC_PLACEHOLDER___')
+                content = '\n'.join(lines)
 
     # Convert headings
     def convert_heading(match, level):
         text = match.group(1).strip()
+        
+        # Extract existing backlink [↑](#toc-xxx) if present
+        # Use Unicode escape sequence to avoid encoding issues
+        import unicodedata
+        up_arrow = '\u2191'  # ↑ character
+        backlink_pattern = r'\s*\[' + up_arrow + r'\]\(#toc-[^)]+\)\s*'
+        backlink_match = re.search(backlink_pattern, text)
+        existing_backlink = backlink_match.group(0) if backlink_match else None
+        if backlink_match:
+            text = text[:backlink_match.start()] + text[backlink_match.end():]
+            text = text.strip()
+        
+        # Extract custom ID {#id} if present
         id_match = re.search(r'\s*\{#([a-z0-9\-_]+)\}\s*$', text, re.IGNORECASE)
         if id_match:
             heading_id = id_match.group(1)
@@ -180,20 +158,27 @@ def markdown_to_html_basic(content: str, add_toc_backlinks: bool = False) -> str
             heading_id = re.sub(r'[^\w\s-]', '', text.lower())
             heading_id = re.sub(r'[\s_]+', '-', heading_id).strip('-')
 
+        # Build HTML
         if add_toc_backlinks:
-            return f'<h{level} id="{heading_id}">{text} <a href="#table-of-contents" class="back-to-toc" title="Retour à la table des matières">↑</a></h{level}>'
+            backlink_html = f' <a href="#table-of-contents" class="back-to-toc" title="Retour à la table des matières">&uarr;</a>'
+            return f'<h{level} id="{heading_id}">{text}{backlink_html}</h{level}>'
         else:
-            return f'<h{level} id="{heading_id}">{text}</h{level}>'
+            # Preserve existing backlink from markdown if not adding new ones
+            if existing_backlink:
+                # Convert markdown backlink to HTML
+                backlink_url = re.search(r'\(#([^)]+)\)', existing_backlink).group(1)
+                backlink_html = f' <a href="#{backlink_url}">&uarr;</a>'
+                return f'<h{level} id="{heading_id}">{text}{backlink_html}</h{level}>'
+            else:
+                return f'<h{level} id="{heading_id}">{text}</h{level}>'
 
     content = re.sub(r'^# (.+)$', lambda m: convert_heading(m, 1), content, flags=re.MULTILINE)
     content = re.sub(r'^## (.+)$', lambda m: convert_heading(m, 2), content, flags=re.MULTILINE)
     content = re.sub(r'^### (.+)$', lambda m: convert_heading(m, 3), content, flags=re.MULTILINE)
     content = re.sub(r'^#### (.+)$', lambda m: convert_heading(m, 4), content, flags=re.MULTILINE)
 
-    if toc_html:
-        content = content.replace('___TOC_PLACEHOLDER___', toc_html)
+    # TOC placeholder will be replaced after paragraph conversion
 
-    # Convert inline formatting
     content = re.sub(r'`([^`]+)`', r'<code>\1</code>', content)
     content = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', content)
     content = re.sub(r'\*(.+?)\*', r'<em>\1</em>', content)
@@ -285,6 +270,10 @@ def markdown_to_html_basic(content: str, add_toc_backlinks: bool = False) -> str
     for placeholder, tag in html_tags.items():
         content = content.replace(placeholder, tag)
 
+    # Insert TOC HTML at the end (after all markdown conversions)
+    if toc_html:
+        content = content.replace('___TOC_PLACEHOLDER___', toc_html)
+
     return content
 
 
@@ -325,7 +314,7 @@ def convert_inline_markdown(text: str) -> str:
     return text
 
 
-def generate_toc(content: str) -> str:
+def generate_toc(content: str, skip_h1: bool = True) -> str:
     """Generate a Table of Contents from markdown headers."""
     toc_items = []
     header_pattern = r'^(#{1,4})\s+(.+?)(?:\s*\{#([a-z0-9\-_]+)\})?\s*$'
@@ -334,6 +323,10 @@ def generate_toc(content: str) -> str:
         level = len(match.group(1))
         text = match.group(2).strip()
         explicit_id = match.group(3)
+
+        # Skip H1 if requested (main title should not be in TOC)
+        if skip_h1 and level == 1:
+            continue
 
         if explicit_id:
             heading_id = explicit_id
@@ -345,23 +338,92 @@ def generate_toc(content: str) -> str:
 
     if not toc_items:
         return ''
-
-    toc_html = ['<nav class="table-of-contents" id="table-of-contents">']
-    toc_html.append('<h2>Table des matières</h2>')
-    toc_html.append('<ul>')
-
+    
+    # Normalize levels if H1 was skipped (H2 becomes level 1, H3 becomes level 2, etc.)
+    if skip_h1 and toc_items:
+        min_level = min(item['level'] for item in toc_items)
+        if min_level > 1:
+            for item in toc_items:
+                item['level'] = item['level'] - min_level + 1
+    
+    # Build nested TOC HTML using stack-based approach
+    result = ['<nav class="table-of-contents" id="table-of-contents">']
+    result.append('<h2>Table des matières</h2>')
+    
+    # Stack tracks (level, lines) for each open list
+    stack = []
+    
     for item in toc_items:
-        indent = '  ' * (item['level'] - 1)
-        toc_html.append(f'{indent}<li><a href="#{item["id"]}">{item["text"]}</a></li>')
+        level = item['level']
+        
+        # Close lists that are at same or deeper level
+        while stack and stack[-1][0] >= level:
+            closed_level, closed_lines = stack.pop()
+            closed_lines.append('</ul>')
+            if stack:
+                # Add closed list to parent and close parent's li
+                stack[-1][1].extend(closed_lines)
+                stack[-1][1].append('</li>')
+            else:
+                # Root level closed - add to result
+                result.extend(closed_lines)
+        
+        # Start new list if needed
+        if not stack:
+            # Start root list
+            stack.append((level, ['<ul>']))
+        elif stack[-1][0] < level:
+            # Start nested list - remove </li> from parent, add <ul>
+            stack[-1][1].pop()  # Remove </li>
+            stack[-1][1].append('<ul>')
+            stack.append((level, []))
+        
+        # Add item to current level with anchor for backlink
+        toc_line_id = f"toc-{item['id']}"
+        stack[-1][1].append(f'<li><a id="{toc_line_id}"></a><a href="#{item["id"]}">{item["text"]}</a></li>')
+    
+    # Close remaining lists
+    while stack:
+        closed_level, closed_lines = stack.pop()
+        closed_lines.append('</ul>')
+        if stack:
+            stack[-1][1].extend(closed_lines)
+            stack[-1][1].append('</li>')
+        else:
+            result.extend(closed_lines)
+    
+    result.append('</nav>')
+    return '\n'.join(result)
 
-    toc_html.append('</ul>')
-    toc_html.append('</nav>')
 
-    return '\n'.join(toc_html)
+def wrap_html_document(content: str, title: str, page_orientation: Optional[str] = None) -> str:
+    """
+    Wrap HTML content in a full document with CSS.
 
+    Args:
+        content: HTML content body
+        title: Page title
+        page_orientation: 'portrait', 'landscape' or None for diagram sizing
 
-def wrap_html_document(content: str, title: str) -> str:
-    """Wrap HTML content in a full document with CSS."""
+    Returns:
+        Complete HTML document
+    """
+    css_orientation = ""
+    if page_orientation == 'portrait':
+        css_orientation = """
+        .diagram svg {
+            max-width: 700px;
+            height: auto;
+        }
+        """
+    elif page_orientation == 'landscape':
+        css_orientation = """
+        .diagram svg {
+            max-width: 900px;
+            height: auto;
+        }
+        """
+
     return f"""<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -377,6 +439,15 @@ def wrap_html_document(content: str, title: str) -> str:
             padding: 20px;
             color: #333;
         }}
+        .diagram {{
+            margin: 20px 0;
+            text-align: center;
+        }}
+        .diagram svg {{
+            max-width: 100%;
+            height: auto;
+        }}
+        {css_orientation}
         pre {{
             background: #f4f4f4;
             padding: 15px;
@@ -407,6 +478,38 @@ def wrap_html_document(content: str, title: str) -> str:
             font-size: 0.8em;
             margin-left: 10px;
         }}
+        .table-of-contents {{
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }}
+        .table-of-contents h2 {{
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }}
+        .table-of-contents ul {{
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }}
+        .table-of-contents ul ul {{
+            padding-left: 20px;
+            margin-top: 5px;
+        }}
+        .table-of-contents li {{
+            margin: 8px 0;
+            line-height: 1.5;
+        }}
+        .table-of-contents a {{
+            text-decoration: none;
+            color: #0066cc;
+        }}
+        .table-of-contents a:hover {{
+            text-decoration: underline;
+        }}
         blockquote {{
             border-left: 4px solid #ddd;
             margin: 0;
@@ -424,51 +527,3 @@ def wrap_html_document(content: str, title: str) -> str:
 {content}
 </body>
 </html>"""
-
-
-def main():
-    """Entry point for md2html command."""
-    parser = argparse.ArgumentParser(
-        description="""
-        Convert Markdown to HTML (simple conversion, NO diagram support).
-        
-        This command converts Markdown files to HTML WITHOUT processing
-        PlantUML, Mermaid, or Graphviz diagrams.
-        
-        For conversion WITH diagram support, use:
-            ambulon md2html-diagrams document.md
-        """,
-        epilog="""
-        Examples:
-          ambulon md2html document.md
-          ambulon md2html document.md -o output.html --toc-backlinks
-          
-        For diagram support:
-          ambulon md2html-diagrams document.md
-        """
-    )
-
-    parser.add_argument("input", type=str, help="Input Markdown file")
-    parser.add_argument("-o", "--output", type=str, help="Output HTML file (default: <input>.html)")
-    parser.add_argument("-v", "--verbose", action="store_true", help="Verbose output")
-    parser.add_argument("--no-standalone", action="store_true", help="Output HTML fragment only (no CSS)")
-    parser.add_argument("--toc-backlinks", action="store_true", help="Add back-to-TOC links after headings")
-
-    args = parser.parse_args()
-
-    # Setup logging
-    log_level = logging.DEBUG if args.verbose else logging.INFO
-    setup_logging(level=log_level, log_file_prefix="md2html")
-    logger.info("[START] Starting md2html conversion (simple, no diagrams).")
-
-    return process_markdown_to_html_simple(
-        markdown_path=args.input,
-        output_path=args.output,
-        verbose=args.verbose,
-        standalone=not args.no_standalone,
-        add_toc_backlinks=args.toc_backlinks,
-    )
-
-
-if __name__ == '__main__':
-    sys.exit(main())

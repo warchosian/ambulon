@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 DEFAULT_CONFIG = {
     'toc': {
         'add_toc_md': {
-            'min_level': 1,
+            'min_level': 2,  # Skip H1 (main title), start TOC from H2
             'max_level': 6,
         }
     }
@@ -54,8 +54,9 @@ def main(argv=None):
     parser.add_argument("--config", "-c", type=Path, help="Path to a YAML configuration file (e.g., config/toc.yaml).")
     parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose logging.")
     parser.add_argument("--quiet", "-q", action="store_true", help="Suppress most output messages.")
-    parser.add_argument("--min-level", type=int, help="Minimum heading level to include in TOC (1-6). Overrides config/env.")
+    parser.add_argument("--min-level", type=int, help="Minimum heading level to include in TOC (1-6, default: 2 to skip main title). Overrides config/env.")
     parser.add_argument("--max-level", type=int, help="Maximum heading level to include in TOC (1-6). Overrides config/env.")
+    parser.add_argument("--force", "-f", action="store_true", help="Replace existing TOC if found.")
 
     args = parser.parse_args(argv)
 
@@ -82,7 +83,8 @@ def main(argv=None):
         input_file=args.input_file,
         output_file=args.output,
         min_level=final_min_level,
-        max_level=final_max_level
+        max_level=final_max_level,
+        force=args.force
     )
 
     if exit_code == 0:
