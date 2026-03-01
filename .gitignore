@@ -58,3 +58,6 @@ scans/
 
 # Logs
 logs/
+ 
+# Sous-depots gitlab 
+gitlab/ 
