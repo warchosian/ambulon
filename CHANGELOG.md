@@ -5,6 +5,92 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.2.0 (2026-03-22)
+
+### Feat
+
+- **piag**: PIPELINE RAG CHAT
+
+## 3.1.1-dev.1 (2026-03-01)
+
+## v3.1.0 (2026-02-28)
+
+### BREAKING CHANGE
+
+- iTOC links now point to specific TOC line anchors
+instead of the general TOC heading.
+- Command names now use consistent '4md' format:
+- add-toc-html → add-toc4html
+- add-toc-md → add-toc4md
+- add-toc-backlinks-md → add-itoc4md (renamed to inverse TOC)
+- check-toc-md → check-toc4md
+- check-itoc-md → check-itoc4md (NEW)
+
+### Feat
+
+- release v3.1.0 - modules TOC et diagrams
+- Improve iTOC links to point to specific TOC lines
+- Add Table of Contents with back-to-TOC navigation links
+- **md2html**: Add proportional height constraints for better PDF rendering
+- **md2html**: Add page orientation support for optimized PDF generation
+- Add PlantUML checker and diagram extractor modules
+
+### Fix
+
+- **toc**: Remove [TOC] marker to prevent duplicate TOC in HTML output
+- **md2html**: Enable horizontal scroll for natural mode diagrams
+- **md2html**: Fix SVG distortion by correcting PlantUML output
+- Correct CLI issues and reorganize project structure
+
+### Refactor
+
+- Reorganize TOC modules into dedicated app/toc package
+- **md2html**: Remove max-height, let SVG proportions adjust naturally
+
+## v3.0.5 (2026-02-13)
+
+### BREAKING CHANGE
+
+- Scripts now require confirmation if not in virtual environment
+
+### Feat
+
+- **offline**: Add offline installation v3.0.4 with venv check and improved display
+
+### Fix
+
+- **offline**: Improve virtual environment detection with VIRTUAL_ENV check
+
+## 3.0.4 (2026-02-10)
+
+### Feat
+
+- **offline**: Add automatic installer with online/offline modes
+
+### Fix
+
+- **dist-offline**: amelioration de install_offline
+- **Correction-de-md2html**: Mise en prod
+- Mise en production
+- **offline**: Remove Unicode chars for Windows compatibility + add Option A guide
+- **offline**: Add install_from_wheels.py for true offline installation
+
+### Refactor
+
+- **offline**: Separate download and install scripts
+
+## 3.0.3 (2026-02-05)
+
+### Fix
+
+- **offline**: Add --only-binary flag and build multi-version wheels
+- **offline**: Add missing greenlet dependency to offline package
+- **readme**: Fix offline package download link to point to prod branch
+
+### Refactor
+
+- Rename prod to preprod for branch naming
+
 ## [3.0.2] - 2026-01-31
 
 ## [3.0.4] - 2026-02-10
