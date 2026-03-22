@@ -5,6 +5,312 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 3.2.0 (2026-03-22)
+
+### Feat
+
+- **piag**: PIPELINE RAG CHAT
+
+## 3.1.1-dev.1 (2026-03-01)
+
+## v3.1.0 (2026-02-28)
+
+### BREAKING CHANGE
+
+- iTOC links now point to specific TOC line anchors
+instead of the general TOC heading.
+- Command names now use consistent '4md' format:
+- add-toc-html → add-toc4html
+- add-toc-md → add-toc4md
+- add-toc-backlinks-md → add-itoc4md (renamed to inverse TOC)
+- check-toc-md → check-toc4md
+- check-itoc-md → check-itoc4md (NEW)
+
+### Feat
+
+- release v3.1.0 - modules TOC et diagrams
+- Improve iTOC links to point to specific TOC lines
+- Add Table of Contents with back-to-TOC navigation links
+- **md2html**: Add proportional height constraints for better PDF rendering
+- **md2html**: Add page orientation support for optimized PDF generation
+- Add PlantUML checker and diagram extractor modules
+
+### Fix
+
+- **toc**: Remove [TOC] marker to prevent duplicate TOC in HTML output
+- **md2html**: Enable horizontal scroll for natural mode diagrams
+- **md2html**: Fix SVG distortion by correcting PlantUML output
+- Correct CLI issues and reorganize project structure
+
+### Refactor
+
+- Reorganize TOC modules into dedicated app/toc package
+- **md2html**: Remove max-height, let SVG proportions adjust naturally
+
+## v3.0.5 (2026-02-13)
+
+### BREAKING CHANGE
+
+- Scripts now require confirmation if not in virtual environment
+
+### Feat
+
+- **offline**: Add offline installation v3.0.4 with venv check and improved display
+
+### Fix
+
+- **offline**: Improve virtual environment detection with VIRTUAL_ENV check
+
+## 3.0.4 (2026-02-10)
+
+### Feat
+
+- **offline**: Add automatic installer with online/offline modes
+
+### Fix
+
+- **dist-offline**: amelioration de install_offline
+- **Correction-de-md2html**: Mise en prod
+- Mise en production
+- **offline**: Remove Unicode chars for Windows compatibility + add Option A guide
+- **offline**: Add install_from_wheels.py for true offline installation
+
+### Refactor
+
+- **offline**: Separate download and install scripts
+
+## 3.0.3 (2026-02-05)
+
+### Fix
+
+- **offline**: Add --only-binary flag and build multi-version wheels
+- **offline**: Add missing greenlet dependency to offline package
+
+## 3.0.2 (2026-02-02)
+
+### Feat
+
+- **build**: Add offline installation package generator
+
+### Fix
+
+- **offline**: Install dependencies before ambulon to avoid resolution errors
+- **readme**: Fix offline package download link to point to prod branch
+- **cli**: Remove unused requests and json imports
+- **conversion**: Remove unused markdown import from md2html
+
+### Refactor
+
+- Rename prod to preprod for branch naming
+
+## v3.0.0 (2026-01-29)
+
+### Feat
+
+- **processing**: Add code2md module for Markdown code block wrapping
+- **wikisi**: Add WikiSI API client and CLI integration
+- **piag**: Add timeout/retry + update config templates
+
+### Fix
+
+- **wikisi**: Add missing requests import
+- **wikisi**: Add wikisi wrapper to DEFAULT_CONFIG structure
+- **wikisi**: Correct setup_logging call and config structure access
+- **wikisi**: Remove invalid env_prefix parameter and fix config structure
+- **piag**: Optimize search performance and user experience
+
+### Refactor
+
+- **processing**: Clean up project2md formatting
+- **piag**: Standardize argument naming with explicit -name/-id suffixes
+
+## 2.1.4 (2026-01-22)
+
+## 2.1.3 (2026-01-22)
+
+## 2.1.2 (2026-01-22)
+
+## 2.1.1 (2026-01-22)
+
+### Feat
+
+- **gitlab**: document rag monofile directories
+
+## 2.1.0 (2026-01-22)
+
+### Feat
+
+- **piag**: Add flexible argument handling for collections and documents
+
+### Fix
+
+- **piag**: Fix search API to match PIAG RAG spec (page 5)
+
+### Refactor
+
+- **piag**: Rename --collections to --collection-list for clarity
+
+## 2.0.7 (2026-01-17)
+
+### Fix
+
+- **gitlab**: Improve config validation with detailed error messages
+- **config**: Add multi-location config file search
+
+## 2.0.6 (2026-01-17)
+
+### Fix
+
+- **cli**: Prevent empty ambulon_cli log files creation
+
+## 2.0.5 (2026-01-17)
+
+### BREAKING CHANGE
+
+- Complete removal of Typer dependency
+
+### Refactor
+
+- **scan,ocr**: Complete Typer elimination - Convert to argparse
+
+## 2.0.4 (2026-01-17)
+
+### Refactor
+
+- Complete Typer elimination - final 3 files migrated to argparse
+
+## 2.0.3 (2026-01-17)
+
+### Fix
+
+- Support tilde (~) in config paths and add --repo CLI argument
+- **piag**: Load config from current working directory, not package install dir
+
+## 2.0.2 (2026-01-17)
+
+### Fix
+
+- **piag**: Remove unused DEFAULT_CONFIG from exports
+
+## 2.0.1 (2026-01-16)
+
+### BREAKING CHANGE
+
+- Typer dependency completely removed from project
+
+### Fix
+
+- **cli**: Import __version__ from app instead of hardcoding 1.0.0
+- **cli**: Replace runpy with direct imports for PIAG and WikiSI commands
+
+### Refactor
+
+- Replace Typer with argparse in all CLI commands
+
+## 1.1.1 (2026-01-16)
+
+### Fix
+
+- **piag**: Remove config loading warning at module import
+
+## 1.1.0 (2026-01-16)
+
+### Feat
+
+- **cli**: Add ambulon init command for config generation
+
+### Fix
+
+- **piag**: Stabilize PIAG module with comprehensive test suite
+
+## 1.0.0 (2026-01-13)
+
+### BREAKING CHANGE
+
+- Structure de packages modifiée de ambulon à app
+
+### Feat
+
+- **conversion**: Add PDF to HTML converter (pdf2html)
+- **mcp**: Add comprehensive MCP tools for WikiSI, Conversion, Processing and Encoding
+- **wikisi**: Add comprehensive web scraper with configuration hierarchy
+- **cli**: Intégration complète des modules WikiSI et Processing
+- **cli**: Intégration complète des modules conversion et encoding
+- add RAG PIAG module with collections, documents and search operations
+
+### Fix
+
+- **gitlab**: Gestion des URLs avec préfixe https:// dans gitlab_clone
+- **readme**: Fix offline package download link to point to prod branch
+
+### Refactor
+
+- **wikisi**: Move flatten_wikisi from processing to wikisi module
+- Restructuration complète de l'architecture des modules
+- Rename prod to preprod for branch naming
+
+## 0.5.1 (2026-01-08)
+
+### Feat
+
+- ajout des fonctions de traitement OCR par dossier et PDF
+
+### Fix
+
+- **packaging**: Embed config data and fix NameError issues to ensure reliable build and execution
+- améliorer la détection des répertoires dans le module OCR
+- améliorer la détection du mode de traitement OCR
+- corrige la gestion des dossiers et fichiers dans le module OCR
+
+### Refactor
+
+- améliorer la détection du type de chemin d'entrée pour l'OCR
+- corriger la détection du mode de traitement OCR (dossier/fichier)
+- améliorer la détection et la gestion des chemins d'entrée pour l'OCR
+
+## 0.4.0 (2025-12-15)
+
+### Feat
+
+- ajouter les modules img2pdf et compress-pdf à Ambulon
+- ajout de scripts de test avancés pour le serveur MCP
+- ajout de tests d'intégration complets pour le serveur MCP Ambulon
+- corriger les tests d'OCR et de scan pour améliorer la robustesse
+- Ajouter une structure complète de tests unitaires avec pytest
+- ajout du module de configuration pour Ambulon
+- ajouter le fichier de configuration JSON au package Poetry
+- ajout de la gestion de configuration MCP et de l'export de configuration Claude
+- intégrer le serveur MCP comme module Ambulon
+- intégrer l'option `--no-increment` dans le serveur MCP pour le scan
+- ajouter une vérification pour empêcher l'écrasement de répertoires lors de la numérisation
+- ajout de l'option --no-increment pour désactiver l'auto-incrémentation des noms de fichiers
+- ajout de l'auto-incrémentation pour les fichiers de scan
+- Migrer le serveur MCP de Dyag vers Ambulon
+- intégrer le serveur MCP pour Ambulon avec support des outils de scan et OCR
+- ajouter un serveur MCP pour les outils dyag avec des fonctionnalités avancées
+- améliore l'interface CLI d'Ambulon avec une aide détaillée et des modules disponibles
+- intégrer le module OCR dans l'interface CLI d'Ambulon
+- ajouter le module OCR pour le traitement d'images
+
+### Fix
+
+- ajouter la fonction setup_logging dans le module cli
+- Ajouter la gestion du cas sans incrémentation dans le nommage des fichiers
+- corriger l'initialisation de la variable output_file dans le mode de scan standard
+- corriger la gestion des chemins de sortie dans le module de scan
+- importer Path depuis pathlib pour vérifier l'existence du script de test
+- corriger les tests et dépendances pour améliorer la compatibilité
+- gérer l'aide et corriger l'encodage des messages de configuration
+- améliorer la gestion du mode simulation de scan avec des informations détaillées
+- corrige la gestion des erreurs de scan et d'OCR pour les fichiers vides
+- ajouter le champ capabilities manquant dans InitializationOptions
+- supprimer l'appel de get_capabilities() dans l'initialisation du serveur MCP
+- corrige l'utilisation de false par False en Python
+
+### Refactor
+
+- modifier la logique d'incrémentation des noms de fichiers par défaut
+
 ## 0.2.0 (2026-03-22)
 
 ### Feat

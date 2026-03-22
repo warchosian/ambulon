@@ -61,3 +61,6 @@ logs/
  
 # Sous-depots gitlab 
 gitlab/ 
+
+# WikiSI downloaded data
+wikisi-downloaded/
