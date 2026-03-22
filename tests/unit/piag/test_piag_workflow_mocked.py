@@ -11,31 +11,35 @@ import io
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent / "src"))
 
-from app.piag.commands.piag_collection_add import main as piag_collection_add_main
-from app.piag.commands.piag_collection_get import main as piag_collection_get_main
-from app.piag.commands.piag_collection_rm import main as piag_collection_rm_main
-from app.piag.commands.piag_collection_update import main as piag_collection_update_main
-from app.piag.commands.piag_doc_upload import main as piag_doc_upload_main
-from app.piag.commands.piag_doc_list import main as piag_doc_list_main
-from app.piag.commands.piag_doc_get import main as piag_doc_get_main
-from app.piag.commands.piag_doc_chunks import main as piag_doc_chunks_main
-from app.piag.commands.piag_doc_rm import main as piag_doc_rm_main
-from app.piag.commands.piag_search import main as piag_search_main
+from app.piag.commands.piag_rag_collection_add import main as piag_collection_add_main
+from app.piag.commands.piag_rag_collection_get import main as piag_collection_get_main
+from app.piag.commands.piag_rag_collection_rm import main as piag_collection_rm_main
+from app.piag.commands.piag_rag_collection_update import main as piag_collection_update_main
+from app.piag.commands.piag_rag_doc_upload import main as piag_doc_upload_main
+from app.piag.commands.piag_rag_doc_list import main as piag_doc_list_main
+from app.piag.commands.piag_rag_doc_get import main as piag_doc_get_main
+from app.piag.commands.piag_rag_doc_chunks import main as piag_doc_chunks_main
+from app.piag.commands.piag_rag_doc_rm import main as piag_doc_rm_main
+from app.piag.commands.piag_rag_search import main as piag_search_main
 
 
 @pytest.fixture
 def mock_config():
     """Configuration mockée."""
     return {
-        'api': {
-            'base_url': 'https://test.api.example.com',
-            'timeout': 30
-        },
-        'project': {
-            'project_id': 'test-project-123'
-        },
-        'security': {
-            'token': 'mock-token-123'
+        'piag': {
+            'rag': {
+                'api': {
+                    'base_url': 'https://test.api.example.com',
+                    'timeout': 30
+                },
+                'project': {
+                    'project_id': 'test-project-123'
+                },
+                'security': {
+                    'token': 'mock-token-123'
+                }
+            }
         }
     }
 
@@ -76,8 +80,8 @@ def temp_document_file(tmp_path):
 class TestPiagWorkflowMocked:
     """Tests du workflow PIAG E2E complet en mode mocké (sans réseau)."""
 
-    @patch('app.piag.commands.piag_collection_add.load_config')
-    @patch('app.piag.commands.piag_collection_add.PIAGClient')
+    @patch('app.piag.commands.piag_rag_collection_add.load_config')
+    @patch('app.piag.commands.piag_rag_collection_add.PIAGClient')
     def test_step1_create_collection(self, mock_client_class, mock_load_config, mock_config, mock_collection_data):
         """Étape 1 : Créer une collection."""
         print("\n--- [Mock] Step 1: Create collection ---")
@@ -100,8 +104,8 @@ class TestPiagWorkflowMocked:
         mock_client.create_collection.assert_called_once()
         print(f"✓ Collection créée (mock): {mock_collection_data['name']}")
 
-    @patch('app.piag.commands.piag_collection_update.load_config')
-    @patch('app.piag.commands.piag_collection_update.PIAGClient')
+    @patch('app.piag.commands.piag_rag_collection_update.load_config')
+    @patch('app.piag.commands.piag_rag_collection_update.PIAGClient')
     def test_step2_update_collection(self, mock_client_class, mock_load_config, mock_config, mock_collection_data):
         """Étape 2 : Mettre à jour la collection."""
         print("\n--- [Mock] Step 2: Update collection ---")
@@ -130,8 +134,8 @@ class TestPiagWorkflowMocked:
         mock_client.update_collection.assert_called_once()
         print(f"✓ Collection mise à jour (mock): {updated_description}")
 
-    @patch('app.piag.commands.piag_collection_get.load_config')
-    @patch('app.piag.commands.piag_collection_get.PIAGClient')
+    @patch('app.piag.commands.piag_rag_collection_get.load_config')
+    @patch('app.piag.commands.piag_rag_collection_get.PIAGClient')
     def test_step3_get_collection(self, mock_client_class, mock_load_config, mock_config, mock_collection_data):
         """Étape 3 : Récupérer la collection."""
         print("\n--- [Mock] Step 3: Get collection ---")
@@ -155,8 +159,8 @@ class TestPiagWorkflowMocked:
         mock_client.get_collection.assert_called_once()
         print(f"✓ Collection récupérée (mock): {mock_collection_data['name']}")
 
-    @patch('app.piag.commands.piag_doc_upload.load_config')
-    @patch('app.piag.commands.piag_doc_upload.PIAGClient')
+    @patch('app.piag.commands.piag_rag_doc_upload.load_config')
+    @patch('app.piag.commands.piag_rag_doc_upload.PIAGClient')
     def test_step4_upload_document(self, mock_client_class, mock_load_config,
                                    mock_config, mock_collection_data, mock_document_data, temp_document_file):
         """Étape 4 : Uploader un document."""
@@ -183,8 +187,8 @@ class TestPiagWorkflowMocked:
         mock_client.upload_document.assert_called_once()
         print(f"✓ Document uploadé (mock): {mock_document_data['filename']}")
 
-    @patch('app.piag.commands.piag_doc_list.load_config')
-    @patch('app.piag.commands.piag_doc_list.PIAGClient')
+    @patch('app.piag.commands.piag_rag_doc_list.load_config')
+    @patch('app.piag.commands.piag_rag_doc_list.PIAGClient')
     def test_step5_list_documents(self, mock_client_class, mock_load_config, mock_config,
                                   mock_collection_data, mock_document_data):
         """Étape 5 : Lister les documents."""
@@ -212,8 +216,8 @@ class TestPiagWorkflowMocked:
         mock_client.list_documents.assert_called_once()
         print(f"✓ Documents listés (mock): 1 document trouvé")
 
-    @patch('app.piag.commands.piag_doc_chunks.load_config')
-    @patch('app.piag.commands.piag_doc_chunks.PIAGClient')
+    @patch('app.piag.commands.piag_rag_doc_chunks.load_config')
+    @patch('app.piag.commands.piag_rag_doc_chunks.PIAGClient')
     def test_step6_get_document_chunks(self, mock_client_class, mock_load_config, mock_config,
                                        mock_collection_data, mock_document_data):
         """Étape 6 : Récupérer les chunks du document."""
@@ -245,8 +249,8 @@ class TestPiagWorkflowMocked:
         mock_client.get_document_chunks.assert_called_once()
         print(f"✓ Chunks récupérés (mock): 3 chunks")
 
-    @patch('app.piag.commands.piag_search.load_config')
-    @patch('app.piag.commands.piag_search.PIAGClient')
+    @patch('app.piag.commands.piag_rag_search.load_config')
+    @patch('app.piag.commands.piag_rag_search.PIAGClient')
     def test_step7_search_collection(self, mock_client_class, mock_load_config, mock_config,
                                      mock_collection_data, mock_document_data):
         """Étape 7 : Rechercher dans la collection (RAG)."""
@@ -280,8 +284,8 @@ class TestPiagWorkflowMocked:
         mock_client.search.assert_called_once()
         print(f"✓ Recherche effectuée (mock): 1 résultat trouvé")
 
-    @patch('app.piag.commands.piag_doc_get.load_config')
-    @patch('app.piag.commands.piag_doc_get.PIAGClient')
+    @patch('app.piag.commands.piag_rag_doc_get.load_config')
+    @patch('app.piag.commands.piag_rag_doc_get.PIAGClient')
     def test_step8_get_document_by_id(self, mock_client_class, mock_load_config, mock_config,
                                       mock_collection_data, mock_document_data):
         """Étape 8 : Récupérer le document par ID."""
@@ -307,8 +311,8 @@ class TestPiagWorkflowMocked:
         mock_client.get_document.assert_called_once()
         print(f"✓ Document récupéré (mock): {mock_document_data['id']}")
 
-    @patch('app.piag.commands.piag_doc_rm.load_config')
-    @patch('app.piag.commands.piag_doc_rm.PIAGClient')
+    @patch('app.piag.commands.piag_rag_doc_rm.load_config')
+    @patch('app.piag.commands.piag_rag_doc_rm.PIAGClient')
     def test_step9_delete_document(self, mock_client_class, mock_load_config, mock_config,
                                    mock_collection_data, mock_document_data):
         """Étape 9 : Supprimer le document."""
@@ -335,8 +339,8 @@ class TestPiagWorkflowMocked:
         mock_client.delete_document.assert_called_once()
         print(f"✓ Document supprimé (mock): {mock_document_data['id']}")
 
-    @patch('app.piag.commands.piag_doc_list.load_config')
-    @patch('app.piag.commands.piag_doc_list.PIAGClient')
+    @patch('app.piag.commands.piag_rag_doc_list.load_config')
+    @patch('app.piag.commands.piag_rag_doc_list.PIAGClient')
     def test_step10_verify_document_deletion(self, mock_client_class, mock_load_config, mock_config,
                                              mock_collection_data):
         """Étape 10 : Vérifier la suppression du document."""
@@ -365,8 +369,8 @@ class TestPiagWorkflowMocked:
         assert call_result['total'] == 0
         print(f"✓ Suppression vérifiée (mock): 0 document restant")
 
-    @patch('app.piag.commands.piag_collection_rm.load_config')
-    @patch('app.piag.commands.piag_collection_rm.PIAGClient')
+    @patch('app.piag.commands.piag_rag_collection_rm.load_config')
+    @patch('app.piag.commands.piag_rag_collection_rm.PIAGClient')
     def test_step11_delete_collection(self, mock_client_class, mock_load_config, mock_config,
                                       mock_collection_data):
         """Étape 11 : Supprimer la collection (cleanup)."""

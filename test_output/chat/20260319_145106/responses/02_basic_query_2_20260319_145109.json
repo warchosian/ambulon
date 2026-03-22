@@ -1,0 +1,21 @@
+{
+  "id": "92e32f94d03b46908413b3f9e2934e2e",
+  "created": 1773928268,
+  "model": "mte-api-piag-mistral-medium-latest",
+  "object": "chat.completion",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "L'**intelligence artificielle (IA)** est un ensemble de technologies permettant à des machines d’imiter des capacités cognitives humaines (comme l’apprentissage, le raisonnement ou la prise de décision) pour accomplir des tâches de manière autonome.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 53,
+    "prompt_tokens": 17,
+    "total_tokens": 70
+  }
+}

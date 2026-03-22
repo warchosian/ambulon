@@ -1,0 +1,21 @@
+{
+  "id": "49ee5b42845c4019b0c6e54e47508b07",
+  "object": "text_completion",
+  "created": 1773927804,
+  "model": "mte-api-piag-mistral-medium-latest",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "text": "Bonjour ! 😊 Je vais très bien, merci de demander – et vous, comment allez-vous aujourd’hui ?\n\nSi vous avez une question, un projet ou même une simple discussion, je suis là pour vous aider ! 🌟\n\n*(P.S. : Votre français est impeccable, mais je peux aussi répondre en anglais ou dans d’autres langues si vous préférez !)*",
+      "logprobs": null
+    }
+  ],
+  "usage": {
+    "completion_tokens": 81,
+    "prompt_tokens": 10,
+    "total_tokens": 91,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": null
+  }
+}

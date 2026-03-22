@@ -273,17 +273,17 @@ from app.core.http_client import HTTPClient  # ✅ Utilitaire commun
 
 ### Module PIAG
 
-- `ambulon piag-collection-add` - Créer une collection
-- `ambulon piag-collection-list` - Lister les collections
-- `ambulon piag-collection-get` - Obtenir les détails d'une collection
-- `ambulon piag-collection-update` - Mettre à jour une collection
-- `ambulon piag-collection-rm` - Supprimer une collection
-- `ambulon piag-doc-upload` - Uploader un document
-- `ambulon piag-doc-list` - Lister les documents
-- `ambulon piag-doc-get` - Obtenir les détails d'un document
-- `ambulon piag-doc-chunks` - Afficher les chunks d'un document
-- `ambulon piag-doc-rm` - Supprimer un document
-- `ambulon piag-search` - Effectuer une recherche RAG
+- `ambulon piag-rag-collection-add` - Créer une collection
+- `ambulon piag-rag-collection-list` - Lister les collections
+- `ambulon piag-rag-collection-get` - Obtenir les détails d'une collection
+- `ambulon piag-rag-collection-update` - Mettre à jour une collection
+- `ambulon piag-rag-collection-rm` - Supprimer une collection
+- `ambulon piag-rag-doc-upload` - Uploader un document
+- `ambulon piag-rag-doc-list` - Lister les documents
+- `ambulon piag-rag-doc-get` - Obtenir les détails d'un document
+- `ambulon piag-rag-doc-chunks` - Afficher les chunks d'un document
+- `ambulon piag-rag-doc-rm` - Supprimer un document
+- `ambulon piag-rag-search` - Effectuer une recherche RAG
 
 ### Module WikiSI
 
@@ -396,10 +396,10 @@ ambulon --version
 ambulon --help
 
 # Afficher l'aide d'une sous-commande
-ambulon piag-search --help
+ambulon piag-rag-search --help
 
 # Exécuter une commande
-ambulon piag-search --query "test" --collection-id "abc123"
+ambulon piag-rag-search --query "test" --collection-id "abc123"
 ```
 
 ## Versioning
@@ -490,11 +490,11 @@ tests/
 
 ### Workflow PIAG RAG
 
-1. Créer une collection : `piag-collection-add`
-2. Uploader des documents : `piag-doc-upload`
-3. Rechercher dans la collection : `piag-search`
-4. (Optionnel) Voir les chunks : `piag-doc-chunks`
-5. (Optionnel) Supprimer documents/collection : `piag-doc-rm` / `piag-collection-rm`
+1. Créer une collection : `piag-rag-collection-add`
+2. Uploader des documents : `piag-rag-doc-upload`
+3. Rechercher dans la collection : `piag-rag-search`
+4. (Optionnel) Voir les chunks : `piag-rag-doc-chunks`
+5. (Optionnel) Supprimer documents/collection : `piag-rag-doc-rm` / `piag-rag-collection-rm`
 
 ### Workflow WikiSI
 

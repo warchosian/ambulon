@@ -1,0 +1,190 @@
+{
+  "_metadata": {
+    "tool": "dyag parkjson2json",
+    "version": "3.0.4",
+    "generated_at": "2026-02-13T09:38:21",
+    "source": {
+      "file": "applicationsIA_mini.json",
+      "total_count": 1090
+    },
+    "filter": {
+      "type": "name",
+      "value": "SIREINES",
+      "description": "Applications contenant 'SIREINES' dans le nom (insensible à la casse)"
+    },
+    "output": {
+      "count": 1,
+      "percentage": "0.1%"
+    }
+  },
+  "applicationsIA_mini": [
+    {
+      "Id": 275,
+      "Numéros d'affaire": [
+        {
+          "Numéro d'affaire": "AFF0275"
+        }
+      ],
+      "Ids globaux": [
+        {
+          "Id global": "50936abe-dbd2-4f53-a1a7-2b97d88bb651"
+        }
+      ],
+      "Nom": "SIREINES",
+      "Nom long": "SIREINES",
+      "Statut SI": "En production",
+      "Domaines et sous-domaines": [
+        {
+          "Domaine métier": "Transverse"
+        }
+      ],
+      "SI à enjeux": "oui",
+      "Application figurant dans les cartographie d'urbanisme": "oui",
+      "POS, zones, quartiers et îlots": [
+        {
+          "POS": "CGDD",
+          "Zone": "Répertoires Administratifs",
+          "Quartier": "Gérer un répertoire des experts"
+        }
+      ],
+      "Famille d'applications": "Applications métiers répondant à une politique publique ou à une mission du service",
+      "Descriptif": "constitution de la base des experts et spécialistes scientifiques et techniques en enregistrant les données des dossiers et des avis d'évaluation\r\n\r\n84% select 10% insert 4% update ~20 écrans \r\ndéclaration CNIL 29/09/2014, n°1034232",
+      "Sites": [
+        {
+          "nature de l'URL": "Site de production",
+          "URL": "http://sireines.e2.rie.gouv.fr",
+          "Commentaire": "import SPS automatique"
+        },
+        {
+          "nature de l'URL": "Site de pré-production",
+          "URL": "https://sireines.preprod.e2.rie.gouv.fr/Accueil.do"
+        },
+        {
+          "nature de l'URL": "Site de recette",
+          "URL": "http://sireines.recette.pnm3.eco4.cloud.e2.rie.gouv.fr/"
+        },
+        {
+          "nature de l'URL": "Site de supervision",
+          "URL": "http://psin.supervision.e2.rie.gouv.fr/portails/MonApplication.php?application=SIREINES",
+          "Commentaire": "import SPS automatique"
+        },
+        {
+          "nature de l'URL": "Page de l'application sur SPS",
+          "URL": "https://portail-support.din.developpement-durable.gouv.fr/projects/sireines",
+          "Commentaire": "import SPS automatique"
+        },
+        {
+          "nature de l'URL": "Site de ticketing de l'application sur SPS",
+          "URL": "https://portail-support.din.developpement-durable.gouv.fr/projects/sireines/issues",
+          "Commentaire": "import SPS automatique"
+        }
+      ],
+      "Portée géographique": "Nationale",
+      "Fonctions": [
+        "Collecte",
+        "Concentration"
+      ],
+      "Environnement d'accès": "Web",
+      "Événements": [
+        {
+          "Date": "29/09/2014",
+          "Type d'événement": "Déclaration CNIL",
+          "Commentaire": "déclaration CNIL 29/09/2014, n°1034232"
+        }
+      ],
+      "Participe à la cartographie numérique pour la transition écologique": "non",
+      "Données liées": [
+        {
+          "Type de flux": "Base propre",
+          "Donnée liée": "SIREINES",
+          "ID donnée liée": 212
+        }
+      ],
+      "Acteurs": [
+        {
+          "Rôle d'acteur": "MOA",
+          "Acteur": "CGDD/SRI/AST2"
+        },
+        {
+          "Rôle d'acteur": "MOE",
+          "Acteur": "SG/DNUM/PNM/DPNM3",
+          "Commentaire": "developpement spécifique"
+        },
+        {
+          "Rôle d'acteur": "MOE externe",
+          "Acteur": "CGI",
+          "Commentaire": "maintenance"
+        },
+        {
+          "Rôle d'acteur": "Hébergement",
+          "Acteur": "SG/DNUM",
+          "Commentaire": "centre serveur Paris"
+        }
+      ],
+      "Acteurs MOE habilités": [
+        {
+          "Acteur": "SG/DNUM/PNM/DPNM3"
+        }
+      ],
+      "Hébergements": [
+        {
+          "Type de site": "Production",
+          "Data center": "Centre-serveur ministériel Paris La Défense",
+          "Plateforme": "IaaS (ECO4)"
+        }
+      ],
+      "Technologie principale": "Java/J2EE",
+      "Version de la technologie principale": "1.7",
+      "Technologies": [
+        {
+          "Technologie": "Progiciel",
+          "Commentaire": "BIRT 4.3"
+        }
+      ],
+      "Traitement de données à caractère personnel": "oui",
+      "DACP traitées": "Coordonnées des experts et spécialistes",
+      "Finalités du traitement": "Constitution d'un répertoire d'experts et spécialistes",
+      "MOA habilitée SSI": [
+        {
+          "Acteur": "CGDD/SRI/AST2"
+        }
+      ],
+      "Cycle de vie des documents et des données": [
+        {
+          "Typologie": "Base de l'ensemble des personnes évaluées par les comités d'évaluation scientifique et technique (comités de domaines).",
+          "DUA": "5 ans",
+          "Sort final": "Élimination",
+          "Justification réglementaire": "(décision valable 4 ans)"
+        }
+      ],
+      "Criticité en terme d'archivage": "Faible",
+      "Archivage - action à mener": "Plan d'élimination",
+      "Évolution technologique": "non",
+      "Évolution du contenu": "non",
+      "Évolution des conditions d'accès": "non",
+      "Évolution de l'usage": "non",
+      "Contacts": [
+        {
+          "Rôle de contact": "Référent métier",
+          "Contact": "LETROUIT Vincent (Chef de bureau) - CGDD/SRI/AST2 <Vincent.Letrouit@developpement-durable.gouv.fr>",
+          "Courriel": "Vincent.Letrouit@developpement-durable.gouv.fr",
+          "notification_maj": false
+        },
+        {
+          "Rôle de contact": "Référent métier",
+          "Contact": "ZEMOUR Pascal (Chargé de mission) - CGDD/SRI/AST2 <Pascal.Zemour@developpement-durable.gouv.fr>",
+          "Courriel": "Pascal.Zemour@developpement-durable.gouv.fr",
+          "notification_maj": false
+        },
+        {
+          "Rôle de contact": "Référent technique",
+          "Contact": "Infocentre  - CGDD/SDSED/BUN <infocentre.bun.sdsed.cgdd@developpement-durable.gouv.fr>",
+          "Courriel": "infocentre.bun.sdsed.cgdd@developpement-durable.gouv.fr",
+          "notification_maj": false
+        }
+      ],
+      "Date et heure de création de la fiche": "15/03/2022 10:21:20",
+      "Date et heure de modification de la fiche": "10/02/2026 08:58:20"
+    }
+  ]
+}

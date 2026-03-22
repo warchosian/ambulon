@@ -1,0 +1,94 @@
+{
+  "chunks": [
+    {
+      "score": 0.029726775956284153,
+      "rerank_score": 3.324608325958252,
+      "document_id": "2d4357f9-6d3c-4803-af78-4e99fc338464",
+      "document_name": "sireines.cctp.md",
+      "collection_id": "Cze7Wx4SrQW1gfHq",
+      "chunk_index": 34,
+      "text": "CAHIER DES CLAUSES TECHNIQUES PARTICULIÈRES (CCTP)\n8. DOCUMENTATION ET FORMATION\n8.1 Liste des documents à fournir\nDocument d'Architecture Technique (DAT), Destinataire = MOA, MOE, RSSI. Document d'Architecture Technique (DAT), Format = Markdown/PDF. Document d'Architecture Technique (DAT), Fréquence de mise à jour = À chaque évolution majeure. Dossier d'Installation et d'Exploitation (DIE), Destinataire = Exploitation. Dossier d'Installation et d'Exploitation (DIE), Format = Markdown/PDF. Dossier d'Installation et d'Exploitation (DIE), Fréquence de mise à jour = À chaque livraison. Guide utilisateur, Destinataire = Utilisateurs finaux. Guide utilisateur, Format = PDF/HTML. Guide utilisateur, Fréquence de mise à jour = À chaque évolution fonctionnelle. Guide administrateur, Destinataire = Administrateurs techniques. Guide administrateur, Format = Markdown/PDF. Guide administrateur, Fréquence de mise à jour = À chaque évolution technique. Documentation de l'API (si créée), Destinataire = Intégrateurs. Documentation de l'API (si créée), Format = OpenAPI/Swagger. Documentation de l'API (si créée), Fréquence de mise à jour = À chaque évolution. Procédures de secours, Destinataire = Exploitation, RSSI. Procédures de secours, Format = Markdown/PDF. Procédures de secours, Fréquence de mise à jour = Annuelle. Registre des traitements RGPD, Destinataire = DPO. Registre des traitements RGPD, Format = Excel/PDF. Registre des traitements RGPD, Fréquence de mise à jour = À chaque évolution"
+    },
+    {
+      "score": 0.027425373134328357,
+      "rerank_score": 0.9350078105926514,
+      "document_id": "53c2e4f6-54af-4331-8408-f6526b1a5130",
+      "document_name": "sireines.components.md",
+      "collection_id": "Cze7Wx4SrQW1gfHq",
+      "chunk_index": 6,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n1. Vue Composants (C4-L3) - Architecture Interne Détaillée {#vue-composants}\n1.2 Fiches composants détaillées\nCOMP-001 : DossierRechercheMotsClefsAction\nInterfaces exposées\n```\ndoSearch()\n```\n```\nloadFacets()\n```\n```\nautocomplete()\n```\n, Entrée = . , Sortie = . , Description = "
+    },
+    {
+      "score": 0.014084507042253521,
+      "rerank_score": 0.7598702311515808,
+      "document_id": "53c2e4f6-54af-4331-8408-f6526b1a5130",
+      "document_name": "sireines.components.md",
+      "collection_id": "Cze7Wx4SrQW1gfHq",
+      "chunk_index": 7,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n1. Vue Composants (C4-L3) - Architecture Interne Détaillée {#vue-composants}\n1.2 Fiches composants détaillées\nCOMP-001 : DossierRechercheMotsClefsAction\nDépendances internes\n- `DossiersServices` (service métier)\n- `DossierMotsClefsSearchLoader` (loader spécialisé)\n- `AbstractSireinesFacetActionSupport` (classe parent)"
+    },
+    {
+      "score": 0.014925373134328358,
+      "rerank_score": 0.14067479968070984,
+      "document_id": "53c2e4f6-54af-4331-8408-f6526b1a5130",
+      "document_name": "sireines.components.md",
+      "collection_id": "Cze7Wx4SrQW1gfHq",
+      "chunk_index": 11,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n1. Vue Composants (C4-L3) - Architecture Interne Détaillée {#vue-composants}\n1.2 Fiches composants détaillées\nCOMP-002 : ExtractionsServicesImpl\n`i2.application.sireines.service.extractions`\nResponsabilité, Valeur = Génération de rapports statistiques via BIRT, export CSV/PDF. Technologie, Valeur = Java 7, BIRT Runtime, JDBC. Package, Valeur = "
+    },
+    {
+      "score": 0.027313266443701224,
+      "rerank_score": 0.11551196873188019,
+      "document_id": "53c2e4f6-54af-4331-8408-f6526b1a5130",
+      "document_name": "sireines.components.md",
+      "collection_id": "Cze7Wx4SrQW1gfHq",
+      "chunk_index": 12,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n1. Vue Composants (C4-L3) - Architecture Interne Détaillée {#vue-composants}\n1.2 Fiches composants détaillées\nCOMP-002 : ExtractionsServicesImpl\n🔴 Vulnérabilités critiques identifiées\n```\nMODEL_HOME\n```\nen dur\n```\n/usr/local/tomcat/webapps/ROOT/report/\n```\nVULN-EXT-001, Type = Path Traversal. VULN-EXT-001, Description = . VULN-EXT-001, Risque = "
+    },
+    {
+      "score": 0.027364110201042444,
+      "rerank_score": -0.546156644821167,
+      "document_id": "53c2e4f6-54af-4331-8408-f6526b1a5130",
+      "document_name": "sireines.components.md",
+      "collection_id": "Cze7Wx4SrQW1gfHq",
+      "chunk_index": 9,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n1. Vue Composants (C4-L3) - Architecture Interne Détaillée {#vue-composants}\n1.2 Fiches composants détaillées\nCOMP-001 : DossierRechercheMotsClefsAction\n🔴 Vulnérabilités critiques identifiées\n```\ndossiersDao.ksp\n```\n```\nresources/i2/application/sireines/services/dossiers/dossiersDao.ksp\n```\n```\ndoSearch()\n```\nVULN-DOSS-001, Type = Injection SQL. VULN-DOSS-001, Description = . VULN-DOSS-001, Localisation = . VULN-DOSS-001, Risque = "
+    },
+    {
+      "score": 0.015151515151515152,
+      "rerank_score": -1.8302685022354126,
+      "document_id": "53c2e4f6-54af-4331-8408-f6526b1a5130",
+      "document_name": "sireines.components.md",
+      "collection_id": "Cze7Wx4SrQW1gfHq",
+      "chunk_index": 34,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n9. Annexes {#annexes}\n9.1 Glossaire sécurité\nCSRF, Définition = Cross-Site Request Forgery - Attaque par détournement de session. DFD, Définition = Data Flow Diagram - Diagramme de flux de données. EOL, Définition = End of Life - Fin de support, plus de patches sécurité. KSP, Définition = Vertigo Keyword Scripting Language - DSL pour requêtes MDA. MDA, Définition = Model Driven Architecture - Génération code depuis modèles. RCE, Définition = Remote Code Execution - Exécution code arbitraire à distance. SRP, Définition = Single Responsibility Principle - Principe responsabilité unique. SSRF, Définition = Server-Side Request Forgery - Détournement requêtes serveur. STRIDE, Définition = Modèle de menaces Microsoft (Spoofing, Tampering, Repudiation, Info Disclosure, DoS, Elevation). XXE, Définition = XML External Entity - Injection entités XML malveillantes"
+    },
+    {
+      "score": 0.029910714285714284,
+      "rerank_score": -6.06615686416626,
+      "document_id": "2d4357f9-6d3c-4803-af78-4e99fc338464",
+      "document_name": "sireines.cctp.md",
+      "collection_id": "Cze7Wx4SrQW1gfHq",
+      "chunk_index": 11,
+      "text": "CAHIER DES CLAUSES TECHNIQUES PARTICULIÈRES (CCTP)\n3. ARCHITECTURE ET CONCEPTION\n3.1 Contraintes architecturales imposées\nL'architecture devra respecter les contraintes suivantes :\n```\n┌─────────────────────────────────────────────────────────────┐\n│                    COUCHE PRÉSENTATION                       │\n│  JSP + Tags Struts + Templates Freemarker + Bootstrap CSS   │\n├─────────────────────────────────────────────────────────────┤\n│                    COUCHE CONTRÔLEUR                         │\n│  Actions Struts (pattern MVC) + Validators                  │\n├─────────────────────────────────────────────────────────────┤\n│                    COUCHE MÉTIER                             │\n│  Services Java + Vertigo (DAO, KSP) + MDA                   │\n├─────────────────────────────────────────────────────────────┤\n│                    COUCHE DONNÉES                            │\n│  PostgreSQL + Elasticsearch (indexation full-text)          │\n├─────────────────────────────────────────────────────────────┤\n│                    COUCHE INTÉGRATION                        │\n│  Cerbère (SSO) + BIRT (reporting) + Talend (ETL)           │\n└─────────────────────────────────────────────────────────────┘\n```"
+    },
+    {
+      "score": 0.02976190476190476,
+      "rerank_score": -6.537114143371582,
+      "document_id": "2d4357f9-6d3c-4803-af78-4e99fc338464",
+      "document_name": "sireines.cctp.md",
+      "collection_id": "Cze7Wx4SrQW1gfHq",
+      "chunk_index": 12,
+      "text": "CAHIER DES CLAUSES TECHNIQUES PARTICULIÈRES (CCTP)\n3. ARCHITECTURE ET CONCEPTION\n3.2 Standards et normes obligatoires\nModélisation données, Standard = Merise / PowerDesigner. Modélisation données, Application = Modèle physique de données (MPD). Génération de code, Standard = MDA (Model Driven Architecture). Génération de code, Application = Génération DAO et entités via Vertigo. Sécurité web, Standard = OWASP Top 10. Sécurité web, Application = Protection contre injections XSS, SQL, CSRF. Protocoles réseau, Standard = HTTPS/TLS 1.2 minimum. Protocoles réseau, Application = Toutes les communications. Encodage, Standard = UTF-8. Encodage, Application = Stockage et échanges de données"
+    },
+    {
+      "score": 0.030090497737556562,
+      "rerank_score": -6.782001495361328,
+      "document_id": "28261087-d46a-4148-a06c-9386841ae4b4",
+      "document_name": "sireines.dat_c4model.md",
+      "collection_id": "Cze7Wx4SrQW1gfHq",
+      "chunk_index": 25,
+      "text": "Analyse Architecture C4 Model - SIREINES\nSynthèse architecture C4 {#synthese}\nPattern architectural, Description = MVC 3-tiers avec MDA. Pattern architectural, Évaluation = Classique, mature. Couplage, Description = Fort entre couches (héritage profond). Couplage, Évaluation = 🔴 À améliorer. Cohésion, Description = Services par domaine métier. Cohésion, Évaluation = 🟢 Bonne. Complexité, Description = Classes volumineuses (>10ko). Complexité, Évaluation = 🔴 Élevée. Testabilité, Description = Dépendances statiques, pas d'IoC complet. Testabilité, Évaluation = 🟡 Moyenne. Évolutivité, Description = Génération MDA facilite changements BDD. Évolutivité, Évaluation = 🟢 Bonne. Maintenabilité, Description = Code legacy Java 7, EOL. Maintenabilité, Évaluation = 🔴 Critique\n**Fin de l'analyse C4 Model**\n*Document structuré selon le standard C4 Model (c4model.com)*\n[↩ Retour au sommaire](#c4-l1)\n```\n---\n\nCette analyse C4 complète fournit une **vision hiérarchique de l'architecture SIREINES**, du contexte métier jusqu'au code source, avec 12 diagrammes PlantUML interactifs et une documentation détaillée de chaque niveau d'abstraction.\n```"
+    }
+  ]
+}

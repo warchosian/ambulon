@@ -103,7 +103,7 @@ def get_base_url(base_url: Optional[str] = None, config: Optional[Dict[str, Any]
         return base_url
 
     cfg = get_config(config)
-    return cfg.get('api', {}).get('base_url', DEFAULT_BASE_URL)
+    return cfg.get('piag', {}).get('rag', {}).get('api', {}).get('base_url', DEFAULT_BASE_URL)
 
 
 def get_timeout(config: Optional[Dict[str, Any]] = None) -> int:
@@ -117,7 +117,7 @@ def get_timeout(config: Optional[Dict[str, Any]] = None) -> int:
         Timeout en secondes.
     """
     cfg = get_config(config)
-    return cfg.get('api', {}).get('timeout', 30)
+    return cfg.get('piag', {}).get('rag', {}).get('api', {}).get('timeout', 30)
 
 
 def should_log_requests(config: Optional[Dict[str, Any]] = None) -> bool:
@@ -131,7 +131,7 @@ def should_log_requests(config: Optional[Dict[str, Any]] = None) -> bool:
         True si le logging des requêtes est activé.
     """
     cfg = get_config(config)
-    return cfg.get('logging', {}).get('log_requests', False)
+    return cfg.get('piag', {}).get('rag', {}).get('logging', {}).get('log_requests', False)
 
 
 def should_log_responses(config: Optional[Dict[str, Any]] = None) -> bool:
@@ -145,7 +145,7 @@ def should_log_responses(config: Optional[Dict[str, Any]] = None) -> bool:
         True si le logging des réponses est activé.
     """
     cfg = get_config(config)
-    return cfg.get('logging', {}).get('log_responses', False)
+    return cfg.get('piag', {}).get('rag', {}).get('logging', {}).get('log_responses', False)
 
 
 def get_endpoint(endpoint_key: str, config: Optional[Dict[str, Any]] = None) -> str:
@@ -160,7 +160,8 @@ def get_endpoint(endpoint_key: str, config: Optional[Dict[str, Any]] = None) -> 
         Chemin de l'endpoint.
     """
     cfg = get_config(config)
-    endpoints = cfg.get('endpoints', {})
+    # Chercher dans la nouvelle structure piag.rag.endpoints
+    endpoints = cfg.get('piag', {}).get('rag', {}).get('endpoints', {})
 
     # Mapping des endpoints par défaut
     default_endpoints = {
@@ -169,7 +170,7 @@ def get_endpoint(endpoint_key: str, config: Optional[Dict[str, Any]] = None) -> 
         'documents_upload': '/api/v1/collections/{collection_id}/documents-upload-slow',
         'documents': '/api/v1/collections/{collection_id}/documents',
         'document_detail': '/api/v1/collections/{collection_id}/documents/{document_id}',
-        'document_chunks': '/api/v1/collections/{collection_id}/documents/{document_id}/chunks',
+        'document_chunks': '/api/v1/documents/{document_id}/chunks',  # Pas de collection_id selon la doc API
         'search': '/api/v1/search',
     }
 
@@ -192,11 +193,11 @@ def get_headers(api_token: str, config: Optional[Dict[str, Any]] = None,
     cfg = get_config(config)
 
     headers = {
-        "accept": cfg.get('headers', {}).get('accept', 'application/json'),
+        "accept": cfg.get('piag', {}).get('rag', {}).get('headers', {}).get('accept', 'application/json'),
         "Authorization": f"Bearer {api_token}"
     }
 
     if include_content_type:
-        headers["Content-Type"] = cfg.get('headers', {}).get('content_type', 'application/json')
+        headers["Content-Type"] = cfg.get('piag', {}).get('rag', {}).get('headers', {}).get('content_type', 'application/json')
 
     return headers

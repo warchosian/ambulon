@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>guidelines-illustrated</title>
+    <style>
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 2em;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #34495e;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+            line-height: 1.4;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+        pre.tree {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        li {
+            margin: 0.5em 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding: 0.5em 0 0.5em 1em;
+            color: #555;
+            background: #f8f9fa;
+            border-radius: 0 3px 3px 0;
+        }
+        blockquote p {
+            margin: 0.5em 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+    </style>
+</head>
+<body>
+<h1>Guidelines de Développement Ambulon - Version Illustrée</h1>
+
+<p>Documentation complète avec diagrammes PlantUML de toutes les pratiques et patterns du projet Ambulon.</p>
+
+<hr>
+
+<h2>Table des Matières</h2>
+
+<p>1. <a href="#architecture-cli">Architecture CLI - Interdiction Typer</a>
+2. <a href="#pattern-argparse">Pattern argparse Obligatoire</a>
+3. <a href="#workflow-git">Workflow Git et Branches</a>
+4. <a href="#processus-release">Processus de Release</a>
+5. <a href="#configuration">Configuration Hiérarchique</a>
+6. <a href="#modules-conversion">Pattern de Modules de Conversion</a>
+7. <a href="#securite">Gestion des Secrets</a>
+8. <a href="#structure">Structure du Projet</a>
+9. <a href="#workflow-dev">Workflow Complet de Développement</a></p>
+
+<hr>
+
+<a name="architecture-cli"></a>
+<h2>1. Architecture CLI - Interdiction Typer</h2>
+
+<h3>Pourquoi Typer est Banni</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Typer vs argparse - Comparaison
+
+rectangle "❌ TYPER (INTERDIT)" as typer #FF6B6B
+rectangle "✅ ARGPARSE (OBLIGATOIRE)" as argparse #90EE90
+
+note right of typer
+  &lt;b&gt;🚨 PROBLÈMES TYPER&lt;/b&gt;
+
+  • RuntimeWarning avec runpy
+  • Conflits sys.argv
+  • "Got unexpected extra arguments"
+  • Complexité inutile
+  • Dépendances externes
+  • Debugging difficile
+
+  &lt;b&gt;RÈGLE NON NÉGOCIABLE:&lt;/b&gt;
+  Typer a été complètement banni
+  du projet. Tout code utilisant
+  Typer doit être refactorisé.
+end note
+
+note right of argparse
+  &lt;b&gt;✅ AVANTAGES ARGPARSE&lt;/b&gt;
+
+  • Bibliothèque standard Python
+  • Stable et documentée
+  • Contrôle total
+  • Testable et prévisible
+  • Support écosystème Python
+  • Pas de dépendances
+
+  &lt;b&gt;SOLUTION IMPOSÉE:&lt;/b&gt;
+  Tous les nouveaux modules CLI
+  DOIVENT utiliser argparse.
+end note
+
+@enduml
+</code></pre><figcaption>Figure 1.1 – Comparaison CLI : Typer vs Argparse</figcaption></p>
+
+<hr>
+
+<a name="pattern-argparse"></a>
+<h2>2. Pattern argparse Obligatoire</h2>
+
+<h3>Structure d'un Module CLI</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Pattern CLI Obligatoire avec argparse
+
+rectangle "commands/mon_module.py" as cmd_module #LIGHTBLUE {
+
+}
+
+rectangle "ArgumentParser (stdlib)" as argparser #LIGHTYELLOW {
+
+}
+
+rectangle "setup_logging()" as setup_log #LIGHTGREEN {
+
+}
+
+rectangle "load_config()" as load_cfg #LIGHTGREEN {
+
+}
+
+note right of cmd_module
+  &lt;b&gt;Structure OBLIGATOIRE:&lt;/b&gt;
+
+  def main(argv=None):
+      parser = setup_parser()
+      args = parser.parse_args(argv)
+
+      # Setup logging
+      setup_logging(...)
+
+      # Load config
+      config = load_config(...)
+
+      # Business logic
+      result = fonction_metier(args, config)
+
+      return 0 if success else 1
+
+  if __name__ == "__main__":
+      sys.exit(main())
+end note
+
+note bottom of argparser
+  • add_argument()
+  • add_mutually_exclusive_group()
+  • parse_args(argv)
+end note
+
+note bottom of setup_log
+  • level: str
+  • log_file_prefix: str
+end note
+
+note bottom of load_cfg
+  • config_path: Path
+  • default_config: dict
+end note
+
+@enduml
+</code></pre><figcaption>Figure 2.1 – Pattern argparse obligatoire</figcaption></p>
+
+<h3>Flux d'Exécution CLI</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Flux d'Exécution Standard d'une Commande CLI
+
+start
+
+:Utilisateur exécute\nambul on mon-module --args;
+
+partition "main(argv=None)" {
+  :Créer ArgumentParser;
+
+  :Configurer arguments\n(positional + optional);
+
+  :parser.parse_args(argv);
+  note right
+    argv=None → utilise sys.argv
+    argv=[...] → pour tests
+  end note
+
+  :Setup logging\n(level + file);
+  note right
+    - Console: INFO/DEBUG
+    - Fichier: si --verbose
+    - Prefix: nom module
+  end note
+
+  :Load configuration\n(YAML + ENV + CLI);
+  note right
+    Hiérarchie:
+    CLI &gt; YAML &gt; ENV &gt; defaults
+  end note
+
+  :Valider arguments;
+
+  if (Arguments valides ?) then (oui)
+    :Exécuter logique métier;
+
+    if (Succès ?) then (oui)
+      :return 0;
+      stop
+    else (erreur)
+      :Afficher erreur;
+      :return 1;
+      stop
+    endif
+  else (non)
+    :Afficher usage + erreur;
+    :return 1;
+    stop
+  endif
+}
+
+@enduml
+</code></pre><figcaption>Figure 2.2 – Flux d'exécution CLI standard</figcaption></p>
+
+<hr>
+
+<a name="workflow-git"></a>
+<h2>3. Workflow Git et Branches</h2>
+
+<h3>Architecture des Branches</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Architecture des Branches Git - Ambulon
+
+rectangle "feature/*" as feature #FFE5B4
+rectangle "preprod/vX.X.X-stable" as preprod #FFFACD
+rectangle "prod/vX.X.X-stable" as prod #90EE90
+rectangle "main" as main #87CEEB
+
+feature -down-&gt; preprod : créer preprod
+preprod -down-&gt; prod : validation OK
+prod -down-&gt; main : sync main
+
+note right of feature
+  &lt;b&gt;Développement&lt;/b&gt;
+
+  &lt;b&gt;Actions:&lt;/b&gt;
+  • Commits conventionnels
+  • cz bump
+  • poetry build
+  • build_offline_package.py
+
+  &lt;b&gt;Durée:&lt;/b&gt; jours/semaines
+  &lt;b&gt;État:&lt;/b&gt; Supprimée après merge
+end note
+
+note right of preprod
+  &lt;b&gt;Validation&lt;/b&gt;
+
+  &lt;b&gt;Actions:&lt;/b&gt;
+  • Tests fonctionnels
+  • Installation offline
+  • Corrections bugs
+  • Validation finale
+
+  &lt;b&gt;Durée:&lt;/b&gt; heures/jours
+end note
+
+note right of prod
+  &lt;b&gt;Production&lt;/b&gt;
+
+  &lt;b&gt;Caractéristiques:&lt;/b&gt;
+  🔒 Immuable
+  📌 Tagguée
+  ♾️ Conservée indéfiniment
+  ✅ Source de vérité
+
+  &lt;b&gt;État:&lt;/b&gt; Permanente, jamais modifiée
+end note
+
+note right of main
+  &lt;b&gt;Miroir Production&lt;/b&gt;
+
+  &lt;b&gt;Rôle:&lt;/b&gt;
+  📖 Lecture seule
+  🔄 Sync avec prod
+  👁️ Branche par défaut GitHub
+  ✨ Toujours stable
+end note
+
+@enduml
+</code></pre><figcaption>Figure 3.1 – Architecture des branches Git</figcaption></p>
+
+<p>Voir <a href="git-workflow.html">doc/git-workflow.md</a> pour les diagrammes détaillés du workflow Git.</p>
+
+<hr>
+
+<a name="processus-release"></a>
+<h2>4. Processus de Release</h2>
+
+<h3>Workflow SemVer et Commitizen</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Processus de Release avec SemVer
+
+start
+
+:Développer fonctionnalité\nsur feature branch;
+
+:Commits conventionnels\navec cz commit;
+
+partition "Semantic Versioning" {
+  if (Type de changement ?) then (BREAKING CHANGE)
+    :Version MAJOR\n3.0.2 → 4.0.0;
+    note right
+      feat!: ...
+      ou
+      BREAKING CHANGE: dans footer
+    end note
+  elseif (Nouvelle fonctionnalité) then (feat:)
+    :Version MINOR\n3.0.2 → 3.1.0;
+    note right
+      feat: Add new feature
+    end note
+  elseif (Correction bug) then (fix:)
+    :Version PATCH\n3.0.2 → 3.0.3;
+    note right
+      fix: Correct bug
+    end note
+  else (docs/style/refactor)
+    :Pas de bump version;
+    note right
+      docs:, style:, refactor:
+      test:, chore:, perf:
+      → Changelog seulement
+    end note
+  endif
+}
+
+:cz bump --changelog;
+note right
+  Automatique:
+  - Détermine version
+  - MAJ pyproject.toml
+  - MAJ __init__.py
+  - Génère CHANGELOG.md
+  - Crée commit + tag
+end note
+
+:poetry build;
+
+:build_offline_package.py;
+
+:Créer preprod/vX.X.X-stable;
+
+repeat
+  :Tests &amp; validation;
+
+  if (Validation OK ?) then (oui)
+  else (non)
+    :Corriger sur preprod;
+    :cz bump (patch);
+    :Rebuild;
+  endif
+
+repeat while (Validation OK ?) is (non) not (oui)
+
+:Créer prod/vX.X.X-stable;
+:Sync main;
+:✅ Release terminée;
+stop
+
+@enduml
+</code></pre><figcaption>Figure 4.1 – Processus de release avec SemVer</figcaption></p>
+
+<h3>Types de Commits et Impact</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Impact des Types de Commits sur la Version
+
+object feat {
+  Type = "feat:"
+  Impact = MINOR
+  Exemple = "3.0.2 → 3.1.0"
+}
+
+object fix {
+  Type = "fix:"
+  Impact = PATCH
+  Exemple = "3.0.2 → 3.0.3"
+}
+
+object featBreaking {
+  Type = "feat!"
+  Impact = MAJOR
+  Exemple = "3.0.2 → 4.0.0"
+}
+
+object breakingChange {
+  Type = "BREAKING CHANGE:"
+  Impact = MAJOR
+  Exemple = "3.0.2 → 4.0.0"
+}
+
+object docsStyleRefactor {
+  Types = "docs: / style: / refactor:"
+  Impact = "Aucun"
+  Note = "Changelog uniquement"
+}
+
+object testChorePerf {
+  Types = "test: / chore: / perf:"
+  Impact = "Aucun"
+  Note = "Changelog uniquement"
+}
+
+note right of feat
+  Ces commits déclenchent
+  un bump de version via
+  cz bump
+end note
+
+note right of docsStyleRefactor
+  Ces commits apparaissent
+  dans le CHANGELOG mais
+  ne modifient pas la version
+end note
+
+@enduml
+</code></pre><figcaption>Figure 4.2 – Impact des types de commits</figcaption></p>
+
+<hr>
+
+<a name="configuration"></a>
+<h2>5. Configuration Hiérarchique</h2>
+
+<h3>Hiérarchie de Configuration (CLI > YAML > ENV > Defaults)</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Hiérarchie de Configuration - Priority Order
+
+rectangle "1. Arguments CLI" as cli #FF6B6B
+rectangle "2. Fichier YAML" as yaml #FFA500
+rectangle "3. Variables ENV" as env #FFFACD
+rectangle "4. Valeurs par Défaut" as defaults #90EE90
+
+cli -down-&gt; yaml : surcharge
+yaml -down-&gt; env : surcharge
+env -down-&gt; defaults : surcharge
+
+note right of cli
+  &lt;b&gt;Priorité MAXIMALE&lt;/b&gt;
+
+  &lt;b&gt;Exemples:&lt;/b&gt;
+  --timeout 120
+  --max-retries 5
+  --config custom.yaml
+
+  ✅ Surcharge tout
+  ✅ Pour tests/debug
+  ✅ Usage ponctuel
+end note
+
+note right of yaml
+  &lt;b&gt;Configuration persistante&lt;/b&gt;
+
+  &lt;b&gt;Exemples:&lt;/b&gt;
+  config/piag.yaml:
+    timeout: 120
+    max_retries: 5
+
+  ✅ Config par projet
+  ✅ Versionnable (*.example)
+  ✅ Réutilisable
+end note
+
+note right of env
+  &lt;b&gt;Configuration système&lt;/b&gt;
+
+  &lt;b&gt;Exemples:&lt;/b&gt;
+  PIAG_RAG_TIMEOUT=120
+  PIAG_RAG_MAX_RETRIES=5
+
+  ✅ Config par machine
+  ✅ CI/CD friendly
+  ✅ Sécurité (secrets)
+end note
+
+note right of defaults
+  &lt;b&gt;Priorité MINIMALE&lt;/b&gt;
+
+  &lt;b&gt;Exemples:&lt;/b&gt;
+  DEFAULT_CONFIG = {
+    'timeout': 30,
+    'max_retries': 3
+  }
+
+  ✅ Fallback sûr
+  ✅ Documenté dans code
+  ✅ Toujours disponible
+end note
+
+@enduml
+</code></pre><figcaption>Figure 5.1 – Hiérarchie de configuration</figcaption></p>
+
+<h3>Flux de Résolution de Configuration</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Flux de Résolution de Configuration
+
+start
+
+:Démarrage du module\nambulonmon-module --timeout 120;
+
+:Charger DEFAULT_CONFIG\n(valeurs par défaut);
+note right
+  DEFAULT_CONFIG = {
+    'timeout': 30,
+    'max_retries': 3,
+    'url': 'http://localhost'
+  }
+end note
+
+if (Variable ENV\ndéfinie ?) then (oui)
+  :Surcharger avec ENV\nPIAG_RAG_TIMEOUT=60;
+  note right
+    config['timeout'] = 60
+    (surcharge default 30)
+  end note
+else (non)
+  :Conserver default;
+endif
+
+if (Fichier YAML\nexiste ?) then (oui)
+  :Charger config/piag.yaml;
+  :Merger avec config;
+  note right
+    yaml: timeout: 90
+    config['timeout'] = 90
+    (surcharge ENV 60)
+  end note
+else (non)
+  :Pas de YAML;
+endif
+
+if (Argument CLI\nfourni ?) then (oui)
+  :Appliquer args.timeout;
+  note right
+    args.timeout = 120
+    config['timeout'] = 120
+    (surcharge YAML 90)
+  end note
+else (non)
+  :Pas d'override CLI;
+endif
+
+:Configuration finale\ntimeout = 120;
+
+:Exécuter avec config;
+
+stop
+
+note right
+  Résolution finale:
+  CLI (120) &gt; YAML (90) &gt; ENV (60) &gt; DEFAULT (30)
+
+  Résultat: timeout = 120
+end note
+
+@enduml
+</code></pre><figcaption>Figure 5.2 – Flux de résolution de configuration</figcaption></p>
+
+<hr>
+
+<a name="modules-conversion"></a>
+<h2>6. Pattern de Modules de Conversion</h2>
+
+<h3>Architecture Standard des Modules</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Pattern des Modules de Conversion
+
+rectangle "commands/format1_to_format2.py" as cmd #LIGHTBLUE
+rectangle "core/format1_to_format2_converter.py" as core #LIGHTGREEN
+
+cmd -down-&gt; core : utilise
+
+note right of cmd
+  &lt;b&gt;CLI Layer&lt;/b&gt;
+
+  &lt;b&gt;Fonctions:&lt;/b&gt;
+  • main(argv=None)
+  • setup_parser()
+
+  &lt;b&gt;Responsabilités:&lt;/b&gt;
+  • Parsing arguments
+  • Configuration
+  • Appel du core
+end note
+
+note right of core
+  &lt;b&gt;Business Layer&lt;/b&gt;
+
+  &lt;b&gt;Fonctions:&lt;/b&gt;
+  • convert(input, output, options)
+  • _validate_input()
+  • _process()
+  • _write_output()
+
+  &lt;b&gt;Logique métier pure:&lt;/b&gt;
+  • Indépendante du CLI
+  • Testable unitairement
+  • Réutilisable
+end note
+
+@enduml
+</code></pre><figcaption>Figure 6.1 – Pattern des modules de conversion</figcaption></p>
+
+<h3>Naming Conventions</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Conventions de Nommage des Modules de Conversion
+
+object html2md
+html2md : Description = "HTML vers Markdown"
+
+object md2html
+md2html : Description = "Markdown vers HTML"
+
+object pdf2html
+pdf2html : Description = "PDF vers HTML"
+
+object img2pdf
+img2pdf : Description = "Images vers PDF"
+
+object json2md
+json2md : Description = "JSON vers Markdown"
+
+object json2jsonl
+json2jsonl : Description = "JSON vers JSONL"
+
+object code2md
+code2md : Description = "Code vers Markdown"
+
+note right of html2md
+  &lt;b&gt;Format: &amp;lt;source&amp;gt;2&amp;lt;dest&amp;gt;&lt;/b&gt;
+
+  ✅ Toujours lowercase
+  ✅ Pas de underscores
+  ✅ Format source en premier
+  ✅ "2" comme séparateur
+  ✅ Format destination en dernier
+
+  &lt;b&gt;Fichiers:&lt;/b&gt;
+  - commands/&amp;lt;source&amp;gt;2&amp;lt;dest&amp;gt;.py
+  - core/&amp;lt;source&amp;gt;2&amp;lt;dest&amp;gt;_converter.py
+end note
+
+@enduml
+</code></pre><figcaption>Figure 6.2 – Conventions de nommage</figcaption></p>
+
+<h3>Interface CLI Unifiée</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Interface CLI Standard pour Conversions
+
+start
+
+:ambulon &lt;source&gt;2&lt;dest&gt;\n&lt;input&gt; [options];
+
+partition "Arguments Positionnels" {
+  :input_file\n(obligatoire);
+  note right
+    Fichier ou dossier source
+    Peut être omis pour stdin
+  end note
+}
+
+partition "Options Communes" {
+  :-o, --output\n(optionnel);
+  note right
+    Fichier de sortie
+    Si omis: génération auto
+    input.ext → input.&lt;dest&gt;.ext
+  end note
+
+  :--verbose, -v\n(optionnel);
+  note right
+    Active logging DEBUG
+  end note
+}
+
+partition "Options Spécifiques au Module" {
+  :Options propres\nau type de conversion;
+  note right
+    Exemples:
+    --quality (pdf)
+    --lang (ocr)
+    --format (code2md)
+  end note
+}
+
+:Exécuter conversion;
+
+if (Succès ?) then (oui)
+  :Afficher chemin de sortie;
+  :return 0;
+  stop
+else (erreur)
+  :Afficher erreur;
+  :return 1;
+  stop
+endif
+
+@enduml
+</code></pre><figcaption>Figure 6.3 – Interface CLI standard</figcaption></p>
+
+<hr>
+
+<a name="securite"></a>
+<h2>7. Gestion des Secrets</h2>
+
+<h3>Règles de Sécurité Strictes</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Gestion des Secrets - Workflow de Sécurité
+
+rectangle "✅ AUTORISÉ" as autorise #90EE90
+rectangle "❌ INTERDIT" as interdit #FF6B6B
+
+note right of autorise
+  &lt;b&gt;Fichiers *.example&lt;/b&gt;
+  config/piag.yaml.example:
+    token: "VOTRE_TOKEN_ICI"
+
+  &lt;b&gt;Variables ENV&lt;/b&gt;
+  export PIAG_TOKEN="real_token"
+  export WIKISI_API_TOKEN="secret"
+
+  &lt;b&gt;.gitignore&lt;/b&gt;
+  config/*.yaml
+  !config/*.example
+  .env
+  credentials.json
+
+  &lt;b&gt;Avant CHAQUE push:&lt;/b&gt;
+  git diff HEAD | grep -i "token"
+
+  &lt;b&gt;Si secret détecté:&lt;/b&gt;
+  1. NE PAS PUSHER
+  2. Remplacer par placeholder
+  3. Amender le commit
+  4. Re-vérifier
+end note
+
+note right of interdit
+  &lt;b&gt;Secrets dans Git (INTERDIT)&lt;/b&gt;
+  ⛔ config/piag.yaml (vrais tokens)
+  ⛔ JWT tokens dans docs
+  ⛔ project_id réels dans README
+  ⛔ API keys dans exemples
+
+  &lt;b&gt;Si secret poussé:&lt;/b&gt;
+  1. Secret = COMPROMIS
+  2. Le révoquer IMMÉDIATEMENT
+  3. Générer nouveau secret
+  4. NE PAS juste supprimer
+     (reste accessible dans historique)
+end note
+
+@enduml
+</code></pre><figcaption>Figure 7.1 – Workflow de gestion des secrets</figcaption></p>
+
+<h3>Checklist Pré-Push</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Checklist de Sécurité Avant Push
+
+start
+
+:Prêt à pusher\nvers GitHub;
+
+partition "Vérifications Obligatoires" {
+
+  :git diff --staged;
+
+  :git diff HEAD | grep -i\n"token\\|secret\\|password\\|api_key";
+
+  repeat
+    if (Secrets détectés ?) then (oui)
+      :🚨 STOP - Ne pas pusher;
+      :Remplacer par placeholders;
+      :git commit --amend --no-edit;
+    else (non)
+      :grep -r "token" doc/ config/;
+
+      if (Secrets dans docs ?) then (oui)
+        :🚨 STOP - Nettoyer docs;
+      else (non)
+        :Vérifier .gitignore;
+
+        if (config/*.yaml\nexclus ?) then (oui)
+          :✅ Sécurité OK;
+          :git push --follow-tags;
+          stop
+        else (non)
+          :🚨 Ajouter à .gitignore;
+        endif
+      endif
+    endif
+  repeat while (Vérifications OK ?) is (non) not (oui)
+}
+
+@enduml
+</code></pre><figcaption>Figure 7.2 – Checklist de sécurité pré-push</figcaption></p>
+
+<hr>
+
+<a name="structure"></a>
+<h2>8. Structure du Projet</h2>
+
+<h3>Arborescence Complète</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Structure du Projet Ambulon
+
+rectangle "ambulon/" as ambulon_root #LIGHTBLUE {
+
+}
+
+note right of ambulon_root
+  &lt;b&gt;.claude/&lt;/b&gt;
+  • GUIDELINES.md
+  • PROJECT.md
+  • settings.json
+
+  &lt;b&gt;config/&lt;/b&gt; (examples versionnés)
+  • piag.yaml.example
+  • gitlab.yaml.example
+  • wikisi.yaml.example
+  • README.md
+
+  &lt;b&gt;dist/&lt;/b&gt; (généré, pas versionné)
+  • ambulon-3.0.2-py3-none-any.whl
+  • ambulon-3.0.2.tar.gz
+
+  &lt;b&gt;dist-offline/&lt;/b&gt; (80MB, versionné)
+  • ambulon-3.0.2-offline-install.zip
+  • 50 wheels de dépendances
+
+  &lt;b&gt;doc/&lt;/b&gt; (documentation PlantUML)
+  • git-workflow.md
+  • guidelines-illustrated.md
+
+  &lt;b&gt;scripts/&lt;/b&gt;
+  • build_offline_package.py
+
+  &lt;b&gt;src/app/&lt;/b&gt; (__version__ = "3.0.2")
+  • cli/ (commands)
+  • conversion/
+  • piag/
+  • wikisi/
+  • __init__.py
+
+  &lt;b&gt;Fichiers racine:&lt;/b&gt;
+  • pyproject.toml
+  • CHANGELOG.md
+  • .gitignore
+  • README.md
+
+  &lt;b&gt;Principes:&lt;/b&gt;
+  ✅ Séparation commands/core
+  ✅ Config examples versionnés
+  ✅ Secrets dans .gitignore
+  ✅ Documentation PlantUML
+  ✅ Package offline sur preprod/prod
+end note
+
+@enduml
+</code></pre><figcaption>Figure 8.1 – Structure du projet Ambulon</figcaption></p>
+
+<h3>Séparation Commands / Core</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Séparation Commands / Core - Responsabilités
+
+rectangle "commands/pdf2html.py" as cmd #LIGHTBLUE
+rectangle "core/pdf2html_converter.py" as core #LIGHTGREEN
+
+cmd -down-&gt; core : appelle
+
+note right of cmd
+  &lt;b&gt;CLI Layer&lt;/b&gt;
+
+  &lt;b&gt;Fonctions:&lt;/b&gt;
+  • main(argv=None)
+  • setup_parser()
+
+  &lt;b&gt;Responsabilités:&lt;/b&gt;
+  • Parsing arguments (argparse)
+  • Setup logging
+  • Load config
+  • Appel core/
+  • Gestion erreurs CLI
+  • Interface utilisateur
+  • Exit codes
+end note
+
+note right of core
+  &lt;b&gt;Business Layer&lt;/b&gt;
+
+  &lt;b&gt;Fonctions:&lt;/b&gt;
+  • convert(input, output, options)
+  • _validate_input()
+  • _process_pdf()
+  • _write_html()
+
+  &lt;b&gt;Responsabilités:&lt;/b&gt;
+  • Logique métier pure
+  • Conversion PDF → HTML
+  • Indépendant du CLI
+  • Testable unitairement
+  • Pure functions
+  • Réutilisable
+end note
+
+@enduml
+</code></pre><figcaption>Figure 8.2 – Séparation Commands/Core</figcaption></p>
+
+<hr>
+
+<a name="workflow-dev"></a>
+<h2>9. Workflow Complet de Développement</h2>
+
+<h3>Cycle de Vie d'une Fonctionnalité</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Cycle de Vie Complet
+
+start
+
+partition "Développement" {
+  :Créer feature branch\ngit checkout -b feature/ma-fonctionnalite;
+
+  repeat
+    :Développer code;
+    :Tests unitaires;
+
+    if (Tests OK ?) then (oui)
+      :cz commit;
+      note right
+        Commit conventionnel:
+        feat/fix/docs/...
+      end note
+    else (non)
+      :Corriger code;
+    endif
+
+  repeat while (Fonctionnalité\ncomplète ?) is (non) not (oui)
+}
+
+partition "Versioning" {
+  :cz bump (3.0.2 → 3.1.0);
+  :poetry build;
+  :build_offline_package.py;
+}
+
+partition "Preprod" {
+  :Créer preprod/v3.1.0-stable;
+
+  repeat
+    :Tests installation offline;
+    :Tests fonctionnels complets;
+    :Vérification documentation;
+
+    if (Validation OK ?) then (non)
+      :Corriger bugs;
+      :cz bump (patch) 3.1.0 → 3.1.1;
+      :Rebuild packages;
+    else (oui)
+    endif
+
+  repeat while (Validation OK ?) is (non) not (oui)
+}
+
+partition "Production" {
+  :Créer prod/v3.1.0-stable;
+  :Tag v3.1.0;
+  :Push GitHub;
+}
+
+partition "Main" {
+  :Sync main avec prod;
+  :✅ Feature déployée;
+}
+
+stop
+
+@enduml
+</code></pre><figcaption>Figure 9.1 – Cycle de vie d'une fonctionnalité</figcaption></p>
+
+<h3>Matrice de Décision - Quel Type de Commit ?</h3>
+
+<p><pre><code class="language-plantuml">@startuml
+!theme plain
+
+title Matrice de Décision x
+
+start
+
+:Modification du code;
+
+if (Type de modification ?) then (Nouvelle\nfonctionnalité)
+  if (Breaking change ?) then (oui)
+    :feat!: ...\nou\nBREAKING CHANGE: dans footer;
+    note right: Version: 3.0.2 → 4.0.0
+    stop
+  else (non)
+    :feat: ...;
+    note right: Version: 3.0.2 → 3.1.0
+    stop
+  endif
+
+elseif (Correction\nde bug) then (oui)
+  :fix: ...;
+  note right: Version: 3.0.2 → 3.0.3
+  stop
+
+elseif (Documentation) then (oui)
+  :docs: ...;
+  note right: Pas de bump version
+  stop
+
+elseif (Refactoring) then (oui)
+  :refactor: ...;
+  note right: Pas de bump version
+  stop
+
+elseif (Tests) then (oui)
+  :test: ...;
+  note right: Pas de bump version
+  stop
+
+elseif (Style/Format) then (oui)
+  :style: ...;
+  note right: Pas de bump version
+  stop
+
+elseif (Performance) then (oui)
+  :perf: ...;
+  note right: Pas de bump version
+  stop
+
+else (Maintenance)
+  :chore: ...;
+  note right: Pas de bump version
+  stop
+endif
+
+@enduml
+</code></pre><figcaption>Figure 9.2 – Matrice de décision des commits</figcaption></p>
+
+<hr>
+
+<h2>Génération des Diagrammes</h2>
+
+<h3>Avec PlantUML</h3>
+
+<p><pre><code class="language-bash"># Installation
+sudo apt-get install plantuml  # Linux
+brew install plantuml          # macOS
+choco install plantuml        # Windows
+
+# Générer tous les diagrammes depuis ce fichier
+plantuml doc/guidelines-illustrated.md
+
+# Générer en SVG (meilleure qualité)
+plantuml -tsvg doc/guidelines-illustrated.md
+
+# Générer en PNG
+plantuml -tpng doc/guidelines-illustrated.md
+</code></pre>
+<h3>Avec le service en ligne</h3></p>
+
+<p>1. Copier un bloc PlantUML depuis ce fichier
+2. Aller sur https://www.plantuml.com/plantuml/uml/
+3. Coller le code
+4. Télécharger le diagramme généré</p>
+
+<hr>
+
+<h2>Résumé des Principes Clés</h2>
+
+<p><pre><code class="language-plantuml">@startmindmap
+!theme plain
+
+title Principes Clés du Projet Ambulon
+
+* Ambulon
+** CLI
+*** ❌ JAMAIS Typer
+*** ✅ TOUJOURS argparse
+*** Pattern standard
+*** Testable (argv)
+** Git Workflow
+*** feature → preprod → prod → main
+*** main = lecture seule
+*** prod = immuable
+*** preprod = validation
+** Configuration
+*** CLI &gt; YAML &gt; ENV &gt; defaults
+*** Secrets dans .gitignore
+*** Examples versionnés
+*** Hiérarchie stricte
+** Release
+*** SemVer (MAJOR.MINOR.PATCH)
+*** Commits conventionnels
+*** cz bump automatique
+*** Package offline généré
+** Sécurité
+*** Aucun secret dans Git
+*** Vérification pré-push
+*** Placeholders dans examples
+*** Variables ENV pour secrets
+** Architecture
+*** Séparation commands/core
+*** Modules de conversion
+*** Naming conventions
+*** Documentation PlantUML
+
+@endmindmap
+</code></pre><figcaption>Figure 10.1 – Résumé des principes clés</figcaption></p>
+
+<hr>
+
+<strong>Auteur</strong>: Hervé Marchal <herve.marchal@hotmail.fr>
+<strong>Version</strong>: 3.0.2
+<strong>Date</strong>: 2026-01-31
+<strong>Licence</strong>: MIT
+
+<hr>
+
+<h2>Index des Diagrammes</h2>
+
+<p>1. <strong>Architecture CLI</strong>
+   - Typer vs argparse
+   - Pattern CLI obligatoire
+   - Flux d'exécution CLI</p>
+
+<p>2. <strong>Workflow Git</strong>
+   - Architecture des branches
+   - Cycle de vie des branches
+   - Processus de release
+   - Gestion des bugs
+   - Timeline exemple</p>
+
+<p>3. <strong>Versioning</strong>
+   - SemVer workflow
+   - Types de commits
+   - Matrice de décision commits</p>
+
+<p>4. <strong>Configuration</strong>
+   - Hiérarchie de configuration
+   - Flux de résolution</p>
+
+<p>5. <strong>Modules de Conversion</strong>
+   - Architecture standard
+   - Naming conventions
+   - Interface CLI unifiée</p>
+
+<p>6. <strong>Sécurité</strong>
+   - Règles secrets
+   - Checklist pré-push</p>
+
+<p>7. <strong>Structure Projet</strong>
+   - Arborescence complète
+   - Séparation commands/core</p>
+
+<p>8. <strong>Workflow Développement</strong>
+   - Cycle de vie feature
+   - Matrice de décision</p>
+
+<p>9. <strong>Résumé</strong>
+   - Mindmap principes clés</p>
+</body>
+</html>

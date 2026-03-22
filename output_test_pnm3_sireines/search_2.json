@@ -1,0 +1,14 @@
+G:\WarchoLife\WarchoPortable\PortableWork\Anaconda\anaconda-3\envs\ambulon\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.3) or chardet (6.0.0.post1)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(
+usage: ambulon piag-search [-h] [--collection-name COLLECTION_NAME]
+                           [--collection-id COLLECTION_ID]
+                           [--collection-name-list COLLECTION_NAME_LIST]
+                           [--collection-id-list COLLECTION_ID_LIST]
+                           [--project-id PROJECT_ID] [--query QUERY]
+                           [--token TOKEN] [--top-k TOP_K] [--rerank]
+                           [--no-rerank] [--k-rerank K_RERANK]
+                           [--mode {hybrid,semantic,keyword}]
+                           [--base-url BASE_URL] [--timeout TIMEOUT]
+                           [--max-retries MAX_RETRIES] [--config CONFIG]
+                           [--debug] [--format {json,text}]
+ambulon piag-search: error: unrecognized arguments: true --json

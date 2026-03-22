@@ -1,0 +1,79 @@
+{
+  "piag": {
+    "rag": {
+      "api": {
+        "base_url": "https://preprod.api.piag.e2.rie.gouv.fr/rag/",
+        "version": "v1",
+        "timeout": 30,
+        "max_retries": 3
+      },
+      "endpoints": {
+        "collections": "/api/v1/collections",
+        "documents_upload": "/api/v1/collections/{collection_id}/documents-upload-slow",
+        "document_detail": "/api/v1/documents/{document_id}",
+        "collection_documents": "/api/v1/collections/{collection_id}/documents",
+        "document_chunks": "/api/v1/documents/{document_id}/chunks",
+        "search": "/api/v1/search"
+      },
+      "headers": {
+        "accept": "application/json",
+        "content_type": "application/json",
+        "user_agent": "Ambulon RAG Client/1.0"
+      },
+      "project": {
+        "project_id": "PnuQzUEmwRDkxZPX"
+      },
+      "security": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJQbnVRelVFbXdSRGt4WlBYIiwianRpIjoiNDVkYjYwY2EtYzc2Zi00N2ZlLWFmYjgtNjNhNThiZDUzNWUzIiwiYWRtaW4iOmZhbHNlfQ.GsSXeR_BjBkuWbbQAhw0qL3Yiq-vL5A0Em04XA5x2AU",
+        "token_env_var": "PIAG_RAG_API_TOKEN"
+      },
+      "logging": {
+        "enable_debug": false,
+        "log_requests": true,
+        "log_responses": true,
+        "log_to_file": false,
+        "log_file_path": "logs/piag_rag.log"
+      },
+      "listing": {
+        "default_limit": 20,
+        "default_offset": 0,
+        "default_order_by": "name",
+        "default_order": "asc"
+      },
+      "document": null,
+      "upload": {
+        "processing_delay": 20,
+        "allowed_mime_types": [
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          "application/msword",
+          "text/html"
+        ],
+        "max_file_size_mb": 50
+      },
+      "chunks": {
+        "default_from_index": 0,
+        "default_to_index": 10,
+        "max_chunks_per_request": 100
+      },
+      "search": {
+        "default_top_k": 5,
+        "min_score": 0.5,
+        "output_format": "json"
+      }
+    },
+    "chat": {
+      "api": {
+        "base_url": "https://preprod.api.piag.e2.rie.gouv.fr/v1/chat/completions",
+        "timeout": 60
+      },
+      "security": {
+        "token": "***MASKED***",
+        "token_env_var": "PIAG_CHAT_API_TOKEN"
+      },
+      "model": "mte-api-piag-mistral-medium-latest"
+    }
+  }
+}

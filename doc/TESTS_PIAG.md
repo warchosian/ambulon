@@ -13,7 +13,7 @@ Tous les appels HTTP et fichiers sont simulés (mockés) en mémoire.
 #### Commandes
 
 ```bash
-# Tests de la commande piag-collection-list (8 tests)
+# Tests de la commande piag-rag-collection-list (8 tests)
 poetry run pytest tests/unit/piag/commands/test_piag_collection_list.py -v
 
 # Tests du client PIAG (17 tests)

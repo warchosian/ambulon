@@ -1,0 +1,68 @@
+{
+  "config": {
+    "site": {
+      "base_url": "https://wikisi.e2.rie.gouv.fr/wikisi/application",
+      "max_depth": -1,
+      "delay": 1.0,
+      "timeout": 30
+    },
+    "filters": {
+      "include_patterns": [
+        ".*"
+      ],
+      "exclude_patterns": [
+        ".*/logout.*",
+        ".*/admin.*",
+        ".*\\.pdf$",
+        ".*\\.zip$"
+      ],
+      "allowed_extensions": [
+        ".html",
+        ".htm"
+      ],
+      "same_domain_only": true
+    },
+    "output": {
+      "directory": "./wikisi-downloaded",
+      "preserve_structure": true,
+      "save_metadata": true,
+      "filename_format": "sanitized"
+    },
+    "headers": {
+      "User-Agent": "Ambulon WikiSI Scraper/1.0",
+      "Accept-Language": "fr-FR,fr;q=0.9"
+    },
+    "authentication": {
+      "type": "none",
+      "username": "",
+      "password": "",
+      "token": ""
+    },
+    "advanced": {
+      "max_retries": 3,
+      "respect_robots_txt": true,
+      "verify_ssl": true,
+      "threads": 1,
+      "max_file_size_mb": 50
+    },
+    "logging": {
+      "level": "info",
+      "log_to_file": true,
+      "log_file": "./wikisi-scraper.log"
+    }
+  },
+  "statistics": {
+    "start_url": "https://wikisi.e2.rie.gouv.fr/wikisi/application",
+    "start_time": "2026-01-30T09:13:18.344226",
+    "end_time": "2026-01-30T09:13:24.621671",
+    "duration_seconds": 6.277445,
+    "pages_visited": 1,
+    "pages_downloaded": 0,
+    "pages_failed": 1,
+    "total_size_bytes": 0
+  },
+  "downloaded_files": [],
+  "failed_urls": {
+    "https://wikisi.e2.rie.gouv.fr/wikisi/application": "HTTPSConnectionPool(host='wikisi.e2.rie.gouv.fr', port=443): Max retries exceeded with url: /wikisi/application (Caused by NameResolutionError(\"HTTPSConnection(host='wikisi.e2.rie.gouv.fr', port=443): Failed to resolve 'wikisi.e2.rie.gouv.fr' ([Errno 11001] getaddrinfo failed)\"))"
+  }
+}

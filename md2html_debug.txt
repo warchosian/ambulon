@@ -1,0 +1,30 @@
+Tree paragraphs wrapped: 0
+Total paragraphs: 148
+
+Para 0: has_tree=False, len=81, start=<h2 id="table-des-matières-html-tag-86">Table des matières ___HTML_TAG_86___</h2>
+
+Para 1: has_tree=False, len=1833, start=<ul>
+<li>___HTML_TAG_0______HTML_TAG_87___
+</li>
+<li>___HTML_TAG_1______HTML_TAG_88___
+<ul>
+<li>___H
+
+Para 2: has_tree=False, len=4, start=<hr>
+
+Para 3: has_tree=False, len=18, start=
+___HTML_TAG_39___
+
+Para 4: has_tree=False, len=217, start=___HTML_TAG_40___
+<h1 id="déploiement-déploiement-de-lapplicatif-recette-pré-production-production-h
+
+Para 5: has_tree=False, len=145, start=<blockquote>
+<strong>Source :</strong> <code>Déploiement.Déploiement-de-l'applicatif-(Recette,-pré-p
+
+Para 6: has_tree=False, len=13, start=Déploiement :
+
+Para 7: has_tree=False, len=27, start=Se connecter avec 'Bastion'
+
+Para 8: has_tree=False, len=78, start=puis utiliser un alias de connexion : sireinesrec, sireinesppr ou sireinesprod
+
+Para 9: has_tree=False, len=11, start=cd /opt/app

@@ -1,0 +1,49 @@
+{
+  "chunks": [
+    {
+      "score": 0.0273972602739726,
+      "rerank_score": 7.611271381378174,
+      "document_id": "6028689c-532a-4576-9f3b-6aa2739c7610",
+      "document_name": "sireines.dat_c4model.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 18,
+      "text": "Analyse Architecture C4 Model - SIREINES\nNiveau 4 : Vue Code (C4-L4) {#c4-l4}\n4.1 Structure du codebase\n```\n@startuml\nskinparam componentStyle rectangle\nskinparam packageStyle rectangle\n\ntitle SIREINES - C4 Niveau 4 : Structure du Code (Vue Package)"
+    },
+    {
+      "score": 0.026992753623188405,
+      "rerank_score": 7.514044284820557,
+      "document_id": "bfae470f-357d-47ee-87b0-9335afd44c1d",
+      "document_name": "sireines.dat_c4model.pdf",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 6,
+      "text": "Analyse Architecture C4 Model - SIREINES\nNiveau 4 : Vue Code (C4-L4) {#c4-l4}\n**4.1 Structure du codebase**\n**4.2 Exemple de code - Pattern MDA Vertigo**\n**4.3 Exemple de modèle KSP (Keyword Scripting)**"
+    },
+    {
+      "score": 0.016129032258064516,
+      "rerank_score": 7.074018955230713,
+      "document_id": "f98127bd-f059-4e58-8e70-108b268dbc06",
+      "document_name": "sireines.dat_c4model-landscape.pdf",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 10,
+      "text": "Analyse Architecture C4 Model - SIREINES\nNiveau 4 : Vue Code (C4-L4) {#c4-l4}\n4.1 Structure du codebase\n, Col3 = . , Col4 = . , Col5 = . , Col6 = . , Col7 = . , Col8 = . , service = . , Col10 = . , Col11 = . , controler = . , Col13 = . , Col14 = . , Col15 = . , Col16 = . , Col17 = . , Col18 = . , Col19 = . , Col20 = . , Col21 = . , Col22 = . , Col23 = . , Col24 = . , Col25 = . , Col26 = . , Col27 = . , Col28 = "
+    },
+    {
+      "score": 0.015873015873015872,
+      "rerank_score": 7.067809581756592,
+      "document_id": "0fface53-a98e-4b3c-9516-778a9099b95b",
+      "document_name": "sireines.dat_c4model-portrait.pdf",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 9,
+      "text": "Analyse Architecture C4 Model - SIREINES\nSynthèse architecture C4 {#synthese}\n--\n**Fin de l'analyse C4 Model**\n*Document structuré selon le standard C4 Model (c4model.com)*\n↩ Retour au sommaire ```\nCette analyse C4 complète fournit une\n**vision hiérarchique de l'architecture SIREINES**\n, du contexte métier jusqu'au code\nsource, avec 12 diagrammes PlantUML interactifs et une documentation détaillée de chaque niveau d'abstraction."
+    },
+    {
+      "score": 0.015625,
+      "rerank_score": 7.067809581756592,
+      "document_id": "bfae470f-357d-47ee-87b0-9335afd44c1d",
+      "document_name": "sireines.dat_c4model.pdf",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 8,
+      "text": "Analyse Architecture C4 Model - SIREINES\nSynthèse architecture C4 {#synthese}\n--\n**Fin de l'analyse C4 Model**\n*Document structuré selon le standard C4 Model (c4model.com)*\n↩ Retour au sommaire ```\nCette analyse C4 complète fournit une\n**vision hiérarchique de l'architecture SIREINES**\n, du contexte métier jusqu'au code source, avec 12 diagrammes PlantUML interactifs\net une documentation détaillée de chaque niveau d'abstraction."
+    }
+  ]
+}

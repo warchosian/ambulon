@@ -1,0 +1,9 @@
+﻿ID;Catégorie;Question;Top-K;Succès;Chunks trouvés;Sources;Longueur sans RAG;Longueur avec RAG;Différence;Termes sans RAG;Termes avec RAG;Amélioration RAG;Utilisation Chunks (%)
+Q1;Composants Java;Quel est le rôle exact de la classe DossierRechercheMotsClefsAction dans SIREINES ?;5;OUI;5;3;3892;2796;-1096;6;2;NON;0.0
+Q2;Vulnérabilités CVE;Quelles sont les vulnérabilités CVE identifiées pour le composant ExtractionsServicesImpl de SIREINES ?;7;OUI;7;5;2216;1121;-1095;2;3;OUI;0.0
+Q3;Configuration technique;Quelle version exacte d'Elasticsearch est utilisée dans SIREINES et comment est-elle configurée en mode embarqué ?;5;OUI;5;4;6584;1704;-4880;6;3;NON;0.0
+Q4;Décisions architecturales;Pourquoi SIREINES utilise-t-il le Vertigo Framework et quelles sont ses responsabilités exactes ?;5;OUI;5;5;5674;2552;-3122;3;9;OUI;0.0
+Q5;Sécurité STRIDE;Quelles vulnérabilités STRIDE ont été identifiées pour le module CerbereUtil + SireinesSessionFilter ?;7;OUI;7;4;7461;1372;-6089;3;2;NON;0.0
+Q6;ISO 25010;Quels sont les critères ISO 25010 spécifiques définis pour SIREINES avec leurs valeurs cibles mesurables ?;7;OUI;7;5;9057;992;-8065;4;4;NON;0.0
+Q7;Modèle C4 Level 3;Quels sont les composants internes détaillés du service SvcExtr dans le diagramme C4 Component de SIREINES ?;5;OUI;5;2;6339;249;-6090;4;2;NON;0.0
+Q8;Dépendances Maven;Quelles sont les dépendances Maven listées dans le pom.xml de sireines-web avec leurs versions exactes ?;5;OUI;5;3;3697;1327;-2370;4;7;OUI;0.0

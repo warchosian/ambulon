@@ -89,7 +89,7 @@ def show_help():
     print("  flatten-html          Aplatir une arborescence HTML")
     print("  flatten-md            Aplatir une arborescence Markdown")
     print("  wikisi-flatten        Aplatir une arborescence WikiSI")
-    print("  make-html-interactive Rendre HTML interactif (anchors, navigation)")
+    print("  augment               Augmenter HTML avec navigation interactive (anchors, TOC)")
     print("  md2interactive        Convertir MD en HTML interactif complet")
     print("  merge-html            Fusionner plusieurs fichiers HTML")
     print("  merge-md              Fusionner plusieurs fichiers Markdown")
@@ -97,21 +97,31 @@ def show_help():
     print("  project2md            Convertir structure de projet en Markdown")
     print("  code2md               Encapsuler du code dans des blocs Markdown")
     print()
-    print("Modules RAG PIAG (Retrieval Augmented Generation):")
-    print("  Collections:")
-    print("    piag-collection-add     Créer une collection RAG")
-    print("    piag-collection-list    Lister les collections")
-    print("    piag-collection-get     Obtenir les détails d'une collection")
-    print("    piag-collection-update  Mettre à jour une collection")
-    print("    piag-collection-rm      Supprimer une collection")
-    print("  Documents:")
-    print("    piag-doc-upload         Upload un document")
-    print("    piag-doc-list           Lister les documents")
-    print("    piag-doc-get            Obtenir les détails d'un document")
-    print("    piag-doc-rm             Supprimer un document")
-    print("    piag-doc-chunks         Obtenir les chunks d'un document")
-    print("  Recherche:")
-    print("    piag-search             Recherche sémantique RAG")
+    print("Modules PIAG (Retrieval Augmented Generation & Chat):")
+    print("  Gestion des RAG (Collections & Documents):")
+    print("    piag-rag-create                 Créer un RAG complet (collection + upload)")
+    print("    piag-rag-collection-add         Créer une collection RAG")
+    print("    piag-rag-collection-list        Lister les collections RAG")
+    print("    piag-rag-collection-get         Obtenir les détails d'une collection")
+    print("    piag-rag-collection-update      Mettre à jour une collection")
+    print("    piag-rag-collection-rm          Supprimer une collection")
+    print("    piag-rag-doc-upload             Upload un document vers une collection")
+    print("    piag-rag-doc-list               Lister les documents d'une collection")
+    print("    piag-rag-doc-get                Obtenir les détails d'un document")
+    print("    piag-rag-doc-rm                 Supprimer un document")
+    print("    piag-rag-doc-chunks             Obtenir les chunks d'un document")
+    print("    piag-rag-search                 Recherche sémantique dans les collections")
+    print("  Chat & Completions:")
+    print("    piag-chat-apikey-info           Infos sur le token (budget, dépenses)")
+    print("    piag-chat-basic-query           Interroger l'API Chat (mode basique)")
+    print("    piag-chat-completion            Complétion de texte (endpoint legacy)")
+    print("    piag-chat-query                 Interroger avec contexte RAG")
+    print("  Pipeline RAG (Workflow complet):")
+    print("    piag-rag-then-chat run          Pipeline complet (4 étapes en une commande)")
+    print("    piag-rag-then-chat init         Étape 1: Initialiser la collection")
+    print("    piag-rag-then-chat ingest       Étape 2: Ingestion des documents")
+    print("    piag-rag-then-chat chunk        Étape 3: Création des chunks")
+    print("    piag-rag-then-chat generate     Étape 4: Génération de la réponse")
     print()
     print("Options générales:")
     print("  -h, --help    Afficher cette aide")
@@ -138,6 +148,14 @@ def show_help():
     print("  ambulon mcp                         Démarrer le serveur MCP")
     print("  ambulon gitlab-clone                Cloner les projets configurés")
     print("  ambulon gitlab-monofile G:\\repos\\my-project")
+    print()
+    print("Exemples RAG PIAG:")
+    print("  ambulon piag-rag-create --collection-name 'MonRAG' --desc 'Docs'         Collection vide")
+    print("  ambulon piag-rag-create --collection-name 'MonRAG' --directory ./docs    Avec documents")
+    print("  ambulon piag-rag-collection-list                                         Lister collections")
+    print("  ambulon piag-rag-doc-list --collection-name 'MonRAG'                     Lister documents")
+    print("  ambulon piag-rag-search --collection-name 'MonRAG' --query 'question'    Rechercher")
+    print("  ambulon piag-chat-query --collection-name 'MonRAG' --query 'question'    Chat avec RAG")
     print()
     print("Pour plus d'informations sur un module spécifique:")
     print("  ambulon [MODULE] --help")
@@ -498,17 +516,29 @@ def handle_rag_module(module_name: str):
     """
     # Mapper les noms de commandes aux fonctions main()
     command_to_import = {
-        'piag-collection-add': ('app.piag.commands.piag_collection_add', 'main'),
-        'piag-collection-list': ('app.piag.commands.piag_collection_list', 'main'),
-        'piag-collection-get': ('app.piag.commands.piag_collection_get', 'main'),
-        'piag-collection-update': ('app.piag.commands.piag_collection_update', 'main'),
-        'piag-collection-rm': ('app.piag.commands.piag_collection_rm', 'main'),
-        'piag-doc-upload': ('app.piag.commands.piag_doc_upload', 'main'),
-        'piag-doc-list': ('app.piag.commands.piag_doc_list', 'main'),
-        'piag-doc-get': ('app.piag.commands.piag_doc_get', 'main'),
-        'piag-doc-rm': ('app.piag.commands.piag_doc_rm', 'main'),
-        'piag-doc-chunks': ('app.piag.commands.piag_doc_chunks', 'main'),
-        'piag-search': ('app.piag.commands.piag_search', 'main'),
+        # RAG complet
+        'piag-rag-create': ('app.piag.commands.piag_rag_create', 'main'),
+        # Collections RAG
+        'piag-rag-collection-add': ('app.piag.commands.piag_rag_collection_add', 'main'),
+        'piag-rag-collection-list': ('app.piag.commands.piag_rag_collection_list', 'main'),
+        'piag-rag-collection-get': ('app.piag.commands.piag_rag_collection_get', 'main'),
+        'piag-rag-collection-update': ('app.piag.commands.piag_rag_collection_update', 'main'),
+        'piag-rag-collection-rm': ('app.piag.commands.piag_rag_collection_rm', 'main'),
+        # Documents RAG
+        'piag-rag-doc-upload': ('app.piag.commands.piag_rag_doc_upload', 'main'),
+        'piag-rag-doc-list': ('app.piag.commands.piag_rag_doc_list', 'main'),
+        'piag-rag-doc-get': ('app.piag.commands.piag_rag_doc_get', 'main'),
+        'piag-rag-doc-rm': ('app.piag.commands.piag_rag_doc_rm', 'main'),
+        'piag-rag-doc-chunks': ('app.piag.commands.piag_rag_doc_chunks', 'main'),
+        # Recherche RAG
+        'piag-rag-search': ('app.piag.commands.piag_rag_search', 'main'),
+        # Chat
+        'piag-chat-apikey-info': ('app.piag.commands.piag_chat_apikey_info', 'main'),
+        'piag-chat-basic-query': ('app.piag.commands.piag_chat_basic_query', 'main'),
+        'piag-chat-completion': ('app.piag.commands.piag_chat_completion', 'main'),
+        'piag-chat-query': ('app.piag.commands.piag_chat_query', 'main'),
+        # Pipeline RAG (orchestration complète)
+        'piag-rag-then-chat': ('app.piag.commands.piag_rag_then_chat', 'main'),
     }
 
     import_info = command_to_import.get(module_name)
@@ -980,11 +1010,11 @@ def main():
                 else:
                     i += 1
             return flatten_wikisi_directory(source, output, verbose)
-        elif command == 'make-html-interactive':
-            # Rendre HTML interactif
-            from app.processing import make_html_interactive
+        elif command == 'augment':
+            # Augmenter HTML avec navigation interactive
+            from app.processing.commands.add_augment import augment
             if len(sys.argv) < 3:
-                print("Usage: ambulon make-interactive <input.html> [-o <output.html>] [--verbose]")
+                print("Usage: ambulon augment <input.html> [-o <output.html>] [--verbose]")
                 return 1
             input_file = sys.argv[2]
             output = None
@@ -999,7 +1029,7 @@ def main():
                     i += 1
                 else:
                     i += 1
-            return make_html_interactive(input_file, output, verbose)
+            return augment(input_file, output, verbose)
         elif command == 'md2interactive':
             # Convertir MD en HTML interactif complet (TOC + iTOC + HTML + interactif)
             from app.processing.commands.md_to_interactive_html import main as md_to_interactive_main
@@ -1039,11 +1069,21 @@ def main():
             return gitlab_monofile_main(sys.argv[2:])
         elif command == 'test':
             return handle_test_command()
-        # Commandes RAG PIAG
-        elif command in ['piag-collection-add', 'piag-collection-list', 'piag-collection-get',
-                        'piag-collection-update', 'piag-collection-rm',
-                        'piag-doc-upload', 'piag-doc-list', 'piag-doc-get',
-                        'piag-doc-rm', 'piag-doc-chunks', 'piag-search']:
+        # Commandes RAG et Chat PIAG
+        elif command in [
+            # RAG complet
+            'piag-rag-create',
+            # Collections RAG
+            'piag-rag-collection-add', 'piag-rag-collection-list', 'piag-rag-collection-get',
+            'piag-rag-collection-update', 'piag-rag-collection-rm',
+            # Documents RAG
+            'piag-rag-doc-upload', 'piag-rag-doc-list', 'piag-rag-doc-get',
+            'piag-rag-doc-rm', 'piag-rag-doc-chunks',
+            # Recherche RAG
+            'piag-rag-search',
+            # Chat
+            'piag-chat-apikey-info', 'piag-chat-basic-query', 'piag-chat-completion', 'piag-chat-query',
+        ]:
             return handle_rag_module(command)
         else:
             print(f"Module inconnu: {command}")

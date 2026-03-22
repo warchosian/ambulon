@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sireines.wiki</title>
+    <style>
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: none;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 2em;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #34495e;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+            line-height: 1.4;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+        pre.tree {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+            .diagram svg {
+            width: auto;
+            height: auto;
+        }
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        li {
+            margin: 0.5em 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding: 0.5em 0 0.5em 1em;
+            color: #555;
+            background: #f8f9fa;
+            border-radius: 0 3px 3px 0;
+        }
+        blockquote p {
+            margin: 0.5em 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+    </style>
+<style>
+/* Styles pour les fonctionnalits interactives dtk */
+.zoom-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(52, 152, 219, 0.9);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    font-size: 14px;
+}
+
+.interaction-help {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgba(44, 62, 80, 0.95);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    max-width: 250px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.interaction-help.visible {
+    display: block;
+    opacity: 1;
+}
+
+.diagram-image.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    background: rgba(0,0,0,0.9);
+    object-fit: contain;
+    cursor: zoom-out;
+}
+
+.diagram-image {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    position: relative;
+    z-index: 1;
+}
+
+.diagram-block {
+    position: relative;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    margin: 16px 0;
+    background-color: #f6f8fa;
+}
+
+.diagram-block code.diagram-image {
+    display: block;
+    padding: 16px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 12px;
+    line-height: 1.45;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #212529;
+    cursor: grab;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.diagram-image:active {
+    cursor: grabbing;
+}
+
+.zoom-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    gap: 5px;
+}
+
+.zoom-controls button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+}
+
+.zoom-controls button:hover {
+    background-color: #2980b9;
+}
+
+@media print {
+    .zoom-indicator, .interaction-help, .zoom-controls {
+        display: none !important;
+    }
+}
+</style>
+</head>
+<body>
+<h1>📚 Table des matières</h1>
+
+<blockquote>
+Document fusionné généré automatiquement
+</blockquote>
+
+<ul>
+<li><a href="#dploiement-dploiement-de-lapplicatif-recette-pr-production-production">Déploiement › Déploiement-de-l'applicatif-(Recette,-pré-production,-production</a></li>
+<li><a href="#home">Home</a></li>
+<li><a href="#recette-connexionbdd_docker">Recette › ConnexionBDD_Docker</a></li>
+<li><a href="#recette-livraisonsurpostedocker">Recette › LivraisonSurPosteDocker</a></li>
+<li><a href="#reversing">Reversing</a></li>
+<li><a href="#sireines-cerbre">Sireines › Cerbère</a></li>
+<li><a href="#sireines-sites">Sireines › sites</a></li>
+<li><a href="#sireines-version">Sireines › Version</a></li>
+</ul>
+
+<hr>
+
+
+<hr>
+
+<a id="dploiement-dploiement-de-lapplicatif-recette-pr-production-production"></a>
+
+<h1>📄 Déploiement › Déploiement-de-l'applicatif-(Recette,-pré-production,-production</h1>
+
+<blockquote>
+<strong>Source :</strong> <code>Déploiement.Déploiement-de-l'applicatif-(Recette,-pré-production,-production.md</code>
+</blockquote>
+
+<p>Déploiement :</p>
+
+<p>Se connecter avec 'Bastion'</p>
+
+<p>puis utiliser un alias de connexion : sireinesrec, sireinesppr ou sireinesprod</p>
+
+<p>cd /opt/app</p>
+
+<p>copie du docker-compose.yml avec la date (ex :  docker-compose.yml.20250523)
+ex: 
+cp docker-compose.yml docker-compose.yml.20250523</p>
+
+<p>effectuer un docker ps pour identifier le container sireines-app</p>
+
+<p>!<a href="uploads/12738ffe6934641f1c4ed401955817a3/Capture.JPG">Capture</a></p>
+
+<p>docker rm -f sireines-app</p>
+
+<p>vi docker-compose.yml (Pour modifier la version à livrer)</p>
+
+<p>docker compose up -d</p>
+
+<p>Pour le test de la recette aller sur :</p>
+
+<p>http://sireines.recette.pnm3.eco4.cloud.e2.rie.gouv.fr/Accueil.do</p>
+
+<p>!<a href="uploads/dba83529ace31f5dc3448548f1e5f1d6/Capture2.JPG">Capture2</a></p>
+
+<p>Effectuer quelques tests fonctionnels simples :</p>
+
+<p>!<a href="uploads/e282ab2b5a5e58e429f2fcc7f673edcf/Capture3.JPG">Capture3</a></p>
+
+<hr>
+
+<a id="home"></a>
+
+<h1>📄 Home</h1>
+
+<blockquote>
+<strong>Source :</strong> <code>Home.md</code>
+</blockquote>
+
+<p>La mission des compétences scientifiques et techniques (DRI/AST4) tient à jour une base de données dénommée SIREINES qui recense toutes les demandes de qualification par les comités de domaine de ses agents. Elle suit l'évolution de ces données, coordonne leur évaluation par les comités de domaine, et tient les agents informés des suites de leurs de leurs demandes.</p>
+
+<p>Sommaire :
+<ul>
+<li><a href="#quifaitquoi">Qui fait quoi</a></li>
+<li><a href="#Historique">Historique</a></li>
+<li><a href="#Site">Accès au site</a></li>
+<li><a href="#Cerbere">Cerbère</a></li>
+<li><a href="#Version">Version</a></li>
+<li><a href="#Doc">Documentations</a></li>
+</ul></p>
+
+
+<a name="quifaitquoi"></a>
+<h2>Qui fait quoi</h2>
+
+<p><table>
+<thead>
+<tr>
+<th>Intervenants</th>
+<th>Commentaires</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MOA MTES</td>
+<td>Zemour Pascal (Chargé de mission) - CGDD/DRI/AST4 Pascal.Zemour@developpement-durable.gouv.fr =\> Chef de projet opérationnel de l'application</td>
+</tr>
+<tr>
+<td></td>
+<td>Letrouit Vincent (Chef de bureau) - CGDD/DRI/AST4 Vincent.Letrouit@developpement-durable.gouv.fr =\> Sponsor des projets</td>
+</tr>
+<tr>
+<td>MOE prestataire</td>
+<td>Jusqu'en novembre 2021 : Klee Group</td>
+</tr>
+<tr>
+<td></td>
+<td>\- Matthieu Georges (Chef de projet) matthieu.georges@kleegroup.com</td>
+</tr>
+<tr>
+<td></td>
+<td>\- Olivier Venot (Directeur de projet) olivier.venot@kleegroup.com</td>
+</tr>
+</tbody>
+</table><a name="Historique"></a>
+<h2>Historique</h2></p>
+
+<p><table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Références</th>
+<th>Type d'évolution</th>
+<th>Fichier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>26/02/2020</td>
+<td>Mantis 0052083</td>
+<td>Évolution mineure des courriers</td>
+<td>\<a href="uploads/431f99b1ec1a87bc71962a80758af481/sireines_mantis_0052083.pdf">[sireines_mantis_0052083.pdf</a>\]</td>
+</tr>
+<tr>
+<td>15/09/2020</td>
+<td>Mantis 0056137</td>
+<td>Demande de mise à jour des courriers</td>
+<td>\<a href="uploads/d67a07eca5a5a248db13b6ebc71e6a0b/sireines_mantis_0056137.pdf">[sireines_mantis_0056137.pdf</a>\]</td>
+</tr>
+<tr>
+<td>22/10/2020</td>
+<td>Mantis 0056773</td>
+<td>Correction de courriers</td>
+<td>\<a href="uploads/e855689ab130403e40ada37f2c93848f/sireines_mantis_0056773.pdf">[sireines_mantis_0056773.pdf</a>\]</td>
+</tr>
+<tr>
+<td>03/05/2021</td>
+<td>Mantis 0059550</td>
+<td>Extractions=erreur eclipse</td>
+<td>\<a href="uploads/dbf64e820c7296237e5c5eafbe9dca45/sireines_mantis_0059550.pdf">[sireines_mantis_0059550.pdf</a>\]</td>
+</tr>
+<tr>
+<td>30/09/2021</td>
+<td>Mantis 0061626</td>
+<td>Anomalie dans livraison 2.5.6</td>
+<td>\<a href="uploads/ac13ef2303459e85a76ccba84ce9da96/sireines_mantis_0061626.pdf">[sireines_mantis_0061626.pdf</a>\]</td>
+</tr>
+</tbody>
+</table><a name="Site"></a>
+<h2>Accès au site</h2></p>
+
+<a href="Sireines/sites">sites</a>
+
+<a name="Cerbere"></a>
+<h2>Cerbère</h2>
+
+<a href="Sireines/Cerbère">cerbère</a>
+
+<a name="Version"></a>
+<h2>Version</h2>
+
+<a href="Sireines/Version">version</a>
+
+<a name="Doc"></a>
+<h2>Documentations</h2>
+
+<h3>Guide du chef de produit :</h3>
+ * <a href="Recette/LivraisonSurPosteDocker">Recette d'une livraison sur poste (Docker)</a>
+ * Recette d'une livraison sur environnement IAAS
+ * <a href="Recette/ConnexionBDD_Docker">Connexion base de données</a>
+
+<h3>Fonctionnel :</h3>
+
+<h3>Technique :</h3>
+  * <a href="Technique/DocumentationInstallationEtExploitation">Document d'installation et d'exploitation (IAAS)</a>
+    
+<h3>Reversing</h3>
+  * <a href="Reversing/App">Application</a>
+  * <a href="Reversing/Database">Base de données</a>
+
+<h3>Deploiement</h3>
+  * <a href="Technique/DeploiementApplicatif">Procedure de déploiement applicatif </a>
+
+<hr>
+
+<a id="recette-connexionbdd_docker"></a>
+
+<h1>📄 Recette › ConnexionBDD_Docker</h1>
+
+<blockquote>
+<strong>Source :</strong> <code>Recette.ConnexionBDD_Docker.md</code>
+</blockquote>
+
+<p>Se mettre sur le serveur de recette (sireinesrec)</p>
+
+<p>Lancer Run pageant 
+New Session (Load Bastion)</p>
+
+
+<ul>
+<li>/opt/app</li>
+<li>cat .env</li>
+<li>docker exec -it sireines-db bash</li>
+<li>psql -U sireines</li>
+</ul>
+
+<hr>
+
+<a id="recette-livraisonsurpostedocker"></a>
+
+<h1>📄 Recette › LivraisonSurPosteDocker</h1>
+
+<blockquote>
+<strong>Source :</strong> <code>Recette.LivraisonSurPosteDocker.md</code>
+</blockquote>
+
+<a name="HautdePage"></a>
+<h1>Document d'installation sur Poste de Travail (Docker)</h1>
+
+<p>Sommaire :</p>
+
+<p>*<a href="#prerequis">Pré-requis</a></p>
+
+
+<a name="prerequis"></a>
+<h2>0 - Pré-requis</h2>
+
+<p>Avoir installé sur son poste : 
+<ul>
+<li>Docker Desktop Installer.exe (application Docker Desktop) (Logo Baleine) avec wsl-updatex64.msi</li>
+</ul></p>
+
+<ul>
+<li>L'application Visual code avec les extensions :</li>
+</ul>
+    * Dev Containers
+    * Docker
+    <em> French Language Pack for Visual Studio Code (</em>)
+    <em> Markdown Preview Enhanced (</em>)
+    * WSL
+<em> L'application Prince (</em>) et ajouter dans les variables d'environnement dans le path :
+    C:\Program Files (x86)\Prince\engine\bin
+
+<ul>
+<li>L'interface de base de données Pgadmin 4 v8 (minimal)</li>
+</ul>
+
+<p>(*) Non obligatoire</p>
+
+<a href="#HautdePage">Haut de Page</a>
+
+<h2>1 - Les conteneurs et les images</h2>
+
+<h3>1.1 Vocabulaire</h3>
+
+<strong>Un conteneur</strong> est une unité logicielle standard qui regroupe le code et toutes ses dépendances afin que l'application s'exécute rapidement et de manière fiable d'un environnement informatique à un autre. Une image de conteneur Docker est un package logiciel léger, autonome et exécutable qui comprend tout ce dont vous avez besoin pour exécuter une application : code, runtime, outils système, bibliothèques système et paramètres.
+
+<strong>Les images de conteneurs</strong>
+deviennent des conteneurs au moment de l'exécution et dans le cas des conteneurs Docker, les images deviennent des conteneurs lorsqu'elles s'exécutent sur Docker Engine (logo Baleine). 
+
+<h3>1.2 Cas particulier  : Application Sireines</h3>
+L'application Sireines comporte  trois conteneurs, trois images et un volume.
+
+<ul>
+<li>Le conteneur de l'applicatif s'appelle <strong>sireines_app_usine_container</strong> et l'image associée s'appelle <strong>sireines_app_usine_image</strong>.</li>
+</ul>
+
+<ul>
+<li>Le conteneur de la base de données s'appelle <strong>sireines_db_usine_container</strong> et l'image associée s'appelle <strong>postgres:14.1-alpine</strong>.</li>
+</ul>
+
+<ul>
+<li>Un conteneur a été ajouté pour garder en mémoire les connexions à la base de données. Ce conteneur s'appelle <strong>sireines_pgadmin_container</strong> et l'image associée s'appelle <strong>dpage/pgadmin4</strong>.</li>
+</ul>
+
+<p>La base de données est contenu dans un seul volume appelé : <strong>sireines_db_sireines_vol</strong>.
+Les connexions sont sauvegardées dans le volume appelé : <strong>sireines_pgadmin_sireines_vol</strong>.</p>
+
+<h2>2 - Aller chercher le war dans gitlab</h2>
+
+<h3>2.1 Les liens Gitlab</h3>
+
+<ul>
+<li><strong>Lien Gitlab</strong></li>
+</ul>
+
+<p>https://gitlab-forge.din.developpement-durable.gouv.fr/</p>
+
+<ul>
+<li><strong>Lien Gitlab du projet Sireines</strong></li>
+</ul>
+
+<p>https://gitlab-forge.din.developpement-durable.gouv.fr/snum/pnm3/produits/rh/sireines</p>
+
+<ul>
+<li><strong>Emplacement du war dans Gitlab</strong></li>
+</ul>
+
+<p>deploy / package registry</p>
+
+<p>(https://gitlab-forge.din.developpement-durable.gouv.fr/snum/pnm3/produits/rh/sireines/-/packages) puis cliquer sur le lien pour télécharger le war  (sireines-web-*.war).</p>
+
+<h3>2.2 Télécharger le fichier *.war et le déposer dans le répertoire de travail de votre poste</h3>
+
+<p>c:/sireines/sireines_pgadmin (Répertoire de travail)</p>
+
+<h3>2.3 Annotation</h3>
+
+<p>A noter que dans le fichier Dockerfile, la ligne 
+    <strong>COPY --chown=root:root sireines-web-*.war /tmp/ROOT.war</strong>
+permet de prendre tous les war commençant par <strong>"sireines-web-"</strong> et se terminant par <strong>".war"</strong>.</p>
+
+<p>Lors d'une nouvelle livraison d'un war, il suffit de substituer l'ancien war par le nouveau war dans le répertoire de travail.</p>
+
+<p>Dans ce cas précis, il n'y aura rien d'autre à changer et le fichier Dockerfile peut rester en l'état.</p>
+
+<p>Toutes les sources se trouvent dans le répertoire partagé du service :</p>
+
+<p><a href="M:\Produits numériques\Ressources humaines\Sireines\Docker\Archives">M:\Produits numériques\Ressources humaines\Sireines\Docker\Archives</a>
+M: correspond au Dossier partagé [DPNM3]</p>
+
+<p>On y trouvera les war et les dump de l'application.</p>
+
+<div style="page-break-after: always; visibility: hidden">\pagebreak</div>
+
+<h2>3 - Installation de l'applicatif </h2>
+
+<h3>3.1 Prérequis</h3>
+<ul>
+<li>Avoir récupérer le répertoire <strong>[M:\Produits numériques\Ressources humaines\Sireines\Docker\sireines_pgadmin]</strong>(M:\Produits numériques\Ressources humaines\Sireines\Docker\sireines_pgadmin)</li>
+</ul>
+M: correspond au Dossier partagé [DPNM3]
+et le déposer sur le poste de travail <strong>c:/sireines/sireines_pgadmin</strong>
+
+<ul>
+<li>Lancer l'application Docker Desktop (Logo Baleine) et s'assurer que les moteurs sont bien en exécution (Running)</li>
+</ul>
+!<a href="img/dockerDesktop.png">alt text</a>
+
+<h3>3.2 Vérification de l'existence des volumes (Visual studio Code)</h3>
+
+<p>Se positionner dans le terminal du Visual Code dans le répertoire de travail:
+!<a href="img/repertoire.PNG">alt text</a></p>
+
+<ul>
+<li>Si le volume sireines_db_sireines_vol n'est pas n'existe pas faire :</li>
+</ul>
+    docker volume create sireines_db_sireines_vol
+    
+    !<a href="images/creation_volume.png">alt text</a>
+
+<p>et modifier <strong>si besoin</strong> les lignes 38 et 74 de docker-compose.yml concernant ce volume.
+!<a href="<images/Volume Sireines pgadmin lignes 38_74.JPG>">alt text</a></p>
+
+<p>Ce volume contiendra les données de la base de données.</p>
+
+<ul>
+<li>Si le volume sireines_pgadmin_sireines_vol n'existe pas faire :</li>
+</ul>
+docker volume create sireines_pgadmin_sireines_vol 
+
+<p>et modifier <strong>si besoin</strong> les lignes 66 et 76 de de docker-compose.yml concernant ce volume.
+!<a href="<images/Volume Sreines pgadmin lignes 66-76.JPG>">alt text</a></p>
+
+<p>Au final, on devrait avoir :</p>
+
+<p>!<a href="images/Volume.PNG">alt text</a></p>
+
+<p>Ces volumes sont persistants sur le poste de travail.</p>
+
+<h3>3.3 Si besoin supprimer l'applicatif</h3>
+
+<p>Remove sur le conteneur (sireines_app_usine_container) puis l'image(sireines_app_usine_image).</p>
+
+<p>Dans l'application Visual code :
+!<a href="images/remove_conteneur.PNG">alt text</a>
+!<a href="images/remove_image.PNG">alt text</a></p>
+
+<strong>Ou</strong> dans Docker Desktop :
+!<a href="images/delete_docker.PNG">alt text</a>
+
+<strong>Ou</strong> en ligne de commande Dos (cmd)
+``<code>docker rm -f sireines_app_usine_container<pre><code class="language-">```docker rmi -f sireines_app_usine_image</code></pre>
+
+<h3>3.4 Créer et démarrer tous les services </h3>
+ 
+<strong>Lancer sans le VPN :</strong> 
+</code>`<code>docker-compose up -d</code>`<code>
+
+<p>dans le répertoire c:/sireines/sireines_pgadmin</p>
+
+<div style="page-break-after: always; visibility: hidden">\pagebreak</div>
+
+<h2>4 - Installation de la base de données</h2>
+
+<h3>4.1 Prérequis</h3>
+Vérifier dans le fichier .env, les arguments de la bdd du Docker
+            POSTGRES_DB=postgres
+            POSTGRES_HOST=db
+            POSTGRES_PORT=5432
+            POSTGRES_USER=postgres
+            POSTGRES_PASSWORD=postgres
+            POSTGRES_SCHEMA=postgres
+
+<h3>4.2  Installation de la BDD avec pgAdmin et/ou ligne de commande :</h3>
+
+<p>1 - Add Server 
+Renseigner Onglet General : Name XXXXX ;
+Renseigner Onglet Connection :
+    Host : localhost
+    Port : 8888
+    Maintenance Database :
+    UserName :
+    MotdePasse :</p>
+
+
+
+<p>2- Alimentation de la base via un dump</p>
+
+
+
+
+
+<p><div style="page-break-after: always; visibility: hidden">\pagebreak</div>
+<h1>Annexe(s) </h1></p>
+
+<h2>Ouvrir un terminal dans l'application Visual code </h2>
+
+<strong>Choisir "Command prompt" à la place de powershell (par défaut)</strong>
+
+<p>!<a href="images/prompt_cmd.PNG">alt text</a></p>
+
+<p>Vous pourrez alors utiliser les commandes dos non reconnues par powershell</p>
+
+<hr>
+
+<a id="reversing"></a>
+
+<h1>📄 Reversing</h1>
+
+<blockquote>
+<strong>Source :</strong> </code>Reversing.md<code>
+</blockquote>
+
+<h1>Documentation WarchoDevplace</h1>
+
+<p>Vous pouvez télécharger le fichier ZIP contenant tous les documents ici :  
+<a href="https://gitlab.eco4.cloud.e2.rie.gouv.fr/snum/pnm3/produits/rh/ttc/-/raw/documentation/documentation.zip">Télécharger documents.zip</a></p>
+
+<p>Une fois téléchargé, décompressez le fichier pour accéder aux documents.</p>
+
+<hr>
+
+<a id="sireines-cerbre"></a>
+
+<h1>📄 Sireines › Cerbère</h1>
+
+<blockquote>
+<strong>Source :</strong> </code>Sireines.Cerbère.md<code>
+</blockquote>
+
+<p><table>
+<thead>
+<tr>
+<th>Cerbère</th>
+<th>Pré-production</th>
+<th>Production</th>
+<th>Recette</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID</td>
+<td>546</td>
+<td>546</td>
+<td>564</td>
+</tr>
+</tbody>
+</table><strong>Gestion de cerbere recette :</strong></p>
+
+<p>https://cerbere.recette.e2.rie.gouv.fr/administration/</p>
+
+
+
+<hr>
+
+<a id="sireines-sites"></a>
+
+<h1>📄 Sireines › sites</h1>
+
+<blockquote>
+<strong>Source :</strong> </code>Sireines.sites.md<code>
+</blockquote>
+
+<p>Recette : http://sireines.recette.pnm3.eco4.cloud.e2.rie.gouv.fr/</p>
+
+<p>Pré prod : https://sireines.preprod.e2.rie.gouv.fr/Accueil.do</p>
+
+<p>prod : https://sireines.e2.rie.gouv.fr/Accueil.do</p>
+
+<hr>
+
+<a id="sireines-version"></a>
+
+<h1>📄 Sireines › Version</h1>
+
+<blockquote>
+<strong>Source :</strong> </code>Sireines.Version.md`
+</blockquote>
+
+<p>Version en cours en production (12 mars 2024) : 2.5.11</p>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('=== Fonctionnalits interactives charges ===');
+
+    const enabledFeatures = {
+        zoom: true,
+        drag: true,
+        fullscreen: true,
+        help: true,
+        controls: true
+    };
+
+    // Slectionner tous les SVG
+    const svgElements = document.querySelectorAll('svg');
+    console.log('SVG trouv:', svgElements.length);
+
+    const allInteractiveElements = Array.from(svgElements);
+
+    // Ajouter la classe diagram-image
+    allInteractiveElements.forEach(svg => {
+        if (!svg.classList.contains('diagram-image')) {
+            svg.classList.add('diagram-image');
+        }
+    });
+
+    let zoomIndicator = null;
+    let helpPanel = null;
+
+    // Crer l'indicateur de zoom
+    function createZoomIndicator() {
+        zoomIndicator = document.createElement('div');
+        zoomIndicator.className = 'zoom-indicator';
+        document.body.appendChild(zoomIndicator);
+    }
+
+    // Crer le panneau d'aide
+    function createHelpPanel() {
+        if (!enabledFeatures.help) return;
+
+        helpPanel = document.createElement('div');
+        helpPanel.className = 'interaction-help';
+
+        let helpContent = '<strong>Contrles diagramme:</strong><br>';
+        if (enabledFeatures.zoom) helpContent += '• Molette: Zoom/Dzoom<br>';
+        if (enabledFeatures.drag) helpContent += '• Clic + glisser: Dplacer<br>';
+        if (enabledFeatures.drag) helpContent += '• Clic simple: Rinitialiser<br>';
+        if (enabledFeatures.fullscreen) helpContent += '• F/Entre/Espace: Plein cran<br>';
+        if (enabledFeatures.fullscreen) helpContent += '• champ: Quitter plein cran<br>';
+
+        helpPanel.innerHTML = helpContent;
+        document.body.appendChild(helpPanel);
+    }
+
+    // Mettre jour l'indicateur de zoom
+    function updateZoomIndicator(scale, visible = true) {
+        if (!zoomIndicator) createZoomIndicator();
+        zoomIndicator.textContent = 'Zoom: ' + Math.round(scale * 100) + '%';
+        zoomIndicator.style.display = visible ? 'block' : 'none';
+    }
+
+    // Afficher/masquer l'aide
+    function toggleHelp(show) {
+        if (!helpPanel) createHelpPanel();
+        helpPanel.classList.toggle('visible', show);
+    }
+
+    allInteractiveElements.forEach((img, index) => {
+        let scale = 1;
+        let isDragging = false;
+        let hasMoved = false;
+        let startX, startY, translateX = 0, translateY = 0;
+        let isFullscreen = false;
+        let helpTimeout = null;
+        let currentZIndex = 1;
+
+        function updateTransform() {
+            img.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scale + ')';
+        }
+
+        // Zoom avec molette
+        if (enabledFeatures.zoom) {
+            img.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? -0.1 : 0.1;
+                scale = Math.max(0.5, Math.min(5, scale + delta));
+                updateTransform();
+
+                if (isFullscreen) {
+                    updateZoomIndicator(scale);
+                }
+            });
+        }
+
+        // Drag and drop
+        if (enabledFeatures.drag) {
+            img.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                isDragging = true;
+                hasMoved = false;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                img.style.cursor = 'grabbing';
+                img.style.opacity = '0.7';
+                currentZIndex++;
+                img.style.zIndex = currentZIndex.toString();
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    hasMoved = true;
+                    translateX = e.clientX - startX;
+                    translateY = e.clientY - startY;
+                    updateTransform();
+                }
+            });
+
+            document.addEventListener('mouseup', function(e) {
+                if (isDragging) {
+                    isDragging = false;
+                    img.style.cursor = 'grab';
+                    img.style.opacity = '1';
+                }
+            });
+        }
+
+        // Reset avec clic simple (seulement si pas de mouvement)
+        if (enabledFeatures.drag || enabledFeatures.zoom) {
+            img.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                if (hasMoved) {
+                    hasMoved = false;
+                    return;
+                }
+
+                // Rinitialiser
+                scale = 1;
+                translateX = 0;
+                translateY = 0;
+                updateTransform();
+
+                if (isFullscreen) {
+                    updateZoomIndicator(scale);
+                }
+            });
+        }
+
+        // Mode plein cran
+        if (enabledFeatures.fullscreen) {
+            document.addEventListener('keydown', function(e) {
+                if (img.matches(':hover') || isFullscreen) {
+                    switch(e.key) {
+                        case 'Escape':
+                            if (isFullscreen) {
+                                isFullscreen = false;
+                                img.classList.remove('fullscreen');
+                                updateZoomIndicator(scale, false);
+                                toggleHelp(false);
+                            }
+                            break;
+                        case 'f':
+                        case 'F':
+                        case 'Enter':
+                        case ' ':
+                            isFullscreen = !isFullscreen;
+                            img.classList.toggle('fullscreen', isFullscreen);
+                            if (isFullscreen) {
+                                updateZoomIndicator(scale);
+                                toggleHelp(true);
+                            } else {
+                                updateZoomIndicator(scale, false);
+                                toggleHelp(false);
+                            }
+                            break;
+                        case '+':
+                        case '=':
+                            scale = Math.min(5, scale + 0.2);
+                            updateTransform();
+                            if (isFullscreen) updateZoomIndicator(scale);
+                            break;
+                        case '-':
+                            scale = Math.max(0.5, scale - 0.2);
+                            updateTransform();
+                            if (isFullscreen) updateZoomIndicator(scale);
+                            break;
+                        case '0':
+                            scale = 1;
+                            translateX = 0;
+                            translateY = 0;
+                            updateTransform();
+                            if (isFullscreen) updateZoomIndicator(scale);
+                            break;
+                    }
+                }
+            });
+        }
+
+        // Afficher l'aide au survol
+        if (enabledFeatures.help) {
+            img.addEventListener('mouseenter', function() {
+                if (helpTimeout) clearTimeout(helpTimeout);
+                helpTimeout = setTimeout(function() { toggleHelp(true); }, 1000);
+            });
+
+            img.addEventListener('mouseleave', function() {
+                if (helpTimeout) clearTimeout(helpTimeout);
+                if (!isFullscreen) {
+                    toggleHelp(false);
+                }
+            });
+        }
+
+        // Ajouter des contrles visuels
+        if (enabledFeatures.controls && (enabledFeatures.zoom || enabledFeatures.drag)) {
+            const container = img.closest('.diagram, .diagram-container') || img.parentElement;
+
+            if (container && !container.querySelector('.zoom-controls')) {
+                const controls = document.createElement('div');
+                controls.className = 'zoom-controls';
+
+                let controlsHTML = '';
+                if (enabledFeatures.zoom) {
+                    controlsHTML += '<button class="zoom-in" title="Zoom avant">+</button>';
+                    controlsHTML += '<button class="zoom-out" title="Zoom arrire">-</button>';
+                }
+                if (enabledFeatures.zoom || enabledFeatures.drag) {
+                    controlsHTML += '<button class="reset" title="Rinitialiser">Reset</button>';
+                }
+
+                controls.innerHTML = controlsHTML;
+                container.style.position = 'relative';
+                container.appendChild(controls);
+
+                const zoomInBtn = controls.querySelector('.zoom-in');
+                const zoomOutBtn = controls.querySelector('.zoom-out');
+                const resetBtn = controls.querySelector('.reset');
+
+                if (zoomInBtn) {
+                    zoomInBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        scale = Math.min(5, scale + 0.2);
+                        updateTransform();
+                        if (isFullscreen) updateZoomIndicator(scale);
+                    });
+                }
+
+                if (zoomOutBtn) {
+                    zoomOutBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        scale = Math.max(0.5, scale - 0.2);
+                        updateTransform();
+                        if (isFullscreen) updateZoomIndicator(scale);
+                    });
+                }
+
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        scale = 1;
+                        translateX = 0;
+                        translateY = 0;
+                        updateTransform();
+                        if (isFullscreen) updateZoomIndicator(scale);
+                    });
+                }
+            }
+        }
+    });
+
+    console.log('=== Setup termin ===');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "id": "0b25bb728ab045dea74cfed56afa4f0c",
+  "object": "text_completion",
+  "created": 1773928270,
+  "model": "mte-api-piag-mistral-medium-latest",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "text": "Bonjour ! 😊 Je vais très bien, merci de demander – et vous, comment allez-vous aujourd’hui ? Puis-je vous aider avec quelque chose ? (Un conseil, une question, une curiosité… ou même une blague ? 😄)\n\n*Petit bonus* : Saviez-vous que le français est la langue officielle dans **29 pays** ? Un petit fait pour égayer la journée ! 🌍✨",
+      "logprobs": null
+    }
+  ],
+  "usage": {
+    "completion_tokens": 91,
+    "prompt_tokens": 10,
+    "total_tokens": 101,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": null
+  }
+}

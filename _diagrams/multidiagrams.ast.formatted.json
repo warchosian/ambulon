@@ -1,0 +1,2006 @@
+{
+    "pandoc-api-version": [
+        1,
+        23,
+        1
+    ],
+    "meta": {},
+    "blocks": [
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "Bien"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "s\u00fbr\u202f!"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "Voici"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "un"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "document"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "Markdown"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "complet"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "contenant"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strong",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "3"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "diagrammes"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "PlantUML"
+                        }
+                    ]
+                },
+                {
+                    "t": "Str",
+                    "c": ","
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strong",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "3"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "diagrammes"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "Mermaid"
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "et"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strong",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "3"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "diagrammes"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "Graphviz"
+                        }
+                    ]
+                },
+                {
+                    "t": "Str",
+                    "c": ","
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "soigneusement"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "structur\u00e9"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "et"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "pr\u00eat"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "\u00e0"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "\u00eatre"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "utilis\u00e9."
+                }
+            ]
+        },
+        {
+            "t": "Header",
+            "c": [
+                1,
+                [
+                    "collection-de-diagrammes-exemples-complets",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "Collection"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "de"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "diagrammes"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "\u2013"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Exemples"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "complets"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "Ce"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "document"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "pr\u00e9sente"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strong",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "neuf"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "diagrammes"
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "r\u00e9partis"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "en"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "trois"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "familles"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": ":"
+                },
+                {
+                    "t": "SoftBreak"
+                },
+                {
+                    "t": "Str",
+                    "c": "-"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strong",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "3"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "diagrammes"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "PlantUML"
+                        }
+                    ]
+                },
+                {
+                    "t": "SoftBreak"
+                },
+                {
+                    "t": "Str",
+                    "c": "-"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strong",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "3"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "diagrammes"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "Mermaid"
+                        }
+                    ]
+                },
+                {
+                    "t": "SoftBreak"
+                },
+                {
+                    "t": "Str",
+                    "c": "-"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strong",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "3"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "diagrammes"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "Graphviz"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "t": "HorizontalRule"
+        },
+        {
+            "t": "Header",
+            "c": [
+                2,
+                [
+                    "diagrammes-plantuml",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "\ud83c\udf3f"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Diagrammes"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "PlantUML"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "Header",
+            "c": [
+                3,
+                [
+                    "diagramme-de-s\u00e9quence-authentification-utilisateur",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "1."
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Diagramme"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "de"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "s\u00e9quence"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "\u2013"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Authentification"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "utilisateur"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "CodeBlock",
+            "c": [
+                [
+                    "",
+                    [
+                        "plantuml"
+                    ],
+                    []
+                ],
+                "@startuml\nactor Utilisateur\nparticipant \"Interface Web\" as Web\nparticipant \"Service Auth\" as Auth\ndatabase \"Base de donn\u00e9es\" as DB\n\nUtilisateur -> Web : Saisit identifiants\nWeb -> Auth : Envoie requ\u00eate\nAuth -> DB : V\u00e9rifie les donn\u00e9es\nDB --> Auth : R\u00e9sultat\nAuth --> Web : Jeton d'authentification\nWeb --> Utilisateur : Acc\u00e8s autoris\u00e9\n@enduml"
+            ]
+        },
+        {
+            "t": "Header",
+            "c": [
+                3,
+                [
+                    "diagramme-de-classes-syst\u00e8me-de-gestion-de-biblioth\u00e8que",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "2."
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Diagramme"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "de"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "classes"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "\u2013"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Syst\u00e8me"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "de"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "gestion"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "de"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "biblioth\u00e8que"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "CodeBlock",
+            "c": [
+                [
+                    "",
+                    [
+                        "plantuml"
+                    ],
+                    []
+                ],
+                "@startuml\nclass Livre {\n  -String titre\n  -String ISBN\n  +emprunter()\n  +rendre()\n}\n\nclass Membre {\n  -String nom\n  -String idMembre\n  +emprunterLivre(Livre)\n}\n\nclass Biblioth\u00e8que {\n  -List<Livre> catalogue\n  +ajouterLivre(Livre)\n  +rechercherLivre(String)\n}\n\nMembre \"1\" -- \"0..*\" Livre : emprunte >\n@enduml"
+            ]
+        },
+        {
+            "t": "Header",
+            "c": [
+                3,
+                [
+                    "diagramme-d\u00e9tats-cycle-de-vie-dune-commande",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "3."
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Diagramme"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "d\u2019\u00e9tats"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "\u2013"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Cycle"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "de"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "vie"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "d\u2019une"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "commande"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "CodeBlock",
+            "c": [
+                [
+                    "",
+                    [
+                        "plantuml"
+                    ],
+                    []
+                ],
+                "@startuml\n[*] --> Cr\u00e9\u00e9e\nCr\u00e9\u00e9e --> Pay\u00e9e : paiement re\u00e7u\nPay\u00e9e --> Exp\u00e9di\u00e9e : pr\u00e9paration termin\u00e9e\nExp\u00e9di\u00e9e --> Livr\u00e9e : colis re\u00e7u\nLivr\u00e9e --> [*]\nExp\u00e9di\u00e9e --> Annul\u00e9e : retour client\nPay\u00e9e --> Annul\u00e9e : annulation avant exp\u00e9dition\nAnnul\u00e9e --> [*]\n@enduml"
+            ]
+        },
+        {
+            "t": "HorizontalRule"
+        },
+        {
+            "t": "Header",
+            "c": [
+                2,
+                [
+                    "diagrammes-mermaid",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "\ud83c\udf0a"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Diagrammes"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Mermaid"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "Header",
+            "c": [
+                3,
+                [
+                    "flowchart-processus-de-validation-de-pr\u00eat-immobilier",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "1."
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Flowchart"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "\u2013"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Processus"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "de"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "validation"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "de"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "pr\u00eat"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "immobilier"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "CodeBlock",
+            "c": [
+                [
+                    "",
+                    [
+                        "mermaid"
+                    ],
+                    []
+                ],
+                "flowchart TD\n    A[Demande de pr\u00eat] --> B{Dossier complet ?}\n    B -- Non --> C[Demander pi\u00e8ces manquantes]\n    C --> B\n    B -- Oui --> D[Analyse solvabilit\u00e9]\n    D --> E{Solvabilit\u00e9 OK ?}\n    E -- Non --> F[Refus]\n    E -- Oui --> G[Offre de pr\u00eat]\n    G --> H{Acceptation client ?}\n    H -- Non --> I[Archivage]\n    H -- Oui --> J[D\u00e9blocage des fonds]\n    J --> K[Financement r\u00e9alis\u00e9]"
+            ]
+        },
+        {
+            "t": "Header",
+            "c": [
+                3,
+                [
+                    "diagramme-de-classes-mod\u00e8le-de-compte-bancaire",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "2."
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Diagramme"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "de"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "classes"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "\u2013"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Mod\u00e8le"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "de"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "compte"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "bancaire"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "CodeBlock",
+            "c": [
+                [
+                    "",
+                    [
+                        "mermaid"
+                    ],
+                    []
+                ],
+                "classDiagram\n    class Compte {\n        -numero: string\n        -solde: number\n        +d\u00e9biter(montant: number)\n        +cr\u00e9diter(montant: number)\n        +getSolde(): number\n    }\n\n    class Compte\u00c9pargne {\n        -tauxInt\u00e9r\u00eat: number\n        +calculerInt\u00e9r\u00eats()\n    }\n\n    class CompteCourant {\n        -d\u00e9couvertAutoris\u00e9: number\n    }\n\n    Compte <|-- Compte\u00c9pargne\n    Compte <|-- CompteCourant"
+            ]
+        },
+        {
+            "t": "Header",
+            "c": [
+                3,
+                [
+                    "diagramme-de-s\u00e9quence-notification-dalerte-m\u00e9dicale",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "3."
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Diagramme"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "de"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "s\u00e9quence"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "\u2013"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Notification"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "d\u2019alerte"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "m\u00e9dicale"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "CodeBlock",
+            "c": [
+                [
+                    "",
+                    [
+                        "mermaid"
+                    ],
+                    []
+                ],
+                "sequenceDiagram\n    participant Patient\n    participant Capteur as Capteur biom\u00e9dical\n    participant Syst\u00e8me as Syst\u00e8me d'alerte\n    participant M\u00e9decin\n\n    Capteur->>Syst\u00e8me: Envoie donn\u00e9es vitales\n    Syst\u00e8me->>Syst\u00e8me: Analyse seuils critiques\n    alt Donn\u00e9es anormales\n        Syst\u00e8me->>M\u00e9decin: Envoie alerte urgente\n        M\u00e9decin->>Patient: Contacte le patient\n    else Donn\u00e9es normales\n        Syst\u00e8me->>Syst\u00e8me: Archive les donn\u00e9es\n    end"
+            ]
+        },
+        {
+            "t": "HorizontalRule"
+        },
+        {
+            "t": "Header",
+            "c": [
+                2,
+                [
+                    "diagrammes-graphviz-dot",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "\ud83d\udd17"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Diagrammes"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Graphviz"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "(DOT)"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "Header",
+            "c": [
+                3,
+                [
+                    "graphe-orient\u00e9-d\u00e9pendances-logicielles",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "1."
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Graphe"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "orient\u00e9"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "\u2013"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "D\u00e9pendances"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "logicielles"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "CodeBlock",
+            "c": [
+                [
+                    "",
+                    [
+                        "dot"
+                    ],
+                    []
+                ],
+                "digraph D\u00e9pendances {\n    rankdir=TB;\n    node [shape=box, style=filled, fillcolor=\"#e0f7fa\"];\n    \n    \"Frontend\" -> \"API Gateway\";\n    \"API Gateway\" -> \"Service Utilisateurs\";\n    \"API Gateway\" -> \"Service Paiements\";\n    \"Service Utilisateurs\" -> \"Base de donn\u00e9es\";\n    \"Service Paiements\" -> \"Passerelle bancaire\";\n    \"Service Paiements\" -> \"Base de donn\u00e9es\";\n}"
+            ]
+        },
+        {
+            "t": "Header",
+            "c": [
+                3,
+                [
+                    "arbre-organisationnel-structure-dune-agence-immobili\u00e8re",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "2."
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Arbre"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "organisationnel"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "\u2013"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Structure"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "d\u2019une"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "agence"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "immobili\u00e8re"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "CodeBlock",
+            "c": [
+                [
+                    "",
+                    [
+                        "dot"
+                    ],
+                    []
+                ],
+                "digraph Agence {\n    node [shape=box, style=filled, fillcolor=\"#f3e5f5\"];\n    \n    \"Directeur\" -> \"Responsable Ventes\";\n    \"Directeur\" -> \"Responsable Location\";\n    \"Directeur\" -> \"Administratif\";\n    \n    \"Responsable Ventes\" -> \"Agent 1\";\n    \"Responsable Ventes\" -> \"Agent 2\";\n    \"Responsable Ventes\" -> \"Agent 3\";\n    \n    \"Responsable Location\" -> \"Gestionnaire A\";\n    \"Responsable Location\" -> \"Gestionnaire B\";\n}"
+            ]
+        },
+        {
+            "t": "Header",
+            "c": [
+                3,
+                [
+                    "graphe-non-orient\u00e9-r\u00e9seau-de-contacts-professionnels",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "3."
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "Graphe"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "non"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "orient\u00e9"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "\u2013"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "R\u00e9seau"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "de"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "contacts"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Str",
+                        "c": "professionnels"
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "CodeBlock",
+            "c": [
+                [
+                    "",
+                    [
+                        "dot"
+                    ],
+                    []
+                ],
+                "graph R\u00e9seau {\n    layout=neato;\n    node [shape=circle, style=filled, fillcolor=\"#fff3e0\", fontsize=10];\n    \n    \"Jean\" -- \"Marie\";\n    \"Jean\" -- \"Pierre\";\n    \"Marie\" -- \"Sandrine\";\n    \"Pierre\" -- \"Claire\";\n    \"Claire\" -- \"Sandrine\";\n    \"Sandrine\" -- \"Luc\";\n    \"Luc\" -- \"Jean\";\n}"
+            ]
+        },
+        {
+            "t": "HorizontalRule"
+        },
+        {
+            "t": "BlockQuote",
+            "c": [
+                {
+                    "t": "Para",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "\u2705"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Strong",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "Conseils"
+                                },
+                                {
+                                    "t": "Space"
+                                },
+                                {
+                                    "t": "Str",
+                                    "c": "d\u2019utilisation"
+                                }
+                            ]
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": ":"
+                        },
+                        {
+                            "t": "SoftBreak"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "-"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Strong",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "PlantUML"
+                                }
+                            ]
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": ":"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "Utilise"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "un"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "serveur"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "PlantUML"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "(en"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "ligne"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "ou"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "local)"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "ou"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "un"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "plugin"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "IDE."
+                        },
+                        {
+                            "t": "SoftBreak"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "-"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Strong",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "Mermaid"
+                                }
+                            ]
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": ":"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "Compatible"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "avec"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "Obsidian,"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "Typora,"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "GitLab,"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "et"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "via"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Code",
+                            "c": [
+                                [
+                                    "",
+                                    [],
+                                    []
+                                ],
+                                "<script>"
+                            ]
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "dans"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "HTML."
+                        },
+                        {
+                            "t": "SoftBreak"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "-"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Strong",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "Graphviz"
+                                }
+                            ]
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": ":"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "Compile"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "avec"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "la"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "commande"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Code",
+                            "c": [
+                                [
+                                    "",
+                                    [],
+                                    []
+                                ],
+                                "dot -Tpng fichier.dot -o sortie.png"
+                            ]
+                        },
+                        {
+                            "t": "Str",
+                            "c": "."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "Ce"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "document"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "est"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strong",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "autonome"
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "et"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "couvre"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "une"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "vari\u00e9t\u00e9"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "de"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "cas"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "d\u2019usage"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "(technique,"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "organisationnel,"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "m\u00e9dical,"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "immobilier,"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "etc.)."
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "Tu"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "peux"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "l\u2019adapter"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "selon"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "tes"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "besoins"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "sp\u00e9cifiques"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "(par"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "exemple,"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "int\u00e9grer"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "des"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "noms"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "r\u00e9els"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "comme"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Emph",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "Sandrine"
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "ou"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "des"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "\u00e9tapes"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "li\u00e9es"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "\u00e0"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "ton"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "projet"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "immobilier"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "\u00e0"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "Juan-les-Pins"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "si"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "n\u00e9cessaire)."
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "Souhaites-tu"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "une"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "version"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "PDF"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "ou"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "des"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "images"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "export\u00e9es"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "de"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "ces"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "diagrammes"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "?"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "2783ef425cbf4adb9a7c14412a7eb571",
+  "created": 1773926897,
+  "model": "mte-api-piag-mistral-medium-latest",
+  "object": "chat.completion",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "La capitale de la France est **Paris**. 🇫🇷✨\n\nTu cherches des informations sur la ville (monuments, histoire, etc.) ? 😊",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 41,
+    "prompt_tokens": 12,
+    "total_tokens": 53
+  }
+}

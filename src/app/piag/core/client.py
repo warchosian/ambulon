@@ -30,7 +30,8 @@ class PIAGClient:
         self,
         api_token: str,
         base_url: Optional[str] = None,
-        config: Optional[Dict[str, Any]] = None
+        config: Optional[Dict[str, Any]] = None,
+        force: bool = False
     ):
         """
         Initialise le client PIAG.
@@ -39,12 +40,14 @@ class PIAGClient:
             api_token: Token d'authentification Bearer.
             base_url: URL de base de l'API. Si None, utilise la config.
             config: Configuration personnalisée. Si None, utilise la config par défaut.
+            force: Si True, désactive tous les warnings (doublons, etc.).
         """
         self.api_token = api_token
         self.config = get_config(config)
         self.base_url = get_base_url(base_url, self.config)
         self.timeout = get_timeout(self.config)
-        self.max_retries = self.config.get('api', {}).get('max_retries', 3)
+        self.max_retries = self.config.get('piag', {}).get('rag', {}).get('api', {}).get('max_retries', 3)
+        self.force = force
 
     def _log_request(self, method: str, url: str, **kwargs):
         """Log une requête HTTP si le logging est activé."""
@@ -108,7 +111,12 @@ class PIAGClient:
                 )
                 response.raise_for_status()
 
-                result = response.json()
+                # Gérer les réponses sans contenu (204 No Content)
+                if response.status_code == 204:
+                    result = {}
+                else:
+                    result = response.json()
+
                 self._log_response(response)
 
                 return result
@@ -243,9 +251,25 @@ class PIAGClient:
 
         # Chercher par nom dans la liste des collections
         collections = self.list_collections(project_id, limit=1000).get('items', [])
-        for collection in collections:
-            if collection.get('name') == collection_name_or_id:
-                return collection['id']
+        matched_collections = [c for c in collections if c.get('name') == collection_name_or_id]
+
+        if len(matched_collections) > 1:
+            # Plusieurs collections avec le même nom détectées
+            if not self.force:
+                print(f"\n⚠️  ATTENTION: {len(matched_collections)} collections trouvées avec le nom '{collection_name_or_id}':", file=sys.stderr)
+                for i, coll in enumerate(matched_collections, 1):
+                    created = coll.get('created_at', 'N/A')
+                    coll_id = coll['id']
+                    print(f"   {i}. ID: {coll_id} (créée le: {created})", file=sys.stderr)
+                print(f"\n   → Utilisation automatique de la première: {matched_collections[0]['id']}", file=sys.stderr)
+                print(f"\n   💡 Pour être explicite:", file=sys.stderr)
+                print(f"      • --collection-id {matched_collections[0]['id']}  (utiliser la 1ère)", file=sys.stderr)
+                if len(matched_collections) > 1:
+                    print(f"      • --collection-id {matched_collections[1]['id']}  (utiliser la 2ème)", file=sys.stderr)
+                print(f"      • --force                          (ignorer ce warning)\n", file=sys.stderr)
+            return matched_collections[0]['id']
+        elif len(matched_collections) == 1:
+            return matched_collections[0]['id']
 
         # Si pas trouvé et qu'on n'avait pas testé comme ID, essayer maintenant
         if not looks_like_id:
@@ -288,9 +312,25 @@ class PIAGClient:
 
         # Deuxième tentative : l'argument est un nom de fichier
         documents = self.list_documents(collection_id, limit=1000).get('items', [])
-        for document in documents:
-            if document.get('name') == document_name_or_id:
-                return document['id']
+        matched_documents = [d for d in documents if d.get('name') == document_name_or_id]
+
+        if len(matched_documents) > 1:
+            # Plusieurs documents avec le même nom détectés
+            if not self.force:
+                print(f"\n⚠️  ATTENTION: {len(matched_documents)} documents trouvés avec le nom '{document_name_or_id}':", file=sys.stderr)
+                for i, doc in enumerate(matched_documents, 1):
+                    created = doc.get('created_at', 'N/A')
+                    doc_id = doc['id']
+                    print(f"   {i}. ID: {doc_id} (créé le: {created})", file=sys.stderr)
+                print(f"\n   → Utilisation automatique du premier: {matched_documents[0]['id']}", file=sys.stderr)
+                print(f"\n   💡 Pour être explicite:", file=sys.stderr)
+                print(f"      • --doc-id {matched_documents[0]['id']}  (utiliser le 1er)", file=sys.stderr)
+                if len(matched_documents) > 1:
+                    print(f"      • --doc-id {matched_documents[1]['id']}  (utiliser le 2ème)", file=sys.stderr)
+                print(f"      • --force                   (ignorer ce warning)\n", file=sys.stderr)
+            return matched_documents[0]['id']
+        elif len(matched_documents) == 1:
+            return matched_documents[0]['id']
 
         raise ValueError(f"Document '{document_name_or_id}' non trouvé dans la collection '{collection_id}'.")
 
@@ -352,7 +392,8 @@ class PIAGClient:
     def get_document_chunks(self, collection_id: str, document_id: str) -> Dict[str, Any]:
         """Récupère les chunks d'un document."""
         endpoint = get_endpoint('document_chunks', self.config)
-        endpoint = endpoint.replace('{collection_id}', collection_id).replace('{document_id}', document_id)
+        # L'endpoint document_chunks ne contient que {document_id}, pas {collection_id}
+        endpoint = endpoint.replace('{document_id}', document_id)
 
         return self._request('GET', endpoint)
 

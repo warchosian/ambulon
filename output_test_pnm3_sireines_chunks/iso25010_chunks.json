@@ -1,0 +1,67 @@
+{
+  "chunks": [
+    {
+      "score": 0.03252247488101534,
+      "rerank_score": 5.716866493225098,
+      "document_id": "a3e74cb8-a335-4240-9ef2-f2f5d0654339",
+      "document_name": "sireines.cctp.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 30,
+      "text": "CAHIER DES CLAUSES TECHNIQUES PARTICULIÈRES (CCTP)\n7. QUALITÉ ET CONFORMITÉ\n7.1 Référentiels de qualité applicables\nISO 9001, Domaine = Management qualité. ISO 9001, Application = Processus de maintenance et support. ISO 25010 (SQuaRE), Domaine = Qualité logicielle. ISO 25010 (SQuaRE), Application = Maintenabilité, fiabilité, sécurité. ISO 27001 (si certifié), Domaine = Sécurité de l'information. ISO 27001 (si certifié), Application = Gestion des risques sécurité"
+    },
+    {
+      "score": 0.02886002886002886,
+      "rerank_score": 2.5416338443756104,
+      "document_id": "a3e74cb8-a335-4240-9ef2-f2f5d0654339",
+      "document_name": "sireines.cctp.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 58,
+      "text": "CAHIER DES CLAUSES TECHNIQUES PARTICULIÈRES (CCTP)\n14. ANNEXES CONTRACTUELLES\nAnnexe B — Références normatives\nCode de la commande publique, Description = Articles R. 2161-1 et suivants (CCTP). RGS v2.0, Description = Référentiel Général de Sécurité (ANSSI). RGPD, Description = Règlement (UE) 2016/679. RGI 2.0, Description = Référentiel Général d'Interopérabilité. RGAA 4.1, Description = Référentiel Général d'Amélioration de l'Accessibilité. ISO 25010, Description = Systèmes et logiciels — Modèle de qualité. OWASP ASVS 4.0, Description = Application Security Verification Standard"
+    },
+    {
+      "score": 0.015151515151515152,
+      "rerank_score": -4.36435079574585,
+      "document_id": "522ae90f-1a68-44ec-9930-949e78238b00",
+      "document_name": "sireines.cst_iso29229.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 15,
+      "text": "Prompt pour CST selon ISO/IEC/IEEE 29119 — Documentation des tests\nStructure obligatoire selon ISO/IEC/IEEE 29119\n4. Spécification des cas de test (Test Case Specification - ISO 29119-3)\n4.2 Cas de test non-fonctionnels\n- **Tests de performance** : Load, stress, endurance, spike\n- **Tests de sécurité** : OWASP Top 10, injection, authentification\n- **Tests d'utilisabilité** : Parcours utilisateurs, mesures de temps\n- **Tests de compatibilité** : Navigateurs, OS, résolutions\n- **Tests de fiabilité** : Récupération après panne, disponibilité"
+    },
+    {
+      "score": 0.014705882352941176,
+      "rerank_score": -7.6356282234191895,
+      "document_id": "0c37a61c-505e-4507-a94c-0c58f9fd4295",
+      "document_name": "sireines.components-toced.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 30,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n6. Schéma de flux de données sécurisé (DFD) {#dfd}\nBrowser --> Nginx : HTTPS/TLS 1.3\\n[Chiffrement transit]\nNginx --> Filter : Proxy Pass\\n[Headers sécurisés]\nFilter --> Actions : Requête authentifiée\\n[Session valide]\nActions --> Services : Appel métier\\n[DTO validés]\nServices --> DAO : Transactions\\n[Paramètres bindés]\nDAO --> DB : JDBC/SSL\\n[Certificat client]\nServices --> ES : HTTP/9200\\n[Localhost uniquement]\nFilter --> SSO : SAML/HTTPS\\n[Token signé]\n\nnote right of Actions\n  Contrôles de sécurité:\n  - Validation entrée (whitelist)\n  - Échappement sortie (XSS)\n  - CSRF token\n  - Rate limiting\nend note\n\nnote right of Services\n  Audit:\n  - Log authentification\n  - Log modification données sensibles\n  - Log erreurs sécurité\nend note\n\nnote bottom of DB\n  Protection données:\n  - Chiffrement dumps AES-256\n  - Masking données sensibles (logs)\n  - Rotation credentials\nend note\n\n@enduml\n```"
+    },
+    {
+      "score": 0.014492753623188406,
+      "rerank_score": -7.6356282234191895,
+      "document_id": "87f68539-f7de-4aed-b3f0-33b21e12049a",
+      "document_name": "sireines.components.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 31,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n6. Schéma de flux de données sécurisé (DFD) {#dfd}\nBrowser --> Nginx : HTTPS/TLS 1.3\\n[Chiffrement transit]\nNginx --> Filter : Proxy Pass\\n[Headers sécurisés]\nFilter --> Actions : Requête authentifiée\\n[Session valide]\nActions --> Services : Appel métier\\n[DTO validés]\nServices --> DAO : Transactions\\n[Paramètres bindés]\nDAO --> DB : JDBC/SSL\\n[Certificat client]\nServices --> ES : HTTP/9200\\n[Localhost uniquement]\nFilter --> SSO : SAML/HTTPS\\n[Token signé]\n\nnote right of Actions\n  Contrôles de sécurité:\n  - Validation entrée (whitelist)\n  - Échappement sortie (XSS)\n  - CSRF token\n  - Rate limiting\nend note\n\nnote right of Services\n  Audit:\n  - Log authentification\n  - Log modification données sensibles\n  - Log erreurs sécurité\nend note\n\nnote bottom of DB\n  Protection données:\n  - Chiffrement dumps AES-256\n  - Masking données sensibles (logs)\n  - Rotation credentials\nend note\n\n@enduml\n```"
+    },
+    {
+      "score": 0.014925373134328358,
+      "rerank_score": -8.386495590209961,
+      "document_id": "52c7a19a-ea92-4e38-a52f-35d83c337f74",
+      "document_name": "sireines.code.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 1032,
+      "text": "Projet : sireines\n📄 Contenu des fichiers\n\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'AUDIT SECURITE DES PROJETS ROUTIERS');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'CONTRÔLE DE SECURITE DES PROJETS ROUTIERS/METHODOLOGIE');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'SECURITE DES DIGUES');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'SECURITE DES ITINERAIRES');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'SECURITE DES NAVIRES');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'SECURITE DES SYSTEMES DE TRANSPORTS');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'SECURITE INCENDIE');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'SECURITE ROUTIERE');"
+    },
+    {
+      "score": 0.01639344262295082,
+      "rerank_score": -8.717235565185547,
+      "document_id": "52c7a19a-ea92-4e38-a52f-35d83c337f74",
+      "document_name": "sireines.code.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 869,
+      "text": "Projet : sireines\n📄 Contenu des fichiers\n\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='SECURITE DES INFRASTRUCTURES' and th.niveau=2) WHERE the_id=(select the_id from thesaurus where libelle='CONTRÔLE DE SECURITE DES PROJETS ROUTIERS/METHODOLOGIE');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='SECURITE DES INFRASTRUCTURES' and th.niveau=2) WHERE the_id=(select the_id from thesaurus where libelle='SECURITE DES DIGUES');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='SECURITE ET SURETE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='SECURITE DES ITINERAIRES');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='SECURITE ET SURETE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='SECURITE DES NAVIRES');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='SECURITE ET SURETE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='SECURITE DES SYSTEMES DE TRANSPORTS');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='SECURITE ET SURETE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='SECURITE INCENDIE');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='SECURITE ET SURETE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='SECURITE ROUTIERE');"
+    }
+  ]
+}

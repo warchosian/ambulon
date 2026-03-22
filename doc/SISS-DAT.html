@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISS-DAT</title>
+    <style>
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 2em;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #34495e;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+            line-height: 1.4;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+        pre.tree {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        li {
+            margin: 0.5em 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding: 0.5em 0 0.5em 1em;
+            color: #555;
+            background: #f8f9fa;
+            border-radius: 0 3px 3px 0;
+        }
+        blockquote p {
+            margin: 0.5em 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+    </style>
+</head>
+<body>
+<p>Voici le <strong>DAT (Dossier d'Architecture Technique) détaillé de l'application SISS</strong>, illustré avec des <strong>diagrammes PlantUML</strong> et structuré selon les exigences techniques et fonctionnelles identifiées.</p>
+
+<hr>
+
+
+<h1>Dossier d'Architecture Technique (DAT) - SISS</h1>
+
+<hr>
+
+<h2>Table des Matières</h2>
+<ul>
+<li><a href="#1-introduction">1. Introduction</a></li>
+<li><a href="#2-contexte-et-périmètre">2. Contexte et Périmètre</a></li>
+<li><a href="#3-architecture-fonctionnelle">3. Architecture Fonctionnelle</a></li>
+</ul>
+  - <a href="#31-cas-dusage">3.1 Cas d'Usage</a>
+  - <a href="#32-règles-métier">3.2 Règles Métier</a>
+<ul>
+<li><a href="#4-architecture-technique">4. Architecture Technique</a></li>
+</ul>
+  - <a href="#41-architecture-logique">4.1 Architecture Logique</a>
+  - <a href="#42-architecture-physique">4.2 Architecture Physique</a>
+  - <a href="#43-composants-techniques">4.3 Composants Techniques</a>
+  - <a href="#44-flux-de-données">4.4 Flux de Données</a>
+<ul>
+<li><a href="#5-diagrammes-techniques">5. Diagrammes Techniques</a></li>
+</ul>
+  - <a href="#51-diagramme-de-déploiement">5.1 Diagramme de Déploiement</a>
+  - <a href="#52-diagramme-de-composants">5.2 Diagramme de Composants</a>
+  - <a href="#53-diagramme-de-séquence">5.3 Diagramme de Séquence</a>
+  - <a href="#54-diagramme-détats">5.4 Diagramme d'États</a>
+  - <a href="#55-diagramme-de-classes">5.5 Diagramme de Classes</a>
+<ul>
+<li><a href="#6-configuration-et-déploiement">6. Configuration et Déploiement</a></li>
+<li><a href="#7-sécurité">7. Sécurité</a></li>
+<li><a href="#8-annexes">8. Annexes</a></li>
+</ul>
+
+<hr>
+
+<h2>1. Introduction</h2>
+Le <strong>SISS</strong> (Système d'Information pour le Suivi des Stockages) est une application conçue pour gérer l'archivage physique et numérique de documents sensibles dans un contexte administratif ministériel. Elle assure la traçabilité des mouvements, la gestion sécurisée des accès et le stockage conforme des pièces jointes.
+
+<hr>
+
+<h2>2. Contexte et Périmètre</h2>
+
+<h3>2.1 Description Générale</h3>
+<ul>
+<li><strong>ID</strong> : 583</li>
+<li><strong>Statut</strong> : En construction</li>
+<li><strong>Numéro d'affaire</strong> : AFF0583</li>
+<li><strong>Acteur MOE</strong> : SG/DNUM/PNM/DPNM3</li>
+<li><strong>Technologie principale</strong> : Java</li>
+</ul>
+
+<h3>2.2 Domaine Applicatif</h3>
+L'application <strong>SISS</strong> gère :
+<ul>
+<li>L'archivage physique de documents sensibles.</li>
+<li>La traçabilité des mouvements.</li>
+<li>La gestion des accès sécurisés.</li>
+<li>Le stockage des pièces jointes.</li>
+</ul>
+
+<h3>2.3 Périmètre Fonctionnel</h3>
+<ul>
+<li><strong>Inclus</strong> :</li>
+</ul>
+  - Versements de documents.
+  - Demandes d'accès, consultation et restitution.
+  - Mouvements de documents (transferts, archivage, désarchivage).
+  - Gestion des référentiels (utilisateurs, départements) via fichiers CSV.
+  - Authentification (SAML2 ou mode TEST local).
+  - Stockage sécurisé des pièces jointes (AWS S3-compatible).
+  - Envoi d'e-mails via API HEDWIGE ou SMTP.
+  - Batchs automatisés (fin de délégation, nettoyage).
+
+<ul>
+<li><strong>Exclus</strong> :</li>
+</ul>
+  - Gestion de données patients.
+  - Logique de facturation ou tarification.
+  - Workflow avancé (pas de moteur BPM).
+
+<hr>
+
+<h2>3. Architecture Fonctionnelle</h2>
+
+<h3>3.1 Cas d'Usage</h3>
+<pre><code class="language-plantuml">@startuml
+title Cas d'usage
+left to right direction
+actor "Utilisateur" as User
+rectangle "SISS" {
+  User -- (Gérer versements)
+  User -- (Consulter dossiers)
+  User -- (Demander restitution)
+  User -- (Recevoir notifications)
+  (Gérer versements) .&gt; (Stockage PJ) : inclut
+  (Recevoir notifications) .&gt; (Envoyer email) : inclut
+}
+@enduml
+</code></pre>Fig 3.1 Cas d'usage
+
+<h3>3.2 Règles Métier</h3>
+<ul>
+<li><strong>Gestion des pièces jointes</strong> :</li>
+</ul>
+  - Formats autorisés : Configurables via <code>siss.format_piece_jointe</code> (ex. : <code>pdf, docx</code>).
+  - Stockage : AWS S3-compatible (<code>siss.pj-stockage.mode=AWS</code>).
+  - Chemin temporaire local : <code>/app/data/siss_upload</code>.
+
+<ul>
+<li><strong>Chiffrement des données</strong> :</li>
+</ul>
+  - Clé symétrique définie dans <code>siss.encryption.key</code>.
+  - Non modifiable après initialisation.
+  - Générée via <code>siss-generate-key.jar</code>.
+
+<hr>
+
+<h2>4. Architecture Technique</h2>
+
+<h3>4.1 Architecture Logique</h3>
+<table>
+<thead>
+<tr>
+<th>Composant</th>
+<th>Technologie</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**Backend**</td>
+<td>Java Spring Boot</td>
+<td>Application embarquée dans **Tomcat 9.0.82** (JDK 11).</td>
+</tr>
+<tr>
+<td>**Frontend**</td>
+<td>Inclus dans le `.war`</td>
+<td>Pas de séparation explicite avec le backend.</td>
+</tr>
+<tr>
+<td>**Base de données**</td>
+<td>PostgreSQL 13.19</td>
+<td>Stockage des données métiers et des référentiels.</td>
+</tr>
+<tr>
+<td>**Stockage des PJ**</td>
+<td>AWS S3-compatible</td>
+<td>Stockage sécurisé des pièces jointes.</td>
+</tr>
+<tr>
+<td>**Authentification**</td>
+<td>SAML2 / Stub LDAP</td>
+<td>Authentification centralisée ou locale (mode TEST).</td>
+</tr>
+<tr>
+<td>**Envoi d'e-mails**</td>
+<td>API HEDWIGE / SMTP</td>
+<td>Intégration avec le service ministériel d'e-mails sécurisés.</td>
+</tr>
+</tbody>
+</table>### 4.2 Architecture Physique
+<ul>
+<li><strong>Environnements</strong> :</li>
+</ul>
+  - <strong>Développement</strong> : Sources locales (fichiers <code>.tar.bz2</code> copiés dans l'image Docker).
+  - <strong>Production</strong> : Sources téléchargées depuis <strong>Nexus Silicom</strong> (<code>nexus.sro.silicom.fr</code>).
+
+<h3>4.3 Composants Techniques</h3>
+<pre><code class="language-plantuml">@startuml
+title Composants Techniques
+package "SISS Application" {
+  [Tomcat 9 + SISS.war] as app
+  [PostgreSQL 13] as db
+  [AWS S3] as storage
+  [HEDWIGE API] as mail
+}
+
+app --&gt; db : JDBC
+app --&gt; storage : S3 API
+app --&gt; mail : HTTPS + OAuth2
+@enduml
+</code></pre>Fig 4.3 Composants Techniques
+
+<h3>4.4 Flux de Données</h3>
+<pre><code class="language-plantuml">@startuml
+title Flux de Données
+actor Utilisateur
+Utilisateur -&gt; ((Tomcat SISS2.war)) : Requetes
+((Tomcat SISS.war)) -&gt; (PostgreSQL 13) : JDBC
+((Tomcat SISS.war)) -&gt; (AWS S3) : S3 API
+((Tomcat SISS.war)) -&gt; (HEDWIGE API) : HTTPS + OAuth2
+@enduml
+</code></pre>Fig 4.4 Flux de Données
+<hr>
+
+<h2>5. Diagrammes Techniques</h2>
+
+<h3>5.1 Diagramme de Déploiement</h3>
+<pre><code class="language-plantuml">@startuml
+title Diagramme de Déploiement
+node "Host Dev" {
+  node "Docker Engine" {
+    artifact "siss-app" as app
+    artifact "siss-db" as db
+  }
+}
+app --&gt; db : localhost:5432
+app ..&gt; "Local FS" : ./data, ./logs
+@enduml
+</code></pre>Fig 5.1 : Diagramme de Déploiement
+<h3>5.2 Diagramme de Composants</h3>
+<pre><code class="language-plantuml">@startuml
+title Diagramme de Composants
+package "SISS Application" {
+  [Tomcat 9 + SISS.war] as app
+  [PostgreSQL 13] as db
+  [AWS S3] as storage
+  [HEDWIGE API] as mail
+}
+
+app --&gt; db : JDBC
+app --&gt; storage : S3 API
+app --&gt; mail : HTTPS + OAuth2
+@enduml
+</code></pre>Fig 5.2 Diagramme de Composants
+<h3>5.3 Diagramme de Séquence : Authentification en Mode TEST</h3>
+<pre><code class="language-plantuml">@startuml
+title Authentification en Mode TEST
+actor Utilisateur
+participant "SISS App" as App
+database "PostgreSQL" as DB
+
+Utilisateur -&gt; App : POST /login (user, pwd)
+App -&gt; DB : SELECT * FROM ref_utilisateur WHERE uti_login = ?
+DB --&gt; App : Utilisateur
+App -&gt; App : Valider contre authentication.stubLdap.[user].*
+App --&gt; Utilisateur : Session créée
+@enduml
+</code></pre>Fig 5.3 : Authentification en Mode TEST
+
+<h3>5.4 Diagramme d'États : Cycle de Vie d'un Utilisateur</h3>
+<pre><code class="language-plantuml">@startuml
+title Cycle de Vie d'un Utilisateur
+[*] --&gt; Inactif
+Inactif --&gt; Actif : Initialisation CSV
+Actif --&gt; Délégué : Délégation active
+Délégué --&gt; Actif : Fin délégation (batch)
+Actif --&gt; [*] : Désactivation manuelle
+@enduml
+</code></pre>Fig 5.4 : Cycle de Vie d'un Utilisateur
+
+<h3>5.5 Diagramme de Classes : Modèle Relationnel Simplifié</h3>
+<pre><code class="language-plantuml">@startuml
+title Modèle Relationnel Simplifié
+class ref_utilisateur {
+  + String uti_login
+  + String cn
+  + String mail
+  + String departement
+}
+
+class dossier {
+  + Long id
+  + String statut
+  + Date date_creation
+}
+
+ref_utilisateur "1" -- "0..*" dossier : crée
+@enduml
+</code></pre>Fig 5.5 : Modèle Relationnel Simplifié
+
+
+<h2>6. Configuration et Déploiement</h2>
+
+<h3>6.1 Paramétrage</h3>
+<ul>
+<li><strong>Fichiers de configuration</strong> :</li>
+</ul>
+  - <code>application.properties</code> : Paramètres principaux.
+  - <code>access.properties</code> : Accès sécurisés.
+  - <code>ref_utilisateur.csv</code> : Initialisation des utilisateurs.
+
+<ul>
+<li><strong>Clé de chiffrement</strong> :</li>
+</ul>
+  - Générée via la commande :
+    <pre><code class="language-bash">    docker exec -it siss:latest java -jar /app/siss/lib/version/siss-generate-key.jar [cle-de-chiffrement]
+    </code></pre>  - Résultat à renseigner dans <code>siss.encryption.key</code>.
+
+<h3>6.2 Déploiement</h3>
+<ul>
+<li><strong>Build locale</strong> :</li>
+</ul>
+  <pre><code class="language-bash">  docker build -t siss:latest --build-arg SISS_VERSION=X.Y.Z -f conf/dev/Dockerfile .
+  </code></pre>- <strong>Build CI/CD</strong> :
+  - Image disponible sous <code>eu.gcr.io/dpnm3-lab/siss</code>.
+
+<hr>
+
+<h2>7. Sécurité</h2>
+<ul>
+<li><strong>Chiffrement des données</strong> :</li>
+</ul>
+  - Clé symétrique pour le chiffrement/déchiffrement des données.
+  - Non modifiable après initialisation.
+
+<ul>
+<li><strong>Authentification</strong> :</li>
+</ul>
+  - SAML2 pour la production.
+  - Stub LDAP pour les tests.
+
+<hr>
+
+<h2>8. Annexes</h2>
+<ul>
+<li><strong>Références</strong> :</li>
+</ul>
+  - Ce document suit les principes de <strong>arc42</strong> pour une documentation claire et orientée décision.
+  - Diagrammes centrés sur les besoins.
+
+<hr>
+
+<p>↩ <a href="#dossier-darchitecture-technique-dat---siss">Retour au sommaire</a></p>
+
+
+<hr>
+<h3>Points clés du DAT :</h3>
+1. <strong>Diagrammes PlantUML</strong> :
+   - Tous les diagrammes sont intégrés directement dans le document.
+   - Ils couvrent les aspects fonctionnels et techniques (cas d'usage, composants, séquences, états, classes).
+
+<p>2. <strong>Structure claire</strong> :
+   - Sections bien définies pour chaque aspect de l'architecture.
+   - Navigation facile grâce aux liens de retour vers la TOC.</p>
+
+<p>3. <strong>Conformité</strong> :
+   - Respect des règles de <strong>PlantUML</strong> et des exigences techniques identifiées dans les documents sources.</p>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "items": [
+    {
+      "project_id": "PnuQzUEmwRDkxZPX",
+      "name": "PNM3_AMBULON",
+      "description": "WARCHOSIAN production",
+      "id": "CcjDvYhcIL1r9oG5",
+      "created_at": "2026-01-18T09:30:52.691829"
+    },
+    {
+      "project_id": "PnuQzUEmwRDkxZPX",
+      "name": "PNM3_FORMIDD",
+      "description": "Collection pour les documents FORMIDD du projet PNM3-GTI",
+      "id": "CHzOAB3896m0u0Er",
+      "created_at": "2026-01-08T19:44:56.203763"
+    },
+    {
+      "project_id": "PnuQzUEmwRDkxZPX",
+      "name": "PNM3_LAMBDA",
+      "description": "Projet lambda",
+      "id": "CzvttXSD5Cx8SWPh",
+      "created_at": "2026-01-08T19:49:55.785992"
+    }
+  ],
+  "total": 3,
+  "limit": 10,
+  "offset": 0,
+  "order_by": "name",
+  "order": "asc"
+}

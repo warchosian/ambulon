@@ -1,0 +1,49 @@
+{
+  "chunks": [
+    {
+      "score": 0.029551337359792925,
+      "rerank_score": 4.131757736206055,
+      "document_id": "a3e74cb8-a335-4240-9ef2-f2f5d0654339",
+      "document_name": "sireines.cctp.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 16,
+      "text": "CAHIER DES CLAUSES TECHNIQUES PARTICULIÈRES (CCTP)\n4. EXIGENCES DE SÉCURITÉ\n4.2 Authentification et contrôle d'accès\nAuthentification unique, Spécification = Intégration Cerbère (SSO). Authentification unique, Modalité de vérification = Test de connexion via portail agent. Gestion des habilitations, Spécification = Rôles : ADMIN, GESTIONNAIRE, RAPPORTEUR, AGENT. Gestion des habilitations, Modalité de vérification = Matrice des droits documentée. Durée de session, Spécification = Timeout de 30 minutes d'inactivité. Durée de session, Modalité de vérification = Test de déconnexion automatique. Mot de passe applicatif (admin technique), Spécification = Complexité : 12 caractères minimum, majuscules, minuscules, chiffres, caractères spéciaux. Mot de passe applicatif (admin technique), Modalité de vérification = Audit de configuration"
+    },
+    {
+      "score": 0.015151515151515152,
+      "rerank_score": 1.9507430791854858,
+      "document_id": "1302fa52-f832-4684-a011-12befef7a913",
+      "document_name": "sireines.components-itoced-embedded.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 29,
+      "text": "\n\nnote right of Actions\n  Contrôles de sécurité:\n  - Validation entrée (whitelist)\n  - Échappement sortie (XSS)\n  - CSRF token\n  - Rate limiting\nend note\n\nnote right of Services\n  Audit:\n  - Log authentification\n  - Log modification données sensibles\n  - Log erreurs sécurité\nend note\n\nnote bottom of DB\n  Protection données:\n  - Chiffrement dumps AES-256\n  - Masking données sensibles (logs)\n  - Rotation credentials\nend note\n\n@enduml\n```\n7. Checklist OWASP Top 10 2021 - Mapping complet\n[↑](#toc-owasp)\n{#owasp}\n```\nMotCleNiveauDetailAction\n```\n,\n```\nSeanceAffectationAction\n```\n```\n@Secured\n```\n```\nsireines-database/script/\n```\n```\nDossierRechercheMotsClefsAction\n```\n,\n```\ndossiersDao.ksp\n```\n```\nImportsServicesImpl\n```\n```\nweb.xml\n```\n,\n```\ncontext.xml\n```\n```\npom.xml\n```\n```\nCerbereUtil\n```\n,\n```\nSireinesSessionFilter\n```\n```\nExtractionsServicesImpl\n```\n```\nExtractionsServicesImpl\n```\nA01:2021-Broken Access Control, Composant concerné = . A01:2021-Broken Access Control, Statut = . A01:2021-Broken Access Control, Preuve/Justification = . A01:2021-Broken Access Control, Action requise = \nA10:2021-SSRF, Templates BIRT sans signature, risque modification = . A10:2021-SSRF, Signature templates = \n8. Plan d'action sécurité synthétique\n[↑](#toc-plan-action)\n{#plan-action}"
+    },
+    {
+      "score": 0.015873015873015872,
+      "rerank_score": 1.933632731437683,
+      "document_id": "f13a2a1b-e028-4f1e-85c0-31904a05beb3",
+      "document_name": "sireines.components-itoced.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 20,
+      "text": "\n\nnote right of Actions\n  Contrôles de sécurité:\n  - Validation entrée (whitelist)\n  - Échappement sortie (XSS)\n  - CSRF token\n  - Rate limiting\nend note\n\nnote right of Services\n  Audit:\n  - Log authentification\n  - Log modification données sensibles\n  - Log erreurs sécurité\nend note\n\nnote bottom of DB\n  Protection données:\n  - Chiffrement dumps AES-256\n  - Masking données sensibles (logs)\n  - Rotation credentials\nend note\n\n@enduml\n```\n```\nMotCleNiveauDetailAction\n```\n```\nSeanceAffectationAction\n```\n```\n@Secured\n```\n```\nsireines-database/script/\n```\n```\nDossierRechercheMotsClefsAction\n```\n```\ndossiersDao.ksp\n```\n```\nImportsServicesImpl\n```\n```\nweb.xml\n```\n```\ncontext.xml\n```\n```\npom.xml\n```\n```\nCerbereUtil\n```\n```\nSireinesSessionFilter\n```\n```\nExtractionsServicesImpl\n```\n```\nExtractionsServicesImpl\n```\nA01:2021-Broken Access Control, Composant concerné = . A01:2021-Broken Access Control, Statut = . A01:2021-Broken Access Control, Preuve/Justification = . A01:2021-Broken Access Control, Action requise = \nA10:2021-SSRF, Templates BIRT sans signature, risque modification = . A10:2021-SSRF, Signature templates = "
+    },
+    {
+      "score": 0.014925373134328358,
+      "rerank_score": 1.8722805976867676,
+      "document_id": "0c37a61c-505e-4507-a94c-0c58f9fd4295",
+      "document_name": "sireines.components-toced.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 30,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n6. Schéma de flux de données sécurisé (DFD) {#dfd}\nBrowser --> Nginx : HTTPS/TLS 1.3\\n[Chiffrement transit]\nNginx --> Filter : Proxy Pass\\n[Headers sécurisés]\nFilter --> Actions : Requête authentifiée\\n[Session valide]\nActions --> Services : Appel métier\\n[DTO validés]\nServices --> DAO : Transactions\\n[Paramètres bindés]\nDAO --> DB : JDBC/SSL\\n[Certificat client]\nServices --> ES : HTTP/9200\\n[Localhost uniquement]\nFilter --> SSO : SAML/HTTPS\\n[Token signé]\n\nnote right of Actions\n  Contrôles de sécurité:\n  - Validation entrée (whitelist)\n  - Échappement sortie (XSS)\n  - CSRF token\n  - Rate limiting\nend note\n\nnote right of Services\n  Audit:\n  - Log authentification\n  - Log modification données sensibles\n  - Log erreurs sécurité\nend note\n\nnote bottom of DB\n  Protection données:\n  - Chiffrement dumps AES-256\n  - Masking données sensibles (logs)\n  - Rotation credentials\nend note\n\n@enduml\n```"
+    },
+    {
+      "score": 0.014705882352941176,
+      "rerank_score": 1.8722805976867676,
+      "document_id": "87f68539-f7de-4aed-b3f0-33b21e12049a",
+      "document_name": "sireines.components.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 31,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n6. Schéma de flux de données sécurisé (DFD) {#dfd}\nBrowser --> Nginx : HTTPS/TLS 1.3\\n[Chiffrement transit]\nNginx --> Filter : Proxy Pass\\n[Headers sécurisés]\nFilter --> Actions : Requête authentifiée\\n[Session valide]\nActions --> Services : Appel métier\\n[DTO validés]\nServices --> DAO : Transactions\\n[Paramètres bindés]\nDAO --> DB : JDBC/SSL\\n[Certificat client]\nServices --> ES : HTTP/9200\\n[Localhost uniquement]\nFilter --> SSO : SAML/HTTPS\\n[Token signé]\n\nnote right of Actions\n  Contrôles de sécurité:\n  - Validation entrée (whitelist)\n  - Échappement sortie (XSS)\n  - CSRF token\n  - Rate limiting\nend note\n\nnote right of Services\n  Audit:\n  - Log authentification\n  - Log modification données sensibles\n  - Log erreurs sécurité\nend note\n\nnote bottom of DB\n  Protection données:\n  - Chiffrement dumps AES-256\n  - Masking données sensibles (logs)\n  - Rotation credentials\nend note\n\n@enduml\n```"
+    }
+  ]
+}

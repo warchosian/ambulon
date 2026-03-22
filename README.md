@@ -180,25 +180,25 @@ ambulon gitlab-clone
 ambulon init piag                # Génère config/piag.yaml avec des exemples
 
 # Collections RAG
-ambulon piag-collection-list --token <TOKEN> --project-id <PROJECT_ID>
-ambulon piag-collection-add --name "Mon Corpus" --description "Description" --token <TOKEN>
-ambulon piag-collection-get --collection <NAME_OR_ID> --project-id <PROJECT_ID> --token <TOKEN>
-ambulon piag-collection-update --collection <NAME_OR_ID> --name "Nouveau nom" --token <TOKEN>
-ambulon piag-collection-rm --collection <NAME_OR_ID> --token <TOKEN>
+ambulon piag-rag-collection-list --token <TOKEN> --project-id <PROJECT_ID>
+ambulon piag-rag-collection-add --name "Mon Corpus" --description "Description" --token <TOKEN>
+ambulon piag-rag-collection-get --collection <NAME_OR_ID> --project-id <PROJECT_ID> --token <TOKEN>
+ambulon piag-rag-collection-update --collection <NAME_OR_ID> --name "Nouveau nom" --token <TOKEN>
+ambulon piag-rag-collection-rm --collection <NAME_OR_ID> --token <TOKEN>
 
 # Documents RAG
-ambulon piag-doc-upload --collection <NAME_OR_ID> --file document.pdf --token <TOKEN>
-ambulon piag-doc-list --collection <NAME_OR_ID> --project-id <PROJECT_ID> --token <TOKEN>
-ambulon piag-doc-get --document-id <ID> --token <TOKEN>
-ambulon piag-doc-rm --document-id <ID> --token <TOKEN>
-ambulon piag-doc-chunks --document-id <ID> --token <TOKEN>
+ambulon piag-rag-doc-upload --collection <NAME_OR_ID> --file document.pdf --token <TOKEN>
+ambulon piag-rag-doc-list --collection <NAME_OR_ID> --project-id <PROJECT_ID> --token <TOKEN>
+ambulon piag-rag-doc-get --document-id <ID> --token <TOKEN>
+ambulon piag-rag-doc-rm --document-id <ID> --token <TOKEN>
+ambulon piag-rag-doc-chunks --document-id <ID> --token <TOKEN>
 
 # Recherche sémantique
-ambulon piag-search --collection <NAME_OR_ID> --query "Quelle est la procédure ?" --token <TOKEN>
+ambulon piag-rag-search --collection <NAME_OR_ID> --query "Quelle est la procédure ?" --token <TOKEN>
 
 # Utilisation avec configuration (recommandé)
 # Éditez config/piag.yaml puis:
-ambulon piag-search --collection "Ma Collection" --query "Question" --config config/piag.yaml
+ambulon piag-rag-search --collection "Ma Collection" --query "Question" --config config/piag.yaml
 ```
 
 ### Configuration MCP pour assistants IA
@@ -379,7 +379,7 @@ ambulon wikisi-extract wikisi-data/applications.json -o apps-subset.json -r 1-50
 ambulon wikisi-md wikisi-data/applicationsIA_mini.json -o apps-rag.md --verbose
 
 # 4. Uploader vers PIAG RAG
-ambulon piag-doc-upload --folder wikisi-data/ --collection-name WIKISI_APPS
+ambulon piag-rag-doc-upload --folder wikisi-data/ --collection-name WIKISI_APPS
 
 # Résultat : Parc applicatif indexé et interrogeable par recherche sémantique
 ```
@@ -423,39 +423,39 @@ ambulon init piag
 #    - URL de l'API (défaut: preprod)
 
 # 3. Créer une collection RAG
-ambulon piag-collection-add \
+ambulon piag-rag-collection-add \
   --name "Documentation Technique" \
   --description "Corpus de docs internes" \
   --config config/piag.yaml
 
 # 4. Lister les collections pour récupérer l'ID
-ambulon piag-collection-list --config config/piag.yaml
+ambulon piag-rag-collection-list --config config/piag.yaml
 
 # 5. Uploader des documents dans la collection
-ambulon piag-doc-upload \
+ambulon piag-rag-doc-upload \
   --collection "Documentation Technique" \
   --file ./docs/manuel_utilisateur.pdf \
   --config config/piag.yaml
 
-ambulon piag-doc-upload \
+ambulon piag-rag-doc-upload \
   --collection "Documentation Technique" \
   --file ./docs/specifications.pdf \
   --config config/piag.yaml
 
 # 6. Lister les documents uploadés
-ambulon piag-doc-list \
+ambulon piag-rag-doc-list \
   --collection "Documentation Technique" \
   --config config/piag.yaml
 
 # 7. Recherche sémantique (RAG)
-ambulon piag-search \
+ambulon piag-rag-search \
   --collection "Documentation Technique" \
   --query "Comment installer le logiciel ?" \
   --top-k 5 \
   --config config/piag.yaml
 
 # 8. Obtenir les chunks d'un document spécifique
-ambulon piag-doc-chunks \
+ambulon piag-rag-doc-chunks \
   --document-id <DOCUMENT_ID> \
   --config config/piag.yaml
 

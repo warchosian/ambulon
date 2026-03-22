@@ -1,0 +1,1 @@
+Sous Windows, utiliser `^` au lieu de `\` pour continuer les commandes sur plusieurs lignes

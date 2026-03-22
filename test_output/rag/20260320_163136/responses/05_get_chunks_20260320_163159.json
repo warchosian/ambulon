@@ -1,0 +1,10 @@
+[
+  {
+    "document_id": "ee0fd178-2bdb-42a2-975d-5366f465d848",
+    "document_name": "test_document.txt",
+    "chunk_index": 0,
+    "text": "Ceci est un document de test pour l'API RAG PIAG.\nCe document contient plusieurs paragraphes pour tester le chunking et la recherche sémantique.\nLe système RAG (Retrieval Augmented Generation) permet de faire de la recherche sémantique\ndans une base documentaire et de générer des réponses contextualisées.\nCe test vérifie que :\n- Le document peut être uploadé\n- Les chunks sont correctement générés\n- La recherche sémantique fonctionne\n- Les résultats sont pertinents",
+    "total_chunks": 1,
+    "collection_id": "CXQ1mvw3FpoYla0I"
+  }
+]

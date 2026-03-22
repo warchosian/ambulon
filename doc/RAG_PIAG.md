@@ -124,7 +124,7 @@ output_mode "shared" place code + wiki dans <repo>.rag (pas de <repo>.wiki.rag).
      - `ambulon merge-html <dossier_html> -o <output.html>`
 
 2. Envoyer le monofichier au RAG
-   - `ambulon piag-doc-upload --file <output.md>`
+   - `ambulon piag-rag-doc-upload --file <output.md>`
 
 ---
 
@@ -140,35 +140,35 @@ output_mode "shared" place code + wiki dans <repo>.rag (pas de <repo>.wiki.rag).
    - `ambulon wikisi-flatten <dossier_wikisi> -o <dossier_sortie>`
 
 3. Envoyer le contenu plat au RAG
-   - `ambulon piag-doc-upload --folder <dossier_sortie>`
+   - `ambulon piag-rag-doc-upload --folder <dossier_sortie>`
 
 ---
 
 ## 3) Interroger le RAG
 
-- `ambulon piag-search --query "<question>" --collection-name "<collection>"`
-- ou `ambulon piag-search --query "<question>" --collection-id "<id>"`
+- `ambulon piag-rag-search --query "<question>" --collection-name "<collection>"`
+- ou `ambulon piag-rag-search --query "<question>" --collection-id "<id>"`
 
 ---
 
 ## 4) Commandes RAG PIAG disponibles
 
 Collections:
-- `ambulon piag-collection-add`
-- `ambulon piag-collection-list`
-- `ambulon piag-collection-get`
-- `ambulon piag-collection-update`
-- `ambulon piag-collection-rm`
+- `ambulon piag-rag-collection-add`
+- `ambulon piag-rag-collection-list`
+- `ambulon piag-rag-collection-get`
+- `ambulon piag-rag-collection-update`
+- `ambulon piag-rag-collection-rm`
 
 Documents:
-- `ambulon piag-doc-upload`
-- `ambulon piag-doc-list`
-- `ambulon piag-doc-get`
-- `ambulon piag-doc-rm`
-- `ambulon piag-doc-chunks`
+- `ambulon piag-rag-doc-upload`
+- `ambulon piag-rag-doc-list`
+- `ambulon piag-rag-doc-get`
+- `ambulon piag-rag-doc-rm`
+- `ambulon piag-rag-doc-chunks`
 
 Recherche:
-- `ambulon piag-search`
+- `ambulon piag-rag-search`
 
 ---
 
@@ -206,7 +206,7 @@ ambulon gitlab-monofile G:\WarchoLife\WarchoDevplace\Gitlab2\admin_ep --mode cod
 ambulon gitlab-monofile G:\WarchoLife\WarchoDevplace\Gitlab2\admin_ep.wiki --mode wiki
 
 # 2) Uploader dans la collection
-ambulon piag-doc-upload --file out\project.md --collection-name "ambulon" --project-id "12345"
+ambulon piag-rag-doc-upload --file out\project.md --collection-name "ambulon" --project-id "12345"
 ```
 
 ### B) WikiSI -> aplatir -> upload RAG
@@ -222,30 +222,30 @@ ambulon wikisi-scrape https://wiki.example.fr -o out\wikisi
 ambulon wikisi-flatten out\wikisi -o out\wikisi_flat
 
 # 3) Uploader tous les fichiers
-ambulon piag-doc-upload --folder out\wikisi_flat --collection-name "ambulon" --project-id "12345"
+ambulon piag-rag-doc-upload --folder out\wikisi_flat --collection-name "ambulon" --project-id "12345"
 ```
 
 ### C) Recherche RAG
 
 ```bash
 # Recherche par nom de collection
-ambulon piag-search --query "etat du projet" --collection-name "ambulon" --project-id "12345"
+ambulon piag-rag-search --query "etat du projet" --collection-name "ambulon" --project-id "12345"
 
 # Recherche par ID de collection
-ambulon piag-search --query "changements depuis hier" --collection-id "col_abc123" --project-id "12345"
+ambulon piag-rag-search --query "changements depuis hier" --collection-id "col_abc123" --project-id "12345"
 ```
 
 ### D) Variante avec config YAML
 
 ```bash
 # Utilise config\piag.yaml pour base_url/token/project_id
-ambulon piag-search --query "risques" --collection-name "ambulon" --config config\piag.yaml
+ambulon piag-rag-search --query "risques" --collection-name "ambulon" --config config\piag.yaml
 ```
 
 ### E) Variante full CLI (sans config)
 
 ```bash
-ambulon piag-doc-upload ^
+ambulon piag-rag-doc-upload ^
   --file out\project.md ^
   --collection-id "col_abc123" ^
   --project-id "12345" ^
@@ -256,7 +256,7 @@ ambulon piag-doc-upload ^
 ### F) Recherche avec token explicite
 
 ```bash
-ambulon piag-search ^
+ambulon piag-rag-search ^
   --query "etat de la collection" ^
   --collection-id "col_abc123" ^
   --project-id "12345" ^

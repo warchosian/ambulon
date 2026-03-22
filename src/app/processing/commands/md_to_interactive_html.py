@@ -61,8 +61,9 @@ def md_to_interactive_html(
         out_dir = input_file.parent
     
     base_name = input_file.stem
-    toc_file = out_dir / f"{base_name}-itoc.md"
-    html_file = out_dir / f"{base_name}-itoc.html"
+    toc_file = out_dir / f"{base_name}-toced.md"
+    itoc_file = out_dir / f"{base_name}-itoced.md"
+    html_file = out_dir / f"{base_name}-itoced.html"
     interactive_file = out_dir / f"{base_name}-interactive.html"
     
     try:
@@ -90,12 +91,10 @@ def md_to_interactive_html(
         if verbose:
             print(f"[2/4] Adding backlinks to {toc_file.name}...")
             
-        # Use a temp file for the itoc output
-        itoc_temp = out_dir / f"{base_name}-itoc-temp.md"
         result = subprocess.run([
             sys.executable, '-m', 'app.toc.commands.add_itoc4md',
             str(toc_file),
-            '-o', str(itoc_temp),
+            '-o', str(itoc_file),
             '--min-level', str(min_level),
             '--max-level', str(max_level),
             '-v' if verbose else '-q'
@@ -103,15 +102,10 @@ def md_to_interactive_html(
         
         if result.returncode != 0:
             print(f"Error adding iTOC: {result.stderr}", file=sys.stderr)
-            itoc_temp.unlink(missing_ok=True)
             return result.returncode
         
-        # Replace the toc file with the itoc version
-        toc_file.unlink()
-        itoc_temp.rename(toc_file)
-            
         if verbose:
-            print(f"      Updated: {toc_file.name}")
+            print(f"      Created: {itoc_file.name}")
         
         # Step 3: Convert to HTML
         if verbose:
@@ -119,7 +113,7 @@ def md_to_interactive_html(
             
         cmd = [
             sys.executable, '-m', 'app.diagrams.commands.md2html',
-            str(toc_file),
+            str(itoc_file),
             '-o', str(html_file)
         ]
         if no_diagrams:
@@ -136,13 +130,13 @@ def md_to_interactive_html(
         
         # Step 4: Make interactive
         if verbose:
-            print(f"[4/4] Making HTML interactive...")
+            print(f"[4/4] Augmenting HTML...")
         
         # Import and call directly
-        from .make_html_interactive import make_html_interactive
-        result = make_html_interactive(
+        from .add_augment import augment
+        result = augment(
             input_path=str(html_file),
-            output_path=str(interactive_file),
+            output_path=str(augmented_file),
             verbose=verbose
         )
         
@@ -151,23 +145,26 @@ def md_to_interactive_html(
             return result
             
         if verbose:
-            print(f"      Created: {interactive_file.name}")
+            print(f"      Created: {augmented_file.name}")
         
         # Success summary
         print(f"\n[SUCCESS] Conversion complete!")
-        print(f"  Markdown:  {toc_file}")
-        print(f"  HTML:      {html_file}")
-        print(f"  Interactive: {interactive_file}")
+        print(f"  TOC Markdown:   {toc_file}")
+        print(f"  iTOC Markdown:  {itoc_file}")
+        print(f"  HTML:           {html_file}")
+        print(f"  Augmented:      {augmented_file}")
         
         # File sizes
         toc_size = toc_file.stat().st_size
+        itoc_size = itoc_file.stat().st_size
         html_size = html_file.stat().st_size
-        interactive_size = interactive_file.stat().st_size
+        augmented_size = augmented_file.stat().st_size
         
         print(f"\nFile sizes:")
         print(f"  {toc_file.name}: {toc_size:,} bytes")
+        print(f"  {itoc_file.name}: {itoc_size:,} bytes")
         print(f"  {html_file.name}: {html_size:,} bytes")
-        print(f"  {interactive_file.name}: {interactive_size:,} bytes")
+        print(f"  {augmented_file.name}: {augmented_size:,} bytes")
         
         return 0
         

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>analyseplus</title>
+    <style>
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 2em;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #34495e;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+            line-height: 1.4;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+        pre.tree {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        li {
+            margin: 0.5em 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding: 0.5em 0 0.5em 1em;
+            color: #555;
+            background: #f8f9fa;
+            border-radius: 0 3px 3px 0;
+        }
+        blockquote p {
+            margin: 0.5em 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+    </style>
+</head>
+<body>
+<p>Voici le document Markdown avec des <strong>vrais hyperliens</strong> internes et externes. Les liens internes permettent de naviguer dans le document, et les liens externes pointent vers des ressources utiles (comme PlantUML ou des bibliothèques).</p>
+
+
+<h1><a href="#">Analyse de l'application "GestionClient"</a></h1>
+<strong>Date</strong> : <a href="#">23/01/2026</a>
+<strong>Auteur</strong> : <a href="#">Assistant</a>
+<strong>Version</strong> : <a href="#">1.0</a>
+
+<hr>
+
+<h2><a href="#sommaire">Sommaire</a></h2>
+1. <a href="#introduction">Introduction</a>
+2. <a href="#analyse-fonctionnelle">Analyse fonctionnelle</a>
+   - 2.1. <a href="#acteurs-et-cas-dusage">Acteurs et cas d'usage</a>
+   - 2.2. <a href="#règles-métier">Règles métier</a>
+   - 2.3. <a href="#workflows">Workflows</a>
+3. <a href="#analyse-technique">Analyse technique</a>
+   - 3.1. <a href="#architecture">Architecture</a>
+   - 3.2. <a href="#modules-et-dépendances">Modules et dépendances</a>
+   - 3.3. <a href="#sécurité">Sécurité</a>
+   - 3.4. <a href="#dette-technique">Dette technique</a>
+4. <a href="#conclusion">Conclusion</a>
+
+<hr>
+
+<h2>1. <a href="#introduction">Introduction</a> <a id="introduction"></a></h2>
+<h3>Contexte</h3>
+L'application <strong><a href="#">GestionClient</a></strong> est un système de <strong>gestion de relations clients (CRM)</strong> permettant aux entreprises de :
+<ul>
+<li>Suivre les interactions avec les clients.</li>
+<li>Gérer les contrats et les réclamations.</li>
+<li>Générer des rapports analytiques.</li>
+</ul>
+
+<h3>Périmètre de l'analyse</h3>
+Cette analyse est basée sur :
+<ul>
+<li>Le <a href="#">code source</a> (backend en <a href="https://www.python.org/">Python</a>, frontend en <a href="https://react.dev/">React</a>).</li>
+<li>Les <a href="#">fichiers de configuration</a> (Docker, CI/CD).</li>
+<li>La <a href="#">documentation technique et fonctionnelle</a>.</li>
+</ul>
+
+<hr>
+<strong><a href="#sommaire">Retour au sommaire</a></strong>
+
+<hr>
+
+<h2>2. <a href="#analyse-fonctionnelle">Analyse fonctionnelle</a> <a id="analyse-fonctionnelle"></a></h2>
+
+<h3>2.1. <a href="#acteurs-et-cas-dusage">Acteurs et cas d'usage</a> <a id="acteurs-et-cas-dusage"></a></h3>
+<h4>Diagramme des cas d'usage</h4>
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="520px" preserveAspectRatio="none" style="width:468px;height:520px;background:#FFFFFF;" version="1.1" viewBox="0 0 468 520" width="468px" zoomAndPan="magnify"><defs/><g><!--cluster Syst?me--><g class="cluster" data-entity="Syst.me" data-source-line="6" data-uid="ent0005" id="cluster_Syst.me"><rect fill="none" height="507" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="282.81" x="179.93" y="7"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="67.8125" x="287.4288" y="21.9951">Syst&#232;me</text></g><!--entity UC1: Consulter ses contrats--><g class="entity" data-entity="UC1. Consulter ses contrats" data-source-line="7" data-uid="ent0006" id="entity_UC1. Consulter ses contrats"><ellipse cx="321.3426" cy="66.0005" fill="#F1F1F1" rx="108.7026" ry="24.1405" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="195.0703" x="223.8074" y="70.649">UC1: Consulter ses contrats</text></g><!--entity UC2: Soumettre une r?clamation--><g class="entity" data-entity="UC2. Soumettre une r.clamation" data-source-line="8" data-uid="ent0008" id="entity_UC2. Soumettre une r.clamation"><ellipse cx="321.3443" cy="153.0009" fill="#F1F1F1" rx="125.4043" ry="27.4809" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="230.8496" x="205.9195" y="157.6493">UC2: Soumettre une r&#233;clamation</text></g><!--entity UC3: Cr?er un contrat--><g class="entity" data-entity="UC3. Cr.er un contrat" data-source-line="9" data-uid="ent0010" id="entity_UC3. Cr.er un contrat"><ellipse cx="321.3446" cy="235.9969" fill="#F1F1F1" rx="89.9846" ry="20.3969" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="153.7061" x="244.4915" y="240.6453">UC3: Cr&#233;er un contrat</text></g><!--entity UC4: Modifier un contrat--><g class="entity" data-entity="UC4. Modifier un contrat" data-source-line="10" data-uid="ent0012" id="entity_UC4. Modifier un contrat"><ellipse cx="321.3426" cy="313.0045" fill="#F1F1F1" rx="98.0726" ry="22.0145" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="171.8008" x="235.4422" y="317.653">UC4: Modifier un contrat</text></g><!--entity UC5: G?rer les utilisateurs--><g class="entity" data-entity="UC5. G.rer les utilisateurs" data-source-line="11" data-uid="ent0014" id="entity_UC5. G.rer les utilisateurs"><ellipse cx="321.3397" cy="393.0019" fill="#F1F1F1" rx="103.7597" ry="23.1519" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="184.3105" x="229.1844" y="397.6504">UC5: G&#233;rer les utilisateurs</text></g><!--entity UC6: G?n?rer des rapports--><g class="entity" data-entity="UC6. G.n.rer des rapports" data-source-line="12" data-uid="ent0016" id="entity_UC6. G.n.rer des rapports"><ellipse cx="321.335" cy="474.997" fill="#F1F1F1" rx="105.485" ry="23.497" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="188.0771" x="227.2964" y="479.6454">UC6: G&#233;n&#233;rer des rapports</text></g><!--entity client--><g class="entity" data-entity="client" data-source-line="2" data-uid="ent0002" id="entity_client"><ellipse cx="70.9651" cy="80.35" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M70.9651,88.35 L70.9651,115.35 M57.9651,96.35 L83.9651,96.35 M70.9651,115.35 L57.9651,130.35 M70.9651,115.35 L83.9651,130.35" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40.5303" x="50.7" y="144.8451">Client</text></g><!--entity agent--><g class="entity" data-entity="agent" data-source-line="3" data-uid="ent0003" id="entity_agent"><ellipse cx="70.9653" cy="255.35" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M70.9653,263.35 L70.9653,290.35 M57.9653,271.35 L83.9653,271.35 M70.9653,290.35 L57.9653,305.35 M70.9653,290.35 L83.9653,305.35" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="129.9307" x="6" y="319.8451">Agent Commercial</text></g><!--entity admin--><g class="entity" data-entity="admin" data-source-line="4" data-uid="ent0004" id="entity_admin"><ellipse cx="70.9618" cy="391.35" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M70.9618,399.35 L70.9618,426.35 M57.9618,407.35 L83.9618,407.35 M70.9618,426.35 L57.9618,441.35 M70.9618,426.35 L83.9618,441.35" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="104.6035" x="18.66" y="455.8451">Administrateur</text></g><!--link client to UC1: Consulter ses contrats--><g class="link" data-entity-1="client" data-entity-2="UC1. Consulter ses contrats" data-source-line="7" data-uid="lnk7" id="link_client_UC1. Consulter ses contrats"><path d="M91.45,106.55 C122.16,101.11 177.6919,91.2662 229.1919,82.1462" fill="none" id="client-to-UC1: Consulter ses contrats" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="235.1,81.1,225.5404,78.7307,230.1766,81.9719,226.9354,86.6081,235.1,81.1" style="stroke:#181818;stroke-width:1;"/></g><!--link client to UC2: Soumettre une r?clamation--><g class="link" data-entity-1="client" data-entity-2="UC2. Soumettre une r.clamation" data-source-line="8" data-uid="lnk9" id="link_client_UC2. Soumettre une r.clamation"><path d="M91.45,113.37 C119.53,118.23 167.388,126.516 215.768,134.896" fill="none" id="client-to-UC2: Soumettre une r&#233;clamation" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="221.68,135.92,213.4947,130.4427,216.7534,135.0666,212.1294,138.3253,221.68,135.92" style="stroke:#181818;stroke-width:1;"/></g><!--link agent to UC3: Cr?er un contrat--><g class="link" data-entity-1="agent" data-entity-2="UC3. Cr.er un contrat" data-source-line="9" data-uid="lnk11" id="link_agent_UC3. Cr.er un contrat"><path d="M136.25,272.32 C171.9,265.29 210.3133,257.7007 246.5233,250.5607" fill="none" id="agent-to-UC3: Cr&#233;er un contrat" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="252.41,249.4,242.8062,247.2167,247.5045,250.3673,244.3539,255.0656,252.41,249.4" style="stroke:#181818;stroke-width:1;"/></g><!--link agent to UC4: Modifier un contrat--><g class="link" data-entity-1="agent" data-entity-2="UC4. Modifier un contrat" data-source-line="10" data-uid="lnk13" id="link_agent_UC4. Modifier un contrat"><path d="M136.25,292.25 C165.71,295.57 195.1378,298.8875 226.9678,302.4775" fill="none" id="agent-to-UC4: Modifier un contrat" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="232.93,303.15,224.435,298.1665,227.9615,302.5896,223.5384,306.1161,232.93,303.15" style="stroke:#181818;stroke-width:1;"/></g><!--link admin to UC5: G?rer les utilisateurs--><g class="link" data-entity-1="admin" data-entity-2="UC5. G.rer les utilisateurs" data-source-line="11" data-uid="lnk15" id="link_admin_UC5. G.rer les utilisateurs"><path d="M123.73,415.16 C153.87,411.77 186.7978,408.0521 222.0178,404.0821" fill="none" id="admin-to-UC5: G&#233;rer les utilisateurs" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="227.98,403.41,218.5886,400.4433,223.0115,403.9701,219.4847,408.3929,227.98,403.41" style="stroke:#181818;stroke-width:1;"/></g><!--link admin to UC6: G?n?rer des rapports--><g class="link" data-entity-1="admin" data-entity-2="UC6. G.n.rer des rapports" data-source-line="12" data-uid="lnk17" id="link_admin_UC6. G.n.rer des rapports"><path d="M123.73,432.25 C158.7,439.86 199.5971,448.7449 238.7271,457.2549" fill="none" id="admin-to-UC6: G&#233;n&#233;rer des rapports" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="244.59,458.53,236.6456,452.7088,239.7042,457.4674,234.9455,460.526,244.59,458.53" style="stroke:#181818;stroke-width:1;"/></g><!--SRC=[PSyzRiCm30NWtQSWFBL3XluE7WeK7Z9r2de0GcPS0X8LKDGG1BrFSmvVh99I0mMyIUA79pvFHmEBe3n_6Koiv8oZTEWiAlIZPnBh0HEuTbm7xtEvm1X387MClX6S_uifi70oHQEijtbzwhhw1yhi2Vh3ETdo4wY7ImT_Ny1kzmPtd-F3KF8bPM-aaAXi4AMcfViDVHpW47CWCoN8Gg3BrNaCMBjKtZPRzLC9Bg2aPbb3D-XvW8yuyP6thBPOsSi0- -Mg1VcoOJRsd5hXjA6lZSfDJqKhdavHQv_lNm00]--></g></svg>
+</div>
+<em><a href="http://www.plantuml.com/plantuml/">Générer ce diagramme avec PlantUML</a></em>
+
+<h4>Description des acteurs</h4>
+<table>
+<thead>
+<tr>
+<th>Acteur</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**<a href="#">Client</a>**</td>
+<td>Utilisateur final qui consulte ses contrats et soumet des réclamations.</td>
+</tr>
+<tr>
+<td>**<a href="#">Agent Commercial</a>**</td>
+<td>Crée et modifie les contrats pour les clients.</td>
+</tr>
+<tr>
+<td>**<a href="#">Administrateur</a>**</td>
+<td>Gère les utilisateurs et génère des rapports analytiques.</td>
+</tr>
+</tbody>
+</table>---
+<strong><a href="#sommaire">Retour au sommaire</a></strong>
+
+<hr>
+
+<h3>2.2. <a href="#règles-métier">Règles métier</a> <a id="règles-métier"></a></h3>
+<h4>Calcul du score de fidélité</h4>
+Le score de fidélité d'un client est calculé selon les règles suivantes :
+<ul>
+<li><strong>Formule</strong> :</li>
+</ul>
+  \[
+  \text{Score} = (\text{Nombre de contrats actifs} \times 10) + (\text{Ancienneté en années} \times 5) - (\text{Nombre de réclamations} \times 2)
+  \]
+<ul>
+<li><strong>Seuils</strong> :</li>
+</ul>
+  - Score > 50 : Client <strong><a href="#">Premium</a></strong>.
+  - 20 < Score ≤ 50 : Client <strong><a href="#">Standard</a></strong>.
+  - Score ≤ 20 : Client <strong><a href="#">À risque</a></strong>.
+
+<h4>Diagramme de décision</h4>
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="264px" preserveAspectRatio="none" style="width:405px;height:264px;background:#FFFFFF;" version="1.1" viewBox="0 0 405 264" width="405px" zoomAndPan="magnify"><defs/><g><ellipse cx="171.2913" cy="20" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1;"/><polygon fill="#F1F1F1" points="137.7434,50,204.8391,50,216.8391,62,204.8391,74,137.7434,74,125.7434,62,137.7434,50" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="67.0957" x="137.7434" y="65.8081">Score &gt; 50?</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="18.686" x="107.0574" y="59.4058">Oui</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="21.9302" x="216.8391" y="59.4058">Non</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="112.4258" x="11" y="84"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="92.4258" x="21" y="105.1387">Client Premium</text><polygon fill="#F1F1F1" points="241.8218,84,308.9175,84,320.9175,96,308.9175,108,241.8218,108,229.8218,96,241.8218,84" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="67.0957" x="241.8218" y="99.8081">Score &gt; 20?</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="18.686" x="211.1357" y="93.4058">Oui</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="21.9302" x="320.9175" y="93.4058">Non</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="113.3574" x="153.4258" y="118"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="93.3574" x="163.4258" y="139.1387">Client Standard</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="107.7031" x="286.7832" y="118"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="87.7031" x="296.7832" y="139.1387">Client &#192; risque</text><polygon fill="#F1F1F1" points="275.3696,157.9688,287.3696,169.9688,275.3696,181.9688,263.3696,169.9688,275.3696,157.9688" style="stroke:#181818;stroke-width:0.5;"/><polygon fill="#F1F1F1" points="171.2913,187.9688,183.2913,199.9688,171.2913,211.9688,159.2913,199.9688,171.2913,187.9688" style="stroke:#181818;stroke-width:0.5;"/><ellipse cx="171.2913" cy="242.9688" fill="none" rx="11" ry="11" style="stroke:#222222;stroke-width:1;"/><ellipse cx="171.2913" cy="242.9688" fill="#222222" rx="6" ry="6" style="stroke:#222222;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="229.8218" x2="210.1045" y1="96" y2="96"/><line style="stroke:#181818;stroke-width:1;" x1="210.1045" x2="210.1045" y1="96" y2="118"/><polygon fill="#181818" points="206.1045,108,210.1045,118,214.1045,108,210.1045,112" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="320.9175" x2="340.6348" y1="96" y2="96"/><line style="stroke:#181818;stroke-width:1;" x1="340.6348" x2="340.6348" y1="96" y2="118"/><polygon fill="#181818" points="336.6348,108,340.6348,118,344.6348,108,340.6348,112" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="210.1045" x2="210.1045" y1="151.9688" y2="169.9688"/><line style="stroke:#181818;stroke-width:1;" x1="210.1045" x2="263.3696" y1="169.9688" y2="169.9688"/><polygon fill="#181818" points="253.3696,165.9688,263.3696,169.9688,253.3696,173.9688,257.3696,169.9688" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="340.6348" x2="340.6348" y1="151.9688" y2="169.9688"/><line style="stroke:#181818;stroke-width:1;" x1="340.6348" x2="287.3696" y1="169.9688" y2="169.9688"/><polygon fill="#181818" points="297.3696,165.9688,287.3696,169.9688,297.3696,173.9688,293.3696,169.9688" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="125.7434" x2="67.2129" y1="62" y2="62"/><line style="stroke:#181818;stroke-width:1;" x1="67.2129" x2="67.2129" y1="62" y2="84"/><polygon fill="#181818" points="63.2129,74,67.2129,84,71.2129,74,67.2129,78" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="216.8391" x2="275.3696" y1="62" y2="62"/><line style="stroke:#181818;stroke-width:1;" x1="275.3696" x2="275.3696" y1="62" y2="84"/><polygon fill="#181818" points="271.3696,74,275.3696,84,279.3696,74,275.3696,78" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="67.2129" x2="67.2129" y1="117.9688" y2="199.9688"/><line style="stroke:#181818;stroke-width:1;" x1="67.2129" x2="159.2913" y1="199.9688" y2="199.9688"/><polygon fill="#181818" points="149.2913,195.9688,159.2913,199.9688,149.2913,203.9688,153.2913,199.9688" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="275.3696" x2="275.3696" y1="181.9688" y2="199.9688"/><line style="stroke:#181818;stroke-width:1;" x1="275.3696" x2="183.2913" y1="199.9688" y2="199.9688"/><polygon fill="#181818" points="193.2913,195.9688,183.2913,199.9688,193.2913,203.9688,189.2913,199.9688" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="171.2913" x2="171.2913" y1="30" y2="50"/><polygon fill="#181818" points="167.2913,40,171.2913,50,175.2913,40,171.2913,44" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="171.2913" x2="171.2913" y1="211.9688" y2="231.9688"/><polygon fill="#181818" points="167.2913,221.9688,171.2913,231.9688,175.2913,221.9688,171.2913,225.9688" style="stroke:#181818;stroke-width:1;"/><!--SRC=[Aov9B2hXoanJq0XEpYzALR1JC3MmrrGeoKZDKz3mBytKv59Gi7BEoKpDAr48A4hDpIpDjUPApIbELT3moyy3oIBhDSBGYz0TN9AObv9Ob68D54Kn0A7aS8D2KMPnOMagM4rUIcOQ5uGiBial0000]--></g></svg>
+</div>
+<em><a href="http://www.plantuml.com/plantuml/">Générer ce diagramme avec PlantUML</a></em>
+
+<hr>
+<strong><a href="#sommaire">Retour au sommaire</a></strong>
+
+<hr>
+
+<h3>2.3. <a href="#workflows">Workflows</a> <a id="workflows"></a></h3>
+<h4>Workflow de gestion des réclamations</h4>
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="555px" preserveAspectRatio="none" style="width:250px;height:555px;background:#FFFFFF;" version="1.1" viewBox="0 0 250 555" width="250px" zoomAndPan="magnify"><defs/><g><g id="nouvelle"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="81.2021" x="11.48" y="7"/><line style="stroke:#181818;stroke-width:0.5;" x1="11.48" x2="92.6821" y1="33.2969" y2="33.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="61.2021" x="21.48" y="24.9951">Nouvelle</text></g><g id="encours"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="80.3545" x="11.9" y="134"/><line style="stroke:#181818;stroke-width:0.5;" x1="11.9" x2="92.2545" y1="160.2969" y2="160.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="60.3545" x="21.9" y="151.9951">En cours</text></g><g id="resolue"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75.5762" x="14.29" y="261"/><line style="stroke:#181818;stroke-width:0.5;" x1="14.29" x2="89.8662" y1="287.2969" y2="287.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="55.5762" x="24.29" y="278.9951">R&#233;solue</text></g><g id="cloturee"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="79.5752" x="12.29" y="388"/><line style="stroke:#181818;stroke-width:0.5;" x1="12.29" x2="91.8652" y1="414.2969" y2="414.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="59.5752" x="22.29" y="405.9951">Cl&#244;tur&#233;e</text></g><g id="Archivage"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="90.1572" x="7" y="499"/><line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="97.1572" y1="525.2969" y2="525.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70.1572" x="17" y="516.9951">Archivage</text></g><!--link nouvelle to encours--><g class="link" data-entity-1="nouvelle" data-entity-2="encours" data-source-line="6" data-uid="lnk2" id="link_nouvelle_encours"><path d="M52.08,57.4 C52.08,79.42 52.08,105.66 52.08,127.66" fill="none" id="nouvelle-to-encours" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="52.08,133.66,56.08,124.66,52.08,128.66,48.08,124.66,52.08,133.66" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="189.0078" x="53.08" y="100.0669">Prise en charge par un agent</text></g><!--link encours to resolue--><g class="link" data-entity-1="encours" data-entity-2="resolue" data-source-line="7" data-uid="lnk3" id="link_encours_resolue"><path d="M52.08,184.4 C52.08,206.42 52.08,232.66 52.08,254.66" fill="none" id="encours-to-resolue" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="52.08,260.66,56.08,251.66,52.08,255.66,48.08,251.66,52.08,260.66" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="117.6157" x="53.08" y="227.0669">Solution propos&#233;e</text></g><!--link resolue to cloturee--><g class="link" data-entity-1="resolue" data-entity-2="cloturee" data-source-line="8" data-uid="lnk4" id="link_resolue_cloturee"><path d="M52.08,311.4 C52.08,333.42 52.08,359.66 52.08,381.66" fill="none" id="resolue-to-cloturee" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="52.08,387.66,56.08,378.66,52.08,382.66,48.08,378.66,52.08,387.66" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="146.4785" x="53.08" y="354.0669">Validation par le client</text></g><!--link cloturee to Archivage--><g class="link" data-entity-1="cloturee" data-entity-2="Archivage" data-source-line="9" data-uid="lnk6" id="link_cloturee_Archivage"><path d="M52.08,438.46 C52.08,456.41 52.08,474.69 52.08,492.62" fill="none" id="cloturee-to-Archivage" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="52.08,498.62,56.08,489.62,52.08,493.62,48.08,489.62,52.08,498.62" style="stroke:#181818;stroke-width:1;"/></g><!--SRC=[FOqz2iCm38Ltdq9apmKw54hfMaeBtOqh4eEmWsJdJjbxWroiiXrtaXxV-v5a4y9mZtb58Xp02eH366dm5i35p58XXlftzjmtYPHRaB7-dLrf_wRC-zQeewWAqPW-0EDuxeLmWWTxGTNWPiiJmc8PSW0xOKYcsqhasD78Is_oCS32SOcYKwR3OkoJwdnRyX_RlDghuuvyAVvxIk32RlQhBlu0]--></g></svg>
+</div>
+<em><a href="http://www.plantuml.com/plantuml/">Générer ce diagramme avec PlantUML</a></em>
+
+<hr>
+<strong><a href="#sommaire">Retour au sommaire</a></strong>
+
+<hr>
+
+<h2>3. <a href="#analyse-technique">Analyse technique</a> <a id="analyse-technique"></a></h2>
+
+<h3>3.1. <a href="#architecture">Architecture</a> <a id="architecture"></a></h3>
+<h4>Diagramme d'architecture globale</h4>
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="488px" preserveAspectRatio="none" style="width:374px;height:488px;background:#FFFFFF;" version="1.1" viewBox="0 0 374 488" width="374px" zoomAndPan="magnify"><defs/><g><!--cluster fe--><g class="cluster" data-entity="fe" data-source-line="2" data-uid="ent0003" id="cluster_fe"><rect fill="none" height="97.3" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="178" x="7" y="115.7478"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="72.2285" x="59.8857" y="130.7429">Frontend</text></g><!--cluster be--><g class="cluster" data-entity="be" data-source-line="5" data-uid="ent0005" id="cluster_be"><rect fill="none" height="220.59" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="194" x="10" y="262.0478"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="67.2109" x="73.3945" y="277.0429">Backend</text></g><!--entity react--><g class="entity" data-entity="react" data-source-line="3" data-uid="ent0004" id="entity_react"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="145.4854" x="23.26" y="150.7478"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="148.7454" y="155.7478"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="146.7454" y="157.7478"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="146.7454" y="161.7478"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="105.4854" x="38.26" y="183.7429"><a href="#">React App</a></text></g><!--entity api--><g class="entity" data-entity="api" data-source-line="6" data-uid="ent0006" id="entity_api"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="136.1885" x="27.91" y="297.0478"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="144.0985" y="302.0478"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="142.0985" y="304.0478"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="142.0985" y="308.0478"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="96.1885" x="42.91" y="330.0429"><a href="#">API REST</a></text></g><!--entity auth--><g class="entity" data-entity="auth" data-source-line="7" data-uid="ent0007" id="entity_auth"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="162.582" x="25.71" y="420.3378"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="168.292" y="425.3378"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="166.292" y="427.3378"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="166.292" y="431.3378"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="122.582" x="40.71" y="453.3329"><a href="#">Service Auth</a></text></g><!--entity client--><g class="entity" data-entity="client" data-source-line="1" data-uid="ent0002" id="entity_client"><path d="M52.2008,15.3458 C55.3641,10.2099 61.38,10.1551 64.2474,15.68 C67.146,10.1762 70.4866,9.8231 75.077,13.734 C77.802,7.7495 81.4632,7.8998 85.5472,12.3734 C87.9985,7.4084 93.0629,7.31 96.1625,11.6323 C100.6294,6 105.8951,6.1637 108.8993,13.1129 C112.4739,7.4394 117.9116,8.2976 120.3505,14.2332 C123.7713,9.0114 128.8537,9.8509 131.1568,15.3589 C134.6095,10.5009 137.7335,9.7668 141.5336,15.0017 C151.5484,15.1948 155.8255,23.0162 149.5648,31.2527 C154.8476,39.1767 151.9036,45.1725 142.4594,46.0018 C139.5146,51.0981 133.7929,51.1719 130.9921,45.8435 C128.086,52.5629 123.6787,52.5111 118.6295,48.2581 C115.4915,52.8696 112.4409,54.2251 108.4861,49.1099 C104.5934,55.2813 100.5073,55.1687 96.8121,48.9243 C93.1735,54.3483 89.0719,53.4375 86.2019,48.1622 C82.6911,53.2972 77.9837,53.4866 75.2002,47.4461 C72.4191,53.019 67.2487,53.3655 64.3169,47.5907 C59.325,53.7408 55.5437,52.9237 51.7463,46.4054 C44.6854,42.0728 42.0465,36.9139 49.6991,30.6672 C44.1147,24.8671 44.5593,18.9864 52.2008,15.3458" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="76.3232" x="57.84" y="34.4429">Client Web</text></g><!--entity db--><g class="entity" data-entity="db" data-source-line="9" data-uid="ent0008" id="entity_db"><path d="M222.83,430.8378 C222.83,420.8378 289.9955,420.8378 289.9955,420.8378 C289.9955,420.8378 357.1611,420.8378 357.1611,430.8378 L357.1611,456.1346 C357.1611,466.1346 289.9955,466.1346 289.9955,466.1346 C289.9955,466.1346 222.83,466.1346 222.83,456.1346 L222.83,430.8378" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><path d="M222.83,430.8378 C222.83,440.8378 289.9955,440.8378 289.9955,440.8378 C289.9955,440.8378 357.1611,440.8378 357.1611,430.8378" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114.3311" x="232.83" y="457.8329"><a href="#">PostgreSQL</a></text></g><!--link client to react--><g class="link" data-entity-1="client" data-entity-2="react" data-source-line="11" data-uid="lnk9" id="link_client_react"><path d="M96,53.1478 C96,79.7878 96,117.8578 96,144.4578" fill="none" id="client-to-react" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="96,150.4578,100,141.4578,96,145.4578,92,141.4578,96,150.4578" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="41.7485" x="97" y="95.8146">HTTPS</text></g><!--link react to api--><g class="link" data-entity-1="react" data-entity-2="api" data-source-line="12" data-uid="lnk10" id="link_react_api"><path d="M96,197.4378 C96,224.5478 96,263.7678 96,290.8078" fill="none" id="react-to-api" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="96,296.8078,100,287.8078,96,291.8078,92,287.8078,96,296.8078" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="86.0869" x="97" y="242.1146">Requ&#234;tes API</text></g><!--link api to auth--><g class="link" data-entity-1="api" data-entity-2="auth" data-source-line="13" data-uid="lnk11" id="link_api_auth"><path d="M98.04,343.7278 C100.02,365.5078 102.4585,392.3622 104.4285,414.1022" fill="none" id="api-to-auth" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="104.97,420.0778,108.1415,410.7535,104.5188,415.0982,100.1741,411.4755,104.97,420.0778" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="102.813" x="104" y="386.4046">V&#233;rification JWT</text></g><!--link api to db--><g class="link" data-entity-1="api" data-entity-2="db" data-source-line="14" data-uid="lnk12" id="link_api_db"><path d="M157.94,343.7378 C176.93,351.8478 197.44,361.8678 215,373.3378 C235.46,386.7178 251.4722,401.4512 265.7522,416.1712" fill="none" id="api-to-db" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="269.93,420.4778,266.5343,411.2328,266.4485,416.889,260.7923,416.8032,269.93,420.4778" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="91.2476" x="238" y="386.4046">Requ&#234;tes SQL</text></g><!--SRC=[PKyxJiD04Ett52EdWI8Ne8XaeaG4KJYsHOeenUpk9AmmkyvwJ8CuKBX6BiRO5WwGydtclJUc2gs5P5uvyWmRqWbW0wQ7Af9Xz8UA85d6u9cyxUKzmOS2CE6j3hwxIxOveM58wtftCxdjJR5ZrEVla7iqhpyP-ZeZpLQGBufoZC3Q_RCK5D-T8KXRVhdO14YHHKQDZVHiiz3m8LAnVXfDLYirl0NJwMnO1tVmK9PPeGRKyL8fR4x7zlp5r81iKXtNQz8ZulFv5DtU6MGNF3nkoj5WzPzRgVy6]--></g></svg>
+</div>
+<em><a href="http://www.plantuml.com/plantuml/">Générer ce diagramme avec PlantUML</a></em>
+
+<hr>
+<strong><a href="#sommaire">Retour au sommaire</a></strong>
+
+<hr>
+
+<h3>3.2. <a href="#modules-et-dépendances">Modules et dépendances</a> <a id="modules-et-dépendances"></a></h3>
+<h4>Diagramme des dépendances du backend</h4>
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="423px" preserveAspectRatio="none" style="width:422px;height:423px;background:#FFFFFF;" version="1.1" viewBox="0 0 422 423" width="422px" zoomAndPan="magnify"><defs/><g><!--cluster Backend--><g class="cluster" data-entity="Backend" data-source-line="1" data-uid="ent0002" id="cluster_Backend"><path d="M8.5,6 L76.7109,6 A3.75,3.75 0 0 1 79.2109,8.5 L86.2109,28.2969 L412.5,28.2969 A2.5,2.5 0 0 1 415,30.7969 L415,414.39 A2.5,2.5 0 0 1 412.5,416.89 L8.5,416.89 A2.5,2.5 0 0 1 6,414.39 L6,8.5 A2.5,2.5 0 0 1 8.5,6" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="86.2109" y1="28.2969" y2="28.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="67.2109" x="10" y="20.9951">Backend</text></g><!--cluster Modules--><g class="cluster" data-entity="Modules" data-source-line="2" data-uid="ent0003" id="cluster_Modules"><path d="M146.5,49 L213.665,49 A3.75,3.75 0 0 1 216.165,51.5 L223.165,71.2969 L388.5,71.2969 A2.5,2.5 0 0 1 391,73.7969 L391,390.39 A2.5,2.5 0 0 1 388.5,392.89 L146.5,392.89 A2.5,2.5 0 0 1 144,390.39 L144,51.5 A2.5,2.5 0 0 1 146.5,49" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="144" x2="223.165" y1="71.2969" y2="71.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="66.165" x="148" y="63.9951">Modules</text></g><!--entity db--><g class="entity" data-entity="db" data-source-line="7" data-uid="ent0011" id="entity_db"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.8008" x="21.6" y="84"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="108.4008" y="89"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="106.4008" y="91"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="106.4008" y="95"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="66.8008" x="36.6" y="116.9951">Database</text></g><!--entity Auth--><g class="entity" data-entity="Auth" data-source-line="3" data-uid="ent0004" id="entity_Auth"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.8125" x="302.59" y="207.3"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="355.4025" y="212.3"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="353.4025" y="214.3"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="353.4025" y="218.3"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="32.8125" x="317.59" y="240.2951">Auth</text></g><!--entity Database--><g class="entity" data-entity="Database" data-source-line="3" data-uid="ent0005" id="entity_Database"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.8008" x="210.6" y="330.59"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="297.4008" y="335.59"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="295.4008" y="337.59"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="295.4008" y="341.59"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="66.8008" x="225.6" y="363.5851">Database</text></g><!--entity Contracts--><g class="entity" data-entity="Contracts" data-source-line="4" data-uid="ent0007" id="entity_Contracts"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="107.5186" x="160.24" y="207.3"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="247.7586" y="212.3"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="245.7586" y="214.3"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="245.7586" y="218.3"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67.5186" x="175.24" y="240.2951">Contracts</text></g><!--entity Reports--><g class="entity" data-entity="Reports" data-source-line="5" data-uid="ent0009" id="entity_Reports"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.332" x="166.83" y="84"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="241.162" y="89"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="239.162" y="91"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="239.162" y="95"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="54.332" x="181.83" y="116.9951">Reports</text></g><!--link Auth to Database--><g class="link" data-entity-1="Auth" data-entity-2="Database" data-source-line="3" data-uid="lnk6" id="link_Auth_Database"><path d="M325.07,253.98 C311.6,275.76 294.4551,303.4865 281.0151,325.2265" fill="none" id="Auth-to-Database" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="277.86,330.33,285.9949,324.7781,280.4892,326.0771,279.1903,320.5714,277.86,330.33" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="40.2188" x="306" y="296.6569">Utilise</text></g><!--link Contracts to Database--><g class="link" data-entity-1="Contracts" data-entity-2="Database" data-source-line="4" data-uid="lnk8" id="link_Contracts_Database"><path d="M220.96,253.83 C225.41,267.5 231.54,285.25 238,300.59 C242.16,310.48 244.5974,315.7784 249.2374,324.8484" fill="none" id="Contracts-to-Database" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="251.97,330.19,251.4321,320.3558,249.6928,325.7387,244.31,323.9994,251.97,330.19" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="40.2188" x="239" y="296.6569">Utilise</text></g><!--link Reports to Contracts--><g class="link" data-entity-1="Reports" data-entity-2="Contracts" data-source-line="5" data-uid="lnk10" id="link_Reports_Contracts"><path d="M214,130.68 C214,152.47 214,179.29 214,201.03" fill="none" id="Reports-to-Contracts" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="214,207.03,218,198.03,214,202.03,210,198.03,214,207.03" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="71.1318" x="215" y="173.3669">D&#233;pend de</text></g><!--SRC=[AqXCpavCJrLGSW8oKlDIb1IgkHGKql9pKbAB59HyyrDASrAB8O8A2j6EfIKPiGgwkdOAqIw99Ob9YSMfiGfM2g4bcJcPnQaGDSxvUIL5YSabnOGK1gKMv1V1bI5fir9mERoo0EWOXHIGqbeWHZ8biLWX9Och5W00]--></g></svg>
+</div>
+<em><a href="http://www.plantuml.com/plantuml/">Générer ce diagramme avec PlantUML</a></em>
+
+<h4>Liste des dépendances critiques</h4>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Dépendance</th>
+<th>Version actuelle</th>
+<th>Version recommandée</th>
+<th>Lien vers la documentation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Auth</td>
+<td><a href="https://github.com/pyca/bcrypt/">bcrypt</a></td>
+<td>3.1.7</td>
+<td>4.0.1</td>
+<td><a href="https://bcrypt.readthedocs.io/">Documentation</a></td>
+</tr>
+<tr>
+<td>Contracts</td>
+<td><a href="https://pandas.pydata.org/">pandas</a></td>
+<td>1.2.0</td>
+<td>2.0.3</td>
+<td><a href="https://pandas.pydata.org/docs/">Documentation</a></td>
+</tr>
+<tr>
+<td>Reports</td>
+<td><a href="https://matplotlib.org/">matplotlib</a></td>
+<td>3.3.4</td>
+<td>3.7.1</td>
+<td><a href="https://matplotlib.org/stable/contents.html">Documentation</a></td>
+</tr>
+</tbody>
+</table>---
+<strong><a href="#sommaire">Retour au sommaire</a></strong>
+
+<hr>
+
+<h3>3.3. <a href="#sécurité">Sécurité</a> <a id="sécurité"></a></h3>
+<h4>Schéma d'authentification</h4>
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="356px" preserveAspectRatio="none" style="width:732px;height:356px;background:#FFFFFF;" version="1.1" viewBox="0 0 732 356" width="732px" zoomAndPan="magnify"><defs/><g><g><title>Utilisateur</title><rect fill="#000000" fill-opacity="0.00000" height="194.7969" width="8" x="40.0049" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="44" x2="44" y1="81.2969" y2="276.0938"/></g><g><title>Frontend</title><rect fill="#000000" fill-opacity="0.00000" height="194.7969" width="8" x="234.5728" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="238.0181" x2="238.0181" y1="81.2969" y2="276.0938"/></g><g><title>Backend .Auth.</title><rect fill="#000000" fill-opacity="0.00000" height="194.7969" width="8" x="453.3569" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="457.083" x2="457.083" y1="81.2969" y2="276.0938"/></g><g><title>Base de donn.es</title><rect fill="#000000" fill-opacity="0.00000" height="194.7969" width="8" x="655.7705" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="659.6655" x2="659.6655" y1="81.2969" y2="276.0938"/></g><g class="participant participant-head" data-participant="Utilisateur"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72.0098" x="5" y="77.9951">Utilisateur</text><ellipse cx="44.0049" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M44.0049,21.5 L44.0049,48.5 M31.0049,29.5 L57.0049,29.5 M44.0049,48.5 L31.0049,63.5 M44.0049,48.5 L57.0049,63.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-tail" data-participant="Utilisateur"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72.0098" x="5" y="288.0889">Utilisateur</text><ellipse cx="44.0049" cy="299.8906" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M44.0049,307.8906 L44.0049,334.8906 M31.0049,315.8906 L57.0049,315.8906 M44.0049,334.8906 L31.0049,349.8906 M44.0049,334.8906 L57.0049,349.8906" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-head" data-participant="fe"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.1094" x="200.0181" y="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63.1094" x="207.0181" y="69.9951">Frontend</text></g><g class="participant participant-tail" data-participant="fe"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.1094" x="200.0181" y="275.0938"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63.1094" x="207.0181" y="295.0889">Frontend</text></g><g class="participant participant-head" data-participant="auth"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="122.5479" x="396.083" y="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108.5479" x="403.083" y="69.9951">Backend (Auth)</text></g><g class="participant participant-tail" data-participant="auth"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="122.5479" x="396.083" y="275.0938"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108.5479" x="403.083" y="295.0889">Backend (Auth)</text></g><g class="participant participant-head" data-participant="db"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="134.21" x="592.6655" y="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="120.21" x="599.6655" y="69.9951">Base de donn&#233;es</text></g><g class="participant participant-tail" data-participant="db"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="134.21" x="592.6655" y="275.0938"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="120.21" x="599.6655" y="295.0889">Base de donn&#233;es</text></g><g class="message" data-participant-1="Utilisateur" data-participant-2="fe"><polygon fill="#181818" points="226.5728,108.4297,236.5728,112.4297,226.5728,116.4297,230.5728,112.4297" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="44.0049" x2="232.5728" y1="112.4297" y2="112.4297"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="170.5679" x="51.0049" y="107.3638">Saisie email/mot de passe</text></g><g class="message" data-participant-1="fe" data-participant-2="auth"><polygon fill="#181818" points="445.3569,137.5625,455.3569,141.5625,445.3569,145.5625,449.3569,141.5625" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="238.5728" x2="451.3569" y1="141.5625" y2="141.5625"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="194.7842" x="245.5728" y="136.4966">POST /login (email, password)</text></g><g class="message" data-participant-1="auth" data-participant-2="db"><polygon fill="#181818" points="647.7705,166.6953,657.7705,170.6953,647.7705,174.6953,651.7705,170.6953" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="457.3569" x2="653.7705" y1="170.6953" y2="170.6953"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="178.4136" x="464.3569" y="165.6294">V&#233;rification des identifiants</text></g><g class="message" data-participant-1="db" data-participant-2="auth"><polygon fill="#181818" points="468.3569,195.8281,458.3569,199.8281,468.3569,203.8281,464.3569,199.8281" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="462.3569" x2="658.7705" y1="199.8281" y2="199.8281"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="136.811" x="474.3569" y="194.7622">Retourne l'utilisateur</text></g><g class="message" data-participant-1="auth" data-participant-2="fe"><polygon fill="#181818" points="249.5728,224.9609,239.5728,228.9609,249.5728,232.9609,245.5728,228.9609" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="243.5728" x2="456.3569" y1="228.9609" y2="228.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="150.2236" x="255.5728" y="223.895">Retourne un token JWT</text></g><g class="message" data-participant-1="fe" data-participant-2="Utilisateur"><polygon fill="#181818" points="55.0049,254.0938,45.0049,258.0938,55.0049,262.0938,51.0049,258.0938" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="49.0049" x2="237.5728" y1="258.0938" y2="258.0938"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="100.6675" x="61.0049" y="253.0278">Stocke le token</text></g><!--SRC=[NT0nJaCn30RWFQUmkj1ALDqPa61WO07H0hFxue95QZ_5ZZXJpz6BuQO27aWPelZB7ySuk5PuTYviwDHg6h4w3poYECpkgegJv1cWmOx-5czn-8WQp6-QloywmTZzHqQGOwd8yK3MMTwcD7aJbjSH3bUmHZOce3roMUtLJnT7DACKvK2d-62F3-iDh8g-iS2yuylEFhNcHUeeSDu6VJaUAkzuG6ULY3FWJE9n5DrP2hFypNqYrrQ5e5oqoKJEWTyz_g0cu1e3WFlNJUylnFHJyHtNc10KEiCl]--></g></svg>
+</div>
+<em><a href="http://www.plantuml.com/plantuml/">Générer ce diagramme avec PlantUML</a></em>
+
+<h4>Vulnérabilités identifiées</h4>
+1. <strong>Token JWT non expiré</strong> :
+   - Les tokens actuels n'ont pas de durée de vie limitée.
+   - <strong>Solution</strong> : Utiliser la bibliothèque <a href="https://pyjwt.readthedocs.io/">PyJWT</a> pour ajouter une expiration.
+2. <strong>Mot de passe non haché</strong> :
+   - Les mots de passe sont stockés en clair dans la base de données.
+   - <strong>Solution</strong> : Utiliser <a href="https://bcrypt.readthedocs.io/">bcrypt</a> pour le hachage.
+
+<hr>
+<strong><a href="#sommaire">Retour au sommaire</a></strong>
+
+<hr>
+
+<h3>3.4. <a href="#dette-technique">Dette technique</a> <a id="dette-technique"></a></h3>
+<h4>Problèmes identifiés</h4>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+<th>Priorité</th>
+<th>Solution proposée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code dupliqué</td>
+<td>La fonction `calculateScore()` est dupliquée dans 3 modules.</td>
+<td>Haute</td>
+<td>Centraliser dans un module dédié.</td>
+</tr>
+<tr>
+<td>Dépendances obsolètes</td>
+<td>Utilisation de <a href="https://pandas.pydata.org/">pandas 1.2.0</a> (vulnérabilités connues).</td>
+<td>Moyenne</td>
+<td>Mettre à jour vers <a href="https://pandas.pydata.org/docs/">pandas 2.0.3</a>.</td>
+</tr>
+<tr>
+<td>Tests manquants</td>
+<td>Aucun test unitaire pour le module `Reports`.</td>
+<td>Haute</td>
+<td>Ajouter des tests avec <a href="https://docs.pytest.org/">pytest</a>.</td>
+</tr>
+</tbody>
+</table>---
+<strong><a href="#sommaire">Retour au sommaire</a></strong>
+
+<hr>
+
+<h2>4. <a href="#conclusion">Conclusion</a> <a id="conclusion"></a></h2>
+<h3>Synthèse</h3>
+<ul>
+<li><strong>Fonctionnel</strong> :</li>
+</ul>
+  - L'application couvre les besoins de base d'un CRM.
+  - Les règles métier (score de fidélité, workflow des réclamations) sont bien définies.
+<ul>
+<li><strong>Technique</strong> :</li>
+</ul>
+  - Architecture modulaire mais avec des dépendances obsolètes.
+  - Problèmes de sécurité critiques (authentification, stockage des mots de passe).
+
+<h3>Recommandations</h3>
+1. <strong>Corriger les vulnérabilités</strong> :
+   - Implémenter l'expiration des tokens JWT avec <a href="https://pyjwt.readthedocs.io/">PyJWT</a>.
+   - Hacher les mots de passe avec <a href="https://bcrypt.readthedocs.io/">bcrypt</a>.
+2. <strong>Améliorer la maintenabilité</strong> :
+   - Supprimer le code dupliqué.
+   - Mettre à jour les dépendances (ex. <a href="https://pandas.pydata.org/">pandas</a>).
+3. <strong>Renforcer les tests</strong> :
+   - Ajouter des tests unitaires et d'intégration avec <a href="https://docs.pytest.org/">pytest</a>.
+
+<hr>
+<strong><a href="#sommaire">Retour au sommaire</a></strong>
+``<code>
+
+<hr>
+
+<h3><strong>Points clés du document avec hyperliens</strong> :</h3>
+1. <strong>Liens internes</strong> :
+   - Permettent de naviguer entre les sections (ex. </code><a href="#sommaire">Retour au sommaire</a><code>).
+   - Chaque titre a un ancrage (</code><a id="section"></a>`) pour faciliter la navigation.
+
+<p>2. <strong>Liens externes</strong> :
+   - Pointent vers des ressources utiles :
+     - <a href="http://www.plantuml.com/">PlantUML</a> pour générer les diagrammes.
+     - <a href="#">Documentation des bibliothèques</a> (bcrypt, pandas, etc.).
+     - Outils comme <a href="https://docs.pytest.org/">pytest</a> pour les tests.</p>
+
+<p>3. <strong>Diagrammes PlantUML</strong> :
+   - Chaque diagramme est accompagné d'un lien vers l'outil en ligne pour le visualiser.</p>
+
+<hr>
+<strong>Prochaine étape</strong> : Si vous me fournissez vos fichiers, je peux adapter ce document à votre application réelle ! 🚀
+</body>
+</html>

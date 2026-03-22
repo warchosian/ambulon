@@ -121,7 +121,7 @@ source ambulon_env/bin/activate  # Linux/Mac
 .\ambulon_env\Scripts\Activate.ps1  # Windows
 
 # 2. Utiliser Ambulon
-ambulon piag-search "ma requête"
+ambulon piag-rag-search "ma requête"
 ambulon scan -o document.pdf
 
 # 3. Quand terminé, désactiver
@@ -210,7 +210,7 @@ python -c "import site; print(site.USER_BASE + '\\Scripts')"
 ```bash
 # Directement disponible (après configuration PATH)
 ambulon --version
-ambulon piag-search "requête"
+ambulon piag-rag-search "requête"
 ```
 
 ---
@@ -246,7 +246,7 @@ pip install ambulon-2.0.6-py3-none-any.whl
 ```bash
 # Directement disponible
 ambulon --version
-ambulon piag-search "requête"
+ambulon piag-rag-search "requête"
 ```
 
 ---
@@ -313,7 +313,7 @@ python -c "import app; print('✅ Ambulon import OK')"
 # → ✅ Ambulon import OK
 
 # 6. Test d'une commande
-ambulon piag-collection-list --help
+ambulon piag-rag-collection-list --help
 ```
 
 ---
@@ -371,7 +371,7 @@ export GITLAB_PRIVATE_TOKEN="glpat-xxxxx"
 export OCR_LANGUAGE="fra"
 
 # Utiliser Ambulon (lit automatiquement les variables)
-ambulon piag-search "requête"
+ambulon piag-rag-search "requête"
 ```
 
 ### Fichier .env (Optionnel)
@@ -400,7 +400,7 @@ source .env  # Linux/Mac
 
 ```bash
 # Recherche PIAG
-ambulon piag-search "ma requête" -o results.json
+ambulon piag-rag-search "ma requête" -o results.json
 
 # Scanner un document
 ambulon scan -o scans/document.pdf --resolution 300
@@ -409,7 +409,7 @@ ambulon scan -o scans/document.pdf --resolution 300
 ambulon ocr image.jpg --lang fra -o texte.txt
 
 # Lister les collections PIAG
-ambulon piag-collection-list
+ambulon piag-rag-collection-list
 
 # Cloner des projets GitLab
 ambulon gitlab-clone --config config/gitlab.yaml
@@ -429,7 +429,7 @@ source ambulon_env/bin/activate
 export PIAG_RAG_API_TOKEN="votre-token"
 
 # 3. Exécuter les commandes
-ambulon piag-search "intelligence artificielle" -o ia_results.json
+ambulon piag-rag-search "intelligence artificielle" -o ia_results.json
 ambulon scan -o scans/rapport.pdf
 ambulon ocr scans/*.jpg --lang fra
 
@@ -600,7 +600,7 @@ pip install --user ambulon-2.0.6-py3-none-any.whl
 #!/bin/bash
 export PATH="$HOME/.local/bin:$PATH"
 ambulon wikisi-scrape --config /etc/ambulon/wikisi.yaml
-ambulon piag-doc-upload wikisi-downloaded/*.md
+ambulon piag-rag-doc-upload wikisi-downloaded/*.md
 ```
 
 ### Utilisation dans Docker

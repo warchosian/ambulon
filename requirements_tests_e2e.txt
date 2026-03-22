@@ -1,0 +1,9 @@
+# Dépendances pour les tests E2E PIAG
+# Installation: pip install -r requirements_tests_e2e.txt
+
+# Requis pour les tests
+pyyaml>=6.0
+requests>=2.28.0
+
+# Optionnel - déjà installé si vous avez installé ambulon
+# Mais nécessaire si vous lancez les scripts en standalone

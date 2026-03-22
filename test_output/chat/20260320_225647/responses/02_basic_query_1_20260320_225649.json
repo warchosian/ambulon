@@ -1,0 +1,21 @@
+{
+  "id": "712a88928b2741539186877c7186fa36",
+  "created": 1774043808,
+  "model": "mte-api-piag-mistral-medium-latest",
+  "object": "chat.completion",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "La capitale de la France est **Paris**. 🇫🇷✨\n\nC'est également la plus grande ville du pays et un centre culturel, économique et politique majeur. Tu cherches des informations spécifiques sur Paris ? 😊",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 52,
+    "prompt_tokens": 12,
+    "total_tokens": 64
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "chunks": [
+    {
+      "score": 0.014492753623188406,
+      "rerank_score": 2.69657301902771,
+      "document_id": "d0405333-fd68-4143-81f6-23a1721dc84b",
+      "document_name": "sireines.dat-itoced-itoced.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 29,
+      "text": "\n\n\n9.1 Authentification et autorisation\n[↑](#table-of-contents)\n[↑](#toc-91-authentification-et-autorisation-table-of-contents)\nProtocole, Implémentation = SAML 2.0 / CAS via Cerbère. Gestion des sessions, Implémentation = Sessions HTTP côté serveur (Struts 2). Contrôles d'accès, Implémentation = RBAC basé sur les rôles Cerbère (gestionnaire, rapporteur, admin). Déconnexion, Implémentation = SSO logout redirect vers Cerbère\n9.2 Journalisation et traçabilité\n[↑](#table-of-contents)\n[↑](#toc-92-journalisation-et-traçabilité-table-of-contents)\n```\nhistorique\n```\n```\nimport_erreur\n```\nLogs applicatifs, Destination = Stdout/Stderr (Docker) → Loki. Logs applicatifs, Format = Log4j XML. Audit métier, Destination = . Audit métier, Format = \n9.3 Gestion des erreurs\n[↑](#table-of-contents)\n[↑](#toc-93-gestion-des-erreurs-table-of-contents)\n```\nErrorHandler\n```\n```\nSAS_IMPORT\n```\nUI, Stratégie = Messages utilisateur internationalisés (FR), pas de stack trace exposée. Application, Stratégie = \n9.4 API et intégrations\n[↑](#table-of-contents)\n[↑](#toc-94-api-et-intégrations-table-of-contents)\nL'application ne propose pas d'API REST publique. Les intégrations se font via :\n- **Import de fichiers** : CSV, Excel (via formulaires web)\n- **Export de rapports** : PDF, Excel, HTML (via BIRT)\n- **Recherche interne** : Elasticsearch (non exposé externement)\n[↩ Retour au sommaire](#introduction)"
+    },
+    {
+      "score": 0.029726775956284153,
+      "rerank_score": 2.2465858459472656,
+      "document_id": "67f05d7e-948e-4e9f-a3f3-3965a457dc2e",
+      "document_name": "sireines.dat.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 28,
+      "text": "Dossier d'Architecture Technique (DAT) - SIREINES\n9. Sujets transverses {#transverses}\n9.1 Authentification et autorisation\nProtocole, Implémentation = SAML 2.0 / CAS via Cerbère. Gestion des sessions, Implémentation = Sessions HTTP côté serveur (Struts 2). Contrôles d'accès, Implémentation = RBAC basé sur les rôles Cerbère (gestionnaire, rapporteur, admin). Déconnexion, Implémentation = SSO logout redirect vers Cerbère"
+    },
+    {
+      "score": 0.029116045245077504,
+      "rerank_score": 2.2465858459472656,
+      "document_id": "ea48d9f3-7cdf-4eb5-91dc-1049cd0b035f",
+      "document_name": "sireines.dat-toced.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 26,
+      "text": "Dossier d'Architecture Technique (DAT) - SIREINES\n9. Sujets transverses {#transverses}\n9.1 Authentification et autorisation\nProtocole, Implémentation = SAML 2.0 / CAS via Cerbère. Gestion des sessions, Implémentation = Sessions HTTP côté serveur (Struts 2). Contrôles d'accès, Implémentation = RBAC basé sur les rôles Cerbère (gestionnaire, rapporteur, admin). Déconnexion, Implémentation = SSO logout redirect vers Cerbère"
+    },
+    {
+      "score": 0.029083245521601686,
+      "rerank_score": 1.1459242105484009,
+      "document_id": "a3e74cb8-a335-4240-9ef2-f2f5d0654339",
+      "document_name": "sireines.cctp.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 16,
+      "text": "CAHIER DES CLAUSES TECHNIQUES PARTICULIÈRES (CCTP)\n4. EXIGENCES DE SÉCURITÉ\n4.2 Authentification et contrôle d'accès\nAuthentification unique, Spécification = Intégration Cerbère (SSO). Authentification unique, Modalité de vérification = Test de connexion via portail agent. Gestion des habilitations, Spécification = Rôles : ADMIN, GESTIONNAIRE, RAPPORTEUR, AGENT. Gestion des habilitations, Modalité de vérification = Matrice des droits documentée. Durée de session, Spécification = Timeout de 30 minutes d'inactivité. Durée de session, Modalité de vérification = Test de déconnexion automatique. Mot de passe applicatif (admin technique), Spécification = Complexité : 12 caractères minimum, majuscules, minuscules, chiffres, caractères spéciaux. Mot de passe applicatif (admin technique), Modalité de vérification = Audit de configuration"
+    },
+    {
+      "score": 0.015873015873015872,
+      "rerank_score": -3.148780107498169,
+      "document_id": "d0405333-fd68-4143-81f6-23a1721dc84b",
+      "document_name": "sireines.dat-itoced-itoced.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 8,
+      "text": "\n\n\nD - Disponibilité, Exigence = RTO < 4h, RPO < 1h. D - Disponibilité, Mesure technique = Sauvegardes automatisées, réplication BDD, conteneurisation. I - Intégrité, Exigence = Traçabilité des modifications sur les dossiers. I - Intégrité, Mesure technique = Audit trail complet, checksums des documents. C - Confidentialité, Exigence = Chiffrement des données sensibles. C - Confidentialité, Mesure technique = Chiffrement AES-256 des dumps, HTTPS obligatoire, contrôles d'accès RBAC. T - Traçabilité, Exigence = Logs d'accès et d'actions conservés 1 an. T - Traçabilité, Mesure technique = Centralisation des logs (Loki), supervision PSIN\n3.4 Contraintes réglementaires\n[↑](#table-of-contents)\n[↑](#toc-34-contraintes-réglementaires-table-of-contents)\n- **RGPD** : Déclaration enregistrée, droit à l'effacement et à la portabilité\n- **RGS (Référentiel Général de Sécurité)** : Niveau \"standard\" requis\n- **Accessibilité** : Engagement de conformité RGAA (audit prévu)\n[↩ Retour au sommaire](#introduction)"
+    },
+    {
+      "score": 0.015625,
+      "rerank_score": -7.616384029388428,
+      "document_id": "0c37a61c-505e-4507-a94c-0c58f9fd4295",
+      "document_name": "sireines.components-toced.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 31,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n7. Checklist OWASP Top 10 2021 - Mapping complet {#owasp}\n```\nMotCleNiveauDetailAction\n```\n```\nSeanceAffectationAction\n```\n```\n@Secured\n```\n```\nsireines-database/script/\n```\n```\nDossierRechercheMotsClefsAction\n```\n```\ndossiersDao.ksp\n```\n```\nImportsServicesImpl\n```\n```\nweb.xml\n```\n```\ncontext.xml\n```\n```\npom.xml\n```\n```\nCerbereUtil\n```\n```\nSireinesSessionFilter\n```\n```\nExtractionsServicesImpl\n```\n```\nExtractionsServicesImpl\n```\nA01:2021-Broken Access Control, Composant concerné = . A01:2021-Broken Access Control, Statut = . A01:2021-Broken Access Control, Preuve/Justification = . A01:2021-Broken Access Control, Action requise = \nA10:2021-SSRF, Templates BIRT sans signature, risque modification = . A10:2021-SSRF, Signature templates = "
+    },
+    {
+      "score": 0.014925373134328358,
+      "rerank_score": -7.665534496307373,
+      "document_id": "87f68539-f7de-4aed-b3f0-33b21e12049a",
+      "document_name": "sireines.components.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 32,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n7. Checklist OWASP Top 10 2021 - Mapping complet {#owasp}\n```\nMotCleNiveauDetailAction\n```\n,\n```\nSeanceAffectationAction\n```\n```\n@Secured\n```\n```\nsireines-database/script/\n```\n```\nDossierRechercheMotsClefsAction\n```\n,\n```\ndossiersDao.ksp\n```\n```\nImportsServicesImpl\n```\n```\nweb.xml\n```\n,\n```\ncontext.xml\n```\n```\npom.xml\n```\n```\nCerbereUtil\n```\n,\n```\nSireinesSessionFilter\n```\n```\nExtractionsServicesImpl\n```\n```\nExtractionsServicesImpl\n```\nA01:2021-Broken Access Control, Composant concerné = . A01:2021-Broken Access Control, Statut = . A01:2021-Broken Access Control, Preuve/Justification = . A01:2021-Broken Access Control, Action requise = \nA10:2021-SSRF, Templates BIRT sans signature, risque modification = . A10:2021-SSRF, Signature templates = "
+    }
+  ]
+}

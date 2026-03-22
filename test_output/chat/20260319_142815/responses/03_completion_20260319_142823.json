@@ -1,0 +1,21 @@
+{
+  "id": "a52d9fb133d34d639c79d623bdb47156",
+  "object": "text_completion",
+  "created": 1773926901,
+  "model": "mte-api-piag-mistral-medium-latest",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "text": "Bonjour ! 😊 Je vais très bien, merci de demander – et vous, comment allez-vous aujourd’hui ? Puis-je vous aider avec quelque chose ? (Un conseil, une question, une curiosité… ou juste pour papoter ? 😄)\n\n*Petit bonus* : Si vous voulez pratiquer le français, je suis là pour corriger ou discuter ! 🇫🇷✨",
+      "logprobs": null
+    }
+  ],
+  "usage": {
+    "completion_tokens": 86,
+    "prompt_tokens": 10,
+    "total_tokens": 96,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": null
+  }
+}

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUIDELINES_CLAUDE_PLANTUML</title>
+    <style>
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 2em;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #34495e;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+            line-height: 1.4;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+        pre.tree {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        li {
+            margin: 0.5em 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding: 0.5em 0 0.5em 1em;
+            color: #555;
+            background: #f8f9fa;
+            border-radius: 0 3px 3px 0;
+        }
+        blockquote p {
+            margin: 0.5em 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+    </style>
+</head>
+<body>
+<h1>Guidelines Claude pour PlantUML</h1>
+
+<strong>Document de référence</strong> : Bonnes pratiques pour Claude lors de la création ou vérification de diagrammes PlantUML
+
+<strong>Date de création</strong> : 2026-02-02
+<strong>Auteur</strong> : Hervé Marchal <herve.marchal@hotmail.fr>
+<strong>Version</strong> : 1.0
+
+<hr>
+
+<h2>Table des Matières</h2>
+
+<p>1. <a href="#introduction">Introduction</a>
+2. <a href="#syntaxe-objets">Syntaxe des Objets</a>
+3. <a href="#nommage">Nommage des Éléments</a>
+4. <a href="#checklist">Checklist de Révision</a></p>
+
+<hr>
+
+<a name="introduction"></a>
+<h2>1. Introduction</h2>
+
+<p>Ce document contient les <strong>bonnes pratiques de style</strong> recommandées pour Claude lors de la création ou vérification de diagrammes PlantUML.</p>
+
+<p>Ces règles ne sont <strong>pas des erreurs techniques</strong> (les deux syntaxes fonctionnent), mais des <strong>conventions</strong> pour améliorer la lisibilité et la maintenabilité.</p>
+
+<hr>
+
+<a name="syntaxe-objets"></a>
+<h2>2. Syntaxe des Objets</h2>
+
+<h3>✅ Guideline #1 : Préférer la Syntaxe Explicite pour les Objets</h3>
+
+<strong>Recommandation</strong> : Utiliser la syntaxe avec séparation nom/attributs plutôt que la syntaxe avec accolades.
+
+<h4>⚠️ Syntaxe valide mais non recommandée</h4>
+
+<p><pre><code class="language-plantuml">@startuml
+object "feat:" {
+  Impact = MINOR
+  Exemple = "3.0.2 → 3.1.0"
+}
+@enduml
+</code></pre>
+<strong>Pourquoi éviter</strong> :
+<ul>
+<li>La syntaxe avec accolades est moins explicite</li>
+<li>Mélange la déclaration et les attributs</li>
+<li>Moins cohérente avec la documentation PlantUML officielle</li>
+</ul></p>
+
+<h4>✅ Syntaxe recommandée (explicite)</h4>
+
+<p><pre><code class="language-plantuml">@startuml
+object feat
+feat : Type = "feat:"
+feat : Impact = MINOR
+feat : Exemple = "3.0.2 → 3.1.0"
+@enduml
+</code></pre>
+<strong>Avantages</strong> :
+<ul>
+<li>✅ Séparation claire : déclaration puis attributs</li>
+<li>✅ Syntaxe officielle PlantUML</li>
+<li>✅ Plus facile à modifier (ajouter/retirer des attributs)</li>
+<li>✅ Cohérence avec la documentation</li>
+</ul></p>
+
+<strong>Pattern recommandé</strong> :
+<pre><code class="language-">object nomObjet
+nomObjet : attribut1 = valeur1
+nomObjet : attribut2 = valeur2
+</code></pre>
+<hr>
+
+<a name="nommage"></a>
+<h2>3. Nommage des Éléments</h2>
+
+<h3>✅ Guideline #2 : Éviter les Caractères Spéciaux dans les Noms d'Objets</h3>
+
+<strong>Recommandation</strong> : Ne pas utiliser <code>:</code> dans le nom d'un objet. Placer cette information dans un attribut.
+
+<h4>⚠️ Syntaxe valide mais non recommandée</h4>
+
+<p><pre><code class="language-plantuml">@startuml
+object "docs:" {
+  Impact = Aucun
+}
+@enduml
+</code></pre>
+<strong>Pourquoi éviter</strong> :
+<ul>
+<li>Le <code>:</code> est un séparateur réservé pour les stéréotypes et attributs</li>
+<li>Peut causer de la confusion lors de la lecture</li>
+<li>Rend le code moins maintenable</li>
+</ul></p>
+
+<h4>✅ Syntaxe recommandée</h4>
+
+<p><pre><code class="language-plantuml">@startuml
+object docs
+docs : Type = "docs:"
+docs : Impact = Aucun
+@enduml
+</code></pre>
+<strong>Avantages</strong> :
+<ul>
+<li>✅ Nom simple et clair</li>
+<li>✅ Information du type dans un attribut dédié</li>
+<li>✅ Évite les conflits avec les caractères réservés</li>
+<li>✅ Plus facile à référencer dans les relations</li>
+</ul></p>
+
+<strong>Caractères à éviter dans les noms</strong> :
+<ul>
+<li><code>:</code> (deux-points) - séparateur de stéréotype</li>
+<li><code>\n</code> (newline) - erreurs de référence</li>
+<li><code><em></code> et <code></em>*</code> - conflit avec markdown</li>
+<li><code>=></code>, <code>-></code>, <code>--</code> - symboles de relation</li>
+</ul>
+
+<strong>Solution</strong> : Mettre ces caractères dans des attributs ou le contenu, pas dans les noms.
+
+<hr>
+
+<a name="checklist"></a>
+<h2>4. Checklist de Révision</h2>
+
+<p>Lorsque Claude crée ou vérifie un diagramme PlantUML, vérifier :</p>
+
+<h3>Structure générale</h3>
+<ul>
+<li>[ ] Chaque bloc commence par <code>@startuml</code></li>
+<li>[ ] Chaque bloc se termine par <code>@enduml</code></li>
+<li>[ ] Ordre des éléments : <code>"Nom" as alias #couleur</code></li>
+</ul>
+
+<h3>Objets</h3>
+<ul>
+<li>[ ] Syntaxe explicite privilégiée : <code>object nom</code> puis <code>nom : attr = val</code></li>
+<li>[ ] Pas de <code>:</code> dans les noms d'objets</li>
+<li>[ ] Caractères spéciaux évités dans les identifiants</li>
+</ul>
+
+<h3>Notes et documentation</h3>
+<ul>
+<li>[ ] Contenu complexe/indenté dans des notes, pas dans les rectangles</li>
+<li>[ ] Notes attachées avec des alias : <code>note right of alias</code></li>
+<li>[ ] Formatage HTML dans les notes : <code><b></code>, <code><i></code>, <code><u></code></li>
+</ul>
+
+<h3>Diagrammes d'activité</h3>
+<ul>
+<li>[ ] <code>backward</code> uniquement dans <code>repeat...repeat while</code></li>
+<li>[ ] Pas de <code>backward</code> dans des structures <code>if...endif</code></li>
+</ul>
+
+<h3>Mindmaps</h3>
+<ul>
+<li>[ ] Hiérarchie respectée : <code><em></code> (racine), <code><strong></code> (niveau 1), <code></strong></em></code> (niveau 2)</li>
+<li>[ ] Pas de <code>**</code> pour le gras (utiliser <code><b></code> si nécessaire)</li>
+</ul>
+
+<hr>
+
+<h2>Résumé</h2>
+
+<p>Ces guidelines permettent à Claude de :
+1. <strong>Générer du code PlantUML cohérent</strong> et maintenable
+2. <strong>Suivre les conventions</strong> de la documentation officielle
+3. <strong>Éviter les patterns</strong> qui fonctionnent mais sont déconseillés
+4. <strong>Faciliter la révision</strong> et la modification ultérieure</p>
+
+<strong>Note importante</strong> : Ces règles sont des <strong>recommandations</strong>, pas des erreurs. Les deux syntaxes fonctionnent en PlantUML, mais la syntaxe recommandée améliore la qualité du code généré.
+
+</body>
+</html>

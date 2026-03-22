@@ -1,0 +1,21 @@
+{
+  "id": "ed5fb1f0a1294a4989d5c5704b7afa7a",
+  "created": 1774043810,
+  "model": "mte-api-piag-mistral-medium-latest",
+  "object": "chat.completion",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Voici un nombre aléatoire entre 1 et 100 : **47**\n\n*(Généré aléatoirement à l'instant !)* 😊",
+        "role": "assistant"
+      }
+    }
+  ],
+  "usage": {
+    "completion_tokens": 36,
+    "prompt_tokens": 19,
+    "total_tokens": 55
+  }
+}

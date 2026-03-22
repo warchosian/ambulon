@@ -1,0 +1,49 @@
+{
+  "chunks": [
+    {
+      "score": 0.016129032258064516,
+      "rerank_score": -5.21539831161499,
+      "document_id": "52c7a19a-ea92-4e38-a52f-35d83c337f74",
+      "document_name": "sireines.code.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 2545,
+      "text": "Projet : sireines\n📄 Contenu des fichiers\n\n\t/**\n\t * Execution de l'extraction 2 (gestion de séance).\n\t * @param criteres criteres\n\t * @return extraction\n\t */\n\tVFile executeExtractionDeux(ExDeuxCritere criteres);\n\n\t/**\n\t * Execution de l'extraction 3 (gestion de séance).\n\t * @param criteres criteres\n\t * @return extraction\n\t */\n\tVFile executeExtractionTrois(ExTroisCritere criteres);\n\n\t/**\n\t * Execution de l'extraction 4 (gestion de séance).\n\t * @param criteres criteres\n\t * @return extraction\n\t */\n\tVFile executeExtractionQuatre(ExQuatreCritere criteres);\n\n\t/**\n\t * Execution de l'extraction 5 (gestion de séance).\n\t * @param criteres criteres\n\t * @return extraction\n\t */\n\tVFile executeExtractionCinq(ExCinqCritere criteres);\n\n\t/**\n\t * Execution de l'extraction 6 (gestion de séance).\n\t * @param criteres criteres\n\t * @return extraction\n\t */\n\tVFile executeExtractionSix(ExSixCritere criteres);\n\n\t/**\n\t * Execution de l'extraction 7 (gestion de séance).\n\t * @param criteres criteres\n\t * @return extraction\n\t */\n\tVFile executeExtractionSept(ExSeptCritere criteres);\n\n\t/**\n\t * Execution de l'extraction 8 (gestion de séance).\n\t * @param criteres criteres\n\t * @return extraction\n\t */\n\tVFile executeExtractionHuit(ExHuitCritere criteres);\n\n\t/**\n\t * Execution de l'extraction 9 (gestion de séance).\n\t * @param criteres criteres\n\t * @return extraction\n\t */\n\tVFile executeExtractionNeuf(ExNeufCritere criteres);"
+    },
+    {
+      "score": 0.015384615384615385,
+      "rerank_score": -5.231106758117676,
+      "document_id": "a3e74cb8-a335-4240-9ef2-f2f5d0654339",
+      "document_name": "sireines.cctp.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 7,
+      "text": "CAHIER DES CLAUSES TECHNIQUES PARTICULIÈRES (CCTP)\n2. DESCRIPTION TECHNIQUE DÉTAILLÉE\n2.1 Spécifications fonctionnelles minimales (références CCF)\nL'application devra permettre la gestion des entités métier suivantes :\nAgents, Fonctionnalités minimales = CRUD agents, recherche multicritère, consultation fiche détaillée. Dossiers de qualification, Fonctionnalités minimales = Création, modification, suivi du workflow de qualification, gestion des 5 mots-clés, gestion des fiches de conclusion (avis, projet de qualification, conclusions). Séances de comité, Fonctionnalités minimales = Planification, affectation des dossiers, gestion des dates de passage. Rapporteurs, Fonctionnalités minimales = Affectation principale/secondaire, gestion des disponibilités. Référentiels, Fonctionnalités minimales = Gestion des corps, grades, structures, macro-structures, comités de domaine, qualifications, thésaurus de mots-clés. Courriers, Fonctionnalités minimales = Génération des courriers types (convocation, notification, etc.). Extractions/Reporting, Fonctionnalités minimales = 10 rapports BIRT standards + rapports CPII/ACAI spécifiques, export CSV. Imports, Fonctionnalités minimales = Import de masse via fichier (format à spécifier)"
+    },
+    {
+      "score": 0.014492753623188406,
+      "rerank_score": -6.003480911254883,
+      "document_id": "52c7a19a-ea92-4e38-a52f-35d83c337f74",
+      "document_name": "sireines.code.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 224,
+      "text": "Projet : sireines\n📄 Contenu des fichiers\n\n8A4533ED-494E-4A6B-94EB-D1FB5985535F\nGestionnaire\nGestionnaire\n1387383675\njmosset\n1387383705\njmosset\n\n3DF0EA2C-7C3F-45D1-AA19-162C47BF8E34\n18112063-1A4B-11D1-83D9-444553540000\n<Model>::i2.application.sireines.domain.referentiel\n\n\nF26AE8EB-F3CD-417B-9DAB-F9080D59375A\nDocument\nDOCUMENT\n1389377035\njmosset\n1457627298\nSPELEKOUDAS\n0\n\n\n7167A604-F18D-4E17-95F5-6391DE856B98\nDOC_ID\nDOC_ID\n1389377035\njmosset\n1389377147\njmosset\nLong\n-\nD446D313-0151-48BA-855F-6D7610964BC6\nType de fichier\nTYPE_FICHIER\n1389377132\njmosset\n1389377604\njmosset\nString\n-\n1..1\n\n\n\n\n\nDBC21667-2052-4005-932F-5E9795959D9B\nTaille\nTAILLE\n1389377132\njmosset\n1389620443\njmosset\nint\n-\n1..1\n\n\n\n\n\n6C0E7376-C699-4C21-A48C-37F6F60EC69C\nNom Fichier\nNOM_FICHIER\n1389377132\njmosset\n1389377590\njmosset\nString\n-\n1..1\n\n\n\n\n\n5FD7D3C4-91D3-457E-A3AF-9CFE45C0C787\nTaille libellé\nTAILLE_LIB\n1389620282\njmosset\n1389620328\njmosset\nString\n-\n0"
+    },
+    {
+      "score": 0.014492753623188406,
+      "rerank_score": -6.226351737976074,
+      "document_id": "3d7cff55-2ae4-4206-9275-d76f74e19822",
+      "document_name": "sireines.dat-itoced.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 1,
+      "text": "Dossier d'Architecture Technique (DAT) - SIREINES\n\n\nSIREINES (Système d'Information pour la Recherche et l'Évaluation des compétences scientifiques et techniques) est une application métier dédiée à la gestion des évaluations des compétences scientifiques et techniques au sein de l'administration française. L'application permet :\n- La gestion des dossiers d'évaluation des agents (création, suivi, qualification)\n- L'organisation des séances de comités d'évaluation\n- La gestion des rapporteurs et des gestionnaires\n- L'import/export de données et la génération de rapports statistiques\n- La gestion des référentiels (corps, grades, structures, mots-clés, thésaurus)\n```\n@startuml\n!define RECTANGLE class\n\nskinparam backgroundColor #FEFEFE\nskinparam componentStyle rectangle\n\ntitle SIREINES - Vue Système (C4-L1)\n\nrectangle \"Utilisateurs\\n(Agents, Gestionnaires,\\nRapporteurs)\" as Users #LightBlue\nrectangle \"Administrateurs\\nTechniques\" as Admins #LightGreen\n\nrectangle \"SIREINES\\n[Gestion des évaluations\\nscientifiques et techniques]\" as Sireines #Gold\n\nrectangle \"Systèmes Externes\" as Ext #LightGray {\n    rectangle \"Cerbère\\n[Authentification]\" as Cerbere #LightGray\n    rectangle \"Annuaire\\n[RH/Agents]\" as Annuaire #LightGray\n    rectangle \"Services d'impression\\net rapports\" as Print #LightGray\n}\n\nUsers --> Sireines : Utilise\\n(HTTPS)\nAdmins --> Sireines : Administre\\n(SSH/HTTPS)\nSireines --> Cerbere : Authentifie\\n(SAML/CAS)\nSireines --> Annuaire : Importe données\\n(CSV/API)\nSireines --> Print : Génère rapports\\n(BIRT/PDF)\n\n@enduml\n```"
+    },
+    {
+      "score": 0.015873015873015872,
+      "rerank_score": -6.616633892059326,
+      "document_id": "52c7a19a-ea92-4e38-a52f-35d83c337f74",
+      "document_name": "sireines.code.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 844,
+      "text": "Projet : sireines\n📄 Contenu des fichiers\n\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='MANAGEMENT GESTION GOUVERNANCE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='CONDUITE PROJET DE DEVELOPPEMENT');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='MANAGEMENT GESTION GOUVERNANCE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='CONSEIL');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='MANAGEMENT GESTION GOUVERNANCE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='COOPERATION  INTERNATIONALE');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='MANAGEMENT GESTION GOUVERNANCE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='DEBAT PUBLIC SUR DES INFRASTRUCTURES');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='MANAGEMENT GESTION GOUVERNANCE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='DIALOGUE PUBLIC');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='MANAGEMENT GESTION GOUVERNANCE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='DIRECTEUR DE PROJET');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='MANAGEMENT GESTION GOUVERNANCE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='ESTIMATION DES PROJETS');"
+    }
+  ]
+}

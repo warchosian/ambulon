@@ -1,0 +1,180 @@
+<p>Bien sûr ! Voici un document Markdown complet contenant <strong>3
+diagrammes PlantUML</strong>, <strong>3 diagrammes Mermaid</strong> et
+<strong>3 diagrammes Graphviz</strong>, soigneusement structuré et prêt
+à être utilisé.</p>
+<h1 id="collection-de-diagrammes-exemples-complets">Collection de
+diagrammes – Exemples complets</h1>
+<p>Ce document présente <strong>neuf diagrammes</strong> répartis en
+trois familles : - <strong>3 diagrammes PlantUML</strong> - <strong>3
+diagrammes Mermaid</strong> - <strong>3 diagrammes Graphviz</strong></p>
+<hr />
+<h2 id="diagrammes-plantuml">🌿 Diagrammes PlantUML</h2>
+<h3 id="diagramme-de-séquence-authentification-utilisateur">1. Diagramme
+de séquence – Authentification utilisateur</h3>
+<pre class="plantuml"><code>@startuml
+actor Utilisateur
+participant &quot;Interface Web&quot; as Web
+participant &quot;Service Auth&quot; as Auth
+database &quot;Base de données&quot; as DB
+
+Utilisateur -&gt; Web : Saisit identifiants
+Web -&gt; Auth : Envoie requête
+Auth -&gt; DB : Vérifie les données
+DB --&gt; Auth : Résultat
+Auth --&gt; Web : Jeton d&#39;authentification
+Web --&gt; Utilisateur : Accès autorisé
+@enduml</code></pre>
+<h3 id="diagramme-de-classes-système-de-gestion-de-bibliothèque">2.
+Diagramme de classes – Système de gestion de bibliothèque</h3>
+<pre class="plantuml"><code>@startuml
+class Livre {
+  -String titre
+  -String ISBN
+  +emprunter()
+  +rendre()
+}
+
+class Membre {
+  -String nom
+  -String idMembre
+  +emprunterLivre(Livre)
+}
+
+class Bibliothèque {
+  -List&lt;Livre&gt; catalogue
+  +ajouterLivre(Livre)
+  +rechercherLivre(String)
+}
+
+Membre &quot;1&quot; -- &quot;0..*&quot; Livre : emprunte &gt;
+@enduml</code></pre>
+<h3 id="diagramme-détats-cycle-de-vie-dune-commande">3. Diagramme
+d’états – Cycle de vie d’une commande</h3>
+<pre class="plantuml"><code>@startuml
+[*] --&gt; Créée
+Créée --&gt; Payée : paiement reçu
+Payée --&gt; Expédiée : préparation terminée
+Expédiée --&gt; Livrée : colis reçu
+Livrée --&gt; [*]
+Expédiée --&gt; Annulée : retour client
+Payée --&gt; Annulée : annulation avant expédition
+Annulée --&gt; [*]
+@enduml</code></pre>
+<hr />
+<h2 id="diagrammes-mermaid">🌊 Diagrammes Mermaid</h2>
+<h3 id="flowchart-processus-de-validation-de-prêt-immobilier">1.
+Flowchart – Processus de validation de prêt immobilier</h3>
+<pre class="mermaid"><code>flowchart TD
+    A[Demande de prêt] --&gt; B{Dossier complet ?}
+    B -- Non --&gt; C[Demander pièces manquantes]
+    C --&gt; B
+    B -- Oui --&gt; D[Analyse solvabilité]
+    D --&gt; E{Solvabilité OK ?}
+    E -- Non --&gt; F[Refus]
+    E -- Oui --&gt; G[Offre de prêt]
+    G --&gt; H{Acceptation client ?}
+    H -- Non --&gt; I[Archivage]
+    H -- Oui --&gt; J[Déblocage des fonds]
+    J --&gt; K[Financement réalisé]</code></pre>
+<h3 id="diagramme-de-classes-modèle-de-compte-bancaire">2. Diagramme de
+classes – Modèle de compte bancaire</h3>
+<pre class="mermaid"><code>classDiagram
+    class Compte {
+        -numero: string
+        -solde: number
+        +débiter(montant: number)
+        +créditer(montant: number)
+        +getSolde(): number
+    }
+
+    class CompteÉpargne {
+        -tauxIntérêt: number
+        +calculerIntérêts()
+    }
+
+    class CompteCourant {
+        -découvertAutorisé: number
+    }
+
+    Compte &lt;|-- CompteÉpargne
+    Compte &lt;|-- CompteCourant</code></pre>
+<h3 id="diagramme-de-séquence-notification-dalerte-médicale">3.
+Diagramme de séquence – Notification d’alerte médicale</h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Patient
+    participant Capteur as Capteur biomédical
+    participant Système as Système d&#39;alerte
+    participant Médecin
+
+    Capteur-&gt;&gt;Système: Envoie données vitales
+    Système-&gt;&gt;Système: Analyse seuils critiques
+    alt Données anormales
+        Système-&gt;&gt;Médecin: Envoie alerte urgente
+        Médecin-&gt;&gt;Patient: Contacte le patient
+    else Données normales
+        Système-&gt;&gt;Système: Archive les données
+    end</code></pre>
+<hr />
+<h2 id="diagrammes-graphviz-dot">🔗 Diagrammes Graphviz (DOT)</h2>
+<h3 id="graphe-orienté-dépendances-logicielles">1. Graphe orienté –
+Dépendances logicielles</h3>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode dot"><code class="sourceCode dot"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">digraph</span> <span class="va">Dépendances</span> <span class="ot">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="at">rankdir</span><span class="ot">=</span><span class="va">TB</span><span class="ot">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="kw">node</span><span class="co"> </span><span class="ot">[</span><span class="at">shape</span><span class="ot">=</span><span class="va">box</span><span class="co">, </span><span class="at">style</span><span class="ot">=</span><span class="va">filled</span><span class="co">, </span><span class="at">fillcolor</span><span class="ot">=</span><span class="st">&quot;#e0f7fa&quot;</span><span class="ot">];</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Frontend&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;API Gateway&quot;</span><span class="ot">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;API Gateway&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Service Utilisateurs&quot;</span><span class="ot">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;API Gateway&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Service Paiements&quot;</span><span class="ot">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Service Utilisateurs&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Base de données&quot;</span><span class="ot">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Service Paiements&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Passerelle bancaire&quot;</span><span class="ot">;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Service Paiements&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Base de données&quot;</span><span class="ot">;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ot">}</span></span></code></pre></div>
+<h3 id="arbre-organisationnel-structure-dune-agence-immobilière">2.
+Arbre organisationnel – Structure d’une agence immobilière</h3>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode dot"><code class="sourceCode dot"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">digraph</span> <span class="va">Agence</span> <span class="ot">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="kw">node</span><span class="co"> </span><span class="ot">[</span><span class="at">shape</span><span class="ot">=</span><span class="va">box</span><span class="co">, </span><span class="at">style</span><span class="ot">=</span><span class="va">filled</span><span class="co">, </span><span class="at">fillcolor</span><span class="ot">=</span><span class="st">&quot;#f3e5f5&quot;</span><span class="ot">];</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Directeur&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Responsable Ventes&quot;</span><span class="ot">;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Directeur&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Responsable Location&quot;</span><span class="ot">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Directeur&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Administratif&quot;</span><span class="ot">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Responsable Ventes&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Agent 1&quot;</span><span class="ot">;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Responsable Ventes&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Agent 2&quot;</span><span class="ot">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Responsable Ventes&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Agent 3&quot;</span><span class="ot">;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Responsable Location&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Gestionnaire A&quot;</span><span class="ot">;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Responsable Location&quot;</span><span class="co"> </span><span class="ot">-&gt;</span><span class="co"> </span><span class="st">&quot;Gestionnaire B&quot;</span><span class="ot">;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="ot">}</span></span></code></pre></div>
+<h3 id="graphe-non-orienté-réseau-de-contacts-professionnels">3. Graphe
+non orienté – Réseau de contacts professionnels</h3>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode dot"><code class="sourceCode dot"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">graph</span> <span class="va">Réseau</span> <span class="ot">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="va">layout</span><span class="ot">=</span><span class="va">neato</span><span class="ot">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="kw">node</span><span class="co"> </span><span class="ot">[</span><span class="at">shape</span><span class="ot">=</span><span class="va">circle</span><span class="co">, </span><span class="at">style</span><span class="ot">=</span><span class="va">filled</span><span class="co">, </span><span class="at">fillcolor</span><span class="ot">=</span><span class="st">&quot;#fff3e0&quot;</span><span class="co">, </span><span class="at">fontsize</span><span class="ot">=</span><span class="dv">10</span><span class="ot">];</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Jean&quot;</span><span class="co"> -- </span><span class="st">&quot;Marie&quot;</span><span class="ot">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Jean&quot;</span><span class="co"> -- </span><span class="st">&quot;Pierre&quot;</span><span class="ot">;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Marie&quot;</span><span class="co"> -- </span><span class="st">&quot;Sandrine&quot;</span><span class="ot">;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Pierre&quot;</span><span class="co"> -- </span><span class="st">&quot;Claire&quot;</span><span class="ot">;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Claire&quot;</span><span class="co"> -- </span><span class="st">&quot;Sandrine&quot;</span><span class="ot">;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Sandrine&quot;</span><span class="co"> -- </span><span class="st">&quot;Luc&quot;</span><span class="ot">;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">    </span><span class="st">&quot;Luc&quot;</span><span class="co"> -- </span><span class="st">&quot;Jean&quot;</span><span class="ot">;</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="ot">}</span></span></code></pre></div>
+<hr />
+<blockquote>
+<p>✅ <strong>Conseils d’utilisation</strong> : -
+<strong>PlantUML</strong> : Utilise un serveur PlantUML (en ligne ou
+local) ou un plugin IDE. - <strong>Mermaid</strong> : Compatible avec
+Obsidian, Typora, GitLab, et via <code>&lt;script&gt;</code> dans HTML.
+- <strong>Graphviz</strong> : Compile avec la commande
+<code>dot -Tpng fichier.dot -o sortie.png</code>.</p>
+</blockquote>
+<p>Ce document est <strong>autonome</strong> et couvre une variété de
+cas d’usage (technique, organisationnel, médical, immobilier, etc.). Tu
+peux l’adapter selon tes besoins spécifiques (par exemple, intégrer des
+noms réels comme <em>Sandrine</em> ou des étapes liées à ton projet
+immobilier à Juan-les-Pins si nécessaire).</p>
+<p>Souhaites-tu une version PDF ou des images exportées de ces
+diagrammes ?</p>

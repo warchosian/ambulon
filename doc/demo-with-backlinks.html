@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>demo-with-backlinks</title>
+    <style>
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: none;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 2em;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #34495e;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+            line-height: 1.4;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+        pre.tree {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+            .diagram svg {
+            width: auto;
+            height: auto;
+        }
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        li {
+            margin: 0.5em 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        a.back-to-toc {
+            font-size: 0.7em;
+            color: #95a5a6;
+            text-decoration: none;
+            margin-left: 0.5em;
+            vertical-align: super;
+            transition: color 0.2s;
+        }
+        a.back-to-toc:hover {
+            color: #3498db;
+            text-decoration: none;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding: 0.5em 0 0.5em 1em;
+            color: #555;
+            background: #f8f9fa;
+            border-radius: 0 3px 3px 0;
+        }
+        blockquote p {
+            margin: 0.5em 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+    </style>
+</head>
+<body>
+<h1 id="guide-ambulon---conversion-de-documents-html-tag-0">Guide Ambulon - Conversion de Documents <a href="#table-of-contents">↑</a></h1>
+
+<nav class="table-of-contents" id="table-of-contents">
+<h2>Table des matières</h2>
+<ul>
+<li><a href="#guide-ambulon---conversion-de-documents-html-tag-0">Guide Ambulon - Conversion de Documents <a href="#table-of-contents">↑</a></a></li>
+  <li><a href="#introduction-html-tag-1">Introduction <a href="#table-of-contents">↑</a></a></li>
+  <li><a href="#conversion-markdown-vers-html-html-tag-2">Conversion Markdown vers HTML <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#diagrammes-supportés-html-tag-3">Diagrammes supportés <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#options-de-conversion-html-tag-4">Options de conversion <a href="#table-of-contents">↑</a></a></li>
+      <li><a href="#orientation-de-page-html-tag-5">Orientation de page <a href="#table-of-contents">↑</a></a></li>
+      <li><a href="#mode-standalone-html-tag-6">Mode standalone <a href="#table-of-contents">↑</a></a></li>
+  <li><a href="#table-des-matières-html-tag-7">Table des matières <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#génération-automatique-html-tag-8">Génération automatique <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#liens-de-retour-html-tag-9">Liens de retour <a href="#table-of-contents">↑</a></a></li>
+  <li><a href="#module-add-toc-backlinks-md-html-tag-10">Module add-toc-backlinks-md <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#utilisation-de-base-html-tag-11">Utilisation de base <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#options-avancées-html-tag-12">Options avancées <a href="#table-of-contents">↑</a></a></li>
+  <li><a href="#conversion-html-vers-pdf-html-tag-13">Conversion HTML vers PDF <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#configuration-html-tag-14">Configuration <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#workflow-recommandé-html-tag-15">Workflow recommandé <a href="#table-of-contents">↑</a></a></li>
+  <li><a href="#traitement-des-tableaux-html-tag-16">Traitement des tableaux <a href="#table-of-contents">↑</a></a></li>
+</ul>
+</nav>
+
+<h2 id="introduction-html-tag-1">Introduction <a href="#table-of-contents">↑</a></h2>
+
+<p>Ambulon est un outil puissant pour la conversion de documents entre différents formats. Ce guide vous présente les principales fonctionnalités.</p>
+
+<h2 id="conversion-markdown-vers-html-html-tag-2">Conversion Markdown vers HTML <a href="#table-of-contents">↑</a></h2>
+
+<p>La commande <code>md2html</code> permet de convertir des fichiers Markdown en HTML avec support des diagrammes.</p>
+
+<h3 id="diagrammes-supportés-html-tag-3">Diagrammes supportés <a href="#table-of-contents">↑</a></h3>
+
+<p>Ambulon supporte plusieurs types de diagrammes :</p>
+
+<ul>
+<li><strong>PlantUML</strong> : diagrammes UML complets</li>
+<li><strong>Graphviz</strong> : graphes et diagrammes de flux</li>
+<li><strong>Mermaid</strong> : diagrammes simples et légers</li>
+</ul>
+
+<h3 id="options-de-conversion-html-tag-4">Options de conversion <a href="#table-of-contents">↑</a></h3>
+
+<p>Plusieurs options sont disponibles pour personnaliser la conversion :</p>
+
+<h4 id="orientation-de-page-html-tag-5">Orientation de page <a href="#table-of-contents">↑</a></h4>
+
+<p>L'option <code>-p</code> ou <code>--page-orientation</code> permet d'optimiser pour la génération PDF :
+<ul>
+<li><code>portrait</code> : Format A4 vertical (700px)</li>
+<li><code>landscape</code> : Format A4 horizontal (900px)</li>
+</ul></p>
+
+<h4 id="mode-standalone-html-tag-6">Mode standalone <a href="#table-of-contents">↑</a></h4>
+
+<p>Par défaut, md2html génère un document HTML complet avec CSS. L'option <code>--no-standalone</code> génère uniquement un fragment HTML.</p>
+
+<h2 id="table-des-matières-html-tag-7">Table des matières <a href="#table-of-contents">↑</a></h2>
+
+<h3 id="génération-automatique-html-tag-8">Génération automatique <a href="#table-of-contents">↑</a></h3>
+
+<p>Utilisez le marqueur <code><nav class="table-of-contents" id="table-of-contents">
+<h2>Table des matières</h2>
+<ul>
+<li><a href="#guide-ambulon---conversion-de-documents-html-tag-0">Guide Ambulon - Conversion de Documents <a href="#table-of-contents">↑</a></a></li>
+  <li><a href="#introduction-html-tag-1">Introduction <a href="#table-of-contents">↑</a></a></li>
+  <li><a href="#conversion-markdown-vers-html-html-tag-2">Conversion Markdown vers HTML <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#diagrammes-supportés-html-tag-3">Diagrammes supportés <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#options-de-conversion-html-tag-4">Options de conversion <a href="#table-of-contents">↑</a></a></li>
+      <li><a href="#orientation-de-page-html-tag-5">Orientation de page <a href="#table-of-contents">↑</a></a></li>
+      <li><a href="#mode-standalone-html-tag-6">Mode standalone <a href="#table-of-contents">↑</a></a></li>
+  <li><a href="#table-des-matières-html-tag-7">Table des matières <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#génération-automatique-html-tag-8">Génération automatique <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#liens-de-retour-html-tag-9">Liens de retour <a href="#table-of-contents">↑</a></a></li>
+  <li><a href="#module-add-toc-backlinks-md-html-tag-10">Module add-toc-backlinks-md <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#utilisation-de-base-html-tag-11">Utilisation de base <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#options-avancées-html-tag-12">Options avancées <a href="#table-of-contents">↑</a></a></li>
+  <li><a href="#conversion-html-vers-pdf-html-tag-13">Conversion HTML vers PDF <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#configuration-html-tag-14">Configuration <a href="#table-of-contents">↑</a></a></li>
+    <li><a href="#workflow-recommandé-html-tag-15">Workflow recommandé <a href="#table-of-contents">↑</a></a></li>
+  <li><a href="#traitement-des-tableaux-html-tag-16">Traitement des tableaux <a href="#table-of-contents">↑</a></a></li>
+</ul>
+</nav></code> dans votre Markdown pour générer automatiquement une table des matières.</p>
+
+<h3 id="liens-de-retour-html-tag-9">Liens de retour <a href="#table-of-contents">↑</a></h3>
+
+<p>L'option <code>--toc-backlinks</code> ajoute des flèches ↑ après chaque titre pour revenir facilement à la table des matières.</p>
+
+<h2 id="module-add-toc-backlinks-md-html-tag-10">Module add-toc-backlinks-md <a href="#table-of-contents">↑</a></h2>
+
+<p>Ce module permet d'ajouter des liens retour à des fichiers Markdown existants.</p>
+
+<h3 id="utilisation-de-base-html-tag-11">Utilisation de base <a href="#table-of-contents">↑</a></h3>
+
+<p><pre><code class="language-bash">ambulon add-toc-backlinks-md document.md
+</code></pre>
+<h3 id="options-avancées-html-tag-12">Options avancées <a href="#table-of-contents">↑</a></h3></p>
+
+<ul>
+<li><code>--toc-id</code> : ID de l'ancre TOC (défaut: table-of-contents)</li>
+<li><code>--link-text</code> : Texte du lien retour (défaut: ↑)</li>
+<li><code>--min-level</code> : Niveau minimum des titres (1-6)</li>
+<li><code>--max-level</code> : Niveau maximum des titres (1-6)</li>
+</ul>
+
+<h2 id="conversion-html-vers-pdf-html-tag-13">Conversion HTML vers PDF <a href="#table-of-contents">↑</a></h2>
+
+<p>La commande <code>html2pdf</code> utilise Playwright pour générer des PDFs de haute qualité.</p>
+
+<h3 id="configuration-html-tag-14">Configuration <a href="#table-of-contents">↑</a></h3>
+
+<p>Assurez-vous que Chromium est installé :</p>
+
+<p><pre><code class="language-bash">playwright install chromium
+</code></pre>
+<h3 id="workflow-recommandé-html-tag-15">Workflow recommandé <a href="#table-of-contents">↑</a></h3></p>
+
+<p>Pour un rendu optimal :</p>
+
+<p>1. Convertir Markdown en HTML avec orientation
+2. Convertir HTML en PDF avec la même orientation</p>
+
+<p><pre><code class="language-bash">ambulon md2html doc.md -p landscape
+ambulon html2pdf doc.html -p landscape
+</code></pre>
+<h2 id="traitement-des-tableaux-html-tag-16">Traitement des tableaux <a href="#table-of-contents">↑</a></h2></p>
+
+<p>Les tableaux Markdown sont convertis avec support du formatage inline :</p>
+
+<table>
+<thead>
+<tr>
+<th>Fonctionnalité</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Gras</strong></td>
+<td>✓</td>
+</tr>
+<tr>
+<td><em>Italique</em></td>
+<td>✓</td>
+</tr>
+<tr>
+<td><code>Code</code></td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>## Conclusion <a href="#table-of-contents">↑</a>
+
+<p>Ambulon offre une suite complète d'outils pour la conversion et le traitement de documents. Consultez l'aide de chaque commande pour plus de détails.</p>
+</body>
+</html>

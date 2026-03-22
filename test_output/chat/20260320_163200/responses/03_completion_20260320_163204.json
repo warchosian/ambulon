@@ -1,0 +1,21 @@
+{
+  "id": "08b7e2e759e7406e87398430c0ca82c9",
+  "object": "text_completion",
+  "created": 1774020723,
+  "model": "mte-api-piag-mistral-medium-latest",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "text": "Bonjour ! 😊 Je vais très bien, merci de demander – et vous, comment allez-vous aujourd’hui ?\n\nSi vous avez une question, un projet ou même une simple envie de discuter (de la météo, des dernières séries, des recettes de cuisine ou des mystères de l’univers 🌌), je suis là pour vous aider !\n\nÀ tout de suite ! ✨",
+      "logprobs": null
+    }
+  ],
+  "usage": {
+    "completion_tokens": 80,
+    "prompt_tokens": 10,
+    "total_tokens": 90,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": null
+  }
+}

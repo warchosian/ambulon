@@ -1,0 +1,301 @@
+{
+  "timestamp": "2026-03-21T11:12:51.770447",
+  "collection": "PNM3_SIREINES",
+  "total_tests": 8,
+  "success_count": 8,
+  "tests": [
+    {
+      "id": "Q1",
+      "category": "Composants Java",
+      "question": "Quel est le rôle exact de la classe DossierRechercheMotsClefsAction dans SIREINES ?",
+      "top_k": 5,
+      "success": true,
+      "metrics": {
+        "chunks_found": 5,
+        "sources_count": 3,
+        "sources": [
+          "sireines.components-toced.md",
+          "sireines.components.md",
+          "sireines.code.md"
+        ],
+        "length_without_rag": 5152,
+        "length_with_rag": 1772,
+        "length_difference": -3380,
+        "terms_without_rag_count": 4,
+        "terms_with_rag_count": 3,
+        "terms_without_rag": [
+          "Struts",
+          "Java",
+          "sireines",
+          "SIREINES"
+        ],
+        "terms_with_rag": [
+          "Java",
+          "sireines",
+          "SIREINES"
+        ],
+        "rag_improvement": false,
+        "chunk_usage_score": 0,
+        "chunk_usage_details": {}
+      }
+    },
+    {
+      "id": "Q2",
+      "category": "Vulnérabilités CVE",
+      "question": "Quelles sont les vulnérabilités CVE identifiées pour le composant ExtractionsServicesImpl de SIREINES ?",
+      "top_k": 7,
+      "success": true,
+      "metrics": {
+        "chunks_found": 7,
+        "sources_count": 5,
+        "sources": [
+          "sireines.components-itoced.pdf",
+          "sireines.components-toced.md",
+          "sireines.components.md",
+          "sireines.components-itoced.md",
+          "sireines.components-itoced-embedded.md"
+        ],
+        "length_without_rag": 2796,
+        "length_with_rag": 1522,
+        "length_difference": -1274,
+        "terms_without_rag_count": 3,
+        "terms_with_rag_count": 4,
+        "terms_without_rag": [
+          "Java",
+          "sireines",
+          "SIREINES"
+        ],
+        "terms_with_rag": [
+          "Tomcat",
+          "Maven",
+          "sireines",
+          "SIREINES"
+        ],
+        "rag_improvement": true,
+        "chunk_usage_score": 0,
+        "chunk_usage_details": {}
+      }
+    },
+    {
+      "id": "Q3",
+      "category": "Configuration technique",
+      "question": "Quelle version exacte d'Elasticsearch est utilisée dans SIREINES et comment est-elle configurée en mode embarqué ?",
+      "top_k": 5,
+      "success": true,
+      "metrics": {
+        "chunks_found": 5,
+        "sources_count": 4,
+        "sources": [
+          "sireines.components-toced.md",
+          "sireines.components.md",
+          "sireines.dat.md",
+          "sireines.code.md"
+        ],
+        "length_without_rag": 6889,
+        "length_with_rag": 1633,
+        "length_difference": -5256,
+        "terms_without_rag_count": 4,
+        "terms_with_rag_count": 4,
+        "terms_without_rag": [
+          "Elasticsearch",
+          "Java",
+          "Docker",
+          "Maven"
+        ],
+        "terms_with_rag": [
+          "Vertigo",
+          "Elasticsearch",
+          "sireines",
+          "SIREINES"
+        ],
+        "rag_improvement": false,
+        "chunk_usage_score": 0,
+        "chunk_usage_details": {}
+      }
+    },
+    {
+      "id": "Q4",
+      "category": "Décisions architecturales",
+      "question": "Pourquoi SIREINES utilise-t-il le Vertigo Framework et quelles sont ses responsabilités exactes ?",
+      "top_k": 5,
+      "success": true,
+      "metrics": {
+        "chunks_found": 5,
+        "sources_count": 5,
+        "sources": [
+          "sireines.dat.md",
+          "sireines.dat-toced.md",
+          "sireines.dat-itoced.md",
+          "sireines.dat-itoced-itoced.md",
+          "sireines.code.md"
+        ],
+        "length_without_rag": 5965,
+        "length_with_rag": 2160,
+        "length_difference": -3805,
+        "terms_without_rag_count": 5,
+        "terms_with_rag_count": 7,
+        "terms_without_rag": [
+          "Vertigo",
+          "PostgreSQL",
+          "Java",
+          "sireines",
+          "SIREINES"
+        ],
+        "terms_with_rag": [
+          "Struts",
+          "Vertigo",
+          "Elasticsearch",
+          "Java",
+          "Tomcat",
+          "sireines",
+          "SIREINES"
+        ],
+        "rag_improvement": true,
+        "chunk_usage_score": 0,
+        "chunk_usage_details": {}
+      }
+    },
+    {
+      "id": "Q5",
+      "category": "Sécurité STRIDE",
+      "question": "Quelles vulnérabilités STRIDE ont été identifiées pour le module CerbereUtil + SireinesSessionFilter ?",
+      "top_k": 7,
+      "success": true,
+      "metrics": {
+        "chunks_found": 7,
+        "sources_count": 4,
+        "sources": [
+          "sireines.components.md",
+          "sireines.components-toced.md",
+          "sireines.components-itoced-embedded.md",
+          "sireines.components-itoced.pdf"
+        ],
+        "length_without_rag": 8344,
+        "length_with_rag": 1329,
+        "length_difference": -7015,
+        "terms_without_rag_count": 3,
+        "terms_with_rag_count": 2,
+        "terms_without_rag": [
+          "Java",
+          "sireines",
+          "SIREINES"
+        ],
+        "terms_with_rag": [
+          "sireines",
+          "SIREINES"
+        ],
+        "rag_improvement": false,
+        "chunk_usage_score": 0,
+        "chunk_usage_details": {}
+      }
+    },
+    {
+      "id": "Q6",
+      "category": "ISO 25010",
+      "question": "Quels sont les critères ISO 25010 spécifiques définis pour SIREINES avec leurs valeurs cibles mesurables ?",
+      "top_k": 7,
+      "success": true,
+      "metrics": {
+        "chunks_found": 7,
+        "sources_count": 5,
+        "sources": [
+          "sireines.code.md",
+          "sireines.wiki-itoced.pdf",
+          "sireines.wiki-itoced.md",
+          "test.pdf",
+          "sireines.dat-toced.md"
+        ],
+        "length_without_rag": 12440,
+        "length_with_rag": 968,
+        "length_difference": -11472,
+        "terms_without_rag_count": 2,
+        "terms_with_rag_count": 5,
+        "terms_without_rag": [
+          "sireines",
+          "SIREINES"
+        ],
+        "terms_with_rag": [
+          "Java",
+          "Docker",
+          "Maven",
+          "sireines",
+          "SIREINES"
+        ],
+        "rag_improvement": true,
+        "chunk_usage_score": 0,
+        "chunk_usage_details": {}
+      }
+    },
+    {
+      "id": "Q7",
+      "category": "Modèle C4 Level 3",
+      "question": "Quels sont les composants internes détaillés du service SvcExtr dans le diagramme C4 Component de SIREINES ?",
+      "top_k": 5,
+      "success": true,
+      "metrics": {
+        "chunks_found": 5,
+        "sources_count": 2,
+        "sources": [
+          "sireines.components-toced.md",
+          "sireines.components.md"
+        ],
+        "length_without_rag": 8074,
+        "length_with_rag": 424,
+        "length_difference": -7650,
+        "terms_without_rag_count": 3,
+        "terms_with_rag_count": 2,
+        "terms_without_rag": [
+          "PostgreSQL",
+          "sireines",
+          "SIREINES"
+        ],
+        "terms_with_rag": [
+          "sireines",
+          "SIREINES"
+        ],
+        "rag_improvement": false,
+        "chunk_usage_score": 0,
+        "chunk_usage_details": {}
+      }
+    },
+    {
+      "id": "Q8",
+      "category": "Dépendances Maven",
+      "question": "Quelles sont les dépendances Maven listées dans le pom.xml de sireines-web avec leurs versions exactes ?",
+      "top_k": 5,
+      "success": true,
+      "metrics": {
+        "chunks_found": 5,
+        "sources_count": 3,
+        "sources": [
+          "sireines.code.md",
+          "sireines.components-toced.md",
+          "sireines.components.md"
+        ],
+        "length_without_rag": 2771,
+        "length_with_rag": 1444,
+        "length_difference": -1327,
+        "terms_without_rag_count": 4,
+        "terms_with_rag_count": 7,
+        "terms_without_rag": [
+          "PostgreSQL",
+          "Maven",
+          "sireines",
+          "SIREINES"
+        ],
+        "terms_with_rag": [
+          "Struts",
+          "PostgreSQL",
+          "BIRT",
+          "Java",
+          "Maven",
+          "sireines",
+          "SIREINES"
+        ],
+        "rag_improvement": true,
+        "chunk_usage_score": 0,
+        "chunk_usage_details": {}
+      }
+    }
+  ]
+}

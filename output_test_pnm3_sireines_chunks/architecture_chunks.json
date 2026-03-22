@@ -1,0 +1,67 @@
+{
+  "chunks": [
+    {
+      "score": 0.015873015873015872,
+      "rerank_score": 3.403430223464966,
+      "document_id": "d97ab914-78a9-41bf-816c-32e885da75b0",
+      "document_name": "sireines.dat_archimate.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 11,
+      "text": "Dossier d'Architecture Technique (DAT) — Projet SIREINES\n3. Couche Application (Application Layer)\n3.2 Structure des composants\n' Services exposés\nServices --> SvcDossiers : fournit\nServices --> SvcAgents : fournit\nServices --> SvcSeances : fournit\nServices --> SvcExtr : fournit\nServices --> SvcRef : fournit\n\n' Intégrations\nSvcExtr --> BIRT : délègue\nActions --> Cerbere : authentifie\nSvcDossiers --> ES : indexe\n\n@enduml\n```"
+    },
+    {
+      "score": 0.015384615384615385,
+      "rerank_score": 3.130619764328003,
+      "document_id": "9c0bedc3-05e9-430f-bfeb-1497a31f9bb0",
+      "document_name": "sireines.components-itoced.pdf",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 0,
+      "text": "Table des matières ↑\nDAT Vue Composants & Analyse de Sécurité - SIREINES\n1. Vue Composants (C4-L3) - Architecture Interne Détaillée\n1.1 Diagramme de composants global\n1.2 Fiches composants détaillées\nCOMP-001 : DossierRechercheMotsClefsAction\nInterfaces exposées\nDépendances internes\nDépendances externes\n� Vulnérabilités critiques identifiées\nDette technique\nCOMP-002 : ExtractionsServicesImpl\n� Vulnérabilités critiques identifiées\nDette technique - � Critique\nCOMP-003 : ImportsServicesImpl\n� Vulnérabilités critiques identifiées\nCOMP-004 : CerbereUtil + SireinesSessionFilter\nDépendances externes critiques\n� Vulnérabilités identifiées\nCOMP-005 : ESEmbeddedSearchServicesPlugin\n� Vulnérabilités critiques\n1. Matrice de vulnérabilités STRIDE\n2. Inventaire des dépendances et vulnérabilités\n3.1 Dépendances Maven (pom.xml sireines-web)\n3.2 Dépendances Frontend (analyse templates)\n1. Dettes techniques identifiées\n2. Recommandations de sécurité prioritaires\n5.1 Court terme (0-3 mois) - � Urgent\n5.2 Moyen terme (3-12 mois) - � Important\n5.3 Long terme (> 12 mois) - � Stratégique\n1. Schéma de flux de données sécurisé (DFD)\n2. Checklist OWASP Top 10 2021 - Mapping complet\n3. Plan d'action sécurité synthétique\n4. Annexes\n9.1 Glossaire sécurité\n9.2 Références CVE critiques à surveiller\nVoici le\n**DAT Vue Composants & Analyse de Sécurité**\ncomplet pour l'application\n**SIREINES**\n, généré selon le modèle Arc42 avec analyse\napprofondie des vulnérabilités, dettes techniques et recommandations de sécurité."
+    },
+    {
+      "score": 0.016129032258064516,
+      "rerank_score": 2.8093621730804443,
+      "document_id": "1302fa52-f832-4684-a011-12befef7a913",
+      "document_name": "sireines.components-itoced-embedded.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 2,
+      "text": "\nTable des matières\n- [DAT Vue Composants & Analyse de Sécurité - SIREINES](#dat-vue-composants-analyse-de-securite-sireines)\n[1. Vue Composants (C4-L3) - Architecture Interne Détaillée](#vue-composants)\n- [1.1 Diagramme de composants global](#1-1-diagramme-de-composants-global)\n[1.2 Fiches composants détaillées](#1-2-fiches-composants-detaillees)\n[COMP-001 : DossierRechercheMotsClefsAction](#comp-001-dossierrecherchemotsclefsaction)\n- [Interfaces exposées](#interfaces-exposees)\n- [Dépendances internes](#dependances-internes)\n- [Dépendances externes](#dependances-externes)\n- [🔴 Vulnérabilités critiques identifiées](#vulnerabilites-critiques-identifiees)\n- [Dette technique](#dette-technique)\n[COMP-002 : ExtractionsServicesImpl](#comp-002-extractionsservicesimpl)\n- [🔴 Vulnérabilités critiques identifiées](#vulnerabilites-critiques-identifiees-1)\n- [Dette technique - 🔴 Critique](#dette-technique-critique)\n[COMP-003 : ImportsServicesImpl](#comp-003-importsservicesimpl)\n- [🔴 Vulnérabilités critiques identifiées](#vulnerabilites-critiques-identifiees-2)\n[COMP-004 : CerbereUtil + SireinesSessionFilter](#comp-004-cerbereutil-sireinessessionfilter)\n- [Dépendances externes critiques](#dependances-externes-critiques)\n- [🟡 Vulnérabilités identifiées](#vulnerabilites-identifiees)"
+    },
+    {
+      "score": 0.028309409888357256,
+      "rerank_score": 1.5387715101242065,
+      "document_id": "ea48d9f3-7cdf-4eb5-91dc-1049cd0b035f",
+      "document_name": "sireines.dat-toced.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 12,
+      "text": "Dossier d'Architecture Technique (DAT) - SIREINES\n5. Stratégie de solution {#strategie}\n5.1 Décisions architecturales majeures\nArchitecture, Choix = Monolithe web Java. Architecture, Justification = Simplicité de déploiement, cohérence avec le legacy, équipe réduite. Pattern MVC, Choix = Struts 2 + Vertigo Framework. Pattern MVC, Justification = Standard historique, génération de code MDA, productivité. Persistance, Choix = SQL natif + MDA (KSP). Persistance, Justification = Performance, contrôle fin des requêtes métier complexes. Recherche, Choix = Elasticsearch embarqué. Recherche, Justification = Recherche full-text performante sur les dossiers. Reporting, Choix = BIRT intégré. Reporting, Justification = Exigence métier de rapports complexes et paramétrables. Conteneurisation, Choix = Docker + Docker Compose. Conteneurisation, Justification = Portabilité, reproductibilité des environnements"
+    },
+    {
+      "score": 0.027912386121341344,
+      "rerank_score": 1.5387715101242065,
+      "document_id": "67f05d7e-948e-4e9f-a3f3-3965a457dc2e",
+      "document_name": "sireines.dat.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 13,
+      "text": "Dossier d'Architecture Technique (DAT) - SIREINES\n5. Stratégie de solution {#strategie}\n5.1 Décisions architecturales majeures\nArchitecture, Choix = Monolithe web Java. Architecture, Justification = Simplicité de déploiement, cohérence avec le legacy, équipe réduite. Pattern MVC, Choix = Struts 2 + Vertigo Framework. Pattern MVC, Justification = Standard historique, génération de code MDA, productivité. Persistance, Choix = SQL natif + MDA (KSP). Persistance, Justification = Performance, contrôle fin des requêtes métier complexes. Recherche, Choix = Elasticsearch embarqué. Recherche, Justification = Recherche full-text performante sur les dossiers. Reporting, Choix = BIRT intégré. Reporting, Justification = Exigence métier de rapports complexes et paramétrables. Conteneurisation, Choix = Docker + Docker Compose. Conteneurisation, Justification = Portabilité, reproductibilité des environnements"
+    },
+    {
+      "score": 0.01639344262295082,
+      "rerank_score": 0.7420103549957275,
+      "document_id": "d97ab914-78a9-41bf-816c-32e885da75b0",
+      "document_name": "sireines.dat_archimate.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 17,
+      "text": "Dossier d'Architecture Technique (DAT) — Projet SIREINES\n4. Couche Technologie (Technology Layer)\n4.3 Artifacts et déploiement\n```\nsireines-web.war\n```\n```\n/usr/local/tomcat/webapps/ROOT/\n```\n```\n*.rptdesign\n```\n```\n/usr/local/tomcat/webapps/ROOT/report/\n```\n```\ncrebas.sql\n```\n```\nsireines-database/modele/\n```\n```\nelasticsearch.yml\n```\n```\nsrc/main/resources/search/config/\n```\n, Type = . , Emplacement = "
+    },
+    {
+      "score": 0.029726775956284153,
+      "rerank_score": 0.6765958070755005,
+      "document_id": "67f05d7e-948e-4e9f-a3f3-3965a457dc2e",
+      "document_name": "sireines.dat.md",
+      "collection_id": "CXyFU81Nk8k8qL7h",
+      "chunk_index": 15,
+      "text": "Dossier d'Architecture Technique (DAT) - SIREINES\n5. Stratégie de solution {#strategie}\n5.2 Environnement technologique\nLangage, Technologie = Java. Langage, Version = 1.7. Langage, Rôle = Logique métier. Framework Web, Technologie = Struts 2. Framework Web, Version = 2.x. Framework Web, Rôle = Couche présentation MVC. Framework Métier, Technologie = Vertigo. Framework Métier, Version = -. Framework Métier, Rôle = Services, DAO, ORM léger. Base de données, Technologie = PostgreSQL. Base de données, Version = 15.2. Base de données, Rôle = Persistance relationnelle. Moteur de recherche, Technologie = Elasticsearch. Moteur de recherche, Version = 7.x (embarqué). Moteur de recherche, Rôle = Indexation full-text. Reporting, Technologie = BIRT. Reporting, Version = 4.x. Reporting, Rôle = Génération de rapports. Frontend, Technologie = Bootstrap 2/3. Frontend, Version = -. Frontend, Rôle = UI responsive. Template Engine, Technologie = FreeMarker. Template Engine, Version = -. Template Engine, Rôle = Génération vues. Build, Technologie = Maven. Build, Version = 3.6. Build, Rôle = Compilation, packaging. Conteneur, Technologie = Tomcat. Conteneur, Version = 9.x (embarqué). Conteneur, Rôle = Serveur d'applications"
+    }
+  ]
+}

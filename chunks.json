@@ -1,0 +1,94 @@
+{
+  "chunks": [
+    {
+      "score": 0.03057889822595705,
+      "rerank_score": 0.7548856735229492,
+      "document_id": "ecd4f635-96a3-43a2-8a74-1aa15f01dce9",
+      "document_name": "sireines.dat_c4model.md",
+      "collection_id": "CGrvE2oatf01bV0C",
+      "chunk_index": 1,
+      "text": "Analyse Architecture C4 Model - SIREINES\n**Version**\n: 2.5.12\n**Date**\n: 23 février 2026\n**Auteur**\n: Architecture Technique\n**Standards**\n: C4 Model (Simon Brown) + Arc42\n[TOC]"
+    },
+    {
+      "score": 0.029877369007803793,
+      "rerank_score": 0.4433504343032837,
+      "document_id": "397f7f5d-58f9-4bf0-be5b-086eed31709f",
+      "document_name": "sireines.cctp.md",
+      "collection_id": "CGrvE2oatf01bV0C",
+      "chunk_index": 11,
+      "text": "CAHIER DES CLAUSES TECHNIQUES PARTICULIÈRES (CCTP)\n3. ARCHITECTURE ET CONCEPTION\n3.1 Contraintes architecturales imposées\nL'architecture devra respecter les contraintes suivantes :\n```\n┌─────────────────────────────────────────────────────────────┐\n│                    COUCHE PRÉSENTATION                       │\n│  JSP + Tags Struts + Templates Freemarker + Bootstrap CSS   │\n├─────────────────────────────────────────────────────────────┤\n│                    COUCHE CONTRÔLEUR                         │\n│  Actions Struts (pattern MVC) + Validators                  │\n├─────────────────────────────────────────────────────────────┤\n│                    COUCHE MÉTIER                             │\n│  Services Java + Vertigo (DAO, KSP) + MDA                   │\n├─────────────────────────────────────────────────────────────┤\n│                    COUCHE DONNÉES                            │\n│  PostgreSQL + Elasticsearch (indexation full-text)          │\n├─────────────────────────────────────────────────────────────┤\n│                    COUCHE INTÉGRATION                        │\n│  Cerbère (SSO) + BIRT (reporting) + Talend (ETL)           │\n└─────────────────────────────────────────────────────────────┘\n```"
+    },
+    {
+      "score": 0.016129032258064516,
+      "rerank_score": -0.11970245838165283,
+      "document_id": "ecd4f635-96a3-43a2-8a74-1aa15f01dce9",
+      "document_name": "sireines.dat_c4model.md",
+      "collection_id": "CGrvE2oatf01bV0C",
+      "chunk_index": 25,
+      "text": "Analyse Architecture C4 Model - SIREINES\nSynthèse architecture C4 {#synthese}\nPattern architectural, Description = MVC 3-tiers avec MDA. Pattern architectural, Évaluation = Classique, mature. Couplage, Description = Fort entre couches (héritage profond). Couplage, Évaluation = 🔴 À améliorer. Cohésion, Description = Services par domaine métier. Cohésion, Évaluation = 🟢 Bonne. Complexité, Description = Classes volumineuses (>10ko). Complexité, Évaluation = 🔴 Élevée. Testabilité, Description = Dépendances statiques, pas d'IoC complet. Testabilité, Évaluation = 🟡 Moyenne. Évolutivité, Description = Génération MDA facilite changements BDD. Évolutivité, Évaluation = 🟢 Bonne. Maintenabilité, Description = Code legacy Java 7, EOL. Maintenabilité, Évaluation = 🔴 Critique\n**Fin de l'analyse C4 Model**\n*Document structuré selon le standard C4 Model (c4model.com)*\n[↩ Retour au sommaire](#c4-l1)\n```\n---\n\nCette analyse C4 complète fournit une **vision hiérarchique de l'architecture SIREINES**, du contexte métier jusqu'au code source, avec 12 diagrammes PlantUML interactifs et une documentation détaillée de chaque niveau d'abstraction.\n```"
+    },
+    {
+      "score": 0.014492753623188406,
+      "rerank_score": -0.46008020639419556,
+      "document_id": "397f7f5d-58f9-4bf0-be5b-086eed31709f",
+      "document_name": "sireines.cctp.md",
+      "collection_id": "CGrvE2oatf01bV0C",
+      "chunk_index": 12,
+      "text": "CAHIER DES CLAUSES TECHNIQUES PARTICULIÈRES (CCTP)\n3. ARCHITECTURE ET CONCEPTION\n3.2 Standards et normes obligatoires\nModélisation données, Standard = Merise / PowerDesigner. Modélisation données, Application = Modèle physique de données (MPD). Génération de code, Standard = MDA (Model Driven Architecture). Génération de code, Application = Génération DAO et entités via Vertigo. Sécurité web, Standard = OWASP Top 10. Sécurité web, Application = Protection contre injections XSS, SQL, CSRF. Protocoles réseau, Standard = HTTPS/TLS 1.2 minimum. Protocoles réseau, Application = Toutes les communications. Encodage, Standard = UTF-8. Encodage, Application = Stockage et échanges de données"
+    },
+    {
+      "score": 0.01639344262295082,
+      "rerank_score": -1.1160809993743896,
+      "document_id": "397f7f5d-58f9-4bf0-be5b-086eed31709f",
+      "document_name": "sireines.cctp.md",
+      "collection_id": "CGrvE2oatf01bV0C",
+      "chunk_index": 34,
+      "text": "CAHIER DES CLAUSES TECHNIQUES PARTICULIÈRES (CCTP)\n8. DOCUMENTATION ET FORMATION\n8.1 Liste des documents à fournir\nDocument d'Architecture Technique (DAT), Destinataire = MOA, MOE, RSSI. Document d'Architecture Technique (DAT), Format = Markdown/PDF. Document d'Architecture Technique (DAT), Fréquence de mise à jour = À chaque évolution majeure. Dossier d'Installation et d'Exploitation (DIE), Destinataire = Exploitation. Dossier d'Installation et d'Exploitation (DIE), Format = Markdown/PDF. Dossier d'Installation et d'Exploitation (DIE), Fréquence de mise à jour = À chaque livraison. Guide utilisateur, Destinataire = Utilisateurs finaux. Guide utilisateur, Format = PDF/HTML. Guide utilisateur, Fréquence de mise à jour = À chaque évolution fonctionnelle. Guide administrateur, Destinataire = Administrateurs techniques. Guide administrateur, Format = Markdown/PDF. Guide administrateur, Fréquence de mise à jour = À chaque évolution technique. Documentation de l'API (si créée), Destinataire = Intégrateurs. Documentation de l'API (si créée), Format = OpenAPI/Swagger. Documentation de l'API (si créée), Fréquence de mise à jour = À chaque évolution. Procédures de secours, Destinataire = Exploitation, RSSI. Procédures de secours, Format = Markdown/PDF. Procédures de secours, Fréquence de mise à jour = Annuelle. Registre des traitements RGPD, Destinataire = DPO. Registre des traitements RGPD, Format = Excel/PDF. Registre des traitements RGPD, Fréquence de mise à jour = À chaque évolution"
+    },
+    {
+      "score": 0.015625,
+      "rerank_score": -2.3106799125671387,
+      "document_id": "0324f12f-81da-4ce2-be15-f183a60e1ccb",
+      "document_name": "sireines.code.md",
+      "collection_id": "CGrvE2oatf01bV0C",
+      "chunk_index": 841,
+      "text": "Projet : sireines\n📄 Contenu des fichiers\n\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='SYSTEME D''INFORMATION SECURITE ROUTIERE' and th.niveau=2) WHERE the_id=(select the_id from thesaurus where libelle='ARCHITECTURE DES SYSTEMES INTELLIGENTS');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='SYSTEME D''INFORMATION SECURITE ROUTIERE' and th.niveau=2) WHERE the_id=(select the_id from thesaurus where libelle='ARCHITECTURE RESEAU DES SYSTEMES D''EXPLOITATION');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='SCIENCES ET TECHNOLOGIES DE L''INFORMATION ET DE LA COMMUNICATION' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='VISIOCONFERENCE');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='GEOMATIQUE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='ADMINISTRATION DE DONNEES LOCALISEES');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='GEOMATIQUE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='BATHYMETRIE');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='GEOMATIQUE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='CARTOGRAPHIE');\nUPDATE thesaurus SET id_pere=(select th.the_id from  thesaurus th  where th.libelle='GEOMATIQUE' and th.niveau=1) WHERE the_id=(select the_id from thesaurus where libelle='GEOMATIQUE TELEDETECTION');"
+    },
+    {
+      "score": 0.030309988518943745,
+      "rerank_score": -2.377213954925537,
+      "document_id": "397f7f5d-58f9-4bf0-be5b-086eed31709f",
+      "document_name": "sireines.cctp.md",
+      "collection_id": "CGrvE2oatf01bV0C",
+      "chunk_index": 2,
+      "text": "CAHIER DES CLAUSES TECHNIQUES PARTICULIÈRES (CCTP)\nSOMMAIRE\n1. [Objet du marché](#1-objet-du-marché)\n2. [Description technique détaillée](#2-description-technique-détaillée)\n3. [Architecture et conception](#3-architecture-et-conception)\n4. [Exigences de sécurité](#4-exigences-de-sécurité)\n5. [Interfaces et intégrations](#5-interfaces-et-intégrations)\n6. [Environnements et infrastructure](#6-environnements-et-infrastructure)\n7. [Qualité et conformité](#7-qualité-et-conformité)\n8. [Documentation et formation](#8-documentation-et-formation)\n9. [Tests et recette](#9-tests-et-recette)\n10. [Maintenance et support](#10-maintenance-et-support)\n11. [Livrables et planning](#11-livrables-et-planning)\n12. [Contraintes légales et réglementaires](#12-contraintes-légales-et-réglementaires)\n13. [Critères de sélection des offres](#13-critères-de-sélection-des-offres)\n14. [Annexes contractuelles](#14-annexes-contractuelles)"
+    },
+    {
+      "score": 0.014285714285714285,
+      "rerank_score": -3.686751127243042,
+      "document_id": "21f41edf-f543-4244-86f1-62bf7c36b37b",
+      "document_name": "sireines.components.md",
+      "collection_id": "CGrvE2oatf01bV0C",
+      "chunk_index": 5,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n1. Vue Composants (C4-L3) - Architecture Interne Détaillée {#vue-composants}\n1.2 Fiches composants détaillées\nCOMP-001 : DossierRechercheMotsClefsAction\n`i2.application.sireines.controller.dossiers`\nResponsabilité, Valeur = Recherche avancée de dossiers par mots-clés avec autocomplétion et filtres facettes. Technologie, Valeur = Java 7, Struts 2.5.x, Vertigo Dynamo. Package, Valeur = "
+    },
+    {
+      "score": 0.014084507042253521,
+      "rerank_score": -4.1769609451293945,
+      "document_id": "21f41edf-f543-4244-86f1-62bf7c36b37b",
+      "document_name": "sireines.components.md",
+      "collection_id": "CGrvE2oatf01bV0C",
+      "chunk_index": 4,
+      "text": "DAT Vue Composants & Analyse de Sécurité - SIREINES\n1. Vue Composants (C4-L3) - Architecture Interne Détaillée {#vue-composants}\n1.1 Diagramme de composants global\n' Utilitaires\nSvcDossier --> UtilCerbere\nSvcDossier --> ESPlugin\nSvcExtract --> BirtMgr\nDaoDossier --> SharedDB\nFilterSession --> SSO\n\n' Filtres\nFilterSession ..> Accueil : intercepte\nFilterEnc ..> Accueil : intercepte\n\nnote right of DossierSearchMC\n  ⚠️ Vulnérabilité potentielle:\n  Recherche par mots-clés\n  avec concaténation SQL\nend note\n\nnote bottom of SvcExtract\n  ⚠️ Dépendance critique:\n  BIRT (fin de support Eclipse)\nend note\n\nnote bottom of ESPlugin\n  ⚠️ Elasticsearch embarqué\n  Mode embedded = risque split-brain\nend note\n\n@enduml\n```"
+    },
+    {
+      "score": 0.014705882352941176,
+      "rerank_score": -4.406184673309326,
+      "document_id": "0324f12f-81da-4ce2-be15-f183a60e1ccb",
+      "document_name": "sireines.code.md",
+      "collection_id": "CGrvE2oatf01bV0C",
+      "chunk_index": 1007,
+      "text": "Projet : sireines\n📄 Contenu des fichiers\n\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'SYSTEME D''INFORMATION RH');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'SYSTEME D''INFORMATION ROUTIERE');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'SYSTEME D''INFORMATION TRANSPORTS');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'SYSTEME D''INFORMATION URBANISME - LOGEMENT');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'SYSTEME D''INFORMATION SECURITE ROUTIERE');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'ARCHITECTURE DES SYSTEMES INTELLIGENTS');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'ARCHITECTURE RESEAU DES SYSTEMES D''EXPLOITATION');\n\tINSERT INTO thesaurus (the_id, dth_id, libelle) VALUES (nextval('seq_thesaurus'), currval('seq_domaine_thesaurus'), 'VISIOCONFERENCE');"
+    }
+  ]
+}

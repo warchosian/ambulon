@@ -1,0 +1,8 @@
+G:\WarchoLife\WarchoPortable\PortableWork\Anaconda\anaconda-3\envs\ambulon\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.3) or chardet (6.0.0.post1)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(
+usage: ambulon [-h] --collection-name COLLECTION_NAME [--directory DIRECTORY]
+               [--description DESCRIPTION] [--project-id PROJECT_ID]
+               [--token TOKEN] [--base-url BASE_URL] [--config CONFIG]
+               [--recursive] [--extensions EXTENSIONS] [--exclude EXCLUDE]
+               [--debug] [--dry-run]
+ambulon: error: unrecognized arguments: --json

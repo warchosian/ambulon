@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>analyse</title>
+    <style>
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 2em;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #34495e;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+            line-height: 1.4;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+        pre.tree {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        li {
+            margin: 0.5em 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding: 0.5em 0 0.5em 1em;
+            color: #555;
+            background: #f8f9fa;
+            border-radius: 0 3px 3px 0;
+        }
+        blockquote p {
+            margin: 0.5em 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+    
+    /* Table of Contents Styles */
+    .table-of-contents {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 30px 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .table-of-contents h2 {
+        margin-top: 0;
+        color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+    }
+
+    .table-of-contents ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 10px 0;
+    }
+
+    .table-of-contents ul ul {
+        padding-left: 20px;
+        margin-top: 5px;
+    }
+
+    .table-of-contents li {
+        margin: 8px 0;
+        line-height: 1.6;
+    }
+
+    .table-of-contents a {
+        color: #3498db;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .table-of-contents a:hover {
+        color: #2980b9;
+        text-decoration: underline;
+    }
+
+    /* Back-to-TOC links next to headings */
+    .back-to-toc {
+        font-size: 0.7em;
+        color: #95a5a6;
+        text-decoration: none;
+        margin-left: 10px;
+        opacity: 0.6;
+        transition: opacity 0.2s, color 0.2s;
+        vertical-align: super;
+    }
+
+    .back-to-toc:hover {
+        opacity: 1;
+        color: #3498db;
+        text-decoration: none;
+    }
+
+    h1:hover .back-to-toc,
+    h2:hover .back-to-toc,
+    h3:hover .back-to-toc,
+    h4:hover .back-to-toc,
+    h5:hover .back-to-toc,
+    h6:hover .back-to-toc {
+        opacity: 1;
+    }
+
+    /* Floating TOC button */
+    .floating-toc-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #3498db;
+        color: white;
+        padding: 12px 18px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        transition: background 0.3s, transform 0.2s;
+        z-index: 1000;
+    }
+
+    .floating-toc-btn:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        text-decoration: none;
+    }
+
+    /* Smooth scrolling for anchor links */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Highlight target when navigating */
+    .table-of-contents li:target {
+        background: #fff3cd;
+        border-radius: 4px;
+        transition: background 0.5s;
+    }
+    
+    </style>
+</head>
+<body>
+<nav id="table-of-contents" class="table-of-contents">
+<h2>Table des matières</h2>
+<ul>
+<li><a id="toc-analyse-de-lapplication-gestionclient"></a><a href="#analyse-de-lapplication-gestionclient">Analyse de l'application "GestionClient"</a>
+<ul>
+<li><a id="toc-sommaire"></a><a href="#sommaire">Sommaire</a>
+</li>
+<li><a id="toc-1-introduction"></a><a href="#1-introduction">1. Introduction</a>
+<ul>
+<li><a id="toc-contexte"></a><a href="#contexte">Contexte</a>
+</li>
+<li><a id="toc-périmètre-de-lanalyse"></a><a href="#p%C3%A9rim%C3%A8tre-de-lanalyse">Périmètre de l'analyse</a>
+</li>
+</ul>
+<li><a id="toc-2-analyse-fonctionnelle"></a><a href="#2-analyse-fonctionnelle">2. Analyse fonctionnelle</a>
+<ul>
+<li><a id="toc-21-acteurs-et-cas-dusage"></a><a href="#21-acteurs-et-cas-dusage">2.1. Acteurs et cas d'usage</a>
+<ul>
+<li><a id="toc-diagramme-des-cas-dusage"></a><a href="#diagramme-des-cas-dusage">Diagramme des cas d'usage</a>
+</li>
+<li><a id="toc-description-des-acteurs"></a><a href="#description-des-acteurs">Description des acteurs</a>
+</li>
+</ul>
+<li><a id="toc-22-règles-métier"></a><a href="#22-r%C3%A8gles-m%C3%A9tier">2.2. Règles métier</a>
+<ul>
+<li><a id="toc-calcul-du-score-de-fidélité"></a><a href="#calcul-du-score-de-fid%C3%A9lit%C3%A9">Calcul du score de fidélité</a>
+</li>
+<li><a id="toc-diagramme-de-décision"></a><a href="#diagramme-de-d%C3%A9cision">Diagramme de décision</a>
+</li>
+</ul>
+<li><a id="toc-23-workflows"></a><a href="#23-workflows">2.3. Workflows</a>
+<ul>
+<li><a id="toc-workflow-de-gestion-des-réclamations"></a><a href="#workflow-de-gestion-des-r%C3%A9clamations">Workflow de gestion des réclamations</a>
+</li>
+</ul>
+</li>
+</ul>
+<li><a id="toc-3-analyse-technique"></a><a href="#3-analyse-technique">3. Analyse technique</a>
+<ul>
+<li><a id="toc-31-architecture"></a><a href="#31-architecture">3.1. Architecture</a>
+<ul>
+<li><a id="toc-diagramme-darchitecture-globale"></a><a href="#diagramme-darchitecture-globale">Diagramme d'architecture globale</a>
+</li>
+</ul>
+<li><a id="toc-32-modules-et-dépendances"></a><a href="#32-modules-et-d%C3%A9pendances">3.2. Modules et dépendances</a>
+<ul>
+<li><a id="toc-diagramme-des-dépendances-du-backend"></a><a href="#diagramme-des-d%C3%A9pendances-du-backend">Diagramme des dépendances du backend</a>
+</li>
+<li><a id="toc-liste-des-dépendances-critiques"></a><a href="#liste-des-d%C3%A9pendances-critiques">Liste des dépendances critiques</a>
+</li>
+</ul>
+<li><a id="toc-33-sécurité"></a><a href="#33-s%C3%A9curit%C3%A9">3.3. Sécurité</a>
+<ul>
+<li><a id="toc-schéma-dauthentification"></a><a href="#sch%C3%A9ma-dauthentification">Schéma d'authentification</a>
+</li>
+<li><a id="toc-vulnérabilités-identifiées"></a><a href="#vuln%C3%A9rabilit%C3%A9s-identifi%C3%A9es">Vulnérabilités identifiées</a>
+</li>
+</ul>
+<li><a id="toc-34-dette-technique"></a><a href="#34-dette-technique">3.4. Dette technique</a>
+<ul>
+<li><a id="toc-problèmes-identifiés"></a><a href="#probl%C3%A8mes-identifi%C3%A9s">Problèmes identifiés</a>
+</li>
+</ul>
+</li>
+</ul>
+<li><a id="toc-4-conclusion"></a><a href="#4-conclusion">4. Conclusion</a>
+<ul>
+<li><a id="toc-synthèse"></a><a href="#synth%C3%A8se">Synthèse</a>
+</li>
+<li><a id="toc-recommandations"></a><a href="#recommandations">Recommandations</a>
+</li>
+<li><a id="toc-points-clés-du-document"></a><a href="#points-cl%C3%A9s-du-document">Points clés du document :</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+
+<p>Voici un exemple de document Markdown complet et autoporté, structuré pour analyser une application fictive. Vous pourrez l'adapter ou me fournir vos fichiers pour une analyse personnalisée.</p>
+
+
+<h1 id="analyse-de-lapplication-gestionclient">Analyse de l'application "GestionClient" <a href="#toc-analyse-de-lapplication-gestionclient" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h1>
+<strong>Date</strong> : 23/01/2026
+<strong>Auteur</strong> : Assistant
+<strong>Version</strong> : 1.0
+
+<hr>
+
+<h2 id="sommaire">Sommaire <a href="#toc-sommaire" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h2>
+1. <a href="#introduction">Introduction</a>
+2. <a href="#analyse-fonctionnelle">Analyse fonctionnelle</a>
+   - 2.1. <a href="#acteurs-et-cas-dusage">Acteurs et cas d'usage</a>
+   - 2.2. <a href="#règles-métier">Règles métier</a>
+   - 2.3. <a href="#workflows">Workflows</a>
+3. <a href="#analyse-technique">Analyse technique</a>
+   - 3.1. <a href="#architecture">Architecture</a>
+   - 3.2. <a href="#modules-et-dépendances">Modules et dépendances</a>
+   - 3.3. <a href="#sécurité">Sécurité</a>
+   - 3.4. <a href="#dette-technique">Dette technique</a>
+4. <a href="#conclusion">Conclusion</a>
+
+<hr>
+
+<h2 id="1-introduction">1. Introduction <a href="#toc-1-introduction" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h2>
+<h3 id="contexte">Contexte <a href="#toc-contexte" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h3>
+L'application <strong>GestionClient</strong> est un système de gestion de relations clients (CRM) permettant aux entreprises de suivre leurs interactions avec les clients, de gérer les contrats et de générer des rapports.
+
+<h3 id="périmètre-de-lanalyse">Périmètre de l'analyse <a href="#toc-périmètre-de-lanalyse" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h3>
+Cette analyse est basée sur :
+<ul>
+<li>Le code source fourni (backend en Python, frontend en React).</li>
+<li>Les fichiers de configuration (Docker, CI/CD).</li>
+<li>La documentation technique et fonctionnelle.</li>
+</ul>
+
+<hr>
+
+<h2 id="2-analyse-fonctionnelle">2. Analyse fonctionnelle <a href="#toc-2-analyse-fonctionnelle" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h2>
+
+<h3 id="21-acteurs-et-cas-dusage">2.1. Acteurs et cas d'usage <a href="#toc-21-acteurs-et-cas-dusage" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h3>
+<h4 id="diagramme-des-cas-dusage">Diagramme des cas d'usage <a href="#toc-diagramme-des-cas-dusage" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h4>
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="520px" preserveAspectRatio="none" style="width:468px;height:520px;background:#FFFFFF;" version="1.1" viewBox="0 0 468 520" width="468px" zoomAndPan="magnify"><defs/><g><!--cluster Syst?me--><g class="cluster" data-entity="Syst.me" data-source-line="6" data-uid="ent0005" id="cluster_Syst.me"><rect fill="none" height="507" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="282.81" x="179.93" y="7"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="67.8125" x="287.4288" y="21.9951">Syst&#232;me</text></g><!--entity UC1: Consulter ses contrats--><g class="entity" data-entity="UC1. Consulter ses contrats" data-source-line="7" data-uid="ent0006" id="entity_UC1. Consulter ses contrats"><ellipse cx="321.3426" cy="66.0005" fill="#F1F1F1" rx="108.7026" ry="24.1405" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="195.0703" x="223.8074" y="70.649">UC1: Consulter ses contrats</text></g><!--entity UC2: Soumettre une r?clamation--><g class="entity" data-entity="UC2. Soumettre une r.clamation" data-source-line="8" data-uid="ent0008" id="entity_UC2. Soumettre une r.clamation"><ellipse cx="321.3443" cy="153.0009" fill="#F1F1F1" rx="125.4043" ry="27.4809" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="230.8496" x="205.9195" y="157.6493">UC2: Soumettre une r&#233;clamation</text></g><!--entity UC3: Cr?er un contrat--><g class="entity" data-entity="UC3. Cr.er un contrat" data-source-line="9" data-uid="ent0010" id="entity_UC3. Cr.er un contrat"><ellipse cx="321.3446" cy="235.9969" fill="#F1F1F1" rx="89.9846" ry="20.3969" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="153.7061" x="244.4915" y="240.6453">UC3: Cr&#233;er un contrat</text></g><!--entity UC4: Modifier un contrat--><g class="entity" data-entity="UC4. Modifier un contrat" data-source-line="10" data-uid="ent0012" id="entity_UC4. Modifier un contrat"><ellipse cx="321.3426" cy="313.0045" fill="#F1F1F1" rx="98.0726" ry="22.0145" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="171.8008" x="235.4422" y="317.653">UC4: Modifier un contrat</text></g><!--entity UC5: G?rer les utilisateurs--><g class="entity" data-entity="UC5. G.rer les utilisateurs" data-source-line="11" data-uid="ent0014" id="entity_UC5. G.rer les utilisateurs"><ellipse cx="321.3397" cy="393.0019" fill="#F1F1F1" rx="103.7597" ry="23.1519" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="184.3105" x="229.1844" y="397.6504">UC5: G&#233;rer les utilisateurs</text></g><!--entity UC6: G?n?rer des rapports--><g class="entity" data-entity="UC6. G.n.rer des rapports" data-source-line="12" data-uid="ent0016" id="entity_UC6. G.n.rer des rapports"><ellipse cx="321.335" cy="474.997" fill="#F1F1F1" rx="105.485" ry="23.497" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="188.0771" x="227.2964" y="479.6454">UC6: G&#233;n&#233;rer des rapports</text></g><!--entity client--><g class="entity" data-entity="client" data-source-line="2" data-uid="ent0002" id="entity_client"><ellipse cx="70.9651" cy="80.35" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M70.9651,88.35 L70.9651,115.35 M57.9651,96.35 L83.9651,96.35 M70.9651,115.35 L57.9651,130.35 M70.9651,115.35 L83.9651,130.35" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40.5303" x="50.7" y="144.8451">Client</text></g><!--entity agent--><g class="entity" data-entity="agent" data-source-line="3" data-uid="ent0003" id="entity_agent"><ellipse cx="70.9653" cy="255.35" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M70.9653,263.35 L70.9653,290.35 M57.9653,271.35 L83.9653,271.35 M70.9653,290.35 L57.9653,305.35 M70.9653,290.35 L83.9653,305.35" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="129.9307" x="6" y="319.8451">Agent Commercial</text></g><!--entity admin--><g class="entity" data-entity="admin" data-source-line="4" data-uid="ent0004" id="entity_admin"><ellipse cx="70.9618" cy="391.35" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M70.9618,399.35 L70.9618,426.35 M57.9618,407.35 L83.9618,407.35 M70.9618,426.35 L57.9618,441.35 M70.9618,426.35 L83.9618,441.35" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="104.6035" x="18.66" y="455.8451">Administrateur</text></g><!--link client to UC1: Consulter ses contrats--><g class="link" data-entity-1="client" data-entity-2="UC1. Consulter ses contrats" data-source-line="7" data-uid="lnk7" id="link_client_UC1. Consulter ses contrats"><path d="M91.45,106.55 C122.16,101.11 177.6919,91.2662 229.1919,82.1462" fill="none" id="client-to-UC1: Consulter ses contrats" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="235.1,81.1,225.5404,78.7307,230.1766,81.9719,226.9354,86.6081,235.1,81.1" style="stroke:#181818;stroke-width:1;"/></g><!--link client to UC2: Soumettre une r?clamation--><g class="link" data-entity-1="client" data-entity-2="UC2. Soumettre une r.clamation" data-source-line="8" data-uid="lnk9" id="link_client_UC2. Soumettre une r.clamation"><path d="M91.45,113.37 C119.53,118.23 167.388,126.516 215.768,134.896" fill="none" id="client-to-UC2: Soumettre une r&#233;clamation" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="221.68,135.92,213.4947,130.4427,216.7534,135.0666,212.1294,138.3253,221.68,135.92" style="stroke:#181818;stroke-width:1;"/></g><!--link agent to UC3: Cr?er un contrat--><g class="link" data-entity-1="agent" data-entity-2="UC3. Cr.er un contrat" data-source-line="9" data-uid="lnk11" id="link_agent_UC3. Cr.er un contrat"><path d="M136.25,272.32 C171.9,265.29 210.3133,257.7007 246.5233,250.5607" fill="none" id="agent-to-UC3: Cr&#233;er un contrat" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="252.41,249.4,242.8062,247.2167,247.5045,250.3673,244.3539,255.0656,252.41,249.4" style="stroke:#181818;stroke-width:1;"/></g><!--link agent to UC4: Modifier un contrat--><g class="link" data-entity-1="agent" data-entity-2="UC4. Modifier un contrat" data-source-line="10" data-uid="lnk13" id="link_agent_UC4. Modifier un contrat"><path d="M136.25,292.25 C165.71,295.57 195.1378,298.8875 226.9678,302.4775" fill="none" id="agent-to-UC4: Modifier un contrat" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="232.93,303.15,224.435,298.1665,227.9615,302.5896,223.5384,306.1161,232.93,303.15" style="stroke:#181818;stroke-width:1;"/></g><!--link admin to UC5: G?rer les utilisateurs--><g class="link" data-entity-1="admin" data-entity-2="UC5. G.rer les utilisateurs" data-source-line="11" data-uid="lnk15" id="link_admin_UC5. G.rer les utilisateurs"><path d="M123.73,415.16 C153.87,411.77 186.7978,408.0521 222.0178,404.0821" fill="none" id="admin-to-UC5: G&#233;rer les utilisateurs" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="227.98,403.41,218.5886,400.4433,223.0115,403.9701,219.4847,408.3929,227.98,403.41" style="stroke:#181818;stroke-width:1;"/></g><!--link admin to UC6: G?n?rer des rapports--><g class="link" data-entity-1="admin" data-entity-2="UC6. G.n.rer des rapports" data-source-line="12" data-uid="lnk17" id="link_admin_UC6. G.n.rer des rapports"><path d="M123.73,432.25 C158.7,439.86 199.5971,448.7449 238.7271,457.2549" fill="none" id="admin-to-UC6: G&#233;n&#233;rer des rapports" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="244.59,458.53,236.6456,452.7088,239.7042,457.4674,234.9455,460.526,244.59,458.53" style="stroke:#181818;stroke-width:1;"/></g><!--SRC=[PSyzRiCm30NWtQSWFBL3XluE7WeK7Z9r2de0GcPS0X8LKDGG1BrFSmvVh99I0mMyIUA79pvFHmEBe3n_6Koiv8oZTEWiAlIZPnBh0HEuTbm7xtEvm1X387MClX6S_uifi70oHQEijtbzwhhw1yhi2Vh3ETdo4wY7ImT_Ny1kzmPtd-F3KF8bPM-aaAXi4AMcfViDVHpW47CWCoN8Gg3BrNaCMBjKtZPRzLC9Bg2aPbb3D-XvW8yuyP6thBPOsSi0- -Mg1VcoOJRsd5hXjA6lZSfDJqKhdavHQv_lNm00]--></g></svg>
+</div>
+
+<h4 id="description-des-acteurs">Description des acteurs <a href="#toc-description-des-acteurs" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Acteur</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**Client**</td>
+<td>Utilisateur final qui consulte ses contrats et soumet des réclamations.</td>
+</tr>
+<tr>
+<td>**Agent Commercial**</td>
+<td>Crée et modifie les contrats pour les clients.</td>
+</tr>
+<tr>
+<td>**Administrateur**</td>
+<td>Gère les utilisateurs et génère des rapports analytiques.</td>
+</tr>
+</tbody>
+</table>---
+
+<h3 id="22-règles-métier">2.2. Règles métier <a href="#toc-22-règles-métier" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h3>
+<h4 id="calcul-du-score-de-fidélité">Calcul du score de fidélité <a href="#toc-calcul-du-score-de-fidélité" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h4>
+Le score de fidélité d'un client est calculé selon les règles suivantes :
+<ul>
+<li><strong>Formule</strong> :</li>
+</ul>
+  \[
+  \text{Score} = (\text{Nombre de contrats actifs} \times 10) + (\text{Ancienneté en années} \times 5) - (\text{Nombre de réclamations} \times 2)
+  \]
+<ul>
+<li><strong>Seuils</strong> :</li>
+</ul>
+  - Score > 50 : Client "Premium".
+  - 20 < Score ≤ 50 : Client "Standard".
+  - Score ≤ 20 : Client "À risque".
+
+<h4 id="diagramme-de-décision">Diagramme de décision <a href="#toc-diagramme-de-décision" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h4>
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="264px" preserveAspectRatio="none" style="width:405px;height:264px;background:#FFFFFF;" version="1.1" viewBox="0 0 405 264" width="405px" zoomAndPan="magnify"><defs/><g><ellipse cx="171.2913" cy="20" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1;"/><polygon fill="#F1F1F1" points="137.7434,50,204.8391,50,216.8391,62,204.8391,74,137.7434,74,125.7434,62,137.7434,50" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="67.0957" x="137.7434" y="65.8081">Score &gt; 50?</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="18.686" x="107.0574" y="59.4058">Oui</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="21.9302" x="216.8391" y="59.4058">Non</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="112.4258" x="11" y="84"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="92.4258" x="21" y="105.1387">Client Premium</text><polygon fill="#F1F1F1" points="241.8218,84,308.9175,84,320.9175,96,308.9175,108,241.8218,108,229.8218,96,241.8218,84" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="67.0957" x="241.8218" y="99.8081">Score &gt; 20?</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="18.686" x="211.1357" y="93.4058">Oui</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="21.9302" x="320.9175" y="93.4058">Non</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="113.3574" x="153.4258" y="118"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="93.3574" x="163.4258" y="139.1387">Client Standard</text><rect fill="#F1F1F1" height="33.9688" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="107.7031" x="286.7832" y="118"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="87.7031" x="296.7832" y="139.1387">Client &#192; risque</text><polygon fill="#F1F1F1" points="275.3696,157.9688,287.3696,169.9688,275.3696,181.9688,263.3696,169.9688,275.3696,157.9688" style="stroke:#181818;stroke-width:0.5;"/><polygon fill="#F1F1F1" points="171.2913,187.9688,183.2913,199.9688,171.2913,211.9688,159.2913,199.9688,171.2913,187.9688" style="stroke:#181818;stroke-width:0.5;"/><ellipse cx="171.2913" cy="242.9688" fill="none" rx="11" ry="11" style="stroke:#222222;stroke-width:1;"/><ellipse cx="171.2913" cy="242.9688" fill="#222222" rx="6" ry="6" style="stroke:#222222;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="229.8218" x2="210.1045" y1="96" y2="96"/><line style="stroke:#181818;stroke-width:1;" x1="210.1045" x2="210.1045" y1="96" y2="118"/><polygon fill="#181818" points="206.1045,108,210.1045,118,214.1045,108,210.1045,112" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="320.9175" x2="340.6348" y1="96" y2="96"/><line style="stroke:#181818;stroke-width:1;" x1="340.6348" x2="340.6348" y1="96" y2="118"/><polygon fill="#181818" points="336.6348,108,340.6348,118,344.6348,108,340.6348,112" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="210.1045" x2="210.1045" y1="151.9688" y2="169.9688"/><line style="stroke:#181818;stroke-width:1;" x1="210.1045" x2="263.3696" y1="169.9688" y2="169.9688"/><polygon fill="#181818" points="253.3696,165.9688,263.3696,169.9688,253.3696,173.9688,257.3696,169.9688" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="340.6348" x2="340.6348" y1="151.9688" y2="169.9688"/><line style="stroke:#181818;stroke-width:1;" x1="340.6348" x2="287.3696" y1="169.9688" y2="169.9688"/><polygon fill="#181818" points="297.3696,165.9688,287.3696,169.9688,297.3696,173.9688,293.3696,169.9688" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="125.7434" x2="67.2129" y1="62" y2="62"/><line style="stroke:#181818;stroke-width:1;" x1="67.2129" x2="67.2129" y1="62" y2="84"/><polygon fill="#181818" points="63.2129,74,67.2129,84,71.2129,74,67.2129,78" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="216.8391" x2="275.3696" y1="62" y2="62"/><line style="stroke:#181818;stroke-width:1;" x1="275.3696" x2="275.3696" y1="62" y2="84"/><polygon fill="#181818" points="271.3696,74,275.3696,84,279.3696,74,275.3696,78" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="67.2129" x2="67.2129" y1="117.9688" y2="199.9688"/><line style="stroke:#181818;stroke-width:1;" x1="67.2129" x2="159.2913" y1="199.9688" y2="199.9688"/><polygon fill="#181818" points="149.2913,195.9688,159.2913,199.9688,149.2913,203.9688,153.2913,199.9688" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="275.3696" x2="275.3696" y1="181.9688" y2="199.9688"/><line style="stroke:#181818;stroke-width:1;" x1="275.3696" x2="183.2913" y1="199.9688" y2="199.9688"/><polygon fill="#181818" points="193.2913,195.9688,183.2913,199.9688,193.2913,203.9688,189.2913,199.9688" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="171.2913" x2="171.2913" y1="30" y2="50"/><polygon fill="#181818" points="167.2913,40,171.2913,50,175.2913,40,171.2913,44" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="171.2913" x2="171.2913" y1="211.9688" y2="231.9688"/><polygon fill="#181818" points="167.2913,221.9688,171.2913,231.9688,175.2913,221.9688,171.2913,225.9688" style="stroke:#181818;stroke-width:1;"/><!--SRC=[Aov9B2hXoanJq0XEpYzALR1JC3MmrrGeoKZDKz3mBytKv59Gi7BEoKpDAr48A4hDpIpDjUPApIbELT3moyy3oIBhDSBGYz0TN9AObv9Ob68D54Kn0A7aS8D2KMPnOMagM4rUIcOQ5uGiBial0000]--></g></svg>
+</div>
+
+<hr>
+
+<h3 id="23-workflows">2.3. Workflows <a href="#toc-23-workflows" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h3>
+<h4 id="workflow-de-gestion-des-réclamations">Workflow de gestion des réclamations <a href="#toc-workflow-de-gestion-des-réclamations" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h4>
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="555px" preserveAspectRatio="none" style="width:250px;height:555px;background:#FFFFFF;" version="1.1" viewBox="0 0 250 555" width="250px" zoomAndPan="magnify"><defs/><g><g id="nouvelle"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="81.2021" x="11.48" y="7"/><line style="stroke:#181818;stroke-width:0.5;" x1="11.48" x2="92.6821" y1="33.2969" y2="33.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="61.2021" x="21.48" y="24.9951">Nouvelle</text></g><g id="encours"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="80.3545" x="11.9" y="134"/><line style="stroke:#181818;stroke-width:0.5;" x1="11.9" x2="92.2545" y1="160.2969" y2="160.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="60.3545" x="21.9" y="151.9951">En cours</text></g><g id="resolue"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75.5762" x="14.29" y="261"/><line style="stroke:#181818;stroke-width:0.5;" x1="14.29" x2="89.8662" y1="287.2969" y2="287.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="55.5762" x="24.29" y="278.9951">R&#233;solue</text></g><g id="cloturee"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="79.5752" x="12.29" y="388"/><line style="stroke:#181818;stroke-width:0.5;" x1="12.29" x2="91.8652" y1="414.2969" y2="414.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="59.5752" x="22.29" y="405.9951">Cl&#244;tur&#233;e</text></g><g id="Archivage"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="90.1572" x="7" y="499"/><line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="97.1572" y1="525.2969" y2="525.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70.1572" x="17" y="516.9951">Archivage</text></g><!--link nouvelle to encours--><g class="link" data-entity-1="nouvelle" data-entity-2="encours" data-source-line="6" data-uid="lnk2" id="link_nouvelle_encours"><path d="M52.08,57.4 C52.08,79.42 52.08,105.66 52.08,127.66" fill="none" id="nouvelle-to-encours" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="52.08,133.66,56.08,124.66,52.08,128.66,48.08,124.66,52.08,133.66" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="189.0078" x="53.08" y="100.0669">Prise en charge par un agent</text></g><!--link encours to resolue--><g class="link" data-entity-1="encours" data-entity-2="resolue" data-source-line="7" data-uid="lnk3" id="link_encours_resolue"><path d="M52.08,184.4 C52.08,206.42 52.08,232.66 52.08,254.66" fill="none" id="encours-to-resolue" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="52.08,260.66,56.08,251.66,52.08,255.66,48.08,251.66,52.08,260.66" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="117.6157" x="53.08" y="227.0669">Solution propos&#233;e</text></g><!--link resolue to cloturee--><g class="link" data-entity-1="resolue" data-entity-2="cloturee" data-source-line="8" data-uid="lnk4" id="link_resolue_cloturee"><path d="M52.08,311.4 C52.08,333.42 52.08,359.66 52.08,381.66" fill="none" id="resolue-to-cloturee" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="52.08,387.66,56.08,378.66,52.08,382.66,48.08,378.66,52.08,387.66" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="146.4785" x="53.08" y="354.0669">Validation par le client</text></g><!--link cloturee to Archivage--><g class="link" data-entity-1="cloturee" data-entity-2="Archivage" data-source-line="9" data-uid="lnk6" id="link_cloturee_Archivage"><path d="M52.08,438.46 C52.08,456.41 52.08,474.69 52.08,492.62" fill="none" id="cloturee-to-Archivage" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="52.08,498.62,56.08,489.62,52.08,493.62,48.08,489.62,52.08,498.62" style="stroke:#181818;stroke-width:1;"/></g><!--SRC=[FOqz2iCm38Ltdq9apmKw54hfMaeBtOqh4eEmWsJdJjbxWroiiXrtaXxV-v5a4y9mZtb58Xp02eH366dm5i35p58XXlftzjmtYPHRaB7-dLrf_wRC-zQeewWAqPW-0EDuxeLmWWTxGTNWPiiJmc8PSW0xOKYcsqhasD78Is_oCS32SOcYKwR3OkoJwdnRyX_RlDghuuvyAVvxIk32RlQhBlu0]--></g></svg>
+</div>
+
+<hr>
+
+<h2 id="3-analyse-technique">3. Analyse technique <a href="#toc-3-analyse-technique" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h2>
+
+<h3 id="31-architecture">3.1. Architecture <a href="#toc-31-architecture" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h3>
+<h4 id="diagramme-darchitecture-globale">Diagramme d'architecture globale <a href="#toc-diagramme-darchitecture-globale" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h4>
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="488px" preserveAspectRatio="none" style="width:314px;height:488px;background:#FFFFFF;" version="1.1" viewBox="0 0 314 488" width="314px" zoomAndPan="magnify"><defs/><g><!--cluster fe--><g class="cluster" data-entity="fe" data-source-line="2" data-uid="ent0003" id="cluster_fe"><rect fill="none" height="97.3" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="144" x="7" y="115.7478"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="72.2285" x="42.8857" y="130.7429">Frontend</text></g><!--cluster be--><g class="cluster" data-entity="be" data-source-line="5" data-uid="ent0005" id="cluster_be"><rect fill="none" height="220.59" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="171" x="10" y="262.0478"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="67.2109" x="61.8945" y="277.0429">Backend</text></g><!--entity react--><g class="entity" data-entity="react" data-source-line="3" data-uid="ent0004" id="entity_react"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="111.9072" x="23.05" y="150.7478"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="114.9572" y="155.7478"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="112.9572" y="157.7478"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="112.9572" y="161.7478"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="71.9072" x="38.05" y="183.7429">React App</text></g><!--entity api--><g class="entity" data-entity="api" data-source-line="6" data-uid="ent0006" id="entity_api"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="102.6104" x="27.69" y="297.0478"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="110.3004" y="302.0478"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="108.3004" y="304.0478"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="108.3004" y="308.0478"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="62.6104" x="42.69" y="330.0429">API REST</text></g><!--entity auth--><g class="entity" data-entity="auth" data-source-line="7" data-uid="ent0007" id="entity_auth"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.0039" x="26.5" y="420.3378"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="135.5039" y="425.3378"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="133.5039" y="427.3378"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="133.5039" y="431.3378"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.0039" x="41.5" y="453.3329">Service Auth</text></g><!--entity client--><g class="entity" data-entity="client" data-source-line="1" data-uid="ent0002" id="entity_client"><path d="M35.2008,15.3458 C38.3641,10.2099 44.38,10.1551 47.2474,15.68 C50.146,10.1762 53.4866,9.8231 58.077,13.734 C60.802,7.7495 64.4632,7.8998 68.5472,12.3734 C70.9985,7.4084 76.0629,7.31 79.1625,11.6323 C83.6294,6 88.8951,6.1637 91.8993,13.1129 C95.4739,7.4394 100.9116,8.2976 103.3505,14.2332 C106.7713,9.0114 111.8537,9.8509 114.1568,15.3589 C117.6095,10.5009 120.7335,9.7668 124.5336,15.0017 C134.5484,15.1948 138.8255,23.0162 132.5648,31.2527 C137.8476,39.1767 134.9036,45.1725 125.4594,46.0018 C122.5146,51.0981 116.7929,51.1719 113.9921,45.8435 C111.086,52.5629 106.6787,52.5111 101.6295,48.2581 C98.4915,52.8696 95.4409,54.2251 91.4861,49.1099 C87.5934,55.2813 83.5073,55.1687 79.8121,48.9243 C76.1735,54.3483 72.0719,53.4375 69.2019,48.1622 C65.6911,53.2972 60.9837,53.4866 58.2002,47.4461 C55.4191,53.019 50.2487,53.3655 47.3169,47.5907 C42.325,53.7408 38.5437,52.9237 34.7463,46.4054 C27.6854,42.0728 25.0465,36.9139 32.6991,30.6672 C27.1147,24.8671 27.5593,18.9864 35.2008,15.3458" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="76.3232" x="40.84" y="34.4429">Client Web</text></g><!--entity db--><g class="entity" data-entity="db" data-source-line="9" data-uid="ent0008" id="entity_db"><path d="M196.62,430.8378 C196.62,420.8378 246.9965,420.8378 246.9965,420.8378 C246.9965,420.8378 297.3729,420.8378 297.3729,430.8378 L297.3729,456.1346 C297.3729,466.1346 246.9965,466.1346 246.9965,466.1346 C246.9965,466.1346 196.62,466.1346 196.62,456.1346 L196.62,430.8378" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><path d="M196.62,430.8378 C196.62,440.8378 246.9965,440.8378 246.9965,440.8378 C246.9965,440.8378 297.3729,440.8378 297.3729,430.8378" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.7529" x="206.62" y="457.8329">PostgreSQL</text></g><!--link client to react--><g class="link" data-entity-1="client" data-entity-2="react" data-source-line="11" data-uid="lnk9" id="link_client_react"><path d="M79,53.1478 C79,79.7878 79,117.8578 79,144.4578" fill="none" id="client-to-react" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="79,150.4578,83,141.4578,79,145.4578,75,141.4578,79,150.4578" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="41.7485" x="80" y="95.8146">HTTPS</text></g><!--link react to api--><g class="link" data-entity-1="react" data-entity-2="api" data-source-line="12" data-uid="lnk10" id="link_react_api"><path d="M79,197.4378 C79,224.5478 79,263.7678 79,290.8078" fill="none" id="react-to-api" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="79,296.8078,83,287.8078,79,291.8078,75,287.8078,79,296.8078" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="86.0869" x="80" y="242.1146">Requ&#234;tes API</text></g><!--link api to auth--><g class="link" data-entity-1="api" data-entity-2="auth" data-source-line="13" data-uid="lnk11" id="link_api_auth"><path d="M81.23,343.7278 C83.38,365.5078 86.0395,392.3669 88.1895,414.1069" fill="none" id="api-to-auth" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="88.78,420.0778,91.8748,410.7278,88.2879,415.102,83.9137,411.5151,88.78,420.0778" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="102.813" x="87" y="386.4046">V&#233;rification JWT</text></g><!--link api to db--><g class="link" data-entity-1="api" data-entity-2="db" data-source-line="14" data-uid="lnk12" id="link_api_db"><path d="M130.71,336.8678 C152.96,345.2978 178.33,357.3078 198,373.3378 C213.86,386.2578 223.9306,400.347 232.5806,415.267" fill="none" id="api-to-db" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="235.59,420.4578,234.5364,410.6654,233.0822,416.1321,227.6155,414.6779,235.59,420.4578" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="91.2476" x="215" y="386.4046">Requ&#234;tes SQL</text></g><!--SRC=[POz1Ri8m44NtFiKeUoxG1L90hG2n24a4wx4zW4MmWpDXK_L0xJMuM2UEG21s_l_DdpysJUWjPFF6aMVOaSu0Ep19gaY6qHyQWkmh1i_aRS9xWcy5OCAv3Nx8PIMXOSZRDl4uAFNpd9-XETtZ-YsU5qieFwiwOMpTAwqeNfqXo7i-ZXFoaFKM6JLsihq87HyYLPjrubOhDNu19fFfU0vymAAkYqgDQl2bIDoIBltjZwa3kK8DNc9I8N1x-urkxmoo2nvMk_enOFLBLgh_0G00]--></g></svg>
+</div>
+
+<hr>
+
+<h3 id="32-modules-et-dépendances">3.2. Modules et dépendances <a href="#toc-32-modules-et-dépendances" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h3>
+<h4 id="diagramme-des-dépendances-du-backend">Diagramme des dépendances du backend <a href="#toc-diagramme-des-dépendances-du-backend" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h4>
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="423px" preserveAspectRatio="none" style="width:422px;height:423px;background:#FFFFFF;" version="1.1" viewBox="0 0 422 423" width="422px" zoomAndPan="magnify"><defs/><g><!--cluster Backend--><g class="cluster" data-entity="Backend" data-source-line="1" data-uid="ent0002" id="cluster_Backend"><path d="M8.5,6 L76.7109,6 A3.75,3.75 0 0 1 79.2109,8.5 L86.2109,28.2969 L412.5,28.2969 A2.5,2.5 0 0 1 415,30.7969 L415,414.39 A2.5,2.5 0 0 1 412.5,416.89 L8.5,416.89 A2.5,2.5 0 0 1 6,414.39 L6,8.5 A2.5,2.5 0 0 1 8.5,6" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="86.2109" y1="28.2969" y2="28.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="67.2109" x="10" y="20.9951">Backend</text></g><!--cluster Modules--><g class="cluster" data-entity="Modules" data-source-line="2" data-uid="ent0003" id="cluster_Modules"><path d="M146.5,49 L213.665,49 A3.75,3.75 0 0 1 216.165,51.5 L223.165,71.2969 L388.5,71.2969 A2.5,2.5 0 0 1 391,73.7969 L391,390.39 A2.5,2.5 0 0 1 388.5,392.89 L146.5,392.89 A2.5,2.5 0 0 1 144,390.39 L144,51.5 A2.5,2.5 0 0 1 146.5,49" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="144" x2="223.165" y1="71.2969" y2="71.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="66.165" x="148" y="63.9951">Modules</text></g><!--entity db--><g class="entity" data-entity="db" data-source-line="7" data-uid="ent0011" id="entity_db"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.8008" x="21.6" y="84"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="108.4008" y="89"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="106.4008" y="91"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="106.4008" y="95"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="66.8008" x="36.6" y="116.9951">Database</text></g><!--entity Auth--><g class="entity" data-entity="Auth" data-source-line="3" data-uid="ent0004" id="entity_Auth"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.8125" x="302.59" y="207.3"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="355.4025" y="212.3"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="353.4025" y="214.3"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="353.4025" y="218.3"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="32.8125" x="317.59" y="240.2951">Auth</text></g><!--entity Database--><g class="entity" data-entity="Database" data-source-line="3" data-uid="ent0005" id="entity_Database"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.8008" x="210.6" y="330.59"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="297.4008" y="335.59"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="295.4008" y="337.59"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="295.4008" y="341.59"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="66.8008" x="225.6" y="363.5851">Database</text></g><!--entity Contracts--><g class="entity" data-entity="Contracts" data-source-line="4" data-uid="ent0007" id="entity_Contracts"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="107.5186" x="160.24" y="207.3"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="247.7586" y="212.3"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="245.7586" y="214.3"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="245.7586" y="218.3"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67.5186" x="175.24" y="240.2951">Contracts</text></g><!--entity Reports--><g class="entity" data-entity="Reports" data-source-line="5" data-uid="ent0009" id="entity_Reports"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.332" x="166.83" y="84"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="241.162" y="89"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="239.162" y="91"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="239.162" y="95"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="54.332" x="181.83" y="116.9951">Reports</text></g><!--link Auth to Database--><g class="link" data-entity-1="Auth" data-entity-2="Database" data-source-line="3" data-uid="lnk6" id="link_Auth_Database"><path d="M325.07,253.98 C311.6,275.76 294.4551,303.4865 281.0151,325.2265" fill="none" id="Auth-to-Database" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="277.86,330.33,285.9949,324.7781,280.4892,326.0771,279.1903,320.5714,277.86,330.33" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="40.2188" x="306" y="296.6569">Utilise</text></g><!--link Contracts to Database--><g class="link" data-entity-1="Contracts" data-entity-2="Database" data-source-line="4" data-uid="lnk8" id="link_Contracts_Database"><path d="M220.96,253.83 C225.41,267.5 231.54,285.25 238,300.59 C242.16,310.48 244.5974,315.7784 249.2374,324.8484" fill="none" id="Contracts-to-Database" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="251.97,330.19,251.4321,320.3558,249.6928,325.7387,244.31,323.9994,251.97,330.19" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="40.2188" x="239" y="296.6569">Utilise</text></g><!--link Reports to Contracts--><g class="link" data-entity-1="Reports" data-entity-2="Contracts" data-source-line="5" data-uid="lnk10" id="link_Reports_Contracts"><path d="M214,130.68 C214,152.47 214,179.29 214,201.03" fill="none" id="Reports-to-Contracts" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="214,207.03,218,198.03,214,202.03,210,198.03,214,207.03" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="71.1318" x="215" y="173.3669">D&#233;pend de</text></g><!--SRC=[AqXCpavCJrLGSW8oKlDIb1IgkHGKql9pKbAB59HyyrDASrAB8O8A2j6EfIKPiGgwkdOAqIw99Ob9YSMfiGfM2g4bcJcPnQaGDSxvUIL5YSabnOGK1gKMv1V1bI5fir9mERoo0EWOXHIGqbeWHZ8biLWX9Och5W00]--></g></svg>
+</div>
+
+<h4 id="liste-des-dépendances-critiques">Liste des dépendances critiques <a href="#toc-liste-des-dépendances-critiques" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Dépendance</th>
+<th>Version actuelle</th>
+<th>Version recommandée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Auth</td>
+<td>bcrypt</td>
+<td>3.1.7</td>
+<td>4.0.1</td>
+</tr>
+<tr>
+<td>Contracts</td>
+<td>pandas</td>
+<td>1.2.0</td>
+<td>2.0.3</td>
+</tr>
+<tr>
+<td>Reports</td>
+<td>matplotlib</td>
+<td>3.3.4</td>
+<td>3.7.1</td>
+</tr>
+</tbody>
+</table>---
+
+<h3 id="33-sécurité">3.3. Sécurité <a href="#toc-33-sécurité" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h3>
+<h4 id="schéma-dauthentification">Schéma d'authentification <a href="#toc-schéma-dauthentification" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h4>
+<div class="diagram diagram-plantuml">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="356px" preserveAspectRatio="none" style="width:732px;height:356px;background:#FFFFFF;" version="1.1" viewBox="0 0 732 356" width="732px" zoomAndPan="magnify"><defs/><g><g><title>Utilisateur</title><rect fill="#000000" fill-opacity="0.00000" height="194.7969" width="8" x="40.0049" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="44" x2="44" y1="81.2969" y2="276.0938"/></g><g><title>Frontend</title><rect fill="#000000" fill-opacity="0.00000" height="194.7969" width="8" x="234.5728" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="238.0181" x2="238.0181" y1="81.2969" y2="276.0938"/></g><g><title>Backend .Auth.</title><rect fill="#000000" fill-opacity="0.00000" height="194.7969" width="8" x="453.3569" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="457.083" x2="457.083" y1="81.2969" y2="276.0938"/></g><g><title>Base de donn.es</title><rect fill="#000000" fill-opacity="0.00000" height="194.7969" width="8" x="655.7705" y="81.2969"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="659.6655" x2="659.6655" y1="81.2969" y2="276.0938"/></g><g class="participant participant-head" data-participant="Utilisateur"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72.0098" x="5" y="77.9951">Utilisateur</text><ellipse cx="44.0049" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M44.0049,21.5 L44.0049,48.5 M31.0049,29.5 L57.0049,29.5 M44.0049,48.5 L31.0049,63.5 M44.0049,48.5 L57.0049,63.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-tail" data-participant="Utilisateur"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72.0098" x="5" y="288.0889">Utilisateur</text><ellipse cx="44.0049" cy="299.8906" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M44.0049,307.8906 L44.0049,334.8906 M31.0049,315.8906 L57.0049,315.8906 M44.0049,334.8906 L31.0049,349.8906 M44.0049,334.8906 L57.0049,349.8906" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-head" data-participant="fe"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.1094" x="200.0181" y="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63.1094" x="207.0181" y="69.9951">Frontend</text></g><g class="participant participant-tail" data-participant="fe"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.1094" x="200.0181" y="275.0938"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63.1094" x="207.0181" y="295.0889">Frontend</text></g><g class="participant participant-head" data-participant="auth"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="122.5479" x="396.083" y="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108.5479" x="403.083" y="69.9951">Backend (Auth)</text></g><g class="participant participant-tail" data-participant="auth"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="122.5479" x="396.083" y="275.0938"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108.5479" x="403.083" y="295.0889">Backend (Auth)</text></g><g class="participant participant-head" data-participant="db"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="134.21" x="592.6655" y="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="120.21" x="599.6655" y="69.9951">Base de donn&#233;es</text></g><g class="participant participant-tail" data-participant="db"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="134.21" x="592.6655" y="275.0938"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="120.21" x="599.6655" y="295.0889">Base de donn&#233;es</text></g><g class="message" data-participant-1="Utilisateur" data-participant-2="fe"><polygon fill="#181818" points="226.5728,108.4297,236.5728,112.4297,226.5728,116.4297,230.5728,112.4297" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="44.0049" x2="232.5728" y1="112.4297" y2="112.4297"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="170.5679" x="51.0049" y="107.3638">Saisie email/mot de passe</text></g><g class="message" data-participant-1="fe" data-participant-2="auth"><polygon fill="#181818" points="445.3569,137.5625,455.3569,141.5625,445.3569,145.5625,449.3569,141.5625" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="238.5728" x2="451.3569" y1="141.5625" y2="141.5625"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="194.7842" x="245.5728" y="136.4966">POST /login (email, password)</text></g><g class="message" data-participant-1="auth" data-participant-2="db"><polygon fill="#181818" points="647.7705,166.6953,657.7705,170.6953,647.7705,174.6953,651.7705,170.6953" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="457.3569" x2="653.7705" y1="170.6953" y2="170.6953"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="178.4136" x="464.3569" y="165.6294">V&#233;rification des identifiants</text></g><g class="message" data-participant-1="db" data-participant-2="auth"><polygon fill="#181818" points="468.3569,195.8281,458.3569,199.8281,468.3569,203.8281,464.3569,199.8281" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="462.3569" x2="658.7705" y1="199.8281" y2="199.8281"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="136.811" x="474.3569" y="194.7622">Retourne l'utilisateur</text></g><g class="message" data-participant-1="auth" data-participant-2="fe"><polygon fill="#181818" points="249.5728,224.9609,239.5728,228.9609,249.5728,232.9609,245.5728,228.9609" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="243.5728" x2="456.3569" y1="228.9609" y2="228.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="150.2236" x="255.5728" y="223.895">Retourne un token JWT</text></g><g class="message" data-participant-1="fe" data-participant-2="Utilisateur"><polygon fill="#181818" points="55.0049,254.0938,45.0049,258.0938,55.0049,262.0938,51.0049,258.0938" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="49.0049" x2="237.5728" y1="258.0938" y2="258.0938"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="100.6675" x="61.0049" y="253.0278">Stocke le token</text></g><!--SRC=[NT0nJaCn30RWFQUmkj1ALDqPa61WO07H0hFxue95QZ_5ZZXJpz6BuQO27aWPelZB7ySuk5PuTYviwDHg6h4w3poYECpkgegJv1cWmOx-5czn-8WQp6-QloywmTZzHqQGOwd8yK3MMTwcD7aJbjSH3bUmHZOce3roMUtLJnT7DACKvK2d-62F3-iDh8g-iS2yuylEFhNcHUeeSDu6VJaUAkzuG6ULY3FWJE9n5DrP2hFypNqYrrQ5e5oqoKJEWTyz_g0cu1e3WFlNJUylnFHJyHtNc10KEiCl]--></g></svg>
+</div>
+
+<h4 id="vulnérabilités-identifiées">Vulnérabilités identifiées <a href="#toc-vulnérabilités-identifiées" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h4>
+1. <strong>Token JWT non expiré</strong> : Les tokens actuels n'ont pas de durée de vie limitée.
+2. <strong>Mot de passe non haché</strong> : Les mots de passe sont stockés en clair dans la base de données (à corriger avec <code>bcrypt</code>).
+
+<hr>
+
+<h3 id="34-dette-technique">3.4. Dette technique <a href="#toc-34-dette-technique" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h3>
+<h4 id="problèmes-identifiés">Problèmes identifiés <a href="#toc-problèmes-identifiés" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+<th>Priorité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code dupliqué</td>
+<td>La fonction `calculateScore()` est dupliquée dans 3 modules.</td>
+<td>Haute</td>
+</tr>
+<tr>
+<td>Dépendances obsolètes</td>
+<td>Utilisation de `pandas 1.2.0` (vulnérabilités connues).</td>
+<td>Moyenne</td>
+</tr>
+<tr>
+<td>Tests manquants</td>
+<td>Aucun test unitaire pour le module `Reports`.</td>
+<td>Haute</td>
+</tr>
+</tbody>
+</table>#### Recommandations
+<ul>
+<li><strong>Refactorisation</strong> : Centraliser <code>calculateScore()</code> dans un module dédié.</li>
+<li><strong>Mise à jour</strong> : Passer à <code>pandas 2.0.3</code>.</li>
+<li><strong>Tests</strong> : Ajouter des tests unitaires pour <code>Reports</code>.</li>
+</ul>
+
+<hr>
+
+<h2 id="4-conclusion">4. Conclusion <a href="#toc-4-conclusion" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h2>
+<h3 id="synthèse">Synthèse <a href="#toc-synthèse" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h3>
+<ul>
+<li><strong>Fonctionnel</strong> :</li>
+</ul>
+  - L'application couvre les besoins de base d'un CRM.
+  - Les règles métier (score de fidélité, workflow des réclamations) sont bien définies.
+<ul>
+<li><strong>Technique</strong> :</li>
+</ul>
+  - Architecture modulaire mais avec des dépendances obsolètes.
+  - Problèmes de sécurité critiques (authentification, stockage des mots de passe).
+
+<h3 id="recommandations">Recommandations <a href="#toc-recommandations" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h3>
+1. <strong>Corriger les vulnérabilités</strong> :
+   - Implémenter l'expiration des tokens JWT.
+   - Hacher les mots de passe avec <code>bcrypt</code>.
+2. <strong>Améliorer la maintenabilité</strong> :
+   - Supprimer le code dupliqué.
+   - Mettre à jour les dépendances.
+3. <strong>Renforcer les tests</strong> :
+   - Ajouter des tests unitaires et d'intégration.
+
+<hr>
+<strong>Fin du document</strong>
+```
+
+<hr>
+
+<h3 id="points-clés-du-document">Points clés du document : <a href="#toc-points-clés-du-document" class="back-to-toc" title="Retour à la table des matières">&#8617;</a></h3>
+1. <strong>Structure claire</strong> : Séparation fonctionnelle/technique.
+2. <strong>Diagrammes PlantUML</strong> : Illustrent chaque concept (cas d'usage, workflows, architecture).
+3. <strong>Détails techniques</strong> : Dépendances, sécurité, dette technique.
+4. <strong>Règles métier</strong> : Formules, diagrammes de décision, tableaux.
+
+
+<a href="#table-of-contents" class="floating-toc-btn" title="Retour à la table des matières">↑ TOC</a>
+</body>
+</html>

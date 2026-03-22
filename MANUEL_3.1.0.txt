@@ -1,0 +1,26 @@
+PASSAGE MANUEL A LA VERSION 3.1.0
+=================================
+
+1. Ouvrir src/app/__init__.py et changer:
+   __version__ = "3.0.5" 
+   en:
+   __version__ = "3.1.0"
+
+2. Ouvrir pyproject.toml et changer:
+   version = "3.0.5"
+   en:
+   version = "3.1.0"
+
+3. Dans le terminal:
+   git add src/app/__init__.py pyproject.toml
+   git add src/ tests/ tools/ -A
+   git commit -m "feat: release v3.1.0"
+   git tag v3.1.0
+
+4. Build:
+   poetry build
+   (ou: python -m build)
+
+5. Push:
+   git push origin main
+   git push origin v3.1.0

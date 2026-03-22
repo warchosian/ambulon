@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGLES_PLANTUML</title>
+    <style>
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 2em;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #34495e;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+            line-height: 1.4;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+        pre.tree {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        li {
+            margin: 0.5em 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding: 0.5em 0 0.5em 1em;
+            color: #555;
+            background: #f8f9fa;
+            border-radius: 0 3px 3px 0;
+        }
+        blockquote p {
+            margin: 0.5em 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+    </style>
+</head>
+<body>
+<h1>Règles de Rédaction PlantUML</h1>
+
+<strong>Document de référence</strong> : Bonnes pratiques pour écrire des diagrammes PlantUML sans erreurs
+
+<strong>Date de création</strong> : 2026-02-02
+<strong>Auteur</strong> : Hervé Marchal <herve.marchal@hotmail.fr>
+<strong>Version</strong> : 1.0
+
+<hr>
+
+<h2>Table des Matières</h2>
+
+<p>1. <a href="#principes-generaux">Principes Généraux</a>
+2. <a href="#rectangles-et-composants">Rectangles et Composants</a>
+3. <a href="#diagrammes-objets">Diagrammes d'Objets</a>
+4. <a href="#diagrammes-activite">Diagrammes d'Activité</a>
+5. <a href="#notes-et-documentation">Notes et Documentation</a>
+6. <a href="#commentaires-symboles">Commentaires et Symboles</a>
+7. <a href="#mindmaps">Mindmaps</a>
+8. <a href="#compatibilite">Compatibilité Slinky vs Graphviz</a>
+9. <a href="#checklist">Checklist de Validation</a></p>
+
+<hr>
+
+<a name="principes-generaux"></a>
+<h2>1. Principes Généraux</h2>
+
+<h3>✅ Règle #1 : Privilégier la Complexité</h3>
+
+<strong>TOUJOURS préférer les structures complexes aux structures simples.</strong>
+
+<h4>❌ Mauvais exemple (simplicité + notes)</h4>
+
+<p><pre><code class="language-text">rectangle "Level 1" as level1
+
+note right of level1
+  &lt;b&gt;Level 2&lt;/b&gt;
+  • Item 1
+  • Item 2
+
+  &lt;b&gt;Level 3&lt;/b&gt;
+  • Détail 1
+  • Détail 2
+end note
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Level 1" as level1
+
+note right of level1
+  &lt;b&gt;Level 2&lt;/b&gt;
+  • Item 1
+  • Item 2
+
+  &lt;b&gt;Level 3&lt;/b&gt;
+  • Détail 1
+  • Détail 2
+end note
+@enduml
+</code></pre><strong>Pourquoi</strong> : L'utilisation de notes peut masquer la structure réelle du diagramme et le rendre moins détaillé.</p>
+
+<h4>✅ Bon exemple (structure complexe)</h4>
+
+<p><pre><code class="language-text">rectangle "Level 1" {
+  rectangle "Level 2" {
+    rectangle "Level 3" {
+      - Item 1
+      - Item 2
+    }
+  }
+}
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Level 1" {
+  rectangle "Level 2" {
+    rectangle "Level 3" {
+      - Item 1
+      - Item 2
+    }
+  }
+}
+@enduml
+</code></pre><strong>Pourquoi</strong> : Les structures imbriquées reflètent mieux la complexité du système.</p>
+
+<hr>
+
+<h3>✅ Règle #2 : Mettre l'alias avant la couleur</h3>
+
+<strong>L'alias doit être défini AVANT la couleur pour éviter les erreurs de référence.</strong>
+
+<h4>❌ Mauvais exemple (couleur avant alias)</h4>
+
+<p><pre><code class="language-text">rectangle "1. Arguments CLI" #FF6B6B as cli
+
+note bottom of cli
+  &lt;b&gt;Priorité MAXIMALE&lt;/b&gt;
+  Contenu de la note
+end note
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "1. Arguments CLI" #FF6B6B as cli
+
+note bottom of cli
+  &lt;b&gt;Priorité MAXIMALE&lt;/b&gt;
+  Contenu de la note
+end note
+@enduml
+</code></pre><strong>Pourquoi</strong> : Mettre la couleur (#FF6B6B) AVANT l'alias (as cli) peut causer des problèmes de parsing. L'alias risque de ne pas être reconnu correctement.</p>
+
+<h4>✅ Bon exemple (alias avant couleur)</h4>
+
+<p><pre><code class="language-text">rectangle "1. Arguments CLI" as cli #FF6B6B
+
+note bottom of cli
+  &lt;b&gt;Priorité MAXIMALE&lt;/b&gt;
+  Contenu de la note
+end note
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "1. Arguments CLI" as cli #FF6B6B
+
+note bottom of cli
+  &lt;b&gt;Priorité MAXIMALE&lt;/b&gt;
+  Contenu de la note
+end note
+@enduml
+</code></pre>
+<strong>Pourquoi</strong> : L'ordre correct est : <code>nom as alias #couleur</code>. L'alias vient immédiatement après le nom, puis la couleur.</p>
+
+<h4>🔧 Comment corriger</h4>
+
+<strong>Transformation</strong> : <code>rectangle "Nom" #COULEUR as alias</code> → <code>rectangle "Nom" as alias #COULEUR</code>
+
+<p>1. Placer <code>as alias</code> juste après le nom de l'élément
+2. Placer la couleur <code>#COULEUR</code> en dernier
+3. Ordre correct : <strong>nom → alias → couleur</strong></p>
+
+<hr>
+
+<h3>✅ Règle #3 : Éviter les Caractères Spéciaux dans les Noms</h3>
+
+<strong>Liste des caractères à éviter dans les identifiants</strong> :
+<ul>
+<li><code>:</code> (deux-points) - interprété comme séparateur de stéréotype</li>
+<li><code>\n</code> (newline) - cause des erreurs de référence</li>
+<li><code>*</code> (astérisque) - conflit avec le markdown PlantUML</li>
+<li><code>**</code> (double astérisque) - conflit avec le bold dans mindmaps</li>
+</ul>
+
+<h4>❌ Mauvais exemple</h4>
+
+<p><pre><code class="language-text">object "feat:" {
+  Impact = MINOR
+}
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+object "feat:" {
+  Impact = MINOR
+}
+@enduml
+</code></pre><strong>Pourquoi</strong> : L'utilisation de <code>:</code> dans le nom de l'objet est interprétée comme un séparateur de stéréotype et peut causer des erreurs.</p>
+
+<h4>✅ Bon exemple</h4>
+
+<p><pre><code class="language-text">object feat {
+  Type = "feat:"
+  Impact = MINOR
+}
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+object feat {
+  Type = "feat:"
+  Impact = MINOR
+}
+@enduml
+</code></pre><strong>Pourquoi</strong> : Le nom de l'objet est un identifiant simple, et le type est défini comme un attribut, ce qui est la syntaxe correcte.</p>
+
+<hr>
+
+<a name="rectangles-et-composants"></a>
+<h2>2. Rectangles et Composants</h2>
+
+<h3>✅ Règle #5 : Utiliser les Listes à Tirets dans les Rectangles Imbriqués</h3>
+
+<strong>TOUJOURS privilégier les listes à tirets dans les rectangles imbriqués pour une meilleure lisibilité.</strong>
+
+<h4>❌ Mauvais exemple (utiliser des notes)</h4>
+
+<p><pre><code class="language-text">rectangle "Container" #LIGHTBLUE as container
+
+note right of container
+  &lt;b&gt;Actions:&lt;/b&gt;
+  • Action 1
+  • Action 2
+  • Action 3
+end note
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Container" #LIGHTBLUE as container
+
+note right of container
+  &lt;b&gt;Actions:&lt;/b&gt;
+  • Action 1
+  • Action 2
+  • Action 3
+end note
+@enduml
+</code></pre><strong>Pourquoi</strong> : L'utilisation de notes pour de courtes listes peut être verbeuse et moins directe.</p>
+
+<h4>✅ Bon exemple</h4>
+
+<p><pre><code class="language-text">rectangle "Container" {
+  rectangle "Actions" {
+    - Action 1
+    - Action 2
+    - Action 3
+  }
+}
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Container" {
+  rectangle "Actions" {
+    - Action 1
+    - Action 2
+    - Action 3
+  }
+}
+@enduml
+</code></pre><strong>Pourquoi</strong> : C'est une syntaxe plus compacte et lisible pour les listes simples.</p>
+
+<hr>
+
+<h3>✅ Règle #6 : Mettre la couleur après l'alias</h3>
+
+<h4>❌ Mauvais exemple</h4>
+
+<p><pre><code class="language-text">rectangle "Config" {
+  config/piag.yaml:
+    timeout: 120
+    retries: 3
+}
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Config" #LIGHTYELLOW as config {
+  config/piag.yaml:
+    timeout: 120
+    retries: 3
+}
+@enduml
+</code></pre><strong>Pourquoi</strong> : L'indentation YAML/JSON à l'intérieur du rectangle est mal interprétée par PlantUML. Le contenu ne s'affiche pas comme prévu.</p>
+
+<h4>✅ Bon exemple (utiliser des notes)</h4>
+
+<p><pre><code class="language-text">rectangle "Config" #LIGHTYELLOW as config
+
+note right of config
+  &lt;b&gt;config/piag.yaml:&lt;/b&gt;
+  timeout: 120
+  retries: 3
+end note
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Config" as config #LIGHTYELLOW 
+
+note right of config
+  &lt;b&gt;config/piag.yaml:&lt;/b&gt;
+  timeout: 120
+  retries: 3
+end note
+@enduml
+</code></pre><strong>Pourquoi</strong> : Les notes préservent le formatage du texte pré-formaté et sont le conteneur approprié pour des extraits de code ou de configuration.</p>
+
+<h4>🔧 Comment corriger</h4>
+
+<strong>Transformation</strong> : Contenu indenté dans rectangle → Note avec contenu pré-formaté
+
+<p>1. Créer un rectangle simple avec un alias : <code>rectangle "Config" as config</code>
+2. Ajouter une couleur pour distinguer : <code>#LIGHTYELLOW</code>
+3. Créer une note attachée : <code>note right of config</code>
+4. Mettre le contenu YAML/JSON dans la note (l'indentation est préservée)
+5. Utiliser <code><b>...</b></code> pour les titres dans la note
+6. Fermer avec <code>end note</code></p>
+
+<hr>
+
+<a name="diagrammes-objets"></a>
+<h2>3. Diagrammes d'Objets</h2>
+
+<p>_Note : Les bonnes pratiques de style pour les objets PlantUML sont documentées dans le guide des guidelines Claude._</p>
+
+<hr>
+
+<a name="diagrammes-activite"></a>
+<h2>4. Diagrammes d'Activité</h2>
+
+<h3>✅ Règle #9 : <code>backward</code> Uniquement dans <code>repeat...repeat while</code></h3>
+
+<strong>NE JAMAIS utiliser <code>backward</code> en dehors d'une structure <code>repeat</code>.</strong>
+
+<h4>❌ Mauvais exemple (backward sans repeat)</h4>
+
+<p><pre><code class="language-text">if (Validation OK ?) then (✅ oui)
+  :Continuer;
+else (❌ non)
+  :Corriger;
+  backward :Re-tester;  # ❌ ERREUR
+endif
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+if (Validation OK ?) then (✅ oui)
+  :Continuer;
+else (❌ non)
+  :Corriger;
+  backward :Re-tester;  # ❌ ERREUR
+endif
+</code></pre><strong>Pourquoi</strong> : <code>backward</code> est un mot-clé réservé pour les boucles <code>repeat</code>.</p>
+
+<h4>✅ Bon exemple (repeat...repeat while)</h4>
+
+<p><pre><code class="language-text">repeat
+  :Tests &amp; validation;
+
+  if (Validation OK ?) then (oui)
+  else (non)
+    :Corriger;
+    :Rebuild;
+  endif
+
+repeat while (Validation OK ?) is (non) not (oui)
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+repeat
+  :Tests &amp; validation;
+
+  if (Validation OK ?) then (oui)
+  else (non)
+    :Corriger;
+    :Rebuild;
+  endif
+
+repeat while (Validation OK ?) is (non) not (oui)
+@enduml
+</code></pre><strong>Pourquoi</strong> : La structure <code>repeat...repeat while</code> est la manière correcte d'implémenter des boucles qui peuvent nécessiter de revenir en arrière.</p>
+
+<hr>
+
+
+
+<a name="notes-et-documentation"></a>
+<h2>5. Notes et Documentation</h2>
+
+<h3>✅ Règle #12 : Utiliser <code><b></code> pour le Bold dans les Notes</h3>
+
+<strong>Utiliser les balises HTML pour le formatage dans les notes.</strong>
+
+<p><pre><code class="language-text">note right of element
+  &lt;b&gt;Titre en Gras&lt;/b&gt;
+  &lt;i&gt;Texte en italique&lt;/i&gt;
+  &lt;u&gt;Texte souligné&lt;/u&gt;
+
+  Texte normal
+end note
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Element" as element
+
+note right of element
+  &lt;b&gt;Titre en Gras&lt;/b&gt;
+  &lt;i&gt;Texte en italique&lt;/i&gt;
+  &lt;u&gt;Texte souligné&lt;/u&gt;
+
+  Texte normal
+end note
+@enduml
+</code></pre>
+<strong>Balises supportées</strong> :
+<ul>
+<li><code><b>texte</b></code> - gras</li>
+<li><code><i>texte</i></code> - italique</li>
+<li><code><u>texte</u></code> - souligné</li>
+<li><code><color:red>texte</color></code> - couleur</li>
+</ul></p>
+
+<hr>
+
+<h3>✅ Règle #13 : Échapper les Caractères Spéciaux dans les Notes</h3>
+
+<strong>Utiliser <code><</code> et <code>></code> pour les chevrons dans les notes.</strong>
+
+<p><pre><code class="language-text">note right of element
+  Format: &lt;source&gt;2&lt;dest&gt;
+
+  Fichiers:
+  - commands/&lt;name&gt;.py
+  - core/&lt;name&gt;_converter.py
+end note
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Element" as element
+
+note right of element
+  Format: &lt;source&gt;2&lt;dest&gt;
+
+  Fichiers:
+  - commands/&lt;name&gt;.py
+  - core/&lt;name&gt;_converter.py
+end note
+@enduml
+</code></pre>
+<hr></p>
+
+<a name="commentaires-symboles"></a>
+<h2>6. Commentaires et Symboles</h2>
+
+<h3>✅ Règle #19 : Utiliser les Commentaires Correctement</h3>
+
+<strong>Utiliser les commentaires PlantUML pour documenter le code du diagramme.</strong>
+
+<p><pre><code class="language-text">' Commentaire sur une seule ligne (apostrophe)
+
+/'
+  Ceci est un commentaire
+  sur plusieurs lignes.
+  Il explique une section complexe du diagramme.
+'/
+
+actor Utilisateur
+participant Système
+
+Utilisateur -&gt; Système : Fait une requête ' Description de la requête
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+' Commentaire sur une seule ligne (apostrophe)
+
+/'
+  Ceci est un commentaire
+  sur plusieurs lignes.
+  Il explique une section complexe du diagramme.
+'/
+
+actor Utilisateur
+participant Système
+
+Utilisateur -&gt; Système : Fait une requête ' Description de la requête
+@enduml
+</code></pre>
+<strong>Pourquoi</strong> : Les commentaires aident à la compréhension et à la maintenance des diagrammes, surtout pour les sections complexes ou les choix de conception.</p>
+
+<hr>
+
+<h3>✅ Règle #20 : Éviter les Caractères Spéciaux non Supportés</h3>
+
+<strong>Éviter l'utilisation de symboles qui peuvent être interprétés comme des éléments PlantUML.</strong>
+
+<h4>❌ Mauvais exemple (peut causer des problèmes de parsing)</h4>
+
+<p><pre><code class="language-text">rectangle "Ma Fonction =&gt; Resultat" {
+  -- Option 1 --
+}
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Ma Fonction =&gt; Resultat" {
+  -- Option 1 --
+}
+@enduml
+</code></pre><strong>Pourquoi</strong> : Certains symboles (comme <code>=></code>, <code>--</code>, <code>-></code>) ont une signification spéciale en PlantUML et peuvent perturber le parsing s'ils sont utilisés hors de leur contexte.</p>
+
+<h4>✅ Bon exemple (Utiliser des noms descriptifs sans symboles spéciaux ou notes)</h4>
+
+<p><pre><code class="language-text">rectangle "Ma Fonction et son Résultat" as funcResult
+
+note bottom of funcResult
+  Option 1 : Description
+end note
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Ma Fonction et son Résultat" as funcResult
+
+note bottom of funcResult
+  Option 1 : Description
+end note
+@enduml
+</code></pre><strong>Pourquoi</strong> : En évitant les symboles réservés, on garantit que le diagramme sera parsé correctement.</p>
+
+<hr>
+
+<h3>✅ Règle #21 : Balises @startuml et @enduml Obligatoires</h3>
+
+<strong>TOUJOURS encadrer les diagrammes PlantUML avec les balises <code>@startuml</code> et <code>@enduml</code>.</strong>
+
+<h4>❌ Mauvais exemple (sans balises)</h4>
+
+<p><pre><code class="language-text">rectangle "Element" as elem
+
+note right of elem
+  Description
+end note
+</code></pre>
+<strong>Pourquoi</strong> : Sans ces balises, PlantUML ne peut pas identifier le début et la fin du diagramme. Le code ne sera pas converti en image.</p>
+
+<h4>✅ Bon exemple (avec balises)</h4>
+
+<p><pre><code class="language-text">@startuml
+rectangle "Element" as elem
+
+note right of elem
+  Description
+end note
+@enduml
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Element" as elem
+
+note right of elem
+  Description
+end note
+@enduml
+</code></pre>
+<strong>Pourquoi</strong> : Les balises <code>@startuml</code> et <code>@enduml</code> délimitent le code PlantUML et permettent sa conversion en SVG/image.</p>
+
+<strong>Note importante</strong> : Dans un fichier Markdown, ces balises doivent être à l'intérieur du bloc <code> </code>`<code>plantuml </code> :
+
+<p><pre><code class="language-markdown">\```plantuml
+@startuml
+rectangle "Test"
+@enduml
+\</code></pre><pre><code class="language-">
+---
+
+### ✅ Règle #22 : Toujours Fermer avec @enduml
+
+**TOUJOURS terminer un diagramme PlantUML par `@enduml`, sinon le diagramme ne sera pas converti.**
+
+#### ❌ Mauvais exemple (oubli de @enduml)
+
+```text
+@startuml
+object nomObjet
+nomObjet : attribut1 = valeur1
+nomObjet : attribut2 = valeur2
+</code></pre>
+<strong>Erreur</strong> : Le diagramme n'est jamais fermé. PlantUML ne sait pas où se termine le code.</p>
+
+<h4>✅ Bon exemple (avec @enduml)</h4>
+
+<p><pre><code class="language-text">@startuml
+object nomObjet
+nomObjet : attribut1 = valeur1
+nomObjet : attribut2 = valeur2
+@enduml
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+object nomObjet
+nomObjet : attribut1 = valeur1
+nomObjet : attribut2 = valeur2
+@enduml
+</code></pre>
+<strong>Pourquoi</strong> : <code>@enduml</code> ferme le bloc PlantUML et indique que le diagramme est complet. Sans cette balise, le rendu échoue.</p>
+
+<h4>🔧 Comment corriger</h4>
+
+<strong>Symptôme</strong> : Diagramme non converti en image, code source affiché tel quel
+
+<strong>Solution</strong> :
+1. Vérifier que chaque <code>@startuml</code> a son <code>@enduml</code> correspondant
+2. Placer <code>@enduml</code> à la fin du code PlantUML, juste avant <code> </code>`<code> </code>
+3. Ne PAS oublier le <code>@</code> devant <code>enduml</code>
+
+<strong>Pattern correct</strong> :
+<pre><code class="language-">```plantuml
+@startuml
+[votre code PlantUML ici]
+@enduml
+</code></pre><pre><code class="language-">
+---
+
+### ✅ Règle #23 : Rectangles avec Accolades Non Vides
+
+**Les rectangles avec accolades `{ }` doivent contenir au moins une ligne (même vide).**
+
+#### ❌ Mauvais exemple (rectangle vide)
+
+```text
+rectangle "Mon Element" as elem #LIGHTBLUE {
+}
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Mon Element" as elem #LIGHTBLUE {
+}
+@enduml
+</code></pre>
+<strong>Erreur</strong> : Le rectangle avec accolades est complètement vide. PlantUML peut mal interpréter cette syntaxe et produire un rendu incorrect.
+
+<h4>✅ Bon exemple (avec au moins une ligne)</h4>
+
+<strong>Option 1</strong> : Ajouter une ligne vide à l'intérieur
+<pre><code class="language-text">rectangle "Mon Element" as elem #LIGHTBLUE {
+
+}
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Mon Element" as elem #LIGHTBLUE {
+
+}
+@enduml
+</code></pre>
+<strong>Option 2</strong> : Ajouter du contenu
+<pre><code class="language-text">rectangle "Mon Element" as elem #LIGHTBLUE {
+  - Item 1
+  - Item 2
+}
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Mon Element" as elem #LIGHTBLUE {
+  - Item 1
+  - Item 2
+}
+@enduml
+</code></pre>
+<strong>Option 3</strong> : Utiliser un rectangle sans accolades
+<pre><code class="language-text">rectangle "Mon Element" as elem #LIGHTBLUE
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+rectangle "Mon Element" as elem #LIGHTBLUE
+@enduml
+</code></pre>
+<strong>Pourquoi</strong> : Les accolades vides <code>{ }</code> peuvent causer des problèmes de parsing. Si le rectangle n'a pas de contenu, soit ajouter une ligne vide, soit ne pas utiliser d'accolades.
+
+<h4>🔧 Comment corriger</h4>
+
+<strong>Transformation</strong> : <code>rectangle "Nom" { }</code> → <code>rectangle "Nom" { <ligne vide> }</code> ou <code>rectangle "Nom"</code>
+
+<p>1. Si le rectangle doit rester vide : ajouter une ligne vide entre les accolades
+2. Si possible : ajouter du contenu (liste, texte)
+3. Alternative : supprimer les accolades si pas de contenu</p>
+
+<strong>Pattern recommandé</strong> :
+<ul>
+<li>Avec contenu : <code>rectangle "Nom" { - Item }</code></li>
+<li>Sans contenu : <code>rectangle "Nom"</code> (pas d'accolades)</li>
+<li>Vide temporaire : <code>rectangle "Nom" { <espace> }</code></li>
+</ul>
+
+<hr>
+
+<h3>✅ Règle #24 : Utiliser @startmindmap pour les Mindmaps</h3>
+
+<strong>Les mindmaps doivent utiliser <code>@startmindmap</code>/<code>@endmindmap</code>, PAS <code>@startuml</code>/<code>@enduml</code>.</strong>
+
+<h4>❌ Mauvais exemple (utilise @startuml)</h4>
+
+<p><pre><code class="language-text">@startuml
+@startmindmap
+* Racine
+** Branche 1
+*** Sous-branche
+@endmindmap
+@enduml
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+@startmindmap
+* Racine
+** Branche 1
+*** Sous-branche
+@endmindmap
+@enduml
+</code></pre>
+<strong>Erreur</strong> : Utiliser <code>@startuml</code> avec <code>@startmindmap</code> est redondant et incorrect. Les mindmaps ont leurs propres balises.</p>
+
+<h4>✅ Bon exemple (utilise @startmindmap)</h4>
+
+<p><pre><code class="language-text">@startmindmap
+* Racine
+** Branche 1
+*** Sous-branche 1.1
+*** Sous-branche 1.2
+** Branche 2
+@endmindmap
+</code></pre>
+<pre><code class="language-plantuml">@startmindmap
+* Racine
+** Branche 1
+*** Sous-branche 1.1
+*** Sous-branche 1.2
+** Branche 2
+@endmindmap
+</code></pre>
+<strong>Pourquoi</strong> : Les mindmaps sont un type spécial de diagramme PlantUML qui utilise sa propre syntaxe de délimitation.</p>
+
+<h4>🔧 Comment corriger</h4>
+
+<strong>Transformation</strong> :
+<pre><code class="language-">❌ @startuml              ✅ @startmindmap
+   @startmindmap             * Racine
+   * Racine                  ** Branche
+   @endmindmap               @endmindmap
+   @enduml
+</code></pre>
+<strong>Solution</strong> :
+1. Remplacer <code>@startuml</code> par <code>@startmindmap</code> au début
+2. Remplacer <code>@enduml</code> par <code>@endmindmap</code> à la fin
+3. Supprimer <code>@startmindmap</code> et <code>@endmindmap</code> internes si présents
+
+<strong>Pattern correct pour mindmap</strong> :
+<pre><code class="language-">@startmindmap
+* Nœud racine
+** Niveau 1
+*** Niveau 2
+@endmindmap
+</code></pre>
+<strong>Pattern incorrect</strong> :
+<pre><code class="language-">@startuml
+@startmindmap
+...
+@endmindmap
+@enduml
+</code></pre>
+<hr>
+
+<h3>✅ Règle #25 : Pas d'Emojis dans les Labels</h3>
+
+<strong>Ne PAS utiliser d'emojis (✅, ❌, etc.) dans les labels de diagrammes d'activité (<code>is</code>, <code>then</code>, <code>else</code>).</strong>
+
+<h4>❌ Mauvais exemple (emojis dans labels)</h4>
+
+<p><pre><code class="language-text">if (Validation OK ?) then (✅ oui)
+  :Continuer;
+else (❌ non)
+  :Corriger;
+endif
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+if (Validation OK ?) then (✅ oui)
+  :Continuer;
+else (❌ non)
+  :Corriger;
+endif
+@enduml
+</code></pre>
+<strong>Erreur</strong> : Les emojis/icônes (✅, ❌, 🚀, etc.) dans les labels peuvent causer des problèmes d'encodage et de rendu selon l'environnement PlantUML.</p>
+
+<h4>✅ Bon exemple (texte simple)</h4>
+
+<p><pre><code class="language-text">if (Validation OK ?) then (oui)
+  :Continuer;
+else (non)
+  :Corriger;
+endif
+</code></pre>
+<pre><code class="language-plantuml">@startuml
+if (Validation OK ?) then (oui)
+  :Continuer;
+else (non)
+  :Corriger;
+endif
+@enduml
+</code></pre>
+<strong>Pourquoi</strong> : Les labels textuels simples garantissent un rendu cohérent sur tous les environnements (terminal, PDF, HTML, etc.).</p>
+
+<h4>🔧 Comment corriger</h4>
+
+<strong>Transformation</strong> : Retirer les emojis des labels <code>is</code>, <code>then</code>, <code>else</code>, <code>not</code>
+
+<strong>Exemples de corrections</strong> :
+<ul>
+<li><code>is (✅ oui)</code> → <code>is (oui)</code></li>
+<li><code>is (❌ non)</code> → <code>is (non)</code></li>
+<li><code>then (✅ succès)</code> → <code>then (succès)</code></li>
+<li><code>else (❌ échec)</code> → <code>else (échec)</code></li>
+</ul>
+
+<strong>Note</strong> : Les emojis restent acceptables dans :
+<ul>
+<li>Les titres (<code>title 🚀 Mon Diagramme</code>)</li>
+<li>Le contenu des notes</li>
+<li>Le texte des rectangles</li>
+<li>Les noms d'éléments (mais déconseillé)</li>
+</ul>
+
+<strong>Zones à éviter pour les emojis</strong> :
+<ul>
+<li>Labels <code>is (...)</code>, <code>then (...)</code>, <code>else (...)</code>, <code>not (...)</code></li>
+<li>Labels de boucles <code>repeat while (...)</code></li>
+<li>Identifiants d'alias</li>
+</ul>
+
+<hr>
+
+<a name="mindmaps"></a>
+<h2>7. Mindmaps</h2>
+
+<h3>✅ Règle #16 : Respecter la Hiérarchie des Mindmaps</h3>
+
+<strong>Structure hiérarchique stricte</strong> :
+<ul>
+<li><code>*</code> - Nœud racine (1 seul)</li>
+<li><code>**</code> - Niveau 1 (enfants de la racine)</li>
+<li><code><em>*</em></code> - Niveau 2 (petits-enfants)</li>
+<li><code><em>*</em>*</code> - Niveau 3 (arrière-petits-enfants)</li>
+</ul>
+
+<p><pre><code class="language-text">@startmindmap
+* Racine
+** Branche 1
+*** Sous-branche 1.1
+*** Sous-branche 1.2
+** Branche 2
+*** Sous-branche 2.1
+@endmindmap
+</code></pre>
+<pre><code class="language-plantuml">@startmindmap
+* Racine
+** Branche 1
+*** Sous-branche 1.1
+*** Sous-branche 1.2
+** Branche 2
+*** Sous-branche 2.1
+@endmindmap
+</code></pre>
+<hr></p>
+
+<a name="compatibilite"></a>
+<h2>8. Compatibilité Slinky vs Graphviz</h2>
+
+<h3>Comprendre les Deux Moteurs de Rendu PlantUML</h3>
+
+<strong>PlantUML utilise deux moteurs de rendu</strong> :
+
+<p>1. <strong>Slinky (moteur natif Java)</strong> - Pas besoin de Graphviz
+   - Activity diagrams
+   - Sequence diagrams
+   - State diagrams
+   - Object diagrams simples
+   - Mindmaps
+   - Rectangles avec flèches simples</p>
+
+<p>2. <strong>Graphviz (moteur externe)</strong> - Nécessite installation de Graphviz
+   - Class diagrams avec relations
+   - Component diagrams avec imbrication
+   - Package diagrams
+   - Deployment diagrams</p>
+
+<hr>
+
+<h3>✅ Règle #18 : Privilégier les Diagrammes Compatibles Slinky</h3>
+
+<strong>Pour une portabilité maximale, utiliser les types de diagrammes qui fonctionnent sans Graphviz.</strong>
+
+<strong>Diagrammes recommandés (Slinky)</strong> :
+<ul>
+<li>Activity diagrams pour les workflows</li>
+<li>Sequence diagrams pour les interactions</li>
+<li>Rectangles simples pour les architectures</li>
+<li>Object diagrams pour les données</li>
+<li>Mindmaps pour les concepts</li>
+</ul>
+
+<strong>Diagrammes à éviter (Graphviz requis)</strong> :
+<ul>
+<li>Class diagrams avec relations <code>--></code></li>
+<li>Component diagrams avec imbrication</li>
+<li>Package diagrams</li>
+</ul>
+
+<hr>
+
+<a name="documentation"></a>
+<h2>9. Documentation et Formatage Markdown</h2>
+
+<h3>✅ Règle #26 : Identifier Chaque Diagramme (Sans Balises HTML Complexes)</h3>
+
+<strong>Au-delà du code PlantUML lui-même, dans le document Markdown contenant les diagrammes, chaque diagramme doit être identifié de manière simple et portable.</strong>
+
+<strong>IMPORTANT</strong> : <strong>Éviter les balises <code><figure markdown></code> et <code></figure></code></strong> qui causent des problèmes de compatibilité entre les convertisseurs Markdown.
+
+<h4>✅ Bon exemple (identification simple et portable)</h4>
+
+<p><pre><code class="language-markdown">Comme illustré à la **Figure 1.1**, l'architecture repose sur trois couches principales.
+
+```plantuml
+@startuml
+!theme aws-orange
+
+package "Couche Présentation" {
+  [Frontend React]
+}
+
+package "Couche Services" {
+  [Auth Service]
+}
+
+[Frontend React] --&gt; [Auth Service] : HTTPS / JSON
+@enduml
+</code></pre><figcaption>Figure 1.1 – Architecture globale à trois couches</figcaption></p>
+
+<blockquote>
+ℹ️ <em>Source : Conception équipe DevOps, février 2026.</em>
+</blockquote>
+<pre><code class="language-">
+**Éléments recommandés** :
+1. **Référence dans le texte** : `**Figure X.Y**` mentionnée AVANT le diagramme
+2. **Bloc PlantUML** : Directement avec ` ```plantuml ` (sans balise HTML)
+3. **Légende** : `&lt;figcaption&gt;Figure X.Y – Description&lt;/figcaption&gt;` SOUS le diagramme
+4. **Source** (optionnel) : Note informative avec `&gt; ℹ️ *Source: ...*`
+
+#### ❌ Mauvais exemple 1 (diagramme nu sans identification)
+
+```markdown
+```plantuml
+@startuml
+package "Services" {
+  [Auth Service]
+}
+@enduml
+</code></pre><pre><code class="language-">
+**Problèmes** :
+- Pas de référence dans le texte
+- Pas de légende
+- Impossible de référencer dans le document
+
+#### ❌ Mauvais exemple 2 (utilisation de `&lt;figure markdown&gt;`)
+
+```markdown
+&lt;figure markdown&gt;
+```plantuml
+@startuml
+rectangle "Test"
+@enduml
+</code></pre><figcaption>Figure 1 – Test</figcaption>
+</figure>
+<pre><code class="language-">
+**Problèmes** :
+- Balises `&lt;figure markdown&gt;` et `&lt;/figure&gt;` causent des problèmes de compatibilité
+- Non supporté par tous les convertisseurs Markdown (GitHub, certains parsers)
+- Peut casser le rendu lors de conversion MD → HTML → PDF
+
+**Pourquoi éviter `&lt;figure markdown&gt;` ?**
+- ❌ Incompatibilité avec GitHub/GitLab Markdown
+- ❌ Problèmes avec certains convertisseurs (Pandoc, ambulon)
+- ❌ Balises HTML mixées avec Markdown = parsing fragile
+- ✅ Approche simple avec `&lt;figcaption&gt;` seul = plus robuste et portable
+
+**Pourquoi identifier les diagrammes ?**
+- Référencement croisé dans le document
+- Traçabilité et professionnalisme
+- Conformité aux standards de documentation technique
+- Facilite la maintenance et les mises à jour
+
+---
+
+### ✅ Règle #27 : Éviter les Commentaires qui Cassent le Rendu
+
+**Ne PAS utiliser de commentaires HTML contenant des balises Markdown (` ```markdown `) ou des balises HTML (`&lt;figure&gt;`, `&lt;/figure&gt;`) car ils empêchent le rendu correct des diagrammes.**
+
+#### ❌ Mauvais exemples (commentaires problématiques)
+
+**Exemple 1 : Commentaire avec \`\`\`markdown**
+```markdown
+&lt;!-- EVITER
+```markdown
+--&gt;
+# Mon document
+
+&lt;figure markdown&gt;
+```plantuml
+@startuml
+rectangle "Test"
+@enduml
+</code></pre></figure>
+<pre><code class="language-">
+**Problème** : Le ` ```markdown ` dans le commentaire casse le parsing Markdown.
+
+**Exemple 2 : Commentaire avec balises HTML**
+```markdown
+&lt;!-- EVITER
+&lt;figure markdown&gt;
+--&gt;
+```plantuml
+@startuml
+rectangle "Test"
+@enduml
+</code></pre><figcaption>Figure 1 – Test</figcaption>
+<!-- EVITER
+</figure>
+-->
+<pre><code class="language-">
+**Problème** : Les balises `&lt;figure&gt;` et `&lt;/figure&gt;` commentées désynchronisent le parsing HTML.
+
+**Exemple 3 : Commentaire quote avec EVITER**
+```markdown
+'EVITER &lt;figure markdown&gt;
+```plantuml
+@startuml
+rectangle "Test"
+@enduml
+</code></pre></figure>
+<pre><code class="language-">
+**Problème** : Le `'EVITER` avec balise HTML perturbe le rendu.
+
+#### ✅ Bon exemple (commentaires corrects)
+
+```markdown
+&lt;!-- Note: Ce diagramme illustre l'architecture --&gt;
+
+&lt;figure markdown&gt;
+```plantuml
+@startuml
+rectangle "Test"
+@enduml
+</code></pre><figcaption>Figure 1 – Test</figcaption>
+</figure>
+
+<!-- TODO: Ajouter une note sur les performances -->
+<pre><code class="language-">
+**Commentaires acceptables** :
+- `&lt;!-- Note simple sans balises Markdown/HTML --&gt;`
+- `&lt;!-- TODO: Description de tâche --&gt;`
+- `&lt;!-- FIXME: Problème à corriger --&gt;`
+
+**Commentaires à ÉVITER** :
+- `&lt;!-- EVITER ` suivi de ` ```markdown `
+- `&lt;!-- EVITER &lt;figure&gt; --&gt;`
+- `'EVITER &lt;balise-html&gt;`
+- Tout commentaire contenant des délimiteurs de code ou balises
+
+**Pourquoi** : Les commentaires avec balises Markdown/HTML perturbent le parsing et causent :
+- Non-rendu des diagrammes
+- Désynchronisation des balises ouvrantes/fermantes
+- Échec de conversion MD → HTML → PDF
+- Problèmes d'affichage dans les éditeurs (Obsidian, VSCode)
+
+#### 🔧 Comment corriger
+
+**Transformation** : Supprimer ou simplifier les commentaires problématiques
+
+**Avant** :
+```markdown
+&lt;!-- EVITER
+```markdown
+--&gt;
+&lt;figure markdown&gt;
+</code></pre>
+<strong>Après</strong> :
+<pre><code class="language-markdown">&lt;!-- Exemple de figure avec diagramme --&gt;
+&lt;figure markdown&gt;
+</code></pre>
+<strong>Ou encore mieux</strong> : Supprimer complètement les commentaires <code>EVITER</code> si ce sont des exemples de ce qu'il ne faut pas faire. Dans ce cas, documenter dans une section séparée avec des blocs de code texte.
+
+<hr>
+
+<a name="checklist"></a>
+<h2>10. Checklist de Validation</h2>
+
+<h3>Avant de Générer un PDF PlantUML</h3>
+
+<strong>Vérifier les points suivants</strong> :
+
+<ul>
+<li>[ ] <strong>Pas de nesting > 2 niveaux</strong> de rectangles</li>
+<li>[ ] <strong>Pas de listes à tirets</strong> dans des rectangles imbriqués</li>
+<li>[ ] <strong>Pas de YAML/JSON indenté</strong> dans des rectangles</li>
+<li>[ ] <strong>Tous les éléments ont des alias simples</strong> (pas de <code>\n</code>, <code>:</code>, etc.)</li>
+<li>[ ] <strong>Notes utilisées</strong> pour les contenus complexes</li>
+<li>[ ] <strong>Syntaxe object correcte</strong> : <code>object nom</code> puis <code>nom : attr = val</code></li>
+<li>[ ] <strong>Pas de <code>:</code> dans les noms</strong> d'objets ou rectangles</li>
+<li>[ ] <strong><code>backward</code> uniquement dans <code>repeat...repeat while</code></strong></li>
+</ul>
+
+<ul>
+<li>[ ] <strong>Tous les blocs ont <code>@startuml</code> et <code>@enduml</code></strong> (Règle #21, #22)</li>
+<li>[ ] <strong>Rectangles avec braces <code>{ }</code> ont au moins une ligne</strong> (Règle #23)</li>
+<li>[ ] <strong>Mindmaps utilisent <code>@startmindmap</code>/<code>@endmindmap</code></strong> (Règle #24)</li>
+<li>[ ] <strong>Pas d'emojis dans les labels</strong> <code>is</code>, <code>then</code>, <code>else</code>, <code>not</code> (Règle #25)</li>
+<li>[ ] <strong>Diagrammes identifiés avec référence + <code><figcaption></code></strong> (Règle #26)</li>
+<li>[ ] <strong>Éviter <code><figure markdown></code> et <code></figure></code></strong> (Règle #26)</li>
+<li>[ ] <strong>Pas de commentaires <code><!-- EVITER </code> avec balises MD/HTML</strong> (Règle #27)</li>
+</ul>
+
+<ul>
+<li>[ ] <strong>Pas de <code></strong></code> dans les mindmaps** (sauf pour hiérarchie)</li>
+<li>[ ] <strong>Class diagrams convertis en rectangles</strong> si pas de Graphviz</li>
+<li>[ ] <strong>Utilisation de <code><b></code> au lieu de <code></strong></code>** pour le bold dans les notes</li>
+<li>[ ] <strong>Commentaires utilisés</strong> pour documenter le code du diagramme</li>
+<li>[ ] <strong>Pas de caractères spéciaux non supportés</strong> dans les noms d'éléments (ex: <code>=></code>, <code>--</code>, <code>-></code>)</li>
+</ul>
+
+
+</body>
+</html>

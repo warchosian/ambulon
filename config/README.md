@@ -42,7 +42,7 @@ La configuration suit cette hiérarchie (du plus prioritaire au moins prioritair
 ### Exemple:
 ```bash
 # Le token passé en CLI écrase le YAML et les variables d'environnement
-ambulon piag-collection-list --token "mon-token" --project-id "mon-projet"
+ambulon piag-rag-collection-list --token "mon-token" --project-id "mon-projet"
 ```
 
 ## Configuration du Projet PNM3-GTI
@@ -67,43 +67,43 @@ Le fichier `piag_rag.yaml` est préconfiguré pour le projet **PNM3-GTI** avec:
 ### Collections
 ```bash
 # Lister les collections
-ambulon piag-collection-list --token $PIAG_RAG_API_TOKEN
+ambulon piag-rag-collection-list --token $PIAG_RAG_API_TOKEN
 
 # Créer une collection
-ambulon piag-collection-add --name "Ma Collection" --description "Test" --token $PIAG_RAG_API_TOKEN
+ambulon piag-rag-collection-add --name "Ma Collection" --description "Test" --token $PIAG_RAG_API_TOKEN
 
 # Obtenir une collection
-ambulon piag-collection-get --collection-id <id> --token $PIAG_RAG_API_TOKEN
+ambulon piag-rag-collection-get --collection-id <id> --token $PIAG_RAG_API_TOKEN
 
 # Mettre à jour une collection
-ambulon piag-collection-update --collection-id <id> --name "Nouveau nom" --token $PIAG_RAG_API_TOKEN
+ambulon piag-rag-collection-update --collection-id <id> --name "Nouveau nom" --token $PIAG_RAG_API_TOKEN
 
 # Supprimer une collection
-ambulon piag-collection-rm --collection-id <id> --token $PIAG_RAG_API_TOKEN
+ambulon piag-rag-collection-rm --collection-id <id> --token $PIAG_RAG_API_TOKEN
 ```
 
 ### Documents
 ```bash
 # Upload un document
-ambulon piag-doc-upload --collection-id <id> --file document.pdf --token $PIAG_RAG_API_TOKEN
+ambulon piag-rag-doc-upload --collection-id <id> --file document.pdf --token $PIAG_RAG_API_TOKEN
 
 # Lister les documents
-ambulon piag-doc-list --collection-id <id> --token $PIAG_RAG_API_TOKEN
+ambulon piag-rag-doc-list --collection-id <id> --token $PIAG_RAG_API_TOKEN
 
 # Obtenir un document
-ambulon piag-doc-get --document-id <id> --token $PIAG_RAG_API_TOKEN
+ambulon piag-rag-doc-get --document-id <id> --token $PIAG_RAG_API_TOKEN
 
 # Supprimer un document
-ambulon piag-doc-rm --document-id <id> --token $PIAG_RAG_API_TOKEN
+ambulon piag-rag-doc-rm --document-id <id> --token $PIAG_RAG_API_TOKEN
 
 # Obtenir les chunks d'un document
-ambulon piag-doc-chunks --document-id <id> --token $PIAG_RAG_API_TOKEN
+ambulon piag-rag-doc-chunks --document-id <id> --token $PIAG_RAG_API_TOKEN
 ```
 
 ### Recherche
 ```bash
 # Recherche RAG sémantique
-ambulon piag-search --collection-id <id> --query "Quelle est la procédure?" --token $PIAG_RAG_API_TOKEN
+ambulon piag-rag-search --collection-id <id> --query "Quelle est la procédure?" --token $PIAG_RAG_API_TOKEN
 ```
 
 ## Options communes
@@ -119,7 +119,7 @@ Toutes les commandes acceptent les options suivantes:
 
 Pour obtenir l'aide d'une commande spécifique:
 ```bash
-ambulon piag-collection-list --help
+ambulon piag-rag-collection-list --help
 ```
 
 ## Support
