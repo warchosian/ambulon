@@ -8,8 +8,8 @@ import os
 import pytest
 import tempfile
 from pathlib import Path
-from src.app.core.config_manager import ConfigManager
-from src.app.core.config_tracker import ConfigSource
+from app.core.config_manager import ConfigManager
+from app.core.config_tracker import ConfigSource
 
 
 @pytest.fixture

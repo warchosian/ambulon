@@ -6,7 +6,7 @@ CLI > YAML > Environment > Default
 """
 
 import pytest
-from src.app.core.config_tracker import (
+from app.core.config_tracker import (
     ConfigTracker,
     ConfigSource,
     ConfigValue,
