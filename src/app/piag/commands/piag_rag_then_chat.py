@@ -33,6 +33,81 @@ if hasattr(sys.stderr, 'reconfigure'):
 from app.piag.core import PIAGClient, load_config
 
 
+def ask_network_location() -> bool:
+    """
+    Demande à l'utilisateur s'il est dans l'intranet.
+
+    Returns:
+        True si dans l'intranet, False sinon
+    """
+    print("\n" + "=" * 60)
+    print("📡 CONFIGURATION RÉSEAU")
+    print("=" * 60)
+    print("\nCe pipeline nécessite un accès VPN pour les API PIAG.")
+    print("\nÊtes-vous actuellement dans l'intranet ?")
+    print("  [O] Oui - je suis dans l'intranet (pas de contrainte VPN)")
+    print("  [N] Non - je suis en externe (vérifications VPN nécessaires)")
+
+    while True:
+        choice = input("\nVotre choix [O/N]: ").strip().upper()
+        if choice in ['O', 'OUI', 'Y', 'YES']:
+            print("✓ Mode intranet activé - aucune vérification réseau nécessaire")
+            return True
+        elif choice in ['N', 'NON', 'NO']:
+            print("✓ Mode externe activé - vérifications VPN avant chaque étape")
+            return False
+        else:
+            print("⚠ Réponse invalide. Veuillez entrer O (oui) ou N (non)")
+
+
+def check_network_ready(step_name: str, requires_vpn: bool, is_intranet: bool) -> bool:
+    """
+    Vérifie que l'utilisateur est prêt au niveau réseau avant l'étape.
+
+    Args:
+        step_name: Nom de l'étape
+        requires_vpn: Si True, cette étape nécessite le VPN
+        is_intranet: Si True, l'utilisateur est dans l'intranet
+
+    Returns:
+        True si prêt, False pour annuler
+    """
+    # Si dans l'intranet, pas de vérification nécessaire
+    if is_intranet:
+        return True
+
+    # Afficher le besoin réseau
+    print("\n" + "-" * 60)
+    if requires_vpn:
+        print(f"🔒 {step_name} - VPN REQUIS")
+        print("-" * 60)
+        print("Cette étape nécessite une connexion VPN active.")
+        print("\n⚠️  Assurez-vous que :")
+        print("   • Votre VPN est connecté")
+        print("   • Vous avez accès aux API PIAG (e2.rie.gouv.fr)")
+    else:
+        print(f"🌐 {step_name} - PAS DE VPN")
+        print("-" * 60)
+        print("Cette étape ne nécessite PAS de VPN.")
+        print("\n⚠️  Assurez-vous que :")
+        print("   • Votre VPN est déconnecté (si nécessaire)")
+
+    print("\nVoulez-vous continuer ?")
+    print("  [O] Oui - je suis prêt(e)")
+    print("  [N] Non - annuler le pipeline")
+
+    while True:
+        choice = input("\nVotre choix [O/N]: ").strip().upper()
+        if choice in ['O', 'OUI', 'Y', 'YES']:
+            print("✓ Démarrage de l'étape...")
+            return True
+        elif choice in ['N', 'NON', 'NO']:
+            print("✗ Pipeline annulé par l'utilisateur")
+            return False
+        else:
+            print("⚠ Réponse invalide. Veuillez entrer O (oui) ou N (non)")
+
+
 def slugify(text: str) -> str:
     """Convertit un texte en slug utilisable dans un nom de fichier."""
     return text.lower().replace(' ', '_').replace(',', '').replace('?', '').replace('!', '')[:50]
@@ -411,11 +486,11 @@ def step_generate(chunk_file: str, prompt_file: str, response_file: str,
 
 def run_full_pipeline(args) -> int:
     """
-    Exécute le pipeline complet (4 étapes).
-    
+    Exécute le pipeline complet (4 étapes) avec gestion des contraintes réseau VPN.
+
     Args:
         args: Arguments parsés
-        
+
     Returns:
         Code de sortie (0 = succès, 1 = erreur)
     """
@@ -423,10 +498,10 @@ def run_full_pipeline(args) -> int:
     collection_name = derive_collection_name(args.source)
     chunk_file = derive_chunk_file(args.source, args.prompt)
     response_file = derive_response_file(args.source, args.prompt)
-    
+
     # Générer ID de session
     session_id = generate_session_id()
-    
+
     print("=" * 60)
     print("🚀 RAG then CHAT - Workflow Complet")
     print("=" * 60)
@@ -438,41 +513,57 @@ def run_full_pipeline(args) -> int:
     print(f"Chunk:      {chunk_file}")
     print(f"Response:   {response_file}")
     print("=" * 60)
-    
+
+    # Demander la localisation réseau (intranet ou externe)
+    # Skip si --skip-network-check est activé
+    if args.skip_network_check:
+        is_intranet = True
+        print("\n⚠️  Mode automatique : vérifications réseau désactivées")
+    else:
+        is_intranet = ask_network_location()
+
     # Métadonnées
     metadata = create_metadata(
-        args.source, args.prompt, collection_name, 
+        args.source, args.prompt, collection_name,
         args.query, session_id
     )
-    
-    # Étape 1: INIT
+
+    # Étape 1: INIT (nécessite VPN)
     log_step(1, "INIT", f"Collection: {collection_name}")
+    if not check_network_ready("INIT - Initialisation collection", requires_vpn=True, is_intranet=is_intranet):
+        return 1
     if not step_init(collection_name, args.source, args.force):
         print("\n✗ Étape 1 échouée - Arrêt")
         return 1
     print("    ✓ Prêt")
-    
-    # Étape 2: INGEST
+
+    # Étape 2: INGEST (nécessite VPN)
     log_step(2, "INGEST", f"Répertoire: {args.source}")
+    if not check_network_ready("INGEST - Upload documents", requires_vpn=True, is_intranet=is_intranet):
+        return 1
     success, doc_count = step_ingest(
-        collection_name, args.source, 
+        collection_name, args.source,
         args.extensions, args.wait_index
     )
     if not success:
         print("\n✗ Étape 2 échouée - Arrêt")
         return 1
-    
-    # Étape 3: CHUNK
+
+    # Étape 3: CHUNK (nécessite VPN)
     log_step(3, "CHUNK", f"Requête: '{args.query}'")
+    if not check_network_ready("CHUNK - Recherche sémantique RAG", requires_vpn=True, is_intranet=is_intranet):
+        return 1
     if not step_chunk(
         collection_name, args.query, args.prompt,
         chunk_file, args.top_k, args.timeout_search
     ):
         print("\n✗ Étape 3 échouée - Arrêt")
         return 1
-    
-    # Étape 4: GENERATE
+
+    # Étape 4: GENERATE (nécessite VPN)
     log_step(4, "GENERATE", f"Prompt: {Path(args.prompt).name}")
+    if not check_network_ready("GENERATE - Génération réponse via PIAG Chat", requires_vpn=True, is_intranet=is_intranet):
+        return 1
     if not step_generate(
         chunk_file, args.prompt, response_file,
         args.timeout_generate, args.max_retries, args.retry_delay,
@@ -480,7 +571,7 @@ def run_full_pipeline(args) -> int:
     ):
         print("\n✗ Étape 4 échouée - Arrêt")
         return 1
-    
+
     # Résumé final
     print("\n" + "=" * 60)
     print("✅ PIPELINE TERMINÉ")
@@ -491,7 +582,7 @@ def run_full_pipeline(args) -> int:
     print(f"\n📖 Lire la réponse:")
     print(f"   type {response_file}")
     print("=" * 60)
-    
+
     return 0
 
 
@@ -512,18 +603,33 @@ def main(argv=None):
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Commandes disponibles:
-  run       Exécuter le pipeline complet (4 étapes)
+  run       Exécuter le pipeline complet (4 étapes) avec gestion VPN
   init      Étape 1: Initialiser la collection (créer/supprimer)
   ingest    Étape 2: Ingestion des documents
   chunk     Étape 3: Création des chunks (recherche RAG avec --query)
   generate  Étape 4: Génération de la réponse
 
+Gestion du VPN:
+  Le pipeline demande automatiquement si vous êtes dans l'intranet :
+  • Intranet     : Aucune vérification réseau nécessaire
+  • Externe      : Vérification VPN avant chaque étape
+
+  Pour sauter les vérifications (scripts automatiques) :
+  --skip-network-check
+
 Exemples:
-  # Pipeline complet
+  # Pipeline complet avec vérifications VPN interactives
   ambulon piag-rag-then-chat run \\
       --source applications/sireines.rag \\
       --prompt .claude/prompts/prompt.dat_c4model.md \\
       --query "Architecture, DAT"
+
+  # Pipeline complet sans vérifications (scripts CI/CD)
+  ambulon piag-rag-then-chat run \\
+      --source applications/sireines.rag \\
+      --prompt .claude/prompts/prompt.dat_c4model.md \\
+      --query "Architecture, DAT" \\
+      --skip-network-check
 
   # Uniquement créer la collection et uploader
   ambulon piag-rag-then-chat init --source applications/sireines.rag --force
@@ -569,6 +675,8 @@ Convention de nommage:
                           help='Délai entre retries (défaut: 1m)')
     run_parser.add_argument('--force', '-f', action='store_true',
                           help='Forcer la suppression de la collection existante')
+    run_parser.add_argument('--skip-network-check', action='store_true',
+                          help='Sauter les vérifications réseau VPN (mode automatique)')
     
     # Commande INIT
     init_parser = subparsers.add_parser('init', help='Étape 1: Initialiser la collection')
