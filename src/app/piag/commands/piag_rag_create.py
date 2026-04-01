@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import List, Dict, Any
 
 from app.piag.core import PIAGClient, load_config
+from app.core.config_tracker import ConfigTracker, ConfigSource, is_sensitive_key
 
 # Forcer l'encodage UTF-8 pour stdout et stderr (Windows compatibility)
 if hasattr(sys.stdout, 'reconfigure'):
@@ -118,16 +119,44 @@ def main(argv=None):
         action="store_true",
         help="Simule l'opération sans créer ni uploader (vérifie uniquement)."
     )
-    
+
+    # Configuration tracking options
+    parser.add_argument(
+        '-S', '--show-config-sources',
+        action='store_true',
+        help='Affiche la provenance détaillée de chaque paramètre de configuration et quitte'
+    )
+    parser.add_argument(
+        '--check-config',
+        action='store_true',
+        help='Vérifie rapidement l\'origine des paramètres (résumé condensé) et quitte'
+    )
+
     args = parser.parse_args(argv)
     
+    # Initialize configuration tracker
+    tracker = ConfigTracker()
+
     # Charger la configuration
     try:
         config = load_config(args.config)
     except Exception as e:
         print(f"Erreur lors du chargement de la configuration: {e}", file=sys.stderr)
         return 1
-    
+
+    # Track loaded configuration
+    config_file_found = Path(args.config).exists() if args.config else False
+    piag_rag_config = config.get('piag', {}).get('rag', {})
+
+    # Track defaults and loaded values
+    for section in ['project', 'security', 'api']:
+        section_data = piag_rag_config.get(section, {})
+        for key, value in section_data.items():
+            full_key = f"piag.rag.{section}.{key}"
+            display_value = value if value else "(empty)"
+            source = ConfigSource.YAML if config_file_found else ConfigSource.DEFAULT
+            tracker.set(full_key, display_value, source, is_sensitive=is_sensitive_key(key))
+
     # Activer le debug si demandé
     if args.debug:
         config.setdefault('piag', {}).setdefault('rag', {}).setdefault('logging', {}).update({
@@ -135,15 +164,23 @@ def main(argv=None):
             'log_requests': True,
             'log_responses': True
         })
-    
+
     # Résolution de la hiérarchie de configuration : CLI > YAML > ENV
-    
+
     # 1. PROJECT_ID
     project_id = args.project_id
     if not project_id:
         project_id = config.get('piag', {}).get('rag', {}).get('project', {}).get('project_id')
     if not project_id:
         project_id = os.getenv('PIAG_RAG_PROJECT_ID')
+
+    # Track final sources for project_id
+    if args.project_id:
+        tracker.set('piag.rag.project.project_id', args.project_id, ConfigSource.CLI, is_sensitive=True)
+    elif piag_rag_config.get('project', {}).get('project_id'):
+        pass  # Already tracked from YAML above
+    elif os.getenv('PIAG_RAG_PROJECT_ID'):
+        tracker.set('piag.rag.project.project_id', os.getenv('PIAG_RAG_PROJECT_ID'), ConfigSource.ENV, is_sensitive=True)
     if not project_id:
         print(f"Erreur: Project ID PIAG requis.", file=sys.stderr)
         print(f"", file=sys.stderr)
@@ -168,6 +205,35 @@ def main(argv=None):
     if not api_token:
         token_env_var = config.get('piag', {}).get('rag', {}).get('security', {}).get('token_env_var', 'PIAG_RAG_API_TOKEN')
         api_token = os.getenv(token_env_var)
+
+    # Track final sources for token
+    if args.token:
+        tracker.set('piag.rag.security.token', args.token, ConfigSource.CLI, is_sensitive=True)
+    elif piag_rag_config.get('security', {}).get('token'):
+        pass  # Already tracked from YAML above
+    elif os.getenv(token_env_var):
+        tracker.set('piag.rag.security.token', os.getenv(token_env_var), ConfigSource.ENV, is_sensitive=True)
+
+    # Handle configuration source display options (before validation)
+    if args.show_config_sources:
+        print(tracker.get_report("piag-rag-create"))
+        if config_file_found:
+            print(f"\nConfig file: {Path(args.config)}")
+        else:
+            print(f"\nConfig file: config/piag.yaml (not found, using defaults)")
+        print("\n✓ Configuration sources displayed successfully")
+        print("\nUse this command without -S to execute the RAG creation.")
+        return 0
+
+    if args.check_config:
+        print(tracker.get_check_summary("piag-rag-create"))
+        if config_file_found:
+            print(f"\nConfig file: {Path(args.config)}")
+        else:
+            print(f"\nConfig file: config/piag.yaml (not found)")
+        print("\nUse -S/--show-config-sources for detailed view.")
+        return 0
+
     if not api_token:
         print(f"Erreur: Token API PIAG requis.", file=sys.stderr)
         print(f"", file=sys.stderr)

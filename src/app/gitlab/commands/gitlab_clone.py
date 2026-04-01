@@ -12,6 +12,7 @@ from typing import List, Optional
 
 from app.core.config_loader import load_config as load_app_config, find_config_file
 from app.core.logging_config import setup_logging
+from app.core.config_tracker import ConfigTracker, ConfigSource, is_sensitive_key
 from app.gitlab.core.cloning import clone_repository
 from app.gitlab.core.monofile import generate_code_monofile, generate_wiki_monofile, infer_repo_mode
 
@@ -81,11 +82,26 @@ Exemples:
     parser.add_argument("-c", "--config", type=str, default="config/gitlab.yaml", help="Path to the gitlab.yaml configuration file.")
     parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose logging.")
 
+    # Options de traçabilité de configuration
+    parser.add_argument(
+        "-S", "--show-config-sources",
+        action="store_true",
+        help="Affiche la provenance détaillée de chaque paramètre de configuration et quitte"
+    )
+    parser.add_argument(
+        "--check-config",
+        action="store_true",
+        help="Vérifie rapidement l'origine des paramètres (résumé condensé) et quitte"
+    )
+
     args = parser.parse_args(argv)
 
     # Setup logging
     log_level = logging.DEBUG if args.verbose else logging.INFO
     setup_logging(level=log_level, log_file_prefix="gitlab_clone")
+
+    # Initialize configuration tracker
+    tracker = ConfigTracker()
 
     # 1. Load config from YAML, substituting env vars, merged over defaults
     # Determine if config file exists (check exact path or search standard locations)
@@ -102,15 +118,73 @@ Exemples:
 
     config = load_app_config(args.config, DEFAULT_CONFIG)
 
-    # 2. Override with CLI arguments if they were provided
+    # Track defaults first
+    for key, value in DEFAULT_CONFIG.get('gitlab', {}).items():
+        full_key = f"gitlab.{key}"
+        display_value = value if value else "(empty)"
+        if isinstance(value, list):
+            display_value = f"{len(value)} repositories" if value else "(empty)"
+        tracker.set(full_key, display_value, ConfigSource.DEFAULT, is_sensitive=is_sensitive_key(key))
+
+    # Track values from loaded config (YAML or ENV via substitution)
+    # Note: load_app_config already merges ENV vars via ${VAR} substitution
+    loaded_gitlab = config.get('gitlab', {})
+    for key, value in loaded_gitlab.items():
+        full_key = f"gitlab.{key}"
+        # Determine if value came from ENV or YAML by checking if it differs from default
+        default_value = DEFAULT_CONFIG.get('gitlab', {}).get(key)
+        display_value = value if value else "(empty)"
+        if isinstance(value, list):
+            display_value = f"{len(value)} repositories" if value else "(empty)"
+
+        # If value differs from default, it came from config file or ENV
+        # (We can't distinguish YAML vs ENV easily here, assume YAML unless it's from os.getenv)
+        if value != default_value:
+            # Check if it's a direct env var
+            if key == 'token' and value == os.getenv('GITLAB_PRIVATE_TOKEN', ''):
+                source = ConfigSource.ENV
+            elif key == 'username' and value == os.getenv('GITLAB_USERNAME', 'oauth2') and value != 'oauth2':
+                source = ConfigSource.ENV
+            elif config_file_found:
+                source = ConfigSource.YAML
+            else:
+                source = ConfigSource.DEFAULT
+            tracker.set(full_key, display_value, source, is_sensitive=is_sensitive_key(key))
+
+    # 2. Override with CLI arguments if they were provided (highest priority)
     if args.token:
         config['gitlab']['token'] = args.token
+        tracker.set('gitlab.token', args.token, ConfigSource.CLI, is_sensitive=True)
     if args.username:
         config['gitlab']['username'] = args.username
+        tracker.set('gitlab.username', args.username, ConfigSource.CLI)
     if args.output:
         config['gitlab']['base_clone_dir'] = args.output
+        tracker.set('gitlab.base_clone_dir', args.output, ConfigSource.CLI)
     if args.repositories:
         config['gitlab']['repositories'] = args.repositories
+        display_value = f"{len(args.repositories)} repositories"
+        tracker.set('gitlab.repositories', display_value, ConfigSource.CLI)
+
+    # Handle configuration source display options
+    if args.show_config_sources:
+        print(tracker.get_report("gitlab-clone"))
+        if config_file_found:
+            print(f"\nConfig file: {config_file_found}")
+        else:
+            print(f"\nConfig file: {args.config} (not found, using defaults)")
+        print("\n✓ Configuration sources displayed successfully")
+        print("\nUse this command without -S to execute the clone operation.")
+        return 0
+
+    if args.check_config:
+        print(tracker.get_check_summary("gitlab-clone"))
+        if config_file_found:
+            print(f"\nConfig file: {config_file_found}")
+        else:
+            print(f"\nConfig file: {args.config} (not found)")
+        print("\nUse -S/--show-config-sources for detailed view.")
+        return 0
 
     # 3. Validate the final configuration
     gitlab_config = config.get("gitlab", {})

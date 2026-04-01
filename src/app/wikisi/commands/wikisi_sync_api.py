@@ -8,6 +8,7 @@ from typing import Dict, Any, Optional
 
 from app.core.config_loader import load_config as load_app_config
 from app.core.logging_config import setup_logging
+from app.core.config_tracker import ConfigTracker, ConfigSource, is_sensitive_key
 from ..core.api_client import WikiSIAPIClient
 
 logger = logging.getLogger(__name__)
@@ -76,11 +77,26 @@ Variables d'environnement supportées:
   WIKISI_LOG_LEVEL           Niveau de journalisation (info, debug, warning, error)
   WIKISI_LOG_TO_FILE         Activer la journalisation vers un fichier (true/false)
   WIKISI_LOG_FILE            Chemin du fichier de journalisation
+
+Options de diagnostic:
+  -S, --show-config-sources  Affiche d'où vient chaque paramètre (rapport détaillé)
+  --check-config             Vérification rapide de la configuration (résumé)
+
+Exemples:
+  # Vérifier la configuration avant exécution
+  ambulon wikisi-sync-api -S
+  ambulon wikisi-sync-api --check-config
+
+  # Exécution normale
+  ambulon wikisi-sync-api
+
+  # Avec override CLI
+  ambulon wikisi-sync-api --output-dir ./custom-output --api-url https://custom.api.fr
         """
     )
 
     # Global options
-    parser.add_argument("--config", "-c", type=Path, help="Path to a YAML configuration file (e.g., config/wikisi.yaml).")
+    parser.add_argument("--config", "-c", type=str, default="config/wikisi.yaml", help="Path to a YAML configuration file (default: config/wikisi.yaml).")
     parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose logging (DEBUG level).")
     parser.add_argument("--quiet", "-q", action="store_true", help="Suppress most output messages (WARNING level).")
 
@@ -97,35 +113,112 @@ Variables d'environnement supportées:
     parser.add_argument("--applications-ia-file", help="Override the filename for AI-ready applications JSON.")
     parser.add_argument("--applications-ia-mini-file", help="Override the filename for mini AI-ready applications JSON.")
 
+    # Configuration tracking options
+    parser.add_argument(
+        "-S", "--show-config-sources",
+        action="store_true",
+        help="Affiche la provenance détaillée de chaque paramètre de configuration et quitte"
+    )
+    parser.add_argument(
+        "--check-config",
+        action="store_true",
+        help="Vérifie rapidement l'origine des paramètres (résumé condensé) et quitte"
+    )
+
     args = parser.parse_args(argv)
+
+    # Initialize configuration tracker
+    tracker = ConfigTracker()
+
+    # Track defaults first
+    for section_key, section_value in DEFAULT_CONFIG.get('wikisi', {}).items():
+        if isinstance(section_value, dict):
+            for key, value in section_value.items():
+                full_key = f"wikisi.{section_key}.{key}"
+                display_value = value if value else "(empty)"
+                tracker.set(full_key, display_value, ConfigSource.DEFAULT, is_sensitive=is_sensitive_key(key))
 
     # Load configuration
     # config_loader handles merging defaults, YAML, and ENV vars.
-    loaded_config = load_app_config(str(args.config) if args.config else None, DEFAULT_CONFIG)
+    loaded_config = load_app_config(args.config, DEFAULT_CONFIG)
 
     # Extract wikisi config (all our config is under 'wikisi' key)
     app_config = loaded_config.get('wikisi', {})
 
+    # Track loaded configuration (YAML/ENV)
+    # Determine source by comparing with defaults
+    config_file_found = Path(args.config).expanduser().exists() if args.config else False
+    for section_key, section_value in app_config.items():
+        if isinstance(section_value, dict):
+            for key, value in section_value.items():
+                full_key = f"wikisi.{section_key}.{key}"
+                default_value = DEFAULT_CONFIG.get('wikisi', {}).get(section_key, {}).get(key)
+
+                if value != default_value:
+                    # Value differs from default, likely from YAML or ENV
+                    # Check if it's a direct ENV var
+                    env_var = f"WIKISI_{key.upper()}"
+                    env_value = os.getenv(env_var)
+
+                    if env_value and str(value) == str(env_value):
+                        source = ConfigSource.ENV
+                    elif config_file_found:
+                        source = ConfigSource.YAML
+                    else:
+                        source = ConfigSource.ENV  # Assume ENV if no config file
+
+                    display_value = value if value else "(empty)"
+                    tracker.set(full_key, display_value, source, is_sensitive=is_sensitive_key(key))
+
     # Apply CLI overrides (highest priority)
     if args.api_url:
         app_config['api']['url'] = args.api_url
+        tracker.set('wikisi.api.url', args.api_url, ConfigSource.CLI)
     if args.api_token:
         app_config['api']['token'] = args.api_token
+        tracker.set('wikisi.api.token', args.api_token, ConfigSource.CLI, is_sensitive=True)
     if args.api_user_agent:
         app_config['api']['user_agent'] = args.api_user_agent
+        tracker.set('wikisi.api.user_agent', args.api_user_agent, ConfigSource.CLI)
     if args.api_page_limit is not None:
         app_config['api']['page_limit'] = args.api_page_limit
+        tracker.set('wikisi.api.page_limit', args.api_page_limit, ConfigSource.CLI)
 
     if args.output_dir:
         app_config['output']['directory'] = str(args.output_dir) # Ensure it's a string for Path conversion in client
+        tracker.set('wikisi.output.directory', str(args.output_dir), ConfigSource.CLI)
     if args.enumerations_file:
         app_config['output']['enumerations_file'] = args.enumerations_file
+        tracker.set('wikisi.output.enumerations_file', args.enumerations_file, ConfigSource.CLI)
     if args.applications_file:
         app_config['output']['applications_file'] = args.applications_file
+        tracker.set('wikisi.output.applications_file', args.applications_file, ConfigSource.CLI)
     if args.applications_ia_file:
         app_config['output']['applications_ia_file'] = args.applications_ia_file
+        tracker.set('wikisi.output.applications_ia_file', args.applications_ia_file, ConfigSource.CLI)
     if args.applications_ia_mini_file:
         app_config['output']['applications_ia_mini_file'] = args.applications_ia_mini_file
+        tracker.set('wikisi.output.applications_ia_mini_file', args.applications_ia_mini_file, ConfigSource.CLI)
+
+    # Handle configuration source display options
+    if args.show_config_sources:
+        print(tracker.get_report("wikisi-sync-api"))
+        if config_file_found:
+            print(f"\nConfig file: {Path(args.config).expanduser()}")
+        else:
+            print(f"\nConfig file: {args.config} (not found, using defaults)")
+        print("\n✓ Configuration sources displayed successfully")
+        print("\nUse this command without -S to execute the synchronization.")
+        return 0
+
+    if args.check_config:
+        print(tracker.get_check_summary("wikisi-sync-api"))
+        if config_file_found:
+            print(f"\nConfig file: {Path(args.config).expanduser()}")
+        else:
+            print(f"\nConfig file: {args.config} (not found)")
+        print("\nUse -S/--show-config-sources for detailed view.")
+        return 0
 
     # Configure logging based on resolved config and CLI overrides
     log_level_str = app_config['logging']['level']

@@ -1,0 +1,30 @@
+# Exemple de fichier de configuration avec substitution de variables d'environnement
+# Utilisé par config_tracking_example.py
+
+# Section principale
+main:
+  # URL peut être définie par variable d'environnement MY_MODULE_URL
+  url: "${MY_MODULE_URL:-https://yaml-default.example.com}"
+
+  # Timeout en secondes
+  timeout: 60
+
+  # Répertoire de sortie
+  output: "./data/output"
+
+# Authentification
+auth:
+  # Token d'API (SENSIBLE - utiliser variable d'env)
+  # Ne JAMAIS commiter de vrais tokens dans ce fichier
+  api_token: "${MY_MODULE_API_TOKEN:-dummy_token_from_yaml}"
+
+  # Type d'authentification
+  auth_type: "${MY_MODULE_AUTH_TYPE:-bearer}"
+
+# Comportement
+behavior:
+  # Nombre de retries
+  max_retries: 5
+
+  # Délai entre retries (secondes)
+  retry_delay: 2

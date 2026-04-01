@@ -1096,6 +1096,457 @@ BASE_URL
 MOD_BU
 ```
 
+#### 6. Traçabilité de Configuration : Option `--show-config-sources` (FORTEMENT RECOMMANDÉ)
+
+**Problème** : Lors du debugging, il est difficile de savoir d'où vient chaque valeur de configuration utilisée par la commande.
+
+**Solution** : Implémenter une option `--show-config-sources` qui affiche la provenance de chaque paramètre avant l'exécution de la commande.
+
+##### Format d'Affichage Recommandé
+
+```
+Configuration Sources Report
+============================
+
+Parameter                Source              Value
+---------                ------              -----
+url                      CLI Argument        https://prod.example.com
+timeout                  YAML File           30
+auth_type                Environment         bearer
+output_dir               Default             ./output
+token                    Environment         ****** (masked)
+
+Summary:
+  - CLI Arguments:     1 parameter(s)
+  - YAML File:         1 parameter(s)
+  - Environment Vars:  2 parameter(s)
+  - Defaults:          1 parameter(s)
+
+Config file: /path/to/config.yaml
+```
+
+##### Implémentation Recommandée
+
+**1. Classe de Tracking des Sources**
+
+```python
+from enum import Enum
+from typing import Any, Dict, Optional
+from dataclasses import dataclass
+
+class ConfigSource(Enum):
+    """Sources de configuration possibles."""
+    CLI = "CLI Argument"
+    YAML = "YAML File"
+    ENV = "Environment"
+    DEFAULT = "Default"
+
+@dataclass
+class ConfigValue:
+    """Valeur de configuration avec sa source."""
+    key: str
+    value: Any
+    source: ConfigSource
+    is_sensitive: bool = False  # Pour masquer tokens/passwords
+
+class ConfigTracker:
+    """Trace la provenance de chaque paramètre de configuration."""
+
+    def __init__(self):
+        self.values: Dict[str, ConfigValue] = {}
+
+    def set(self, key: str, value: Any, source: ConfigSource, is_sensitive: bool = False):
+        """Enregistre une valeur avec sa source."""
+        self.values[key] = ConfigValue(
+            key=key,
+            value=value,
+            source=source,
+            is_sensitive=is_sensitive
+        )
+
+    def get_report(self) -> str:
+        """Génère le rapport de traçabilité."""
+        lines = [
+            "Configuration Sources Report",
+            "=" * 50,
+            "",
+            f"{'Parameter':<20} {'Source':<20} {'Value':<30}",
+            f"{'-' * 20} {'-' * 20} {'-' * 30}",
+        ]
+
+        # Trier par source pour groupement visuel
+        sorted_values = sorted(
+            self.values.values(),
+            key=lambda v: (v.source.value, v.key)
+        )
+
+        for config_value in sorted_values:
+            display_value = "****** (masked)" if config_value.is_sensitive else str(config_value.value)
+            lines.append(
+                f"{config_value.key:<20} {config_value.source.value:<20} {display_value:<30}"
+            )
+
+        # Résumé par source
+        summary = self._get_summary()
+        lines.extend([
+            "",
+            "Summary:",
+        ])
+        for source, count in summary.items():
+            lines.append(f"  - {source:<20} {count} parameter(s)")
+
+        return "\n".join(lines)
+
+    def _get_summary(self) -> Dict[str, int]:
+        """Compte le nombre de paramètres par source."""
+        summary = {}
+        for config_value in self.values.values():
+            source_name = config_value.source.value
+            summary[source_name] = summary.get(source_name, 0) + 1
+        return summary
+```
+
+**2. Intégration dans load_config()**
+
+```python
+def load_config(
+    config_path: Optional[str] = None,
+    default_config: Dict[str, Any] = None,
+    tracker: Optional[ConfigTracker] = None
+) -> Dict[str, Any]:
+    """
+    Charge la configuration avec tracking des sources.
+
+    Args:
+        config_path: Chemin vers fichier YAML (optionnel)
+        default_config: Configuration par défaut
+        tracker: Tracker pour enregistrer les sources (optionnel)
+
+    Returns:
+        Configuration fusionnée
+    """
+    config = {}
+
+    # 1. Valeurs par défaut
+    if default_config:
+        for key, value in default_config.items():
+            config[key] = value
+            if tracker:
+                # Déterminer si sensible (token, password, secret, key)
+                is_sensitive = any(word in key.lower() for word in ['token', 'password', 'secret', 'key'])
+                tracker.set(key, value, ConfigSource.DEFAULT, is_sensitive)
+
+    # 2. Variables d'environnement (via substitution YAML)
+    # Les valeurs sont trackées lors du parsing YAML ci-dessous
+
+    # 3. Fichier YAML
+    if config_path and Path(config_path).exists():
+        with open(config_path, 'r', encoding='utf-8') as f:
+            yaml_content = f.read()
+
+        # Substitution avec tracking
+        def replace_env_var_with_tracking(match):
+            var_expr = match.group(1)
+            var_name, default = (var_expr.split(':-', 1) if ':-' in var_expr else (var_expr, ''))
+            value = os.getenv(var_name, default)
+
+            # Déterminer la source réelle
+            source = ConfigSource.ENV if os.getenv(var_name) else ConfigSource.YAML
+
+            return value
+
+        yaml_content = re.sub(r'\$\{([^}]+)\}', replace_env_var_with_tracking, yaml_content)
+        yaml_config = yaml.safe_load(yaml_content)
+
+        # Fusionner et tracker
+        for key, value in flatten_dict(yaml_config).items():
+            config[key] = value
+            if tracker:
+                # Vérifier si la valeur vient d'une var d'env ou du YAML
+                source = ConfigSource.YAML  # Simplifié pour l'exemple
+                is_sensitive = any(word in key.lower() for word in ['token', 'password', 'secret', 'key'])
+                tracker.set(key, value, source, is_sensitive)
+
+    return config
+
+def flatten_dict(d: Dict, parent_key: str = '', sep: str = '.') -> Dict:
+    """Aplatit un dictionnaire imbriqué."""
+    items = []
+    for k, v in d.items():
+        new_key = f"{parent_key}{sep}{k}" if parent_key else k
+        if isinstance(v, dict):
+            items.extend(flatten_dict(v, new_key, sep=sep).items())
+        else:
+            items.append((new_key, v))
+    return dict(items)
+```
+
+**3. Intégration dans main()**
+
+```python
+def main(argv=None):
+    """
+    Point d'entrée de la commande.
+
+    Args:
+        argv: Arguments CLI ou None pour sys.argv
+
+    Returns:
+        Code de sortie (0 = succès, non-zéro = erreur)
+    """
+    parser = argparse.ArgumentParser(description="Ma commande")
+
+    # Arguments standards
+    parser.add_argument("-u", "--url", help="URL à traiter")
+    parser.add_argument("-o", "--output", help="Répertoire de sortie")
+    parser.add_argument("-c", "--config", help="Fichier de configuration YAML")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Mode verbeux")
+
+    # Option de traçabilité (RECOMMANDÉ) avec version abrégée
+    parser.add_argument(
+        "-S", "--show-config-sources",
+        action="store_true",
+        help="Affiche la provenance de chaque paramètre de configuration et quitte"
+    )
+
+    args = parser.parse_args(argv)
+
+    # Initialiser le tracker
+    tracker = ConfigTracker()
+
+    # Charger configuration avec tracking
+    default_config = {
+        'url': 'https://default.example.com',
+        'output': './output',
+        'timeout': 30
+    }
+
+    config = load_config(
+        config_path=args.config,
+        default_config=default_config,
+        tracker=tracker
+    )
+
+    # Appliquer arguments CLI (priorité maximale)
+    if args.url is not None:
+        config['url'] = args.url
+        tracker.set('url', args.url, ConfigSource.CLI)
+
+    if args.output is not None:
+        config['output'] = args.output
+        tracker.set('output', args.output, ConfigSource.CLI)
+
+    # Afficher le rapport si demandé
+    if args.show_config_sources:
+        print(tracker.get_report())
+        if args.config:
+            print(f"\nConfig file: {Path(args.config).resolve()}")
+        return 0
+
+    # Exécuter la logique métier normalement
+    return execute_business_logic(config)
+```
+
+##### Exemple d'Utilisation
+
+```bash
+# Afficher la provenance de la configuration (option abrégée)
+my-app my-command -S
+
+# Version longue
+my-app my-command --show-config-sources
+
+# Avec fichier de configuration
+my-app my-command --config config/prod.yaml -S
+
+# Avec arguments CLI pour voir l'écrasement
+MY_MODULE_URL=https://from-env.com my-app my-command \
+  --url https://from-cli.com \
+  --config config/dev.yaml \
+  -S
+```
+
+**Sortie exemple :**
+```
+Configuration Sources Report
+==================================================
+
+Parameter            Source               Value
+-------------------- -------------------- ------------------------------
+url                  CLI Argument         https://from-cli.com
+timeout              YAML File            60
+auth_type            Environment          bearer
+token                Environment          ****** (masked)
+output               Default              ./output
+
+Summary:
+  - CLI Argument:      1 parameter(s)
+  - YAML File:         1 parameter(s)
+  - Environment:       2 parameter(s)
+  - Default:           1 parameter(s)
+
+Config file: /home/user/config/dev.yaml
+```
+
+##### Avantages
+
+- ✅ **Debugging facilité** : Savoir immédiatement d'où vient chaque valeur
+- ✅ **Transparence** : Vérifier que la hiérarchie fonctionne correctement
+- ✅ **Sécurité** : Masquage automatique des valeurs sensibles (tokens, passwords)
+- ✅ **Documentation vivante** : Montre concrètement la configuration effective
+- ✅ **Validation** : Confirmer que les variables d'env sont bien prises en compte
+
+##### Exemples Réels d'Utilisation
+
+**Exemple 1 : Vérification rapide avec `--check-config`**
+
+```bash
+$ ambulon gitlab-clone --check-config
+```
+
+**Sortie :**
+```
+Configuration Check - gitlab-clone
+==================================================
+
+Sources distribution:
+  YAML File           5 parameter(s)  (100.0%)
+
+Total parameters: 5
+
+✓ Configuration hierarchy: CLI > YAML > Environment > Default
+
+⚠️ Warnings:
+  - gitlab.token comes from YAML (should use environment variable)
+
+Config file: config\gitlab.yaml
+
+Use -S/--show-config-sources for detailed view.
+```
+
+**Analyse** : Le warning indique que le token est dans le YAML au lieu d'une variable d'environnement (meilleure pratique de sécurité).
+
+---
+
+**Exemple 2 : Rapport détaillé avec `-S`**
+
+```bash
+$ ambulon gitlab-clone -S
+```
+
+**Sortie :**
+```
+Configuration Sources Report - gitlab-clone
+======================================================================
+
+Parameter                 Source               Value
+------------------------- -------------------- -------------------------
+gitlab.automation         YAML File            {'enabled': True, 'out...
+gitlab.base_clone_dir     YAML File            G:/WarchoLife/WarchoDe...
+gitlab.repositories       YAML File            2 repositories
+gitlab.token              YAML File            ****** (masked)
+gitlab.username           YAML File            DOCUMENTATION
+
+Summary:
+  - YAML File          5 parameter(s)
+
+Config file: config\gitlab.yaml
+
+✓ Configuration sources displayed successfully
+
+Use this command without -S to execute the clone operation.
+```
+
+**Analyse** : Tous les paramètres proviennent du fichier YAML. Le token est correctement masqué.
+
+---
+
+**Exemple 3 : Configuration mixte (YAML + Defaults)**
+
+```bash
+$ ambulon piag-chat-query --question "Test" --chunks chunks.json -S
+```
+
+**Sortie :**
+```
+Configuration Sources Report - piag-chat-query
+======================================================================
+
+Parameter                 Source               Value
+------------------------- -------------------- -------------------------
+piag.chat.api.base_url    Default              https://preprod.api.pi...
+piag.chat.api.timeout     Default              60
+piag.chat.model           Default              mte-api-piag-mistral-m...
+piag.chat.security.token  YAML File            ****** (masked)
+piag.chat.security.token_env_var YAML File     PIAG_CHAT_API_TOKEN
+
+Summary:
+  - Default            3 parameter(s)
+  - YAML File          2 parameter(s)
+
+Config file: config\piag.yaml
+
+✓ Configuration sources displayed successfully
+```
+
+**Analyse** : Hiérarchie respectée avec 3 valeurs par défaut et 2 du YAML. Démontre que la commande fonctionne avec configuration partielle.
+
+---
+
+**Exemple 4 : Détection d'erreurs de configuration**
+
+```bash
+$ ambulon wikisi-sync-api --check-config
+```
+
+**Sortie :**
+```
+Configuration Check - wikisi-sync-api
+==================================================
+
+Sources distribution:
+  Default            11 parameter(s)  ( 91.7%)
+  YAML File           1 parameter(s)  (  8.3%)
+
+Total parameters: 12
+
+✓ Configuration hierarchy: CLI > YAML > Environment > Default
+
+⚠️ Warnings:
+  - wikisi.api.token is empty (from defaults)
+
+Config file: config\wikisi.yaml
+
+Use -S/--show-config-sources for detailed view.
+```
+
+**Analyse** : Le warning indique qu'un paramètre critique (token) est vide. Permet de détecter les problèmes de configuration AVANT l'exécution.
+
+---
+
+**Cas d'usage typiques :**
+
+1. **Debugging** : `ambulon command -S` → Voir immédiatement d'où viennent les valeurs
+2. **Validation rapide** : `ambulon command --check-config` → Vérifier la config en 1 seconde
+3. **Audit** : `ambulon command -S > config_audit.txt` → Documenter la configuration utilisée
+4. **CI/CD** : Validation automatique que les secrets viennent bien de l'environnement
+
+##### Checklist d'Implémentation
+
+Pour chaque nouveau module, vérifier :
+- [ ] Option `-S, --show-config-sources` ajoutée au parser (avec version abrégée)
+- [ ] `ConfigTracker` instancié et passé à `load_config()`
+- [ ] Arguments CLI trackés avec `ConfigSource.CLI`
+- [ ] Valeurs sensibles marquées avec `is_sensitive=True`
+- [ ] Rapport affiché avant l'exécution si option activée
+- [ ] Documentation de l'option dans `--help`
+
+**Recommandation d'option abrégée :** `-S` (majuscule pour éviter conflit avec `-s` souvent utilisé pour `--silent` ou `--size`)
+
+**Cette option est FORTEMENT RECOMMANDÉE pour tous les modules avec hiérarchie de configuration.**
+
+---
+
 ### Exemple de Code - Fonction de Chargement de Config
 
 ```python

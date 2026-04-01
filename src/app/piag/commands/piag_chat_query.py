@@ -34,6 +34,7 @@ import requests
 from app.core.config_loader import load_config as load_app_config
 from app.core.logging_config import setup_logging
 from app.core.timeout_parser import parse_timeout, format_timeout
+from app.core.config_tracker import ConfigTracker, ConfigSource, is_sensitive_key
 
 logger = logging.getLogger(__name__)
 
@@ -254,7 +255,16 @@ Configuration Hierarchy (priorité décroissante):
 Variables d'environnement:
   PIAG_CHAT_API_TOKEN   Token API pour l'authentification Bearer (API Chat)
 
+Options de diagnostic:
+  -S, --show-config-sources  Affiche d'où vient chaque paramètre (rapport détaillé)
+  --check-config             Vérification rapide de la configuration (résumé)
+
 Exemples:
+  # Vérifier la configuration
+  ambulon piag-chat-query -S
+  ambulon piag-chat-query --check-config
+
+Exemples d'utilisation:
   # Avec un fichier de chunks JSON (local)
   ambulon piag-chat-query --question "Quelle est la procédure ?" --chunks chunks.json
 
@@ -292,6 +302,18 @@ Exemples:
     parser.add_argument('--max-retries', default='3', help='Nombre max de tentatives en cas d\'erreur (default: 3). Accepte: 5, 10')
     parser.add_argument('--retry-delay', default='5s', help='Délai entre les tentatives (default: 5s). Accepte: 5s, 30s, 1m')
 
+    # Configuration tracking options
+    parser.add_argument(
+        '-S', '--show-config-sources',
+        action='store_true',
+        help='Affiche la provenance détaillée de chaque paramètre de configuration et quitte'
+    )
+    parser.add_argument(
+        '--check-config',
+        action='store_true',
+        help='Vérifie rapidement l\'origine des paramètres (résumé condensé) et quitte'
+    )
+
     args = parser.parse_args(argv)
 
     # Setup logging
@@ -321,9 +343,43 @@ Exemples:
         logger.error("La question est vide")
         return 1
     
+    # Initialize configuration tracker
+    tracker = ConfigTracker()
+
+    # Track defaults
+    for section_key, section_value in DEFAULT_CONFIG.get('piag', {}).get('chat', {}).items():
+        if isinstance(section_value, dict):
+            for key, value in section_value.items():
+                full_key = f"piag.chat.{section_key}.{key}"
+                display_value = value if value else "(empty)"
+                tracker.set(full_key, display_value, ConfigSource.DEFAULT, is_sensitive=is_sensitive_key(key))
+        else:
+            full_key = f"piag.chat.{section_key}"
+            tracker.set(full_key, section_value, ConfigSource.DEFAULT, is_sensitive=is_sensitive_key(section_key))
+
     # Chargement de la config
-    config = load_app_config(str(args.config) if args.config.exists() else None, DEFAULT_CONFIG)
+    # Ne pas vérifier args.config.exists() car load_app_config cherche dans plusieurs emplacements
+    # et peut fallback sur le fichier .example si le fichier principal n'existe pas
+    config = load_app_config(str(args.config), DEFAULT_CONFIG)
     piag_config = config.get('piag', {}).get('chat', {})
+
+    # Track loaded config (YAML/ENV)
+    config_file_found = Path(str(args.config)).expanduser().exists() if args.config else False
+    for section_key, section_value in piag_config.items():
+        if isinstance(section_value, dict):
+            for key, value in section_value.items():
+                full_key = f"piag.chat.{section_key}.{key}"
+                default_value = DEFAULT_CONFIG.get('piag', {}).get('chat', {}).get(section_key, {}).get(key)
+                if value != default_value:
+                    source = ConfigSource.YAML if config_file_found else ConfigSource.ENV
+                    display_value = value if value else "(empty)"
+                    tracker.set(full_key, display_value, source, is_sensitive=is_sensitive_key(key))
+        else:
+            full_key = f"piag.chat.{section_key}"
+            default_value = DEFAULT_CONFIG.get('piag', {}).get('chat', {}).get(section_key)
+            if section_value != default_value:
+                source = ConfigSource.YAML if config_file_found else ConfigSource.ENV
+                tracker.set(full_key, section_value, source, is_sensitive=is_sensitive_key(section_key))
     
     # Récupération des valeurs (CLI > YAML > ENV > Defaults)
     # URL de l'API Chat (chat/completions)
@@ -339,6 +395,36 @@ Exemples:
         chat_token = os.getenv(token_env_var)
 
     model = args.model or piag_config.get('model') or DEFAULT_CONFIG['piag']['chat']['model']
+
+    # Track CLI overrides
+    if args.api_url:
+        tracker.set('piag.chat.api.base_url', args.api_url, ConfigSource.CLI)
+    if args.chat_token:
+        tracker.set('piag.chat.security.token', args.chat_token, ConfigSource.CLI, is_sensitive=True)
+    if args.model:
+        tracker.set('piag.chat.model', args.model, ConfigSource.CLI)
+    if args.timeout != '60s':  # If changed from default
+        tracker.set('piag.chat.api.timeout', args.timeout, ConfigSource.CLI)
+
+    # Handle configuration source display options
+    if args.show_config_sources:
+        print(tracker.get_report("piag-chat-query"))
+        if config_file_found:
+            print(f"\nConfig file: {Path(str(args.config)).expanduser()}")
+        else:
+            print(f"\nConfig file: {args.config} (not found, using defaults)")
+        print("\n✓ Configuration sources displayed successfully")
+        print("\nUse this command without -S to execute the query.")
+        return 0
+
+    if args.check_config:
+        print(tracker.get_check_summary("piag-chat-query"))
+        if config_file_found:
+            print(f"\nConfig file: {Path(str(args.config)).expanduser()}")
+        else:
+            print(f"\nConfig file: {args.config} (not found)")
+        print("\nUse -S/--show-config-sources for detailed view.")
+        return 0
 
     # Parse timeout avec suffixes (ms, s, m)
     timeout_value = args.timeout or piag_config.get('api', {}).get('timeout') or DEFAULT_CONFIG['piag']['chat']['api']['timeout']
