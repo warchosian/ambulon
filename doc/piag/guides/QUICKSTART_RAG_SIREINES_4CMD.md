@@ -529,3 +529,18 @@ ambulon piag-rag-collection-list && echo. && ambulon piag-rag-collection-rm --co
 
 **Auteur** : Équipe Ambulon
 **Dernière mise à jour** : 2026-03-22
+
+
+curl -X POST 
+    -H "Authorization: token VOTRE_TOKEN_GITHUB" \
+    -H "Content-Type: application/json" \
+    https://api.github.com/repos/VOTRE_USER/VOTRE_REPO/releases \
+    -d "{\"tag_name\":\"v3.2.0\",\"name\":\"v3.2.0 - PIPELINE RAG CHAT\",\"body\":\"Ajout du module piag-rag-then-chat\"}"     
+
+
+ambulon>curl -X POST ^
+Plus ?     -H "Authorization: token YOUR_GITHUB_TOKEN" ^
+Plus ?     -H "Content-Type: application/octet-stream" ^
+Plus ?     --data-binary "@dist\ambulon-3.2.0-py3-none-any.whl" ^
+Plus ?     "https://uploads.github.com/repos/warchosian/ambulon/releases/ID_RELEASE/assets?name=ambulon-3.2.0-py3-none-any.whl"       
+

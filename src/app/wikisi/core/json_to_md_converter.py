@@ -1155,6 +1155,9 @@ def process_parkjson2md_logic(
             logger.warning("[WARNING] Conversion produced empty result")
             return 1, None
 
+        # Create parent directory if it doesn't exist
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+
         # Write Markdown file
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(markdown_content)

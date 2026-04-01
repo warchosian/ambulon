@@ -136,7 +136,9 @@ Exemples:
     setup_logging(level=log_level, log_file_prefix="piag_chat_apikey_info")
     
     # Chargement de la config
-    config = load_app_config(str(args.config) if args.config.exists() else None, DEFAULT_CONFIG)
+    # Ne pas vérifier args.config.exists() car load_app_config cherche dans plusieurs emplacements
+    # et peut fallback sur le fichier .example si le fichier principal n'existe pas
+    config = load_app_config(str(args.config), DEFAULT_CONFIG)
     piag_config = config.get('piag', {}).get('chat', {})
     
     # Récupération des valeurs

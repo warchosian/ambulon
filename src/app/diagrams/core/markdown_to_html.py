@@ -57,12 +57,21 @@ def markdown_to_html_basic(content: str, add_toc_backlinks: bool = False) -> str
     content = re.sub(r'<details[^>]*>.*?</details>', save_html_tag, content, flags=re.DOTALL)
     content = re.sub(r'</?(?:summary|div)[^>]*>', save_html_tag, content)
 
-    # Protect code blocks
+    # Protect code blocks (including excalidraw blocks which need special handling)
     code_block_pattern = r'(`{3,})([^\n`]*)\n(.*?)\1(?:\n|$)'
     code_blocks = {}
+    excalidraw_blocks = {}
+    
     def save_code_block(match):
         lang = match.group(2).strip() or ''
         code = match.group(3)
+        
+        # Handle excalidraw blocks specially
+        if lang.lower() == 'excalidraw':
+            placeholder = f'___EXCALIDRAW_BLOCK_{len(excalidraw_blocks)}___'
+            excalidraw_blocks[placeholder] = code.strip()
+            return placeholder
+        
         placeholder = f'___CODE_BLOCK_{len(code_blocks)}___'
         code_escaped = code.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
         code_blocks[placeholder] = f'<pre><code class="language-{lang}">{code_escaped}</code></pre>'
@@ -269,6 +278,16 @@ def markdown_to_html_basic(content: str, add_toc_backlinks: bool = False) -> str
 
     for placeholder, tag in html_tags.items():
         content = content.replace(placeholder, tag)
+    
+    # Restore excalidraw blocks as interactive components
+    for placeholder, excalidraw_json in excalidraw_blocks.items():
+        # Escape the JSON for use in data attribute
+        json_escaped = excalidraw_json.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
+        container_id = f'excalidraw-container-{hash(placeholder) & 0xFFFFFFFF}'
+        excalidraw_html = f'''<div class="excalidraw-wrapper">
+    <div id="{container_id}" class="excalidraw-container" data-scene="{json_escaped}"></div>
+</div>'''
+        content = content.replace(placeholder, excalidraw_html)
 
     # Insert TOC HTML at the end (after all markdown conversions)
     if toc_html:
@@ -396,7 +415,7 @@ def generate_toc(content: str, skip_h1: bool = True) -> str:
     return '\n'.join(result)
 
 
-def wrap_html_document(content: str, title: str, page_orientation: Optional[str] = None) -> str:
+def wrap_html_document(content: str, title: str, page_orientation: Optional[str] = None, has_excalidraw: bool = False) -> str:
     """
     Wrap HTML content in a full document with CSS.
 
@@ -404,6 +423,7 @@ def wrap_html_document(content: str, title: str, page_orientation: Optional[str]
         content: HTML content body
         title: Page title
         page_orientation: 'portrait', 'landscape' or None for diagram sizing
+        has_excalidraw: Whether the document contains excalidraw diagrams
 
     Returns:
         Complete HTML document
@@ -423,6 +443,39 @@ def wrap_html_document(content: str, title: str, page_orientation: Optional[str]
             height: auto;
         }
         """
+    
+    excalidraw_css = """
+        .excalidraw-wrapper {
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .excalidraw-container {
+            height: 400px;
+            background: #f8f9fa;
+            position: relative;
+        }
+        .excalidraw-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .excalidraw-fallback {
+            padding: 20px;
+            text-align: center;
+            color: #666;
+        }
+        .excalidraw-fallback a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .excalidraw-fallback a:hover {
+            text-decoration: underline;
+        }
+    """ if has_excalidraw else ""
+    
+    excalidraw_scripts = _get_excalidraw_scripts() if has_excalidraw else ""
 
     return f"""<!DOCTYPE html>
 <html lang="fr">
@@ -521,9 +574,61 @@ def wrap_html_document(content: str, title: str, page_orientation: Optional[str]
             border-top: 1px solid #ddd;
             margin: 20px 0;
         }}
+        {excalidraw_css}
     </style>
+    {excalidraw_scripts}
 </head>
 <body>
 {content}
 </body>
 </html>"""
+
+
+def _get_excalidraw_scripts() -> str:
+    """Generate scripts for Excalidraw integration."""
+    return '''
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@excalidraw/excalidraw@0.17/dist/excalidraw.production.min.js" crossorigin></script>
+    <script>
+        // Initialize Excalidraw components
+        document.addEventListener('DOMContentLoaded', function() {
+            const containers = document.querySelectorAll('.excalidraw-container');
+            containers.forEach(function(container) {
+                const sceneData = container.getAttribute('data-scene');
+                if (!sceneData) return;
+                
+                // Decode the JSON
+                const jsonStr = sceneData.replace(/&quot;/g, '"')
+                                         .replace(/&lt;/g, '<')
+                                         .replace(/&gt;/g, '>')
+                                         .replace(/&amp;/g, '&');
+                
+                try {
+                    const scene = JSON.parse(jsonStr);
+                    const root = ReactDOM.createRoot(container);
+                    const e = React.createElement;
+                    root.render(
+                        e(window.ExcalidrawLib.Excalidraw, {
+                            initialData: scene,
+                            UIOptions: {
+                                canvasActions: {
+                                    saveToActiveFile: false,
+                                    export: false,
+                                    loadScene: false,
+                                }
+                            },
+                            viewModeEnabled: true,
+                            zenModeEnabled: false,
+                            gridModeEnabled: false,
+                            theme: 'light'
+                        })
+                    );
+                } catch (err) {
+                    console.error('Failed to load Excalidraw:', err);
+                    container.innerHTML = '<div class="excalidraw-fallback"><p>⚠️ Unable to load Excalidraw diagram</p><p><a href="https://excalidraw.com" target="_blank">Open in Excalidraw</a></p></div>';
+                }
+            });
+        });
+    </script>
+    '''

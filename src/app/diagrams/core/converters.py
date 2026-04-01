@@ -22,6 +22,10 @@ from importlib.util import find_spec
 from pathlib import Path
 from typing import Dict, Optional, Callable
 
+# Suppress RequestsDependencyWarning about urllib3/chardet version mismatch
+import warnings
+warnings.filterwarnings('ignore', message='urllib3 .* or chardet .* doesn\'t match a supported version')
+warnings.filterwarnings('ignore', message='doesn\'t match a supported version')
 import requests
 
 from .base import ConversionResult, ConversionMethod, DiagramType

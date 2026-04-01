@@ -4,7 +4,7 @@ from typing import Optional, Tuple
 import logging
 
 from app.processing.core.project_to_md_converter import project_to_markdown_logic
-from app.conversion.commands.md2html import process_markdown_to_html
+from app.diagrams.commands.md2html import process_markdown_to_html
 from app.processing.core.markdown_flattener import flatten_markdown_directory_logic
 from app.processing.core.markdown_merger import fusion_markdown_files_logic
 

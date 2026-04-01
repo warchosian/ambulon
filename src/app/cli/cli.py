@@ -966,6 +966,10 @@ def main():
             # Ajouter liens retour (iTOC) à Markdown
             from app.toc import add_itoc4md_cli
             return add_itoc4md_cli(sys.argv[2:])
+        elif command == 'add-itoc':
+            # Ajouter liens retour (iTOC) - détecte automatiquement MD/HTML
+            from app.toc import add_itoc_cli
+            return add_itoc_cli(sys.argv[2:])
         elif command == 'check-toc4md':
             # Vérifier si TOC existe dans Markdown
             from app.toc import check_toc4md_cli

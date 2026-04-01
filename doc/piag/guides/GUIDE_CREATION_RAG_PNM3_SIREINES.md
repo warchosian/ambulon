@@ -137,8 +137,8 @@ ambulon piag-rag-collection-rm --collection-name PNM3_SIREINES
 ### 2.2 Créer la nouvelle collection
 
 ```bash
-ambulon piag-rag-collection-add \
-  --name "PNM3_SIREINES" \
+ambulon piag-rag-collection-add ^
+  --name "PNM3_SIREINES" ^
   --description "Documentation complète SIREINES : DAT, C4, Composants, Wiki, ISO25010"
 ```
 

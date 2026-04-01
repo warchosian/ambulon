@@ -27,6 +27,7 @@ from ..core.markdown_to_html import (
     markdown_to_html_basic,
     wrap_html_document,
 )
+from ..core.base import DiagramType
 
 logger = logging.getLogger(__name__)
 
@@ -101,7 +102,9 @@ def process_markdown_to_html(
 
         # Wrap in full HTML if standalone
         if standalone:
-            html_content = wrap_html_document(html_content, md_path.stem, page_orientation)
+            # Check if content has excalidraw diagrams
+            has_excalidraw = '___EXCALIDRAW_BLOCK_' in html_content or '.excalidraw-container' in html_content
+            html_content = wrap_html_document(html_content, md_path.stem, page_orientation, has_excalidraw=has_excalidraw)
 
         # Write output
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -154,12 +157,14 @@ def _convert_diagrams_in_content(
     if verbose:
         stats = get_diagram_stats(diagrams)
         logger.info(f"Found {stats['total']} diagram(s):")
-        if stats['plantuml'] > 0:
+        if stats.get('plantuml', 0) > 0:
             logger.info(f"  - PlantUML: {stats['plantuml']}")
-        if stats['mermaid'] > 0:
+        if stats.get('mermaid', 0) > 0:
             logger.info(f"  - Mermaid: {stats['mermaid']}")
-        if stats['graphviz'] > 0:
+        if stats.get('graphviz', 0) > 0:
             logger.info(f"  - Graphviz: {stats['graphviz']}")
+        if stats.get('excalidraw', 0) > 0:
+            logger.info(f"  - Excalidraw: {stats['excalidraw']}")
 
     result_content = content
 
@@ -174,6 +179,12 @@ def _convert_diagrams_in_content(
         diagram_type = diagram.diagram_type
         diagram_code = diagram.content
         full_block = diagram.full_block
+
+        # Skip Excalidraw diagrams - they are handled specially in markdown_to_html_basic
+        if diagram_type == DiagramType.EXCALIDRAW:
+            if verbose:
+                logger.info(f"Skipping {diagram_type.value} diagram at line {diagram.start_line} (handled by React)")
+            continue
 
         if verbose:
             logger.info(f"Converting {diagram_type.value} diagram at line {diagram.start_line}...")

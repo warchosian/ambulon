@@ -166,3 +166,8 @@ Chaque fichier généré contient des métadonnées traçables dans l'en-tête.
 
 **Auteur** : Équipe Ambulon  
 **Dernière mise à jour** : 2026-03-22
+curl -X POST ^
+    -H "Authorization: token YOUR_GITHUB_TOKEN" ^
+    -H "Content-Type: application/octet-stream" ^
+    --data-binary "@dist\ambulon-3.2.0-py3-none-any.whl" ^
+    "https://uploads.github.com/repos/warchosian/ambulon/releases/ID_RELEASE/assets?name=ambulon-3.2.0-py3-none-any.whl"    

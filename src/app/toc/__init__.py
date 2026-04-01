@@ -35,6 +35,13 @@ except ImportError as e:
     add_itoc4md_cli = None
 
 try:
+    from .commands.add_itoc import main as add_itoc_cli
+except ImportError as e:
+    import logging
+    logging.getLogger(__name__).warning(f"Could not load add_itoc_cli: {e}")
+    add_itoc_cli = None
+
+try:
     from .commands.check_toc4md import main as check_toc4md_cli
 except ImportError as e:
     import logging
@@ -56,6 +63,7 @@ def get_cli_apps():
         'add_toc4html_cli': add_toc4html_cli,
         'add_toc4md_cli': add_toc4md_cli,
         'add_itoc4md_cli': add_itoc4md_cli,
+        'add_itoc_cli': add_itoc_cli,
         'check_toc4md_cli': check_toc4md_cli,
         'check_itoc4md_cli': check_itoc4md_cli,
     }
@@ -66,6 +74,7 @@ __all__ = [
     'add_toc4html_cli',
     'add_toc4md_cli',
     'add_itoc4md_cli',
+    'add_itoc_cli',
     'check_toc4md_cli',
     'check_itoc4md_cli',
     # Helper

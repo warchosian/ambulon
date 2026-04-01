@@ -59,6 +59,7 @@ def find_config_file(config_name: str) -> Optional[Path]:
     1. If AMBULON_HOME is set: $AMBULON_HOME/config/<config_name>.yaml
        Otherwise: ./config/<config_name>.yaml (current working directory)
     2. Environment variable override: $AMBULON_CONFIG_DIR/<config_name>.yaml
+    3. Fallback to .example files if the main config is not found
 
     Args:
         config_name: Name of the config file (without .yaml extension)
@@ -78,9 +79,28 @@ def find_config_file(config_name: str) -> Optional[Path]:
     if env_config_dir:
         search_paths.append(Path(env_config_dir) / f"{config_name}.yaml")
 
+    # First pass: look for the exact config file
     for path in search_paths:
         if path.exists():
+            env_home = os.getenv("AMBULON_HOME")
+            source_info = f"AMBULON_HOME={env_home}" if env_home else "cwd"
+            print(f"[CONFIG] Found: {path} (source: {source_info})", file=sys.stderr)
             logger.info(f"Config resolved: {path}")
+            return path
+
+    # Second pass: fallback to .example files
+    example_search_paths = [
+        base_dir / "config" / f"{config_name}.yaml.example",
+    ]
+    if env_config_dir:
+        example_search_paths.append(Path(env_config_dir) / f"{config_name}.yaml.example")
+
+    for path in example_search_paths:
+        if path.exists():
+            env_home = os.getenv("AMBULON_HOME")
+            source_info = f"AMBULON_HOME={env_home}" if env_home else "cwd"
+            print(f"[CONFIG] Found (using .example): {path} (source: {source_info})", file=sys.stderr)
+            logger.info(f"Config resolved (using example): {path}")
             return path
 
     return None
@@ -110,7 +130,8 @@ def load_config(
     config = default_config or {}
 
     if config_path:
-        # Expand ~ and environment variables in the path
+        # Normalize path separators for cross-platform compatibility
+        # Path() handles both / and \ separators on all platforms
         expanded_path = Path(config_path).expanduser()
         env_home = os.getenv("AMBULON_HOME")
         base_dir = Path(env_home).expanduser() if env_home else Path.cwd()
@@ -119,11 +140,13 @@ def load_config(
         if not expanded_path.is_absolute():
             expanded_path = base_dir / expanded_path
 
-        # If path doesn't exist and looks like just a name (no path separators),
-        # try to find it in standard locations
-        if not expanded_path.exists() and "/" not in config_path and "\\" not in config_path:
-            # Remove .yaml extension if present
-            config_name = config_path.replace(".yaml", "")
+        # If path doesn't exist, try to find it in standard locations
+        # Extract the config name from the path (e.g., "config/piag.yaml" or "config\piag.yaml" -> "piag")
+        # Path.stem handles both Unix (/) and Windows (\) separators correctly
+        if not expanded_path.exists():
+            # Extract filename without extension as config name
+            # Works with: "config/piag.yaml", "config\piag.yaml", "piag.yaml", "piag"
+            config_name = Path(config_path).stem
             found_path = find_config_file(config_name)
             if found_path:
                 expanded_path = found_path
@@ -136,11 +159,17 @@ def load_config(
                     app_version = "unknown"
                 env_home = os.getenv("AMBULON_HOME")
                 base_dir = Path(env_home).expanduser() if env_home else Path.cwd()
+
+                # Message visible même sans logging activé pour aider au débogage
+                source_info = f"AMBULON_HOME={env_home}" if env_home else "cwd (current working directory)"
+                print(f"[CONFIG] Loading: {expanded_path} (source: {source_info})", file=sys.stderr)
+
                 logger.info(
                     f"[CONFIG] v{app_version} resolved: {expanded_path} "
                     f"(base={base_dir}, source={'AMBULON_HOME' if env_home else 'cwd'})"
                 )
             except Exception:
+                print(f"[CONFIG] Loading: {expanded_path}", file=sys.stderr)
                 logger.info(f"[CONFIG] resolved: {expanded_path}")
             try:
                 with open(expanded_path, 'r', encoding='utf-8') as f:

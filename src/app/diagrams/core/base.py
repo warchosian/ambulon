@@ -17,6 +17,7 @@ class DiagramType(Enum):
     MERMAID = "mermaid"
     GRAPHVIZ = "graphviz"
     DOT = "dot"
+    EXCALIDRAW = "excalidraw"
     UNKNOWN = "unknown"
 
 
@@ -75,6 +76,9 @@ DIAGRAM_PATTERNS = {
     DiagramType.GRAPHVIZ: [
         re.compile(r'^```(?:graphviz|dot)\s*$', re.IGNORECASE),
     ],
+    DiagramType.EXCALIDRAW: [
+        re.compile(r'^```excalidraw\s*$', re.IGNORECASE),
+    ],
 }
 
 # Mapping des extensions de fichier
@@ -82,6 +86,7 @@ DIAGRAM_EXTENSIONS = {
     DiagramType.PLANTUML: ['puml', 'plantuml'],
     DiagramType.MERMAID: ['mmd', 'mermaid'],
     DiagramType.GRAPHVIZ: ['dot', 'gv'],
+    DiagramType.EXCALIDRAW: ['excalidraw', 'json'],
 }
 
 
@@ -103,6 +108,8 @@ def normalize_diagram_type(type_str: str) -> DiagramType:
         return DiagramType.MERMAID
     elif type_lower in ('graphviz', 'dot'):
         return DiagramType.GRAPHVIZ
+    elif type_lower == 'excalidraw':
+        return DiagramType.EXCALIDRAW
     else:
         return DiagramType.UNKNOWN
 

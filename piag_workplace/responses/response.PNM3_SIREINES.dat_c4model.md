@@ -2,7 +2,7 @@ Voici une réponse structurée selon le **modèle C4** (Simon Brown), basée **u
 
 ---
 
-```markdown
+
 # **Dossier d'Architecture Technique (DAT) – SIREINES**
 *Modèle C4 – Version alignée sur les extraits fournis*
 

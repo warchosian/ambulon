@@ -138,6 +138,7 @@ def get_diagram_stats(diagrams: List[DiagramBlock]) -> Dict[str, Any]:
         'plantuml': 0,
         'mermaid': 0,
         'graphviz': 0,
+        'excalidraw': 0,
         'other': 0,
         'with_caption': 0,
         'without_caption': 0,
@@ -150,6 +151,8 @@ def get_diagram_stats(diagrams: List[DiagramBlock]) -> Dict[str, Any]:
             stats['mermaid'] += 1
         elif diagram.diagram_type == DiagramType.GRAPHVIZ:
             stats['graphviz'] += 1
+        elif diagram.diagram_type == DiagramType.EXCALIDRAW:
+            stats['excalidraw'] += 1
         else:
             stats['other'] += 1
         
