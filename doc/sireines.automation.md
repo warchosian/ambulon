@@ -8,7 +8,7 @@ Ce document décrit le pipeline complet d'automatisation pour la génération de
 
 ```mermaid
 graph TB
-    subgraph "Phase 1: Collecte de Données"
+    subgraph "Phase 1: Collecte de Données 🔒 VPN REQUIS"
         A[API WikiSI] -->|wikisi-sync-api| B[JSON Applications]
         C[Repositories GitLab] -->|gitlab-clone| D[Projets Clonés]
     end
@@ -16,23 +16,22 @@ graph TB
     subgraph "Phase 2: Préparation Documents"
         B -->|wikisi-md| E[Markdown WikiSI Complet]
         B -->|wikisi-md --name sireines| F[Markdown WikiSI SIREINES]
-        D -->|Copie manuelle| G[Dossier sireines.rag]
+        D -->|Extraction/Organisation| G[Dossier sireines.rag]
     end
 
-    subgraph "Phase 3: Création Collection RAG"
+    subgraph "Phase 3: Création Collection RAG 🔒 VPN REQUIS"
         F --> H[Collection RAG]
         G --> H
         I[Règles PlantUML] -->|piag-rag-doc-upload| H
     end
 
-    subgraph "Phase 4: Recherche & Génération"
+    subgraph "Phase 4: Recherche & Génération 🔒 VPN REQUIS"
         H -->|piag-rag-search| J[Chunks Pertinents]
         J -->|piag-chat-query| K[Document DAT/C4 Généré]
     end
 
     subgraph "Phase 5: Publication"
-        K -->|md2html-diagrams| L[HTML avec SVG]
-        K -->|md2interactive| M[HTML Interactif]
+        K -->|md2interactive| M[HTML Interactif + itoced]
         M -->|html2pdf| N[PDF Final]
     end
 
@@ -48,21 +47,28 @@ graph TB
 
 ### Phase 1 : Collecte de Données
 
-#### 1.1 Synchronisation WikiSI
+#### 1.1 Synchronisation WikiSI 🔒 VPN REQUIS
 
 Récupère les données du parc applicatif depuis l'API WikiSI.
 
 ```mermaid
 sequenceDiagram
+    participant User as Utilisateur
+    participant VPN as VPN
     participant CLI as ambulon CLI
-    participant API as API WikiSI
+    participant API as API WikiSI (e2.rie.gouv.fr)
     participant FS as Système Fichiers
+
+    User->>VPN: Connexion VPN
+    Note over VPN: Accès réseau e2.rie.gouv.fr
 
     CLI->>API: GET /applications
     API-->>CLI: JSON Applications IA
     CLI->>FS: Écriture applicationsIA_mini.json
     Note over FS: workplace-ambulon/wikisi/download/
 ```
+
+**⚠️ Prérequis : Connexion VPN active**
 
 **Commande :**
 ```bash
@@ -74,16 +80,19 @@ ambulon wikisi-sync-api --output workplace-ambulon\wikisi\download
 
 ---
 
-#### 1.2 Clone des Repositories GitLab
+#### 1.2 Clone des Repositories GitLab 🔒 VPN REQUIS
 
 Clone les projets GitLab configurés (SIREINES DAT, composants, etc.).
+
+**⚠️ Prérequis : Connexion VPN active**
 
 ```bash
 ambulon gitlab-clone
 ```
 
 **Sortie :**
-- Repositories clonés dans le workspace configuré
+- Repositories clonés dans `workplace-ambulon/gitlab/`
+- Organisation automatique des projets SIREINES
 
 ---
 
@@ -120,11 +129,30 @@ ambulon wikisi-md ^
 
 ---
 
-### Phase 3 : Création Collection RAG
+#### 2.3 Organisation Dossier RAG
+
+Les fichiers clonés depuis GitLab et les fichiers WikiSI sont organisés dans un dossier unique pour l'indexation RAG.
+
+**Structure finale :**
+```
+workplace-ambulon/gitlab/sireines.rag/
+├── sireines_wikisi.md                # Données WikiSI filtrées
+├── sireines.dat.md                   # DAT depuis GitLab (si présent)
+├── composants/                       # Documentation composants
+└── ...                               # Autres docs techniques
+```
+
+Cette organisation permet à `piag-rag-create` de scanner tous les documents pertinents en une seule commande.
+
+---
+
+### Phase 3 : Création Collection RAG 🔒 VPN REQUIS
 
 #### 3.1 Initialisation de la Collection
 
 Crée une collection RAG vectorielle avec l'ensemble des documents SIREINES.
+
+**⚠️ Prérequis : Connexion VPN active (accès API PIAG)**
 
 ```mermaid
 flowchart LR
@@ -177,11 +205,13 @@ ambulon piag-rag-doc-list ^
 
 ---
 
-### Phase 4 : Recherche Sémantique & Génération
+### Phase 4 : Recherche Sémantique & Génération 🔒 VPN REQUIS
 
 #### 4.1 Recherche de Chunks Pertinents
 
 Interroge la collection RAG pour extraire les passages pertinents.
+
+**⚠️ Prérequis : Connexion VPN active (accès API PIAG)**
 
 ```mermaid
 graph LR
@@ -253,62 +283,34 @@ ambulon piag-chat-query ^
 
 ### Phase 5 : Publication de Documents Autoporteurs
 
-#### 5.1 Génération HTML avec Diagrammes SVG
+#### 5.1 Génération HTML Interactif (Workflow Complet)
 
-Convertit le Markdown en HTML standalone avec diagrammes vectoriels.
-
-```mermaid
-flowchart LR
-    A[Markdown + PlantUML] -->|Détection| B[Extraction Blocs]
-    B -->|Kroki/JAR| C[Conversion SVG]
-    C -->|markdown-it| D[HTML + CSS]
-    D -->|Wrapping| E[Document Standalone]
-
-    style A fill:#e1f5ff
-    style E fill:#e8f5e9
-```
-
-**Commande :**
-```bash
-ambulon md2html-diagrams "applications/sireines.rag.archive/sireines.dat_c4model.md" ^
-   -o "docs-autoporteurs/sireines.dat_c4model.html" ^
-   --toc-backlinks ^
-   --verbose
-```
-
-**Fonctionnalités :**
-- Conversion PlantUML/Mermaid/Graphviz → SVG
-- Génération table des matières (TOC)
-- Liens retour bidirectionnels (↑)
-- CSS intégré pour styling professionnel
-
----
-
-#### 5.2 Génération HTML Interactif
-
-Produit un document HTML avec navigation avancée (zoom, pan, ancres).
+Produit un document HTML avec navigation avancée (zoom, pan, ancres) et table des matières.
 
 ```mermaid
-graph TB
-    A[Markdown Source] -->|add-toc4md| B[MD + TOC]
-    B -->|add-itoc4md| C[MD + TOC + Backlinks]
-    C -->|md2html-diagrams| D[HTML + SVG]
-    D -->|augment| E[HTML Interactif]
+flowchart TB
+    A[Markdown Généré] -->|md2interactive| B[Ajout TOC]
+    B --> C[Ajout Backlinks iTOC]
+    C --> D[Conversion HTML + SVG]
+    D --> E[Augmentation JavaScript]
 
-    subgraph "Fonctionnalités Interactives"
-        E --> F[Zoom/Pan SVG]
-        E --> G[Navigation Ancres]
-        E --> H[Highlighting]
-        E --> I[Responsive]
+    E --> F[HTML Interactif]
+    E --> G[HTML itoced]
+
+    subgraph "Sorties"
+        F[response.sireines.dat_c4model-interactive.html]
+        G[response.sireines.dat_c4model-itoced.html]
     end
 
-    style E fill:#f3e5f5
+    style A fill:#e1f5ff
+    style F fill:#f3e5f5
+    style G fill:#e8f5e9
 ```
 
 **Commande :**
 ```bash
-ambulon md2interactive "applications/sireines.rag.archive/sireines.dat_c4model.md" ^
-    -o "docs-autoporteurs" ^
+ambulon md2interactive "workplace-ambulon/piag-chat/responses/response.sireines.dat_c4model.md" ^
+    -o "workplace-ambulon/doc-kit" ^
     --verbose
 ```
 
@@ -318,12 +320,25 @@ ambulon md2interactive "applications/sireines.rag.archive/sireines.dat_c4model.m
 3. **Conversion HTML** : Markdown → HTML + SVG diagrammes
 4. **Augmentation** : JavaScript pour interactivité (zoom, pan, navigation)
 
-**Sortie :**
+**Fonctionnalités :**
+- Conversion PlantUML/Mermaid/Graphviz → SVG
+- Table des matières cliquable
+- Liens retour bidirectionnels (↑)
+- Zoom/Pan sur les diagrammes SVG
+- Navigation par ancres
+- CSS intégré pour styling professionnel
+
+**Sorties (dans `workplace-ambulon/doc-kit/`) :**
 - `sireines.dat_c4model-interactive.html` : Document HTML autoporteur interactif
+- `sireines.dat_c4model-itoced.html` : Document HTML avec TOC et backlinks (pour PDF)
+
+**Fichiers intermédiaires (dans `workplace-ambulon/piag-chat/responses/`) :**
+- `response.sireines.dat_c4model-toced.md` : Markdown avec TOC
+- `response.sireines.dat_c4model-itoced.md` : Markdown avec TOC + backlinks
 
 ---
 
-#### 5.3 Génération PDF à partir du HTML itoced
+#### 5.2 Génération PDF à partir du HTML itoced
 
 Convertit le HTML avec table des matières et backlinks en document PDF imprimable.
 
@@ -342,8 +357,8 @@ flowchart LR
 
 **Commande avec Chromium (recommandé) :**
 ```bash
-ambulon html2pdf "docs-autoporteurs/sireines.dat_c4model-itoced.html" ^
-   -o "docs-autoporteurs/sireines.dat_c4model.pdf" ^
+ambulon html2pdf "workplace-ambulon/doc-kit/sireines.dat_c4model-itoced.html" ^
+   -o "workplace-ambulon/doc-kit/sireines.dat_c4model.pdf" ^
    -p portrait ^
    -m chromium ^
    --verbose
@@ -351,28 +366,26 @@ ambulon html2pdf "docs-autoporteurs/sireines.dat_c4model-itoced.html" ^
 
 **Commande avec wkhtmltopdf (sans installation) :**
 ```bash
-ambulon html2pdf "docs-autoporteurs/sireines.dat_c4model-itoced.html" ^
-   -o "docs-autoporteurs/sireines.dat_c4model.pdf" ^
+ambulon html2pdf "workplace-ambulon/doc-kit/sireines.dat_c4model-itoced.html" ^
+   -o "workplace-ambulon/doc-kit/sireines.dat_c4model.pdf" ^
    -p portrait ^
    -m wkhtmltopdf ^
    --verbose
 ```
 
-**Workflow Recommandé pour PDF Optimal :**
+**Workflow Complet (HTML Interactif + PDF) :**
 
-Pour obtenir un PDF de qualité optimale, générez d'abord le HTML avec l'orientation souhaitée, puis convertissez en PDF :
+Pour obtenir à la fois le HTML interactif et le PDF de qualité optimale :
 
 ```bash
-# 1. Générer HTML avec orientation portrait
-ambulon md2html-diagrams "doc/sireines.automation.md" ^
-   -o "docs-autoporteurs/sireines.automation.html" ^
-   -p portrait ^
-   --toc-backlinks ^
+# 1. Générer HTML interactif avec TOC et backlinks dans doc-kit
+ambulon md2interactive "workplace-ambulon/piag-chat/responses/response.sireines.dat_c4model.md" ^
+   -o "workplace-ambulon/doc-kit" ^
    --verbose
 
-# 2. Convertir en PDF avec même orientation
-ambulon html2pdf "docs-autoporteurs/sireines.automation.html" ^
-   -o "docs-autoporteurs/sireines.automation.pdf" ^
+# 2. Convertir le HTML itoced en PDF (déjà dans doc-kit)
+ambulon html2pdf "workplace-ambulon/doc-kit/sireines.dat_c4model-itoced.html" ^
+   -o "workplace-ambulon/doc-kit/sireines.dat_c4model.pdf" ^
    -p portrait ^
    -m chromium ^
    --verbose
@@ -389,7 +402,7 @@ poetry run playwright install chromium
 ambulon html2pdf --install-chromium
 ```
 
-**Sortie :**
+**Sortie (dans `workplace-ambulon/doc-kit/`) :**
 - `sireines.dat_c4model.pdf` : Document PDF avec TOC, backlinks et diagrammes SVG haute qualité
 
 ---
@@ -467,20 +480,14 @@ ambulon piag-chat-query ^
 # PHASE 5 : PUBLICATION
 # ========================================
 
-# HTML avec diagrammes SVG
-ambulon md2html-diagrams "applications/sireines.rag.archive/sireines.dat_c4model.md" ^
-   -o "docs-autoporteurs/sireines.dat_c4model.html" ^
-   --toc-backlinks ^
+# HTML interactif avec TOC et backlinks (sortie dans doc-kit)
+ambulon md2interactive "workplace-ambulon/piag-chat/responses/response.sireines.dat_c4model.md" ^
+   -o "workplace-ambulon/doc-kit" ^
    --verbose
 
-# HTML interactif (zoom/pan)
-ambulon md2interactive "applications/sireines.rag.archive/sireines.dat_c4model.md" ^
-    -o "docs-autoporteurs" ^
-    --verbose
-
-# PDF à partir du HTML itoced (meilleure qualité)
-ambulon html2pdf "docs-autoporteurs/sireines.dat_c4model-itoced.html" ^
-   -o "docs-autoporteurs/sireines.dat_c4model.pdf" ^
+# PDF à partir du HTML itoced (déjà dans doc-kit)
+ambulon html2pdf "workplace-ambulon/doc-kit/sireines.dat_c4model-itoced.html" ^
+   -o "workplace-ambulon/doc-kit/sireines.dat_c4model.pdf" ^
    -p portrait ^
    -m chromium ^
    --verbose
@@ -508,19 +515,18 @@ workplace-ambulon/
 │   │   └── chunk.sireines.dat.json           # Chunks pertinents (Top-10)
 │   └── REGLES_PLANTUML.md                    # Règles métier
 │
-└── piag-chat/
-    ├── prompts/
-    │   └── prompt.dat_c4model.md             # Template de génération
-    └── responses/
-        └── response.sireines.dat_c4model.md  # Document généré
-
-docs-autoporteurs/
-├── sireines.dat_c4model.html                 # HTML standard + SVG
-├── sireines.dat_c4model-toced.md             # MD avec TOC
-├── sireines.dat_c4model-itoced.md            # MD avec TOC + backlinks
-├── sireines.dat_c4model-itoced.html          # HTML avec TOC + backlinks
-├── sireines.dat_c4model-interactive.html     # HTML interactif
-└── sireines.dat_c4model.pdf                  # PDF final (depuis itoced.html)
+├── piag-chat/
+│   ├── prompts/
+│   │   └── prompt.dat_c4model.md                           # Template de génération
+│   └── responses/
+│       ├── response.sireines.dat_c4model.md                # Document généré par IA
+│       ├── response.sireines.dat_c4model-toced.md          # MD intermédiaire avec TOC
+│       └── response.sireines.dat_c4model-itoced.md         # MD intermédiaire avec TOC + backlinks
+│
+└── doc-kit/                                                # Documents finaux prêts à publier
+    ├── sireines.dat_c4model-interactive.html               # HTML interactif (zoom/pan)
+    ├── sireines.dat_c4model-itoced.html                    # HTML avec TOC et backlinks
+    └── sireines.dat_c4model.pdf                            # PDF final
 ```
 
 ## Métriques & Performance
@@ -549,12 +555,11 @@ gantt
     Chat Query         :00:00, 20:00
 
     section Phase 5
-    MD2HTML Diagrams   :00:00, 01:00
     MD2Interactive     :00:00, 01:30
     HTML2PDF           :00:00, 00:30
 ```
 
-**Total estimé** : ~30-36 minutes (dépend de la taille des docs et latence API PIAG)
+**Total estimé** : ~29-35 minutes (dépend de la taille des docs et latence API PIAG)
 
 ---
 
@@ -648,12 +653,12 @@ ambulon piag-chat-query \
   -o workplace-ambulon/piag-chat/responses/response.sireines.dat_c4model.md
 
 echo "=== Phase 5: Publication ==="
-ambulon md2interactive applications/sireines.rag.archive/sireines.dat_c4model.md \
-  -o docs-autoporteurs \
+ambulon md2interactive workplace-ambulon/piag-chat/responses/response.sireines.dat_c4model.md \
+  -o workplace-ambulon/doc-kit \
   --verbose
 
-ambulon html2pdf docs-autoporteurs/sireines.dat_c4model-itoced.html \
-  -o docs-autoporteurs/sireines.dat_c4model.pdf \
+ambulon html2pdf workplace-ambulon/doc-kit/sireines.dat_c4model-itoced.html \
+  -o workplace-ambulon/doc-kit/sireines.dat_c4model.pdf \
   -p portrait \
   -m chromium \
   --verbose
@@ -692,11 +697,11 @@ generate_docs:
 publish_html:
   stage: publish
   script:
-    - ambulon md2interactive applications/sireines.rag.archive/sireines.dat_c4model.md -o docs-autoporteurs --verbose
-    - ambulon html2pdf docs-autoporteurs/sireines.dat_c4model-itoced.html -o docs-autoporteurs/sireines.dat_c4model.pdf -p portrait -m chromium --verbose
+    - ambulon md2interactive workplace-ambulon/piag-chat/responses/response.sireines.dat_c4model.md -o workplace-ambulon/doc-kit --verbose
+    - ambulon html2pdf workplace-ambulon/doc-kit/sireines.dat_c4model-itoced.html -o workplace-ambulon/doc-kit/sireines.dat_c4model.pdf -p portrait -m chromium --verbose
   artifacts:
     paths:
-      - docs-autoporteurs/
+      - workplace-ambulon/doc-kit/
 ```
 
 ---
