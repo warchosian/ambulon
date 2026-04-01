@@ -14,12 +14,115 @@ Ce fichier contient les **directives générales applicables à tous les projets
 
 **Typer a été complètement banni** suite à des problèmes récurrents et graves :
 
+#### Problèmes Techniques Critiques
+
 - ❌ **RuntimeWarning** avec `runpy.run_module`
 - ❌ **Conflits** avec manipulation de `sys.argv`
 - ❌ **"Got unexpected extra arguments"** errors imprévisibles
 - ❌ **Complexité inutile** pour des cas d'usage CLI standards
 - ❌ **Dépendances externes** non nécessaires
 - ❌ **Debugging difficile** et comportements imprévisibles
+
+#### Approche Déclarative vs Impérative : Le Problème Fondamental
+
+**Typer utilise une approche déclarative basée sur les annotations Python**, ce qui a causé des problèmes majeurs d'interprétation et de fiabilité :
+
+**❌ Approche Déclarative (Typer) - INTERDITE**
+
+```python
+# Typer : Déclaratif via annotations et décorateurs
+import typer
+
+app = typer.Typer()
+
+@app.command()
+def my_command(
+    input_file: str = typer.Argument(..., help="Fichier d'entrée"),
+    output: str = typer.Option(None, "--output", "-o", help="Fichier de sortie"),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Mode verbeux")
+):
+    """Ma commande."""
+    pass
+
+# Problèmes constatés :
+# - Interprétation des annotations non fiable (typer.Argument vs typer.Option)
+# - Conflits lors de l'exécution via runpy.run_module
+# - Magie implicite difficile à debugger
+# - Comportement imprévisible avec sys.argv
+# - Pas de contrôle sur le parsing des arguments
+```
+
+**Problèmes d'interprétation des annotations rencontrés :**
+- Confusion entre `typer.Argument()` et `typer.Option()` selon le contexte
+- Ordre des arguments mal interprété lors de l'appel
+- Type hints Python natifs mal gérés par Typer
+- Valeurs par défaut (`None`, `...`) créant des ambiguïtés
+- Résolution dynamique au runtime source d'erreurs silencieuses
+
+**✅ Approche Impérative (argparse) - OBLIGATOIRE**
+
+```python
+# argparse : Impératif, contrôle explicite
+import argparse
+import sys
+
+def main(argv=None):
+    """
+    Point d'entrée avec contrôle total.
+
+    Args:
+        argv: Arguments CLI (list) ou None pour sys.argv
+
+    Returns:
+        Code de sortie (0 = succès, non-zéro = erreur)
+    """
+    parser = argparse.ArgumentParser(description="Ma commande")
+
+    # Contrôle explicite : Argument positionnel
+    parser.add_argument("input_file", help="Fichier d'entrée")
+
+    # Contrôle explicite : Options
+    parser.add_argument("-o", "--output", help="Fichier de sortie")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Mode verbeux")
+
+    args = parser.parse_args(argv)
+
+    # Logique métier
+    return process(args.input_file, args.output, args.verbose)
+
+if __name__ == '__main__':
+    sys.exit(main())
+
+# Avantages :
+# ✅ Parsing explicite et prévisible
+# ✅ Pas d'interprétation magique d'annotations
+# ✅ Contrôle total sur sys.argv
+# ✅ Testable facilement (main(argv=[...]))
+# ✅ Pas de dépendances externes
+# ✅ Debugging simple et direct
+```
+
+**Pourquoi l'approche impérative est supérieure :**
+
+1. **Prévisibilité** : Le code fait exactement ce qui est écrit, pas d'interprétation magique
+2. **Contrôle** : Contrôle total sur le parsing, la validation, les messages d'erreur
+3. **Testabilité** : `main(argv=["test.txt", "-v"])` fonctionne de manière déterministe
+4. **Maintenabilité** : Facile à comprendre et modifier sans surprises
+5. **Standard Python** : Bibliothèque standard, documentée, stable depuis Python 2.x
+6. **Pas de surprises** : Comportement explicite documenté, pas de résolution dynamique
+
+**Comparaison finale :**
+
+| Aspect | Typer (Déclaratif) | argparse (Impératif) |
+|--------|-------------------|----------------------|
+| Interprétation | Annotations → Magie → Erreurs | Code explicite → Prévisible |
+| Contrôle | Limité, implicite | Total, explicite |
+| Debugging | Difficile (callstack complexe) | Simple (code direct) |
+| Testabilité | Problématique (mocks requis) | Native (argv paramétrable) |
+| Dépendances | Typer + Click + autres | stdlib uniquement |
+| Fiabilité | Comportements imprévisibles | 100% stable |
+
+**Verdict :** L'approche déclarative de Typer introduit une couche d'abstraction inutile qui masque la complexité au lieu de la simplifier. L'approche impérative d'argparse est plus verbeuse mais infiniment plus fiable et maintenable.
 
 ### Solution Obligatoire : argparse
 

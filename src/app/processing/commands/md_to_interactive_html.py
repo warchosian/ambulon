@@ -136,35 +136,35 @@ def md_to_interactive_html(
         from .add_augment import augment
         result = augment(
             input_path=str(html_file),
-            output_path=str(augmented_file),
+            output_path=str(interactive_file),
             verbose=verbose
         )
-        
+
         if result != 0:
             print(f"Error making interactive (exit code: {result})", file=sys.stderr)
             return result
-            
+
         if verbose:
-            print(f"      Created: {augmented_file.name}")
-        
+            print(f"      Created: {interactive_file.name}")
+
         # Success summary
         print(f"\n[SUCCESS] Conversion complete!")
         print(f"  TOC Markdown:   {toc_file}")
         print(f"  iTOC Markdown:  {itoc_file}")
         print(f"  HTML:           {html_file}")
-        print(f"  Augmented:      {augmented_file}")
-        
+        print(f"  Interactive:    {interactive_file}")
+
         # File sizes
         toc_size = toc_file.stat().st_size
         itoc_size = itoc_file.stat().st_size
         html_size = html_file.stat().st_size
-        augmented_size = augmented_file.stat().st_size
-        
+        interactive_size = interactive_file.stat().st_size
+
         print(f"\nFile sizes:")
         print(f"  {toc_file.name}: {toc_size:,} bytes")
         print(f"  {itoc_file.name}: {itoc_size:,} bytes")
         print(f"  {html_file.name}: {html_size:,} bytes")
-        print(f"  {augmented_file.name}: {augmented_size:,} bytes")
+        print(f"  {interactive_file.name}: {interactive_size:,} bytes")
         
         return 0
         
