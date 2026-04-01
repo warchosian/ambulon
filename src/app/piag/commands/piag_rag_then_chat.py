@@ -1,10 +1,11 @@
-"""Module CLI pour le pipeline RAG puis CHAT (orchestration des 4 étapes).
+"""Module CLI pour le pipeline RAG puis CHAT (orchestration des 5 étapes).
 
 Ce module fournit une commande unifiée qui enchaîne automatiquement :
 1. Création/suppression de la collection RAG
 2. Upload et indexation des documents
 3. Recherche sémantique (chunking)
 4. Génération de réponse via chat
+5. Publication des documents finaux (HTML interactif + PDF)
 
 Usage:
     ambulon piag-rag-then-chat run --source <dir> --prompt <prompt_file> [options]
@@ -12,6 +13,7 @@ Usage:
     ambulon piag-rag-then-chat ingest --source <dir> [--wait-index]
     ambulon piag-rag-then-chat chunk --source <dir> --prompt <prompt_file> --query <query>
     ambulon piag-rag-then-chat generate --source <dir> --prompt <prompt_file>
+    ambulon piag-rag-then-chat publish --source <dir> --prompt <prompt_file>
 """
 
 import os
@@ -158,30 +160,49 @@ def derive_chunk_file(source_dir: str, prompt_file: str) -> str:
 def derive_response_file(source_dir: str, prompt_file: str) -> str:
     """
     Dérive le nom du fichier réponse à partir du répertoire source et du prompt.
-    
+
     Convention: piag_workplace/responses/response.<COLLECTION>.<PROMPT_TYPE>.md
-    
+
     Args:
         source_dir: Chemin du répertoire source
         prompt_file: Chemin du fichier prompt/question
-        
+
     Returns:
         Chemin du fichier réponse (ex: piag_workplace/responses/response.PNM3_SIREINES.dat_c4model.md)
     """
     source_path = Path(source_dir)
     source_name = source_path.name  # "PNM3_SIREINES.rag"
     collection = source_name.replace('.rag', '')  # "PNM3_SIREINES"
-    
+
     # Extraire le type du prompt (ex: "dat_c4model" de "prompt.dat_c4model.md")
     prompt_path = Path(prompt_file)
     prompt_name = prompt_path.stem  # "prompt.dat_c4model"
-    
+
     if prompt_name.startswith('prompt.'):
         prompt_type = prompt_name[7:]  # "dat_c4model"
     else:
         prompt_type = prompt_name
-    
+
     return f"piag_workplace/responses/response.{collection}.{prompt_type}.md"
+
+
+def derive_dockit_dir(source_dir: str) -> str:
+    """
+    Dérive le répertoire doc-kit à partir du répertoire source.
+
+    Convention: workplace-ambulon/doc-kit/<COLLECTION>/
+
+    Args:
+        source_dir: Chemin du répertoire source
+
+    Returns:
+        Chemin du répertoire doc-kit (ex: workplace-ambulon/doc-kit/PNM3_SIREINES/)
+    """
+    source_path = Path(source_dir)
+    source_name = source_path.name  # "PNM3_SIREINES.rag"
+    collection = source_name.replace('.rag', '')  # "PNM3_SIREINES"
+
+    return f"workplace-ambulon/doc-kit/{collection}"
 
 
 def parse_prompt_info(prompt_file: str) -> Dict[str, str]:
@@ -241,7 +262,7 @@ def create_metadata(source_dir: str, prompt_file: str, collection_name: str,
 
 def log_step(step_num: int, step_name: str, message: str = ""):
     """Affiche un message de progression formaté."""
-    print(f"\n[{step_num}/4] {step_name}")
+    print(f"\n[{step_num}/5] {step_name}")
     if message:
         print(f"    {message}")
 
@@ -484,9 +505,117 @@ def step_generate(chunk_file: str, prompt_file: str, response_file: str,
         return False
 
 
+def step_publish(response_file: str, dockit_dir: str, orientation: str = "portrait") -> bool:
+    """
+    Étape 5: Publication - génération des documents finaux (HTML interactif + PDF).
+
+    Args:
+        response_file: Chemin du fichier réponse markdown
+        dockit_dir: Répertoire de sortie doc-kit
+        orientation: Orientation du PDF (portrait ou landscape)
+
+    Returns:
+        True si succès, False sinon
+    """
+    from app.processing.commands.md_to_interactive_html import main as md2interactive_main
+    from app.conversion.commands.html2pdf import main as html2pdf_main
+
+    # Créer le répertoire doc-kit si nécessaire
+    dockit_path = Path(dockit_dir)
+    dockit_path.mkdir(parents=True, exist_ok=True)
+
+    response_path = Path(response_file)
+    if not response_path.exists():
+        print(f"    ✗ Fichier réponse introuvable: {response_file}")
+        return False
+
+    # Dériver le nom de base pour les fichiers de sortie
+    # Ex: response.PNM3_SIREINES.dat_c4model.md → sireines.dat_c4model
+    response_stem = response_path.stem  # "response.PNM3_SIREINES.dat_c4model"
+    if response_stem.startswith('response.'):
+        base_name = response_stem[9:]  # "PNM3_SIREINES.dat_c4model"
+        # Convertir en minuscules pour les fichiers de sortie
+        base_name = base_name.lower()  # "pnm3_sireines.dat_c4model"
+    else:
+        base_name = response_stem.lower()
+
+    print(f"    Fichier source: {response_file}")
+    print(f"    Répertoire cible: {dockit_dir}")
+    print(f"    Base nom: {base_name}")
+
+    # Étape 5a: Générer HTML interactif avec md2interactive
+    print(f"\n    [5a] Génération HTML interactif...")
+    try:
+        argv_interactive = [
+            str(response_path),
+            "-o", str(dockit_path),
+            "--verbose"
+        ]
+
+        result = md2interactive_main(argv_interactive)
+
+        if result != 0:
+            print(f"    ✗ Erreur génération HTML interactif")
+            return False
+
+        # Vérifier les fichiers générés
+        html_interactive = dockit_path / f"{base_name}-interactive.html"
+        html_itoced = dockit_path / f"{base_name}-itoced.html"
+
+        if not html_itoced.exists():
+            print(f"    ✗ Fichier HTML itoced non créé")
+            return False
+
+        print(f"    ✓ HTML interactif généré: {html_interactive.name}")
+        print(f"    ✓ HTML itoced généré: {html_itoced.name}")
+
+    except Exception as e:
+        print(f"    ✗ Erreur md2interactive: {e}")
+        return False
+
+    # Étape 5b: Générer PDF avec html2pdf
+    print(f"\n    [5b] Génération PDF...")
+    try:
+        pdf_output = dockit_path / f"{base_name}.pdf"
+
+        argv_pdf = [
+            str(html_itoced),
+            "-o", str(pdf_output),
+            "-p", orientation,
+            "-m", "chromium",
+            "--verbose"
+        ]
+
+        result = html2pdf_main(argv_pdf)
+
+        if result != 0:
+            print(f"    ⚠ Erreur génération PDF (chromium non installé ?)")
+            print(f"    → Essayez: ambulon html2pdf --install-chromium")
+            return False
+
+        if not pdf_output.exists():
+            print(f"    ✗ Fichier PDF non créé")
+            return False
+
+        print(f"    ✓ PDF généré: {pdf_output.name}")
+
+    except Exception as e:
+        print(f"    ✗ Erreur html2pdf: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+    print(f"\n    ✅ Publication terminée:")
+    print(f"       • {html_interactive.name if html_interactive.exists() else '(non créé)'}")
+    print(f"       • {html_itoced.name}")
+    print(f"       • {pdf_output.name}")
+
+    return True
+
+
 def run_full_pipeline(args) -> int:
     """
-    Exécute le pipeline complet (4 étapes) avec gestion des contraintes réseau VPN.
+    Exécute le pipeline complet (5 étapes) avec gestion des contraintes réseau VPN.
 
     Args:
         args: Arguments parsés
@@ -498,6 +627,7 @@ def run_full_pipeline(args) -> int:
     collection_name = derive_collection_name(args.source)
     chunk_file = derive_chunk_file(args.source, args.prompt)
     response_file = derive_response_file(args.source, args.prompt)
+    dockit_dir = derive_dockit_dir(args.source)
 
     # Générer ID de session
     session_id = generate_session_id()
@@ -512,6 +642,7 @@ def run_full_pipeline(args) -> int:
     print(f"Collection: {collection_name}")
     print(f"Chunk:      {chunk_file}")
     print(f"Response:   {response_file}")
+    print(f"Doc-Kit:    {dockit_dir}")
     print("=" * 60)
 
     # Demander la localisation réseau (intranet ou externe)
@@ -572,15 +703,25 @@ def run_full_pipeline(args) -> int:
         print("\n✗ Étape 4 échouée - Arrêt")
         return 1
 
+    # Étape 5: PUBLISH (ne nécessite PAS de VPN - traitement local)
+    log_step(5, "PUBLISH", f"Documents finaux → {dockit_dir}")
+    if not check_network_ready("PUBLISH - Génération HTML/PDF (traitement local)", requires_vpn=False, is_intranet=is_intranet):
+        return 1
+    if not step_publish(response_file, dockit_dir, args.pdf_orientation):
+        print("\n✗ Étape 5 échouée - Arrêt")
+        return 1
+
     # Résumé final
     print("\n" + "=" * 60)
     print("✅ PIPELINE TERMINÉ")
     print("=" * 60)
     print(f"\n📁 Fichiers générés:")
-    print(f"   • {chunk_file}")
-    print(f"   • {response_file}")
-    print(f"\n📖 Lire la réponse:")
-    print(f"   type {response_file}")
+    print(f"   • Chunks:    {chunk_file}")
+    print(f"   • Markdown:  {response_file}")
+    print(f"   • Doc-Kit:   {dockit_dir}/")
+    print(f"\n📖 Consulter les documents:")
+    print(f"   • HTML interactif: {dockit_dir}/*.interactive.html")
+    print(f"   • PDF:             {dockit_dir}/*.pdf")
     print("=" * 60)
 
     return 0
@@ -589,25 +730,27 @@ def run_full_pipeline(args) -> int:
 def main(argv=None):
     """
     Point d'entrée principal pour la commande piag-rag-then-chat.
-    
+
     Usage:
         ambulon piag-rag-then-chat run --source <dir> --prompt <file>
         ambulon piag-rag-then-chat init --source <dir>
         ambulon piag-rag-then-chat ingest --source <dir>
         ambulon piag-rag-then-chat chunk --source <dir> --prompt <file>
         ambulon piag-rag-then-chat generate --source <dir> --prompt <file>
+        ambulon piag-rag-then-chat publish --source <dir> --prompt <file>
     """
     parser = argparse.ArgumentParser(
         prog='ambulon piag-rag-then-chat',
-        description='Pipeline RAG puis CHAT - Orchestration des 4 étapes',
+        description='Pipeline RAG puis CHAT - Orchestration des 5 étapes',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Commandes disponibles:
-  run       Exécuter le pipeline complet (4 étapes) avec gestion VPN
+  run       Exécuter le pipeline complet (5 étapes) avec gestion VPN
   init      Étape 1: Initialiser la collection (créer/supprimer)
   ingest    Étape 2: Ingestion des documents
   chunk     Étape 3: Création des chunks (recherche RAG avec --query)
   generate  Étape 4: Génération de la réponse
+  publish   Étape 5: Publication documents finaux (HTML + PDF)
 
 Gestion du VPN:
   Le pipeline demande automatiquement si vous êtes dans l'intranet :
@@ -677,6 +820,9 @@ Convention de nommage:
                           help='Forcer la suppression de la collection existante')
     run_parser.add_argument('--skip-network-check', action='store_true',
                           help='Sauter les vérifications réseau VPN (mode automatique)')
+    run_parser.add_argument('--pdf-orientation', type=str, default='portrait',
+                          choices=['portrait', 'landscape'],
+                          help='Orientation du PDF (défaut: portrait)')
     
     # Commande INIT
     init_parser = subparsers.add_parser('init', help='Étape 1: Initialiser la collection')
@@ -723,7 +869,21 @@ Convention de nommage:
                                help='Délai entre retries (défaut: 1m)')
     generate_parser.add_argument('-o', '--output',
                                help='Fichier de sortie (défaut: auto-dérivé)')
-    
+
+    # Commande PUBLISH
+    publish_parser = subparsers.add_parser('publish', help='Étape 5: Publication HTML + PDF')
+    publish_parser.add_argument('--source', '-s', required=True,
+                              help='Répertoire source')
+    publish_parser.add_argument('--prompt', '-p', required=True,
+                              help='Fichier prompt')
+    publish_parser.add_argument('--response', '-r',
+                              help='Fichier réponse markdown (défaut: auto-dérivé)')
+    publish_parser.add_argument('--pdf-orientation', type=str, default='portrait',
+                              choices=['portrait', 'landscape'],
+                              help='Orientation du PDF (défaut: portrait)')
+    publish_parser.add_argument('-o', '--output-dir',
+                              help='Répertoire de sortie doc-kit (défaut: auto-dérivé)')
+
     # Parser les arguments
     args = parser.parse_args(argv)
     
@@ -765,17 +925,27 @@ Convention de nommage:
     elif args.command == 'generate':
         chunk_file = args.chunks or derive_chunk_file(args.source, args.prompt)
         output_file = args.output or derive_response_file(args.source, args.prompt)
-        
-        metadata = create_metadata(args.source, args.prompt, 
+
+        metadata = create_metadata(args.source, args.prompt,
                                    derive_collection_name(args.source))
-        
+
         log_step(4, "GENERATE", f"Prompt: {Path(args.prompt).name}")
-        if step_generate(chunk_file, args.prompt, output_file, 
+        if step_generate(chunk_file, args.prompt, output_file,
                         args.timeout, args.max_retries, args.retry_delay, metadata):
             print(f"    ✓ Réponse générée: {output_file}")
             return 0
         return 1
-    
+
+    elif args.command == 'publish':
+        response_file = args.response or derive_response_file(args.source, args.prompt)
+        dockit_dir = args.output_dir or derive_dockit_dir(args.source)
+
+        log_step(5, "PUBLISH", f"Documents finaux → {dockit_dir}")
+        if step_publish(response_file, dockit_dir, args.pdf_orientation):
+            print(f"    ✓ Documents publiés dans: {dockit_dir}")
+            return 0
+        return 1
+
     return 1
 
 
