@@ -53,6 +53,9 @@ specs/
 scripts/*
 !scripts/build_offline_package.py
 
+# Scripts GitHub (contient potentiellement des tokens)
+scripts-github/
+
 # Scans
 scans/
 
