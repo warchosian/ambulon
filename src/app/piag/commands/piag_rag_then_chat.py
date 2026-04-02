@@ -190,19 +190,15 @@ def derive_dockit_dir(source_dir: str) -> str:
     """
     Dérive le répertoire doc-kit à partir du répertoire source.
 
-    Convention: workplace-ambulon/doc-kit/<COLLECTION>/
+    Convention: workplace-ambulon/doc-kit/
 
     Args:
         source_dir: Chemin du répertoire source
 
     Returns:
-        Chemin du répertoire doc-kit (ex: workplace-ambulon/doc-kit/PNM3_SIREINES/)
+        Chemin du répertoire doc-kit (ex: workplace-ambulon/doc-kit/)
     """
-    source_path = Path(source_dir)
-    source_name = source_path.name  # "PNM3_SIREINES.rag"
-    collection = source_name.replace('.rag', '')  # "PNM3_SIREINES"
-
-    return f"workplace-ambulon/doc-kit/{collection}"
+    return "workplace-ambulon/doc-kit"
 
 
 def parse_prompt_info(prompt_file: str) -> Dict[str, str]:
