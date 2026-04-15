@@ -1,0 +1,82 @@
+# Configuration des extensions VS Code / VSCodium pour la visualisation de diagrammes
+
+recommended_extensions:
+  # ========================================
+  # PlantUML - ESSENTIEL
+  # ========================================
+  jebbs.plantuml:
+    description: "PlantUML - Le meilleur plugin pour diagrammes PlantUML"
+    category: "🌿 PlantUML"
+    priority: "ESSENTIEL"
+
+  # ========================================
+  # Mermaid - ESSENTIEL
+  # ========================================
+  bierner.markdown-mermaid:
+    description: "Markdown Preview Mermaid Support - Officiel Microsoft"
+    category: "🌊 Mermaid"
+    priority: "ESSENTIEL"
+
+  # ========================================
+  # Graphviz/DOT - ESSENTIEL
+  # ========================================
+  tintinweb.graphviz-interactive-preview:
+    description: "Graphviz Interactive Preview - Preview interactif pour DOT"
+    category: "🔗 Graphviz"
+    priority: "ESSENTIEL"
+
+  geeklearningio.graphviz-markdown-preview:
+    description: "Graphviz Markdown Preview - Support Graphviz dans Markdown"
+    category: "🔗 Graphviz"
+    priority: "ESSENTIEL"
+
+  # ========================================
+  # Markdown tout-en-un - FORTEMENT RECOMMANDÉ
+  # ========================================
+  shd101wyy.markdown-preview-enhanced:
+    description: "Markdown Preview Enhanced - Supporte PlantUML, Mermaid, Graphviz et +"
+    category: "📝 Markdown (tout-en-un)"
+    priority: "FORTEMENT RECOMMANDÉ"
+
+  # ========================================
+  # Compléments utiles - OPTIONNEL
+  # ========================================
+  vstirbu.vscode-mermaid-preview:
+    description: "Mermaid Preview - Preview dédié Mermaid"
+    category: "🌊 Mermaid"
+    priority: "OPTIONNEL"
+
+  gruntfuggly.mermaid-export:
+    description: "Mermaid Export - Export diagrammes Mermaid"
+    category: "🌊 Mermaid"
+    priority: "OPTIONNEL"
+
+  hediet.vscode-drawio:
+    description: "Draw.io Integration - Éditeur de diagrammes visuel"
+    category: "🎨 Éditeur visuel"
+    priority: "OPTIONNEL"
+
+  gera2ld.markmap-vscode:
+    description: "Markmap - Mind maps depuis Markdown"
+    category: "🧠 Mind Map"
+    priority: "OPTIONNEL"
+
+
+# ========================================
+# Extensions redondantes à supprimer
+# ========================================
+extensions_to_remove:
+  # PlantUML duplicates (keep only jebbs.plantuml)
+  clysto.plantuml: "Doublon PlantUML - jebbs.plantuml est meilleur"
+  mebrahtom.plantumlpreviewer: "Doublon PlantUML - jebbs.plantuml est meilleur"
+  well-ar.plantuml: "Doublon PlantUML - version ancienne"
+
+  # Redundant Graphviz
+  prinorange.markdown-graphviz-preview: "Redondant avec geeklearningio.graphviz-markdown-preview"
+
+  # Redundant mind map tools (keep gera2ld.markmap-vscode)
+  souche.vscode-mindmap: "Mind map redondant"
+  season-studio.vsc-nano-mindmap: "Mind map redondant"
+
+  # DrawIO plugin rarely used
+  nopeslide.vscode-drawio-plugin-mermaid: "Plugin DrawIO Mermaid - peu utile"

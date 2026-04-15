@@ -45,6 +45,7 @@ nul
 config/*
 !config/*.example
 !config/README.md
+!config/vscode.yaml
 
 # Specs
 specs/
