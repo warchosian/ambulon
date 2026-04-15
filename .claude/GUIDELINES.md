@@ -1096,34 +1096,90 @@ BASE_URL
 MOD_BU
 ```
 
-#### 6. Traçabilité de Configuration : Option `--show-config-sources` (FORTEMENT RECOMMANDÉ)
+#### 6. Traçabilité de Configuration : Options `-S` et `--check-config` (FORTEMENT RECOMMANDÉ)
 
 **Problème** : Lors du debugging, il est difficile de savoir d'où vient chaque valeur de configuration utilisée par la commande.
 
-**Solution** : Implémenter une option `--show-config-sources` qui affiche la provenance de chaque paramètre avant l'exécution de la commande.
+**Solution** : Implémenter DEUX options complémentaires pour la traçabilité de configuration :
 
-##### Format d'Affichage Recommandé
+1. **`-C / --check-config`** : Validation rapide avec warnings de sécurité (validation pré-déploiement)
+2. **`-S / --show-config-sources`** : Rapport détaillé de chaque paramètre (debug approfondi)
+
+##### Complémentarité des Deux Options
+
+| Critère | `-C / --check-config` | `-S / --show-config-sources` |
+|---------|----------------------|------------------------------|
+| **Objectif** | Validation rapide | Debug détaillé |
+| **Détail** | Vue d'ensemble statistique | Chaque paramètre individuellement |
+| **Valeurs** | Non affichées | Affichées (masquées si sensibles) |
+| **Warnings** | ✅ Oui (sécurité + cohérence) | ❌ Non |
+| **Longueur sortie** | ~10 lignes (concis) | 50+ lignes (verbeux) |
+| **Temps lecture** | 5 secondes | 30 secondes |
+| **Usage typique** | CI/CD, validation pré-déploiement | Debugging local, investigation |
+| **Parsing script** | Facile (format structuré) | Difficile (format tableau) |
+| **Statistiques** | Oui (pourcentages, totaux) | Non |
+
+**Workflow recommandé** :
+1. `-C / --check-config` pour validation rapide
+2. Si warnings détectés → `-S` pour investigation détaillée
+
+##### Format d'Affichage Option 1 : `-S / --show-config-sources` (Détaillé)
 
 ```
-Configuration Sources Report
-============================
+Configuration Sources Report - module-name
+======================================================================
 
-Parameter                Source              Value
----------                ------              -----
-url                      CLI Argument        https://prod.example.com
-timeout                  YAML File           30
-auth_type                Environment         bearer
-output_dir               Default             ./output
-token                    Environment         ****** (masked)
+Parameter                 Source               Value
+------------------------- -------------------- -------------------------
+url                       CLI Argument         https://prod.example.com
+timeout                   YAML File            30
+auth_type                 Environment          bearer
+output_dir                Default              ./output
+token                     Environment          ****** (masked)
 
 Summary:
-  - CLI Arguments:     1 parameter(s)
-  - YAML File:         1 parameter(s)
-  - Environment Vars:  2 parameter(s)
-  - Defaults:          1 parameter(s)
+  - CLI Argument       1 parameter(s)
+  - YAML File          1 parameter(s)
+  - Environment        2 parameter(s)
+  - Default            1 parameter(s)
 
 Config file: /path/to/config.yaml
+
+✓ Configuration sources displayed successfully
+
+Use this command without -S to execute the operation.
 ```
+
+**Utilisation** : Investigation détaillée, voir chaque valeur et sa source.
+
+---
+
+##### Format d'Affichage Option 2 : `-C / --check-config` (Validation Rapide)
+
+```
+Configuration Check - module-name
+==================================================
+
+Sources distribution:
+  CLI Argument        1 parameter(s)  ( 20.0%)
+  YAML File           1 parameter(s)  ( 20.0%)
+  Environment         2 parameter(s)  ( 40.0%)
+  Default             1 parameter(s)  ( 20.0%)
+
+Total parameters: 5
+
+✓ Configuration hierarchy: CLI > YAML > Environment > Default
+
+⚠️ Warnings:
+  - module.token comes from YAML (should use environment variable)
+  - module.api.timeout is very high (300s)
+
+Config file: /path/to/config.yaml
+
+Use -S / --show-config-sources for detailed view.
+```
+
+**Utilisation** : Validation pré-déploiement, CI/CD, détection rapide de problèmes.
 
 ##### Implémentation Recommandée
 
@@ -1204,6 +1260,93 @@ class ConfigTracker:
             source_name = config_value.source.value
             summary[source_name] = summary.get(source_name, 0) + 1
         return summary
+
+    def get_check_summary(self, command_name: str) -> str:
+        """
+        Génère un résumé de validation rapide avec warnings.
+
+        Args:
+            command_name: Nom de la commande (ex: "gitlab-clone")
+
+        Returns:
+            Résumé formaté avec statistiques et warnings
+        """
+        lines = [
+            f"Configuration Check - {command_name}",
+            "=" * 50,
+            "",
+            "Sources distribution:",
+        ]
+
+        # Statistiques par source avec pourcentages
+        summary = self._get_summary()
+        total = sum(summary.values())
+
+        for source in ["CLI Argument", "YAML File", "Environment", "Default"]:
+            count = summary.get(source, 0)
+            percentage = (count / total * 100) if total > 0 else 0
+            if count > 0:
+                lines.append(f"  {source:<20} {count} parameter(s)  ({percentage:5.1f}%)")
+
+        lines.extend([
+            "",
+            f"Total parameters: {total}",
+            "",
+            "✓ Configuration hierarchy: CLI > YAML > Environment > Default",
+        ])
+
+        # Détection automatique de warnings
+        warnings = self._detect_warnings()
+        if warnings:
+            lines.extend([
+                "",
+                "⚠️ Warnings:",
+            ])
+            for warning in warnings:
+                lines.append(f"  - {warning}")
+
+        lines.extend([
+            "",
+            "Use -S / --show-config-sources for detailed view.",
+        ])
+
+        return "\n".join(lines)
+
+    def _detect_warnings(self) -> list[str]:
+        """
+        Détecte automatiquement les problèmes de configuration.
+
+        Returns:
+            Liste de warnings
+        """
+        warnings = []
+
+        # Keywords sensibles
+        sensitive_keywords = ['token', 'password', 'secret', 'key', 'credential', 'apikey', 'api_key', 'pat']
+
+        for config_value in self.values.values():
+            key_lower = config_value.key.lower()
+
+            # Warning 1: Token/secret dans YAML au lieu d'ENV
+            if any(keyword in key_lower for keyword in sensitive_keywords):
+                if config_value.source == ConfigSource.YAML:
+                    warnings.append(
+                        f"{config_value.key} comes from YAML (should use environment variable)"
+                    )
+                # Warning 2: Token/secret vide
+                elif not config_value.value or config_value.value == '':
+                    warnings.append(
+                        f"{config_value.key} is empty (from {config_value.source.value.lower()})"
+                    )
+
+            # Warning 3: Timeout très élevé (> 120s)
+            if 'timeout' in key_lower and isinstance(config_value.value, (int, float)):
+                if config_value.value > 120:
+                    warnings.append(
+                        f"{config_value.key} is very high ({config_value.value}s)"
+                    )
+
+        return warnings
 ```
 
 **2. Intégration dans load_config()**
@@ -1302,11 +1445,16 @@ def main(argv=None):
     parser.add_argument("-c", "--config", help="Fichier de configuration YAML")
     parser.add_argument("-v", "--verbose", action="store_true", help="Mode verbeux")
 
-    # Option de traçabilité (RECOMMANDÉ) avec version abrégée
+    # Options de traçabilité (RECOMMANDÉ)
+    parser.add_argument(
+        "-C", "--check-config",
+        action="store_true",
+        help="Valide la configuration rapidement avec warnings de sécurité et quitte"
+    )
     parser.add_argument(
         "-S", "--show-config-sources",
         action="store_true",
-        help="Affiche la provenance de chaque paramètre de configuration et quitte"
+        help="Affiche la provenance détaillée de chaque paramètre et quitte"
     )
 
     args = parser.parse_args(argv)
@@ -1336,9 +1484,16 @@ def main(argv=None):
         config['output'] = args.output
         tracker.set('output', args.output, ConfigSource.CLI)
 
-    # Afficher le rapport si demandé
+    # Option 1: Validation rapide avec warnings
+    if args.check_config:
+        print(tracker.get_check_summary('my-command'))
+        if args.config:
+            print(f"\nConfig file: {Path(args.config).resolve()}")
+        return 0
+
+    # Option 2: Rapport détaillé de chaque paramètre
     if args.show_config_sources:
-        print(tracker.get_report())
+        print(tracker.get_report('my-command'))
         if args.config:
             print(f"\nConfig file: {Path(args.config).resolve()}")
         return 0
@@ -1347,23 +1502,52 @@ def main(argv=None):
     return execute_business_logic(config)
 ```
 
-##### Exemple d'Utilisation
+##### Exemples d'Utilisation
+
+**Option 1 : Validation rapide (`-C`)**
 
 ```bash
-# Afficher la provenance de la configuration (option abrégée)
+# Validation rapide (option courte)
+my-app my-command -C
+
+# Version longue
+my-app my-command --check-config
+
+# Avec fichier de configuration
+my-app my-command --config config/prod.yaml -C
+```
+
+**Option 2 : Rapport détaillé (`-S`)**
+
+```bash
+# Rapport détaillé (option courte)
 my-app my-command -S
 
 # Version longue
 my-app my-command --show-config-sources
-
-# Avec fichier de configuration
-my-app my-command --config config/prod.yaml -S
 
 # Avec arguments CLI pour voir l'écrasement
 MY_MODULE_URL=https://from-env.com my-app my-command \
   --url https://from-cli.com \
   --config config/dev.yaml \
   -S
+```
+
+**Workflow recommandé :**
+
+```bash
+# 1. Check rapide avant exécution
+my-app my-command -C
+
+# 2. Si warnings détectés, investigation détaillée
+my-app my-command -S | grep token
+
+# 3. Corriger et re-valider
+export MY_MODULE_TOKEN="secure_token"
+my-app my-command -C  # Plus de warnings
+
+# 4. Exécuter
+my-app my-command
 ```
 
 **Sortie exemple :**
@@ -1398,10 +1582,10 @@ Config file: /home/user/config/dev.yaml
 
 ##### Exemples Réels d'Utilisation
 
-**Exemple 1 : Vérification rapide avec `--check-config`**
+**Exemple 1 : Vérification rapide avec `-C / --check-config`**
 
 ```bash
-$ ambulon gitlab-clone --check-config
+$ ambulon gitlab-clone -C
 ```
 
 **Sortie :**
@@ -1421,7 +1605,7 @@ Total parameters: 5
 
 Config file: config\gitlab.yaml
 
-Use -S/--show-config-sources for detailed view.
+Use -S / --show-config-sources for detailed view.
 ```
 
 **Analyse** : Le warning indique que le token est dans le YAML au lieu d'une variable d'environnement (meilleure pratique de sécurité).
@@ -1496,7 +1680,7 @@ Config file: config\piag.yaml
 **Exemple 4 : Détection d'erreurs de configuration**
 
 ```bash
-$ ambulon wikisi-sync-api --check-config
+$ ambulon wikisi-sync-api -C
 ```
 
 **Sortie :**
@@ -1517,7 +1701,7 @@ Total parameters: 12
 
 Config file: config\wikisi.yaml
 
-Use -S/--show-config-sources for detailed view.
+Use -S / --show-config-sources for detailed view.
 ```
 
 **Analyse** : Le warning indique qu'un paramètre critique (token) est vide. Permet de détecter les problèmes de configuration AVANT l'exécution.
@@ -1526,24 +1710,30 @@ Use -S/--show-config-sources for detailed view.
 
 **Cas d'usage typiques :**
 
-1. **Debugging** : `ambulon command -S` → Voir immédiatement d'où viennent les valeurs
-2. **Validation rapide** : `ambulon command --check-config` → Vérifier la config en 1 seconde
+1. **Validation rapide** : `ambulon command -C` → Vérifier la config en 1 seconde avec warnings
+2. **Debugging** : `ambulon command -S` → Voir immédiatement d'où viennent les valeurs
 3. **Audit** : `ambulon command -S > config_audit.txt` → Documenter la configuration utilisée
-4. **CI/CD** : Validation automatique que les secrets viennent bien de l'environnement
+4. **CI/CD** : `ambulon command -C || exit 1` → Validation automatique bloquante si warnings
 
 ##### Checklist d'Implémentation
 
 Pour chaque nouveau module, vérifier :
-- [ ] Option `-S, --show-config-sources` ajoutée au parser (avec version abrégée)
+- [ ] Option `-C, --check-config` ajoutée au parser (validation rapide)
+- [ ] Option `-S, --show-config-sources` ajoutée au parser (rapport détaillé)
 - [ ] `ConfigTracker` instancié et passé à `load_config()`
+- [ ] Méthode `get_check_summary()` implémentée avec détection de warnings
 - [ ] Arguments CLI trackés avec `ConfigSource.CLI`
 - [ ] Valeurs sensibles marquées avec `is_sensitive=True`
 - [ ] Rapport affiché avant l'exécution si option activée
-- [ ] Documentation de l'option dans `--help`
+- [ ] Documentation des deux options dans `--help`
 
-**Recommandation d'option abrégée :** `-S` (majuscule pour éviter conflit avec `-s` souvent utilisé pour `--silent` ou `--size`)
+**Recommandation d'options abrégées :**
+- **`-C`** pour `--check-config` (validation rapide)
+- **`-S`** pour `--show-config-sources` (rapport détaillé)
 
-**Cette option est FORTEMENT RECOMMANDÉE pour tous les modules avec hiérarchie de configuration.**
+*(Majuscules pour éviter conflit avec `-c` (config) et `-s` (silent/size))*
+
+**Ces deux options sont FORTEMENT RECOMMANDÉES pour tous les modules avec hiérarchie de configuration.**
 
 ---
 
@@ -1652,6 +1842,534 @@ def deep_merge(base: Dict, override: Dict) -> Dict:
 - **Transparence** : Comportement prévisible et documenté
 - **Testabilité** : Facile à configurer pour les tests automatisés
 - **Maintenabilité** : Pattern standard reconnaissable immédiatement
+
+---
+
+## Documentation des Commandes CLI avec `--help`
+
+### Principe Général
+
+**Toute commande CLI DOIT fournir une aide complète via l'option `--help` (ou `-h`).**
+
+La qualité et la complétude de l'aide `--help` sont ESSENTIELLES pour l'expérience utilisateur. Une commande sans documentation claire est inutilisable.
+
+### Niveaux d'Aide
+
+Le système d'aide se structure sur **deux niveaux** distincts :
+
+#### 1. Aide Principale (`ambulon --help`)
+
+Affiche la liste de toutes les sous-commandes disponibles avec une description courte.
+
+**Format obligatoire :**
+
+```bash
+$ ambulon --help
+
+usage: ambulon [-h] [--version] <command> [<args>]
+
+Ambulon - Outil de documentation et gestion de diagrammes
+
+Commands:
+  General:
+    md2html           Convert Markdown to HTML with diagram rendering
+    augment           Make HTML diagrams interactive (zoom, drag)
+
+  Table of Contents:
+    add-toc           Add table of contents to Markdown
+    add-itoc          Add interactive TOC with backlinks
+
+  GitLab Integration:
+    gitlab-clone      Clone and process GitLab repositories
+
+  Processing:
+    merge-md          Merge multiple Markdown files into one
+    flatten-md        Flatten nested Markdown structure
+
+  VS Code Extensions:
+    vscode-install    Install recommended VS Code extensions
+    vscode-list       List installed VS Code extensions
+    vscode-uninstall  Uninstall redundant extensions
+
+Options:
+  -h, --help          show this help message and exit
+  --version           show program version and exit
+
+Use 'ambulon <command> --help' for more information on a specific command.
+
+Examples:
+  ambulon md2html input.md output.html
+  ambulon vscode-install --mode 2
+  ambulon gitlab-clone --help
+```
+
+**Éléments obligatoires :**
+- ✅ Usage line avec pattern `<command> [<args>]`
+- ✅ Description courte de l'application (1 ligne)
+- ✅ Liste des commandes **groupées par catégorie**
+- ✅ Description courte (1 ligne max) pour chaque commande
+- ✅ Options globales (`--help`, `--version`)
+- ✅ Message indiquant comment obtenir l'aide détaillée : `Use 'ambulon <command> --help'`
+- ✅ Section Examples avec 2-3 exemples représentatifs
+
+**❌ Erreurs à éviter :**
+- Liste des commandes en vrac sans groupement logique
+- Descriptions trop longues (> 1 ligne) dans la liste principale
+- Manque d'exemples
+- Pas d'indication sur comment obtenir l'aide détaillée
+
+---
+
+#### 2. Aide d'une Sous-Commande (`ambulon <command> --help`)
+
+Affiche l'aide complète et détaillée pour une sous-commande spécifique.
+
+**Format obligatoire :**
+
+```bash
+$ ambulon md2html-diagrams --help
+
+usage: ambulon md2html-diagrams [-h] [-o OUTPUT] [-t TITLE] [-s STYLESHEET]
+                                [--no-mermaid] [--no-plantuml] [--no-graphviz]
+                                [-v] [-c CONFIG]
+                                input
+
+Convert Markdown to HTML with automatic diagram rendering (Mermaid, PlantUML, Graphviz).
+
+This command processes Markdown files and generates standalone HTML with embedded
+diagrams. All diagram types are automatically detected and rendered.
+
+Positional Arguments:
+  input                 Input Markdown file path
+
+Options:
+  -h, --help            show this help message and exit
+  -o, --output OUTPUT   Output HTML file path (default: <input>.html)
+  -t, --title TITLE     HTML page title (default: filename)
+  -s, --stylesheet CSS  Custom CSS stylesheet path
+  --no-mermaid          Disable Mermaid diagram rendering
+  --no-plantuml         Disable PlantUML diagram rendering
+  --no-graphviz         Disable Graphviz diagram rendering
+  -v, --verbose         Enable verbose logging
+  -c, --config CONFIG   Configuration file path (YAML)
+
+Configuration Hierarchy (priority from highest to lowest):
+  1. Command-line arguments (--output, --title, etc.)
+  2. YAML configuration file (--config)
+  3. Environment variables (MD2HTML_*)
+  4. Default values
+
+Environment Variables:
+  MD2HTML_OUTPUT_DIR    Default output directory
+  MD2HTML_STYLESHEET    Default CSS stylesheet path
+  MD2HTML_TITLE         Default HTML title template
+
+Examples:
+  # Basic conversion
+  ambulon md2html-diagrams document.md
+
+  # Specify output and title
+  ambulon md2html-diagrams document.md -o output.html -t "My Document"
+
+  # Use custom CSS and disable Mermaid
+  ambulon md2html-diagrams document.md -s custom.css --no-mermaid
+
+  # Use configuration file
+  ambulon md2html-diagrams document.md -c config/md2html.yaml
+
+  # Via environment variables
+  MD2HTML_OUTPUT_DIR=./html ambulon md2html-diagrams document.md
+
+See also:
+  ambulon augment      Make HTML diagrams interactive
+  ambulon add-toc      Add table of contents before conversion
+
+For more information: https://docs.ambulon.dev/md2html
+```
+
+**Structure obligatoire (dans cet ordre) :**
+
+1. **Usage line** : Pattern exact de la commande avec tous les arguments
+2. **Description courte** : 1-2 phrases expliquant ce que fait la commande
+3. **Description détaillée** : 1-2 paragraphes (optionnel mais recommandé)
+4. **Positional Arguments** : Arguments obligatoires sans flag
+5. **Options** : Tous les flags avec description détaillée
+6. **Configuration Hierarchy** : Si la commande supporte la hiérarchie de config (OBLIGATOIRE pour ces commandes)
+7. **Environment Variables** : Liste complète des variables supportées
+8. **Examples** : Au moins 5 exemples couvrant les cas d'usage principaux
+9. **See also** : Commandes liées (optionnel mais recommandé)
+10. **For more information** : Lien vers documentation complète (optionnel)
+
+---
+
+### Règles de Formatage
+
+#### Usage Line
+
+```python
+parser = argparse.ArgumentParser(
+    prog="ambulon md2html-diagrams",  # ✅ Toujours préfixer avec "ambulon"
+    usage="ambulon md2html-diagrams [-h] [-o OUTPUT] [-v] input"  # ✅ Explicite
+)
+```
+
+**❌ Erreur courante :**
+```python
+prog="md2html-diagrams",  # Mauvais : manque le préfixe ambulon
+usage=None  # Mauvais : génération automatique peu lisible
+```
+
+#### Description
+
+```python
+parser = argparse.ArgumentParser(
+    description="Convert Markdown to HTML with diagram rendering.",
+    formatter_class=argparse.RawDescriptionHelpFormatter,  # ✅ Préserve formatage
+    epilog="""
+Examples:
+  ambulon md2html doc.md
+  ambulon md2html doc.md -o output.html
+    """
+)
+```
+
+**Règles :**
+- ✅ Description courte (1-2 phrases max)
+- ✅ `RawDescriptionHelpFormatter` pour préserver le formatage des exemples
+- ✅ Section `epilog` pour exemples, configuration hierarchy, etc.
+- ❌ Pas de descriptions trop longues (> 3 lignes)
+
+#### Arguments et Options
+
+```python
+# ✅ Argument positionnel avec description claire
+parser.add_argument(
+    "input",
+    help="Input Markdown file path"
+)
+
+# ✅ Option avec short et long form, type, default, help
+parser.add_argument(
+    "-o", "--output",
+    type=str,
+    default=None,
+    help="Output HTML file path (default: <input>.html)"
+)
+
+# ✅ Flag booléen avec action
+parser.add_argument(
+    "-v", "--verbose",
+    action="store_true",
+    help="Enable verbose logging"
+)
+
+# ✅ Option avec choices limitées
+parser.add_argument(
+    "--editor",
+    choices=["code", "codium", "cursor", "code-insiders"],
+    help="Specify editor: 'code' (VS Code), 'codium' (VSCodium), 'cursor' (Cursor), 'code-insiders' (VS Code Insiders)"
+)
+```
+
+**Règles help text :**
+- ✅ Commencer par une majuscule
+- ✅ Pas de point final (convention argparse)
+- ✅ Indiquer la valeur par défaut si pertinent : `(default: value)`
+- ✅ Pour choices, expliquer chaque option : `'code' (VS Code), 'codium' (VSCodium)`
+- ❌ Pas de help text trop long (> 2 lignes dans terminal)
+
+#### Section Examples (Obligatoire)
+
+**Format obligatoire dans epilog :**
+
+```python
+epilog="""
+Examples:
+  # Basic usage
+  ambulon command input.txt
+
+  # With options
+  ambulon command input.txt --option value
+
+  # With configuration file
+  ambulon command input.txt -c config.yaml
+
+  # Via environment variables
+  MY_VAR=value ambulon command input.txt
+
+  # Complex example
+  ambulon command input.txt -o output.txt --verbose
+"""
+```
+
+**Règles :**
+- ✅ Au moins 3 exemples (idéalement 5+)
+- ✅ Commencer du plus simple au plus complexe
+- ✅ Inclure un commentaire (# ...) avant chaque exemple
+- ✅ Montrer différentes manières d'utiliser la commande
+- ✅ Couvrir les cas d'usage principaux
+- ❌ Pas d'exemples trop complexes ou irréalistes
+
+#### Configuration Hierarchy (Pour modules configurables)
+
+**OBLIGATOIRE si la commande supporte CLI + YAML + ENV + Defaults :**
+
+```python
+epilog="""
+Configuration Hierarchy (priority from highest to lowest):
+  1. Command-line arguments (--url, --output, etc.)
+  2. YAML configuration file (--config)
+  3. Environment variables (MODULE_*)
+  4. Default values
+
+Environment Variables:
+  MODULE_URL         Base URL
+  MODULE_OUTPUT_DIR  Output directory
+  MODULE_TIMEOUT     Request timeout in seconds
+  MODULE_TOKEN       Authentication token
+
+Examples:
+  # Via CLI
+  ambulon command --url https://example.com
+
+  # Via environment
+  MODULE_URL=https://example.com ambulon command
+
+  # Via config file
+  ambulon command -c config.yaml
+"""
+```
+
+---
+
+### Implémentation avec argparse
+
+#### Pattern Complet pour une Commande
+
+```python
+import argparse
+import sys
+
+def main(argv=None):
+    """
+    Convert Markdown to HTML with diagrams.
+
+    Args:
+        argv: Arguments CLI ou None pour sys.argv
+
+    Returns:
+        Code de sortie (0 = succès, non-zéro = erreur)
+    """
+    parser = argparse.ArgumentParser(
+        prog="ambulon md2html-diagrams",
+        description="Convert Markdown to HTML with automatic diagram rendering.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Configuration Hierarchy (priority from highest to lowest):
+  1. Command-line arguments
+  2. YAML configuration file (--config)
+  3. Environment variables (MD2HTML_*)
+  4. Default values
+
+Environment Variables:
+  MD2HTML_OUTPUT_DIR    Default output directory
+  MD2HTML_STYLESHEET    Default CSS stylesheet
+
+Examples:
+  # Basic conversion
+  ambulon md2html-diagrams document.md
+
+  # With output and title
+  ambulon md2html-diagrams document.md -o output.html -t "Title"
+
+  # With configuration file
+  ambulon md2html-diagrams document.md -c config/md2html.yaml
+
+  # Via environment variables
+  MD2HTML_OUTPUT_DIR=./html ambulon md2html-diagrams document.md
+
+See also:
+  ambulon augment      Make HTML diagrams interactive
+  ambulon add-toc      Add table of contents
+        """
+    )
+
+    # Arguments positionnels
+    parser.add_argument(
+        "input",
+        help="Input Markdown file path"
+    )
+
+    # Options
+    parser.add_argument(
+        "-o", "--output",
+        type=str,
+        help="Output HTML file path (default: <input>.html)"
+    )
+
+    parser.add_argument(
+        "-t", "--title",
+        type=str,
+        help="HTML page title (default: filename)"
+    )
+
+    parser.add_argument(
+        "-c", "--config",
+        type=str,
+        help="Configuration file path (YAML)"
+    )
+
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Enable verbose logging"
+    )
+
+    # Parse arguments
+    args = parser.parse_args(argv)
+
+    # Logique métier...
+    return 0
+
+if __name__ == '__main__':
+    sys.exit(main())
+```
+
+---
+
+### Checklist de Conformité `--help` (OBLIGATOIRE)
+
+**Avant CHAQUE commit d'une nouvelle commande, vérifier :**
+
+#### Pour l'Aide Principale (`ambulon --help`)
+- [ ] Liste des commandes groupées par catégorie
+- [ ] Description courte (1 ligne) pour chaque commande
+- [ ] Options globales (`--help`, `--version`)
+- [ ] Message `Use 'ambulon <command> --help' for more info`
+- [ ] Section Examples avec 2-3 exemples
+
+#### Pour l'Aide de Sous-Commande (`ambulon <command> --help`)
+- [ ] Usage line correcte avec `prog="ambulon command"`
+- [ ] Description courte (1-2 phrases)
+- [ ] Tous les arguments positionnels documentés
+- [ ] Toutes les options documentées avec `-h, --long`
+- [ ] Valeurs par défaut indiquées : `(default: value)`
+- [ ] Section "Configuration Hierarchy" (si applicable)
+- [ ] Section "Environment Variables" (si applicable)
+- [ ] Section "Examples" avec au moins 3 exemples
+- [ ] Section "See also" avec commandes liées (recommandé)
+- [ ] `formatter_class=argparse.RawDescriptionHelpFormatter`
+
+#### Tests
+- [ ] Commande exécutée avec `--help` affiche l'aide complète
+- [ ] Commande exécutée avec `-h` affiche la même aide
+- [ ] L'aide est claire et compréhensible sans autre documentation
+- [ ] Tous les exemples fournis sont exécutables et fonctionnels
+- [ ] Pas de typos ni erreurs de formatage
+
+---
+
+### Exemples de Bonnes Pratiques
+
+#### ✅ BIEN : Description Claire et Complète
+
+```bash
+$ ambulon vscode-install --help
+
+usage: ambulon vscode-install [-h] [--mode {1,2,3}]
+                              [--editor {code,codium,cursor,code-insiders}]
+                              [-y] [-v]
+
+Install recommended VS Code extensions for diagram visualization.
+
+Options:
+  -h, --help            show this help message and exit
+  --mode {1,2,3}        Installation mode: 1=Essential, 2=Essential+Recommended,
+                        3=All (default: 2)
+  --editor {code,codium,cursor,code-insiders}
+                        Specify editor: 'code' (VS Code), 'codium' (VSCodium),
+                        'cursor' (Cursor), 'code-insiders' (VS Code Insiders)
+  -y, --yes             Auto-confirm installation without prompting
+  -v, --verbose         Enable verbose logging
+
+Examples:
+  # Interactive mode
+  ambulon vscode-install
+
+  # Install essentials only
+  ambulon vscode-install --mode 1
+
+  # Install for Cursor editor
+  ambulon vscode-install --editor cursor --mode 2
+
+  # Auto-confirm installation
+  ambulon vscode-install --mode 2 --yes
+```
+
+**Pourquoi c'est bien :**
+- Usage line précis
+- Description concise
+- Chaque option expliquée avec valeurs possibles
+- Valeur par défaut indiquée
+- 4 exemples couvrant les cas principaux
+- Progressif : du plus simple au plus complexe
+
+---
+
+#### ❌ MAL : Description Insuffisante
+
+```bash
+$ ambulon command --help
+
+usage: command [-h] [-o OUTPUT] input
+
+Do something with a file.
+
+positional arguments:
+  input
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -o OUTPUT
+```
+
+**Pourquoi c'est mal :**
+- Pas de préfixe `ambulon` dans usage
+- Description trop vague ("Do something")
+- Arguments sans description
+- Pas d'exemples
+- Pas d'indication sur la configuration
+
+---
+
+### Résumé des Règles
+
+**Règles OBLIGATOIRES (Non négociables) :**
+
+1. ✅ **Aide principale** : Liste des commandes groupées par catégorie
+2. ✅ **Aide sous-commande** : Description, arguments, options, exemples
+3. ✅ **Usage line** : Toujours préfixer avec `ambulon`
+4. ✅ **Examples** : Au moins 3 exemples par commande
+5. ✅ **Configuration Hierarchy** : Documentée pour modules configurables
+6. ✅ **Environment Variables** : Listées si supportées
+7. ✅ **formatter_class** : `RawDescriptionHelpFormatter` pour epilog
+8. ✅ **Testabilité** : Tous les exemples doivent être fonctionnels
+
+**Bonnes Pratiques (Fortement recommandées) :**
+
+- Grouper les options liées (authentification, sortie, etc.)
+- Indiquer les valeurs par défaut : `(default: value)`
+- Expliquer les choices : `'code' (VS Code)`
+- Section "See also" pour commandes liées
+- Progression dans les exemples : simple → complexe
+- Commentaires (# ...) avant chaque exemple
+
+**Sanctions :**
+
+- ❌ Aide incomplète ou manquante → Rejet du commit
+- ❌ Pas d'exemples → Rejet du commit
+- ❌ Configuration hierarchy non documentée → Rejet du commit
+- ❌ Exemples non fonctionnels → Rejet du commit
 
 ---
 

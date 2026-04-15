@@ -16,24 +16,24 @@ logger = logging.getLogger(__name__)
 
 def find_vscode_command(preferred_editor: Optional[str] = None) -> str:
     """
-    Find VS Code or VSCodium command on the system.
+    Find VS Code, VSCodium, Cursor, or Insiders command on the system.
 
     Args:
-        preferred_editor: 'code', 'codium', or None for auto-detection
+        preferred_editor: 'code', 'codium', 'cursor', 'code-insiders', or None for auto-detection
 
     Returns:
-        Path or command to the VS Code/VSCodium executable
+        Path or command to the editor executable
 
     Raises:
-        FileNotFoundError: If no VS Code/VSCodium installation is found
+        FileNotFoundError: If no compatible editor installation is found
         ValueError: If preferred_editor is invalid
     """
     # If a specific editor is requested
     if preferred_editor:
         return _find_specific_editor(preferred_editor)
 
-    # Auto-detection: try 'code' first, then 'codium' in PATH
-    for cmd in ["code", "codium"]:
+    # Auto-detection: try editors in order of priority
+    for cmd in ["code", "cursor", "code-insiders", "codium"]:
         if _is_command_available(cmd):
             logger.info(f"Using {cmd} (auto-detected in PATH)")
             return cmd
@@ -49,7 +49,7 @@ def find_vscode_command(preferred_editor: Optional[str] = None) -> str:
 
     # Build detailed error message
     error_msg = (
-        "Neither VS Code nor VSCodium found on this system.\n\n"
+        "No compatible editor found (VS Code, VSCodium, Cursor, VS Code Insiders).\n\n"
         "Checked locations:\n"
     )
     for path in checked_paths[:10]:  # Show first 10 paths
@@ -59,10 +59,13 @@ def find_vscode_command(preferred_editor: Optional[str] = None) -> str:
 
     error_msg += (
         "\nPlease:\n"
-        "  1. Install VS Code (https://code.visualstudio.com/) or\n"
-        "     VSCodium (https://vscodium.com/), or\n"
-        "  2. Add 'code' or 'codium' command to your system PATH, or\n"
-        "  3. Specify the editor explicitly with --editor code/codium"
+        "  1. Install one of these editors:\n"
+        "     - VS Code (https://code.visualstudio.com/)\n"
+        "     - VSCodium (https://vscodium.com/)\n"
+        "     - Cursor (https://cursor.sh/)\n"
+        "     - VS Code Insiders (https://code.visualstudio.com/insiders/)\n"
+        "  2. Add the command to your system PATH, or\n"
+        "  3. Specify the editor explicitly with --editor code/codium/cursor/code-insiders"
     )
     raise FileNotFoundError(error_msg)
 
@@ -131,10 +134,13 @@ def is_vscode_installed(preferred_editor: Optional[str] = None) -> bool:
 # Private helper functions
 
 def _find_specific_editor(editor: str) -> str:
-    """Find a specific editor (code or codium)."""
+    """Find a specific editor (code, codium, cursor, or code-insiders)."""
     # Validate editor choice
-    if editor not in ["code", "codium"]:
-        raise ValueError(f"Invalid editor '{editor}'. Must be 'code' or 'codium'.")
+    valid_editors = ["code", "codium", "cursor", "code-insiders"]
+    if editor not in valid_editors:
+        raise ValueError(
+            f"Invalid editor '{editor}'. Must be one of: {', '.join(valid_editors)}"
+        )
 
     # Try command in PATH
     if _is_command_available(editor):
@@ -151,18 +157,28 @@ def _find_specific_editor(editor: str) -> str:
             return path
 
     # Build helpful error message
-    editor_name = "VS Code" if editor == "code" else "VSCodium"
+    editor_names = {
+        "code": "VS Code",
+        "codium": "VSCodium",
+        "cursor": "Cursor",
+        "code-insiders": "VS Code Insiders"
+    }
+    editor_name = editor_names.get(editor, editor)
+
     error_msg = (
         f"{editor_name} ('{editor}') not found on this system.\n"
         f"Checked locations:\n"
     )
     for path in checked_paths:
         error_msg += f"  - {path}\n"
+
+    # Suggest alternatives
+    alternatives = [e for e in valid_editors if e != editor]
     error_msg += (
         f"\nPlease:\n"
         f"  1. Install {editor_name}, or\n"
         f"  2. Add '{editor}' command to your system PATH, or\n"
-        f"  3. Use the other editor (--editor {'codium' if editor == 'code' else 'code'})"
+        f"  3. Use another editor (--editor {'/'.join(alternatives)})"
     )
     raise FileNotFoundError(error_msg)
 
@@ -182,10 +198,12 @@ def _is_command_available(cmd: str) -> bool:
 
 
 def _get_common_paths() -> dict[str, list[str]]:
-    """Get common installation paths for VS Code and VSCodium."""
+    """Get common installation paths for VS Code, VSCodium, Cursor, and VS Code Insiders."""
     paths = {
         "code": [],
-        "codium": []
+        "codium": [],
+        "cursor": [],
+        "code-insiders": []
     }
 
     if os.name == "nt":  # Windows
@@ -201,6 +219,16 @@ def _get_common_paths() -> dict[str, list[str]]:
             # Custom portable path (from original script)
             r"G:\WarchoLife\WarchoPortable\PortableCommon\VSCodium\vscodium-1.109.41146\bin\codium.cmd",
         ]
+        paths["cursor"] = [
+            os.path.expandvars(r"%LOCALAPPDATA%\Programs\Cursor\resources\app\bin\cursor.cmd"),
+            os.path.expandvars(r"%LOCALAPPDATA%\Programs\cursor\resources\app\bin\cursor.cmd"),
+            r"C:\Program Files\Cursor\resources\app\bin\cursor.cmd",
+        ]
+        paths["code-insiders"] = [
+            r"C:\Program Files\Microsoft VS Code Insiders\bin\code-insiders.cmd",
+            r"C:\Program Files (x86)\Microsoft VS Code Insiders\bin\code-insiders.cmd",
+            os.path.expandvars(r"%LOCALAPPDATA%\Programs\Microsoft VS Code Insiders\bin\code-insiders.cmd"),
+        ]
     elif os.name == "posix":  # Linux/macOS
         paths["code"] = [
             "/usr/bin/code",
@@ -212,10 +240,22 @@ def _get_common_paths() -> dict[str, list[str]]:
             "/usr/local/bin/codium",
             os.path.expanduser("~/.local/bin/codium"),
         ]
+        paths["cursor"] = [
+            "/usr/bin/cursor",
+            "/usr/local/bin/cursor",
+            os.path.expanduser("~/.local/bin/cursor"),
+        ]
+        paths["code-insiders"] = [
+            "/usr/bin/code-insiders",
+            "/usr/local/bin/code-insiders",
+            os.path.expanduser("~/.local/bin/code-insiders"),
+        ]
 
         # macOS specific paths
         if os.uname().sysname == "Darwin":
             paths["code"].append("/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code")
             paths["codium"].append("/Applications/VSCodium.app/Contents/Resources/app/bin/codium")
+            paths["cursor"].append("/Applications/Cursor.app/Contents/Resources/app/bin/cursor")
+            paths["code-insiders"].append("/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin/code-insiders")
 
     return paths

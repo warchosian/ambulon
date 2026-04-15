@@ -42,11 +42,17 @@ ambulon vscode-install --mode 2 --yes
 
 # Spécifier l'éditeur
 ambulon vscode-install --editor codium
+ambulon vscode-install --editor cursor
+ambulon vscode-install --editor code-insiders
 ```
 
 **Options :**
 - `--mode 1|2|3` : Mode d'installation (1=Essentielles, 2=Essentielles+Recommandées, 3=Toutes)
-- `--editor code|codium` : Spécifier l'éditeur (code=VS Code, codium=VSCodium)
+- `--editor code|codium|cursor|code-insiders` : Spécifier l'éditeur
+  - `code` : VS Code
+  - `codium` : VSCodium
+  - `cursor` : Cursor
+  - `code-insiders` : VS Code Insiders
 - `-y, --yes` : Auto-confirmer sans prompt
 - `-v, --verbose` : Mode verbeux
 
@@ -68,7 +74,7 @@ ambulon vscode-uninstall --editor code
 ```
 
 **Options :**
-- `--editor code|codium` : Spécifier l'éditeur
+- `--editor code|codium|cursor|code-insiders` : Spécifier l'éditeur
 - `-y, --yes` : Auto-confirmer sans prompt
 - `-v, --verbose` : Mode verbeux
 
@@ -91,32 +97,36 @@ ambulon vscode-list --editor codium
 
 **Options :**
 - `--show-recommended` : Afficher la comparaison avec les extensions recommandées
-- `--editor code|codium` : Spécifier l'éditeur
+- `--editor code|codium|cursor|code-insiders` : Spécifier l'éditeur
 - `-v, --verbose` : Mode verbeux
 
 ---
 
-## 🔀 Différence entre VS Code et VSCodium
+## 🔀 Éditeurs supportés
 
-### Qu'est-ce que VS Code vs VSCodium ?
+Le module supporte 4 éditeurs compatibles avec les extensions VS Code :
 
 - **VS Code (`--editor code`)** : Microsoft Visual Studio Code - version officielle avec télémétrie Microsoft
 - **VSCodium (`--editor codium`)** : Version open-source de VS Code sans télémétrie ni tracking
+- **Cursor (`--editor cursor`)** : Fork de VS Code avec IA intégrée (GPT-4, Claude, etc.)
+- **VS Code Insiders (`--editor code-insiders`)** : Version preview/beta de VS Code avec nouvelles fonctionnalités
 
-### Pourquoi deux options ?
+### Pourquoi plusieurs options ?
 
-**Ce sont deux applications distinctes avec des installations séparées** :
+**Ce sont des applications distinctes avec des installations séparées** :
 
 1. **Répertoires d'extensions différents** :
    - VS Code : `%USERPROFILE%\.vscode\extensions` (Windows) ou `~/.vscode/extensions` (Linux/macOS)
    - VSCodium : `%USERPROFILE%\.vscode-oss\extensions` (Windows) ou `~/.vscode-oss/extensions` (Linux/macOS)
+   - Cursor : `%APPDATA%\Cursor\extensions` (Windows) ou `~/.cursor/extensions` (Linux/macOS)
+   - VS Code Insiders : `%USERPROFILE%\.vscode-insiders\extensions` (Windows) ou `~/.vscode-insiders/extensions` (Linux/macOS)
 
 2. **Extensions installées indépendamment** :
-   - Les extensions installées dans VS Code ne sont **pas** disponibles dans VSCodium (et vice-versa)
+   - Les extensions installées dans un éditeur ne sont **pas** disponibles dans les autres
    - Chaque éditeur maintient sa propre liste d'extensions
 
-3. **Marketplaces différents** :
-   - VS Code : Visual Studio Marketplace (Microsoft)
+3. **Marketplaces** :
+   - VS Code / Cursor / Insiders : Visual Studio Marketplace (Microsoft)
    - VSCodium : Open VSX Registry par défaut (open-source)
 
 ### Exemples pratiques
@@ -124,27 +134,34 @@ ambulon vscode-list --editor codium
 ```bash
 # Lister les extensions de VS Code
 ambulon vscode-list --editor code --show-recommended
-# → Affiche les extensions installées dans VS Code
 
 # Lister les extensions de VSCodium
 ambulon vscode-list --editor codium --show-recommended
-# → Affiche les extensions installées dans VSCodium (liste différente)
+
+# Lister les extensions de Cursor
+ambulon vscode-list --editor cursor --show-recommended
+
+# Lister les extensions de VS Code Insiders
+ambulon vscode-list --editor code-insiders --show-recommended
 
 # Installer dans VS Code
 ambulon vscode-install --editor code --mode 2
 
-# Installer dans VSCodium
-ambulon vscode-install --editor codium --mode 2
+# Installer dans Cursor (populaire avec IA intégrée)
+ambulon vscode-install --editor cursor --mode 2
 ```
 
 ### Auto-détection
 
-Si vous n'utilisez pas `--editor`, le module détecte automatiquement l'éditeur disponible :
-- Cherche d'abord `code` dans le PATH
-- Si absent, cherche `codium`
-- Si aucun trouvé, affiche une erreur
+Si vous n'utilisez pas `--editor`, le module détecte automatiquement l'éditeur disponible (ordre de priorité) :
+1. `code` (VS Code)
+2. `cursor` (Cursor)
+3. `code-insiders` (VS Code Insiders)
+4. `codium` (VSCodium)
 
-**Important** : Si vous utilisez les deux éditeurs, vous devrez gérer les extensions séparément pour chacun en spécifiant `--editor code` ou `--editor codium`.
+Si aucun n'est trouvé, affiche une erreur avec les chemins vérifiés.
+
+**Important** : Si vous utilisez plusieurs éditeurs, vous devrez gérer les extensions séparément pour chacun en spécifiant `--editor code/codium/cursor/code-insiders`.
 
 ---
 
@@ -320,21 +337,24 @@ Après modification du fichier, les commandes `vscode-install`, `vscode-uninstal
 
 ### Chemins personnalisés
 
-Si votre installation de VS Code/VSCodium est dans un emplacement non-standard, le module vérifie ces emplacements :
+Si votre éditeur est dans un emplacement non-standard, le module vérifie ces emplacements :
 
 **Windows** :
-- `C:\Program Files\Microsoft VS Code\bin\code.cmd`
-- `%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd`
-- `C:\Program Files\VSCodium\bin\codium.cmd`
+- VS Code : `C:\Program Files\Microsoft VS Code\bin\code.cmd` ou `%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd`
+- VSCodium : `C:\Program Files\VSCodium\bin\codium.cmd` ou `%LOCALAPPDATA%\Programs\VSCodium\bin\codium.cmd`
+- Cursor : `%LOCALAPPDATA%\Programs\Cursor\resources\app\bin\cursor.cmd`
+- VS Code Insiders : `C:\Program Files\Microsoft VS Code Insiders\bin\code-insiders.cmd` ou `%LOCALAPPDATA%\Programs\Microsoft VS Code Insiders\bin\code-insiders.cmd`
 
 **Linux** :
-- `/usr/bin/code` ou `/usr/bin/codium`
-- `/usr/local/bin/code` ou `/usr/local/bin/codium`
-- `~/.local/bin/code` ou `~/.local/bin/codium`
+- `/usr/bin/{code,codium,cursor,code-insiders}`
+- `/usr/local/bin/{code,codium,cursor,code-insiders}`
+- `~/.local/bin/{code,codium,cursor,code-insiders}`
 
 **macOS** :
-- `/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code`
-- `/Applications/VSCodium.app/Contents/Resources/app/bin/codium`
+- VS Code : `/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code`
+- VSCodium : `/Applications/VSCodium.app/Contents/Resources/app/bin/codium`
+- Cursor : `/Applications/Cursor.app/Contents/Resources/app/bin/cursor`
+- VS Code Insiders : `/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin/code-insiders`
 
 ---
 

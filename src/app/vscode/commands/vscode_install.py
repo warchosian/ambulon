@@ -57,8 +57,8 @@ Examples:
     parser.add_argument(
         "--editor",
         type=str,
-        choices=["code", "codium"],
-        help="Specify editor: 'code' for VS Code, 'codium' for VSCodium"
+        choices=["code", "codium", "cursor", "code-insiders"],
+        help="Specify editor: 'code' for VS Code, 'codium' for VSCodium, 'cursor' for Cursor, 'code-insiders' for VS Code Insiders"
     )
     parser.add_argument(
         "-y", "--yes",
