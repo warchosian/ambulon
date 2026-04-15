@@ -67,6 +67,11 @@ def show_help():
     print("  md2html-diagrams      Convertir Markdown en HTML AVEC diagrammes en SVG")
     print("  diagram2svg4md        Convertir diagrammes en SVG inline dans Markdown")
     print()
+    print("Modules VSCode (gestion des extensions):")
+    print("  vscode-install        Installer les extensions recommandées pour diagrammes")
+    print("  vscode-uninstall      Désinstaller les extensions redondantes")
+    print("  vscode-list           Lister les extensions installées")
+    print()
     print("Modules d'encoding:")
     print("  check-utf8            Vérifier l'encodage des fichiers Markdown")
     print("  fix-utf8              Corriger l'encodage des fichiers Markdown")
@@ -1058,6 +1063,16 @@ def main():
             # Encapsuler du code dans des blocs Markdown
             from app.processing.commands.code2md import main as code2md_main
             return code2md_main(sys.argv[2:])
+        # Gestion des extensions VS Code
+        elif command == 'vscode-install':
+            from app.vscode.commands.vscode_install import main as vscode_install_main
+            return vscode_install_main(sys.argv[2:])
+        elif command == 'vscode-uninstall':
+            from app.vscode.commands.vscode_uninstall import main as vscode_uninstall_main
+            return vscode_uninstall_main(sys.argv[2:])
+        elif command == 'vscode-list':
+            from app.vscode.commands.vscode_list import main as vscode_list_main
+            return vscode_list_main(sys.argv[2:])
         elif command == 'config':
             return handle_config_command()
         elif command == 'init':

@@ -670,6 +670,7 @@ def project_to_markdown_logic(
     exclude_dirs: Optional[Set[str]] = None,
     max_file_size: int = 1024 * 1024,  # 1 MB default
     use_gitignore: bool = True,
+    force: bool = False,
 ) -> Tuple[int, Optional[Path]]:
     """
     Core logic to convert project directory to Markdown file for AI analysis.
@@ -680,6 +681,7 @@ def project_to_markdown_logic(
         exclude_dirs: Additional directories to exclude
         max_file_size: Maximum file size in bytes
         use_gitignore: Respect .gitignore patterns
+        force: If True, overwrite output file if it exists (default: False)
 
     Returns:
         A tuple: (exit_code: int, generated_path: Optional[Path])
@@ -741,9 +743,21 @@ def project_to_markdown_logic(
         # Ensure output directory exists
         output_file_resolved.parent.mkdir(parents=True, exist_ok=True)
 
+        # Check if output file already exists
+        file_existed = output_file_resolved.exists()
+        if file_existed and not force:
+            logger.error(f"Output file already exists: {output_file_resolved}")
+            logger.error(f"Use -f/--force to overwrite the existing file.")
+            return 1, None
+
         # Write output with UTF-8 BOM for better Windows compatibility
         with open(output_file_resolved, 'w', encoding='utf-8-sig') as f:
             f.write("\n".join(md_content_parts))
+
+        if file_existed and force:
+            logger.info(f"Overwritten existing file: {output_file_resolved}")
+        else:
+            logger.info(f"Markdown created: {output_file_resolved}")
 
         output_size = output_file_resolved.stat().st_size
         output_size_formatted = format_size(output_size)

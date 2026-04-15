@@ -81,6 +81,7 @@ Exemples:
     parser.add_argument("-r", "--repositories", action="append", help="Git repository URL to clone (can be used multiple times). Overrides config file.")
     parser.add_argument("-c", "--config", type=str, default="config/gitlab.yaml", help="Path to the gitlab.yaml configuration file.")
     parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose logging.")
+    parser.add_argument("-f", "--force", action="store_true", help="Force overwrite of existing monofiles during generation.")
 
     # Options de traçabilité de configuration
     parser.add_argument(
@@ -322,6 +323,7 @@ Exemples:
                         output_mode=output_mode,
                         filename_template=filename_template,
                         templates=templates,
+                        force=args.force,
                     )
                 else:
                     if not code_auto.get("enabled", False):
@@ -335,6 +337,7 @@ Exemples:
                         output_mode=output_mode,
                         filename_template=filename_template,
                         templates=templates,
+                        force=args.force,
                     )
 
                 if exit_code == 0 and output_path:

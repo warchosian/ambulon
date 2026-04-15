@@ -63,8 +63,8 @@ def flatten_md_path(relative_path: Path) -> str:
     # Sanitize each directory part
     sanitized_dirs = [sanitize_filename(part) for part in dir_parts]
 
-    # Join directory parts with dots and add filename
-    flattened = '.'.join(sanitized_dirs) + '.' + filename
+    # Join directory parts with double underscores and add filename
+    flattened = '__'.join(sanitized_dirs) + '__' + filename
 
     return flattened
 
@@ -205,9 +205,33 @@ def adapt_markdown_links(
                 link_relative = absolute_link.relative_to(source_dir)
 
                 # Check if this file is in our mapping
+                matched_path = None
+
+                # Try 1: Direct match
                 if link_relative in link_mapping:
+                    matched_path = link_relative
+
+                # Try 2: Add .md extension (for GitLab wiki links without extension)
+                if not matched_path and not str(link_relative).endswith('.md'):
+                    link_with_md = Path(str(link_relative) + '.md')
+                    if link_with_md in link_mapping:
+                        matched_path = link_with_md
+                        logger.debug(f"Wiki link without .md extension found: '{link_url}' → '{link_with_md}'")
+
+                # Try 3: Transform path with slashes to flattened name (e.g., "configuration/detail_gitlab" → "configuration__detail_gitlab.md")
+                if not matched_path and '/' in str(link_relative):
+                    # Replace / with __ and ensure .md extension
+                    flattened_name = str(link_relative).replace('/', '__')
+                    if not flattened_name.endswith('.md'):
+                        flattened_name += '.md'
+                    flattened_path = Path(flattened_name)
+                    if flattened_path in link_mapping:
+                        matched_path = flattened_path
+                        logger.debug(f"Wiki path transformed to flattened name: '{link_url}' → '{flattened_path}'")
+
+                if matched_path:
                     # Internal link - adapt it
-                    new_link = link_mapping[link_relative]
+                    new_link = link_mapping[matched_path]
                     if has_anchor:
                         new_link = f"{new_link}#{anchor}"
 

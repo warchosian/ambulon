@@ -497,8 +497,9 @@ def wrap_html_document(content: str, title: str, page_orientation: Optional[str]
             text-align: center;
         }}
         .diagram svg {{
-            max-width: 100%;
+            max-width: 90%;
             height: auto;
+            display: inline-block;
         }}
         {css_orientation}
         pre {{
@@ -506,12 +507,13 @@ def wrap_html_document(content: str, title: str, page_orientation: Optional[str]
             padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
+            font-family: 'Courier New', Consolas, Monaco, 'Lucida Console', monospace;
         }}
         code {{
             background: #f4f4f4;
             padding: 2px 5px;
             border-radius: 3px;
-            font-family: 'Courier New', monospace;
+            font-family: 'Courier New', Consolas, Monaco, 'Lucida Console', monospace;
         }}
         table {{
             border-collapse: collapse;

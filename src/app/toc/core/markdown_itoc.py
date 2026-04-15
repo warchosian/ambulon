@@ -47,6 +47,12 @@ def is_toc_heading(text: str) -> bool:
     return False
 
 
+def is_merged_section_heading(text: str) -> bool:
+    """Check if a heading is a merged file section (e.g., '📄 home', '📄 ambulon › configuration')."""
+    # Pattern: Starts with 📄 emoji
+    return text.strip().startswith('📄')
+
+
 def extract_headings_with_positions(md_content: str) -> List[Dict[str, Any]]:
     """
     Extract headings from Markdown content with their positions.
@@ -74,11 +80,15 @@ def extract_headings_with_positions(md_content: str) -> List[Dict[str, Any]]:
             if is_toc_heading(text):
                 continue
 
+            # Mark merged section headings (H1 with 📄) for special handling
+            is_merged_section = (level == 1 and is_merged_section_heading(text))
+
             headings.append({
                 'level': level,
                 'text': text,
                 'line': line_num,
-                'original_line': line
+                'original_line': line,
+                'is_merged_section': is_merged_section
             })
 
     return headings
@@ -116,27 +126,41 @@ def add_backlinks_to_headings(
         line_num = heading['line']
         original_line = lines[line_num]
         heading_text = heading['text']
+        is_merged_section = heading.get('is_merged_section', False)
 
-        # Skip if backlink already exists (check for [↑](#toc-...) pattern)
-        if re.search(r'\[↑\]\(#toc-[^)]+\)', original_line):
+        # Skip if backlink already exists (check for [↑](#...) pattern)
+        if re.search(r'\[↑\]\(#[^)]+\)', original_line):
             continue
 
-        # Extract or generate the heading ID to build the TOC line ID
+        # Determine target anchor based on heading type
+        if is_merged_section:
+            # H1 merged sections point to main TOC
+            # Generate anchor from "📚 Table des matières"
+            toc_line_id = "📚-table-des-matières"
+        else:
+            # Regular headings point to their TOC entry
+            # Extract or generate the heading ID to build the TOC line ID
+            custom_id_pattern = r'\s*\{#([a-zA-Z0-9\-_]+)\}\s*$'
+            match = re.search(custom_id_pattern, original_line)
+
+            if match:
+                # Use the custom ID
+                heading_id = match.group(1)
+            else:
+                # Generate ID from heading text (same logic as TOC generation in merger)
+                heading_id = heading_text.lower()
+                heading_id = heading_id.replace(' ', '-').replace('.', '-').replace('__', '-')
+                heading_id = re.sub(r'[^a-z0-9\-_àâäéèêëïîôùûüÿæœç]', '', heading_id)
+                heading_id = re.sub(r'-+', '-', heading_id)
+                heading_id = heading_id.strip('-')
+
+            # Build the TOC line ID: toc-{heading-id}
+            toc_line_id = f"toc-{heading_id}"
+
+        # Insert the backlink
         custom_id_pattern = r'\s*\{#([a-zA-Z0-9\-_]+)\}\s*$'
         match = re.search(custom_id_pattern, original_line)
 
-        if match:
-            # Use the custom ID
-            heading_id = match.group(1)
-        else:
-            # Generate ID from heading text (same logic as TOC generation)
-            heading_id = re.sub(r'[^\w\s-]', '', heading_text.lower())
-            heading_id = re.sub(r'[\s_]+', '-', heading_id).strip('-')
-
-        # Build the TOC line ID: toc-{heading-id}
-        toc_line_id = f"toc-{heading_id}"
-
-        # Insert the backlink
         if match:
             # Insert link before the custom ID
             # Format: ## Heading [↑](#toc-heading-id) {#heading-id}

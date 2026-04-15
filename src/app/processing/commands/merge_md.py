@@ -110,6 +110,11 @@ Examples:
         type=str,
         help="Title for the merged Markdown document."
     )
+    parser.add_argument(
+        "-f", "--force",
+        action="store_true",
+        help="Force overwrite if output file already exists."
+    )
 
     args = parser.parse_args(argv)
 
@@ -137,10 +142,18 @@ Examples:
 
     # Determine final output path
     if args.output is None:
+        # No output specified: create directory next to source
         output_dir_resolved = args.source_dir.parent / f"{args.source_dir.name}-merged"
+        final_output_file = output_dir_resolved / final_output_name
     else:
-        output_dir_resolved = args.output
-    final_output_file = output_dir_resolved / final_output_name
+        # Output specified: check if it's a file or directory
+        if args.output.suffix == '.md':
+            # User provided a file path (e.g., output.md)
+            final_output_file = args.output
+        else:
+            # User provided a directory path
+            output_dir_resolved = args.output
+            final_output_file = output_dir_resolved / final_output_name
 
     # Execute core logic
     try:
@@ -148,7 +161,8 @@ Examples:
             source_dir=args.source_dir,
             output_file=final_output_file,
             output_name=final_output_name,
-            title=final_title
+            title=final_title,
+            force=args.force
         )
 
         if exit_code == 0:

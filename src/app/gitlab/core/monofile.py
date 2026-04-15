@@ -84,6 +84,7 @@ def generate_code_monofile(
     output_mode: str = "separate",
     filename_template: Optional[str] = None,
     templates: Optional[list[str]] = None,
+    force: bool = False,
 ) -> Tuple[int, Optional[Path]]:
     """Generate <repo>.code.md using project2md logic."""
     base_dir = _resolve_base_dir(repo_dir, output_dir, output_mode)
@@ -96,7 +97,7 @@ def generate_code_monofile(
     # Always generate a markdown file to feed HTML conversion
     md_output = md_targets[0] if md_targets else (base_dir / f"{repo_dir.name}.code.md")
     logger.info(f"Generating code monofile for {repo_dir} -> {md_output}")
-    exit_code, md_path = project_to_markdown_logic(directory=repo_dir, output_file=md_output)
+    exit_code, md_path = project_to_markdown_logic(directory=repo_dir, output_file=md_output, force=force)
     if exit_code != 0 or not md_path:
         return exit_code, md_path
 
@@ -126,6 +127,7 @@ def generate_wiki_monofile(
     filename_template: Optional[str] = None,
     templates: Optional[list[str]] = None,
     flatten_dir: Optional[Path] = None,
+    force: bool = False,
 ) -> Tuple[int, Optional[Path]]:
     """Generate <repo>.md from a wiki repo using flatten-md + merge-md."""
     base_dir = _resolve_base_dir(repo_dir, output_dir, output_mode)
@@ -154,6 +156,7 @@ def generate_wiki_monofile(
         output_file=output_file,
         output_name=output_file.name,
         title=f"Wiki: {repo_dir.name}",
+        force=force,
     )
     if exit_code != 0 or not md_path:
         return exit_code, md_path
@@ -182,6 +185,7 @@ def generate_monofile(
     output_mode: str = "separate",
     filename_template: Optional[str] = None,
     templates: Optional[list[str]] = None,
+    force: bool = False,
 ) -> Tuple[int, Optional[Path]]:
     """Generate a monofile from a repo directory (code or wiki)."""
     effective_mode = mode or infer_repo_mode(repo_dir)
@@ -192,6 +196,7 @@ def generate_monofile(
             output_mode=output_mode,
             filename_template=filename_template,
             templates=templates,
+            force=force,
         )
     return generate_code_monofile(
         repo_dir=repo_dir,
@@ -199,4 +204,5 @@ def generate_monofile(
         output_mode=output_mode,
         filename_template=filename_template,
         templates=templates,
+        force=force,
     )

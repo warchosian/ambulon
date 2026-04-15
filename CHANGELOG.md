@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 3.5.0 (2026-04-15)
+
+### Feat
+
+- **vscode**: ajout support Cursor et VS Code Insiders + doc --help
+- **vscode**: module gestion extensions VS Code/VSCodium
+- **scripts**: ajoute script création release GitHub avec token masqué
+
+## 3.4.0 (2026-04-02)
+
+### Feat
+
+- **piag**: ajout étape 5 publication (HTML + PDF) dans doc-kit
+- **piag**: gestion interactive des contraintes réseau VPN
+
+### Refactor
+
+- **piag**: simplifier organisation doc-kit (sans sous-répertoire)
+
+## 3.3.0 (2026-04-01)
+
+### Feat
+
+- **config**: système complet de tracking de configuration
+
+### Fix
+
+- **tests**: correct import paths in config tests
+- **md2interactive**: corrige variable non définie + enrichit documentation
+
 ## 3.2.0 (2026-03-22)
 
 ### Feat
