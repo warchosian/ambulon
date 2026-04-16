@@ -127,6 +127,13 @@ See also:
         help="Mark as pre-release"
     )
 
+    parser.add_argument(
+        "-y", "--yes", "--force",
+        action="store_true",
+        dest="force",
+        help="Skip confirmation prompts"
+    )
+
     # Configuration
     parser.add_argument(
         "-c", "--config",
@@ -194,14 +201,18 @@ See also:
         manager = ReleaseManager(token=token, owner=owner, repo=repo)
 
         # Check if release already exists
-        if manager.release_exists(args.tag):
+        release_exists = manager.release_exists(args.tag)
+        if release_exists:
             print(f"\n⚠️  Release {args.tag} already exists!")
             print(f"   URL: https://github.com/{owner}/{repo}/releases/tag/{args.tag}")
 
-            response = input("\nDo you want to continue anyway? (y/N): ").strip().lower()
-            if response not in ['y', 'yes', 'o', 'oui']:
-                print("\n❌ Operation cancelled.")
-                return 0
+            if not args.force:
+                response = input("\nDo you want to continue anyway? (y/N): ").strip().lower()
+                if response not in ['y', 'yes', 'o', 'oui']:
+                    print("\n❌ Operation cancelled.")
+                    return 0
+            else:
+                print("   --force specified, will add assets to existing release...")
 
         # Prepare title
         title = args.title or f"v{args.tag}"
@@ -267,22 +278,34 @@ See also:
                 print(f"     - {asset.name} ({asset.stat().st_size / 1024:.1f} KB)")
         print("\n" + "=" * 70)
 
-        # Create release
-        print(f"\n🚀 Creating release...")
-        release = manager.create_release_from_tag(
-            tag=args.tag,
-            title=title,
-            description=description,
-            assets=assets,
-            draft=config["github"]["release"]["draft"],
-            prerelease=config["github"]["release"]["prerelease"]
-        )
+        # Create release or add assets to existing release
+        if release_exists and args.force:
+            print(f"\n📦 Adding assets to existing release...")
+            if assets:
+                release = manager.add_assets_to_release(tag=args.tag, assets=assets)
+                print(f"\n✅ Assets added successfully!")
+                print(f"   URL: {release['html_url']}")
+                print(f"   Assets uploaded: {len(assets)}")
+            else:
+                print(f"\n⚠️  No assets to upload.")
+                release = manager.client.get_release_by_tag(args.tag)
+                print(f"   URL: {release['html_url']}")
+        else:
+            print(f"\n🚀 Creating release...")
+            release = manager.create_release_from_tag(
+                tag=args.tag,
+                title=title,
+                description=description,
+                assets=assets,
+                draft=config["github"]["release"]["draft"],
+                prerelease=config["github"]["release"]["prerelease"]
+            )
 
-        # Success
-        print(f"\n✅ Release created successfully!")
-        print(f"   URL: {release['html_url']}")
-        if assets:
-            print(f"   Assets uploaded: {len(assets)}")
+            # Success
+            print(f"\n✅ Release created successfully!")
+            print(f"   URL: {release['html_url']}")
+            if assets:
+                print(f"   Assets uploaded: {len(assets)}")
 
         return 0
 

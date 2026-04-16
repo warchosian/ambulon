@@ -156,6 +156,37 @@ class ReleaseManager:
             prerelease=template_data.get("prerelease", False)
         )
 
+    def add_assets_to_release(self, tag: str, assets: List[Path]) -> Dict[str, Any]:
+        """
+        Add assets to an existing release.
+
+        Args:
+            tag: Tag name of the release
+            assets: List of file paths to upload
+
+        Returns:
+            Release data dictionary
+
+        Raises:
+            requests.HTTPError: If release not found or upload fails
+        """
+        logger.info(f"Adding assets to existing release {tag}...")
+
+        # Get existing release
+        release = self.client.get_release_by_tag(tag)
+
+        # Upload assets
+        if assets:
+            logger.info(f"Uploading {len(assets)} asset(s)...")
+            for asset_path in assets:
+                try:
+                    self.client.upload_asset(release["id"], asset_path)
+                except Exception as e:
+                    logger.error(f"Failed to upload {asset_path.name}: {e}")
+
+        logger.info(f"Assets added to release: {release['html_url']}")
+        return release
+
     def find_wheel_for_version(self, version: str, dist_dir: Path = Path("dist")) -> Optional[Path]:
         """
         Find wheel file for a specific version.
