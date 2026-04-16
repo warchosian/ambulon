@@ -1,0 +1,41 @@
+# Configuration GitHub pour Ambulon - Example Template
+# Copiez ce fichier vers github.yaml et ajustez les valeurs
+
+github:
+  # Repository settings
+  # Utilisez des variables d'environnement pour plus de flexibilité
+  owner: "${GITHUB_OWNER:-your_username_here}"
+  repo: "${GITHUB_REPO:-your_repo_here}"
+
+  # Authentication
+  # ⚠️ NE JAMAIS commiter un vrai token - toujours utiliser une variable d'environnement
+  # Pour créer un token: https://github.com/settings/tokens
+  # Permissions requises: "repo" (Full control of private repositories)
+  token: "${GITHUB_TOKEN:-}"
+
+  # Release settings
+  release:
+    # Create releases as drafts by default (true to review before publishing)
+    draft: false
+
+    # Mark new releases as pre-releases (useful for beta/alpha versions)
+    prerelease: false
+
+    # Auto-generate release notes from commits (GitHub feature)
+    # This uses commit messages between tags to generate notes
+    generate_notes: false
+
+  # Release template (optionnel)
+  # Personnalisez le format du titre et de la description
+  # template:
+  #   title: "v{version} - {description}"
+  #   body_file: ".github/RELEASE_TEMPLATE.md"
+
+# Variables d'environnement supportées:
+# - GITHUB_TOKEN: Token d'authentification (OBLIGATOIRE)
+# - GITHUB_OWNER: Propriétaire du repository (défaut: warchosian)
+# - GITHUB_REPO: Nom du repository (défaut: ambulon)
+
+# Exemple d'utilisation:
+# export GITHUB_TOKEN=ghp_your_token_here
+# ambulon github-release --tag 3.5.0

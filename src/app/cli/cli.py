@@ -72,6 +72,9 @@ def show_help():
     print("  vscode-uninstall      Désinstaller les extensions redondantes")
     print("  vscode-list           Lister les extensions installées")
     print()
+    print("Modules GitHub (gestion des releases):")
+    print("  github-release        Créer une release GitHub depuis un tag")
+    print()
     print("Modules d'encoding:")
     print("  check-utf8            Vérifier l'encodage des fichiers Markdown")
     print("  fix-utf8              Corriger l'encodage des fichiers Markdown")
@@ -1073,6 +1076,10 @@ def main():
         elif command == 'vscode-list':
             from app.vscode.commands.vscode_list import main as vscode_list_main
             return vscode_list_main(sys.argv[2:])
+        # GitHub operations
+        elif command == 'github-release':
+            from app.github.commands.github_release import main as github_release_main
+            return github_release_main(sys.argv[2:])
         elif command == 'config':
             return handle_config_command()
         elif command == 'init':
