@@ -75,6 +75,9 @@ def show_help():
     print("Modules GitHub (gestion des releases):")
     print("  github-release        Créer une release GitHub depuis un tag")
     print()
+    print("Modules GitLab (gestion des releases):")
+    print("  gitlab-release        Créer une release GitLab depuis un tag")
+    print()
     print("Modules ZIP (gestion d'archives):")
     print("  zip-create            Créer une archive ZIP avec chiffrement AES-256")
     print("  zip-extract           Extraire une archive ZIP")
@@ -1084,6 +1087,10 @@ def main():
         elif command == 'github-release':
             from app.github.commands.github_release import main as github_release_main
             return github_release_main(sys.argv[2:])
+        # GitLab operations
+        elif command == 'gitlab-release':
+            from app.gitlab.releases.commands.gitlab_release import main as gitlab_release_main
+            return gitlab_release_main(sys.argv[2:])
         # ZIP operations
         elif command == 'zip-create':
             from app.zip.commands.zip_create import main as zip_create_main
