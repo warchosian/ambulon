@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sireines.wiki-itoced</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #f4f4f4;
+        }
+        .back-to-toc {
+            text-decoration: none;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        blockquote {
+            border-left: 4px solid #ddd;
+            margin: 0;
+            padding-left: 16px;
+            color: #666;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+<h2 id="table-des-matières-html-tag-86">Table des matières <a href="#toc-table-des-matières">↑</a></h2>
+
+<ul>
+<li><a id="toc-déploiement-déploiement-de-lapplicatif-recette-pré-production-production"></a><a href="#déploiement-déploiement-de-lapplicatif-recette-pré-production-production">📄 Déploiement › Déploiement-de-l'applicatif-(Recette,-pré-production,-production</a>
+</li>
+<li><a id="toc-home"></a><a href="#home">📄 Home</a>
+<ul>
+<li><a id="toc-qui-fait-quoi"></a><a href="#qui-fait-quoi">Qui fait quoi</a>
+</li>
+<li><a id="toc-historique"></a><a href="#historique">Historique</a>
+</li>
+<li><a id="toc-accès-au-site"></a><a href="#accès-au-site">Accès au site</a>
+</li>
+<li><a id="toc-cerbère"></a><a href="#cerbère">Cerbère</a>
+</li>
+<li><a id="toc-version"></a><a href="#version">Version</a>
+</li>
+<li><a id="toc-documentations"></a><a href="#documentations">Documentations</a>
+<ul>
+<li><a id="toc-guide-du-chef-de-produit"></a><a href="#guide-du-chef-de-produit">Guide du chef de produit :</a>
+</li>
+<li><a id="toc-fonctionnel"></a><a href="#fonctionnel">Fonctionnel :</a>
+</li>
+<li><a id="toc-technique"></a><a href="#technique">Technique :</a>
+</li>
+<li><a id="toc-reversing"></a><a href="#reversing">Reversing</a>
+</li>
+<li><a id="toc-deploiement"></a><a href="#deploiement">Deploiement</a>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="toc-recette-connexionbdd_docker"></a><a href="#recette-connexionbdd_docker">📄 Recette › ConnexionBDD_Docker</a>
+</li>
+<li><a id="toc-recette-livraisonsurpostedocker"></a><a href="#recette-livraisonsurpostedocker">📄 Recette › LivraisonSurPosteDocker</a>
+</li>
+<li><a id="toc-document-dinstallation-sur-poste-de-travail-docker"></a><a href="#document-dinstallation-sur-poste-de-travail-docker">Document d'installation sur Poste de Travail (Docker)</a>
+<ul>
+<li><a id="toc-0-pré-requis"></a><a href="#0-pré-requis">0 - Pré-requis</a>
+</li>
+<li><a id="toc-1-les-conteneurs-et-les-images"></a><a href="#1-les-conteneurs-et-les-images">1 - Les conteneurs et les images</a>
+<ul>
+<li><a id="toc-11-vocabulaire"></a><a href="#11-vocabulaire">1.1 Vocabulaire</a>
+</li>
+<li><a id="toc-12-cas-particulier-application-sireines"></a><a href="#12-cas-particulier-application-sireines">1.2 Cas particulier  : Application Sireines</a>
+</ul>
+</li>
+<li><a id="toc-2-aller-chercher-le-war-dans-gitlab"></a><a href="#2-aller-chercher-le-war-dans-gitlab">2 - Aller chercher le war dans gitlab</a>
+<ul>
+<li><a id="toc-21-les-liens-gitlab"></a><a href="#21-les-liens-gitlab">2.1 Les liens Gitlab</a>
+</li>
+<li><a id="toc-22-télécharger-le-fichier-war-et-le-déposer-dans-le-répertoire-de-travail-de-votre-poste"></a><a href="#22-télécharger-le-fichier-war-et-le-déposer-dans-le-répertoire-de-travail-de-votre-poste">2.2 Télécharger le fichier *.war et le déposer dans le répertoire de travail de votre poste</a>
+</li>
+<li><a id="toc-23-annotation"></a><a href="#23-annotation">2.3 Annotation</a>
+</ul>
+</li>
+<li><a id="toc-3-installation-de-lapplicatif"></a><a href="#3-installation-de-lapplicatif">3 - Installation de l'applicatif</a>
+<ul>
+<li><a id="toc-31-prérequis"></a><a href="#31-prérequis">3.1 Prérequis</a>
+</li>
+<li><a id="toc-32-vérification-de-lexistence-des-volumes-visual-studio-code"></a><a href="#32-vérification-de-lexistence-des-volumes-visual-studio-code">3.2 Vérification de l'existence des volumes (Visual studio Code)</a>
+</li>
+<li><a id="toc-33-si-besoin-supprimer-lapplicatif"></a><a href="#33-si-besoin-supprimer-lapplicatif">3.3 Si besoin supprimer l'applicatif</a>
+</li>
+<li><a id="toc-34-créer-et-démarrer-tous-les-services"></a><a href="#34-créer-et-démarrer-tous-les-services">3.4 Créer et démarrer tous les services</a>
+</ul>
+</li>
+<li><a id="toc-4-installation-de-la-base-de-données"></a><a href="#4-installation-de-la-base-de-données">4 - Installation de la base de données</a>
+<ul>
+<li><a id="toc-41-prérequis"></a><a href="#41-prérequis">4.1 Prérequis</a>
+</li>
+<li><a id="toc-42-installation-de-la-bdd-avec-pgadmin-etou-ligne-de-commande"></a><a href="#42-installation-de-la-bdd-avec-pgadmin-etou-ligne-de-commande">4.2  Installation de la BDD avec pgAdmin et/ou ligne de commande :</a>
+</ul>
+</li>
+</ul>
+</li>
+<li><a id="toc-annexes"></a><a href="#annexes">Annexe(s)</a>
+<ul>
+<li><a id="toc-ouvrir-un-terminal-dans-lapplication-visual-code"></a><a href="#ouvrir-un-terminal-dans-lapplication-visual-code">Ouvrir un terminal dans l'application Visual code</a>
+</ul>
+</li>
+<li><a id="toc-reversing-1"></a><a href="#reversing-1">📄 Reversing</a>
+</li>
+<li><a id="toc-documentation-warchodevplace"></a><a href="#documentation-warchodevplace">Documentation WarchoDevplace</a>
+</li>
+<li><a id="toc-sireines-cerbère"></a><a href="#sireines-cerbère">📄 Sireines › Cerbère</a>
+</li>
+<li><a id="toc-sireines-sites"></a><a href="#sireines-sites">📄 Sireines › sites</a>
+</li>
+<li><a id="toc-sireines-version"></a><a href="#sireines-version">📄 Sireines › Version</a>
+</li>
+</ul>
+
+<p><hr></p>
+
+<a id="dploiement-dploiement-de-lapplicatif-recette-pr-production-production"></a>
+
+<a id="déploiement-déploiement-de-lapplicatif-recette-pré-production-production"></a>
+<h1 id="déploiement-déploiement-de-lapplicatif-recette-pré-production-production-html-tag-126">📄 Déploiement › Déploiement-de-l'applicatif-(Recette,-pré-production,-production <a href="#toc-déploiement-déploiement-de-lapplicatif-recette-pré-production-production">↑</a></h1>
+
+<blockquote>
+<strong>Source :</strong> <code>Déploiement.Déploiement-de-l'applicatif-(Recette,-pré-production,-production.md</code>
+</blockquote>
+
+<p>Déploiement :</p>
+
+<p>Se connecter avec 'Bastion'</p>
+
+<p>puis utiliser un alias de connexion : sireinesrec, sireinesppr ou sireinesprod</p>
+
+<p>cd /opt/app</p>
+
+<p>copie du docker-compose.yml avec la date (ex :  docker-compose.yml.20250523)<br>
+ex: <br>
+cp docker-compose.yml docker-compose.yml.20250523</p>
+
+<p>effectuer un docker ps pour identifier le container sireines-app</p>
+
+<p>!<a href="uploads/12738ffe6934641f1c4ed401955817a3/Capture.JPG">Capture</a></p>
+
+<p>docker rm -f sireines-app</p>
+
+<p>vi docker-compose.yml (Pour modifier la version à livrer)</p>
+
+<p>docker compose up -d</p>
+
+<p>Pour le test de la recette aller sur :</p>
+
+<p>http://sireines.recette.pnm3.eco4.cloud.e2.rie.gouv.fr/Accueil.do</p>
+
+<p>!<a href="uploads/dba83529ace31f5dc3448548f1e5f1d6/Capture2.JPG">Capture2</a></p>
+
+<p>Effectuer quelques tests fonctionnels simples :</p>
+
+<p>!<a href="uploads/e282ab2b5a5e58e429f2fcc7f673edcf/Capture3.JPG">Capture3</a></p>
+
+<p><hr></p>
+
+<a id="home"></a>
+
+<a id="home"></a>
+<h1 id="home-html-tag-130">📄 Home <a href="#toc-home">↑</a></h1>
+
+<blockquote>
+<strong>Source :</strong> <code>Home.md</code>
+</blockquote>
+
+<p>La mission des compétences scientifiques et techniques (DRI/AST4) tient à jour une base de données dénommée SIREINES qui recense toutes les demandes de qualification par les comités de domaine de ses agents. Elle suit l'évolution de ces données, coordonne leur évaluation par les comités de domaine, et tient les agents informés des suites de leurs de leurs demandes.</p>
+
+<p>Sommaire :<br>
+<ul><br>
+<li><a href="#quifaitquoi">Qui fait quoi</a></li><br>
+<li><a href="#Historique">Historique</a></li><br>
+<li><a href="#Site">Accès au site</a></li><br>
+<li><a href="#Cerbere">Cerbère</a></li><br>
+<li><a href="#Version">Version</a></li><br>
+<li><a href="#Doc">Documentations</a></li><br>
+</ul></p>
+
+<p><a name="quifaitquoi"></a><br>
+<a id="qui-fait-quoi"></a><br>
+<h2 id="qui-fait-quoi-html-tag-137">Qui fait quoi <a href="#toc-qui-fait-quoi">↑</a></h2></p>
+
+<table>
+<thead>
+<tr>
+<th>Intervenants</th>
+<th>Commentaires</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MOA MTES</td>
+<td>Zemour Pascal (Chargé de mission) - CGDD/DRI/AST4 Pascal.Zemour@developpement-durable.gouv.fr =\> Chef de projet opérationnel de l'application</td>
+</tr>
+<tr>
+<td></td>
+<td>Letrouit Vincent (Chef de bureau) - CGDD/DRI/AST4 Vincent.Letrouit@developpement-durable.gouv.fr =\> Sponsor des projets</td>
+</tr>
+<tr>
+<td>MOE prestataire</td>
+<td>Jusqu'en novembre 2021 : Klee Group</td>
+</tr>
+<tr>
+<td></td>
+<td>\- Matthieu Georges (Chef de projet) matthieu.georges@kleegroup.com</td>
+</tr>
+<tr>
+<td></td>
+<td>\- Olivier Venot (Directeur de projet) olivier.venot@kleegroup.com</td>
+</tr>
+</tbody>
+</table><a name="Historique"></a>
+<a id="historique"></a>
+<h2 id="historique-html-tag-138">Historique <a href="#toc-historique">↑</a></h2>
+
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Références</th>
+<th>Type d'évolution</th>
+<th>Fichier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>26/02/2020</td>
+<td>Mantis 0052083</td>
+<td>Évolution mineure des courriers</td>
+<td>\<a href="uploads/431f99b1ec1a87bc71962a80758af481/sireines_mantis_0052083.pdf">[sireines_mantis_0052083.pdf</a>\]</td>
+</tr>
+<tr>
+<td>15/09/2020</td>
+<td>Mantis 0056137</td>
+<td>Demande de mise à jour des courriers</td>
+<td>\<a href="uploads/d67a07eca5a5a248db13b6ebc71e6a0b/sireines_mantis_0056137.pdf">[sireines_mantis_0056137.pdf</a>\]</td>
+</tr>
+<tr>
+<td>22/10/2020</td>
+<td>Mantis 0056773</td>
+<td>Correction de courriers</td>
+<td>\<a href="uploads/e855689ab130403e40ada37f2c93848f/sireines_mantis_0056773.pdf">[sireines_mantis_0056773.pdf</a>\]</td>
+</tr>
+<tr>
+<td>03/05/2021</td>
+<td>Mantis 0059550</td>
+<td>Extractions=erreur eclipse</td>
+<td>\<a href="uploads/dbf64e820c7296237e5c5eafbe9dca45/sireines_mantis_0059550.pdf">[sireines_mantis_0059550.pdf</a>\]</td>
+</tr>
+<tr>
+<td>30/09/2021</td>
+<td>Mantis 0061626</td>
+<td>Anomalie dans livraison 2.5.6</td>
+<td>\<a href="uploads/ac13ef2303459e85a76ccba84ce9da96/sireines_mantis_0061626.pdf">[sireines_mantis_0061626.pdf</a>\]</td>
+</tr>
+</tbody>
+</table><a name="Site"></a>
+<a id="accès-au-site"></a>
+<h2 id="accès-au-site-html-tag-144">Accès au site <a href="#toc-accès-au-site">↑</a></h2>
+
+<a href="Sireines/sites">sites</a>
+
+<p><a name="Cerbere"></a><br>
+<a id="cerbère"></a><br>
+<h2 id="cerbère-html-tag-146">Cerbère <a href="#toc-cerbère">↑</a></h2></p>
+
+<a href="Sireines/Cerbère">cerbère</a>
+
+<p><a name="Version"></a><br>
+<a id="version"></a><br>
+<h2 id="version-html-tag-148">Version <a href="#toc-version">↑</a></h2></p>
+
+<a href="Sireines/Version">version</a>
+
+<p><a name="Doc"></a><br>
+<a id="documentations"></a><br>
+<h2 id="documentations-html-tag-150">Documentations <a href="#toc-documentations">↑</a></h2></p>
+
+<a id="guide-du-chef-de-produit"></a>
+<h3 id="guide-du-chef-de-produit-html-tag-151">Guide du chef de produit : <a href="#toc-guide-du-chef-de-produit">↑</a></h3>
+ * <a href="Recette/LivraisonSurPosteDocker">Recette d'une livraison sur poste (Docker)</a>
+ * Recette d'une livraison sur environnement IAAS
+ * <a href="Recette/ConnexionBDD_Docker">Connexion base de données</a>
+
+<a id="fonctionnel"></a>
+<h3 id="fonctionnel-html-tag-154">Fonctionnel : <a href="#toc-fonctionnel">↑</a></h3>
+
+<a id="technique"></a>
+<h3 id="technique-html-tag-155">Technique : <a href="#toc-technique">↑</a></h3>
+  * <a href="Technique/DocumentationInstallationEtExploitation">Document d'installation et d'exploitation (IAAS)</a>
+    
+<a id="reversing"></a>
+<h3 id="reversing-html-tag-157">Reversing <a href="#toc-reversing">↑</a></h3>
+  * <a href="Reversing/App">Application</a>
+  * <a href="Reversing/Database">Base de données</a>
+
+<a id="deploiement"></a>
+<h3 id="deploiement-html-tag-160">Deploiement <a href="#toc-deploiement">↑</a></h3>
+  * <a href="Technique/DeploiementApplicatif">Procedure de déploiement applicatif </a>
+
+<p><hr></p>
+
+<a id="recette-connexionbdd_docker"></a>
+
+<a id="recette-connexionbdd_docker"></a>
+<h1 id="recette-connexionbdd-docker-html-tag-162">📄 Recette › ConnexionBDD_Docker <a href="#toc-recette-connexionbdd-docker">↑</a></h1>
+
+<blockquote>
+<strong>Source :</strong> <code>Recette.ConnexionBDD_Docker.md</code>
+</blockquote>
+
+<p>Se mettre sur le serveur de recette (sireinesrec)</p>
+
+<p>Lancer Run pageant <br>
+New Session (Load Bastion)</p>
+
+<ul>
+<li>/opt/app</li>
+<li>cat .env</li>
+<li>docker exec -it sireines-db bash</li>
+<li>psql -U sireines</li>
+</ul>
+
+<p><hr></p>
+
+<a id="recette-livraisonsurpostedocker"></a>
+
+<a id="recette-livraisonsurpostedocker"></a>
+<h1 id="recette-livraisonsurpostedocker-html-tag-163">📄 Recette › LivraisonSurPosteDocker <a href="#toc-recette-livraisonsurpostedocker">↑</a></h1>
+
+<blockquote>
+<strong>Source :</strong> <code>Recette.LivraisonSurPosteDocker.md</code>
+</blockquote>
+
+<p><a name="HautdePage"></a><br>
+<a id="document-dinstallation-sur-poste-de-travail-docker"></a><br>
+<h1 id="document-dinstallation-sur-poste-de-travail-docker-html-tag-164">Document d'installation sur Poste de Travail (Docker) <a href="#toc-document-dinstallation-sur-poste-de-travail-docker">↑</a></h1></p>
+
+<p>Sommaire :</p>
+
+<p>*<a href="#prerequis">Pré-requis</a></p>
+
+<p><a name="prerequis"></a><br>
+<a id="0-pré-requis"></a><br>
+<h2 id="0---pré-requis-html-tag-166">0 - Pré-requis <a href="#toc-0---pré-requis">↑</a></h2></p>
+
+<p>Avoir installé sur son poste : <br>
+<ul><br>
+<li>Docker Desktop Installer.exe (application Docker Desktop) (Logo Baleine) avec wsl-updatex64.msi</li><br>
+</ul></p>
+
+<ul>
+<li>L'application Visual code avec les extensions :</li>
+</ul>
+    * Dev Containers
+    * Docker
+    <em> French Language Pack for Visual Studio Code (</em>)
+    <em> Markdown Preview Enhanced (</em>)
+    * WSL
+<em> L'application Prince (</em>) et ajouter dans les variables d'environnement dans le path :
+    C:\Program Files (x86)\Prince\engine\bin
+
+<ul>
+<li>L'interface de base de données Pgadmin 4 v8 (minimal)</li>
+</ul>
+
+<p>(*) Non obligatoire</p>
+
+<a href="#HautdePage">Haut de Page</a>
+
+<a id="1-les-conteneurs-et-les-images"></a>
+<h2 id="1---les-conteneurs-et-les-images-html-tag-168">1 - Les conteneurs et les images <a href="#toc-1---les-conteneurs-et-les-images">↑</a></h2>
+
+<a id="11-vocabulaire"></a>
+<h3 id="11-vocabulaire-html-tag-169">1.1 Vocabulaire <a href="#toc-11-vocabulaire">↑</a></h3>
+
+<p><strong>Un conteneur</strong> est une unité logicielle standard qui regroupe le code et toutes ses dépendances afin que l'application s'exécute rapidement et de manière fiable d'un environnement informatique à un autre. Une image de conteneur Docker est un package logiciel léger, autonome et exécutable qui comprend tout ce dont vous avez besoin pour exécuter une application : code, runtime, outils système, bibliothèques système et paramètres.</p>
+
+<p><strong>Les images de conteneurs</strong><br>
+deviennent des conteneurs au moment de l'exécution et dans le cas des conteneurs Docker, les images deviennent des conteneurs lorsqu'elles s'exécutent sur Docker Engine (logo Baleine).</p>
+
+<a id="12-cas-particulier-application-sireines"></a>
+<h3 id="12-cas-particulier-application-sireines-html-tag-170">1.2 Cas particulier  : Application Sireines <a href="#toc-12-cas-particulier-application-sireines">↑</a></h3>
+L'application Sireines comporte  trois conteneurs, trois images et un volume.
+
+<ul>
+<li>Le conteneur de l'applicatif s'appelle <strong>sireines_app_usine_container</strong> et l'image associée s'appelle <strong>sireines_app_usine_image</strong>.</li>
+</ul>
+
+<ul>
+<li>Le conteneur de la base de données s'appelle <strong>sireines_db_usine_container</strong> et l'image associée s'appelle <strong>postgres:14.1-alpine</strong>.</li>
+</ul>
+
+<ul>
+<li>Un conteneur a été ajouté pour garder en mémoire les connexions à la base de données. Ce conteneur s'appelle <strong>sireines_pgadmin_container</strong> et l'image associée s'appelle <strong>dpage/pgadmin4</strong>.</li>
+</ul>
+
+<p>La base de données est contenu dans un seul volume appelé : <strong>sireines_db_sireines_vol</strong>.<br>
+Les connexions sont sauvegardées dans le volume appelé : <strong>sireines_pgadmin_sireines_vol</strong>.</p>
+
+<a id="2-aller-chercher-le-war-dans-gitlab"></a>
+<h2 id="2---aller-chercher-le-war-dans-gitlab-html-tag-171">2 - Aller chercher le war dans gitlab <a href="#toc-2---aller-chercher-le-war-dans-gitlab">↑</a></h2>
+
+<a id="21-les-liens-gitlab"></a>
+<h3 id="21-les-liens-gitlab-html-tag-172">2.1 Les liens Gitlab <a href="#toc-21-les-liens-gitlab">↑</a></h3>
+
+<ul>
+<li><strong>Lien Gitlab</strong></li>
+</ul>
+
+<p>https://gitlab-forge.din.developpement-durable.gouv.fr/</p>
+
+<ul>
+<li><strong>Lien Gitlab du projet Sireines</strong></li>
+</ul>
+
+<p>https://gitlab-forge.din.developpement-durable.gouv.fr/snum/pnm3/produits/rh/sireines</p>
+
+<ul>
+<li><strong>Emplacement du war dans Gitlab</strong></li>
+</ul>
+
+<p>deploy / package registry</p>
+
+<p>(https://gitlab-forge.din.developpement-durable.gouv.fr/snum/pnm3/produits/rh/sireines/-/packages) puis cliquer sur le lien pour télécharger le war  (sireines-web-*.war).</p>
+
+<a id="22-télécharger-le-fichier-war-et-le-déposer-dans-le-répertoire-de-travail-de-votre-poste"></a>
+<h3 id="22-télécharger-le-fichier-war-et-le-déposer-dans-le-répertoire-de-travail-de-votre-poste-html-tag-173">2.2 Télécharger le fichier *.war et le déposer dans le répertoire de travail de votre poste <a href="#toc-22-télécharger-le-fichier-war-et-le-déposer-dans-le-répertoire-de-travail-de-votre-poste">↑</a></h3>
+
+<p>c:/sireines/sireines_pgadmin (Répertoire de travail)</p>
+
+<a id="23-annotation"></a>
+<h3 id="23-annotation-html-tag-174">2.3 Annotation <a href="#toc-23-annotation">↑</a></h3>
+
+<p>A noter que dans le fichier Dockerfile, la ligne <br>
+    <strong>COPY --chown=root:root sireines-web-*.war /tmp/ROOT.war</strong><br>
+permet de prendre tous les war commençant par <strong>"sireines-web-"</strong> et se terminant par <strong>".war"</strong>.</p>
+
+<p>Lors d'une nouvelle livraison d'un war, il suffit de substituer l'ancien war par le nouveau war dans le répertoire de travail.</p>
+
+<p>Dans ce cas précis, il n'y aura rien d'autre à changer et le fichier Dockerfile peut rester en l'état.</p>
+
+<p>Toutes les sources se trouvent dans le répertoire partagé du service :</p>
+
+<a href="M:\Produits numériques\Ressources humaines\Sireines\Docker\Archives">M:\Produits numériques\Ressources humaines\Sireines\Docker\Archives</a>
+M: correspond au Dossier partagé [DPNM3]
+
+<p>On y trouvera les war et les dump de l'application.</p>
+
+<div style="page-break-after: always; visibility: hidden">\pagebreak</div>
+
+<a id="3-installation-de-lapplicatif"></a>
+<h2 id="3---installation-de-lapplicatif-html-tag-176">3 - Installation de l'applicatif  <a href="#toc-3---installation-de-lapplicatif">↑</a></h2>
+
+<a id="31-prérequis"></a>
+<h3 id="31-prérequis-html-tag-177">3.1 Prérequis <a href="#toc-31-prérequis">↑</a></h3>
+<ul>
+<li>Avoir récupérer le répertoire <strong>[M:\Produits numériques\Ressources humaines\Sireines\Docker\sireines_pgadmin]</strong>(M:\Produits numériques\Ressources humaines\Sireines\Docker\sireines_pgadmin)</li>
+</ul>
+M: correspond au Dossier partagé [DPNM3]
+et le déposer sur le poste de travail <strong>c:/sireines/sireines_pgadmin</strong>
+
+<ul>
+<li>Lancer l'application Docker Desktop (Logo Baleine) et s'assurer que les moteurs sont bien en exécution (Running)</li>
+</ul>
+!<a href="img/dockerDesktop.png">alt text</a>
+
+<a id="32-vérification-de-lexistence-des-volumes-visual-studio-code"></a>
+<h3 id="32-vérification-de-lexistence-des-volumes-visual-studio-code-html-tag-179">3.2 Vérification de l'existence des volumes (Visual studio Code) <a href="#toc-32-vérification-de-lexistence-des-volumes-visual-studio-code">↑</a></h3>
+
+<p>Se positionner dans le terminal du Visual Code dans le répertoire de travail:<br>
+!<a href="img/repertoire.PNG">alt text</a></p>
+
+<ul>
+<li>Si le volume sireines_db_sireines_vol n'est pas n'existe pas faire :</li>
+</ul>
+    docker volume create sireines_db_sireines_vol
+    
+    !<a href="images/creation_volume.png">alt text</a>
+
+<p>et modifier <strong>si besoin</strong> les lignes 38 et 74 de docker-compose.yml concernant ce volume.<br>
+!<a href="<images/Volume Sireines pgadmin lignes 38_74.JPG>">alt text</a></p>
+
+<p>Ce volume contiendra les données de la base de données.</p>
+
+<ul>
+<li>Si le volume sireines_pgadmin_sireines_vol n'existe pas faire :</li>
+</ul>
+docker volume create sireines_pgadmin_sireines_vol
+
+<p>et modifier <strong>si besoin</strong> les lignes 66 et 76 de de docker-compose.yml concernant ce volume.<br>
+!<a href="<images/Volume Sreines pgadmin lignes 66-76.JPG>">alt text</a></p>
+
+<p>Au final, on devrait avoir :</p>
+
+<p>!<a href="images/Volume.PNG">alt text</a></p>
+
+<p>Ces volumes sont persistants sur le poste de travail.</p>
+
+<a id="33-si-besoin-supprimer-lapplicatif"></a>
+<h3 id="33-si-besoin-supprimer-lapplicatif-html-tag-185">3.3 Si besoin supprimer l'applicatif <a href="#toc-33-si-besoin-supprimer-lapplicatif">↑</a></h3>
+
+<p>Remove sur le conteneur (sireines_app_usine_container) puis l'image(sireines_app_usine_image).</p>
+
+<p>Dans l'application Visual code :<br>
+!<a href="images/remove_conteneur.PNG">alt text</a><br>
+!<a href="images/remove_image.PNG">alt text</a></p>
+
+<p><strong>Ou</strong> dans Docker Desktop :<br>
+!<a href="images/delete_docker.PNG">alt text</a></p>
+
+<p><strong>Ou</strong> en ligne de commande Dos (cmd)<br>
+``<code>docker rm -f sireines_app_usine_container<pre><code class="language-">```docker rmi -f sireines_app_usine_image</code></pre></p>
+
+<a id="34-créer-et-démarrer-tous-les-services"></a>
+<h3 id="34-créer-et-démarrer-tous-les-services-html-tag-189">3.4 Créer et démarrer tous les services  <a href="#toc-34-créer-et-démarrer-tous-les-services">↑</a></h3>
+ 
+<strong>Lancer sans le VPN :</strong> 
+</code>`<code>docker-compose up -d</code>`<code>
+
+<p>dans le répertoire c:/sireines/sireines_pgadmin</p>
+
+<div style="page-break-after: always; visibility: hidden">\pagebreak</div>
+
+<a id="4-installation-de-la-base-de-données"></a>
+<h2 id="4---installation-de-la-base-de-données-html-tag-190">4 - Installation de la base de données <a href="#toc-4---installation-de-la-base-de-données">↑</a></h2>
+
+<a id="41-prérequis"></a>
+<h3 id="41-prérequis-html-tag-191">4.1 Prérequis <a href="#toc-41-prérequis">↑</a></h3>
+Vérifier dans le fichier .env, les arguments de la bdd du Docker
+            POSTGRES_DB=postgres
+            POSTGRES_HOST=db
+            POSTGRES_PORT=5432
+            POSTGRES_USER=postgres
+            POSTGRES_PASSWORD=postgres
+            POSTGRES_SCHEMA=postgres
+
+<a id="42-installation-de-la-bdd-avec-pgadmin-etou-ligne-de-commande"></a>
+<h3 id="42-installation-de-la-bdd-avec-pgadmin-etou-ligne-de-commande-html-tag-192">4.2  Installation de la BDD avec pgAdmin et/ou ligne de commande : <a href="#toc-42-installation-de-la-bdd-avec-pgadmin-etou-ligne-de-commande">↑</a></h3>
+
+<p>1 - Add Server <br>
+Renseigner Onglet General : Name XXXXX ;<br>
+Renseigner Onglet Connection :<br>
+    Host : localhost<br>
+    Port : 8888<br>
+    Maintenance Database :<br>
+    UserName :<br>
+    MotdePasse :</p>
+
+<p>2- Alimentation de la base via un dump</p>
+
+<div style="page-break-after: always; visibility: hidden">\pagebreak</div>
+<a id="annexes"></a>
+<h1 id="annexes-html-tag-193">Annexe(s)  <a href="#toc-annexes">↑</a></h1>
+
+<a id="ouvrir-un-terminal-dans-lapplication-visual-code"></a>
+<h2 id="ouvrir-un-terminal-dans-lapplication-visual-code-html-tag-194">Ouvrir un terminal dans l'application Visual code  <a href="#toc-ouvrir-un-terminal-dans-lapplication-visual-code">↑</a></h2>
+
+<p><strong>Choisir "Command prompt" à la place de powershell (par défaut)</strong></p>
+
+<p>!<a href="images/prompt_cmd.PNG">alt text</a></p>
+
+<p>Vous pourrez alors utiliser les commandes dos non reconnues par powershell</p>
+
+<p><hr></p>
+
+<a id="reversing"></a>
+
+<a id="reversing-1"></a>
+<h1 id="reversing-html-tag-196">📄 Reversing <a href="#toc-reversing">↑</a></h1>
+
+<blockquote>
+<strong>Source :</strong> </code>Reversing.md<code>
+</blockquote>
+
+<a id="documentation-warchodevplace"></a>
+<h1 id="documentation-warchodevplace-html-tag-197">Documentation WarchoDevplace <a href="#toc-documentation-warchodevplace">↑</a></h1>
+
+<p>Vous pouvez télécharger le fichier ZIP contenant tous les documents ici :  <br>
+<a href="https://gitlab.eco4.cloud.e2.rie.gouv.fr/snum/pnm3/produits/rh/ttc/-/raw/documentation/documentation.zip">Télécharger documents.zip</a></p>
+
+<p>Une fois téléchargé, décompressez le fichier pour accéder aux documents.</p>
+
+<p><hr></p>
+
+<a id="sireines-cerbre"></a>
+
+<a id="sireines-cerbère"></a>
+<h1 id="sireines-cerbère-html-tag-199">📄 Sireines › Cerbère <a href="#toc-sireines-cerbère">↑</a></h1>
+
+<blockquote>
+<strong>Source :</strong> </code>Sireines.Cerbère.md<code>
+</blockquote>
+
+<table>
+<thead>
+<tr>
+<th>Cerbère</th>
+<th>Pré-production</th>
+<th>Production</th>
+<th>Recette</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID</td>
+<td>546</td>
+<td>546</td>
+<td>564</td>
+</tr>
+</tbody>
+</table><strong>Gestion de cerbere recette :</strong>
+
+<p>https://cerbere.recette.e2.rie.gouv.fr/administration/</p>
+
+<p><hr></p>
+
+<a id="sireines-sites"></a>
+
+<a id="sireines-sites"></a>
+<h1 id="sireines-sites-html-tag-200">📄 Sireines › sites <a href="#toc-sireines-sites">↑</a></h1>
+
+<blockquote>
+<strong>Source :</strong> </code>Sireines.sites.md<code>
+</blockquote>
+
+<p>Recette : http://sireines.recette.pnm3.eco4.cloud.e2.rie.gouv.fr/</p>
+
+<p>Pré prod : https://sireines.preprod.e2.rie.gouv.fr/Accueil.do</p>
+
+<p>prod : https://sireines.e2.rie.gouv.fr/Accueil.do</p>
+
+<p><hr></p>
+
+<a id="sireines-version"></a>
+
+<a id="sireines-version"></a>
+<h1 id="sireines-version-html-tag-201">📄 Sireines › Version <a href="#toc-sireines-version">↑</a></h1>
+
+<blockquote>
+<strong>Source :</strong> </code>Sireines.Version.md`
+</blockquote>
+
+<p>Version en cours en production (12 mars 2024) : 2.5.11</p>
+</body>
+</html>

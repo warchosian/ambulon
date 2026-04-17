@@ -1,0 +1,94 @@
+{
+  "chunks": [
+    {
+      "score": 0.014925373134328358,
+      "rerank_score": -8.580867767333984,
+      "document_id": "5793c671-459b-4daf-9ba8-4bd4deb23f70",
+      "document_name": "sireines.wiki.md",
+      "collection_id": "Cv7VP8hUX9tPws5e",
+      "chunk_index": 28,
+      "text": "Document d'installation sur Poste de Travail (Docker)\n3 - Installation de l'applicatif\n3.1 Prérequis\n- Avoir récupérer le répertoire [M:\\Produits numériques\\Ressources humaines\\Sireines\\Docker\\sireines_pgadmin] (M:\\Produits numériques\\Ressources humaines\\Sireines\\Docker\\sireines_pgadmin) M: correspond au Dossier partagé [DPNM3] et le déposer sur le poste de travail c:/sireines/sireines_pgadmin\n- Lancer l'application Docker Desktop (Logo Baleine) et s'assurer que les moteurs sont bien en exécution (Running) alt text"
+    },
+    {
+      "score": 0.03076923076923077,
+      "rerank_score": -8.795500755310059,
+      "document_id": "5793c671-459b-4daf-9ba8-4bd4deb23f70",
+      "document_name": "sireines.wiki.md",
+      "collection_id": "Cv7VP8hUX9tPws5e",
+      "chunk_index": 15,
+      "text": "📄 Home\nDocumentations\nGuide du chef de produit :\n- Recette d'une livraison sur poste (Docker)\n- Recette d'une livraison sur environnement IAAS\n- Connexion base de données"
+    },
+    {
+      "score": 0.028958333333333336,
+      "rerank_score": -9.294424057006836,
+      "document_id": "5793c671-459b-4daf-9ba8-4bd4deb23f70",
+      "document_name": "sireines.wiki.md",
+      "collection_id": "Cv7VP8hUX9tPws5e",
+      "chunk_index": 9,
+      "text": "📄 Home\n```\nHome.md\n```\nLa mission des compétences scientifiques et techniques (DRI/AST4) tient à jour une base de données dénommée SIREINES qui recense toutes les demandes de qualification par les comités de domaine de ses agents. Elle suit l'évolution de ces données, coordonne leur évaluation par les comités de domaine, et tient les agents informés des suites de leurs de leurs demandes.\nSommaire :\n- Qui fait quoi\n- Historique\n- Accès au site\n- Cerbère\n- Version\n- Documentations"
+    },
+    {
+      "score": 0.028850145288501453,
+      "rerank_score": -9.435150146484375,
+      "document_id": "5793c671-459b-4daf-9ba8-4bd4deb23f70",
+      "document_name": "sireines.wiki.md",
+      "collection_id": "Cv7VP8hUX9tPws5e",
+      "chunk_index": 23,
+      "text": "Document d'installation sur Poste de Travail (Docker)\n0 - Pré-requis\nAvoir installé sur son poste :\n- Docker Desktop Installer.exe (application Docker Desktop) (Logo Baleine) avec wsl-updatex64.msi\n- L'application Visual code avec les extensions :\n- Dev Containers\n- Docker\n- French Language Pack for Visual Studio Code (*)\n- Markdown Preview Enhanced (*)\n- WSL\n- L'application Prince (*) et ajouter dans les variables d'environnement dans le path : C:\\Program Files (x86)\\Prince\\engine\\bin\n- L'interface de base de données Pgadmin 4 v8 (minimal)\n(*) Non obligatoire\nHaut de Page"
+    },
+    {
+      "score": 0.0304147465437788,
+      "rerank_score": -10.280876159667969,
+      "document_id": "5793c671-459b-4daf-9ba8-4bd4deb23f70",
+      "document_name": "sireines.wiki.md",
+      "collection_id": "Cv7VP8hUX9tPws5e",
+      "chunk_index": 39,
+      "text": "📄 Technique › DocumentationInstallationEtExploitation\n```\nTechnique.DocumentationInstallationEtExploitation.md\n```\nA completer..."
+    },
+    {
+      "score": 0.030117753623188408,
+      "rerank_score": -10.453595161437988,
+      "document_id": "5793c671-459b-4daf-9ba8-4bd4deb23f70",
+      "document_name": "sireines.wiki.md",
+      "collection_id": "Cv7VP8hUX9tPws5e",
+      "chunk_index": 0,
+      "text": "📚 Table des matières\nDocument fusionné généré automatiquement\n- Archives › Déploiement-de-l'applicatif-recette-preprod-prod\n- Archives › OrganisationArchives\n- Deploiement › DeploiementApplicatif\n- Deploiement › DeploiementApplicatif › Preprod\n- Deploiement › DeploiementApplicatif › Recette\n- Home\n- Recette › ConnexionBDD_Docker\n- Recette › LivraisonSurIAAS\n- Recette › LivraisonSurPosteDocker\n- Reversing\n- Sireines › Cerbère\n- Sireines › sites\n- Sireines › Version\n- Technique › DocumentationInstallationEtExploitation"
+    },
+    {
+      "score": 0.01639344262295082,
+      "rerank_score": -10.659296989440918,
+      "document_id": "5793c671-459b-4daf-9ba8-4bd4deb23f70",
+      "document_name": "sireines.wiki.md",
+      "collection_id": "Cv7VP8hUX9tPws5e",
+      "chunk_index": 22,
+      "text": "Document d'installation sur Poste de Travail (Docker)\nSommaire :"
+    },
+    {
+      "score": 0.014705882352941176,
+      "rerank_score": -10.866255760192871,
+      "document_id": "5793c671-459b-4daf-9ba8-4bd4deb23f70",
+      "document_name": "sireines.wiki.md",
+      "collection_id": "Cv7VP8hUX9tPws5e",
+      "chunk_index": 2,
+      "text": "📄 Archives › OrganisationArchives\n```\nArchives.OrganisationArchives.md\n```\nAncienne procédure de déploiement applicatif : recette, preprod, prod\nAncienne modalité de déploiement Applicatif"
+    },
+    {
+      "score": 0.014084507042253521,
+      "rerank_score": -10.897833824157715,
+      "document_id": "5793c671-459b-4daf-9ba8-4bd4deb23f70",
+      "document_name": "sireines.wiki.md",
+      "collection_id": "Cv7VP8hUX9tPws5e",
+      "chunk_index": 35,
+      "text": "Documentation WarchoDevplace\nUne fois téléchargé, décompressez le fichier pour accéder aux documents."
+    },
+    {
+      "score": 0.013888888888888888,
+      "rerank_score": -10.957291603088379,
+      "document_id": "5793c671-459b-4daf-9ba8-4bd4deb23f70",
+      "document_name": "sireines.wiki.md",
+      "collection_id": "Cv7VP8hUX9tPws5e",
+      "chunk_index": 24,
+      "text": "Document d'installation sur Poste de Travail (Docker)\n1 - Les conteneurs et les images\n1.2 Cas particulier  : Application Sireines\nL'application Sireines comporte  trois conteneurs, trois images et un volume.\n- Le conteneur de l'applicatif s'appelle sireines_app_usine_container et l'image associée s'appelle sireines_app_usine_image .\n- Le conteneur de la base de données s'appelle sireines_db_usine_container et l'image associée s'appelle postgres:14.1-alpine .\n- Un conteneur a été ajouté pour garder en mémoire les connexions à la base de données. Ce conteneur s'appelle sireines_pgadmin_container et l'image associée s'appelle dpage/pgadmin4 ."
+    }
+  ]
+}

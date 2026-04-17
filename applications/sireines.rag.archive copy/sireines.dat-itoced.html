@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sireines.dat-itoced</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #f4f4f4;
+        }
+        .back-to-toc {
+            text-decoration: none;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .table-of-contents {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .table-of-contents h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .table-of-contents ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .table-of-contents ul ul {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+        .table-of-contents li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        .table-of-contents a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+        .table-of-contents a:hover {
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 4px solid #ddd;
+            margin: 0;
+            padding-left: 16px;
+            color: #666;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+<p>Voici le Dossier d'Architecture Technique (DAT) complet pour l'application <strong>SIREINES</strong>, généré selon le modèle Arc42 et basé sur l'analyse du fichier source fourni.</p>
+
+<p><hr></p>
+
+<h1 id="dossier-darchitecture-technique-dat---sireines">Dossier d'Architecture Technique (DAT) - SIREINES</h1>
+
+<nav class="table-of-contents" id="table-of-contents">
+<h2>Table des matières</h2>
+<ul>
+<li><a id="toc-table-des-matières"></a><a href="#table-des-matières">Table des matières</a></li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-11-vue-densemble-fonctionnelle-html-tag-120"></a><a href="#11-vue-densemble-fonctionnelle-html-tag-120">1.1 Vue d'ensemble fonctionnelle <a href="#toc-11-vue-densemble-fonctionnelle">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-12-architecture-c4---niveau-1-système-html-tag-121"></a><a href="#12-architecture-c4---niveau-1-système-html-tag-121">1.2 Architecture C4 - Niveau 1 (Système) <a href="#toc-12-architecture-c4---niveau-1-système">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-13-objectifs-de-qualité-orientés-utilisateur-html-tag-122"></a><a href="#13-objectifs-de-qualité-orientés-utilisateur-html-tag-122">1.3 Objectifs de qualité orientés utilisateur <a href="#toc-13-objectifs-de-qualité-orientés-utilisateur">↑</a></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a id="toc-parties-prenantes"></a><a href="#parties-prenantes">2. Parties prenantes <a href="#toc-parties-prenantes">↑</a></a></li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-31-contraintes-techniques-html-tag-127"></a><a href="#31-contraintes-techniques-html-tag-127">3.1 Contraintes techniques <a href="#toc-31-contraintes-techniques">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-32-contraintes-organisationnelles-html-tag-128"></a><a href="#32-contraintes-organisationnelles-html-tag-128">3.2 Contraintes organisationnelles <a href="#toc-32-contraintes-organisationnelles">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-33-exigences-de-sécurité-modèle-d-i-c-t-html-tag-129"></a><a href="#33-exigences-de-sécurité-modèle-d-i-c-t-html-tag-129">3.3 Exigences de sécurité (Modèle D-I-C-T) <a href="#toc-33-exigences-de-sécurité-modèle-d-i-c-t">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-34-contraintes-réglementaires-html-tag-130"></a><a href="#34-contraintes-réglementaires-html-tag-130">3.4 Contraintes réglementaires <a href="#toc-34-contraintes-réglementaires">↑</a></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-41-partenaires-fonctionnels-html-tag-133"></a><a href="#41-partenaires-fonctionnels-html-tag-133">4.1 Partenaires fonctionnels <a href="#toc-41-partenaires-fonctionnels">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-42-interfaces-techniques-html-tag-134"></a><a href="#42-interfaces-techniques-html-tag-134">4.2 Interfaces techniques <a href="#toc-42-interfaces-techniques">↑</a></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-51-décisions-architecturales-majeures-html-tag-137"></a><a href="#51-décisions-architecturales-majeures-html-tag-137">5.1 Décisions architecturales majeures <a href="#toc-51-décisions-architecturales-majeures">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-52-environnement-technologique-html-tag-138"></a><a href="#52-environnement-technologique-html-tag-138">5.2 Environnement technologique <a href="#toc-52-environnement-technologique">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-53-forge-logicielle-html-tag-139"></a><a href="#53-forge-logicielle-html-tag-139">5.3 Forge logicielle <a href="#toc-53-forge-logicielle">↑</a></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-61-vue-conteneur-html-tag-142"></a><a href="#61-vue-conteneur-html-tag-142">6.1 Vue Conteneur <a href="#toc-61-vue-conteneur">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-62-description-des-conteneurs-html-tag-143"></a><a href="#62-description-des-conteneurs-html-tag-143">6.2 Description des conteneurs <a href="#toc-62-description-des-conteneurs">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-63-structure-des-modules-html-tag-144"></a><a href="#63-structure-des-modules-html-tag-144">6.3 Structure des modules <a href="#toc-63-structure-des-modules">↑</a></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-71-scénario-création-dun-dossier-dévaluation-html-tag-147"></a><a href="#71-scénario-création-dun-dossier-dévaluation-html-tag-147">7.1 Scénario : Création d'un dossier d'évaluation <a href="#toc-71-scénario-création-dun-dossier-dévaluation">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-72-scénario-génération-dun-rapport-statistique-html-tag-148"></a><a href="#72-scénario-génération-dun-rapport-statistique-html-tag-148">7.2 Scénario : Génération d'un rapport statistique <a href="#toc-72-scénario-génération-dun-rapport-statistique">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-73-scénario-import-de-données-agents-batch-html-tag-149"></a><a href="#73-scénario-import-de-données-agents-batch-html-tag-149">7.3 Scénario : Import de données agents (batch) <a href="#toc-73-scénario-import-de-données-agents-batch">↑</a></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-81-environnements-html-tag-152"></a><a href="#81-environnements-html-tag-152">8.1 Environnements <a href="#toc-81-environnements">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-82-infrastructure-html-tag-153"></a><a href="#82-infrastructure-html-tag-153">8.2 Infrastructure <a href="#toc-82-infrastructure">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-83-supervision-html-tag-154"></a><a href="#83-supervision-html-tag-154">8.3 Supervision <a href="#toc-83-supervision">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-84-sauvegardes-html-tag-155"></a><a href="#84-sauvegardes-html-tag-155">8.4 Sauvegardes <a href="#toc-84-sauvegardes">↑</a></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-91-authentification-et-autorisation-html-tag-158"></a><a href="#91-authentification-et-autorisation-html-tag-158">9.1 Authentification et autorisation <a href="#toc-91-authentification-et-autorisation">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-92-journalisation-et-traçabilité-html-tag-159"></a><a href="#92-journalisation-et-traçabilité-html-tag-159">9.2 Journalisation et traçabilité <a href="#toc-92-journalisation-et-traçabilité">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-93-gestion-des-erreurs-html-tag-160"></a><a href="#93-gestion-des-erreurs-html-tag-160">9.3 Gestion des erreurs <a href="#toc-93-gestion-des-erreurs">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-94-api-et-intégrations-html-tag-161"></a><a href="#94-api-et-intégrations-html-tag-161">9.4 API et intégrations <a href="#toc-94-api-et-intégrations">↑</a></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a id="toc-qualite"></a><a href="#qualite">10. Exigences de qualité <a href="#toc-qualite">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-risques"></a><a href="#risques">11. Risques et dettes techniques <a href="#toc-risques">↑</a></a></li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-121-glossaire-html-tag-168"></a><a href="#121-glossaire-html-tag-168">12.1 Glossaire <a href="#toc-121-glossaire">↑</a></a></li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-adr-001-maintien-de-java-7-pour-compatibilité-legacy-html-tag-170"></a><a href="#adr-001-maintien-de-java-7-pour-compatibilité-legacy-html-tag-170">ADR-001 : Maintien de Java 7 pour compatibilité legacy <a href="#toc-adr-001-maintien-de-java-7-pour-compatibilité-legacy">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-adr-002-elasticsearch-embarqué-vs-cluster-dédié-html-tag-171"></a><a href="#adr-002-elasticsearch-embarqué-vs-cluster-dédié-html-tag-171">ADR-002 : Elasticsearch embarqué vs cluster dédié <a href="#toc-adr-002-elasticsearch-embarqué-vs-cluster-dédié">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-adr-003-conservation-de-birt-pour-les-rapports-html-tag-172"></a><a href="#adr-003-conservation-de-birt-pour-les-rapports-html-tag-172">ADR-003 : Conservation de BIRT pour les rapports <a href="#toc-adr-003-conservation-de-birt-pour-les-rapports">↑</a></a></li>
+</ul>
+<ul>
+<li><a id="toc-adr-004-architecture-monolithique-conteneurisée-html-tag-173"></a><a href="#adr-004-architecture-monolithique-conteneurisée-html-tag-173">ADR-004 : Architecture monolithique conteneurisée <a href="#toc-adr-004-architecture-monolithique-conteneurisée">↑</a></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+<strong>Version</strong> : 2.5.12  
+<strong>Date</strong> : 23 février 2026  
+<strong>Statut</strong> : Finalisé
+
+<h2 id="table-des-matières">Table des matières</h2>
+
+<ul>
+<li><a id="toc-introduction"></a><a href="#introduction">1. Introduction et objectifs</a>
+<ul>
+<li><a id="toc-11-vue-densemble-fonctionnelle"></a><a href="#11-vue-densemble-fonctionnelle">1.1 Vue d'ensemble fonctionnelle</a>
+</li>
+<li><a id="toc-12-architecture-c4-niveau-1-système"></a><a href="#12-architecture-c4-niveau-1-système">1.2 Architecture C4 - Niveau 1 (Système)</a>
+</li>
+<li><a id="toc-13-objectifs-de-qualité-orientés-utilisateur"></a><a href="#13-objectifs-de-qualité-orientés-utilisateur">1.3 Objectifs de qualité orientés utilisateur</a>
+</ul>
+</li>
+<li><a id="toc-parties-prenantes"></a><a href="#parties-prenantes">2. Parties prenantes</a>
+</li>
+<li><a id="toc-contraintes"></a><a href="#contraintes">3. Contraintes</a>
+<ul>
+<li><a id="toc-31-contraintes-techniques"></a><a href="#31-contraintes-techniques">3.1 Contraintes techniques</a>
+</li>
+<li><a id="toc-32-contraintes-organisationnelles"></a><a href="#32-contraintes-organisationnelles">3.2 Contraintes organisationnelles</a>
+</li>
+<li><a id="toc-33-exigences-de-sécurité-modèle-d-i-c-t"></a><a href="#33-exigences-de-sécurité-modèle-d-i-c-t">3.3 Exigences de sécurité (Modèle D-I-C-T)</a>
+</li>
+<li><a id="toc-34-contraintes-réglementaires"></a><a href="#34-contraintes-réglementaires">3.4 Contraintes réglementaires</a>
+</ul>
+</li>
+<li><a id="toc-contexte"></a><a href="#contexte">4. Contexte et périmètre</a>
+<ul>
+<li><a id="toc-41-partenaires-fonctionnels"></a><a href="#41-partenaires-fonctionnels">4.1 Partenaires fonctionnels</a>
+</li>
+<li><a id="toc-42-interfaces-techniques"></a><a href="#42-interfaces-techniques">4.2 Interfaces techniques</a>
+</ul>
+</li>
+<li><a id="toc-strategie"></a><a href="#strategie">5. Stratégie de solution</a>
+<ul>
+<li><a id="toc-51-décisions-architecturales-majeures"></a><a href="#51-décisions-architecturales-majeures">5.1 Décisions architecturales majeures</a>
+</li>
+<li><a id="toc-52-environnement-technologique"></a><a href="#52-environnement-technologique">5.2 Environnement technologique</a>
+</li>
+<li><a id="toc-53-forge-logicielle"></a><a href="#53-forge-logicielle">5.3 Forge logicielle</a>
+</ul>
+</li>
+<li><a id="toc-briques"></a><a href="#briques">6. Vue en Briques (C4-L2)</a>
+<ul>
+<li><a id="toc-61-vue-conteneur"></a><a href="#61-vue-conteneur">6.1 Vue Conteneur</a>
+</li>
+<li><a id="toc-62-description-des-conteneurs"></a><a href="#62-description-des-conteneurs">6.2 Description des conteneurs</a>
+</li>
+<li><a id="toc-63-structure-des-modules"></a><a href="#63-structure-des-modules">6.3 Structure des modules</a>
+</ul>
+</li>
+<li><a id="toc-execution"></a><a href="#execution">7. Vue Exécution</a>
+<ul>
+<li><a id="toc-71-scénario-création-dun-dossier-dévaluation"></a><a href="#71-scénario-création-dun-dossier-dévaluation">7.1 Scénario : Création d'un dossier d'évaluation</a>
+</li>
+<li><a id="toc-72-scénario-génération-dun-rapport-statistique"></a><a href="#72-scénario-génération-dun-rapport-statistique">7.2 Scénario : Génération d'un rapport statistique</a>
+</li>
+<li><a id="toc-73-scénario-import-de-données-agents-batch"></a><a href="#73-scénario-import-de-données-agents-batch">7.3 Scénario : Import de données agents (batch)</a>
+</ul>
+</li>
+<li><a id="toc-deploiement"></a><a href="#deploiement">8. Vue Déploiement</a>
+<ul>
+<li><a id="toc-81-environnements"></a><a href="#81-environnements">8.1 Environnements</a>
+</li>
+<li><a id="toc-82-infrastructure"></a><a href="#82-infrastructure">8.2 Infrastructure</a>
+</li>
+<li><a id="toc-83-supervision"></a><a href="#83-supervision">8.3 Supervision</a>
+</li>
+<li><a id="toc-84-sauvegardes"></a><a href="#84-sauvegardes">8.4 Sauvegardes</a>
+</ul>
+</li>
+<li><a id="toc-transverses"></a><a href="#transverses">9. Sujets transverses</a>
+<ul>
+<li><a id="toc-91-authentification-et-autorisation"></a><a href="#91-authentification-et-autorisation">9.1 Authentification et autorisation</a>
+</li>
+<li><a id="toc-92-journalisation-et-traçabilité"></a><a href="#92-journalisation-et-traçabilité">9.2 Journalisation et traçabilité</a>
+</li>
+<li><a id="toc-93-gestion-des-erreurs"></a><a href="#93-gestion-des-erreurs">9.3 Gestion des erreurs</a>
+</li>
+<li><a id="toc-94-api-et-intégrations"></a><a href="#94-api-et-intégrations">9.4 API et intégrations</a>
+</ul>
+</li>
+<li><a id="toc-qualite"></a><a href="#qualite">10. Exigences de qualité</a>
+</li>
+<li><a id="toc-risques"></a><a href="#risques">11. Risques et dettes techniques</a>
+</li>
+<li><a id="toc-annexes"></a><a href="#annexes">12. Annexes</a>
+<ul>
+<li><a id="toc-121-glossaire"></a><a href="#121-glossaire">12.1 Glossaire</a>
+</li>
+<li><a id="toc-122-décisions-darchitecture-adr"></a><a href="#122-décisions-darchitecture-adr">12.2 Décisions d'Architecture (ADR)</a>
+<ul>
+<li><a id="toc-adr-001-maintien-de-java-7-pour-compatibilité-legacy"></a><a href="#adr-001-maintien-de-java-7-pour-compatibilité-legacy">ADR-001 : Maintien de Java 7 pour compatibilité legacy</a>
+</li>
+<li><a id="toc-adr-002-elasticsearch-embarqué-vs-cluster-dédié"></a><a href="#adr-002-elasticsearch-embarqué-vs-cluster-dédié">ADR-002 : Elasticsearch embarqué vs cluster dédié</a>
+</li>
+<li><a id="toc-adr-003-conservation-de-birt-pour-les-rapports"></a><a href="#adr-003-conservation-de-birt-pour-les-rapports">ADR-003 : Conservation de BIRT pour les rapports</a>
+</li>
+<li><a id="toc-adr-004-architecture-monolithique-conteneurisée"></a><a href="#adr-004-architecture-monolithique-conteneurisée">ADR-004 : Architecture monolithique conteneurisée</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<p><hr></p>
+
+<p><hr></p>
+
+<h2 id="introduction">1. Introduction et objectifs <a href="#toc-introduction">↑</a></h2>
+
+<a id="11-vue-densemble-fonctionnelle"></a>
+<h3 id="11-vue-densemble-fonctionnelle-html-tag-120">1.1 Vue d'ensemble fonctionnelle <a href="#toc-11-vue-densemble-fonctionnelle">↑</a></h3>
+
+<p>SIREINES (Système d'Information pour la Recherche et l'Évaluation des compétences scientifiques et techniques) est une application métier dédiée à la gestion des évaluations des compétences scientifiques et techniques au sein de l'administration française. L'application permet :</p>
+
+<ul>
+<li>La gestion des dossiers d'évaluation des agents (création, suivi, qualification)</li>
+<li>L'organisation des séances de comités d'évaluation</li>
+<li>La gestion des rapporteurs et des gestionnaires</li>
+<li>L'import/export de données et la génération de rapports statistiques</li>
+<li>La gestion des référentiels (corps, grades, structures, mots-clés, thésaurus)</li>
+</ul>
+
+<h3 id="12-architecture-c4---niveau-1-système-html-tag-121">1.2 Architecture C4 - Niveau 1 (Système) <a href="#toc-12-architecture-c4---niveau-1-système">↑</a></h3>
+
+<div class="diagram diagram-plantuml">
+<?plantuml 1.2026.1?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" preserveAspectRatio="xMidYMid meet" style="background:#FEFEFE;" version="1.1" viewBox="0 0 535 461" zoomAndPan="magnify"><title>SIREINES - Vue Syst&#232;me (C4-L1)</title><defs/><g><rect fill="#FEFEFE" height="461" style="stroke:none;stroke-width:1;" width="535" x="0" y="0"/><g class="title" data-source-line="6"><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="252.9092" x="134.0454" y="22.9951">SIREINES - Vue Syst&#232;me (C4-L1)</text></g><!--cluster Ext--><g class="cluster" data-qualified-name="Ext" data-source-line="13" id="ent0005"><rect fill="#D3D3D3" height="103.59" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="522" x="7" y="352.0769"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="150.5" x="192.75" y="367.072">Syst&#232;mes Externes</text></g><!--entity Cerbere--><g class="entity" data-qualified-name="Ext.Cerbere" data-source-line="14" id="ent0006"><rect fill="#D3D3D3" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.5137" x="22.74" y="387.0769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="56.0137" x="32.74" y="410.072">Cerb&#232;re</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="122.5137" x="32.74" y="426.3689">[Authentification]</text></g><!--entity Annuaire--><g class="entity" data-qualified-name="Ext.Annuaire" data-source-line="15" id="ent0007"><rect fill="#D3D3D3" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.6289" x="200.69" y="387.0769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63.0342" x="210.69" y="410.072">Annuaire</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84.6289" x="210.69" y="426.3689">[RH/Agents]</text></g><!--entity Print--><g class="entity" data-qualified-name="Ext.Print" data-source-line="16" id="ent0008"><rect fill="#D3D3D3" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="172.9199" x="340.54" y="387.0769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="152.9199" x="350.54" y="410.072">Services d'impression</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="77.7656" x="350.54" y="426.3689">et rapports</text></g><!--entity Users--><g class="entity" data-qualified-name="Users" data-source-line="8" id="ent0002"><rect fill="#ADD8E6" height="68.8906" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="184.124" x="64.94" y="44.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="79.3037" x="74.94" y="67.292">Utilisateurs</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="164.124" x="74.94" y="83.5889">(Agents, Gestionnaires,</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="91.8887" x="74.94" y="99.8857">Rapporteurs)</text></g><!--entity Admins--><g class="entity" data-qualified-name="Admins" data-source-line="9" id="ent0003"><rect fill="#90EE90" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="131.8975" x="284.05" y="52.4369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="111.8975" x="294.05" y="75.432">Administrateurs</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.165" x="294.05" y="91.7289">Techniques</text></g><!--entity Sireines--><g class="entity" data-qualified-name="Sireines" data-source-line="11" id="ent0004"><rect fill="#FFD700" height="68.8906" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="213.7988" x="146.1" y="205.1869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63.9229" x="156.1" y="228.182">SIREINES</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="173.6602" x="156.1" y="244.4789">[Gestion des &#233;valuations</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="193.7988" x="156.1" y="260.7757">scientifiques et techniques]</text></g><!--link Users to Sireines--><g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" data-source-line="19" id="lnk9"><path d="M177.36,113.4369 C193.6,140.3069 213.1273,172.6414 229.3973,199.5714" fill="none" id="Users-to-Sireines" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="232.5,204.7069,231.2697,194.9352,229.9144,200.4273,224.4223,199.0721,232.5,204.7069" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="40.2188" x="219.8367" y="156.2538">Utilise</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="51.8921" x="214" y="171.3866">(HTTPS)</text></g><!--link Admins to Sireines--><g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" data-source-line="20" id="lnk10"><path d="M334.42,105.2669 C317.92,132.2869 294.9361,169.9356 276.7461,199.7356" fill="none" id="Admins-to-Sireines" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="273.62,204.8569,281.7233,199.259,276.225,200.5891,274.8949,195.0909,273.62,204.8569" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="70.4844" x="317.0334" y="156.2538">Administre</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="82.5513" x="311" y="171.3866">(SSH/HTTPS)</text></g><!--link Sireines to Cerbere--><g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="dependency" data-source-line="21" id="lnk11"><path d="M201.06,274.4969 C189.21,283.3969 177.14,293.4869 167,304.0769 C142.68,329.4469 124.0355,358.5924 110.7555,381.7424" fill="none" id="Sireines-to-Cerbere" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="107.77,386.9469,115.718,381.1305,110.258,382.6098,108.7787,377.1498,107.77,386.9469" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="71.6016" x="170.374" y="317.1438">Authentifie</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="76.3496" x="168" y="332.2766">(SAML/CAS)</text></g><!--link Sireines to Annuaire--><g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="dependency" data-source-line="22" id="lnk12"><path d="M253,274.5569 C253,307.5069 253,350.7869 253,380.6269" fill="none" id="Sireines-to-Annuaire" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="253,386.6269,257,377.6269,253,381.6269,249,377.6269,253,386.6269" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="110.7285" x="254" y="317.1438">Importe donn&#233;es</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="61.312" x="278.7083" y="332.2766">(CSV/API)</text></g><!--link Sireines to Print--><g class="link" data-entity-1="ent0004" data-entity-2="ent0008" data-link-type="dependency" data-source-line="23" id="lnk13"><path d="M333.98,274.4669 C348.09,282.7569 361.8,292.6069 373,304.0769 C396.04,327.6769 409.1721,357.3853 417.4021,381.2253" fill="none" id="Sireines-to-Print" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="419.36,386.8969,420.2042,377.0843,417.7284,382.1706,412.6421,379.6948,419.36,386.8969" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="106.7676" x="397" y="317.1438">G&#233;n&#232;re rapports</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="69.5767" x="415.5955" y="332.2766">(BIRT/PDF)</text></g><?plantuml-src VLBDRfj04BxlKqoJGsqf5ghKam-L22KOoOqi8BdKFMnWOgy20zrTebfLtoT-3bwims-93uNJmlSty-s739yL8KI-bxZtmTQ7D9V6265U55LIomAUPFfoq6LDcLVcfORhExzzPuYqBAgIa6niJpc2njHAEkGeX5MMFyHXv8VtVWmhUApvU3AsUIiG5jxdrVRJKeY90LSFLkNAI8krDdjQk0UMDJSGeB6g999AexdPKoIhgjGTQda5qi23GMtWUgiEHtkRrpZNTBD2aJ9MZx89faTIFsiq7RVxFv83ZKZl8etnz_HzY04P6cZEhpAlPNjcIPCgJggUErL02tRo-D6Pn9oSDyqsGPbdxms6XHZmVrdKDCJYmvH9dk2t07vcD0_rK_EcaNEvjJtszcaNgBTi0QXn9d8fuHBLxKfP8jeu_R9xxlZdF-GOzQjAENNsKHKLzsBOUKyyk-xRwSVOQKNpGSGV8VgsLgil_zQoXhvwphBO9CakNegXbmlOr6QBZEEDCw0dI8iVHsVuj9eExtxREfvx2P-cNKDOT1SBChvjpHdRI-Z5Zuwx2oyu_Lnh29epjJLCKpFZDemIP_VrRYd-0W00?></g></svg>
+</div>
+
+<a id="13-objectifs-de-qualité-orientés-utilisateur"></a>
+<h3 id="13-objectifs-de-qualité-orientés-utilisateur-html-tag-122">1.3 Objectifs de qualité orientés utilisateur <a href="#toc-13-objectifs-de-qualité-orientés-utilisateur">↑</a></h3>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Objectif</th>
+<th>Description</th>
+<th>Priorité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td><strong>Disponibilité</strong></td>
+<td>L'application doit être accessible 99% du temps ouvré pour permettre la gestion continue des évaluations</td>
+<td>Haute</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td><strong>Intégrité des données</strong></td>
+<td>Garantir la cohérence et la traçabilité des dossiers d'évaluation (historique complet des modifications)</td>
+<td>Critique</td>
+</tr>
+<tr>
+<td>Q3</td>
+<td><strong>Confidentialité</strong></td>
+<td>Protection des données personnelles des agents conformément au RGPD et aux exigences de la fonction publique</td>
+<td>Critique</td>
+</tr>
+<tr>
+<td>Q4</td>
+<td><strong>Maintenabilité</strong></td>
+<td>Faciliter les évolutions métier et correctifs via une architecture modulaire et documentée</td>
+<td>Moyenne</td>
+</tr>
+<tr>
+<td>Q5</td>
+<td><strong>Performance</strong></td>
+<td>Temps de réponse < 3s pour les recherches et génération de rapports standards</td>
+<td>Moyenne</td>
+</tr>
+</tbody>
+</table><a href="#introduction">↩ Retour au sommaire</a>
+
+<p><hr></p>
+
+<h2 id="parties-prenantes">2. Parties prenantes <a href="#toc-parties-prenantes">↑</a></h2>
+
+<table>
+<thead>
+<tr>
+<th>Rôle</th>
+<th>Attente principale</th>
+<th>Intérêt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MOA (Maîtrise d'Ouvrage)</strong></td>
+<td>Disposer d'un outil fiable pour piloter les processus d'évaluation et produire des statistiques</td>
+<td>Fonctionnalités métier complètes, reporting</td>
+</tr>
+<tr>
+<td><strong>Utilisateurs métier (Gestionnaires)</strong></td>
+<td>Interface intuitive pour gérer les dossiers et séances efficacement</td>
+<td>Ergonomie, rapidité d'exécution</td>
+</tr>
+<tr>
+<td><strong>Rapporteurs</strong></td>
+<td>Accès simplifié aux dossiers à évaluer et outils de saisie des conclusions</td>
+<td>Accessibilité, clarté des informations</td>
+</tr>
+<tr>
+<td><strong>Agents évalués</strong></td>
+<td>Traitement équitable et confidentiel de leur dossier</td>
+<td>Sécurité, confidentialité</td>
+</tr>
+<tr>
+<td><strong>RSSI</strong></td>
+<td>Conformité aux référentiels de sécurité de l'État (ANSSI, RGPD)</td>
+<td>Auditabilité, contrôles d'accès</td>
+</tr>
+<tr>
+<td><strong>Exploitants (GTI)</strong></td>
+<td>Déploiement et supervision simplifiés, documentation technique complète</td>
+<td>Containerisation, monitoring, sauvegardes</td>
+</tr>
+<tr>
+<td><strong>Équipe de développement</strong></td>
+<td>Code maintenable, tests automatisés, CI/CD efficace</td>
+<td>Qualité du code, automatisation</td>
+</tr>
+</tbody>
+</table><a href="#introduction">↩ Retour au sommaire</a>
+
+<p><hr></p>
+
+<h2 id="contraintes">3. Contraintes <a href="#toc-contraintes">↑</a></h2>
+
+<a id="31-contraintes-techniques"></a>
+<h3 id="31-contraintes-techniques-html-tag-127">3.1 Contraintes techniques <a href="#toc-31-contraintes-techniques">↑</a></h3>
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Contrainte</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Legacy</strong></td>
+<td>Application Java 7 (JDK 1.7) avec framework Vertigo/Struts 2</td>
+<td>Maintenance technique, sécurité des dépendances</td>
+</tr>
+<tr>
+<td><strong>Base de données</strong></td>
+<td>PostgreSQL 15.2 obligatoire pour la persistance</td>
+<td>Compatibilité ascendante à prévoir</td>
+</tr>
+<tr>
+<td><strong>Reporting</strong></td>
+<td>Dépendance à BIRT (Business Intelligence and Reporting Tools) pour les rapports</td>
+<td>Migration complexe si évolution</td>
+</tr>
+<tr>
+<td><strong>Authentification</strong></td>
+<td>Intégration obligatoire avec Cerbère (SSO de l'État)</td>
+<td>Dépendance à l'infrastructure d'authentification ministérielle</td>
+</tr>
+</tbody>
+</table><a id="32-contraintes-organisationnelles"></a>
+<h3 id="32-contraintes-organisationnelles-html-tag-128">3.2 Contraintes organisationnelles <a href="#toc-32-contraintes-organisationnelles">↑</a></h3>
+
+<ul>
+<li><strong>Hébergement</strong> : Cloud interne ECO4 (OpenStack) du Ministère de la Transition Écologique</li>
+<li><strong>Forge logicielle</strong> : GitLab interne (gitlab-forge.din.developpement-durable.gouv.fr)</li>
+<li><strong>Registry</strong> : Google Cloud Registry (GCR) du département</li>
+<li><strong>CI/CD</strong> : GitLab CI avec runners internes</li>
+</ul>
+
+<a id="33-exigences-de-sécurité-modèle-d-i-c-t"></a>
+<h3 id="33-exigences-de-sécurité-modèle-d-i-c-t-html-tag-129">3.3 Exigences de sécurité (Modèle D-I-C-T) <a href="#toc-33-exigences-de-sécurité-modèle-d-i-c-t">↑</a></h3>
+
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Exigence</th>
+<th>Mesure technique</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>D - Disponibilité</strong></td>
+<td>RTO < 4h, RPO < 1h</td>
+<td>Sauvegardes automatisées, réplication BDD, conteneurisation</td>
+</tr>
+<tr>
+<td><strong>I - Intégrité</strong></td>
+<td>Traçabilité des modifications sur les dossiers</td>
+<td>Audit trail complet, checksums des documents</td>
+</tr>
+<tr>
+<td><strong>C - Confidentialité</strong></td>
+<td>Chiffrement des données sensibles</td>
+<td>Chiffrement AES-256 des dumps, HTTPS obligatoire, contrôles d'accès RBAC</td>
+</tr>
+<tr>
+<td><strong>T - Traçabilité</strong></td>
+<td>Logs d'accès et d'actions conservés 1 an</td>
+<td>Centralisation des logs (Loki), supervision PSIN</td>
+</tr>
+</tbody>
+</table><a id="34-contraintes-réglementaires"></a>
+<h3 id="34-contraintes-réglementaires-html-tag-130">3.4 Contraintes réglementaires <a href="#toc-34-contraintes-réglementaires">↑</a></h3>
+
+<ul>
+<li><strong>RGPD</strong> : Déclaration enregistrée, droit à l'effacement et à la portabilité</li>
+<li><strong>RGS (Référentiel Général de Sécurité)</strong> : Niveau "standard" requis</li>
+<li><strong>Accessibilité</strong> : Engagement de conformité RGAA (audit prévu)</li>
+</ul>
+
+<a href="#introduction">↩ Retour au sommaire</a>
+
+<p><hr></p>
+
+<h2 id="contexte">4. Contexte et périmètre <a href="#toc-contexte">↑</a></h2>
+
+<a id="41-partenaires-fonctionnels"></a>
+<h3 id="41-partenaires-fonctionnels-html-tag-133">4.1 Partenaires fonctionnels <a href="#toc-41-partenaires-fonctionnels">↑</a></h3>
+
+<table>
+<thead>
+<tr>
+<th>Système/Acteur</th>
+<th>Rôle</th>
+<th>Type d'interaction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cerbère</strong></td>
+<td>Authentification centralisée des agents de l'État</td>
+<td>SAML/CAS - À chaque connexion</td>
+</tr>
+<tr>
+<td><strong>Système RH (import)</strong></td>
+<td>Alimentation des données agents, corps, grades</td>
+<td>Import CSV/Excel - Quotidien ou sur demande</td>
+</tr>
+<tr>
+<td><strong>BIRT Engine</strong></td>
+<td>Génération des rapports statistiques et fiches</td>
+<td>Intégration embarquée - À la demande</td>
+</tr>
+<tr>
+<td><strong>Elasticsearch</strong></td>
+<td>Indexation et recherche full-text des dossiers</td>
+<td>API REST - En temps réel</td>
+</tr>
+<tr>
+<td><strong>PostgreSQL</strong></td>
+<td>Persistance des données métier</td>
+<td>JDBC - En temps réel</td>
+</tr>
+<tr>
+<td><strong>Services d'impression</strong></td>
+<td>Génération PDF des courriers et décisions</td>
+<td>Export PDF - À la demande</td>
+</tr>
+</tbody>
+</table><a id="42-interfaces-techniques"></a>
+<h3 id="42-interfaces-techniques-html-tag-134">4.2 Interfaces techniques <a href="#toc-42-interfaces-techniques">↑</a></h3>
+
+<div class="diagram diagram-plantuml">
+<?plantuml 1.2026.1?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" preserveAspectRatio="xMidYMid meet" style="background:#FFFFFF;" version="1.1" viewBox="0 0 738 687" zoomAndPan="magnify"><title>Interfaces Techniques - SIREINES</title><defs/><g><g class="title" data-source-line="3"><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="262.4658" x="230.7671" y="22.9951">Interfaces Techniques - SIREINES</text></g><!--cluster Frontend--><g class="cluster" data-qualified-name="Frontend" data-source-line="5" id="ent0002"><path d="M32.5,43.2969 L105.7285,43.2969 A3.75,3.75 0 0 1 108.2285,45.7969 L115.2285,65.5938 L193.5,65.5938 A2.5,2.5 0 0 1 196,68.0938 L196,128.0869 A2.5,2.5 0 0 1 193.5,130.5869 L32.5,130.5869 A2.5,2.5 0 0 1 30,128.0869 L30,45.7969 A2.5,2.5 0 0 1 32.5,43.2969" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="30" x2="115.2285" y1="65.5938" y2="65.5938"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="72.2285" x="34" y="58.292">Frontend</text></g><!--cluster Application SIREINES--><g class="cluster" data-qualified-name="Application SIREINES" data-source-line="9" id="ent0004"><path d="M28.5,194.5869 L195.8799,194.5869 A3.75,3.75 0 0 1 198.3799,197.0869 L205.3799,216.8838 L205.5,216.8838 A2.5,2.5 0 0 1 208,219.3838 L208,541.9769 A2.5,2.5 0 0 1 205.5,544.4769 L28.5,544.4769 A2.5,2.5 0 0 1 26,541.9769 L26,197.0869 A2.5,2.5 0 0 1 28.5,194.5869" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="26" x2="205.3799" y1="216.8838" y2="216.8838"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="166.3799" x="30" y="209.582">Application SIREINES</text></g><!--cluster Backend--><g class="cluster" data-qualified-name="Backend" data-source-line="15" id="ent0008"><path d="M8.5,593.4769 L76.7109,593.4769 A3.75,3.75 0 0 1 79.2109,595.9769 L86.2109,615.7738 L422.5,615.7738 A2.5,2.5 0 0 1 425,618.2738 L425,678.2769 A2.5,2.5 0 0 1 422.5,680.7769 L8.5,680.7769 A2.5,2.5 0 0 1 6,678.2769 L6,595.9769 A2.5,2.5 0 0 1 8.5,593.4769" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="86.2109" y1="615.7738" y2="615.7738"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="67.2109" x="10" y="608.472">Backend</text></g><!--cluster Externes--><g class="cluster" data-qualified-name="Externes" data-source-line="21" id="ent0012"><path d="M451.5,457.1869 L521.9805,457.1869 A3.75,3.75 0 0 1 524.4805,459.6869 L531.4805,479.4838 L728.5,479.4838 A2.5,2.5 0 0 1 731,481.9838 L731,541.9769 A2.5,2.5 0 0 1 728.5,544.4769 L451.5,544.4769 A2.5,2.5 0 0 1 449,541.9769 L449,459.6869 A2.5,2.5 0 0 1 451.5,457.1869" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="449" x2="531.4805" y1="479.4838" y2="479.4838"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="69.4805" x="453" y="472.182">Externes</text></g><!--entity Browser--><g class="entity" data-qualified-name="Frontend.Browser" data-source-line="6" id="ent0003"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.2168" x="46.39" y="78.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="113.2168" x="56.39" y="101.292">Navigateur Web</text></g><!--entity Struts--><g class="entity" data-qualified-name="Application SIREINES.Struts" data-source-line="10" id="ent0005"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="130.9814" x="47.51" y="229.5869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="110.9814" x="57.51" y="252.582">Struts 2 Actions</text></g><!--entity Services--><g class="entity" data-qualified-name="Application SIREINES.Services" data-source-line="11" id="ent0006"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.9258" x="58.04" y="342.8869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="107.9258" x="68.04" y="365.882">Services M&#233;tier</text></g><!--entity DAO--><g class="entity" data-qualified-name="Application SIREINES.DAO" data-source-line="12" id="ent0007"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.5303" x="47.73" y="492.1869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68.5303" x="57.73" y="515.182">DAO/MDA</text></g><!--entity DB--><g class="entity" data-qualified-name="Backend.DB" data-source-line="16" id="ent0009"><rect fill="#ADD8E6" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="100.7529" x="21.62" y="628.4769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.7529" x="31.62" y="651.472">PostgreSQL</text></g><!--entity ES--><g class="entity" data-qualified-name="Backend.ES" data-source-line="17" id="ent0010"><rect fill="#FFFFE0" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.4971" x="157.75" y="628.4769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="92.4971" x="167.75" y="651.472">Elasticsearch</text></g><!--entity BIRT--><g class="entity" data-qualified-name="Backend.BIRT" data-source-line="18" id="ent0011"><rect fill="#D3D3D3" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.4443" x="304.78" y="628.4769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84.4443" x="314.78" y="651.472">BIRT Engine</text></g><!--entity Cerbere--><g class="entity" data-qualified-name="Externes.Cerbere" data-source-line="22" id="ent0013"><rect fill="#90EE90" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.2568" x="465.37" y="492.1869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.2568" x="475.37" y="515.182">Cerb&#232;re SSO</text></g><!--entity RH--><g class="entity" data-qualified-name="Externes.RH" data-source-line="23" id="ent0014"><rect fill="#FFB6C1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="105.5244" x="609.24" y="492.1869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="85.5244" x="619.24" y="515.182">Syst&#232;me RH</text></g><!--link Browser to Struts--><g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" data-source-line="26" id="lnk15"><path d="M113,114.8569 C113,143.6269 113,194.7369 113,223.4269" fill="none" id="Browser-to-Struts" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="113,229.4269,117,220.4269,113,224.4269,109,220.4269,113,229.4269" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="70.9414" x="120.4207" y="159.6538">HTTPS/443</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="83.7827" x="114" y="174.7866">(Utilisateurs)</text></g><!--link Struts to Services--><g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="dependency" data-source-line="27" id="lnk16"><path d="M114.41,266.1269 C116.09,286.9169 118.3962,315.5264 120.0862,336.4164" fill="none" id="Struts-to-Services" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="120.57,342.3969,123.8312,333.1036,120.1668,337.4132,115.8573,333.7487,120.57,342.3969" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="101.2134" x="120" y="308.9538">Appels internes</text></g><!--link Services to DAO--><g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" data-source-line="28" id="lnk17"><path d="M109.27,379.4669 C103.79,387.9869 97.97,398.6569 95,409.1869 C87.06,437.3069 87.7315,465.6693 89.4915,485.9593" fill="none" id="Services-to-DAO" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="90.01,491.9369,93.2173,482.6249,89.5779,486.9556,85.2472,483.3162,90.01,491.9369" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="83.0527" x="96" y="429.7538">Transactions</text></g><!--link DAO to DB--><g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="dependency" data-source-line="29" id="lnk18"><path d="M89.39,528.8869 C85.55,554.6269 79.3331,596.3922 75.5031,622.1322" fill="none" id="DAO-to-DB" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="74.62,628.0669,79.901,619.7536,75.3559,623.1213,71.9881,618.5762,74.62,628.0669" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="69.3037" x="86" y="573.5438">JDBC/5432</text></g><!--link Services to ES--><g class="link" data-entity-1="ent0006" data-entity-2="ent0010" data-link-type="dependency" data-source-line="30" id="lnk19"><path d="M154.51,379.4969 C165.64,387.1269 177.04,397.1169 184,409.1869 C225.78,481.5769 220.9023,580.9672 216.7423,622.1972" fill="none" id="Services-to-ES" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="216.14,628.1669,221.0233,619.6139,216.6419,623.1921,213.0637,618.8108,216.14,628.1669" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="70.9604" x="224.1641" y="507.3938">HTTP/9200</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="79.2886" x="220" y="522.5266">(Recherche)</text></g><!--link Services to BIRT--><g class="link" data-entity-1="ent0006" data-entity-2="ent0011" data-link-type="dependency" data-source-line="31" id="lnk20"><path d="M186.43,376.9869 C226.99,389.6469 277.3,411.8669 308,449.1869 C352.22,502.9269 357.3419,585.0469 357.3919,622.2269" fill="none" id="Services-to-BIRT" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="357.4,628.2269,361.3879,619.2215,357.3933,623.2269,353.3879,619.2323,357.4,628.2269" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="71.2271" x="352" y="507.3938">API interne</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="68.8149" x="353.2061" y="522.5266">(Rapports)</text></g><!--link Services to Cerbere--><g class="link" data-entity-1="ent0006" data-entity-2="ent0013" data-link-type="dependency" data-source-line="32" id="lnk21"><path d="M186.25,365.6069 C240.53,370.4869 319.38,382.0069 383,409.1869 C430.68,429.5569 473.1596,465.1681 497.7896,487.9981" fill="none" id="Services-to-Cerbere" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="502.19,492.0769,498.3086,483.0251,498.523,488.6779,492.8702,488.8923,502.19,492.0769" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="70.9414" x="458.4106" y="422.2538">HTTPS/443</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="113.7627" x="437" y="437.3866">(Authentification)</text></g><!--link Services to RH--><g class="link" data-entity-1="ent0006" data-entity-2="ent0014" data-link-type="dependency" data-source-line="33" id="lnk22"><path d="M186.05,363.8469 C291.02,367.6669 494.43,378.8269 559,409.1869 C598.95,427.9669 629.3466,463.8123 646.4866,487.1323" fill="none" id="Services-to-RH" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="650.04,491.9669,647.933,482.346,647.0788,487.938,641.4868,487.0839,650.04,491.9669" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="94.5801" x="604" y="422.2538">Import fichiers</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="75.4102" x="613.585" y="437.3866">(CSV/Excel)</text></g><?plantuml-src NPBFSjCm4CRlUegTSY67Z3jfE903CtPYY9d-2PQ1OO23AhQs9efi9BbjXk5zodFanLXRJgQkJjBkRrUVFgtRAjC8AtOWwrrJ6pIU-xr6i2YzCAL6nhpo5CYCHtid93eeK5P6_MvfEmMUvMbsdNB66Y6teaGuUszhWislC_Z3WDRtQt6lIk6njV0LRt-2S93O-i6XPN-VrSLDevKKNjNcrFRKWtlRUWSpY6K7kBvB20u0sdlLoRiw_FCARG26O41MyKrqjOhx3Er7boUqUQvvKpjVMkIVBWEUmAjBLLO-qIq68jN2UIKT2Ykh7ahv07r3hUk7W2LPNa1gIcKmlBmx1-o35VkHYFIHJ3ReJYgMQ6yFJnQ1yvk-kWiWdOyD4Ctm_BtpXwSTGhxkmNmzC1jbjjqbW-CmdRuRV8C5h8jYmwFv_EA7UVtPAwrS_qrkmWQafu_EBe2-2BK3PO9ETafr75bAI665SI9y4kj2VIgXpCTLiepUp2zcup9oBGY9tixEpqb8JlE5v2bEnc3l76dOP4S17IoQfhRUlM2FFesV6BU-eX5NTyEOlIWYpnQGxRf-G4X5K-IeQic_HEcZH3rX_m40?></g></svg>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Protocole</th>
+<th>Fréquence</th>
+<th>Données échangées</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authentification</td>
+<td>HTTPS/SAML</td>
+<td>À chaque session</td>
+<td>Identité, rôles, habilitations</td>
+</tr>
+<tr>
+<td>Import agents</td>
+<td>Fichier CSV</td>
+<td>Quotidien</td>
+<td>Matricule, nom, prénom, grade, structure</td>
+</tr>
+<tr>
+<td>Recherche dossiers</td>
+<td>HTTP/REST</td>
+<td>En temps réel</td>
+<td>Requêtes Lucène, résultats JSON</td>
+</tr>
+<tr>
+<td>Génération rapports</td>
+<td>API Java interne</td>
+<td>À la demande</td>
+<td>Templates .rptdesign, données filtrées</td>
+</tr>
+<tr>
+<td>Base de données</td>
+<td>JDBC</td>
+<td>En temps réel</td>
+<td>Transactions SQL</td>
+</tr>
+</tbody>
+</table><a href="#introduction">↩ Retour au sommaire</a>
+
+<p><hr></p>
+
+<h2 id="strategie">5. Stratégie de solution <a href="#toc-strategie">↑</a></h2>
+
+<a id="51-décisions-architecturales-majeures"></a>
+<h3 id="51-décisions-architecturales-majeures-html-tag-137">5.1 Décisions architecturales majeures <a href="#toc-51-décisions-architecturales-majeures">↑</a></h3>
+
+<table>
+<thead>
+<tr>
+<th>Décision</th>
+<th>Choix</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Architecture</strong></td>
+<td>Monolithe web Java</td>
+<td>Simplicité de déploiement, cohérence avec le legacy, équipe réduite</td>
+</tr>
+<tr>
+<td><strong>Pattern MVC</strong></td>
+<td>Struts 2 + Vertigo Framework</td>
+<td>Standard historique, génération de code MDA, productivité</td>
+</tr>
+<tr>
+<td><strong>Persistance</strong></td>
+<td>SQL natif + MDA (KSP)</td>
+<td>Performance, contrôle fin des requêtes métier complexes</td>
+</tr>
+<tr>
+<td><strong>Recherche</strong></td>
+<td>Elasticsearch embarqué</td>
+<td>Recherche full-text performante sur les dossiers</td>
+</tr>
+<tr>
+<td><strong>Reporting</strong></td>
+<td>BIRT intégré</td>
+<td>Exigence métier de rapports complexes et paramétrables</td>
+</tr>
+<tr>
+<td><strong>Conteneurisation</strong></td>
+<td>Docker + Docker Compose</td>
+<td>Portabilité, reproductibilité des environnements</td>
+</tr>
+</tbody>
+</table><a id="52-environnement-technologique"></a>
+<h3 id="52-environnement-technologique-html-tag-138">5.2 Environnement technologique <a href="#toc-52-environnement-technologique">↑</a></h3>
+
+<div class="diagram diagram-plantuml">
+<?plantuml 1.2026.1?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" preserveAspectRatio="xMidYMid meet" style="background:#FFFFFF;" version="1.1" viewBox="0 0 716 649" zoomAndPan="magnify"><title>Stack Technique SIREINES</title><defs/><g><g class="title" data-source-line="3"><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="207.3477" x="247.3262" y="22.9951">Stack Technique SIREINES</text></g><!--cluster Langages--><g class="cluster" data-qualified-name="Langages" data-source-line="5" id="ent0002"><path d="M8.5,250.8869 L85.1533,250.8869 A3.75,3.75 0 0 1 87.6533,253.3869 L94.6533,273.1838 L306.5,273.1838 A2.5,2.5 0 0 1 309,275.6838 L309,431.9869 A2.5,2.5 0 0 1 306.5,434.4869 L8.5,434.4869 A2.5,2.5 0 0 1 6,431.9869 L6,253.3869 A2.5,2.5 0 0 1 8.5,250.8869" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="94.6533" y1="273.1838" y2="273.1838"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="75.6533" x="10" y="265.882">Langages</text></g><!--cluster Frameworks--><g class="cluster" data-qualified-name="Frameworks" data-source-line="12" id="ent0007"><path d="M335.5,347.1869 L433.5977,347.1869 A3.75,3.75 0 0 1 436.0977,349.6869 L443.0977,369.4838 L552.5,369.4838 A2.5,2.5 0 0 1 555,371.9838 L555,528.2769 A2.5,2.5 0 0 1 552.5,530.7769 L335.5,530.7769 A2.5,2.5 0 0 1 333,528.2769 L333,349.6869 A2.5,2.5 0 0 1 335.5,347.1869" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="333" x2="443.0977" y1="369.4838" y2="369.4838"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="97.0977" x="337" y="362.182">Frameworks</text></g><!--cluster Donn?es--><g class="cluster" data-qualified-name="Donn.es" data-source-line="19" id="ent0012"><path d="M396.5,554.7769 L465.9961,554.7769 A3.75,3.75 0 0 1 468.4961,557.2769 L475.4961,577.0738 L706.5,577.0738 A2.5,2.5 0 0 1 709,579.5738 L709,639.5769 A2.5,2.5 0 0 1 706.5,642.0769 L396.5,642.0769 A2.5,2.5 0 0 1 394,639.5769 L394,557.2769 A2.5,2.5 0 0 1 396.5,554.7769" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="394" x2="475.4961" y1="577.0738" y2="577.0738"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="68.4961" x="398" y="569.772">Donn&#233;es</text></g><!--cluster Outils--><g class="cluster" data-qualified-name="Outils" data-source-line="24" id="ent0015"><path d="M75.5,43.2969 L122.9912,43.2969 A3.75,3.75 0 0 1 125.4912,45.7969 L132.4912,65.5938 L434.5,65.5938 A2.5,2.5 0 0 1 437,68.0938 L437,224.3869 A2.5,2.5 0 0 1 434.5,226.8869 L75.5,226.8869 A2.5,2.5 0 0 1 73,224.3869 L73,45.7969 A2.5,2.5 0 0 1 75.5,43.2969" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="73" x2="132.4912" y1="65.5938" y2="65.5938"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="46.4912" x="77" y="58.292">Outils</text></g><!--entity Java--><g class="entity" data-qualified-name="Langages.Java" data-source-line="6" id="ent0003"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.9297" x="104.54" y="285.8869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42.9297" x="114.54" y="308.882">Java 7</text></g><!--entity SQL--><g class="entity" data-qualified-name="Langages.SQL" data-source-line="7" id="ent0004"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.7061" x="22.15" y="285.8869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="27.7061" x="32.15" y="308.882">SQL</text></g><!--entity JS--><g class="entity" data-qualified-name="Langages.JS" data-source-line="8" id="ent0005"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.1777" x="202.91" y="285.8869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70.1777" x="212.91" y="308.882">JavaScript</text></g><!--entity FTL--><g class="entity" data-qualified-name="Langages.FTL" data-source-line="9" id="ent0006"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.9258" x="22.04" y="382.1869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="79.9258" x="32.04" y="405.182">FreeMarker</text></g><!--entity Struts--><g class="entity" data-qualified-name="Frameworks.Struts" data-source-line="13" id="ent0008"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75.1455" x="349.43" y="382.1869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="55.1455" x="359.43" y="405.182">Struts 2</text></g><!--entity Vertigo--><g class="entity" data-qualified-name="Frameworks.Vertigo" data-source-line="14" id="ent0009"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.7773" x="459.61" y="382.1869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50.7773" x="469.61" y="405.182">Vertigo</text></g><!--entity Spring--><g class="entity" data-qualified-name="Frameworks.Spring" data-source-line="15" id="ent0010"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.1787" x="349.41" y="478.4869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="45.1787" x="359.41" y="501.482">Spring</text></g><!--entity Hibernate--><g class="entity" data-qualified-name="Frameworks.Hibernate" data-source-line="16" id="ent0011"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="89.2275" x="449.39" y="478.4869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="69.2275" x="459.39" y="501.482">Hibernate</text></g><!--entity PG--><g class="entity" data-qualified-name="Donn.es.PG" data-source-line="20" id="ent0013"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="136.375" x="409.81" y="589.7769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="116.375" x="419.81" y="612.772">PostgreSQL 15.2</text></g><!--entity ES--><g class="entity" data-qualified-name="Donn.es.ES" data-source-line="21" id="ent0014"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.4971" x="580.75" y="589.7769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="92.4971" x="590.75" y="612.772">Elasticsearch</text></g><!--entity Maven--><g class="entity" data-qualified-name="Outils.Maven" data-source-line="25" id="ent0016"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="93.1445" x="89.43" y="174.5969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73.1445" x="99.43" y="197.592">Maven 3.6</text></g><!--entity CI--><g class="entity" data-qualified-name="Outils.CI" data-source-line="26" id="ent0017"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83.8477" x="225.08" y="78.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63.8477" x="235.08" y="101.292">GitLab CI</text></g><!--entity Sonar--><g class="entity" data-qualified-name="Outils.Sonar" data-source-line="27" id="ent0018"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98.0527" x="217.97" y="174.5969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="78.0527" x="227.97" y="197.592">SonarQube</text></g><!--entity Docker--><g class="entity" data-qualified-name="Outils.Docker" data-source-line="28" id="ent0019"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.5195" x="351.24" y="174.5969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="49.5195" x="361.24" y="197.592">Docker</text></g><!--link Java to Struts--><g class="link" data-entity-1="ent0003" data-entity-2="ent0008" data-link-type="dependency" data-source-line="31" id="lnk20"><path d="M167.88,317.2269 C173.53,319.0869 179.39,320.8369 185,322.1869 C239.08,335.2169 257.69,317.6969 309,339.1869 C332.5,349.0269 350.7123,363.6625 365.4723,377.6325" fill="none" id="Java-to-Struts" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="369.83,381.7569,366.0431,372.6651,366.1986,378.3199,360.5439,378.4753,369.83,381.7569" style="stroke:#181818;stroke-width:1;"/></g><!--link Java to Vertigo--><g class="link" data-entity-1="ent0003" data-entity-2="ent0009" data-link-type="dependency" data-source-line="32" id="lnk21"><path d="M167.81,317.5569 C173.46,319.3869 179.35,321.0369 185,322.1869 C241.08,333.6369 390.64,313.9169 442,339.1869 C460.86,348.4669 472.6615,362.6823 481.8315,376.9223" fill="none" id="Java-to-Vertigo" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="485.08,381.9669,483.5703,372.2344,482.3729,377.7631,476.8442,376.5657,485.08,381.9669" style="stroke:#181818;stroke-width:1;"/></g><!--link Struts to Spring--><g class="link" data-entity-1="ent0008" data-entity-2="ent0010" data-link-type="dependency" data-source-line="33" id="lnk22"><path d="M386.08,418.6269 C385.19,435.5369 384.1476,455.1553 383.2476,472.1353" fill="none" id="Struts-to-Spring" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="382.93,478.1269,387.4008,469.3512,383.1946,473.1339,379.412,468.9278,382.93,478.1269" style="stroke:#181818;stroke-width:1;"/></g><!--link Vertigo to Hibernate--><g class="link" data-entity-1="ent0009" data-entity-2="ent0011" data-link-type="dependency" data-source-line="34" id="lnk23"><path d="M494.82,418.6269 C494.64,435.5369 494.4336,455.1472 494.2536,472.1272" fill="none" id="Vertigo-to-Hibernate" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="494.19,478.1269,498.2852,469.1698,494.243,473.1272,490.2856,469.085,494.19,478.1269" style="stroke:#181818;stroke-width:1;"/></g><!--link Hibernate to PG--><g class="link" data-entity-1="ent0011" data-entity-2="ent0013" data-link-type="dependency" data-source-line="35" id="lnk24"><path d="M491.43,515.1969 C488.44,535.5869 484.4214,563.1005 481.4314,583.4705" fill="none" id="Hibernate-to-PG" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="480.56,589.4069,485.8246,581.0832,481.2861,584.4599,477.9095,579.9214,480.56,589.4069" style="stroke:#181818;stroke-width:1;"/></g><!--link Vertigo to ES--><g class="link" data-entity-1="ent0009" data-entity-2="ent0014" data-link-type="dependency" data-source-line="36" id="lnk25"><path d="M509.6,418.6969 C522.31,434.0669 541.01,457.2969 556,478.4869 C583.26,517.0069 608.9458,559.2924 623.7658,584.3524" fill="none" id="Vertigo-to-ES" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="626.82,589.5169,625.6817,579.734,624.2748,585.2131,618.7957,583.8063,626.82,589.5169" style="stroke:#181818;stroke-width:1;"/></g><!--link Maven to Java--><g class="link" data-entity-1="ent0016" data-entity-2="ent0003" data-link-type="dependency" data-source-line="37" id="lnk26"><path d="M136,211.2969 C136,231.6969 136,259.1469 136,279.5169" fill="none" id="Maven-to-Java" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="136,285.5169,140,276.5169,136,280.5169,132,276.5169,136,285.5169" style="stroke:#181818;stroke-width:1;"/></g><!--link CI to Maven--><g class="link" data-entity-1="ent0017" data-entity-2="ent0016" data-link-type="dependency" data-source-line="38" id="lnk27"><path d="M242.67,114.9569 C219.14,131.8969 188.5605,153.9128 165.0705,170.8128" fill="none" id="CI-to-Maven" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="160.2,174.3169,169.8417,172.3077,164.2587,171.3968,165.1696,165.8138,160.2,174.3169" style="stroke:#181818;stroke-width:1;"/></g><!--link CI to Sonar--><g class="link" data-entity-1="ent0017" data-entity-2="ent0018" data-link-type="dependency" data-source-line="39" id="lnk28"><path d="M267,114.7369 C267,131.6469 267,151.2569 267,168.2369" fill="none" id="CI-to-Sonar" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="267,174.2369,271,165.2369,267,169.2369,263,165.2369,267,174.2369" style="stroke:#181818;stroke-width:1;"/></g><!--link CI to Docker--><g class="link" data-entity-1="ent0017" data-entity-2="ent0019" data-link-type="dependency" data-source-line="40" id="lnk29"><path d="M289.1,114.9569 C310.48,131.8969 337.9772,153.6908 359.3072,170.5908" fill="none" id="CI-to-Docker" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="364.01,174.3169,359.4399,165.5926,360.091,171.2118,354.4717,171.863,364.01,174.3169" style="stroke:#181818;stroke-width:1;"/></g><?plantuml-src LL7DJiCm3BxtAQBTDmaGSEEohQEeWurEN107BxAwg5rIKdS88Hw8v-35oEniBRtq-t5Y-qjR6Tk0XxtIRjyuYvOA-gnHUTG4jgmnISXG40e2NQaDwfqrxrtWsVCyUvmNIT840qfKepmS2A0TgQz4XU_r0GwWRjyKjEe8HIpMEIlXtrSLsfk6fB8GEVM8I_0LUfRJJPvy3vgbOMZySBxgsnNaEshLfLpFH8mNz6HAnth4yKJZZIsbdg78zsQBtW8XEsVsh__CMVlxCrXsvLegFOQrrCNrH8POBSIRrz2IqIs2rpjsGd33svuwCdL_rn8EQDNLv8PhcOcnC9J3LaqpDgPPNCDPyEjkA_Co4sFcz2a_WSUc_2hZyTqfeZC_HHDpv1999JeizN6S4UjXrs5PM52sE19-_Md6MBQ9H6QD98xu1m00?></g></svg>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Couche</th>
+<th>Technologie</th>
+<th>Version</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Langage</strong></td>
+<td>Java</td>
+<td>1.7</td>
+<td>Logique métier</td>
+</tr>
+<tr>
+<td><strong>Framework Web</strong></td>
+<td>Struts 2</td>
+<td>2.x</td>
+<td>Couche présentation MVC</td>
+</tr>
+<tr>
+<td><strong>Framework Métier</strong></td>
+<td>Vertigo</td>
+<td>-</td>
+<td>Services, DAO, ORM léger</td>
+</tr>
+<tr>
+<td><strong>Base de données</strong></td>
+<td>PostgreSQL</td>
+<td>15.2</td>
+<td>Persistance relationnelle</td>
+</tr>
+<tr>
+<td><strong>Moteur de recherche</strong></td>
+<td>Elasticsearch</td>
+<td>7.x (embarqué)</td>
+<td>Indexation full-text</td>
+</tr>
+<tr>
+<td><strong>Reporting</strong></td>
+<td>BIRT</td>
+<td>4.x</td>
+<td>Génération de rapports</td>
+</tr>
+<tr>
+<td><strong>Frontend</strong></td>
+<td>Bootstrap 2/3</td>
+<td>-</td>
+<td>UI responsive</td>
+</tr>
+<tr>
+<td><strong>Template Engine</strong></td>
+<td>FreeMarker</td>
+<td>-</td>
+<td>Génération vues</td>
+</tr>
+<tr>
+<td><strong>Build</strong></td>
+<td>Maven</td>
+<td>3.6</td>
+<td>Compilation, packaging</td>
+</tr>
+<tr>
+<td><strong>Conteneur</strong></td>
+<td>Tomcat</td>
+<td>9.x (embarqué)</td>
+<td>Serveur d'applications</td>
+</tr>
+</tbody>
+</table><a id="53-forge-logicielle"></a>
+<h3 id="53-forge-logicielle-html-tag-139">5.3 Forge logicielle <a href="#toc-53-forge-logicielle">↑</a></h3>
+
+<table>
+<thead>
+<tr>
+<th>Outil</th>
+<th>Usage</th>
+<th>Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GitLab</strong></td>
+<td>Gestion de sources, CI/CD</td>
+<td>Forge interne du MTE</td>
+</tr>
+<tr>
+<td><strong>Maven</strong></td>
+<td>Build, gestion des dépendances</td>
+<td><code>pom.xml</code> parent avec modules</td>
+</tr>
+<tr>
+<td><strong>SonarQube</strong></td>
+<td>Analyse qualité de code</td>
+<td>Scan manuel dans CI</td>
+</tr>
+<tr>
+<td><strong>Docker</strong></td>
+<td>Conteneurisation applicative</td>
+<td>Multi-stage build, images Alpine</td>
+</tr>
+<tr>
+<td><strong>Registry</strong></td>
+<td>GCR (Google Cloud Registry)</td>
+<td><code>eu.gcr.io/dpnm3-lab/sireines</code></td>
+</tr>
+</tbody>
+</table><a href="#introduction">↩ Retour au sommaire</a>
+
+<p><hr></p>
+
+<h2 id="briques">6. Vue en Briques (C4-L2) <a href="#toc-briques">↑</a></h2>
+
+<a id="61-vue-conteneur"></a>
+<h3 id="61-vue-conteneur-html-tag-142">6.1 Vue Conteneur <a href="#toc-61-vue-conteneur">↑</a></h3>
+
+<div class="diagram diagram-plantuml">
+<?plantuml 1.2026.1?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" preserveAspectRatio="xMidYMid meet" style="background:#FEFEFE;" version="1.1" viewBox="0 0 827 894" zoomAndPan="magnify"><title>SIREINES - Vue Conteneurs (C4-L2)</title><defs/><g><rect fill="#FEFEFE" height="894" style="stroke:none;stroke-width:1;" width="827" x="0" y="0"/><g class="title" data-source-line="6"><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="275.8096" x="268.7354" y="22.9951">SIREINES - Vue Conteneurs (C4-L2)</text></g><!--cluster Syst?me SIREINES--><g class="cluster" data-qualified-name="Syst.me SIREINES" data-source-line="10" id="ent0003"><path d="M8.5,174.8869 L154.3945,174.8869 A3.75,3.75 0 0 1 156.8945,177.3869 L163.8945,197.1838 L710.5,197.1838 A2.5,2.5 0 0 1 713,199.6838 L713,884.6569 A2.5,2.5 0 0 1 710.5,887.1569 L8.5,887.1569 A2.5,2.5 0 0 1 6,884.6569 L6,177.3869 A2.5,2.5 0 0 1 8.5,174.8869" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="163.8945" y1="197.1838" y2="197.1838"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="144.8945" x="10" y="189.882">Syst&#232;me SIREINES</text></g><!--cluster App--><g class="cluster" data-qualified-name="Syst.me SIREINES.App" data-source-line="12" id="ent0004"><rect fill="#FFD700" height="474.08" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="240" x="38" y="225.8869"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="129.1309" x="93.4346" y="240.882">Application Web</text><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="72.208" x="121.896" y="257.1789">SIREINES</text><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="202.6787" x="56.6606" y="273.4757">[Java 7, Struts 2, Vertigo]</text><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="82.9131" x="116.5435" y="289.7726">Port: 8080</text></g><!--entity Search--><g class="entity" data-qualified-name="Syst.me SIREINES.Search" data-source-line="18" id="ent0008"><rect fill="#FFFFE0" height="85.1875" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="170.2402" x="301.88" y="607.0769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="150.2402" x="311.88" y="630.072">Moteur de Recherche</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="92.4971" x="311.88" y="646.3689">Elasticsearch</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="83.002" x="311.88" y="662.6657">[Embarqu&#233;]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73.0488" x="311.88" y="678.9626">Port: 9200</text></g><!--entity Report--><g class="entity" data-qualified-name="Syst.me SIREINES.Report" data-source-line="20" id="ent0009"><rect fill="#D3D3D3" height="68.8906" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="189.5996" x="507.2" y="615.2269"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="169.5996" x="517.2" y="638.222">G&#233;n&#233;rateur de Rapports</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84.4443" x="517.2" y="654.5189">BIRT Engine</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112.8545" x="517.2" y="670.8157">[Int&#233;gr&#233; &#224; l'app]</text></g><!--entity DB--><g class="entity" data-qualified-name="Syst.me SIREINES.DB" data-source-line="22" id="ent0010"><rect fill="#ADD8E6" height="85.1875" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.1035" x="82.95" y="785.9669"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="122.1035" x="92.95" y="808.962">Base de Donn&#233;es</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.7529" x="92.95" y="825.2589">PostgreSQL</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="79.3379" x="92.95" y="841.5557">[Container]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73.0488" x="92.95" y="857.8526">Port: 5432</text></g><!--entity Pres--><g class="entity" data-qualified-name="Syst.me SIREINES.App.Pres" data-source-line="13" id="ent0005"><rect fill="#F1F1F1" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="165.3252" x="62.34" y="317.8869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="145.3252" x="72.34" y="340.882">Couche Pr&#233;sentation</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="138.9063" x="72.34" y="357.1789">(JSP, Actions Struts)</text></g><!--entity Service--><g class="entity" data-qualified-name="Syst.me SIREINES.App.Service" data-source-line="14" id="ent0006"><rect fill="#F1F1F1" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="140.4082" x="97.8" y="462.4869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108.5889" x="107.8" y="485.482">Couche Service</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="120.4082" x="107.8" y="501.7789">(Services m&#233;tier)</text></g><!--entity DAO--><g class="entity" data-qualified-name="Syst.me SIREINES.App.DAO" data-source-line="15" id="ent0007"><rect fill="#F1F1F1" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="183.7891" x="62.11" y="623.3769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="163.7891" x="72.11" y="646.372">Couche Acc&#232;s Donn&#233;es</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="83.6377" x="72.11" y="662.6689">(DAO, MDA)</text></g><!--entity User--><g class="entity" data-qualified-name="User" data-source-line="8" id="ent0002"><rect fill="#ADD8E6" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="166.3643" x="61.82" y="44.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72.0098" x="71.82" y="67.292">Utilisateur</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="146.3643" x="71.82" y="83.5889">(Agent/Gestionnaire)</text></g><!--entity SSO--><g class="entity" data-qualified-name="SSO" data-source-line="25" id="ent0011"><rect fill="#90EE90" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="92.5703" x="728.71" y="462.4869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="56.0137" x="738.71" y="485.482">Cerb&#232;re</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72.5703" x="738.71" y="501.7789">[SSO &#201;tat]</text></g><!--link User to Pres--><g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" data-source-line="27" id="lnk12"><path d="M145,97.1469 C145,148.9069 145,259.6369 145,311.5069" fill="none" id="User-to-Pres" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="145,317.5069,149,308.5069,145,312.5069,141,308.5069,145,317.5069" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="70.9414" x="191.1763" y="139.9538">HTTPS/443</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="161.2939" x="146" y="155.0866">[Authentifi&#233; via Cerb&#232;re]</text></g><!--link Pres to Service--><g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="dependency" data-source-line="28" id="lnk13"><path d="M149.11,370.6769 C153.27,396.4769 158.7137,430.2136 162.8937,456.1036" fill="none" id="Pres-to-Service" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="163.85,462.0269,166.3644,452.5044,163.0531,457.0908,158.4666,453.7795,163.85,462.0269" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="101.2134" x="160" y="421.0538">Appels internes</text></g><!--link Service to DAO--><g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" data-source-line="29" id="lnk14"><path d="M110.27,515.4869 C98.94,523.2969 88.55,533.0769 82,545.0769 C66.73,573.0469 87.4505,598.8701 112.1705,619.2501" fill="none" id="Service-to-DAO" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="116.8,623.0669,112.4002,614.2554,112.9421,619.8863,107.3112,620.4281,116.8,623.0669" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="83.0527" x="83" y="565.6438">Transactions</text></g><!--link DAO to DB--><g class="link" data-entity-1="ent0007" data-entity-2="ent0010" data-link-type="dependency" data-source-line="30" id="lnk15"><path d="M154,676.3969 C154,705.0469 154,745.7869 154,779.7169" fill="none" id="DAO-to-DB" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="154,785.7169,158,776.7169,154,780.7169,150,776.7169,154,785.7169" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="31.8398" x="241.801" y="737.0338">JDBC</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="205.4419" x="155" y="752.1666">[Dossiers, Agents, R&#233;f&#233;rentiels]</text></g><!--link Service to Search--><g class="link" data-entity-1="ent0006" data-entity-2="ent0008" data-link-type="dependency" data-source-line="31" id="lnk16"><path d="M203.19,515.3069 C237.16,539.9569 284.3531,574.204 324.4031,603.254" fill="none" id="Service-to-Search" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="329.26,606.7769,324.3233,598.2546,325.2126,603.8411,319.6261,604.7304,329.26,606.7769" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="33.4966" x="347.4707" y="558.1438">HTTP</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="156.438" x="286" y="573.2766">[Indexation, Recherche]</text></g><!--link Service to Report--><g class="link" data-entity-1="ent0006" data-entity-2="ent0009" data-link-type="dependency" data-source-line="32" id="lnk17"><path d="M238.64,495.5369 C297.35,502.1869 382.1,516.1769 451,545.0769 C492.04,562.2969 528.6655,587.9204 557.6755,611.0104" fill="none" id="Service-to-Report" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="562.37,614.7469,557.8192,606.0124,558.4579,611.6331,552.8372,612.2718,562.37,614.7469" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="71.2271" x="544.2771" y="558.1438">API interne</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="141.7813" x="509" y="573.2766">[G&#233;n&#233;ration rapports]</text></g><!--link App to SSO--><g class="link" data-entity-1="ent0004" data-entity-2="ent0011" data-link-type="dependency" data-source-line="33" id="lnk18"><path d="M278.5225,347.5975 C278.9742,347.725 279.4427,347.8573 279.9279,347.9942 C281.8686,348.5422 284.0758,349.1654 286.5334,349.8592 C296.3636,352.6347 310.1997,356.5413 327.0119,361.2883 C360.6363,370.7822 406.165,383.6375 455.36,397.5281 C553.75,425.3094 661.0308,455.6014 722.8458,473.0564" fill="none" id="App-to-SSO" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="728.62,474.6869,721.0457,468.3917,723.8082,473.3281,718.8717,476.0906,728.62,474.6869" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="66.2061" x="591.7783" y="413.5538">SAML/CAS</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="113.7627" x="568" y="428.6866">[Authentification]</text></g><?plantuml-src VLDTJzim57tFhxY3Xu7KYgfq6kDXKffcNL4BMLsOfhKFRde95gcTsGuRclW1-nTx9ByZVspNILheX6ZL3pltddDyp_6R5LuBYJ0DWvb_FXo74AVS6Cypjq9cNFCrB7bycsYLorMWKgLX_rFetiygOhNEb4HfcRrF4JJ6biiaHS-pmj866qt3qNd8e0rNEKAWf4M9kJPm4FJQu-wXvsrxOE_IYbGORgbWBW_yX72FXcYiK59oeV5m3xY1IuCaPIoI6zjFSwBAI2PFg9_T6ri-hfzez-2t1_IglfuH-LcMYfWxOFYAoxdSDCpbzpD-n-5z2vZLkJNGRS4LQYiIjPZBI6bx2YUTaqwbX61WVwZILKFp7qkWylW68T9bOUWe5HsTwun5BV1Zjp8DItsmIADv1OUXlXCn4aBppy2wBAn0NRStkwyW-75SFXeOq3ZB0WqX3VoB5am6Ver0gwhxuSMXJPGp1bOK6IGqJP-v32apLiG6EQrfUk5woVMFl2osq_hGxNGQVQwcSUuRfgdw-IBFi2n8dkPRDfvbX4Ho-wFf34APK6o9QYHjMIGqN2Z_GlgMgXOLpnHTUSCprFp-HPO-D-ZGduOHAMCJZUpBcC1TKZdnwEqvtlMEk_MK-i_Jzx2Ju03ridpKJXvZ5r3-8TThLMwvaOGeFQ-ASRlziR8TJk7pR1Qnerxlc7hztDvGOiIreDFT2GuRt8LNLRksncxgf1XYQa3GtTAI8hHvugh8KggOQIuDhoFdkQtgKP-Ud0tw0H4Eb34K94F1TBUEVgTbSKqkE1K4ljW1RPoiDLTEhF1N5U_MKpPsMnfJI6mqsYYbpgtNxYRgnkY5vovMHSISUkPFnaU1ptO6Kz_UXVSF?></g></svg>
+</div>
+
+<a id="62-description-des-conteneurs"></a>
+<h3 id="62-description-des-conteneurs-html-tag-143">6.2 Description des conteneurs <a href="#toc-62-description-des-conteneurs">↑</a></h3>
+
+<table>
+<thead>
+<tr>
+<th>Conteneur</th>
+<th>Technologie</th>
+<th>Responsabilité</th>
+<th>Interfaces</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Application Web SIREINES</strong></td>
+<td>Java 7, Struts 2, Vertigo, Tomcat embarqué</td>
+<td>Orchestration des flux métier, présentation web, gestion des sessions</td>
+<td>HTTP 8080 (interne), exposé via Nginx</td>
+</tr>
+<tr>
+<td><strong>Base de données PostgreSQL</strong></td>
+<td>PostgreSQL 15.2 Alpine</td>
+<td>Persistance des données métier, référentiels, historique</td>
+<td>JDBC 5432</td>
+</tr>
+<tr>
+<td><strong>Elasticsearch</strong></td>
+<td>ES 7.x (mode embedded via Vertigo)</td>
+<td>Indexation des dossiers pour recherche full-text</td>
+<td>HTTP 9200 (localhost uniquement)</td>
+</tr>
+<tr>
+<td><strong>BIRT Engine</strong></td>
+<td>Bibliothèque Java intégrée</td>
+<td>Génération des rapports statistiques et fiches PDF</td>
+<td>API interne Java</td>
+</tr>
+</tbody>
+</table><a id="63-structure-des-modules"></a>
+<h3 id="63-structure-des-modules-html-tag-144">6.3 Structure des modules <a href="#toc-63-structure-des-modules">↑</a></h3>
+
+<pre><code class="language-">sireines-web/
+├── src/main/java/
+│   ├── i2/application/sireines/
+│   │   ├── boot/          # Initialisation (Persistence, Search)
+│   │   ├── controller/    # Actions Struts (MVC)
+│   │   ├── service/       # Services métier (Agents, Dossiers, etc.)
+│   │   ├── filter/        # Filtres HTTP (Encoding, Session)
+│   │   └── util/          # Utilitaires
+│   └── resources/
+│       ├── i2/application/sireines/services/  # Modèles MDA (.ksp)
+│       ├── META-INF/      # Configuration Spring/Vertigo
+│       └── template/      # Templates FreeMarker
+└── src/main/webapp/
+    ├── jsp/               # Vues JSP
+    ├── static/            # CSS, JS, images
+    └── WEB-INF/           # Configuration web
+</code></pre>
+<a href="#introduction">↩ Retour au sommaire</a>
+
+<p><hr></p>
+
+<h2 id="execution">7. Vue Exécution <a href="#toc-execution">↑</a></h2>
+
+<a id="71-scénario-création-dun-dossier-dévaluation"></a>
+<h3 id="71-scénario-création-dun-dossier-dévaluation-html-tag-147">7.1 Scénario : Création d'un dossier d'évaluation <a href="#toc-71-scénario-création-dun-dossier-dévaluation">↑</a></h3>
+
+<div class="diagram diagram-plantuml">
+<?plantuml 1.2026.1?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" preserveAspectRatio="xMidYMid meet" style="background:#FFFFFF;" version="1.1" viewBox="0 0 1168 785" zoomAndPan="magnify"><title>S&#233;quence - Cr&#233;ation d'un Dossier d'&#201;valuation</title><defs/><g><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="365.2783" x="400.5732" y="27.9951">S&#233;quence - Cr&#233;ation d'un Dossier d'&#201;valuation</text><g><title>AgentRechercheAction</title><rect fill="#FFFFFF" height="203.9297" style="stroke:#181818;stroke-width:1;" width="10" x="317.1123" y="149.7266"/></g><g><title>AgentRechercheAction</title><rect fill="#FFFFFF" height="304.3281" style="stroke:#181818;stroke-width:1;" width="10" x="317.1123" y="382.7891"/></g><g><title>AgentsServices</title><rect fill="#FFFFFF" height="174.7969" style="stroke:#181818;stroke-width:1;" width="10" x="484.0786" y="178.8594"/></g><g><title>DossiersServices</title><rect fill="#FFFFFF" height="246.0625" style="stroke:#181818;stroke-width:1;" width="10" x="621.2236" y="411.9219"/></g><g><title>DossierDAO</title><rect fill="#FFFFFF" height="87.3984" style="stroke:#181818;stroke-width:1;" width="10" x="807.3325" y="483.1875"/></g><g><title>Elasticsearch</title><rect fill="#FFFFFF" height="29.1328" style="stroke:#181818;stroke-width:1;" width="10" x="1104.1763" y="599.7188"/></g><g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="User" id="part1-lifeline"><g><title>Gestionnaire</title><rect fill="#000000" fill-opacity="0.00000" height="586.5234" width="8" x="48.6421" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="52" x2="52" y1="118.5938" y2="705.1172"/></g></g><g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="Action" id="part2-lifeline"><g><title>AgentRechercheAction</title><rect fill="#000000" fill-opacity="0.00000" height="586.5234" width="8" x="318.1123" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="321.1147" x2="321.1147" y1="118.5938" y2="705.1172"/></g></g><g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="Service" id="part3-lifeline"><g><title>AgentsServices</title><rect fill="#000000" fill-opacity="0.00000" height="586.5234" width="8" x="485.0786" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="488.1943" x2="488.1943" y1="118.5938" y2="705.1172"/></g></g><g class="participant-lifeline" data-entity-uid="part4" data-qualified-name="DossierSvc" id="part4-lifeline"><g><title>DossiersServices</title><rect fill="#000000" fill-opacity="0.00000" height="586.5234" width="8" x="622.2236" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="625.9629" x2="625.9629" y1="118.5938" y2="705.1172"/></g></g><g class="participant-lifeline" data-entity-uid="part5" data-qualified-name="DAO" id="part5-lifeline"><g><title>DossierDAO</title><rect fill="#000000" fill-opacity="0.00000" height="586.5234" width="8" x="808.3325" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="811.5479" x2="811.5479" y1="118.5938" y2="705.1172"/></g></g><g class="participant-lifeline" data-entity-uid="part6" data-qualified-name="DB" id="part6-lifeline"><g><title>PostgreSQL</title><rect fill="#000000" fill-opacity="0.00000" height="586.5234" width="8" x="994.5513" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="998.1748" x2="998.1748" y1="118.5938" y2="705.1172"/></g></g><g class="participant-lifeline" data-entity-uid="part7" data-qualified-name="ES" id="part7-lifeline"><g><title>Elasticsearch</title><rect fill="#000000" fill-opacity="0.00000" height="586.5234" width="8" x="1105.1763" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="1108.9277" x2="1108.9277" y1="118.5938" y2="705.1172"/></g></g><g class="participant participant-head" data-entity-uid="part1" data-qualified-name="User" id="part1-head"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.2842" x="5" y="115.292">Gestionnaire</text><ellipse cx="52.6421" cy="50.7969" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M52.6421,58.7969 L52.6421,85.7969 M39.6421,66.7969 L65.6421,66.7969 M52.6421,85.7969 L39.6421,100.7969 M52.6421,85.7969 L65.6421,100.7969" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="User" id="part1-tail"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.2842" x="5" y="717.1123">Gestionnaire</text><ellipse cx="52.6421" cy="728.9141" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M52.6421,736.9141 L52.6421,763.9141 M39.6421,744.9141 L65.6421,744.9141 M52.6421,763.9141 L39.6421,778.9141 M52.6421,763.9141 L65.6421,778.9141" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-head" data-entity-uid="part2" data-qualified-name="Action" id="part2-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="173.9951" x="235.1147" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="159.9951" x="242.1147" y="107.292">AgentRechercheAction</text></g><g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="Action" id="part2-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="173.9951" x="235.1147" y="704.1172"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="159.9951" x="242.1147" y="724.1123">AgentRechercheAction</text></g><g class="participant participant-head" data-entity-uid="part3" data-qualified-name="Service" id="part3-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="121.7686" x="428.1943" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="107.7686" x="435.1943" y="107.292">AgentsServices</text></g><g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="Service" id="part3-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="121.7686" x="428.1943" y="704.1172"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="107.7686" x="435.1943" y="724.1123">AgentsServices</text></g><g class="participant participant-head" data-entity-uid="part4" data-qualified-name="DossierSvc" id="part4-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="132.5215" x="559.9629" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="118.5215" x="566.9629" y="107.292">DossiersServices</text></g><g class="participant participant-tail" data-entity-uid="part4" data-qualified-name="DossierSvc" id="part4-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="132.5215" x="559.9629" y="704.1172"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="118.5215" x="566.9629" y="724.1123">DossiersServices</text></g><g class="participant participant-head" data-entity-uid="part5" data-qualified-name="DAO" id="part5-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.5693" x="763.5479" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="83.5693" x="770.5479" y="107.292">DossierDAO</text></g><g class="participant participant-tail" data-entity-uid="part5" data-qualified-name="DAO" id="part5-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.5693" x="763.5479" y="704.1172"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="83.5693" x="770.5479" y="724.1123">DossierDAO</text></g><g class="participant participant-head" data-entity-uid="part6" data-qualified-name="DB" id="part6-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.7529" x="951.1748" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.7529" x="958.1748" y="107.292">PostgreSQL</text></g><g class="participant participant-tail" data-entity-uid="part6" data-qualified-name="DB" id="part6-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.7529" x="951.1748" y="704.1172"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.7529" x="958.1748" y="724.1123">PostgreSQL</text></g><g class="participant participant-head" data-entity-uid="part7" data-qualified-name="ES" id="part7-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.4971" x="1055.9277" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="92.4971" x="1062.9277" y="107.292">Elasticsearch</text></g><g class="participant participant-tail" data-entity-uid="part7" data-qualified-name="ES" id="part7-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.4971" x="1055.9277" y="704.1172"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="92.4971" x="1062.9277" y="724.1123">Elasticsearch</text></g><g><title>AgentRechercheAction</title><rect fill="#FFFFFF" height="203.9297" style="stroke:#181818;stroke-width:1;" width="10" x="317.1123" y="149.7266"/></g><g><title>AgentRechercheAction</title><rect fill="#FFFFFF" height="304.3281" style="stroke:#181818;stroke-width:1;" width="10" x="317.1123" y="382.7891"/></g><g><title>AgentsServices</title><rect fill="#FFFFFF" height="174.7969" style="stroke:#181818;stroke-width:1;" width="10" x="484.0786" y="178.8594"/></g><g><title>DossiersServices</title><rect fill="#FFFFFF" height="246.0625" style="stroke:#181818;stroke-width:1;" width="10" x="621.2236" y="411.9219"/></g><g><title>DossierDAO</title><rect fill="#FFFFFF" height="87.3984" style="stroke:#181818;stroke-width:1;" width="10" x="807.3325" y="483.1875"/></g><g><title>Elasticsearch</title><rect fill="#FFFFFF" height="29.1328" style="stroke:#181818;stroke-width:1;" width="10" x="1104.1763" y="599.7188"/></g><g class="message" data-entity-1="part1" data-entity-2="part2" id="msg1"><polygon fill="#181818" points="305.1123,145.7266,315.1123,149.7266,305.1123,153.7266,309.1123,149.7266" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="52.6421" x2="311.1123" y1="149.7266" y2="149.7266"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="241.9028" x="63.9258" y="144.6606">1. Rechercher agent (nom/matricule)</text></g><g class="message" data-entity-1="part2" data-entity-2="part3" id="msg2"><polygon fill="#181818" points="472.0786,174.8594,482.0786,178.8594,472.0786,182.8594,476.0786,178.8594" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="327.1123" x2="478.0786" y1="178.8594" y2="178.8594"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="137.9663" x="336.6123" y="173.7935">findAgentByCriteria()</text></g><g class="message" data-entity-1="part3" data-entity-2="part5" id="msg3"><polygon fill="#181818" points="800.3325,203.9922,810.3325,207.9922,800.3325,211.9922,804.3325,207.9922" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="494.0786" x2="806.3325" y1="207.9922" y2="207.9922"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="94.0215" x="606.1948" y="202.9263">selectAgents()</text></g><g class="message" data-entity-1="part5" data-entity-2="part6" id="msg4"><polygon fill="#181818" points="986.5513,233.125,996.5513,237.125,986.5513,241.125,990.5513,237.125" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="812.3325" x2="992.5513" y1="237.125" y2="237.125"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="69.3672" x="870.7583" y="232.0591">SQL Query</text></g><g class="message" data-entity-1="part6" data-entity-2="part5" id="msg5"><polygon fill="#181818" points="823.3325,262.2578,813.3325,266.2578,823.3325,270.2578,819.3325,266.2578" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="817.3325" x2="997.5513" y1="266.2578" y2="266.2578"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="60.5884" x="875.1477" y="261.1919">R&#233;sultats</text></g><g class="message" data-entity-1="part5" data-entity-2="part3" id="msg6"><polygon fill="#181818" points="505.0786,291.3906,495.0786,295.3906,505.0786,299.3906,501.0786,295.3906" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="499.0786" x2="811.3325" y1="295.3906" y2="295.3906"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="79.1807" x="613.6152" y="290.3247">Liste agents</text></g><g class="message" data-entity-1="part3" data-entity-2="part2" id="msg7"><polygon fill="#181818" points="338.1123,320.5234,328.1123,324.5234,338.1123,328.5234,334.1123,324.5234" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="332.1123" x2="483.0786" y1="324.5234" y2="324.5234"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="73.436" x="368.8774" y="319.4575">AgentsDTO</text></g><g class="message" data-entity-1="part2" data-entity-2="part1" id="msg8"><polygon fill="#181818" points="63.6421,349.6563,53.6421,353.6563,63.6421,357.6563,59.6421,353.6563" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="57.6421" x2="321.1123" y1="353.6563" y2="353.6563"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="111.4204" x="131.667" y="348.5903">Afficher r&#233;sultats</text></g><g class="message" data-entity-1="part1" data-entity-2="part2" id="msg9"><polygon fill="#181818" points="305.1123,378.7891,315.1123,382.7891,305.1123,386.7891,309.1123,382.7891" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="52.6421" x2="311.1123" y1="382.7891" y2="382.7891"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="245.4702" x="62.1421" y="377.7231">2. S&#233;lectionner agent + Cr&#233;er dossier</text></g><g class="message" data-entity-1="part2" data-entity-2="part4" id="msg10"><polygon fill="#181818" points="609.2236,407.9219,619.2236,411.9219,609.2236,415.9219,613.2236,411.9219" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="327.1123" x2="615.2236" y1="411.9219" y2="411.9219"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="207.0288" x="370.6536" y="406.856">createDossier(agentId, params)</text></g><g class="message" data-entity-1="part4" data-entity-2="part4" id="msg11"><line style="stroke:#181818;stroke-width:1;" x1="631.2236" x2="673.2236" y1="441.0547" y2="441.0547"/><line style="stroke:#181818;stroke-width:1;" x1="673.2236" x2="673.2236" y1="441.0547" y2="454.0547"/><line style="stroke:#181818;stroke-width:1;" x1="632.2236" x2="673.2236" y1="454.0547" y2="454.0547"/><polygon fill="#181818" points="642.2236,450.0547,632.2236,454.0547,642.2236,458.0547,638.2236,454.0547" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="152.1089" x="638.2236" y="435.9888">Valider donn&#233;es m&#233;tier</text></g><g class="message" data-entity-1="part4" data-entity-2="part5" id="msg12"><polygon fill="#181818" points="795.3325,479.1875,805.3325,483.1875,795.3325,487.1875,799.3325,483.1875" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="631.2236" x2="801.3325" y1="483.1875" y2="483.1875"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="142.3779" x="648.0891" y="478.1216">insertDossier(dossier)</text></g><g class="message" data-entity-1="part5" data-entity-2="part6" id="msg13"><polygon fill="#181818" points="986.5513,508.3203,996.5513,512.3203,986.5513,516.3203,990.5513,512.3203" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="817.3325" x2="992.5513" y1="512.3203" y2="512.3203"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="157.2188" x="829.3325" y="507.2544">INSERT INTO DOSSIER...</text></g><g class="message" data-entity-1="part6" data-entity-2="part5" id="msg14"><polygon fill="#181818" points="828.3325,537.4531,818.3325,541.4531,828.3325,545.4531,824.3325,541.4531" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="822.3325" x2="997.5513" y1="541.4531" y2="541.4531"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="63.8066" x="876.0386" y="536.3872">ID g&#233;n&#233;r&#233;</text></g><g class="message" data-entity-1="part5" data-entity-2="part4" id="msg15"><polygon fill="#181818" points="642.2236,566.5859,632.2236,570.5859,642.2236,574.5859,638.2236,570.5859" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="636.2236" x2="811.3325" y1="570.5859" y2="570.5859"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="81.085" x="681.2356" y="565.52">Dossier cr&#233;&#233;</text></g><g class="message" data-entity-1="part4" data-entity-2="part7" id="msg16"><polygon fill="#181818" points="1092.1763,595.7188,1102.1763,599.7188,1092.1763,603.7188,1096.1763,599.7188" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="631.2236" x2="1098.1763" y1="599.7188" y2="599.7188"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="141.1084" x="797.1458" y="594.6528">indexDossier(dossier)</text></g><g class="message" data-entity-1="part7" data-entity-2="part4" id="msg17"><polygon fill="#181818" points="642.2236,624.8516,632.2236,628.8516,642.2236,632.8516,638.2236,628.8516" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="636.2236" x2="1108.1763" y1="628.8516" y2="628.8516"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="66.6821" x="836.8589" y="623.7856">OK index&#233;</text></g><g class="message" data-entity-1="part4" data-entity-2="part2" id="msg18"><polygon fill="#181818" points="338.1123,653.9844,328.1123,657.9844,338.1123,661.9844,334.1123,657.9844" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="332.1123" x2="625.2236" y1="657.9844" y2="657.9844"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="76.6479" x="438.344" y="652.9185">DossierDTO</text></g><g class="message" data-entity-1="part2" data-entity-2="part1" id="msg19"><polygon fill="#181818" points="63.6421,683.1172,53.6421,687.1172,63.6421,691.1172,59.6421,687.1172" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="57.6421" x2="321.1123" y1="687.1172" y2="687.1172"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="160.8306" x="106.9619" y="682.0513">Redirection fiche dossier</text></g><?plantuml-src VLJDZjCm4BxdAKQzK0GDWYC7f7GJeOg5i4dXRZdJO94wY-rKx2FmA7cEl1XZEqcTPk5GjVPyy_Dzyxdwfv2FJB4pQFpLeUJu6RLcDIQDg2Lmb0PL51bX6eHow3q6Td2dXfuPqKgeNdGIqbPhWOeEmvyBQpeNYYB6JQjWyn6rFKic56w0QVYcgIhrDOABHoODR9AQMXN8Vw2YJy8jta7zpsV0kaHr4HorWus79MwSQeaSByiBVnQS9hc79Vao_hNLfbPOFjpx-7uPpXf69Bb6HWGS8YkZo1A5tOUH1Ro7jp7CB1KmImIsiZs_EJEZ1EyQV6bL4nTcSE8-9bEPaGZLEGbPEHdsJtTAq984smQPannJ0kKI8ShJs20tNa1Ai9SsjgSGCOE73jLJHCVTd54ClUuQmupswCKOzq9JDqT3Nvk5X7shz9ZFD2ZgPA7OwIIS3khQey8LYU1gL6IjwxlOsjDoiqQRfNtbZ6gDwRVx7ssllg1oN261ngkjgtMeNeDxAZhGEJ1J51IuBVUTDQ9oKqX9usWu3xsnuzmcESM597PcQZvE7ZObQuQBEtmfi-98NySSqhmi3raHn_5oYuSKwg6dvYJ7lCV5ZDCJveGWJ22wxNSpQ5QwEIly_UynoVy4M_N9F_d4PG_xMC8MuMwdbqaU2gUwIhzsLe4L_TVuQ-UnsG1hC_q5?></g></svg>
+</div>
+
+<a id="72-scénario-génération-dun-rapport-statistique"></a>
+<h3 id="72-scénario-génération-dun-rapport-statistique-html-tag-148">7.2 Scénario : Génération d'un rapport statistique <a href="#toc-72-scénario-génération-dun-rapport-statistique">↑</a></h3>
+
+<div class="diagram diagram-plantuml">
+<?plantuml 1.2026.1?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" preserveAspectRatio="xMidYMid meet" style="background:#FFFFFF;" version="1.1" viewBox="0 0 1418 611" zoomAndPan="magnify"><title>S&#233;quence - G&#233;n&#233;ration Rapport BIRT</title><defs/><g><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="289.7002" x="566.0806" y="27.9951">S&#233;quence - G&#233;n&#233;ration Rapport BIRT</text><g><title>ExtractionAction</title><rect fill="#FFFFFF" height="362.5938" style="stroke:#181818;stroke-width:1;" width="10" x="370.8726" y="149.7266"/></g><g><title>ExtractionsServices</title><rect fill="#FFFFFF" height="304.3281" style="stroke:#181818;stroke-width:1;" width="10" x="625.1362" y="178.8594"/></g><g><title>BirtManager</title><rect fill="#FFFFFF" height="246.0625" style="stroke:#181818;stroke-width:1;" width="10" x="865.5259" y="207.9922"/></g><g><title>BIRT Engine</title><rect fill="#FFFFFF" height="187.7969" style="stroke:#181818;stroke-width:1;" width="10" x="1118.0947" y="237.125"/></g><g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="User" id="part1-lifeline"><g><title>Utilisateur</title><rect fill="#000000" fill-opacity="0.00000" height="411.7266" width="8" x="40.0049" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="44" x2="44" y1="118.5938" y2="530.3203"/></g></g><g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="Action" id="part2-lifeline"><g><title>ExtractionAction</title><rect fill="#000000" fill-opacity="0.00000" height="411.7266" width="8" x="371.8726" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="375.0918" x2="375.0918" y1="118.5938" y2="530.3203"/></g></g><g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="Service" id="part3-lifeline"><g><title>ExtractionsServices</title><rect fill="#000000" fill-opacity="0.00000" height="411.7266" width="8" x="626.1362" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="629.2368" x2="629.2368" y1="118.5938" y2="530.3203"/></g></g><g class="participant-lifeline" data-entity-uid="part4" data-qualified-name="Birt" id="part4-lifeline"><g><title>BirtManager</title><rect fill="#000000" fill-opacity="0.00000" height="411.7266" width="8" x="866.5259" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="870.4731" x2="870.4731" y1="118.5938" y2="530.3203"/></g></g><g class="participant-lifeline" data-entity-uid="part5" data-qualified-name="Engine" id="part5-lifeline"><g><title>BIRT Engine</title><rect fill="#000000" fill-opacity="0.00000" height="411.7266" width="8" x="1119.0947" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="1122.8726" x2="1122.8726" y1="118.5938" y2="530.3203"/></g></g><g class="participant-lifeline" data-entity-uid="part6" data-qualified-name="DB" id="part6-lifeline"><g><title>PostgreSQL</title><rect fill="#000000" fill-opacity="0.00000" height="411.7266" width="8" x="1370.4849" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="1374.1084" x2="1374.1084" y1="118.5938" y2="530.3203"/></g></g><g class="participant participant-head" data-entity-uid="part1" data-qualified-name="User" id="part1-head"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72.0098" x="5" y="115.292">Utilisateur</text><ellipse cx="44.0049" cy="50.7969" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M44.0049,58.7969 L44.0049,85.7969 M31.0049,66.7969 L57.0049,66.7969 M44.0049,85.7969 L31.0049,100.7969 M44.0049,85.7969 L57.0049,100.7969" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="User" id="part1-tail"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72.0098" x="5" y="542.3154">Utilisateur</text><ellipse cx="44.0049" cy="554.1172" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M44.0049,562.1172 L44.0049,589.1172 M31.0049,570.1172 L57.0049,570.1172 M44.0049,589.1172 L31.0049,604.1172 M44.0049,589.1172 L57.0049,604.1172" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-head" data-entity-uid="part2" data-qualified-name="Action" id="part2-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.5615" x="311.0918" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="115.5615" x="318.0918" y="107.292">ExtractionAction</text></g><g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="Action" id="part2-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.5615" x="311.0918" y="529.3203"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="115.5615" x="318.0918" y="549.3154">ExtractionAction</text></g><g class="participant participant-head" data-entity-uid="part3" data-qualified-name="Service" id="part3-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151.7988" x="554.2368" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="137.7988" x="561.2368" y="107.292">ExtractionsServices</text></g><g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="Service" id="part3-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151.7988" x="554.2368" y="529.3203"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="137.7988" x="561.2368" y="549.3154">ExtractionsServices</text></g><g class="participant participant-head" data-entity-uid="part4" data-qualified-name="Birt" id="part4-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="100.1055" x="820.4731" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="86.1055" x="827.4731" y="107.292">BirtManager</text></g><g class="participant participant-tail" data-entity-uid="part4" data-qualified-name="Birt" id="part4-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="100.1055" x="820.4731" y="529.3203"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="86.1055" x="827.4731" y="549.3154">BirtManager</text></g><g class="participant participant-head" data-entity-uid="part5" data-qualified-name="Engine" id="part5-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98.4443" x="1073.8726" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84.4443" x="1080.8726" y="107.292">BIRT Engine</text></g><g class="participant participant-tail" data-entity-uid="part5" data-qualified-name="Engine" id="part5-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98.4443" x="1073.8726" y="529.3203"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84.4443" x="1080.8726" y="549.3154">BIRT Engine</text></g><g class="participant participant-head" data-entity-uid="part6" data-qualified-name="DB" id="part6-head"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.7529" x="1331.1084" y="115.292">PostgreSQL</text><path d="M1356.4849,66.2969 C1356.4849,56.2969 1374.4849,56.2969 1374.4849,56.2969 C1374.4849,56.2969 1392.4849,56.2969 1392.4849,66.2969 L1392.4849,92.2969 C1392.4849,102.2969 1374.4849,102.2969 1374.4849,102.2969 C1374.4849,102.2969 1356.4849,102.2969 1356.4849,92.2969 L1356.4849,66.2969" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/><path d="M1356.4849,66.2969 C1356.4849,76.2969 1374.4849,76.2969 1374.4849,76.2969 C1374.4849,76.2969 1392.4849,76.2969 1392.4849,66.2969" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-tail" data-entity-uid="part6" data-qualified-name="DB" id="part6-tail"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.7529" x="1331.1084" y="542.3154">PostgreSQL</text><path d="M1356.4849,555.6172 C1356.4849,545.6172 1374.4849,545.6172 1374.4849,545.6172 C1374.4849,545.6172 1392.4849,545.6172 1392.4849,555.6172 L1392.4849,581.6172 C1392.4849,591.6172 1374.4849,591.6172 1374.4849,591.6172 C1374.4849,591.6172 1356.4849,591.6172 1356.4849,581.6172 L1356.4849,555.6172" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/><path d="M1356.4849,555.6172 C1356.4849,565.6172 1374.4849,565.6172 1374.4849,565.6172 C1374.4849,565.6172 1392.4849,565.6172 1392.4849,555.6172" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g><title>ExtractionAction</title><rect fill="#FFFFFF" height="362.5938" style="stroke:#181818;stroke-width:1;" width="10" x="370.8726" y="149.7266"/></g><g><title>ExtractionsServices</title><rect fill="#FFFFFF" height="304.3281" style="stroke:#181818;stroke-width:1;" width="10" x="625.1362" y="178.8594"/></g><g><title>BirtManager</title><rect fill="#FFFFFF" height="246.0625" style="stroke:#181818;stroke-width:1;" width="10" x="865.5259" y="207.9922"/></g><g><title>BIRT Engine</title><rect fill="#FFFFFF" height="187.7969" style="stroke:#181818;stroke-width:1;" width="10" x="1118.0947" y="237.125"/></g><g class="message" data-entity-1="part1" data-entity-2="part2" id="msg1"><polygon fill="#181818" points="358.8726,145.7266,368.8726,149.7266,358.8726,153.7266,362.8726,149.7266" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="44.0049" x2="364.8726" y1="149.7266" y2="149.7266"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="307.8677" x="53.5049" y="144.6606">1. S&#233;lectionner type d'extraction + param&#232;tres</text></g><g class="message" data-entity-1="part2" data-entity-2="part3" id="msg2"><polygon fill="#181818" points="613.1362,174.8594,623.1362,178.8594,613.1362,182.8594,617.1362,178.8594" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="380.8726" x2="619.1362" y1="178.8594" y2="178.8594"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="198.9863" x="403.5112" y="173.7935">generateReport(type, params)</text></g><g class="message" data-entity-1="part3" data-entity-2="part4" id="msg3"><polygon fill="#181818" points="853.5259,203.9922,863.5259,207.9922,853.5259,211.9922,857.5259,207.9922" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="635.1362" x2="859.5259" y1="207.9922" y2="207.9922"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="211.3896" x="644.6362" y="202.9263">runReport(reportId, parameters)</text></g><g class="message" data-entity-1="part4" data-entity-2="part5" id="msg4"><polygon fill="#181818" points="1106.0947,233.125,1116.0947,237.125,1106.0947,241.125,1110.0947,237.125" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="875.5259" x2="1112.0947" y1="237.125" y2="237.125"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="162.8936" x="915.3635" y="232.0591">Ouvrir rapport .rptdesign</text></g><g class="message" data-entity-1="part5" data-entity-2="part4" id="msg5"><polygon fill="#181818" points="886.5259,262.2578,876.5259,266.2578,886.5259,270.2578,882.5259,266.2578" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="880.5259" x2="1117.0947" y1="266.2578" y2="266.2578"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="100.9785" x="946.321" y="261.1919">Rapport charg&#233;</text></g><g class="message" data-entity-1="part4" data-entity-2="part5" id="msg6"><polygon fill="#181818" points="1106.0947,291.3906,1116.0947,295.3906,1106.0947,299.3906,1110.0947,295.3906" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="875.5259" x2="1112.0947" y1="295.3906" y2="295.3906"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="218.5688" x="887.5259" y="290.3247">D&#233;finir param&#232;tres (dates, filtres)</text></g><g class="message" data-entity-1="part5" data-entity-2="part6" id="msg7"><polygon fill="#181818" points="1362.4849,320.5234,1372.4849,324.5234,1362.4849,328.5234,1366.4849,324.5234" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="1128.0947" x2="1368.4849" y1="324.5234" y2="324.5234"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="222.3901" x="1140.0947" y="319.4575">Ex&#233;cuter requ&#234;tes SQL du rapport</text></g><g class="message" data-entity-1="part6" data-entity-2="part5" id="msg8"><polygon fill="#181818" points="1139.0947,349.6563,1129.0947,353.6563,1139.0947,357.6563,1135.0947,353.6563" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="1133.0947" x2="1373.4849" y1="353.6563" y2="353.6563"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="107.7324" x="1197.4236" y="348.5903">Jeux de donn&#233;es</text></g><g class="message" data-entity-1="part5" data-entity-2="part5" id="msg9"><line style="stroke:#181818;stroke-width:1;" x1="1128.0947" x2="1170.0947" y1="382.7891" y2="382.7891"/><line style="stroke:#181818;stroke-width:1;" x1="1170.0947" x2="1170.0947" y1="382.7891" y2="395.7891"/><line style="stroke:#181818;stroke-width:1;" x1="1129.0947" x2="1170.0947" y1="395.7891" y2="395.7891"/><polygon fill="#181818" points="1139.0947,391.7891,1129.0947,395.7891,1139.0947,399.7891,1135.0947,395.7891" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="162.0557" x="1135.0947" y="377.7231">G&#233;n&#233;rer PDF/Excel/HTML</text></g><g class="message" data-entity-1="part5" data-entity-2="part4" id="msg10"><polygon fill="#181818" points="886.5259,420.9219,876.5259,424.9219,886.5259,428.9219,882.5259,424.9219" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="880.5259" x2="1122.0947" y1="424.9219" y2="424.9219"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="93.3931" x="952.6138" y="419.856">Fichier g&#233;n&#233;r&#233;</text></g><g class="message" data-entity-1="part4" data-entity-2="part3" id="msg11"><polygon fill="#181818" points="646.1362,450.0547,636.1362,454.0547,646.1362,458.0547,642.1362,454.0547" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="640.1362" x2="869.5259" y1="454.0547" y2="454.0547"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="148.751" x="678.4556" y="448.9888">Chemin fichier r&#233;sultat</text></g><g class="message" data-entity-1="part3" data-entity-2="part2" id="msg12"><polygon fill="#181818" points="391.8726,479.1875,381.8726,483.1875,391.8726,487.1875,387.8726,483.1875" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="385.8726" x2="629.1362" y1="483.1875" y2="483.1875"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="220.2637" x="395.3726" y="478.1216">ReportDTO (m&#233;tadonn&#233;es + URL)</text></g><g class="message" data-entity-1="part2" data-entity-2="part1" id="msg13"><polygon fill="#181818" points="55.0049,508.3203,45.0049,512.3203,55.0049,516.3203,51.0049,512.3203" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="49.0049" x2="374.8726" y1="512.3203" y2="512.3203"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="167.6924" x="126.0925" y="507.2544">2. T&#233;l&#233;chargement fichier</text></g><?plantuml-src TLDBRjim5Dpp50_Ur4PZ1-qoYm1nxRGfR2Jrvm2Cz28JbMcLf0ptHbMlmOjrH5As4gGRIuHcXc_cZUrFfIjfv9ui_wfPPxnaQsN1TwKgD6Mi7HiXd78bqzet4KDZ-keRxHiZdJfeMicgEXX7quVLHWYPkOEXmTQfKbdfk3O3afQs5aguowbCLL8x6inFpW0CXRlm6s3nzNz0ksPpL1dRW4s7r-2fCcufDJp4Uzlp6mJ6fBakbEQ0YAyYbqu-IyiqU3fOLnXU_rY4xxEf4EtqDBvDuz4DVPgqUPGSpXeVtU-AAV_0vrdf8uLe_HzdsBQng2FYw1mc9MWc6n0j64h0hBZDSzXANaKHExe8TBP5HuH6wn82fjQ9QyBZ8KzynXxx6Y4L4LXWnmJ0VwoFHXaoQQ4JKxcSBQfmOQQq4cLykRjhGRQJfl3DE-eptxme3VrUBZH4xcolw4MLxNbqLhv5y23DJxx9QenF1XNrVm4cR8RokXjJ03Vkt_ETwnFbs0OsunjatzCyWrA3eViqkx-Udp8khxzjbejtdDshRAS0B285td9-cqTo-sgTNtQyLnhE8Xr4MvTEkZuzBkAyoNx5uYPdcqSQxdtZP6S7nTgk5gE-ohaINQkW4ofxGvydj45H4MAx5zxZBzrDr5T8hVm7?></g></svg>
+</div>
+
+<a id="73-scénario-import-de-données-agents-batch"></a>
+<h3 id="73-scénario-import-de-données-agents-batch-html-tag-149">7.3 Scénario : Import de données agents (batch) <a href="#toc-73-scénario-import-de-données-agents-batch">↑</a></h3>
+
+<div class="diagram diagram-plantuml">
+<?plantuml 1.2026.1?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" preserveAspectRatio="xMidYMid meet" style="background:#FFFFFF;" version="1.1" viewBox="0 0 1060 698" zoomAndPan="magnify"><title>S&#233;quence - Import Fichier Agents</title><defs/><g><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="264.332" x="404.8916" y="27.9951">S&#233;quence - Import Fichier Agents</text><g><title>ImportFichierAction</title><rect fill="#FFFFFF" height="449.9922" style="stroke:#181818;stroke-width:1;" width="10" x="268.792" y="149.7266"/></g><g><title>ImportsServices</title><rect fill="#FFFFFF" height="391.7266" style="stroke:#181818;stroke-width:1;" width="10" x="516.1621" y="178.8594"/></g><g><title>PostgreSQL</title><rect fill="#FFFFFF" height="29.1328" style="stroke:#181818;stroke-width:1;" width="10" x="804.8574" y="250.125"/></g><g><title>PostgreSQL</title><rect fill="#FFFFFF" height="29.1328" style="stroke:#181818;stroke-width:1;" width="10" x="804.8574" y="332.5234"/></g><g><title>PostgreSQL</title><rect fill="#FFFFFF" height="128.5313" style="stroke:#181818;stroke-width:1;" width="10" x="804.8574" y="412.9219"/></g><rect fill="none" height="75.3984" style="stroke:#000000;stroke-width:1.5;" width="419.4683" x="447.7656" y="294.2578"/><g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Admin" id="part1-lifeline"><g><title>Administrateur</title><rect fill="#000000" fill-opacity="0.00000" height="499.125" width="8" x="56.3018" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="60" x2="60" y1="118.5938" y2="617.7188"/></g></g><g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="Action" id="part2-lifeline"><g><title>ImportFichierAction</title><rect fill="#000000" fill-opacity="0.00000" height="499.125" width="8" x="269.792" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="273.1284" x2="273.1284" y1="118.5938" y2="617.7188"/></g></g><g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="Service" id="part3-lifeline"><g><title>ImportsServices</title><rect fill="#000000" fill-opacity="0.00000" height="499.125" width="8" x="517.1621" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="520.7656" x2="520.7656" y1="118.5938" y2="617.7188"/></g></g><g class="participant-lifeline" data-entity-uid="part4" data-qualified-name="SAS" id="part4-lifeline"><g><title>SAS_IMPORT</title><rect fill="#000000" fill-opacity="0.00000" height="499.125" width="8" x="689.2363" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="693.0864" x2="693.0864" y1="118.5938" y2="617.7188"/></g></g><g class="participant-lifeline" data-entity-uid="part5" data-qualified-name="DB" id="part5-lifeline"><g><title>PostgreSQL</title><rect fill="#000000" fill-opacity="0.00000" height="499.125" width="8" x="805.8574" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="809.481" x2="809.481" y1="118.5938" y2="617.7188"/></g></g><g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Admin" id="part1-head"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="104.6035" x="5" y="115.292">Administrateur</text><ellipse cx="60.3018" cy="50.7969" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M60.3018,58.7969 L60.3018,85.7969 M47.3018,66.7969 L73.3018,66.7969 M60.3018,85.7969 L47.3018,100.7969 M60.3018,85.7969 L73.3018,100.7969" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Admin" id="part1-tail"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="104.6035" x="5" y="629.7139">Administrateur</text><ellipse cx="60.3018" cy="641.5156" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M60.3018,649.5156 L60.3018,676.5156 M47.3018,657.5156 L73.3018,657.5156 M60.3018,676.5156 L47.3018,691.5156 M60.3018,676.5156 L73.3018,691.5156" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-head" data-entity-uid="part2" data-qualified-name="Action" id="part2-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151.3271" x="198.1284" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="137.3271" x="205.1284" y="107.292">ImportFichierAction</text></g><g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="Action" id="part2-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151.3271" x="198.1284" y="616.7188"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="137.3271" x="205.1284" y="636.7139">ImportFichierAction</text></g><g class="participant participant-head" data-entity-uid="part3" data-qualified-name="Service" id="part3-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.793" x="457.7656" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112.793" x="464.7656" y="107.292">ImportsServices</text></g><g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="Service" id="part3-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.793" x="457.7656" y="616.7188"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112.793" x="464.7656" y="636.7139">ImportsServices</text></g><g class="participant participant-head" data-entity-uid="part4" data-qualified-name="SAS" id="part4-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="102.2998" x="642.0864" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="88.2998" x="649.0864" y="107.292">SAS_IMPORT</text></g><g class="participant participant-tail" data-entity-uid="part4" data-qualified-name="SAS" id="part4-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="102.2998" x="642.0864" y="616.7188"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="88.2998" x="649.0864" y="636.7139">SAS_IMPORT</text></g><g class="participant participant-head" data-entity-uid="part5" data-qualified-name="DB" id="part5-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.7529" x="762.481" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.7529" x="769.481" y="107.292">PostgreSQL</text></g><g class="participant participant-tail" data-entity-uid="part5" data-qualified-name="DB" id="part5-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.7529" x="762.481" y="616.7188"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.7529" x="769.481" y="636.7139">PostgreSQL</text></g><g><title>ImportFichierAction</title><rect fill="#FFFFFF" height="449.9922" style="stroke:#181818;stroke-width:1;" width="10" x="268.792" y="149.7266"/></g><g><title>ImportsServices</title><rect fill="#FFFFFF" height="391.7266" style="stroke:#181818;stroke-width:1;" width="10" x="516.1621" y="178.8594"/></g><g><title>PostgreSQL</title><rect fill="#FFFFFF" height="29.1328" style="stroke:#181818;stroke-width:1;" width="10" x="804.8574" y="250.125"/></g><g><title>PostgreSQL</title><rect fill="#FFFFFF" height="29.1328" style="stroke:#181818;stroke-width:1;" width="10" x="804.8574" y="332.5234"/></g><g><title>PostgreSQL</title><rect fill="#FFFFFF" height="128.5313" style="stroke:#181818;stroke-width:1;" width="10" x="804.8574" y="412.9219"/></g><g class="message" data-entity-1="part1" data-entity-2="part2" id="msg1"><polygon fill="#181818" points="256.792,145.7266,266.792,149.7266,256.792,153.7266,260.792,149.7266" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="60.3018" x2="262.792" y1="149.7266" y2="149.7266"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="189.4902" x="69.8018" y="144.6606">1. Uploader fichier CSV/Excel</text></g><g class="message" data-entity-1="part2" data-entity-2="part3" id="msg2"><polygon fill="#181818" points="504.1621,174.8594,514.1621,178.8594,504.1621,182.8594,508.1621,178.8594" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="278.792" x2="510.1621" y1="178.8594" y2="178.8594"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="123.3286" x="335.8127" y="173.7935">processImport(file)</text></g><g class="message" data-entity-1="part3" data-entity-2="part3" id="msg3"><line style="stroke:#181818;stroke-width:1;" x1="526.1621" x2="568.1621" y1="207.9922" y2="207.9922"/><line style="stroke:#181818;stroke-width:1;" x1="568.1621" x2="568.1621" y1="207.9922" y2="220.9922"/><line style="stroke:#181818;stroke-width:1;" x1="527.1621" x2="568.1621" y1="220.9922" y2="220.9922"/><polygon fill="#181818" points="537.1621,216.9922,527.1621,220.9922,537.1621,224.9922,533.1621,220.9922" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="138.0742" x="533.1621" y="202.9263">Valider format fichier</text></g><g class="message" data-entity-1="part3" data-entity-2="part5" id="msg4"><polygon fill="#181818" points="792.8574,246.125,802.8574,250.125,792.8574,254.125,796.8574,250.125" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="526.1621" x2="798.8574" y1="250.125" y2="250.125"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="172.999" x="579.0103" y="245.0591">2. TRUNCATE SAS_IMPORT</text></g><g class="message" data-entity-1="part5" data-entity-2="part3" id="msg5"><polygon fill="#181818" points="537.1621,275.2578,527.1621,279.2578,537.1621,283.2578,533.1621,279.2578" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="531.1621" x2="808.8574" y1="279.2578" y2="279.2578"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="18.7573" x="658.6311" y="274.1919">OK</text></g><path d="M447.7656,294.2578 L524.3896,294.2578 L524.3896,301.3906 L514.3896,311.3906 L447.7656,311.3906 L447.7656,294.2578" fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/><rect fill="none" height="75.3984" style="stroke:#000000;stroke-width:1.5;" width="419.4683" x="447.7656" y="294.2578"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="31.624" x="462.7656" y="307.3247">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="163.5337" x="539.3896" y="306.4683">[Pour chaque ligne valide]</text><g class="message" data-entity-1="part3" data-entity-2="part5" id="msg6"><polygon fill="#181818" points="792.8574,328.5234,802.8574,332.5234,792.8574,336.5234,796.8574,332.5234" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="526.1621" x2="798.8574" y1="332.5234" y2="332.5234"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="181.3843" x="574.8176" y="327.4575">INSERT INTO SAS_IMPORT...</text></g><g class="message" data-entity-1="part5" data-entity-2="part3" id="msg7"><polygon fill="#181818" points="537.1621,357.6563,527.1621,361.6563,537.1621,365.6563,533.1621,361.6563" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="531.1621" x2="808.8574" y1="361.6563" y2="361.6563"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="18.7573" x="658.6311" y="356.5903">OK</text></g><g class="message" data-entity-1="part3" data-entity-2="part5" id="msg8"><polygon fill="#181818" points="792.8574,408.9219,802.8574,412.9219,792.8574,416.9219,796.8574,412.9219" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="526.1621" x2="798.8574" y1="412.9219" y2="412.9219"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="187.002" x="572.0088" y="392.7231">3. Appeler proc&#233;dure reprise</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="259.6953" x="535.6621" y="407.856">(Merge SAS_IMPORT vers tables m&#233;tier)</text></g><g class="message" data-entity-1="part5" data-entity-2="part5" id="msg9"><line style="stroke:#181818;stroke-width:1;" x1="814.8574" x2="856.8574" y1="457.1875" y2="457.1875"/><line style="stroke:#181818;stroke-width:1;" x1="856.8574" x2="856.8574" y1="457.1875" y2="470.1875"/><line style="stroke:#181818;stroke-width:1;" x1="815.8574" x2="856.8574" y1="470.1875" y2="470.1875"/><polygon fill="#181818" points="825.8574,466.1875,815.8574,470.1875,825.8574,474.1875,821.8574,470.1875" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="112.0488" x="839.5864" y="436.9888">Validation m&#233;tier</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="147.5068" x="821.8574" y="452.1216">(Doublons, coh&#233;rence)</text></g><g class="message" data-entity-1="part5" data-entity-2="part5" id="msg10"><line style="stroke:#181818;stroke-width:1;" x1="814.8574" x2="856.8574" y1="499.3203" y2="499.3203"/><line style="stroke:#181818;stroke-width:1;" x1="856.8574" x2="856.8574" y1="499.3203" y2="512.3203"/><line style="stroke:#181818;stroke-width:1;" x1="815.8574" x2="856.8574" y1="512.3203" y2="512.3203"/><polygon fill="#181818" points="825.8574,508.3203,815.8574,512.3203,825.8574,516.3203,821.8574,512.3203" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="231.2578" x="821.8574" y="494.2544">INSERT/UPDATE AGENT, DOSSIER...</text></g><g class="message" data-entity-1="part5" data-entity-2="part3" id="msg11"><polygon fill="#181818" points="537.1621,537.4531,527.1621,541.4531,537.1621,545.4531,533.1621,541.4531" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="531.1621" x2="808.8574" y1="541.4531" y2="541.4531"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="166.9497" x="584.5349" y="536.3872">Rapport d'import (OK/KO)</text></g><g class="message" data-entity-1="part3" data-entity-2="part2" id="msg12"><polygon fill="#181818" points="289.792,566.5859,279.792,570.5859,289.792,574.5859,285.792,570.5859" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="283.792" x2="520.1621" y1="570.5859" y2="570.5859"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="213.3701" x="293.292" y="565.52">ImportResultDTO (stats, erreurs)</text></g><g class="message" data-entity-1="part2" data-entity-2="part1" id="msg13"><polygon fill="#181818" points="71.3018,595.7188,61.3018,599.7188,71.3018,603.7188,67.3018,599.7188" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="65.3018" x2="272.792" y1="599.7188" y2="599.7188"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="176.9219" x="78.5859" y="594.6528">4. Afficher synth&#232;se import</text></g><?plantuml-src RLDDZvim4BtxLunoQI9jYFfnsaCbTachA4r8WUofKkM5IMBLiQbjelOVDR-3FzR1a0ribWlOl7dptlFO_XAgv8OVmUBl2bMEAxIMxp6KOgyWH-NGCEQ4amXfVMunC8N5iTJ6mHUH7mGQ2FU4j8pnt6a3ex0u2YMiCznXPKR0BVWjHhsSo4N9bODHoz5HXBaJMhLG__aMrgPeJY97wt7TOWXCm_JdOhM9awp5XEdm_qPRjpUOVl_c_qSFZ7bfCFtSDOPxU1_0jfIQ5sHjrrbyJ9zcypyvoiQaE96pYz2kZ0WwHSHG6aqoRIjxl1CI9zUwYt1smGzAdxWKlh4sH-uk_GVWw85m7mB8aktwCSpcS7LzxKBM23STSCTBLc0VmQJM9MnqPI0_S3fUQ0uUuUH5CA3dTT_5Efqd6RsokDSt20AFxfCtwxSaDFj36QYAMuCV0mZB4YLbqSHPdulA81WiZR3uGurNQFROam0dD1OSVvPeuLYV7SKskScZ8_SfStzm7PGO8rqzIwti7UJwK9zDC-oJVbNhVRRTH4tguTVvEhk3A4xJnJnf4hXnc_3INvJYdMXlp3XUpfRnvFKnl7ZlZs4xFGdQIhg8qXvRnns9GsFeMja1oSjCNQQn8VA3VG-VACXTCqUKfFshtA7-Pn5QGNsERfx_0m00?></g></svg>
+</div>
+
+<a href="#introduction">↩ Retour au sommaire</a>
+
+<p><hr></p>
+
+<h2 id="deploiement">8. Vue Déploiement <a href="#toc-deploiement">↑</a></h2>
+
+<a id="81-environnements"></a>
+<h3 id="81-environnements-html-tag-152">8.1 Environnements <a href="#toc-81-environnements">↑</a></h3>
+
+<table>
+<thead>
+<tr>
+<th>Environnement</th>
+<th>Hébergement</th>
+<th>Serveurs</th>
+<th>Réseau</th>
+<th>Particularités</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Développement</strong></td>
+<td>Cloud ECO4 (OpenStack) - Tenant pnm3</td>
+<td>1 VM / 1 conteneur app + 1 conteneur BDD</td>
+<td>Réseau interne MTE</td>
+<td>Données de test, Cerbère bouchonné possible</td>
+</tr>
+<tr>
+<td><strong>Recette</strong></td>
+<td>Cloud ECO4 (OpenStack) - Tenant pnm3</td>
+<td>2 VMs (HAProxy) + cluster applicatif</td>
+<td>Réseau interne MTE</td>
+<td>Données anonymisées, tests d'intégration</td>
+</tr>
+<tr>
+<td><strong>Production</strong></td>
+<td>Cloud ECO4 (OpenStack) - Tenant pnm3</td>
+<td>2 VMs (HAProxy) + cluster applicatif (2+ nœuds) + PostgreSQL primary/standby</td>
+<td>Réseau interne MTE + DMZ</td>
+<td>Données réelles, supervision renforcée, backups automatiques</td>
+</tr>
+</tbody>
+</table><a id="82-infrastructure"></a>
+<h3 id="82-infrastructure-html-tag-153">8.2 Infrastructure <a href="#toc-82-infrastructure">↑</a></h3>
+
+<p>Le produit est hébergé sur le cloud interne ECO4 basé sur Openstack, dans le tenant 'pnm3' du département.  <br>
+Le reverse-proxy Nginx du schéma ci-dessous est en fait une paire de Nginx load-balancés en frontal des produits hébergés sur le tenant.</p>
+
+<div class="diagram diagram-plantuml">
+<?plantuml 1.2026.1?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" preserveAspectRatio="xMidYMid meet" style="background:#FFFFFF;" version="1.1" viewBox="0 0 1174 819" zoomAndPan="magnify"><title>Architecture de D&#233;ploiement SIREINES</title><defs/><g><g class="title" data-source-line="3"><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="305.2861" x="427.6165" y="22.9951">Architecture de D&#233;ploiement SIREINES</text></g><!--cluster DMZ / Frontal--><g class="cluster" data-qualified-name="DMZ . Frontal" data-source-line="5" id="ent0002"><path d="M8.5,236.8869 L117.0566,236.8869 A3.75,3.75 0 0 1 119.5566,239.3869 L126.5566,259.1837 L199.5,259.1837 A2.5,2.5 0 0 1 202,261.6837 L202,337.9869 A2.5,2.5 0 0 1 199.5,340.4869 L8.5,340.4869 A2.5,2.5 0 0 1 6,337.9869 L6,239.3869 A2.5,2.5 0 0 1 8.5,236.8869" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="126.5566" y1="259.1837" y2="259.1837"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="107.5566" x="10" y="251.882">DMZ / Frontal</text></g><!--cluster Tenant PNM3 - ECO4--><g class="cluster" data-qualified-name="Tenant PNM3 - ECO4" data-source-line="9" id="ent0004"><path d="M282.5,43.2969 L446.1816,43.2969 A3.75,3.75 0 0 1 448.6816,45.7969 L455.6816,65.5938 L840.5,65.5938 A2.5,2.5 0 0 1 843,68.0938 L843,810.4669 A2.5,2.5 0 0 1 840.5,812.9669 L282.5,812.9669 A2.5,2.5 0 0 1 280,810.4669 L280,45.7969 A2.5,2.5 0 0 1 282.5,43.2969" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="280" x2="455.6816" y1="65.5938" y2="65.5938"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="162.6816" x="284" y="58.292">Tenant PNM3 - ECO4</text></g><!--cluster Cluster Application--><g class="cluster" data-qualified-name="Tenant PNM3 - ECO4.Cluster Application" data-source-line="11" id="ent0005"><path d="M347.5,404.4869 L499.1367,404.4869 A3.75,3.75 0 0 1 501.6367,406.9869 L508.6367,426.7837 L693.5,426.7837 A2.5,2.5 0 0 1 696,429.2837 L696,505.5769 A2.5,2.5 0 0 1 693.5,508.0769 L347.5,508.0769 A2.5,2.5 0 0 1 345,505.5769 L345,406.9869 A2.5,2.5 0 0 1 347.5,404.4869" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="345" x2="508.6367" y1="426.7837" y2="426.7837"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="150.6367" x="349" y="419.482">Cluster Application</text></g><!--cluster Data Layer--><g class="cluster" data-qualified-name="Tenant PNM3 - ECO4.Data Layer" data-source-line="16" id="ent0008"><path d="M375.5,557.0769 L462.4756,557.0769 A3.75,3.75 0 0 1 464.9756,559.5769 L471.9756,579.3738 L709.5,579.3738 A2.5,2.5 0 0 1 712,581.8738 L712,786.4669 A2.5,2.5 0 0 1 709.5,788.9669 L375.5,788.9669 A2.5,2.5 0 0 1 373,786.4669 L373,559.5769 A2.5,2.5 0 0 1 375.5,557.0769" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="373" x2="471.9756" y1="579.3738" y2="579.3738"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="85.9756" x="377" y="572.072">Data Layer</text></g><!--cluster Shared Services--><g class="cluster" data-qualified-name="Tenant PNM3 - ECO4.Shared Services" data-source-line="22" id="ent0012"><path d="M365.5,86.2969 L493.8262,86.2969 A3.75,3.75 0 0 1 496.3262,88.7969 L503.3262,108.5938 L703.5,108.5938 A2.5,2.5 0 0 1 706,111.0938 L706,337.9869 A2.5,2.5 0 0 1 703.5,340.4869 L365.5,340.4869 A2.5,2.5 0 0 1 363,337.9869 L363,88.7969 A2.5,2.5 0 0 1 365.5,86.2969" fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="363" x2="503.3262" y1="108.5938" y2="108.5938"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="127.3262" x="367" y="101.292">Shared Services</text></g><!--cluster Services Externes--><g class="cluster" data-qualified-name="Services Externes" data-source-line="29" id="ent0016"><path d="M875.7568,576.8207 C880.5472,564.9537 889.0482,563.8319 896.7695,574.0295 C901.2892,563.7822 911.311,562.7732 917.0148,572.85 C921.1567,565.3434 929.7327,562.6573 934.8833,571.7651 C941.5431,563.7371 948.6134,562.9658 954.293,572.8285 C960.7721,563.1919 967.4522,562.6706 975.4024,571.1105 C981.2123,561.8021 988.8209,562.4991 994.9262,570.7826 C998.4942,559.8857 1007.8116,559.7376 1014.6591,567.2714 C1020.6956,561.0835 1027.3367,561.7581 1031.0131,569.9547 C1038.4384,559.5502 1046.6689,561.7513 1052.7757,571.3865 C1057.2728,563.8539 1065.3473,561.7401 1070.1445,571.0775 C1077.5396,560.8315 1085.9061,563.6359 1091.2944,573.2182 C1096.4455,563.0108 1102.8036,564.2017 1109.5405,571.572 C1116.5462,561.7639 1125.3137,561.0133 1131.2423,572.6613 C1138.5382,565.105 1144.2759,567.8594 1148.2265,576.2289 C1165.6725,585.6536 1164.3028,600.0352 1150.1349,611.1857 C1166.6613,623.44 1167.5192,634.1442 1149.5506,645.8166 C1144.5566,656.3944 1137.261,655.5934 1130.9181,647.1371 C1125.4017,656.6872 1119.3519,655.7307 1112.364,648.7929 C1106.3668,657.898 1097.8347,658.1615 1091.9438,648.6762 C1085.9929,658.3455 1077.4814,660.337 1070.6098,649.6407 C1064.8286,657.6419 1057.9578,657.5685 1052.6964,649.0762 C1047.5164,658.2359 1037.9024,656.8362 1033.3899,648.3461 C1026.9804,658.8091 1021.0552,658.0539 1014.1372,648.8438 C1007.3974,657.359 1001.6324,658.4029 994.9805,648.7511 C988.3881,657.8543 979.7542,657.3067 973.9772,647.8293 C967.9813,659.9382 961.0711,659.0611 953.0097,649.8619 C947.6462,658.5791 940.337,658.2242 935.8479,649.0243 C928.9571,657.6778 919.8768,655.8728 914.9587,646.7112 C909.6836,655.2151 902.4586,656.3528 896.7246,647.1848 C891.2829,658.1459 882.182,658.4933 875.8185,648.0867 C865.7244,644.567 863.3729,635.6001 871.1811,627.9563 C862.1511,624.6965 860.0297,620.0687 866.7376,612.3328 C859.4625,604.7246 859.3317,596.8807 870.9153,593.4434 C864.5327,586.0885 866.7886,579.7045 875.7568,576.8207" fill="none" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="140.8887" x="941.0557" y="591.222">Services Externes</text></g><!--entity Nginx--><g class="entity" data-qualified-name="DMZ . Frontal.Nginx" data-source-line="6" id="ent0003"><rect fill="#90EE90" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="164.7305" x="21.63" y="271.8869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="144.7305" x="31.63" y="294.882">Nginx Load Balancer</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70.7588" x="31.63" y="311.1789">(Paire HA)</text></g><!--entity App1--><g class="entity" data-qualified-name="Tenant PNM3 - ECO4.Cluster Application.App1" data-source-line="12" id="ent0006"><rect fill="#FFD700" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.3838" x="360.81" y="439.4869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="109.0811" x="370.81" y="462.482">SIREINES App 1</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="122.3838" x="370.81" y="478.7789">Docker Container</text></g><!--entity App2--><g class="entity" data-qualified-name="Tenant PNM3 - ECO4.Cluster Application.App2" data-source-line="13" id="ent0007"><rect fill="#FFD700" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.3838" x="537.81" y="439.4869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="109.0811" x="547.81" y="462.482">SIREINES App 2</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="122.3838" x="547.81" y="478.7789">Docker Container</text></g><!--entity PGPrimary--><g class="entity" data-qualified-name="Tenant PNM3 - ECO4.Data Layer.PGPrimary" data-source-line="17" id="ent0009"><rect fill="#ADD8E6" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="159.5488" x="389.23" y="600.2269"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="139.5488" x="399.23" y="623.222">PostgreSQL Primary</text></g><!--entity PGStandby--><g class="entity" data-qualified-name="Tenant PNM3 - ECO4.Data Layer.PGStandby" data-source-line="18" id="ent0010"><rect fill="#ADD8E6" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="163.0898" x="389.46" y="736.6669"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="143.0898" x="399.46" y="759.662">PostgreSQL Standby</text></g><!--entity ES--><g class="entity" data-qualified-name="Tenant PNM3 - ECO4.Data Layer.ES" data-source-line="19" id="ent0011"><rect fill="#FFFFE0" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.4971" x="583.75" y="592.0769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="92.4971" x="593.75" y="615.072">Elasticsearch</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="86.1807" x="593.75" y="631.3689">(Embedded)</text></g><!--entity Portainer--><g class="entity" data-qualified-name="Tenant PNM3 - ECO4.Shared Services.Portainer" data-source-line="23" id="ent0013"><rect fill="#D3D3D3" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="162.5771" x="527.71" y="121.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63.9639" x="537.71" y="144.292">Portainer</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142.5771" x="537.71" y="160.5889">(Gestion containers)</text></g><!--entity Prom--><g class="entity" data-qualified-name="Tenant PNM3 - ECO4.Shared Services.Prom" data-source-line="24" id="ent0014"><rect fill="#D3D3D3" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.1572" x="383.92" y="271.8869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84.1572" x="393.92" y="294.882">Prometheus</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="61.7422" x="393.92" y="311.1789">(Metrics)</text></g><!--entity Grafana--><g class="entity" data-qualified-name="Tenant PNM3 - ECO4.Shared Services.Grafana" data-source-line="25" id="ent0015"><rect fill="#D3D3D3" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114.418" x="378.79" y="121.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="56.1436" x="388.79" y="144.292">Grafana</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="94.418" x="388.79" y="160.5889">(Dashboards)</text></g><!--entity Cerbere--><g class="entity" data-qualified-name="Services Externes.Cerbere" data-source-line="30" id="ent0017"><rect fill="#FFB6C1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.2568" x="1030.37" y="600.2269"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.2568" x="1040.37" y="623.222">Cerb&#232;re SSO</text></g><!--entity GCR--><g class="entity" data-qualified-name="Services Externes.GCR" data-source-line="31" id="ent0018"><rect fill="#FFB6C1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.7432" x="882.63" y="600.2269"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="92.7432" x="892.63" y="623.222">Registry GCR</text></g><!--link Nginx to App1--><g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="dependency" data-source-line="34" id="lnk19"><path d="M69.38,324.8669 C48.73,343.2969 29.45,368.3469 46,388.4869 C85.03,435.9869 254.0235,454.0046 354.4735,460.7546" fill="none" id="Nginx-to-App1" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="360.46,461.1569,351.7484,456.5625,355.4713,460.8216,351.2121,464.5445,360.46,461.1569" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="99.4995" x="47" y="369.5538">Load Balancing</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="93.082" x="50.2087" y="384.6866">(Round Robin)</text></g><!--link Nginx to App2--><g class="link" data-entity-1="ent0003" data-entity-2="ent0007" data-link-type="dependency" data-source-line="35" id="lnk20"><path d="M125.7,324.5769 C145.84,346.0869 177.92,375.4269 213,388.4869 C245.09,400.4169 488.76,384.9669 521,396.4869 C545.59,405.2669 564.3585,419.646 580.7285,435.186" fill="none" id="Nginx-to-App2" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="585.08,439.3169,581.3066,430.2195,581.4537,435.8745,575.7988,436.0216,585.08,439.3169" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="99.4995" x="214" y="369.5538">Load Balancing</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="93.082" x="217.2087" y="384.6866">(Round Robin)</text></g><!--link App1 to PGPrimary--><g class="link" data-entity-1="ent0006" data-entity-2="ent0009" data-link-type="dependency" data-source-line="36" id="lnk21"><path d="M360.55,489.4569 C334.77,501.7869 314.88,519.0569 328,541.0769 C345.03,569.6469 371.3077,585.9422 400.4377,597.5722" fill="none" id="App1-to-PGPrimary" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="406.01,599.7969,399.1347,592.7449,401.3664,597.9429,396.1684,600.1747,406.01,599.7969" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="69.3037" x="329" y="537.1438">JDBC/5432</text></g><!--link App2 to PGPrimary--><g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="dependency" data-source-line="37" id="lnk22"><path d="M594.58,492.5069 C585.6,507.4469 573.26,526.1969 560,541.0769 C539.83,563.6969 517.6254,581.904 498.2854,596.364" fill="none" id="App2-to-PGPrimary" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="493.48,599.9569,503.0833,597.7712,497.4845,596.9628,498.2928,591.364,493.48,599.9569" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="69.3037" x="573" y="537.1438">JDBC/5432</text></g><!--link PGPrimary to PGStandby--><g class="link" data-entity-1="ent0009" data-entity-2="ent0010" data-link-type="dependency" data-source-line="38" id="lnk23"><path d="M469.26,636.9469 C469.64,662.7169 470.2715,704.4675 470.6515,730.2375" fill="none" id="PGPrimary-to-PGStandby" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="470.74,736.2369,474.6069,727.1789,470.6663,731.2374,466.6077,727.2968,470.74,736.2369" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="72.522" x="473.5232" y="687.7338">R&#233;plication</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="77.5684" x="471" y="702.8666">(Streaming)</text></g><!--link App1 to ES--><g class="link" data-entity-1="ent0006" data-entity-2="ent0011" data-link-type="dependency" data-source-line="39" id="lnk24"><path d="M425.2,492.5369 C422.64,508.6469 422.8,528.6269 435,541.0769 C445.2,551.4969 552.59,543.3569 566,549.0769 C587.55,558.2669 602.8511,572.0383 616.3211,587.3783" fill="none" id="App1-to-ES" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="620.28,591.8869,617.3473,582.4848,616.9809,588.1298,611.3359,587.7634,620.28,591.8869" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="115.5273" x="436" y="537.1438">HTTP/9200 (local)</text></g><!--link App2 to ES--><g class="link" data-entity-1="ent0007" data-entity-2="ent0011" data-link-type="dependency" data-source-line="40" id="lnk25"><path d="M646.73,492.5669 C656.48,501.3269 665.71,511.9869 671,524.0769 C680.78,546.4369 673.0533,567.7857 661.6033,586.8157" fill="none" id="App2-to-ES" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="658.51,591.9569,666.5774,586.3074,661.0878,587.6726,659.7226,582.1829,658.51,591.9569" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="115.5273" x="675" y="537.1438">HTTP/9200 (local)</text></g><!--link App1 to Cerbere--><g class="link" data-entity-1="ent0006" data-entity-2="ent0017" data-link-type="dependency" data-source-line="41" id="lnk26"><path d="M468.38,492.3669 C483.6,501.6569 501.94,511.0869 520,516.0769 C549.89,524.3369 768.1,521.4669 799,524.0769 C853.11,528.6369 866.04,534.9669 920,541.0769 C940.61,543.4069 994.08,540.5769 1013,549.0769 C1037.83,560.2369 1055.7137,578.9342 1068.6137,595.2142" fill="none" id="App1-to-Cerbere" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1072.34,599.9169,1069.8857,590.3787,1069.2348,595.998,1063.6155,595.3471,1072.34,599.9169" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="70.9414" x="921" y="537.1438">HTTPS/443</text></g><!--link App2 to Cerbere--><g class="link" data-entity-1="ent0007" data-entity-2="ent0017" data-link-type="dependency" data-source-line="42" id="lnk27"><path d="M680.35,471.4769 C777.64,478.8569 946.01,495.3669 1000,524.0769 C1033.47,541.8769 1057.264,573.1872 1071.284,594.8872" fill="none" id="App2-to-Cerbere" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1074.54,599.9269,1073.0157,590.1967,1071.8266,595.7272,1066.2962,594.5381,1074.54,599.9269" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="70.9414" x="1023" y="537.1438">HTTPS/443</text></g><!--link Portainer to App1--><g class="link" data-entity-1="ent0013" data-entity-2="ent0006" data-link-type="dependency" data-source-line="43" id="lnk28"><path d="M598.46,174.1269 C592.63,189.6569 585.97,210.0769 583,228.8869 C574.71,281.3869 558.88,301.1169 583,348.4869 C585.74,353.8669 591.26,351.0969 594,356.4869 C600.45,369.1569 603.5,377.8969 594,388.4869 C582.95,400.7869 535.34,390.2869 520,396.4869 C496.15,406.1169 477.7438,420.1126 461.3238,435.2326" fill="none" id="Portainer-to-App1" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="456.91,439.2969,466.2402,436.1429,460.5881,435.9099,460.8211,430.2579,456.91,439.2969" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="85.6362" x="584" y="302.7538">Management</text></g><!--link Portainer to App2--><g class="link" data-entity-1="ent0013" data-entity-2="ent0007" data-link-type="dependency" data-source-line="44" id="lnk29"><path d="M639.52,174.2769 C654.17,188.6369 670.21,207.8669 678,228.8869 C696.47,278.7269 692.06,297.2269 678,348.4869 C668.62,382.6669 649.8904,412.1797 633.1604,434.5797" fill="none" id="Portainer-to-App2" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="629.57,439.3869,638.1604,434.5697,632.562,435.3809,631.7508,429.7825,629.57,439.3869" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="85.6362" x="691" y="302.7538">Management</text></g><!--link Prom to App1--><g class="link" data-entity-1="ent0014" data-entity-2="ent0006" data-link-type="dependency" data-source-line="45" id="lnk30"><path d="M383.56,313.8369 C362.46,322.5969 340.25,336.1069 328,356.4869 C308.72,388.5369 338.5588,415.6441 373.0588,435.9441" fill="none" id="Prom-to-App1" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="378.23,438.9869,372.5017,430.9752,373.9207,436.4512,368.4447,437.8702,378.23,438.9869" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="109.8335" x="329" y="377.0538">Scraping metrics</text></g><!--link Prom to App2--><g class="link" data-entity-1="ent0014" data-entity-2="ent0007" data-link-type="dependency" data-source-line="46" id="lnk31"><path d="M462.65,324.6969 C495.16,355.8169 545.4551,403.9585 577.9851,435.0885" fill="none" id="Prom-to-App2" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="582.32,439.2369,578.5832,430.1244,578.7076,435.7799,573.0521,435.9043,582.32,439.2369" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="109.8335" x="528" y="377.0538">Scraping metrics</text></g><!--link Grafana to Prom--><g class="link" data-entity-1="ent0015" data-entity-2="ent0014" data-link-type="dependency" data-source-line="47" id="lnk32"><path d="M436,174.1369 C436,201.3569 436,238.1969 436,265.4769" fill="none" id="Grafana-to-Prom" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="436,271.4769,440,262.4769,436,266.4769,432,262.4769,436,271.4769" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="82.3481" x="437" y="216.9538">Visualisation</text></g><?plantuml-src XLHDJzj04BtxLupA1GueOD93SwW4JXge4d1jLAc57YRsr5bblMljRbgYYl_J_Wx-MCTUcnYQg3b4sftttdozjLq9LQ714Z9TLbgHSgdRI093cKDLI0e29nnVd9jiAHpVhWr1JZ1--bD9BQXa2gHNoUJgUf86GONP2Wk2D-FvLnZ01wELG_a6VWN0lxlhGgW7c6dCuG8bgepClJgCKR3evVdHDq0B7dCm4yNIJGsH2XvxkhUaa3F6r_CpE8P9T3Fin9k_PrmarzQHWVEgaY939xJgW4qbNSar04xlrLXdAuP7TRr2aMbAuTWf74orpFSGm_t4i4Tyt57W61t233TaNjGLQ-iAG-cd6SH6b6WsZM0yRK_jO2xacdQIKbvRlkX8xMadQIBHEf5PGbujRs5IBYZFAVTRu0OzwGj9gN_kRIDTeg4SKZ8_H4RsLI_6puJLfsJh7R3FsZbPd-SPyxnntFGKZ2x9BMbjMM9Epd2zBOyZEoby-euA6Jz6krneD7bBQIElMO-rlpAfrpbtqxO1amSsZzhsSnUHMJpzPfkcwKsZLbyGdxrQBDJA0nCgX7Myg6cK-BHHqWTnCk_mu-Fttc2Z_eCGgk3I4xrMEIHw8TJHItZuNtYZMQEtdXd1n_55D7WxF0k3HcD_U7lhCPs3Hf3KBxvzIfmpTOQmvFozZ6oQ4LpUtiQ3T-792HnAdQ4ysgRS7_VyRgOUb0w6mxCjULTmwvxUDEUyvABvCFqR3r_5QnVrg6bciEAUeFHUUm48Tm4wKpNJgi4Z-2pi6gMmpQI2lm00?></g></svg>
+</div>
+
+<a id="83-supervision"></a>
+<h3 id="83-supervision-html-tag-154">8.3 Supervision <a href="#toc-83-supervision">↑</a></h3>
+
+<p>Le produit est supervisé via le système standard du GTI pour ce faire :<br>
+<ul><br>
+<li>via Portainer pour la partie purement conteneurisée,</li><br>
+<li>via la stack Prometheus/Grafana/Loki/AlertManager,</li><br>
+<li>Le produit dispose également d'une supervision PSIN.</li><br>
+</ul></p>
+
+<a id="84-sauvegardes"></a>
+<h3 id="84-sauvegardes-html-tag-155">8.4 Sauvegardes <a href="#toc-84-sauvegardes">↑</a></h3>
+
+<p>Les sauvegardes de la base de données sont assurées par des scripts standards du GTI permettant la création de dumps cryptés en AES-256 et déposés sur :<br>
+<ul><br>
+<li>le stockage objet B3 du IaaS ministériel,</li><br>
+<li>le stockage objet Outscale SecNumCloud (via la prestation qu'a le GTI sur le marché "Nuage Public"),</li><br>
+<li>le stockage objet standard de Google Cloud (via la prestation qu'a le GTI sur le marché "Nuage Public").</li><br>
+</ul></p>
+
+<a href="#introduction">↩ Retour au sommaire</a>
+
+<p><hr></p>
+
+<h2 id="transverses">9. Sujets transverses <a href="#toc-transverses">↑</a></h2>
+
+<a id="91-authentification-et-autorisation"></a>
+<h3 id="91-authentification-et-autorisation-html-tag-158">9.1 Authentification et autorisation <a href="#toc-91-authentification-et-autorisation">↑</a></h3>
+
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Implémentation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Protocole</strong></td>
+<td>SAML 2.0 / CAS via Cerbère</td>
+</tr>
+<tr>
+<td><strong>Gestion des sessions</strong></td>
+<td>Sessions HTTP côté serveur (Struts 2)</td>
+</tr>
+<tr>
+<td><strong>Contrôles d'accès</strong></td>
+<td>RBAC basé sur les rôles Cerbère (gestionnaire, rapporteur, admin)</td>
+</tr>
+<tr>
+<td><strong>Déconnexion</strong></td>
+<td>SSO logout redirect vers Cerbère</td>
+</tr>
+</tbody>
+</table><a id="92-journalisation-et-traçabilité"></a>
+<h3 id="92-journalisation-et-traçabilité-html-tag-159">9.2 Journalisation et traçabilité <a href="#toc-92-journalisation-et-traçabilité">↑</a></h3>
+
+<table>
+<thead>
+<tr>
+<th>Type de log</th>
+<th>Destination</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Logs applicatifs</strong></td>
+<td>Stdout/Stderr (Docker) → Loki</td>
+<td>Log4j XML</td>
+</tr>
+<tr>
+<td><strong>Audit métier</strong></td>
+<td>Table <code>historique</code> en BDD</td>
+<td>JSON structuré (action, utilisateur, timestamp, données)</td>
+</tr>
+<tr>
+<td><strong>Accès HTTP</strong></td>
+<td>Nginx access logs</td>
+<td>Standard Nginx</td>
+</tr>
+<tr>
+<td><strong>Erreurs</strong></td>
+<td>Fichier + BDD (table <code>import_erreur</code>)</td>
+<td>Stack trace + contexte</td>
+</tr>
+</tbody>
+</table><a id="93-gestion-des-erreurs"></a>
+<h3 id="93-gestion-des-erreurs-html-tag-160">9.3 Gestion des erreurs <a href="#toc-93-gestion-des-erreurs">↑</a></h3>
+
+<table>
+<thead>
+<tr>
+<th>Niveau</th>
+<th>Stratégie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>UI</strong></td>
+<td>Messages utilisateur internationalisés (FR), pas de stack trace exposée</td>
+</tr>
+<tr>
+<td><strong>Application</strong></td>
+<td>Catch global via <code>ErrorHandler</code> Struts, log détaillé, rollback transactionnel</td>
+</tr>
+<tr>
+<td><strong>Base de données</strong></td>
+<td>Contraintes d'intégrité référentielle, transactions ACID</td>
+</tr>
+<tr>
+<td><strong>Import de données</strong></td>
+<td>Table <code>SAS_IMPORT</code> avec statut par ligne, rapport d'erreur détaillé</td>
+</tr>
+</tbody>
+</table><a id="94-api-et-intégrations"></a>
+<h3 id="94-api-et-intégrations-html-tag-161">9.4 API et intégrations <a href="#toc-94-api-et-intégrations">↑</a></h3>
+
+<p>L'application ne propose pas d'API REST publique. Les intégrations se font via :<br>
+<ul><br>
+<li><strong>Import de fichiers</strong> : CSV, Excel (via formulaires web)</li><br>
+<li><strong>Export de rapports</strong> : PDF, Excel, HTML (via BIRT)</li><br>
+<li><strong>Recherche interne</strong> : Elasticsearch (non exposé externement)</li><br>
+</ul></p>
+
+<a href="#introduction">↩ Retour au sommaire</a>
+
+<p><hr></p>
+
+<h2 id="qualite">10. Exigences de qualité <a href="#toc-qualite">↑</a></h2>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Exigence</th>
+<th>Scénario de validation</th>
+<th>Critère d'acceptation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>Temps de réponse recherche</td>
+<td>Recherche full-text sur 100k dossiers</td>
+<td>< 3 secondes</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>Disponibilité service</td>
+<td>Mesure sur 1 mois d'exploitation</td>
+<td>> 99% du temps ouvré</td>
+</tr>
+<tr>
+<td>Q3</td>
+<td>Récupération incident</td>
+<td>Simulation panne BDD primaire</td>
+<td>Basculement < 5 min, perte données < 1h</td>
+</tr>
+<tr>
+<td>Q4</td>
+<td>Sécurité authentification</td>
+<td>Test intrusion (pentest)</td>
+<td>Aucun contournement Cerbère possible</td>
+</tr>
+<tr>
+<td>Q5</td>
+<td>Cohérence données import</td>
+<td>Import fichier 10k lignes avec 5% erreurs</td>
+<td>Rollback complet, rapport erreur précis</td>
+</tr>
+</tbody>
+</table><a href="#introduction">↩ Retour au sommaire</a>
+
+<p><hr></p>
+
+<h2 id="risques">11. Risques et dettes techniques <a href="#toc-risques">↑</a></h2>
+
+<table>
+<thead>
+<tr>
+<th>Risque / Dette</th>
+<th>Sévérité</th>
+<th>Mesure d'atténuation</th>
+<th>Échéance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Java 7 obsolète</strong> (fin de support)</td>
+<td>🔴 Critique</td>
+<td>Plan de migration Java 11/17, audit compatibilité Vertigo</td>
+<td>2026-2027</td>
+</tr>
+<tr>
+<td><strong>Struts 2 vulnérabilités</strong></td>
+<td>🔴 Critique</td>
+<td>Mise à jour dernière version 2.5.x, monitoring CVE</td>
+<td>Continu</td>
+</tr>
+<tr>
+<td><strong>BIRT déprécié</strong> (Eclipse)</td>
+<td>🟡 Majeur</td>
+<td>Évaluation JasperReports ou solutions alternatives</td>
+<td>2027</td>
+</tr>
+<tr>
+<td><strong>Monolithe difficile à scaler</strong></td>
+<td>🟡 Majeur</td>
+<td>Containerisation OK, étude microservices si besoin</td>
+<td>Selon charge</td>
+</tr>
+<tr>
+<td><strong>Elasticsearch embarqué</strong></td>
+<td>🟡 Majeur</td>
+<td>Passage à cluster ES dédié si volumétrie augmente</td>
+<td>Selon volumétrie</td>
+</tr>
+<tr>
+<td><strong>Documentation technique</strong></td>
+<td>🟢 Mineur</td>
+<td>Maintenance DAT, ADR, commentaires code</td>
+<td>Continu</td>
+</tr>
+</tbody>
+</table><a href="#introduction">↩ Retour au sommaire</a>
+
+<p><hr></p>
+
+<h2 id="annexes">12. Annexes <a href="#toc-annexes">↑</a></h2>
+
+<a id="121-glossaire"></a>
+<h3 id="121-glossaire-html-tag-168">12.1 Glossaire <a href="#toc-121-glossaire">↑</a></h3>
+
+<table>
+<thead>
+<tr>
+<th>Terme</th>
+<th>Définition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Arc42</strong></td>
+<td>Standard de documentation d'architecture logicielle</td>
+</tr>
+<tr>
+<td><strong>BIRT</strong></td>
+<td>Business Intelligence and Reporting Tools (Eclipse)</td>
+</tr>
+<tr>
+<td><strong>C4 Model</strong></td>
+<td>Modèle de visualisation d'architecture (Context, Containers, Components, Code)</td>
+</tr>
+<tr>
+<td><strong>Cerbère</strong></td>
+<td>SSO (Single Sign-On) de l'État français</td>
+</tr>
+<tr>
+<td><strong>ECO4</strong></td>
+<td>Cloud privé du Ministère de la Transition Écologique (OpenStack)</td>
+</tr>
+<tr>
+<td><strong>GTI</strong></td>
+<td>Groupement de Travail Informatique (équipe exploitation)</td>
+</tr>
+<tr>
+<td><strong>KSP</strong></td>
+<td>Vertigo Keyword Scripting Language (MDA)</td>
+</tr>
+<tr>
+<td><strong>MDA</strong></td>
+<td>Model Driven Architecture</td>
+</tr>
+<tr>
+<td><strong>RGS</strong></td>
+<td>Référentiel Général de Sécurité</td>
+</tr>
+<tr>
+<td><strong>SAML</strong></td>
+<td>Security Assertion Markup Language (protocole SSO)</td>
+</tr>
+<tr>
+<td><strong>SAS_IMPORT</strong></td>
+<td>Table de staging pour imports de données</td>
+</tr>
+<tr>
+<td><strong>Vertigo</strong></td>
+<td>Framework Java développé par Klee Group</td>
+</tr>
+</tbody>
+</table><a id="122-décisions-darchitecture-adr"></a>
+<h3 id="122-décisions-darchitecture-adr-html-tag-169">12.2 Décisions d'Architecture (ADR) <a href="#toc-122-décisions-darchitecture-adr">↑</a></h3>
+
+<a id="adr-001-maintien-de-java-7-pour-compatibilité-legacy"></a>
+<h4 id="adr-001-maintien-de-java-7-pour-compatibilité-legacy-html-tag-170">ADR-001 : Maintien de Java 7 pour compatibilité legacy <a href="#toc-adr-001-maintien-de-java-7-pour-compatibilité-legacy">↑</a></h4>
+<strong>Contexte</strong> : Application historique, migration coûteuse  
+<strong>Décision</strong> : Conserver Java 7 en production, préparer migration Java 11  
+<strong>Conséquences</strong> : Dette technique, vigilance sécurité
+
+<a id="adr-002-elasticsearch-embarqué-vs-cluster-dédié"></a>
+<h4 id="adr-002-elasticsearch-embarqué-vs-cluster-dédié-html-tag-171">ADR-002 : Elasticsearch embarqué vs cluster dédié <a href="#toc-adr-002-elasticsearch-embarqué-vs-cluster-dédié">↑</a></h4>
+<strong>Contexte</strong> : Besoin de recherche full-text, contraintes d'infrastructure  
+<strong>Décision</strong> : Utiliser le mode embedded d'Elasticsearch via Vertigo  
+<strong>Conséquences</strong> : Simplicité de déploiement, limite de scalabilité horizontale
+
+<a id="adr-003-conservation-de-birt-pour-les-rapports"></a>
+<h4 id="adr-003-conservation-de-birt-pour-les-rapports-html-tag-172">ADR-003 : Conservation de BIRT pour les rapports <a href="#toc-adr-003-conservation-de-birt-pour-les-rapports">↑</a></h4>
+<strong>Contexte</strong> : Exigence métier de rapports complexes existants  
+<strong>Décision</strong> : Maintenir BIRT malgré son déclin, évaluer migration à moyen terme  
+<strong>Conséquences</strong> : Dépendance à une technologie legacy, formation nécessaire
+
+<a id="adr-004-architecture-monolithique-conteneurisée"></a>
+<h4 id="adr-004-architecture-monolithique-conteneurisée-html-tag-173">ADR-004 : Architecture monolithique conteneurisée <a href="#toc-adr-004-architecture-monolithique-conteneurisée">↑</a></h4>
+<strong>Contexte</strong> : Équipe réduite, besoin de simplicité opérationnelle  
+<strong>Décision</strong> : Dockerisation du monolithe existant sans découpage microservices  
+<strong>Conséquences</strong> : Facilité de déploiement, limites de scalabilité fine
+
+<p><hr></p>
+
+<p><strong>Fin du document</strong></p>
+
+<p><em>Document généré automatiquement selon le modèle Arc42 - Compatible VS Code / Obsidian</em><br>
+```</p>
+
+<p><hr></p>
+
+<p>Ce DAT est <strong>autoporté</strong>, prêt à être utilisé dans VS Code ou Obsidian avec l'extension PlantUML activée. Toutes les sections sont complètes et basées sur l'analyse du fichier source fourni, sans dépendances externes.</p>
+</body>
+</html>

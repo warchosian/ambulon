@@ -70,3 +70,6 @@ gitlab/
 
 # WikiSI downloaded data
 wikisi-downloaded/
+
+# Archives directory (old test/debug files)
+archives/

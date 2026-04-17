@@ -47,14 +47,27 @@ def load_gitlab_config(config_file: Optional[str] = None) -> Dict[str, Any]:
     if config_file:
         config_path = Path(config_file)
     else:
-        # Try default location
+        # Try multiple default locations in order
+        search_paths = []
+
+        # 1. Current directory config/gitlab.yaml
+        search_paths.append(Path.cwd() / "config" / "gitlab.yaml")
+
+        # 2. AMBULON_HOME/config/gitlab.yaml
         ambulon_home = os.getenv("AMBULON_HOME")
         if ambulon_home:
-            base_dir = Path(ambulon_home).expanduser()
-        else:
-            base_dir = Path.cwd()
+            search_paths.append(Path(ambulon_home).expanduser() / "config" / "gitlab.yaml")
 
-        config_path = base_dir / "config" / "gitlab.yaml"
+        # Find first existing config file
+        config_path = None
+        for path in search_paths:
+            if path.exists():
+                config_path = path
+                break
+
+        # If none found, use first default location
+        if not config_path:
+            config_path = search_paths[0]
 
     # If config doesn't exist, return defaults
     if not config_path.exists():

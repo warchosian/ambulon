@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>_prompt_ccf_bpmn</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #f4f4f4;
+        }
+        .back-to-toc {
+            text-decoration: none;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .table-of-contents {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .table-of-contents h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .table-of-contents ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .table-of-contents ul ul {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+        .table-of-contents li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        .table-of-contents a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+        .table-of-contents a:hover {
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 4px solid #ddd;
+            margin: 0;
+            padding-left: 16px;
+            color: #666;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+<h1 id="prompt-pour-ccf-avec-bpmn-isoiec-19510">Prompt pour CCF avec BPMN — ISO/IEC 19510</h1>
+
+<nav class="table-of-contents" id="table-of-contents">
+<h2>Table des matières</h2>
+<ul>
+<li><a id="toc-références-normatives"></a><a href="#références-normatives">Références normatives</a></li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-1-introduction-et-contexte-processus"></a><a href="#1-introduction-et-contexte-processus">1. Introduction et contexte processus</a></li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-21-nomenclature-des-processus"></a><a href="#21-nomenclature-des-processus">2.1 Nomenclature des processus</a></li>
+</ul>
+<ul>
+<li><a id="toc-22-matrice-de-processus"></a><a href="#22-matrice-de-processus">2.2 Matrice de processus</a></li>
+</ul>
+<ul>
+<li><a id="toc-31-diagramme-de-collaboration-collaboration-diagram"></a><a href="#31-diagramme-de-collaboration-collaboration-diagram">3.1 Diagramme de collaboration (Collaboration Diagram)</a></li>
+</ul>
+<ul>
+<li><a id="toc-32-diagramme-de-processus-process-diagram"></a><a href="#32-diagramme-de-processus-process-diagram">3.2 Diagramme de processus (Process Diagram)</a></li>
+</ul>
+<ul>
+<li><a id="toc-33-diagramme-de-choreography-choreography-diagram-optionnel"></a><a href="#33-diagramme-de-choreography-choreography-diagram-optionnel">3.3 Diagramme de choreography (Choreography Diagram) — optionnel</a></li>
+</ul>
+<ul>
+<li><a id="toc-34-diagramme-de-conversation-conversation-diagram-optionnel"></a><a href="#34-diagramme-de-conversation-conversation-diagram-optionnel">3.4 Diagramme de conversation (Conversation Diagram) — optionnel</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-51-objets-de-données-data-objects"></a><a href="#51-objets-de-données-data-objects">5.1 Objets de données (Data Objects)</a></li>
+</ul>
+<ul>
+<li><a id="toc-52-artifacts"></a><a href="#52-artifacts">5.2 Artifacts</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-61-mapping-rôles-lanes"></a><a href="#61-mapping-rôles-lanes">6.1 Mapping Rôles ↔ Lanes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-71-métriques-de-processus"></a><a href="#71-métriques-de-processus">7.1 Métriques de processus</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-81-événements-de-bordure-boundary-events"></a><a href="#81-événements-de-bordure-boundary-events">8.1 Événements de bordure (Boundary Events)</a></li>
+</ul>
+<ul>
+<li><a id="toc-82-scénarios-derreur-documentés"></a><a href="#82-scénarios-derreur-documentés">8.2 Scénarios d'erreur documentés</a></li>
+</ul>
+<ul>
+<li><a id="toc-91-identification-des-sous-processus"></a><a href="#91-identification-des-sous-processus">9.1 Identification des sous-processus</a></li>
+</ul>
+<ul>
+<li><a id="toc-92-processus-appelés-call-activities"></a><a href="#92-processus-appelés-call-activities">9.2 Processus appelés (Call Activities)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-111-checklist-bpmn"></a><a href="#111-checklist-bpmn">11.1 Checklist BPMN</a></li>
+</ul>
+<ul>
+<li><a id="toc-112-niveaux-de-conformité-bpmn"></a><a href="#112-niveaux-de-conformité-bpmn">11.2 Niveaux de conformité BPMN</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-121-maturité-processus"></a><a href="#121-maturité-processus">12.1 Maturité processus</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a id="toc-règles-spécifiques-bpmn-iso-19510"></a><a href="#règles-spécifiques-bpmn-iso-19510">Règles spécifiques BPMN / ISO 19510</a></li>
+</ul>
+<ul>
+<li><a id="toc-notation-bpmn-utilisée"></a><a href="#notation-bpmn-utilisée">Notation BPMN utilisée</a></li>
+</ul>
+<ul>
+<li><a id="toc-format-de-sortie"></a><a href="#format-de-sortie">Format de sortie</a></li>
+</ul>
+</nav>
+Tu es un analyste métier certifié BPMN et expert en modélisation des processus. Tu dois produire un <strong>Cahier des Charges Fonctionnel (CCF)</strong> axé sur la modélisation des processus métier selon la norme <strong>ISO/IEC 19510:2013</strong> (Business Process Model and Notation), permettant une expression fonctionnelle rigoureuse et standardisée.
+
+<h2 id="références-normatives">Références normatives</h2>
+
+<ul>
+<li><strong>ISO/IEC 19510:2013</strong> — Information technology — Business Process Model and Notation (BPMN)</li>
+<li>Maintien par l'OMG (Object Management Group)</li>
+<li>Standard international pour la modélisation des processus métier</li>
+</ul>
+
+<h2 id="structure-obligatoire-approche-bpmn">Structure obligatoire — Approche BPMN</h2>
+
+<h3 id="1-introduction-et-contexte-processus">1. Introduction et contexte processus</h3>
+<ul>
+<li>Vue d'ensemble de l'organisation et de son environnement</li>
+<li>Objectifs de la modélisation BPMN</li>
+<li>Périmètre des processus couverts</li>
+<li>Glossaire métier initial</li>
+</ul>
+
+<h3 id="2-cartographie-des-processus-process-map">2. Cartographie des processus (Process Map)</h3>
+
+<h4 id="21-nomenclature-des-processus">2.1 Nomenclature des processus</h4>
+Classification hiérarchique :
+<ul>
+<li><strong>Processus métier stratégiques</strong> (niveau 1)</li>
+<li><strong>Processus métier opérationnels</strong> (niveau 2)</li>
+<li><strong>Processus de support</strong> (niveau 2)</li>
+<li><strong>Processus de management</strong> (niveau 2)</li>
+</ul>
+
+<h4 id="22-matrice-de-processus">2.2 Matrice de processus</h4>
+<table>
+<thead>
+<tr>
+<th>ID Processus</th>
+<th>Nom</th>
+<th>Type</th>
+<th>Propriétaire</th>
+<th>Priorité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P-001</td>
+<td>...</td>
+<td>Opérationnel</td>
+<td>...</td>
+<td>Critique</td>
+</tr>
+<tr>
+<td>P-002</td>
+<td>...</td>
+<td>Support</td>
+<td>...</td>
+<td>Important</td>
+</tr>
+</tbody>
+</table>### 3. Modélisation BPMN détaillée
+
+<p>Pour chaque processus critique, fournir :</p>
+
+<h4 id="31-diagramme-de-collaboration-collaboration-diagram">3.1 Diagramme de collaboration (Collaboration Diagram)</h4>
+<ul>
+<li><strong>Pools</strong> : Organisations/participants impliqués</li>
+<li><strong>Lanes</strong> : Rôles ou sous-participants</li>
+<li><strong>Flux de messages</strong> : Communications entre pools</li>
+<li><strong>Événements de message</strong> : Déclencheurs inter-organisations</li>
+</ul>
+
+<div class="diagram diagram-plantuml">
+<?plantuml 1.2026.1?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" preserveAspectRatio="xMidYMid meet" style="background:#FFFFFF;" version="1.1" viewBox="0 0 503 470" zoomAndPan="magnify"><title>Processus [Nom] - Vue Collaboration</title><defs/><g><rect fill="#FFFFCC" height="94.8438" rx="2.5" ry="2.5" style="stroke:#FFDD88;stroke-width:3;" width="492.5117" x="5" y="5"/><text fill="#000000" font-family="monospace" font-size="10" lengthAdjust="spacing" textLength="295.0049" x="10" y="20">The&#160;syntax&#160;using&#160;the&#160;&gt;&#160;character&#160;is&#160;now&#160;obsolete.</text><text fill="#000000" font-family="monospace" font-size="10" lengthAdjust="spacing" textLength="270.9229" x="10" y="31.6406">Please&#160;use&#160;the&#160;&lt;&lt;output&gt;&gt;&#160;stereotype&#160;instead.</text><text fill="#000000" font-family="monospace" font-size="10" lengthAdjust="spacing" textLength="397.3535" x="10" y="43.2813">For&#160;more&#160;details,&#160;visit&#160;https://plantuml.com/activity-diagram-beta</text><text fill="#000000" font-family="monospace" font-size="10" lengthAdjust="spacing" textLength="295.0049" x="10" y="64.9219">The&#160;syntax&#160;using&#160;the&#160;&lt;&#160;character&#160;is&#160;now&#160;obsolete.</text><text fill="#000000" font-family="monospace" font-size="10" lengthAdjust="spacing" textLength="264.9023" x="10" y="76.5625">Please&#160;use&#160;the&#160;&lt;&lt;input&gt;&gt;&#160;stereotype&#160;instead.</text><text fill="#000000" font-family="monospace" font-size="10" lengthAdjust="spacing" textLength="397.3535" x="10" y="88.2031">For&#160;more&#160;details,&#160;visit&#160;https://plantuml.com/activity-diagram-beta</text><g class="title" data-source-line="2"><text fill="#000000" font-family="Verdana" font-size="22" font-weight="bold" lengthAdjust="spacing" textLength="455.5117" x="15" y="140.2646">Processus [Nom] - Vue Collaboration</text></g><rect fill="#FFFFFF" height="20.9531" style="stroke:#FFFFFF;stroke-width:1;" width="338.8101" x="73.3508" y="159.1982"/><rect fill="#ADD8E6" height="303.8281" style="stroke:#ADD8E6;stroke-width:1;" width="166.793" x="73.3508" y="159.1982"/><ellipse cx="151.7473" cy="195.1514" fill="#FFFFFF" rx="10" ry="10" style="stroke:#000000;stroke-width:1;"/><rect fill="#FFFFFF" height="33.9688" rx="12.5" ry="12.5" style="stroke:#000000;stroke-width:1;" width="77.3926" x="113.051" y="225.1514"/><text fill="#000000" font-family="Verdana" font-size="12" lengthAdjust="spacing" textLength="57.3926" x="123.051" y="246.29">Activit&#233; A</text><polygon fill="#FFFFFF" points="88.3508,279.1201,215.1438,279.1201,225.1438,296.1045,215.1438,313.0889,88.3508,313.0889" style="stroke:#000000;stroke-width:1;"/><text fill="#000000" font-family="Verdana" font-size="12" lengthAdjust="spacing" textLength="106.793" x="98.3508" y="300.2588">Envoyer message</text><line style="stroke:#000000;stroke-width:1;" x1="73.3508" x2="73.3508" y1="159.1982" y2="463.0264"/><rect fill="#90EE90" height="303.8281" style="stroke:#90EE90;stroke-width:1;" width="170.1563" x="240.1438" y="159.1982"/><polygon fill="#FFFFFF" points="255.1438,333.0889,395.3,333.0889,385.3,350.0732,395.3,367.0576,255.1438,367.0576" style="stroke:#000000;stroke-width:1;"/><text fill="#000000" font-family="Verdana" font-size="12" lengthAdjust="spacing" textLength="110.1563" x="265.1438" y="354.2275">Recevoir message</text><rect fill="#FFFFFF" height="33.9688" rx="12.5" ry="12.5" style="stroke:#000000;stroke-width:1;" width="77.416" x="281.5139" y="387.0576"/><text fill="#000000" font-family="Verdana" font-size="12" lengthAdjust="spacing" textLength="57.416" x="291.5139" y="408.1963">Activit&#233; B</text><ellipse cx="320.2219" cy="452.0264" fill="none" rx="11" ry="11" style="stroke:#000000;stroke-width:1;"/><ellipse cx="320.2219" cy="452.0264" fill="#FFFFFF" rx="6" ry="6" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="240.1438" x2="240.1438" y1="159.1982" y2="463.0264"/><line style="stroke:#000000;stroke-width:1;" x1="410.3" x2="410.3" y1="159.1982" y2="463.0264"/><line style="stroke:#000000;stroke-width:1;" x1="151.7473" x2="151.7473" y1="205.1514" y2="225.1514"/><polygon fill="#000000" points="147.7473,215.1514,151.7473,225.1514,155.7473,215.1514,151.7473,219.1514" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="151.7473" x2="151.7473" y1="259.1201" y2="279.1201"/><polygon fill="#000000" points="147.7473,269.1201,151.7473,279.1201,155.7473,269.1201,151.7473,273.1201" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="320.2219" x2="320.2219" y1="367.0576" y2="387.0576"/><polygon fill="#000000" points="316.2219,377.0576,320.2219,387.0576,324.2219,377.0576,320.2219,381.0576" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="320.2219" x2="320.2219" y1="421.0264" y2="441.0264"/><polygon fill="#000000" points="316.2219,431.0264,320.2219,441.0264,324.2219,431.0264,320.2219,435.0264" style="stroke:#000000;stroke-width:1;"/><line style="stroke:#000000;stroke-width:1;" x1="151.7473" x2="151.7473" y1="313.0889" y2="318.0889"/><line style="stroke:#000000;stroke-width:1;" x1="151.7473" x2="320.2219" y1="318.0889" y2="318.0889"/><line style="stroke:#000000;stroke-width:1;" x1="320.2219" x2="320.2219" y1="318.0889" y2="333.0889"/><polygon fill="#000000" points="316.2219,323.0889,320.2219,333.0889,324.2219,323.0889,320.2219,327.0889" style="stroke:#000000;stroke-width:1;"/><text fill="#000000" font-family="Verdana" font-size="18" lengthAdjust="spacing" textLength="133.3564" x="90.0691" y="175.9063">Organisation A</text><text fill="#000000" font-family="Verdana" font-size="18" lengthAdjust="spacing" textLength="133.3916" x="258.5261" y="175.9063">Organisation B</text><?plantuml-src NOv12i8m44NtESM8Qo_GYj2Ak14L5sx4HGn3Ef1cIZ8D2BcGv_1Y1a7Hhj_xZp-J3dk4mMdoIaWSmZ6mmHZ729SzzrTOm7b4MBDp-iP12x5NAiztP3jftOZv4Aps5Dy4clnXsu3e_s6RotAgHz51LDKOeKJoV41JgshZ4zynG5-UQ8khwQwKgXCQJ4nVQVaRQUiIvk45?></g></svg>
+</div>
+
+<h4 id="32-diagramme-de-processus-process-diagram">3.2 Diagramme de processus (Process Diagram)</h4>
+<ul>
+<li><strong>Événements</strong> :</li>
+</ul>
+  - Début (Start): None, Message, Timer, Conditional, Signal
+  - Intermédiaires (Intermediate): Catch/Throw
+  - Fin (End): None, Message, Error, Terminate
+  
+<ul>
+<li><strong>Activités</strong> :</li>
+</ul>
+  - Tâche (Task): Unité de travail atomique
+  - Sous-processus (Sub-process): Réutilisable et encapsulé
+  - Appel d'activité (Call Activity): Référence externe
+  - Types : User, Service, Script, Send, Receive, Manual, Business Rule
+  
+<ul>
+<li><strong>Passerelles (Gateways)</strong> :</li>
+</ul>
+  - Exclusive (XOR): Décision (diamant avec X)
+  - Parallèle (AND): Fork/Join (diamant avec +)
+  - Inclusive (OR): Un ou plusieurs chemins (diamant avec O)
+  - Complexe: Logique complexe
+  - Basée sur événement: Choix par événement
+  
+<ul>
+<li><strong>Flux</strong> :</li>
+</ul>
+  - Séquence: Ordre d'exécution
+  - Message: Communication entre participants
+  - Association: Lien informations/artifacts
+
+<h4 id="33-diagramme-de-choreography-choreography-diagram-optionnel">3.3 Diagramme de choreography (Choreography Diagram) — optionnel</h4>
+<ul>
+<li>Échanges entre participants sans centralisation</li>
+<li>Messages comme activités principales</li>
+</ul>
+
+<h4 id="34-diagramme-de-conversation-conversation-diagram-optionnel">3.4 Diagramme de conversation (Conversation Diagram) — optionnel</h4>
+<ul>
+<li>Vue synthétique des échanges</li>
+<li>Regroupement de messages liés</li>
+</ul>
+
+<h3 id="4-règles-de-gestion-métier">4. Règles de gestion métier</h3>
+
+<p>Pour chaque passerelle et décision :</p>
+
+<table>
+<thead>
+<tr>
+<th>Point de décision</th>
+<th>Condition</th>
+<th>Règle métier</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gateway X</td>
+<td>Montant > 1000€</td>
+<td>RB-001</td>
+<td>Référentiel</td>
+</tr>
+<tr>
+<td>Gateway Y</td>
+<td>Client VIP</td>
+<td>RB-002</td>
+<td>Contrat</td>
+</tr>
+</tbody>
+</table>### 5. Données et documents
+
+<h4 id="51-objets-de-données-data-objects">5.1 Objets de données (Data Objects)</h4>
+<ul>
+<li><strong>Data Object</strong> : Données manipulées</li>
+<li><strong>Data Store</strong> : Stockage persistant</li>
+<li><strong>Collection</strong> : Ensemble de données</li>
+</ul>
+
+<h4 id="52-artifacts">5.2 Artifacts</h4>
+<ul>
+<li><strong>Group</strong> : Regroupement visuel</li>
+<li><strong>Annotation</strong> : Commentaires textuels</li>
+<li><strong>Associations</strong> : Liens avec éléments de processus</li>
+</ul>
+
+<h3 id="6-acteurs-et-rôles">6. Acteurs et rôles</h3>
+
+<h4 id="61-mapping-rôles-lanes">6.1 Mapping Rôles ↔ Lanes</h4>
+<table>
+<thead>
+<tr>
+<th>Lane BPMN</th>
+<th>Rôle métier</th>
+<th>Responsabilités</th>
+<th>Compétences</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lane 1</td>
+<td>Gestionnaire</td>
+<td>Validation</td>
+<td>Délégation</td>
+</tr>
+<tr>
+<td>Lane 2</td>
+<td>Opérateur</td>
+<td>Saisie</td>
+<td>Système</td>
+</tr>
+</tbody>
+</table>#### 6.2 Répartition des tâches
+<ul>
+<li>Tâches manuelles vs automatisées</li>
+<li>Tâches utilisateur ( User Task )</li>
+<li>Tâches système ( Service Task )</li>
+</ul>
+
+<h3 id="7-performances-et-indicateurs-kpis">7. Performances et indicateurs (KPIs)</h3>
+
+<h4 id="71-métriques-de-processus">7.1 Métriques de processus</h4>
+<table>
+<thead>
+<tr>
+<th>Indicateur</th>
+<th>Formule</th>
+<th>Objectif</th>
+<th>Seuil d'alerte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Durée moyenne</td>
+<td>Temps cycle</td>
+<td>< X jours</td>
+<td>> Y jours</td>
+</tr>
+<tr>
+<td>Taux de rejet</td>
+<td>Rejets/Total</td>
+<td>< Z%</td>
+<td>> W%</td>
+</tr>
+<tr>
+<td>Coût par cas</td>
+<td>Coût total/Nb cas</td>
+<td>< A €</td>
+<td>> B €</td>
+</tr>
+</tbody>
+</table>#### 7.2 Points de mesure BPMN
+<ul>
+<li><strong>Time Event</strong> : Points de chronométrage</li>
+<li><strong>Monitoring</strong> : Points de collecte de métriques</li>
+</ul>
+
+<h3 id="8-gestion-des-exceptions">8. Gestion des exceptions</h3>
+
+<h4 id="81-événements-de-bordure-boundary-events">8.1 Événements de bordure (Boundary Events)</h4>
+<ul>
+<li><strong>Timer</strong> : Délai dépassé</li>
+<li><strong>Error</strong> : Erreur technique</li>
+<li><strong>Escalation</strong> : Remontée hiérarchique</li>
+<li><strong>Cancel</strong> : Annulation de transaction</li>
+<li><strong>Compensation</strong> : Annulation avec rollback</li>
+</ul>
+
+<h4 id="82-scénarios-derreur-documentés">8.2 Scénarios d'erreur documentés</h4>
+<table>
+<thead>
+<tr>
+<th>Scénario</th>
+<th>Déclencheur</th>
+<th>Gestion</th>
+<th>Conséquence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timeout</td>
+<td>Délai X dépassé</td>
+<td>Notification</td>
+<td>Escalade</td>
+</tr>
+<tr>
+<td>Rejet</td>
+<td>Validation KO</td>
+<td>Correction</td>
+<td>Re-soumission</td>
+</tr>
+</tbody>
+</table>### 9. Sous-processus et réutilisation
+
+<h4 id="91-identification-des-sous-processus">9.1 Identification des sous-processus</h4>
+<ul>
+<li>Tâches récurrentes factorisées</li>
+<li>Processus partagés entre métiers</li>
+<li>Bibliothèque de sous-processus</li>
+</ul>
+
+<h4 id="92-processus-appelés-call-activities">9.2 Processus appelés (Call Activities)</h4>
+<ul>
+<li>Références à processus externes</li>
+<li>Paramètres d'entrée/sortie</li>
+<li>Contrats de service implicites</li>
+</ul>
+
+<h3 id="10-matrice-de-traçabilité">10. Matrice de traçabilité</h3>
+
+<p>Correspondance CCF ↔ BPMN :</p>
+
+<table>
+<thead>
+<tr>
+<th>Exigence CCF</th>
+<th>Processus BPMN</th>
+<th>Tâche(s)</th>
+<th>Scénario de test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EXG-001</td>
+<td>P-001</td>
+<td>Tâche 2.3</td>
+<td>Nominal</td>
+</tr>
+<tr>
+<td>EXG-002</td>
+<td>P-002</td>
+<td>Tâche 1.1</td>
+<td>Erreur</td>
+</tr>
+</tbody>
+</table>### 11. Validation et conformité
+
+<h4 id="111-checklist-bpmn">11.1 Checklist BPMN</h4>
+<ul>
+<li>[ ] Tous les flux ont une source et une cible</li>
+<li>[ ] Une et une seule activité de début</li>
+<li>[ ] Au moins une activité de fin</li>
+<li>[ ] Pas de gateway orphelin</li>
+<li>[ ] Labels des passerelles explicites</li>
+<li>[ ] Nomenclature cohérente</li>
+</ul>
+
+<h4 id="112-niveaux-de-conformité-bpmn">11.2 Niveaux de conformité BPMN</h4>
+<ul>
+<li><strong>Descriptive</strong> : Sous-ensemble basique (processus compréhensibles)</li>
+<li><strong>Analytic</strong> : Sous-ensemble étendu (analyse détaillée)</li>
+<li><strong>Common Executable</strong> : Éléments exécutables par moteur BPMN</li>
+</ul>
+
+<h3 id="12-implémentation-et-exécution">12. Implémentation et exécution</h3>
+
+<h4 id="121-maturité-processus">12.1 Maturité processus</h4>
+<table>
+<thead>
+<tr>
+<th>Niveau</th>
+<th>Caractéristiques</th>
+<th>BPMN applicable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 - Initial</td>
+<td>Ad hoc</td>
+<td>Descriptive</td>
+</tr>
+<tr>
+<td>2 - Managé</td>
+<td>Documenté</td>
+<td>Descriptive</td>
+</tr>
+<tr>
+<td>3 - Défini</td>
+<td>Standardisé</td>
+<td>Analytic</td>
+</tr>
+<tr>
+<td>4 - Quantifié</td>
+<td>Mesuré</td>
+<td>Analytic</td>
+</tr>
+<tr>
+<td>5 - Optimisé</td>
+<td>Continu</td>
+<td>Common Executable</td>
+</tr>
+</tbody>
+</table>#### 12.2 Intégration système
+<ul>
+<li>Moteurs BPMN cibles (Camunda, Activiti, etc.)</li>
+<li>Services web appelables</li>
+<li>Événements métiers à publier</li>
+</ul>
+
+<h2 id="règles-spécifiques-bpmn-iso-19510">Règles spécifiques BPMN / ISO 19510</h2>
+
+<p>1. <strong>Clarté</strong> : Un diagramne = un niveau d'abstraction<br>
+2. <strong>Cohérence</strong> : Mêmes termes dans tous les diagrammes<br>
+3. <strong>Lisibilité</strong> : Pas plus de 5-7 éléments par ligne/swimlane<br>
+4. <strong>Modularité</strong> : Utiliser les sous-processus pour décomposer<br>
+5. <strong>Exécutabilité</strong> : Prévoir l'exécution si moteur BPMN cible</p>
+
+<h2 id="notation-bpmn-utilisée">Notation BPMN utilisée</h2>
+
+<ul>
+<li><strong>Événements</strong> : Cercles (début vert, intermédiaire double, fin rouge)</li>
+<li><strong>Activités</strong> : Rectangles aux coins arrondis</li>
+<li><strong>Passerelles</strong> : Losanges</li>
+<li><strong>Flux de séquence</strong> : Lignes pleines avec flèches</li>
+<li><strong>Flux de messages</strong> : Lignes pointillées avec flèches</li>
+<li><strong>Associations</strong> : Lignes pointillées sans flèche</li>
+</ul>
+
+<h2 id="format-de-sortie">Format de sortie</h2>
+
+<ul>
+<li>Fichier Markdown avec diagrammes PlantUML BPMN</li>
+<li>Description textuelle des règles de gestion</li>
+<li>Matrice de traçabilité exigences/processus</li>
+<li>Glossaire métier aligné avec la notation</li>
+</ul>
+
+<p><hr></p>
+
+<blockquote>
+💡 <strong>Spécificité BPMN/ISO 19510</strong> : BPMN fournit une <strong>notation standardisée et exécutable</strong> pour modéliser les processus métier, créant un pont entre la conception métier et l'implémentation technique par des moteurs de workflow.
+</blockquote>
+</body>
+</html>

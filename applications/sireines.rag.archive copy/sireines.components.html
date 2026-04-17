@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sireines.components</title>
+    <style>
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: none;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 2em;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 8px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #34495e;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+            line-height: 1.4;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+        pre.tree {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+            .diagram svg {
+            width: auto;
+            height: auto;
+        }
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        li {
+            margin: 0.5em 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding: 0.5em 0 0.5em 1em;
+            color: #555;
+            background: #f8f9fa;
+            border-radius: 0 3px 3px 0;
+        }
+        blockquote p {
+            margin: 0.5em 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+    </style>
+</head>
+<body>
+<p>Voici le <strong>DAT Vue Composants & Analyse de Sécurité</strong> complet pour l'application <strong>SIREINES</strong>, généré selon le modèle Arc42 avec analyse approfondie des vulnérabilités, dettes techniques et recommandations de sécurité.</p>
+
+<hr>
+
+
+<h1>DAT Vue Composants & Analyse de Sécurité - SIREINES</h1>
+
+<strong>Version</strong> : 2.5.12  
+<strong>Date d'analyse</strong> : 23 février 2026  
+<strong>Classification</strong> : Interne - Contient informations de vulnérabilité  
+
+<p>[TOC]</p>
+
+<hr>
+
+<h2>1. Vue Composants (C4-L3) - Architecture Interne Détaillée {#vue-composants}</h2>
+
+<h3>1.1 Diagramme de composants global</h3>
+
+<div class="diagram diagram-plantuml">
+<?plantuml 1.2026.1?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" preserveAspectRatio="xMidYMid meet" style="background:#FFFFFF;" version="1.1" viewBox="0 0 3735 666" zoomAndPan="magnify"><title>SIREINES - Vue Composants (C4-L3)</title><defs/><g><g class="title" data-source-line="4"><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="281.9893" x="1719.8167" y="22.9951">SIREINES - Vue Composants (C4-L3)</text></g><!--cluster Couche Pr?sentation (Controllers)--><g class="cluster" data-qualified-name="Couche Pr.sentation .Controllers." data-source-line="6" id="ent0002"><path d="M903.5,149.1469 L1173.7402,149.1469 A3.75,3.75 0 0 1 1176.2402,151.6469 L1183.2402,171.4437 L3509.5,171.4437 A2.5,2.5 0 0 1 3512,173.9437 L3512,233.9369 A2.5,2.5 0 0 1 3509.5,236.4369 L903.5,236.4369 A2.5,2.5 0 0 1 901,233.9369 L901,151.6469 A2.5,2.5 0 0 1 903.5,149.1469" fill="#ADD8E6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="901" x2="1183.2402" y1="171.4437" y2="171.4437"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="269.2402" x="905" y="164.142">Couche Pr&#233;sentation (Controllers)</text></g><!--cluster Couche Service--><g class="cluster" data-qualified-name="Couche Service" data-source-line="21" id="ent0015"><path d="M1185.5,260.4369 L1307.1953,260.4369 A3.75,3.75 0 0 1 1309.6953,262.9369 L1316.6953,282.7337 L2845.5,282.7337 A2.5,2.5 0 0 1 2848,285.2337 L2848,345.2369 A2.5,2.5 0 0 1 2845.5,347.7369 L1185.5,347.7369 A2.5,2.5 0 0 1 1183,345.2369 L1183,262.9369 A2.5,2.5 0 0 1 1185.5,260.4369" fill="#90EE90" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="1183" x2="1316.6953" y1="282.7337" y2="282.7337"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="120.6953" x="1187" y="275.432">Couche Service</text></g><!--cluster Couche Acc?s Donn?es (DAO)--><g class="cluster" data-qualified-name="Couche Acc.s Donn.es .DAO." data-source-line="32" id="ent0024"><path d="M1495.5,371.7369 L1729.6533,371.7369 A3.75,3.75 0 0 1 1732.1533,374.2369 L1739.1533,394.0337 L2360.5,394.0337 A2.5,2.5 0 0 1 2363,396.5337 L2363,456.5369 A2.5,2.5 0 0 1 2360.5,459.0369 L1495.5,459.0369 A2.5,2.5 0 0 1 1493,456.5369 L1493,374.2369 A2.5,2.5 0 0 1 1495.5,371.7369" fill="#FFFFE0" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="1493" x2="1739.1533" y1="394.0337" y2="394.0337"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="233.1533" x="1497" y="386.732">Couche Acc&#232;s Donn&#233;es (DAO)</text></g><!--cluster Utilitaires & S?curit?--><g class="cluster" data-qualified-name="Utilitaires . S.curit." data-source-line="41" id="ent0031"><path d="M8.5,43.2969 L175.3193,43.2969 A3.75,3.75 0 0 1 177.8193,45.7969 L184.8193,65.5938 L743.5,65.5938 A2.5,2.5 0 0 1 746,68.0938 L746,233.9369 A2.5,2.5 0 0 1 743.5,236.4369 L8.5,236.4369 A2.5,2.5 0 0 1 6,233.9369 L6,45.7969 A2.5,2.5 0 0 1 8.5,43.2969" fill="#D3D3D3" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="184.8193" y1="65.5938" y2="65.5938"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="165.8193" x="10" y="58.292">Utilitaires &amp; S&#233;curit&#233;</text></g><!--cluster Int?grations Externes--><g class="cluster" data-qualified-name="Int.grations Externes" data-source-line="50" id="ent0038"><path d="M2190.5,483.0369 L2363,483.0369 A3.75,3.75 0 0 1 2365.5,485.5369 L2372.5,505.3337 L2857.5,505.3337 A2.5,2.5 0 0 1 2860,507.8337 L2860,567.8269 A2.5,2.5 0 0 1 2857.5,570.3269 L2190.5,570.3269 A2.5,2.5 0 0 1 2188,567.8269 L2188,485.5369 A2.5,2.5 0 0 1 2190.5,483.0369" fill="#FFB6C1" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="2188" x2="2372.5" y1="505.3337" y2="505.3337"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="171.5" x="2192" y="498.032">Int&#233;grations Externes</text></g><!--entity Accueil--><g class="entity" data-qualified-name="Couche Pr.sentation .Controllers..Accueil" data-source-line="7" id="ent0003"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114.3291" x="3381.84" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="94.3291" x="3391.84" y="207.142">AccueilAction</text></g><!--entity AgentSearch--><g class="entity" data-qualified-name="Couche Pr.sentation .Controllers..AgentSearch" data-source-line="8" id="ent0004"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="179.9951" x="3167" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="159.9951" x="3177" y="207.142">AgentRechercheAction</text></g><!--entity AgentDetail--><g class="entity" data-qualified-name="Couche Pr.sentation .Controllers..AgentDetail" data-source-line="9" id="ent0005"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="146.7725" x="2985.61" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="126.7725" x="2995.61" y="207.142">AgentDetailAction</text></g><!--entity DossierSearch--><g class="entity" data-qualified-name="Couche Pr.sentation .Controllers..DossierSearch" data-source-line="10" id="ent0006"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="190.748" x="2465.63" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="170.748" x="2475.63" y="207.142">DossierRechercheAction</text></g><!--entity DossierDetail--><g class="entity" data-qualified-name="Couche Pr.sentation .Controllers..DossierDetail" data-source-line="11" id="ent0007"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="157.5254" x="2273.24" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="137.5254" x="2283.24" y="207.142">DossierDetailAction</text></g><!--entity DossierSearchMC--><g class="entity" data-qualified-name="Couche Pr.sentation .Controllers..DossierSearchMC" data-source-line="12" id="ent0008"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="258.6768" x="2691.66" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="238.6768" x="2701.66" y="207.142">DossierRechercheMotsClefsAction</text></g><!--entity SeanceSearch--><g class="entity" data-qualified-name="Couche Pr.sentation .Controllers..SeanceSearch" data-source-line="13" id="ent0009"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="189.8184" x="2048.09" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="169.8184" x="2058.09" y="207.142">SeanceRechercheAction</text></g><!--entity SeanceAffect--><g class="entity" data-qualified-name="Couche Pr.sentation .Controllers..SeanceAffect" data-source-line="14" id="ent0010"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="191.9854" x="1821.01" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="171.9854" x="1831.01" y="207.142">SeanceAffectationAction</text></g><!--entity Extractions--><g class="entity" data-qualified-name="Couche Pr.sentation .Controllers..Extractions" data-source-line="15" id="ent0011"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="224.1826" x="1561.91" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="204.1826" x="1571.91" y="207.142">Extraction01Action..10Action</text></g><!--entity Import--><g class="entity" data-qualified-name="Couche Pr.sentation .Controllers..Import" data-source-line="16" id="ent0012"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="157.3271" x="1369.34" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="137.3271" x="1379.34" y="207.142">ImportFichierAction</text></g><!--entity RefBalise--><g class="entity" data-qualified-name="Couche Pr.sentation .Controllers..RefBalise" data-source-line="17" id="ent0013"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="180.4258" x="1153.79" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="160.4258" x="1163.79" y="207.142">BaliseRechercheAction</text></g><!--entity RefMotCle--><g class="entity" data-qualified-name="Couche Pr.sentation .Controllers..RefMotCle" data-source-line="18" id="ent0014"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="202.458" x="916.77" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="182.458" x="926.77" y="207.142">MotCleNiveauDetailAction</text></g><!--entity SvcAgent--><g class="entity" data-qualified-name="Couche Service.SvcAgent" data-source-line="22" id="ent0016"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="158.3115" x="2466.84" y="295.4369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="138.3115" x="2476.84" y="318.432">AgentsServicesImpl</text></g><!--entity SvcDossier--><g class="entity" data-qualified-name="Couche Service.SvcDossier" data-source-line="23" id="ent0017"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="169.0645" x="2262.47" y="295.4369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="149.0645" x="2272.47" y="318.432">DossiersServicesImpl</text></g><!--entity SvcSeance--><g class="entity" data-qualified-name="Couche Service.SvcSeance" data-source-line="24" id="ent0018"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="168.1348" x="2058.93" y="295.4369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="148.1348" x="2068.93" y="318.432">SeancesServicesImpl</text></g><!--entity SvcExtract--><g class="entity" data-qualified-name="Couche Service.SvcExtract" data-source-line="25" id="ent0019"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="188.3418" x="1835.83" y="295.4369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="168.3418" x="1845.83" y="318.432">ExtractionsServicesImpl</text></g><!--entity SvcImport--><g class="entity" data-qualified-name="Couche Service.SvcImport" data-source-line="26" id="ent0020"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="163.3359" x="1637.33" y="295.4369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="143.3359" x="1647.33" y="318.432">ImportsServicesImpl</text></g><!--entity SvcRef--><g class="entity" data-qualified-name="Couche Service.SvcRef" data-source-line="27" id="ent0021"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="193.8789" x="1199.06" y="295.4369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="173.8789" x="1209.06" y="318.432">ReferentielsServicesImpl</text></g><!--entity SvcCourrier--><g class="entity" data-qualified-name="Couche Service.SvcCourrier" data-source-line="28" id="ent0022"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="173.8564" x="1428.07" y="295.4369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="153.8564" x="1438.07" y="318.432">CourriersServicesImpl</text></g><!--entity SvcCommon--><g class="entity" data-qualified-name="Couche Service.SvcCommon" data-source-line="29" id="ent0023"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="172.6328" x="2659.68" y="295.4369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="152.6328" x="2669.68" y="318.432">CommonServicesImpl</text></g><!--entity DaoAgent--><g class="entity" data-qualified-name="Couche Acc.s Donn.es .DAO..DaoAgent" data-source-line="33" id="ent0025"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.6582" x="2250.67" y="406.7369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="76.6582" x="2260.67" y="429.732">AgentsDao</text></g><!--entity DaoDossier--><g class="entity" data-qualified-name="Couche Acc.s Donn.es .DAO..DaoDossier" data-source-line="34" id="ent0026"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="107.4111" x="2108.29" y="406.7369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87.4111" x="2118.29" y="429.732">DossiersDao</text></g><!--entity DaoSeance--><g class="entity" data-qualified-name="Couche Acc.s Donn.es .DAO..DaoSeance" data-source-line="35" id="ent0027"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.4814" x="1966.76" y="406.7369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="86.4814" x="1976.76" y="429.732">SeancesDao</text></g><!--entity DaoExtract--><g class="entity" data-qualified-name="Couche Acc.s Donn.es .DAO..DaoExtract" data-source-line="36" id="ent0028"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.6885" x="1804.66" y="406.7369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="106.6885" x="1814.66" y="429.732">ExtractionsDao</text></g><!--entity DaoImport--><g class="entity" data-qualified-name="Couche Acc.s Donn.es .DAO..DaoImport" data-source-line="37" id="ent0029"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="101.6826" x="1668.16" y="406.7369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="81.6826" x="1678.16" y="429.732">ImportsDao</text></g><!--entity DaoRef--><g class="entity" data-qualified-name="Couche Acc.s Donn.es .DAO..DaoRef" data-source-line="38" id="ent0030"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="124.9316" x="1508.53" y="406.7369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="104.9316" x="1518.53" y="429.732">ReferentielDao</text></g><!--entity UtilCerbere--><g class="entity" data-qualified-name="Utilitaires . S.curit..UtilCerbere" data-source-line="42" id="ent0032"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.5293" x="275.24" y="78.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="79.5293" x="285.24" y="101.292">CerbereUtil</text></g><!--entity FilterSession--><g class="entity" data-qualified-name="Utilitaires . S.curit..FilterSession" data-source-line="43" id="ent0033"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="164.9219" x="409.54" y="78.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="144.9219" x="419.54" y="101.292">SireinesSessionFilter</text></g><!--entity FilterEnc--><g class="entity" data-qualified-name="Utilitaires . S.curit..FilterEnc" data-source-line="44" id="ent0034"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.208" x="609.9" y="78.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100.208" x="619.9" y="101.292">EncodingFilter</text></g><!--entity UtilString--><g class="entity" data-qualified-name="Utilitaires . S.curit..UtilString" data-source-line="45" id="ent0035"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="92.5908" x="21.7" y="78.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72.5908" x="31.7" y="101.292">StringUtils</text></g><!--entity UtilCsv--><g class="entity" data-qualified-name="Utilitaires . S.curit..UtilCsv" data-source-line="46" id="ent0036"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.1826" x="149.41" y="78.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="71.1826" x="159.41" y="101.292">CsvExport</text></g><!--entity UtilFile--><g class="entity" data-qualified-name="Utilitaires . S.curit..UtilFile" data-source-line="47" id="ent0037"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.2871" x="22.86" y="184.1469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70.2871" x="32.86" y="207.142">FichierUtil</text></g><!--entity ESPlugin--><g class="entity" data-qualified-name="Int.grations Externes.ESPlugin" data-source-line="51" id="ent0039"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="263.2842" x="2580.36" y="518.0369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="243.2842" x="2590.36" y="541.032">ESEmbeddedSearchServicesPlugin</text></g><!--entity BirtMgr--><g class="entity" data-qualified-name="Int.grations Externes.BirtMgr" data-source-line="52" id="ent0040"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="136.6484" x="2408.68" y="518.0369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="116.6484" x="2418.68" y="541.032">BirtManagerImpl</text></g><!--entity SharedDB--><g class="entity" data-qualified-name="Int.grations Externes.SharedDB" data-source-line="53" id="ent0041"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="169.1943" x="2204.4" y="518.0369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="149.1943" x="2214.4" y="541.032">SharedDBConnection</text></g><!--entity DB--><g class="entity" data-qualified-name="DB" data-source-line="56" id="ent0042"><path d="M1893.62,523.5369 C1893.62,513.5369 1943.9965,513.5369 1943.9965,513.5369 C1943.9965,513.5369 1994.3729,513.5369 1994.3729,523.5369 L1994.3729,548.8338 C1994.3729,558.8338 1943.9965,558.8338 1943.9965,558.8338 C1943.9965,558.8338 1893.62,558.8338 1893.62,548.8338 L1893.62,523.5369" fill="#F08080" style="stroke:#181818;stroke-width:0.5;"/><path d="M1893.62,523.5369 C1893.62,533.5369 1943.9965,533.5369 1943.9965,533.5369 C1943.9965,533.5369 1994.3729,533.5369 1994.3729,523.5369" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.7529" x="1903.62" y="550.532">PostgreSQL</text></g><!--entity SSO--><g class="entity" data-qualified-name="SSO" data-source-line="57" id="ent0043"><path d="M770.9157,187.3043 C775.3528,181.845 779.4982,181.8601 783.6399,187.6389 C786.4338,180.6073 792.3574,181.0387 796.2574,186.5239 C799.2493,179.7748 805.5764,178.2084 809.8747,185.2323 C814.0968,179.0889 819.9466,178.2844 823.9468,185.4667 C827.3284,179.1095 832.3286,178.7289 836.1563,185.0367 C840.6546,178.6562 845.6489,178.9138 849.022,186.1036 C854.7103,179.6114 858.7532,181.7239 862.6026,188.0517 C867.168,181.8538 871.007,182.9481 875.1703,188.4824 C883.6408,190.5584 885.036,195.3019 880.6605,202.4333 C887.0111,210.8012 883.0365,216.3379 873.9313,218.043 C871.2148,225.3178 865.5061,224.6447 861.0491,219.91 C858.2849,227.0292 854.0177,228.1204 847.9365,223.6693 C845.2508,230.3544 840.071,232.3364 834.9628,226.102 C831.6436,233.2543 827.5607,233.3358 822.3815,227.9715 C818.0315,232.4593 812.2788,232.0708 810.1465,225.5147 C806.1192,230.4754 801.0599,231.1548 798.2188,224.3157 C791.9038,230.8981 786.6269,228.4602 784.0672,220.6288 C778.3189,227.126 773.6785,225.938 770.6619,218.0781 C761.3007,215.7799 759.6049,208.8975 767.0193,202.6409 C760.7518,195.8011 763.4613,190.658 770.9157,187.3043" fill="#FFB6C1" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.2568" x="777.37" y="207.142">Cerb&#232;re SSO</text></g><g class="entity" data-qualified-name="GMN75" data-source-line="101" id="ent0076"><path d="M3531.38,174.5969 L3531.38,229.9953 L3728.6227,229.9953 L3728.6227,184.5969 L3718.6227,174.5969 L3531.38,174.5969" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><path d="M3718.6227,174.5969 L3718.6227,184.5969 L3728.6227,184.5969 L3718.6227,174.5969" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="176.2427" x="3537.38" y="191.6638">&#9888;&#65039; Vuln&#233;rabilit&#233; potentielle:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="161.6812" x="3537.38" y="206.7966">Recherche par mots-cl&#233;s</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="157.4536" x="3537.38" y="221.9294">avec concat&#233;nation SQL</text></g><g class="entity" data-qualified-name="GMN78" data-source-line="107" id="ent0079"><path d="M2382.2,404.7569 L2382.2,445.0225 L2587.7962,445.0225 L2587.7962,414.7569 L2577.7962,404.7569 L2382.2,404.7569" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><path d="M2577.7962,404.7569 L2577.7962,414.7569 L2587.7962,414.7569 L2577.7962,404.7569" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="155.7017" x="2388.2" y="421.8238">&#9888;&#65039; D&#233;pendance critique:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="184.5962" x="2388.2" y="436.9566">BIRT (fin de support Eclipse)</text></g><g class="entity" data-qualified-name="GMN81" data-source-line="112" id="ent0082"><path d="M2582.41,618.8269 L2582.41,659.0925 A0,0 0 0 0 2582.41,659.0925 L2841.5868,659.0925 A0,0 0 0 0 2841.5868,659.0925 L2841.5868,628.8269 L2831.5868,618.8269 L2716,618.8269 L2712,554.5569 L2708,618.8269 L2582.41,618.8269 A0,0 0 0 0 2582.41,618.8269" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><path d="M2831.5868,618.8269 L2831.5868,628.8269 L2841.5868,628.8269 L2831.5868,618.8269" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="172.5229" x="2588.41" y="635.8938">&#9888;&#65039; Elasticsearch embarqu&#233;</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="238.1768" x="2588.41" y="651.0266">Mode embedded = risque split-brain</text></g><!--link Accueil to SvcCommon--><g class="link" data-entity-1="ent0003" data-entity-2="ent0023" data-link-type="dependency" data-source-line="60" id="lnk44"><path d="M3439,220.7569 C3439,252.5069 3439,314.0969 3439,314.0969 C3439,314.0969 3024.67,314.0969 2838.72,314.0969" fill="none" id="Accueil-to-SvcCommon" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2832.72,314.0969,2841.72,318.0969,2837.72,314.0969,2841.72,310.0969,2832.72,314.0969" style="stroke:#181818;stroke-width:1;"/></g><!--link AgentSearch to SvcAgent--><g class="link" data-entity-1="ent0004" data-entity-2="ent0016" data-link-type="dependency" data-source-line="61" id="lnk45"><path d="M3257,220.7869 C3257,242.9369 3257,277.0969 3257,277.0969 C3257,277.0969 2572.39,277.0969 2572.39,277.0969 C2572.39,277.0969 2572.39,280.2169 2572.39,289.3469" fill="none" id="AgentSearch-to-SvcAgent" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2572.39,295.3469,2576.39,286.3469,2572.39,290.3469,2568.39,286.3469,2572.39,295.3469" style="stroke:#181818;stroke-width:1;"/></g><!--link AgentDetail to SvcAgent--><g class="link" data-entity-1="ent0005" data-entity-2="ent0016" data-link-type="dependency" data-source-line="62" id="lnk46"><path d="M3059,220.6269 C3059,240.0969 3059,268.0969 3059,268.0969 C3059,268.0969 2519.61,268.0969 2519.61,268.0969 C2519.61,268.0969 2519.61,276.4869 2519.61,289.0869" fill="none" id="AgentDetail-to-SvcAgent" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2519.61,295.0869,2523.61,286.0869,2519.61,290.0869,2515.61,286.0869,2519.61,295.0869" style="stroke:#181818;stroke-width:1;"/></g><!--link DossierSearch to SvcDossier--><g class="link" data-entity-1="ent0006" data-entity-2="ent0017" data-link-type="dependency" data-source-line="63" id="lnk47"><path d="M2465.17,203.0969 C2455.17,203.0969 2448.58,203.0969 2448.58,203.0969 C2448.58,203.0969 2448.58,314.0969 2448.58,314.0969 C2448.58,314.0969 2447.83,314.0969 2437.81,314.0969" fill="none" id="DossierSearch-to-SvcDossier" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2431.81,314.0969,2440.81,318.0969,2436.81,314.0969,2440.81,310.0969,2431.81,314.0969" style="stroke:#181818;stroke-width:1;"/></g><!--link DossierDetail to SvcDossier--><g class="link" data-entity-1="ent0007" data-entity-2="ent0017" data-link-type="dependency" data-source-line="64" id="lnk48"><path d="M2325.75,220.9169 C2325.75,241.5869 2325.75,268.7269 2325.75,289.2669" fill="none" id="DossierDetail-to-SvcDossier" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2325.75,295.2669,2329.75,286.2669,2325.75,290.2669,2321.75,286.2669,2325.75,295.2669" style="stroke:#181818;stroke-width:1;"/></g><!--link DossierSearchMC to SvcDossier--><g class="link" data-entity-1="ent0008" data-entity-2="ent0017" data-link-type="dependency" data-source-line="65" id="lnk49"><path d="M2761.99,220.8769 C2761.99,237.1069 2761.99,258.0969 2761.99,258.0969 C2761.99,258.0969 2378.25,258.0969 2378.25,258.0969 C2378.25,258.0969 2378.25,272.9669 2378.25,289.1069" fill="none" id="DossierSearchMC-to-SvcDossier" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2378.25,295.1069,2382.25,286.1069,2378.25,290.1069,2374.25,286.1069,2378.25,295.1069" style="stroke:#181818;stroke-width:1;"/></g><!--link SeanceSearch to SvcSeance--><g class="link" data-entity-1="ent0009" data-entity-2="ent0018" data-link-type="dependency" data-source-line="66" id="lnk50"><path d="M2143,220.9169 C2143,241.5869 2143,268.7269 2143,289.2669" fill="none" id="SeanceSearch-to-SvcSeance" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2143,295.2669,2147,286.2669,2143,290.2669,2139,286.2669,2143,295.2669" style="stroke:#181818;stroke-width:1;"/></g><!--link SeanceAffect to SvcSeance--><g class="link" data-entity-1="ent0010" data-entity-2="ent0018" data-link-type="dependency" data-source-line="67" id="lnk51"><path d="M2013.44,203.0969 C2026.84,203.0969 2036.13,203.0969 2036.13,203.0969 C2036.13,203.0969 2036.13,314.0969 2036.13,314.0969 C2036.13,314.0969 2039.43,314.0969 2052.53,314.0969" fill="none" id="SeanceAffect-to-SvcSeance" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2058.53,314.0969,2049.53,310.0969,2053.53,314.0969,2049.53,318.0969,2058.53,314.0969" style="stroke:#181818;stroke-width:1;"/></g><!--link Extractions to SvcExtract--><g class="link" data-entity-1="ent0011" data-entity-2="ent0019" data-link-type="dependency" data-source-line="68" id="lnk52"><path d="M1786.39,203.0969 C1802,203.0969 1812.83,203.0969 1812.83,203.0969 C1812.83,203.0969 1812.83,314.0969 1812.83,314.0969 C1812.83,314.0969 1816.1,314.0969 1829.42,314.0969" fill="none" id="Extractions-to-SvcExtract" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1835.42,314.0969,1826.42,310.0969,1830.42,314.0969,1826.42,318.0969,1835.42,314.0969" style="stroke:#181818;stroke-width:1;"/></g><!--link Import to SvcImport--><g class="link" data-entity-1="ent0012" data-entity-2="ent0020" data-link-type="dependency" data-source-line="69" id="lnk53"><path d="M1477.37,220.8869 C1477.37,245.5769 1477.37,286.0969 1477.37,286.0969 C1477.37,286.0969 1711.71,286.0969 1711.71,286.0969 C1711.71,286.0969 1711.71,284.1269 1711.71,289.0969" fill="none" id="Import-to-SvcImport" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1711.71,295.0969,1715.71,286.0969,1711.71,290.0969,1707.71,286.0969,1711.71,295.0969" style="stroke:#181818;stroke-width:1;"/></g><!--link RefBalise to SvcRef--><g class="link" data-entity-1="ent0013" data-entity-2="ent0021" data-link-type="dependency" data-source-line="70" id="lnk54"><path d="M1266.64,220.9169 C1266.64,241.5869 1266.64,268.7269 1266.64,289.2669" fill="none" id="RefBalise-to-SvcRef" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1266.64,295.2669,1270.64,286.2669,1266.64,290.2669,1262.64,286.2669,1266.64,295.2669" style="stroke:#181818;stroke-width:1;"/></g><!--link RefMotCle to SvcRef--><g class="link" data-entity-1="ent0014" data-entity-2="ent0021" data-link-type="dependency" data-source-line="71" id="lnk55"><path d="M1018,220.7569 C1018,252.5069 1018,314.0969 1018,314.0969 C1018,314.0969 1112.6,314.0969 1192.77,314.0969" fill="none" id="RefMotCle-to-SvcRef" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1198.77,314.0969,1189.77,310.0969,1193.77,314.0969,1189.77,318.0969,1198.77,314.0969" style="stroke:#181818;stroke-width:1;"/></g><!--link SvcAgent to DaoAgent--><g class="link" data-entity-1="ent0016" data-entity-2="ent0025" data-link-type="dependency" data-source-line="74" id="lnk56"><path d="M2527.32,332.1369 C2527.32,353.9169 2527.32,387.0969 2527.32,387.0969 C2527.32,387.0969 2304.9,387.0969 2304.9,387.0969 C2304.9,387.0969 2304.9,390.8369 2304.9,400.4369" fill="none" id="SvcAgent-to-DaoAgent" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2304.9,406.4369,2308.9,397.4369,2304.9,401.4369,2300.9,397.4369,2304.9,406.4369" style="stroke:#181818;stroke-width:1;"/></g><!--link SvcDossier to DaoDossier--><g class="link" data-entity-1="ent0017" data-entity-2="ent0026" data-link-type="dependency" data-source-line="75" id="lnk57"><path d="M2262.18,314.0969 C2251.54,314.0969 2244.29,314.0969 2244.29,314.0969 C2244.29,314.0969 2244.29,425.0969 2244.29,425.0969 C2244.29,425.0969 2237.48,425.0969 2221.97,425.0969" fill="none" id="SvcDossier-to-DaoDossier" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2215.97,425.0969,2224.97,429.0969,2220.97,425.0969,2224.97,421.0969,2215.97,425.0969" style="stroke:#181818;stroke-width:1;"/></g><!--link SvcSeance to DaoSeance--><g class="link" data-entity-1="ent0018" data-entity-2="ent0027" data-link-type="dependency" data-source-line="76" id="lnk58"><path d="M2066.09,332.2169 C2066.09,352.8869 2066.09,380.0269 2066.09,400.5669" fill="none" id="SvcSeance-to-DaoSeance" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2066.09,406.5669,2070.09,397.5669,2066.09,401.5669,2062.09,397.5669,2066.09,406.5669" style="stroke:#181818;stroke-width:1;"/></g><!--link SvcExtract to DaoExtract--><g class="link" data-entity-1="ent0019" data-entity-2="ent0028" data-link-type="dependency" data-source-line="77" id="lnk59"><path d="M1883.59,332.2169 C1883.59,352.8869 1883.59,380.0269 1883.59,400.5669" fill="none" id="SvcExtract-to-DaoExtract" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1883.59,406.5669,1887.59,397.5669,1883.59,401.5669,1879.59,397.5669,1883.59,406.5669" style="stroke:#181818;stroke-width:1;"/></g><!--link SvcImport to DaoImport--><g class="link" data-entity-1="ent0020" data-entity-2="ent0029" data-link-type="dependency" data-source-line="78" id="lnk60"><path d="M1719,332.2169 C1719,352.8869 1719,380.0269 1719,400.5669" fill="none" id="SvcImport-to-DaoImport" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1719,406.5669,1723,397.5669,1719,401.5669,1715,397.5669,1719,406.5669" style="stroke:#181818;stroke-width:1;"/></g><!--link SvcRef to DaoRef--><g class="link" data-entity-1="ent0021" data-entity-2="ent0030" data-link-type="dependency" data-source-line="79" id="lnk61"><path d="M1296,332.0069 C1296,363.6769 1296,425.0969 1296,425.0969 C1296,425.0969 1421.09,425.0969 1502.25,425.0969" fill="none" id="SvcRef-to-DaoRef" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1508.25,425.0969,1499.25,421.0969,1503.25,425.0969,1499.25,429.0969,1508.25,425.0969" style="stroke:#181818;stroke-width:1;"/></g><!--link DaoAgent to DB--><g class="link" data-entity-1="ent0025" data-entity-2="ent0042" data-link-type="dependency" data-source-line="82" id="lnk62"><path d="M2299,443.3269 C2299,462.9169 2299,491.0969 2299,491.0969 C2299,491.0969 1985.17,491.0969 1985.17,491.0969 C1985.17,491.0969 1985.17,496.0169 1985.17,507.1069" fill="none" id="DaoAgent-to-DB" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1985.17,513.1069,1989.17,504.1069,1985.17,508.1069,1981.17,504.1069,1985.17,513.1069" style="stroke:#181818;stroke-width:1;"/></g><!--link DaoDossier to DB--><g class="link" data-entity-1="ent0026" data-entity-2="ent0042" data-link-type="dependency" data-source-line="83" id="lnk63"><path d="M2156.35,443.4169 C2156.35,475.2869 2156.35,537.0969 2156.35,537.0969 C2156.35,537.0969 2063.68,537.0969 2000.86,537.0969" fill="none" id="DaoDossier-to-DB" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1994.86,537.0969,2003.86,541.0969,1999.86,537.0969,2003.86,533.0969,1994.86,537.0969" style="stroke:#181818;stroke-width:1;"/></g><!--link DaoSeance to DB--><g class="link" data-entity-1="ent0027" data-entity-2="ent0042" data-link-type="dependency" data-source-line="84" id="lnk64"><path d="M1975.97,443.5169 C1975.97,462.6969 1975.97,486.6269 1975.97,507.2469" fill="none" id="DaoSeance-to-DB" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1975.97,513.2469,1979.97,504.2469,1975.97,508.2469,1971.97,504.2469,1975.97,513.2469" style="stroke:#181818;stroke-width:1;"/></g><!--link DaoExtract to DB--><g class="link" data-entity-1="ent0028" data-entity-2="ent0042" data-link-type="dependency" data-source-line="85" id="lnk65"><path d="M1912.48,443.5169 C1912.48,462.6969 1912.48,486.6269 1912.48,507.2469" fill="none" id="DaoExtract-to-DB" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1912.48,513.2469,1916.48,504.2469,1912.48,508.2469,1908.48,504.2469,1912.48,513.2469" style="stroke:#181818;stroke-width:1;"/></g><!--link DaoImport to DB--><g class="link" data-entity-1="ent0029" data-entity-2="ent0042" data-link-type="dependency" data-source-line="86" id="lnk66"><path d="M1719,443.5169 C1719,473.4869 1719,529.0969 1719,529.0969 C1719,529.0969 1820.86,529.0969 1887.23,529.0969" fill="none" id="DaoImport-to-DB" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1893.23,529.0969,1884.23,525.0969,1888.23,529.0969,1884.23,533.0969,1893.23,529.0969" style="stroke:#181818;stroke-width:1;"/></g><!--link DaoRef to DB--><g class="link" data-entity-1="ent0030" data-entity-2="ent0042" data-link-type="dependency" data-source-line="87" id="lnk67"><path d="M1571,443.5169 C1571,477.0369 1571,544.0969 1571,544.0969 C1571,544.0969 1785.32,544.0969 1887.31,544.0969" fill="none" id="DaoRef-to-DB" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1893.31,544.0969,1884.31,540.0969,1888.31,544.0969,1884.31,548.0969,1893.31,544.0969" style="stroke:#181818;stroke-width:1;"/></g><!--link SvcDossier to UtilCerbere--><g class="link" data-entity-1="ent0017" data-entity-2="ent0032" data-link-type="dependency" data-source-line="90" id="lnk68"><path d="M2267.85,295.0469 C2267.85,273.2769 2267.85,240.0969 2267.85,240.0969 C2267.85,240.0969 325,240.0969 325,240.0969 C325,240.0969 325,159.7269 325,120.9269" fill="none" id="SvcDossier-to-UtilCerbere" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="325,114.9269,321,123.9269,325,119.9269,329,123.9269,325,114.9269" style="stroke:#181818;stroke-width:1;"/></g><!--link SvcDossier to ESPlugin--><g class="link" data-entity-1="ent0017" data-entity-2="ent0039" data-link-type="dependency" data-source-line="91" id="lnk69"><path d="M2415.09,331.8469 C2415.09,340.9669 2415.09,350.0969 2415.09,350.0969 C2415.09,350.0969 2606.48,350.0969 2606.48,350.0969 C2606.48,350.0969 2606.48,464.5869 2606.48,511.6569" fill="none" id="SvcDossier-to-ESPlugin" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2606.48,517.6569,2610.48,508.6569,2606.48,512.6569,2602.48,508.6569,2606.48,517.6569" style="stroke:#181818;stroke-width:1;"/></g><!--link SvcExtract to BirtMgr--><g class="link" data-entity-1="ent0019" data-entity-2="ent0040" data-link-type="dependency" data-source-line="92" id="lnk70"><path d="M1949.05,332.2269 C1949.05,373.3169 1949.05,468.0969 1949.05,468.0969 C1949.05,468.0969 2477,468.0969 2477,468.0969 C2477,468.0969 2477,491.4169 2477,511.5769" fill="none" id="SvcExtract-to-BirtMgr" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2477,517.5769,2481,508.5769,2477,512.5769,2473,508.5769,2477,517.5769" style="stroke:#181818;stroke-width:1;"/></g><!--link DaoDossier to SharedDB--><g class="link" data-entity-1="ent0026" data-entity-2="ent0041" data-link-type="dependency" data-source-line="93" id="lnk71"><path d="M2210.05,443.5169 C2210.05,464.1869 2210.05,491.3169 2210.05,511.8669" fill="none" id="DaoDossier-to-SharedDB" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="2210.05,517.8669,2214.05,508.8669,2210.05,512.8669,2206.05,508.8669,2210.05,517.8669" style="stroke:#181818;stroke-width:1;"/></g><!--link FilterSession to SSO--><g class="link" data-entity-1="ent0033" data-entity-2="ent0043" data-link-type="dependency" data-source-line="94" id="lnk72"><path d="M519.49,115.0269 C519.49,145.5769 519.49,203.0969 519.49,203.0969 C519.49,203.0969 668.07,203.0969 756.23,203.0969" fill="none" id="FilterSession-to-SSO" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="762.23,203.0969,753.23,199.0969,757.23,203.0969,753.23,207.0969,762.23,203.0969" style="stroke:#181818;stroke-width:1;"/></g><!--link FilterSession to Accueil--><g class="link" data-entity-1="ent0033" data-entity-2="ent0003" data-link-type="dependency" data-source-line="97" id="lnk73"><path d="M464.51,114.8369 C464.51,128.6169 464.51,145.0969 464.51,145.0969 C464.51,145.0969 3419.95,145.0969 3419.95,145.0969 C3419.95,145.0969 3419.95,161.1569 3419.95,177.8769" fill="none" id="FilterSession-to-Accueil" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/><polygon fill="#181818" points="3419.95,183.8769,3423.95,174.8769,3419.95,178.8769,3415.95,174.8769,3419.95,183.8769" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="66.7837" x="1879.49" y="141.1638">intercepte</text></g><!--link FilterEnc to Accueil--><g class="link" data-entity-1="ent0034" data-entity-2="ent0003" data-link-type="dependency" data-source-line="98" id="lnk74"><path d="M730.5,97.0969 C1137.31,97.0969 3458.05,97.0969 3458.05,97.0969 C3458.05,97.0969 3458.05,147.8269 3458.05,177.9669" fill="none" id="FilterEnc-to-Accueil" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/><polygon fill="#181818" points="3458.05,183.9669,3462.05,174.9669,3458.05,178.9669,3454.05,174.9669,3458.05,183.9669" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="66.7837" x="2070.71" y="93.1638">intercepte</text></g><!--link DossierSearchMC to GMN75--><g class="link" data-entity-1="ent0008" data-entity-2="ent0076" data-link-type="association" data-source-line="101" id="lnk77"><path d="M2896.99,220.7869 C2896.99,233.8769 2896.99,249.0969 2896.99,249.0969 C2896.99,249.0969 3630,249.0969 3630,249.0969 C3630,249.0969 3630,240.2969 3630,230.3269" fill="none" id="DossierSearchMC-GMN75" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/></g><!--link SvcExtract to GMN78--><g class="link" data-entity-1="ent0019" data-entity-2="ent0079" data-link-type="association" data-source-line="107" id="lnk80"><path d="M1995.47,332.0769 C1995.47,348.2169 1995.47,369.0969 1995.47,369.0969 C1995.47,369.0969 2398.65,369.0969 2398.65,369.0969 C2398.65,369.0969 2398.65,388.5069 2398.65,404.4269" fill="none" id="SvcExtract-GMN78" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/></g><?plantuml-src TLRDRXit4BxlKn0kqCO76GdQKu06i7vS2B1ZrziMA88SAEveHPWYDoHNjL7q6NBFgSVe3NhVD-aBz1Kw_5jnfPK1mT9y7sU-6NA6D4zSDbJJBM5gsoW9qfRsHG3Hm2oLjO32z1J19TYN1eZITgEAmdABp7Bvk5Y-NvHaGdvhWSoS7qEbDUJLx8V9xVUNHT5GzaHh81SprR8Da0VTxGs6efOhYJGbhLP2W3QN5-IRMrvlx5IWhpyBWdyVhXbhWOjhvkWV2JKaMY9Sewj7GCSQFpdB0ILGD6VCELWwT7Qm1jfS6SD1ZxcCKEuqcaxS3kpZZk-KDJC1QtCkmjqiBCHVai6Oe83aUeBbUhrsE-Xu9-o01VRYsMhg2Q_V1EBLrPlNsP83mOGLIznVRMyusw3CZ1ZiWJEbWfjHlO-m3c0WOWMm0E_v3cXxKa7a1hpuw_GCbQ1td44wBpzf0DaV6BUZ9Z8C2XCX-ntpo60pHcaHomiwoWlGSIL7gH7EQpZAoyk81G2DWZc8KIxYWOWrqVfSCWbCrErMoN6UGyPgZUtMVNL7Kyfk3zZOy-lxlbD_1o7K7yFIpwaAXvcgaOfdw5YXC_XCVJF6M5ap-4mrCuQhOPxohvOBZWTHOvxVahBRirPps-qF1us-f6Hde5VeqYtnxjoNQ8iPeHiSchWjcAQIDrnOq9uQlaPxJ50oLN5Pdx0GYEwiHjn5CNsyO8jwp6xnx18-g36x0CL-7KX5xyFMMafCjDP-QlZE1utYK-OFN3wbp1VbOhk2ge8gZ9vqdXv4M_CuEChm8qu4hkqTbHX6zsVEs-gq-HkgePfFyJAGa4siQ7OwAshfYXeK-g2ChJMKFzzU-6sSHeapfQaec51jXOSNTwBxgd5KbFUUXl-pL8hYEt8ZskUZssZoBesM8juoPE9iVNzajqf2mXdFxf4XC1Zf2KedVt1Dd07JPN0CvyC_OR5byab_16MDb93KHQ5TaZKsJp-oazsrJ3-RSsEgQ2oWgoLEYY8LmbFxaN388zdxj9BK1AISUg49IBfxiGc8qeEkPCmbeYulRreaGO7bVmzqUKkknni6Ghmb5-0DVUIfYvhDbUFKyx5n1FLDT9HxQfqZiNst3CPBWCfxdpm2JiAGS7NrBhsfo5l29K8C6Wj5Fu3EKmgfBBuNNLiHjHvvl_pxvU___lcCZqE1juUcArU7RayQNEQ7iO2toEeV2mGVcsIBBwC94zYO2D4TC7oVIaPndGnjYgrVWAo82nubh9IrQkiq3AxR67xUxHjSuBUHuKJddreVTxfy_8MyMdD9AY2cRVmcBfZWZO7Byo6owHO3B0GrbZCJkX6sAwe_jTqU2NSANKESb-H7h9N1uCGqM8Z9IbFqqiVv7m00?></g></svg>
+</div>
+
+<hr>
+
+<h3>1.2 Fiches composants détaillées</h3>
+
+<h4>COMP-001 : DossierRechercheMotsClefsAction</h4>
+
+<p><table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**Responsabilité**</td>
+<td>Recherche avancée de dossiers par mots-clés avec autocomplétion et filtres facettes</td>
+</tr>
+<tr>
+<td>**Technologie**</td>
+<td>Java 7, Struts 2.5.x, Vertigo Dynamo</td>
+</tr>
+<tr>
+<td>**Package**</td>
+<td>`i2.application.sireines.controller.dossiers`</td>
+</tr>
+<tr>
+<td>**Type**</td>
+<td>Action Struts (Controller)</td>
+</tr>
+<tr>
+<td>**Taille**</td>
+<td>8 786 octets (classe complexe)</td>
+</tr>
+</tbody>
+</table>##### Interfaces exposées</p>
+
+<p><table>
+<thead>
+<tr>
+<th>Méthode</th>
+<th>Entrée</th>
+<th>Sortie</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`doSearch()`</td>
+<td>Formulaire recherche (mots-clés, filtres)</td>
+<td>Liste dossiers paginée</td>
+<td>Recherche principale</td>
+</tr>
+<tr>
+<td>`loadFacets()`</td>
+<td>Critères de recherche</td>
+<td>Facettes dynamiques</td>
+<td>Filtrage par thésaurus</td>
+</tr>
+<tr>
+<td>`autocomplete()`</td>
+<td>Fragment texte</td>
+<td>Suggestions mots-clés</td>
+<td>Autocomplétion AJAX</td>
+</tr>
+</tbody>
+</table>##### Dépendances internes
+<ul>
+<li><code>DossiersServices</code> (service métier)</li>
+<li><code>DossierMotsClefsSearchLoader</code> (loader spécialisé)</li>
+<li><code>AbstractSireinesFacetActionSupport</code> (classe parent)</li>
+</ul></p>
+
+<p>##### Dépendances externes</p>
+
+<p><table>
+<thead>
+<tr>
+<th>Librairie</th>
+<th>Version</th>
+<th>Usage</th>
+<th>Statut sécurité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Struts 2</td>
+<td>2.5.x</td>
+<td>MVC, injection dépendances</td>
+<td>🟡 CVE récurrentes</td>
+</tr>
+<tr>
+<td>Vertigo Dynamo</td>
+<td>-</td>
+<td>ORM, recherche facettée</td>
+<td>🟢 Interne</td>
+</tr>
+<tr>
+<td>Elasticsearch</td>
+<td>7.x (embedded)</td>
+<td>Indexation full-text</td>
+<td>🟡 EOL Java 7</td>
+</tr>
+</tbody>
+</table>##### 🔴 Vulnérabilités critiques identifiées</p>
+
+<p><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Type</th>
+<th>Description</th>
+<th>Localisation</th>
+<th>Risque</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**VULN-DOSS-001**</td>
+<td>Injection SQL</td>
+<td>Concaténation de chaînes dans `dossiersDao.ksp` (17 913 octets) - requêtes dynamiques sans paramétrage</td>
+<td>`resources/i2/application/sireines/services/dossiers/dossiersDao.ksp`</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>**VULN-DOSS-002**</td>
+<td>XSS</td>
+<td>Absence d'encodage HTML sur les résultats de recherche retournés en JSON</td>
+<td>Méthode `doSearch()`</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>**VULN-DOSS-003**</td>
+<td>Fuite info</td>
+<td>Messages d'erreur détaillés exposés en cas d'exception Elasticsearch</td>
+<td>Gestion erreurs</td>
+<td>🟡 Majeur</td>
+</tr>
+</tbody>
+</table>##### Dette technique</p>
+
+<p><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Description</th>
+<th>Impact</th>
+<th>Coût</th>
+<th>Priorité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DT-DOSS-001</td>
+<td>Classe de 8 786 octets, violation SRP (Single Responsibility)</td>
+<td>Maintenance difficile, tests complexes</td>
+<td>3j</td>
+<td>🟡 Moyenne</td>
+</tr>
+<tr>
+<td>DT-DOSS-002</td>
+<td>Héritage profond `AbstractSireinesFacetActionSupport` (> 11 000 octets)</td>
+<td>Couplage fort, difficulté évolution</td>
+<td>5j</td>
+<td>🟡 Moyenne</td>
+</tr>
+</tbody>
+</table>---</p>
+
+<h4>COMP-002 : ExtractionsServicesImpl</h4>
+
+<p><table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**Responsabilité**</td>
+<td>Génération de rapports statistiques via BIRT, export CSV/PDF</td>
+</tr>
+<tr>
+<td>**Technologie**</td>
+<td>Java 7, BIRT Runtime, JDBC</td>
+</tr>
+<tr>
+<td>**Package**</td>
+<td>`i2.application.sireines.service.extractions`</td>
+</tr>
+<tr>
+<td>**Type**</td>
+<td>Service métier</td>
+</tr>
+<tr>
+<td>**Taille**</td>
+<td>14 652 octets (service critique)</td>
+</tr>
+</tbody>
+</table>##### 🔴 Vulnérabilités critiques identifiées</p>
+
+<p><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Type</th>
+<th>Description</th>
+<th>Risque</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**VULN-EXT-001**</td>
+<td>Path Traversal</td>
+<td>Chemin `MODEL_HOME` en dur `/usr/local/tomcat/webapps/ROOT/report/` - injection possible via nom rapport</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>**VULN-EXT-002**</td>
+<td>RCE potentielle</td>
+<td>BIRT permet l'exécution de scripts JavaScript dans les templates .rptdesign</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>**VULN-EXT-003**</td>
+<td>SSRF</td>
+<td>Connexions JDBC définies dans les rapports BIRT, possible accès base non contrôlé</td>
+<td>🟡 Majeur</td>
+</tr>
+</tbody>
+</table>##### Dette technique - 🔴 Critique</p>
+
+<p><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Description</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**DT-EXT-001**</td>
+<td>BIRT **abandonné par Eclipse** (projet archivé)</td>
+<td>Aucune correction de sécurité future, blocage migration Java</td>
+</tr>
+<tr>
+<td>**DT-EXT-002**</td>
+<td>Paramètres BIRT en dur dans `ExtractionsServicesImpl.java`</td>
+<td>Configuration non externalisée</td>
+</tr>
+<tr>
+<td>**DT-EXT-003**</td>
+<td>Fichiers `.rptdesign` contiennent credentials JDBC en clair</td>
+<td>Fuite credentials si accès fichiers</td>
+</tr>
+</tbody>
+</table>---</p>
+
+<h4>COMP-003 : ImportsServicesImpl</h4>
+
+<p><table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**Responsabilité**</td>
+<td>Import de fichiers agents (CSV/Excel), validation et reprise en base</td>
+</tr>
+<tr>
+<td>**Technologie**</td>
+<td>Java 7, Apache POI (probable), JDBC batch</td>
+</tr>
+<tr>
+<td>**Package**</td>
+<td>`i2.application.sireines.service.imports`</td>
+</tr>
+<tr>
+<td>**Type**</td>
+<td>Service métier</td>
+</tr>
+<tr>
+<td>**Taille**</td>
+<td>5 101 octets</td>
+</tr>
+</tbody>
+</table>##### 🔴 Vulnérabilités critiques identifiées</p>
+
+<p><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Type</th>
+<th>Description</th>
+<th>Risque</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**VULN-IMP-001**</td>
+<td>Upload sans restriction</td>
+<td>Aucune validation du type MIME réelle, extension seule</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>**VULN-IMP-002**</td>
+<td>XXE potentielle</td>
+<td>Si parsing XML/Excel (OOXML), entités externes non désactivées</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>**VULN-IMP-003**</td>
+<td>Injection SQL batch</td>
+<td>Insertion en masse via `SAS_IMPORT` puis procédure reprise</td>
+<td>🟡 Majeur</td>
+</tr>
+<tr>
+<td>**VULN-IMP-004**</td>
+<td>DoS</td>
+<td>Absence de limite taille fichier, risque saturation mémoire</td>
+<td>🟡 Majeur</td>
+</tr>
+</tbody>
+</table>---</p>
+
+<h4>COMP-004 : CerbereUtil + SireinesSessionFilter</h4>
+
+<p><table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**Responsabilité**</td>
+<td>Intégration SSO Cerbère, gestion des sessions utilisateurs</td>
+</tr>
+<tr>
+<td>**Technologie**</td>
+<td>Java 7, Servlet Filter API, Cerbère Client 4.7.4</td>
+</tr>
+<tr>
+<td>**Package**</td>
+<td>`i2.application.sireines.util`, `i2.application.sireines.filter`</td>
+</tr>
+</tbody>
+</table>##### Dépendances externes critiques</p>
+
+<p><table>
+<thead>
+<tr>
+<th>Librairie</th>
+<th>Version</th>
+<th>CVE connues</th>
+<th>Statut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cerbère Client</td>
+<td>4.7.4</td>
+<td>Inconnues (librairie interne État)</td>
+<td>🟡 Opacité</td>
+</tr>
+<tr>
+<td>Servlet API</td>
+<td>3.0</td>
+<td>Dépend du conteneur</td>
+<td>🟢 Standard</td>
+</tr>
+</tbody>
+</table>##### 🟡 Vulnérabilités identifiées</p>
+
+<p><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Type</th>
+<th>Description</th>
+<th>Risque</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**VULN-AUTH-001**</td>
+<td>Session fixation</td>
+<td>Absence de régénération ID session post-authentification</td>
+<td>🟡 Majeur</td>
+</tr>
+<tr>
+<td>**VULN-AUTH-002**</td>
+<td>Timeout non configuré</td>
+<td>Durée de session par défaut conteneur, non forcée métier</td>
+<td>🟡 Majeur</td>
+</tr>
+<tr>
+<td>**VULN-AUTH-003**</td>
+<td>Logging insuffisant</td>
+<td>Absence de log des échecs d'authentification pour détection intrusion</td>
+<td>🟡 Majeur</td>
+</tr>
+</tbody>
+</table>---</p>
+
+<h4>COMP-005 : ESEmbeddedSearchServicesPlugin</h4>
+
+<p><table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**Responsabilité**</td>
+<td>Plugin Vertigo pour intégration Elasticsearch en mode embedded</td>
+</tr>
+<tr>
+<td>**Technologie**</td>
+<td>Java 7, Elasticsearch 7.x, Vertigo Dynamo</td>
+</tr>
+<tr>
+<td>**Package**</td>
+<td>`io.vertigo.dynamo.plugins.search.elasticsearch.embedded`</td>
+</tr>
+<tr>
+<td>**Type**</td>
+<td>Plugin d'intégration</td>
+</tr>
+</tbody>
+</table>##### 🔴 Vulnérabilités critiques</p>
+
+<p><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Type</th>
+<th>Description</th>
+<th>Risque</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**VULN-ES-001**</td>
+<td>Elasticsearch non sécurisé</td>
+<td>Mode embedded = pas d'authentification, accès local uniquement par confiance réseau</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>**VULN-ES-002**</td>
+<td>Java 7 incompatible</td>
+<td>ES 7.x requiert Java 8+, risque instabilité/sécurité</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>**VULN-ES-003**</td>
+<td>Split-brain possible</td>
+<td>Pas de cluster ES dédié, perte données index si crash</td>
+<td>🟡 Majeur</td>
+</tr>
+</tbody>
+</table>---</p>
+
+<h2>2. Matrice de vulnérabilités STRIDE {#stride}</h2>
+
+<p><table>
+<thead>
+<tr>
+<th>Menace</th>
+<th>Composant affecté</th>
+<th>Description</th>
+<th>Niveau risque</th>
+<th>Mitigation existante</th>
+<th>Recommandation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**S**poofing</td>
+<td>`CerbereUtil`</td>
+<td>Usurpation identité si token Cerbère pas validé signature</td>
+<td>🔴 Critique</td>
+<td>Validation Cerbère côté serveur</td>
+<td>Vérifier validation certificat X.509</td>
+</tr>
+<tr>
+<td>**S**poofing</td>
+<td>`DossierRechercheAction`</td>
+<td>Falsification requêtes AJAX par modification paramètres</td>
+<td>🟡 Majeur</td>
+<td>Filtre session</td>
+<td>Ajouter tokens CSRF</td>
+</tr>
+<tr>
+<td>**T**ampering</td>
+<td>`ImportsServicesImpl`</td>
+<td>Modification fichier upload avant traitement</td>
+<td>🔴 Critique</td>
+<td>Aucune</td>
+<td>Hash fichier côté client + vérification</td>
+</tr>
+<tr>
+<td>**T**ampering</td>
+<td>`ExtractionsServicesImpl`</td>
+<td>Injection code dans template BIRT</td>
+<td>🔴 Critique</td>
+<td>Aucune</td>
+<td>Sandbox BIRT, review templates</td>
+</tr>
+<tr>
+<td>**R**epudiation</td>
+<td>`AbstractSireinesActionSupport`</td>
+<td>Actions utilisateurs non tracées individuellement</td>
+<td>🟡 Majeur</td>
+<td>Log standard</td>
+<td>Audit trail métier obligatoire</td>
+</tr>
+<tr>
+<td>**I**nformation Disclosure</td>
+<td>`DossiersServicesImpl`</td>
+<td>Erreurs SQL détaillées en production</td>
+<td>🔴 Critique</td>
+<td>Filtre erreurs générique</td>
+<td>Masquer stack traces</td>
+</tr>
+<tr>
+<td>**I**nformation Disclosure</td>
+<td>`BirtManagerImpl`</td>
+<td>Chemins système exposés dans erreurs</td>
+<td>🟡 Majeur</td>
+<td>Aucune</td>
+<td>Sanitization messages erreur</td>
+</tr>
+<tr>
+<td>**D**enial of Service</td>
+<td>`DossierRechercheMotsClefsAction`</td>
+<td>Recherche lourde sans limite résultats</td>
+<td>🟡 Majeur</td>
+<td>Pagination</td>
+<td>Rate limiting + timeout</td>
+</tr>
+<tr>
+<td>**D**enial of Service</td>
+<td>`ImportsServicesImpl`</td>
+<td>Fichier trop volumineux</td>
+<td>🔴 Critique</td>
+<td>Aucune</td>
+<td>Limite taille + streaming</td>
+</tr>
+<tr>
+<td>**E**levation of Privilege</td>
+<td>`AbstractSireinesActionSupport`</td>
+<td>Vérification rôles dans chaque méthode, risque oubli</td>
+<td>🔴 Critique</td>
+<td>Annotations Struts</td>
+<td>Centraliser autorisation + tests</td>
+</tr>
+<tr>
+<td>**E**levation of Privilege</td>
+<td>`MotCleNiveauDetailAction`</td>
+<td>Accès référentiel sensible sans contrôle granularité</td>
+<td>🟡 Majeur</td>
+<td>Rôle admin global</td>
+<td>RBAC fin sur référentiels</td>
+</tr>
+</tbody>
+</table>---</p>
+
+<h2>3. Inventaire des dépendances et vulnérabilités {#dependances}</h2>
+
+<h3>3.1 Dépendances Maven (pom.xml sireines-web)</h3>
+
+<p><table>
+<thead>
+<tr>
+<th>Groupe</th>
+<th>Artifact</th>
+<th>Version utilisée</th>
+<th>Dernière version</th>
+<th>CVE connues</th>
+<th>CVSS</th>
+<th>Statut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fr.gouv.e2.cerbere</td>
+<td>cerbere-client</td>
+<td>4.7.4</td>
+<td>Inconnue (interne)</td>
+<td>N/A</td>
+<td>-</td>
+<td>🟡 Opacité</td>
+</tr>
+<tr>
+<td>fr.gouv.e2.sireines</td>
+<td>importfichiersirene</td>
+<td>0.1</td>
+<td>Interne</td>
+<td>N/A</td>
+<td>-</td>
+<td>🟡 Legacy</td>
+</tr>
+<tr>
+<td>fr.gouv.e2.sireines</td>
+<td>systemRoutines</td>
+<td>1.0</td>
+<td>Interne</td>
+<td>N/A</td>
+<td>-</td>
+<td>🟡 Legacy</td>
+</tr>
+<tr>
+<td>org.apache.struts</td>
+<td>struts2-core</td>
+<td>2.5.x (estimé)</td>
+<td>6.3.0.2</td>
+<td>CVE-2023-50164, CVE-2021-31805</td>
+<td>9.8</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>org.apache.struts</td>
+<td>struts2-spring-plugin</td>
+<td>2.5.x</td>
+<td>6.3.0.2</td>
+<td>Mêmes que core</td>
+<td>9.8</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>io.vertigo</td>
+<td>vertigo-dynamo</td>
+<td>-</td>
+<td>4.x</td>
+<td>N/A</td>
+<td>-</td>
+<td>🟡 EOL Java 7</td>
+</tr>
+<tr>
+<td>io.vertigo</td>
+<td>vertigo-vega</td>
+<td>-</td>
+<td>4.x</td>
+<td>N/A</td>
+<td>-</td>
+<td>🟡 EOL Java 7</td>
+</tr>
+<tr>
+<td>org.elasticsearch</td>
+<td>elasticsearch</td>
+<td>7.x (embedded)</td>
+<td>8.11.x</td>
+<td>CVE-2023-46673, CVE-2023-31419</td>
+<td>7.5</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>org.eclipse.birt</td>
+<td>birt-runtime</td>
+<td>4.8+</td>
+<td>Archivé</td>
+<td>Nombreuses CVE non corrigées</td>
+<td>-</td>
+<td>🔴 Abandonné</td>
+</tr>
+<tr>
+<td>org.postgresql</td>
+<td>postgresql</td>
+<td>42.x (estimé)</td>
+<td>42.7.1</td>
+<td>CVE-2024-1597</td>
+<td>8.5</td>
+<td>🟡 À vérifier</td>
+</tr>
+<tr>
+<td>javax.servlet</td>
+<td>servlet-api</td>
+<td>3.0.1</td>
+<td>4.0.1</td>
+<td>N/A</td>
+<td>-</td>
+<td>🟢 OK</td>
+</tr>
+<tr>
+<td>log4j</td>
+<td>log4j</td>
+<td>1.x ou 2.x</td>
+<td>2.22.1</td>
+<td>CVE-2021-44228 (Log4Shell)</td>
+<td>10.0</td>
+<td>🔴 Vérifier URGENT</td>
+</tr>
+</tbody>
+</table>### 3.2 Dépendances Frontend (analyse templates)</p>
+
+<p><table>
+<thead>
+<tr>
+<th>Librairie</th>
+<th>Version détectée</th>
+<th>Source</th>
+<th>CVE connues</th>
+<th>Risque</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bootstrap</td>
+<td>2.3.2 (estimé via CSS)</td>
+<td>`bootstrap.css`</td>
+<td>CVE-2018-14040, CVE-2018-14041, CVE-2018-14042</td>
+<td>🟡 XSS</td>
+</tr>
+<tr>
+<td>jQuery</td>
+<td>1.8+ (estimé)</td>
+<td>Templates FTL</td>
+<td>CVE-2020-11022, CVE-2020-11023</td>
+<td>🔴 XSS</td>
+</tr>
+<tr>
+<td>PIE (Progressive Internet Explorer)</td>
+<td>1.0</td>
+<td>`PIE.htc`</td>
+<td>N/A</td>
+<td>🟢 Obsolete (IE only)</td>
+</tr>
+</tbody>
+</table>---</p>
+
+<h2>4. Dettes techniques identifiées {#dette-technique}</h2>
+
+<p><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Localisation</th>
+<th>Description</th>
+<th>Impact</th>
+<th>Coût correction</th>
+<th>Priorité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**DT-001**</td>
+<td>Global</td>
+<td>**Java 7 End-of-Life depuis 2015**</td>
+<td>Aucun patch sécurité, blocage montée version dépendances</td>
+<td>20j+</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>**DT-002**</td>
+<td>`pom.xml`</td>
+<td>Struts 2 en version 2.5.x (EOL 2023)</td>
+<td>Vulnérabilités critiques non corrigées</td>
+<td>15j</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>**DT-003**</td>
+<td>`sireines-talend/reports/`</td>
+<td>40+ rapports BIRT (.rptdesign) avec credentials JDBC en dur</td>
+<td>Fuite credentials si exfiltration fichiers</td>
+<td>10j</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>**DT-004**</td>
+<td>`DossierRechercheMotsClefsAction.java`</td>
+<td>Classe monolithique 8 786 octets</td>
+<td>Maintenance impossible, tests unitaires absents</td>
+<td>5j</td>
+<td>🟡 Majeur</td>
+</tr>
+<tr>
+<td>**DT-005**</td>
+<td>`AbstractSireinesFacetActionSupport.java`</td>
+<td>Classe parent 11 492 octets avec logique métier</td>
+<td>Couplage fort, violation LSP</td>
+<td>8j</td>
+<td>🟡 Majeur</td>
+</tr>
+<tr>
+<td>**DT-006**</td>
+<td>`dossiersDao.ksp`</td>
+<td>17 913 octets de SQL procédural non testé</td>
+<td>Régressions silencieuses, injection SQL</td>
+<td>10j</td>
+<td>🔴 Critique</td>
+</tr>
+<tr>
+<td>**DT-007**</td>
+<td>`ESEmbeddedSearchServicesPlugin.java`</td>
+<td>Elasticsearch embarqué non clusterisé</td>
+<td>Perte données index, pas de HA</td>
+<td>5j</td>
+<td>🟡 Majeur</td>
+</tr>
+<tr>
+<td>**DT-008**</td>
+<td>`sireines-database/modele/`</td>
+<td>Modèle PowerDesigner (`.oom`, `.pdm`) non synchronisé avec code</td>
+<td>Divergence schéma BDD/code</td>
+<td>3j</td>
+<td>🟢 Mineur</td>
+</tr>
+<tr>
+<td>**DT-009**</td>
+<td>`web.xml`</td>
+<td>Configuration Servlet 2.5, pas de security constraints déclaratives</td>
+<td>Sécurisation URL manquante</td>
+<td>2j</td>
+<td>🟡 Majeur</td>
+</tr>
+<tr>
+<td>**DT-010**</td>
+<td>Global</td>
+<td>Absence de tests automatisés (JUnit, Selenium)</td>
+<td>Régressions en production</td>
+<td>30j+</td>
+<td>🔴 Critique</td>
+</tr>
+</tbody>
+</table>---</p>
+
+<h2>5. Recommandations de sécurité prioritaires {#recommandations}</h2>
+
+<h3>5.1 Court terme (0-3 mois) - 🔴 Urgent</h3>
+
+<p><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Action</th>
+<th>Responsable</th>
+<th>Vérification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**SEC-001**</td>
+<td>**Vérifier version Log4j** - Scanner `WEB-INF/lib` et `maven-dependencies/` pour détecter log4j-core < 2.16</td>
+<td>RSSI/Archi</td>
+<td>`find . -name "log4j-core*.jar"`</td>
+</tr>
+<tr>
+<td>**SEC-002**</td>
+<td>**Mettre à jour Struts 2** vers 6.3.0.2+ ou patcher CVE-2023-50164</td>
+<td>DevSecOps</td>
+<td>Test intrusion</td>
+</tr>
+<tr>
+<td>**SEC-003**</td>
+<td>**Externaliser credentials BDD** des rapports BIRT vers variables d'environnement</td>
+<td>DevOps</td>
+<td>Review templates</td>
+</tr>
+<tr>
+<td>**SEC-004**</td>
+<td>**Implémenter rate limiting** sur `DossierRechercheMotsClefsAction`</td>
+<td>Développeur</td>
+<td>Test charge</td>
+</tr>
+<tr>
+<td>**SEC-005**</td>
+<td>**Ajouter limite taille upload** dans `web.xml` et validation MIME réelle</td>
+<td>Développeur</td>
+<td>Test upload</td>
+</tr>
+</tbody>
+</table>### 5.2 Moyen terme (3-12 mois) - 🟡 Important</p>
+
+<p><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Action</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**SEC-006**</td>
+<td>Migration Java 7 → Java 11/17</td>
+<td>Blocage sécurité, EOL depuis 8 ans</td>
+</tr>
+<tr>
+<td>**SEC-007**</td>
+<td>Remplacement BIRT par JasperReports ou solution moderne</td>
+<td>Abandon Eclipse, CVE non corrigées</td>
+</tr>
+<tr>
+<td>**SEC-008**</td>
+<td>Migration Elasticsearch embedded → cluster dédié sécurisé (X-Pack)</td>
+<td>Authentification, chiffrement, HA</td>
+</tr>
+<tr>
+<td>**SEC-009**</td>
+<td>Implémentation CSRF tokens sur tous les formulaires</td>
+<td>Protection attaques replay</td>
+</tr>
+<tr>
+<td>**SEC-010**</td>
+<td>Audit trail métier complet (qui, quoi, quand)</td>
+<td>Conformité RGPD, répudiation</td>
+</tr>
+<tr>
+<td>**SEC-011**</td>
+<td>Scan SAST/DAST intégré à la CI/CD (SonarQube, OWASP ZAP)</td>
+<td>Détection précoce vulnérabilités</td>
+</tr>
+</tbody>
+</table>### 5.3 Long terme (> 12 mois) - 🟢 Stratégique</p>
+
+<p><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Action</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**SEC-012**</td>
+<td>Refactoring `DossierRechercheMotsClefsAction` en microservices</td>
+<td>Scalabilité, testabilité, maintenance</td>
+</tr>
+<tr>
+<td>**SEC-013**</td>
+<td>Migration Vertigo 3.x → 4.x (Java 11+)</td>
+<td>Support long terme, nouvelles fonctionnalités</td>
+</tr>
+<tr>
+<td>**SEC-014**</td>
+<td>Remplacement Struts 2 par Spring Boot + REST API</td>
+<td>Modernisation, sécurité, écosystème</td>
+</tr>
+<tr>
+<td>**SEC-015**</td>
+<td>Implémentation Zero Trust Architecture</td>
+<td>Authentification continue, moindre privilège</td>
+</tr>
+</tbody>
+</table>---</p>
+
+<h2>6. Schéma de flux de données sécurisé (DFD) {#dfd}</h2>
+
+<div class="diagram diagram-plantuml">
+<?plantuml 1.2026.1?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" preserveAspectRatio="xMidYMid meet" style="background:#FFFFFF;" version="1.1" viewBox="0 0 732 1427" zoomAndPan="magnify"><title>Data Flow Diagram - SIREINES (Niveau Composant S&#233;curis&#233;)</title><defs/><g><g class="title" data-source-line="3"><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="476.3691" x="121.0115" y="22.9951">Data Flow Diagram - SIREINES (Niveau Composant S&#233;curis&#233;)</text></g><!--cluster Trust Boundary: Navigateur Utilisateur--><g class="cluster" data-qualified-name="Trust Boundary. Navigateur Utilisateur" data-source-line="7" id="ent0002"><path d="M91.5,43.2969 L400.8008,43.2969 A3.75,3.75 0 0 1 403.3008,45.7969 L410.3008,65.5938 L410.5,65.5938 A2.5,2.5 0 0 1 413,68.0938 L413,144.0869 A2.5,2.5 0 0 1 410.5,146.5869 L91.5,146.5869 A2.5,2.5 0 0 1 89,144.0869 L89,45.7969 A2.5,2.5 0 0 1 91.5,43.2969" fill="#ADD8E6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="89" x2="410.3008" y1="65.5938" y2="65.5938"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="308.3008" x="93" y="58.292">Trust Boundary: Navigateur Utilisateur</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="87.5" x="211.25" y="80.5889">&#171;Rectangle&#187;</text></g><!--cluster Trust Boundary: DMZ - Reverse Proxy--><g class="cluster" data-qualified-name="Trust Boundary. DMZ - Reverse Proxy" data-source-line="11" id="ent0004"><path d="M81.5,210.5869 L379.7197,210.5869 A3.75,3.75 0 0 1 382.2197,213.0869 L389.2197,232.8837 L389.5,232.8837 A2.5,2.5 0 0 1 392,235.3837 L392,311.3869 A2.5,2.5 0 0 1 389.5,313.8869 L81.5,313.8869 A2.5,2.5 0 0 1 79,311.3869 L79,213.0869 A2.5,2.5 0 0 1 81.5,210.5869" fill="#ADD8E6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="79" x2="389.2197" y1="232.8837" y2="232.8837"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="297.2197" x="83" y="225.582">Trust Boundary: DMZ - Reverse Proxy</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="87.5" x="195.75" y="247.8789">&#171;Rectangle&#187;</text></g><!--cluster Trust Boundary: Application SIREINES--><g class="cluster" data-qualified-name="Trust Boundary. Application SIREINES" data-source-line="15" id="ent0006"><path d="M8.5,377.8869 L308.3945,377.8869 A3.75,3.75 0 0 1 310.8945,380.3869 L317.8945,400.1838 L317.5,400.1838 A2.5,2.5 0 0 1 320,402.6838 L320,1091.3369 A2.5,2.5 0 0 1 317.5,1093.8369 L8.5,1093.8369 A2.5,2.5 0 0 1 6,1091.3369 L6,380.3869 A2.5,2.5 0 0 1 8.5,377.8869" fill="#ADD8E6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="317.8945" y1="400.1838" y2="400.1838"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="298.8945" x="10" y="392.882">Trust Boundary: Application SIREINES</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="87.5" x="123.25" y="415.1789">&#171;Rectangle&#187;</text></g><!--cluster Couche Pr?sentation--><g class="cluster" data-qualified-name="Trust Boundary. Application SIREINES.Couche Pr.sentation" data-source-line="17" id="ent0007"><path d="M108.5,575.7769 L273.665,575.7769 A3.75,3.75 0 0 1 276.165,578.2769 L283.165,598.0738 L283.5,598.0738 A2.5,2.5 0 0 1 286,600.5738 L286,693.1669 A2.5,2.5 0 0 1 283.5,695.6669 L108.5,695.6669 A2.5,2.5 0 0 1 106,693.1669 L106,578.2769 A2.5,2.5 0 0 1 108.5,575.7769" fill="#FFFFE0" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="106" x2="283.165" y1="598.0738" y2="598.0738"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="164.165" x="110" y="590.772">Couche Pr&#233;sentation</text></g><!--cluster Couche Service--><g class="cluster" data-qualified-name="Trust Boundary. Application SIREINES.Couche Service" data-source-line="21" id="ent0009"><path d="M98.5,766.0569 L220.1953,766.0569 A3.75,3.75 0 0 1 222.6953,768.5569 L229.6953,788.3538 L293.5,788.3538 A2.5,2.5 0 0 1 296,790.8538 L296,883.4469 A2.5,2.5 0 0 1 293.5,885.9469 L98.5,885.9469 A2.5,2.5 0 0 1 96,883.4469 L96,768.5569 A2.5,2.5 0 0 1 98.5,766.0569" fill="#90EE90" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="96" x2="229.6953" y1="788.3538" y2="788.3538"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="120.6953" x="100" y="781.052">Couche Service</text></g><!--cluster Couche Donn?es--><g class="cluster" data-qualified-name="Trust Boundary. Application SIREINES.Couche Donn.es" data-source-line="25" id="ent0011"><path d="M76.5,949.9469 L208.4902,949.9469 A3.75,3.75 0 0 1 210.9902,952.4469 L217.9902,972.2438 L293.5,972.2438 A2.5,2.5 0 0 1 296,974.7438 L296,1067.3369 A2.5,2.5 0 0 1 293.5,1069.8369 L76.5,1069.8369 A2.5,2.5 0 0 1 74,1067.3369 L74,952.4469 A2.5,2.5 0 0 1 76.5,949.9469" fill="#F08080" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="74" x2="217.9902" y1="972.2438" y2="972.2438"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="130.9902" x="78" y="964.942">Couche Donn&#233;es</text></g><!--cluster Trust Boundary: Persistence--><g class="cluster" data-qualified-name="Trust Boundary. Persistence" data-source-line="32" id="ent0014"><path d="M76.5,1157.8369 L302.0879,1157.8369 A3.75,3.75 0 0 1 304.5879,1160.3369 L311.5879,1180.1338 L438.5,1180.1338 A2.5,2.5 0 0 1 441,1182.6338 L441,1300.2269 A2.5,2.5 0 0 1 438.5,1302.7269 L76.5,1302.7269 A2.5,2.5 0 0 1 74,1300.2269 L74,1160.3369 A2.5,2.5 0 0 1 76.5,1157.8369" fill="#ADD8E6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="74" x2="311.5879" y1="1180.1338" y2="1180.1338"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="224.5879" x="78" y="1172.832">Trust Boundary: Persistence</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="87.5" x="217.75" y="1195.1289">&#171;Rectangle&#187;</text></g><!--entity Browser--><g class="entity" data-qualified-name="Trust Boundary. Navigateur Utilisateur.Browser" data-source-line="8" id="ent0003"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.0391" x="157.48" y="94.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="57.0391" x="167.48" y="117.292">Browser</text></g><!--entity Nginx--><g class="entity" data-qualified-name="Trust Boundary. DMZ - Reverse Proxy.Nginx" data-source-line="12" id="ent0005"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.3857" x="135.81" y="261.5869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100.3857" x="145.81" y="284.582">Nginx SSL/TLS</text></g><!--entity Filter--><g class="entity" data-qualified-name="Trust Boundary. Application SIREINES.Filter" data-source-line="29" id="ent0013"><rect fill="#F1F1F1" height="68.8906" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.6826" x="120.66" y="428.8869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="93.5566" x="130.66" y="451.882">Filtre Session</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="106.2852" x="130.66" y="468.1789">Timeout 30min</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="130.6826" x="130.66" y="484.4757">Validation Cerb&#232;re</text></g><!--entity Actions--><g class="entity" data-qualified-name="Trust Boundary. Application SIREINES.Couche Pr.sentation.Actions" data-source-line="18" id="ent0008"><rect fill="#F1F1F1" height="68.8906" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="140.627" x="125.69" y="610.7769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="97.624" x="135.69" y="633.772">Struts Actions</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="120.627" x="135.69" y="650.0689">Validation entr&#233;e</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="83.6035" x="135.69" y="666.3657">CSRF Token</text></g><!--entity Services--><g class="entity" data-qualified-name="Trust Boundary. Application SIREINES.Couche Service.Services" data-source-line="22" id="ent0010"><rect fill="#F1F1F1" height="68.8906" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="167.8203" x="112.09" y="801.0569"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="107.9258" x="122.09" y="824.052">Services M&#233;tier</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="66.418" x="122.09" y="840.3489">Audit Log</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="147.8203" x="122.09" y="856.6457">Contr&#244;le autorisation</text></g><!--entity DAO--><g class="entity" data-qualified-name="Trust Boundary. Application SIREINES.Couche Donn.es.DAO" data-source-line="26" id="ent0012"><rect fill="#F1F1F1" height="68.8906" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="190.0234" x="89.99" y="984.9469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68.5303" x="99.99" y="1007.942">DAO/MDA</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="160.3779" x="99.99" y="1024.2389">Requ&#234;tes param&#233;tr&#233;es</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="170.0234" x="99.99" y="1040.5357">Sans concat&#233;nation SQL</text></g><!--entity DB--><g class="entity" data-qualified-name="Trust Boundary. Persistence.DB" data-source-line="33" id="ent0015"><path d="M89.54,1218.8369 C89.54,1208.8369 172.9956,1208.8369 172.9956,1208.8369 C172.9956,1208.8369 256.4511,1208.8369 256.4511,1218.8369 L256.4511,1276.7275 C256.4511,1286.7275 172.9956,1286.7275 172.9956,1286.7275 C172.9956,1286.7275 89.54,1286.7275 89.54,1276.7275 L89.54,1218.8369" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><path d="M89.54,1218.8369 C89.54,1228.8369 172.9956,1228.8369 172.9956,1228.8369 C172.9956,1228.8369 256.4511,1228.8369 256.4511,1218.8369" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.7529" x="99.54" y="1245.832">PostgreSQL</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="146.9111" x="99.54" y="1262.1289">Chiffrement AES-256</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="131.0791" x="99.54" y="1278.4257">Au repos + Transit</text></g><!--entity ES--><g class="entity" data-qualified-name="Trust Boundary. Persistence.ES" data-source-line="34" id="ent0016"><rect fill="#F1F1F1" height="68.8906" rx="35" ry="35" style="stroke:#181818;stroke-width:0.5;" width="133.8525" x="291.07" y="1213.3369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="92.4971" x="301.07" y="1236.332">Elasticsearch</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100.8164" x="301.07" y="1252.6289">Localhost only</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="113.8525" x="301.07" y="1268.9257">Pas d'exposition</text></g><!--entity SSO--><g class="entity" data-qualified-name="SSO" data-source-line="37" id="ent0017"><path d="M344.9617,615.2898 C348.6098,607.2465 354.7622,608.5674 359.2871,614.3836 C362.4915,608.6611 365.7795,607.975 370.1423,613.239 C373.2092,605.6612 380.4173,606.1927 384.7042,611.9018 C387.5169,605.1625 392.2765,605.2868 397.1088,609.6439 C399.6017,603.9574 404.1828,602.8643 408.2152,608.0748 C413.382,601.8417 418.995,603.5782 421.6331,610.629 C426.1561,605.3179 430.4352,605.8587 434.4525,611.2355 C438.6816,606.2066 443.0948,605.5479 446.458,612.1308 C451.914,605.4914 456.6688,606.199 460.0737,614.0571 C463.6294,609.3318 468.0996,609.1117 471.6396,614.0759 C479.7823,618.1078 481.7427,624.6518 473.8407,630.7959 C481.0101,634.9788 483.4714,639.913 475.9326,646.1056 C482.4674,650.6608 482.868,658.0882 474.2807,660.9618 C482.5275,667.5165 481.3838,673.0374 472.5309,677.817 C468.6047,684.3162 464.6542,685.2419 459.662,678.8839 C454.8969,686.1526 450.7497,684.2273 446.2074,678.6505 C441.9917,684.5302 438.4585,683.2868 434.4446,678.4293 C430.975,683.9014 424.4949,684.6324 421.0847,678.3618 C417.8044,683.4456 413.6619,683.8264 409.5761,679.3294 C405.3413,685.5082 399.0253,684.4427 395.5875,678.4159 C392.9611,684.0406 387.5271,683.4246 384.3903,678.9836 C379.9508,685.7473 374.3538,684.0058 370.894,677.9519 C366.8382,684.5284 362.3524,684.7874 358.2558,677.9904 C354.3498,684.3612 350.2419,683.6795 346.1242,678.2072 C338.0819,675.333 336.9152,667.4592 343.2934,662.0573 C335.5967,657.9056 335.3117,652.8185 341.6142,647.0956 C333.7922,642.4597 333.9179,634.8007 342.4796,631.0484 C336.6578,624.5576 337.4037,619.6732 344.9617,615.2898" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="56.0137" x="351.47" y="633.772">Cerb&#232;re</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="65.0576" x="351.47" y="650.0689">SAML 2.0</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="113.0596" x="351.47" y="666.3657">Signature X.509</text></g><g class="entity" data-qualified-name="GMN26" data-source-line="49" id="ent0027"><path d="M514.61,602.3869 L514.61,688.0509 L725.3922,688.0509 L725.3922,612.3869 L715.3922,602.3869 L514.61,602.3869" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><path d="M715.3922,602.3869 L715.3922,612.3869 L725.3922,612.3869 L715.3922,602.3869" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="143.1523" x="520.61" y="619.4538">Contr&#244;les de s&#233;curit&#233;:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="189.7822" x="520.61" y="634.5866">- Validation entr&#233;e (whitelist)</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="179.4863" x="520.61" y="649.7194">- &#201;chappement sortie (XSS)</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="83.6113" x="520.61" y="664.8522">- CSRF token</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="91.749" x="520.61" y="679.985">- Rate limiting</text></g><g class="entity" data-qualified-name="GMN29" data-source-line="57" id="ent0030"><path d="M336.08,800.2369 L336.08,831.4969 L280.16,835.4969 L336.08,839.4969 L336.08,870.7681 A0,0 0 0 0 336.08,870.7681 L597.9164,870.7681 A0,0 0 0 0 597.9164,870.7681 L597.9164,810.2369 L587.9164,800.2369 L336.08,800.2369 A0,0 0 0 0 336.08,800.2369" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><path d="M587.9164,800.2369 L587.9164,810.2369 L597.9164,810.2369 L587.9164,800.2369" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="38.4731" x="342.08" y="817.3038">Audit:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="139.0962" x="342.08" y="832.4366">- Log authentification</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="240.8364" x="342.08" y="847.5694">- Log modification donn&#233;es sensibles</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="139.7881" x="342.08" y="862.7022">- Log erreurs s&#233;curit&#233;</text></g><g class="entity" data-qualified-name="GMN32" data-source-line="64" id="ent0033"><path d="M48.99,1349.7269 L48.99,1420.2581 A0,0 0 0 0 48.99,1420.2581 L297.0139,1420.2581 A0,0 0 0 0 297.0139,1420.2581 L297.0139,1359.7269 L287.0139,1349.7269 L177,1349.7269 L173,1287.1669 L169,1349.7269 L48.99,1349.7269 A0,0 0 0 0 48.99,1349.7269" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><path d="M287.0139,1349.7269 L287.0139,1359.7269 L297.0139,1359.7269 L287.0139,1349.7269" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="130.2476" x="54.99" y="1366.7938">Protection donn&#233;es:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="193.5527" x="54.99" y="1381.9266">- Chiffrement dumps AES-256</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="227.0239" x="54.99" y="1397.0594">- Masking donn&#233;es sensibles (logs)</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="139.9468" x="54.99" y="1412.1922">- Rotation credentials</text></g><!--link Browser to Nginx--><g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" data-source-line="39" id="lnk18"><path d="M196,130.8169 C196,162.4769 196,223.2369 196,255.0969" fill="none" id="Browser-to-Nginx" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="196,261.0969,200,252.0969,196,256.0969,192,252.0969,196,261.0969" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="94.3706" x="216.7285" y="175.6538">HTTPS/TLS 1.3</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="133.8276" x="197" y="190.7866">[Chiffrement transit]</text></g><!--link Nginx to Filter--><g class="link" data-entity-1="ent0005" data-entity-2="ent0013" data-link-type="dependency" data-source-line="40" id="lnk19"><path d="M196,298.1469 C196,328.0669 196,383.7269 196,422.3869" fill="none" id="Nginx-to-Filter" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="196,428.3869,200,419.3869,196,423.3869,192,419.3869,196,428.3869" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="70.0083" x="226.5166" y="342.9538">Proxy Pass</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="129.0415" x="197" y="358.0866">[Headers s&#233;curis&#233;s]</text></g><!--link Filter to Actions--><g class="link" data-entity-1="ent0013" data-entity-2="ent0008" data-link-type="dependency" data-source-line="41" id="lnk20"><path d="M196,498.1669 C196,530.3269 196,572.4269 196,604.5369" fill="none" id="Filter-to-Actions" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="196,610.5369,200,601.5369,196,605.5369,192,601.5369,196,610.5369" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="137.4204" x="197" y="540.8438">Requ&#234;te authentifi&#233;e</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="103.0098" x="214.2053" y="555.9766">[Session valide]</text></g><!--link Actions to Services--><g class="link" data-entity-1="ent0008" data-entity-2="ent0010" data-link-type="dependency" data-source-line="42" id="lnk21"><path d="M196,679.8869 C196,714.0469 196,760.6369 196,794.8169" fill="none" id="Actions-to-Services" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="196,800.8169,200,791.8169,196,795.8169,192,791.8169,196,800.8169" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="83.8525" x="199.2566" y="731.1238">Appel m&#233;tier</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="88.3657" x="197" y="746.2566">[DTO valid&#233;s]</text></g><!--link Services to DAO--><g class="link" data-entity-1="ent0010" data-entity-2="ent0012" data-link-type="dependency" data-source-line="43" id="lnk22"><path d="M193.96,870.2869 C191.99,902.8569 189.3818,945.8778 187.4118,978.4878" fill="none" id="Services-to-DAO" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="187.05,984.4769,191.5854,975.7345,187.3515,979.486,183.6,975.252,187.05,984.4769" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="83.0527" x="216.6702" y="915.0138">Transactions</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="132.3931" x="192" y="930.1466">[Param&#232;tres bind&#233;s]</text></g><!--link DAO to DB--><g class="link" data-entity-1="ent0012" data-entity-2="ent0015" data-link-type="dependency" data-source-line="44" id="lnk23"><path d="M183.2,1054.2869 C181.01,1095.6069 177.6375,1159.2753 175.3475,1202.4953" fill="none" id="DAO-to-DB" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="175.03,1208.4869,179.5006,1199.7111,175.2946,1203.4939,171.5118,1199.2878,175.03,1208.4869" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="59.9663" x="205.7717" y="1122.9038">JDBC/SSL</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="109.5098" x="181" y="1138.0366">[Certificat client]</text></g><!--link Services to ES--><g class="link" data-entity-1="ent0010" data-entity-2="ent0016" data-link-type="dependency" data-source-line="45" id="lnk24"><path d="M268.78,870.3469 C300.95,885.4669 331.87,900.2869 333,901.9469 C398.72,998.2569 380.2822,1141.0645 366.9922,1207.1945" fill="none" id="Services-to-ES" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="365.81,1213.0769,371.5048,1205.0414,366.7951,1208.1749,363.6617,1203.4652,365.81,1213.0769" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="70.9604" x="421.939" y="1016.4538">HTTP/9200</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="154.8384" x="380" y="1031.5866">[Localhost uniquement]</text></g><!--link Filter to SSO--><g class="link" data-entity-1="ent0013" data-entity-2="ent0017" data-link-type="dependency" data-source-line="46" id="lnk25"><path d="M271.76,486.1369 C296.5,495.9369 322.78,509.5169 343,527.7769 C366.37,548.8769 380.8843,574.9129 391.5843,599.8529" fill="none" id="Filter-to-SSO" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="393.95,605.3669,394.0775,595.5188,391.9786,600.7719,386.7256,598.673,393.95,605.3669" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="81.7324" x="372.5388" y="540.8438">SAML/HTTPS</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="88.8101" x="369" y="555.9766">[Token sign&#233;]</text></g><!--link Actions to GMN26--><g class="link" data-entity-1="ent0008" data-entity-2="ent0027" data-link-type="association" data-source-line="49" id="lnk28"><path d="M226.36,610.5169 C252.46,583.5169 292.72,548.1369 336.5,532.7769 C396.47,511.7369 419.53,511.7369 479.5,532.7769 C518.86,546.5869 555.37,576.5669 581.31,602.1069" fill="none" id="Actions-GMN26" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/></g><?plantuml-src XLNRRjj647tdLqpLXzeePBaEKY16O40tDmaaMTNIHL99A5Rac5fukQliBcKPHJwWVnBrkN-W7-liafHbnKNzOD3ad9apPywCxRrGAsvu3edELrgXSimzIWI3YUCganX5JZXwqUEEmxNK3z0JFFE89h3ta_xxKP_1oKYiaHVGzKaiLmxORfiKHjZTzZIAlalnJYY4U7BBuZywDxUZNdlowMHp2YkUtFCCeH6RmZhew4Abt3nUmgO1RzzEQX9NL_3zG6HBrv45CJhAqnZnjSYumyB0hHDIsF3SE8K_8w2VQSVe1ujc3jn2zHnz-JPDR_WxDJN1DHgBC3Pwy_YKOvG9jG761grum4AcyEQbFEtLIeg4Ew7LNg9zel1httPN5ydIrzfjBMaVC8sgrqyelTmbB71WpXJEGZlnONQcVkDIf6KT0bCEdAakcrn3hEzH1P9LRCZnvRy9C3HhaM1T-XU3g9vLBhzR6EwsJg2PgNQH2WS3dL59xOl_GoRXXTF6oqyrG_aQzt_rUrefeczh0brjk3maq6lVj8QzzanDy7En-ziHbU1RekFx9Z4OLvPSh4ZutLPLwlyw23G8VSnWUYsaCxvpQobqfcAHeouSl3hFXNgcRHVDOlVLO4ZbOI_RPqos4TQX8XthQLC6lk3afiPOMvSP94Oas5BStHdCQMZGxhFcnUkVlQ2qTBGzy2F4XdeHhX6eTq8YIy86mVgIMoSIYzmaovaQw8JB9UK6hUJZJ8q9alw06qeaIZFHYpxpV1EfYvGKhxeXnTh30LoSdTEJo4YnWkJuUFRw_4q0CNOJHTMsGBDvLVeTBk5T78-PtmBuwUpLJ4qFkt4bytbK1djOAHZXma814QHXJTyXJqaliFixOUTH5UfHbMy9LW_Scsj9DSIT24QVLfE3jPyKpgCQuk5xlru2RIDAo6lVJdlnJGa99VU17aKs8K1GdzSxDXq7ctqbhrXO25N2V6H0T0ZmeTVfjkWoU2tGU8BaGKYa8BP75UXMbWAstboSa_3Jf_aLIdmkWehFXA0n4CIFgXM49qpORh0qizrs7aLAapZ6RmtekuE5twybEG9heMatBkbR4xwz7N3oi1GEwNowqn2o-ojPSb8lJDPgwenYFZ9MVWs7ndaguSy9tLoG8YVNgIn2bOBdTSpku1w40r9oeIjoCDtoSku_v3hTluIqkXD0rzAAXGoPoZWqXew-FMZqcCL2EwTpJoCi5VdHOV8iRKddqD1faQzilQJXwv1R-gUPlK05JgJERAdEH9V771A3gU-BI_l4vry0?></g></svg>
+</div>
+
+<hr>
+
+<h2>7. Checklist OWASP Top 10 2021 - Mapping complet {#owasp}</h2>
+
+<p><table>
+<thead>
+<tr>
+<th>OWASP Category</th>
+<th>Composant concerné</th>
+<th>Statut</th>
+<th>Preuve/Justification</th>
+<th>Action requise</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**A01:2021-Broken Access Control**</td>
+<td>`MotCleNiveauDetailAction`, `SeanceAffectationAction`</td>
+<td>🔴 Non conforme</td>
+<td>Contrôle rôles dans méthodes, pas d'annotation centralisée</td>
+<td>Implémenter `@Secured` global</td>
+</tr>
+<tr>
+<td>**A02:2021-Cryptographic Failures**</td>
+<td>`sireines-database/script/`</td>
+<td>🟡 Partiel</td>
+<td>Dumps chiffrés AES-256 OK, mais credentials BIRT en clair</td>
+<td>Externaliser credentials</td>
+</tr>
+<tr>
+<td>**A03:2021-Injection**</td>
+<td>`DossierRechercheMotsClefsAction`, `dossiersDao.ksp`</td>
+<td>🔴 Non conforme</td>
+<td>Concaténation SQL visible dans KSP</td>
+<td>Requêtes paramétrées obligatoires</td>
+</tr>
+<tr>
+<td>**A04:2021-Insecure Design**</td>
+<td>`ImportsServicesImpl`</td>
+<td>🔴 Non conforme</td>
+<td>Pas de limite taille fichier, pas de validation MIME</td>
+<td>Design sécurisé upload</td>
+</tr>
+<tr>
+<td>**A05:2021-Security Misconfiguration**</td>
+<td>`web.xml`, `context.xml`</td>
+<td>🟡 Partiel</td>
+<td>Headers sécurité absents, verbose error</td>
+<td>Hardening configuration</td>
+</tr>
+<tr>
+<td>**A06:2021-Vulnerable Components**</td>
+<td>`pom.xml` global</td>
+<td>🔴 Non conforme</td>
+<td>Java 7 EOL, Struts 2 EOL, BIRT abandonné</td>
+<td>Plan migration urgente</td>
+</tr>
+<tr>
+<td>**A07:2021-Auth Failures**</td>
+<td>`CerbereUtil`, `SireinesSessionFilter`</td>
+<td>🟡 Partiel</td>
+<td>SSO OK mais session fixation possible</td>
+<td>Régénération ID session</td>
+</tr>
+<tr>
+<td>**A08:2021-Integrity Failures**</td>
+<td>`ExtractionsServicesImpl`</td>
+<td>🔴 Non conforme</td>
+<td>Templates BIRT sans signature, risque modification</td>
+<td>Signature templates</td>
+</tr>
+<tr>
+<td>**A09:2021-Logging Failures**</td>
+<td>Global</td>
+<td>🔴 Non conforme</td>
+<td>Pas d'audit trail métier, logs techniques uniquement</td>
+<td>Audit sécurité complet</td>
+</tr>
+<tr>
+<td>**A10:2021-SSRF**</td>
+<td>`ExtractionsServicesImpl` (BIRT JDBC)</td>
+<td>🔴 Non conforme</td>
+<td>Connexions JDBC arbitraires via rapports</td>
+<td>Whitelist URLs, sandbox</td>
+</tr>
+</tbody>
+</table>---</p>
+
+<h2>8. Plan d'action sécurité synthétique {#plan-action}</h2>
+
+<div class="diagram diagram-plantuml">
+<?plantuml 1.2026.1?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" preserveAspectRatio="xMidYMid meet" style="background:#FFFFFF;" version="1.1" viewBox="0 0 1606 650" zoomAndPan="magnify"><title>Roadmap S&#233;curit&#233; SIREINES - 2024-2027</title><defs/><g><g class="title" data-source-line="3"><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="320.9131" x="635.5435" y="22.9951">Roadmap S&#233;curit&#233; SIREINES - 2024-2027</text></g><!--cluster T0--><g class="cluster" data-qualified-name="T0" data-source-line="5" id="ent0002"><rect fill="none" height="232.19" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="387" x="674" y="125.5969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="194.8652" x="770.0674" y="140.592">T0 - Imm&#233;diat (0-3 mois)</text></g><!--cluster T1--><g class="cluster" data-qualified-name="T1" data-source-line="12" id="ent0007"><rect fill="none" height="254.74" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="627" x="7" y="246.3369"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="225.2715" x="207.8643" y="261.332">T1 - Court terme (3-12 mois)</text></g><!--cluster T2--><g class="cluster" data-qualified-name="T2" data-source-line="20" id="ent0013"><rect fill="none" height="246.59" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="447" x="677" y="397.7869"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="214.6211" x="793.1895" y="412.782">T2 - Moyen terme (1-2 ans)</text></g><!--cluster T3--><g class="cluster" data-qualified-name="T3" data-source-line="26" id="ent0017"><rect fill="none" height="103.3" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="436" x="1164" y="541.0769"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="201.0107" x="1281.4946" y="556.072">T3 - Long terme (2-3 ans)</text></g><!--entity L4j--><g class="entity" data-qualified-name="T0.L4j" data-source-line="6" id="ent0003"><rect fill="#F1F1F1" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.4668" x="890.77" y="168.5969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="93.5225" x="900.77" y="191.592">V&#233;rifier Log4j</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="118.4668" x="900.77" y="207.8889">CVE-2021-44228</text></g><!--entity Struts--><g class="entity" data-qualified-name="T0.Struts" data-source-line="7" id="ent0004"><rect fill="#F1F1F1" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.4668" x="717.77" y="168.5969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="113.0459" x="727.77" y="191.592">Patcher Struts 2</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="118.4668" x="727.77" y="207.8889">CVE-2023-50164</text></g><!--entity Creds--><g class="entity" data-qualified-name="T0.Creds" data-source-line="8" id="ent0005"><rect fill="#F1F1F1" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="185.915" x="706.04" y="281.1869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="165.915" x="716.04" y="304.182">Externaliser credentials</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="32.0127" x="716.04" y="320.4789">BIRT</text></g><!--entity Rate--><g class="entity" data-qualified-name="T0.Rate" data-source-line="9" id="ent0006"><rect fill="#F1F1F1" height="52.5938" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.3047" x="927.35" y="281.1869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.3047" x="937.35" y="304.182">Rate limiting</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70.4922" x="937.35" y="320.4789">recherche</text></g><!--entity Java--><g class="entity" data-qualified-name="T1.Java" data-source-line="13" id="ent0008"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="171.833" x="31.08" y="289.3369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="151.833" x="41.08" y="312.332">Migration Java 7 &#8594; 11</text></g><!--entity BirtReplace--><g class="entity" data-qualified-name="T1.BirtReplace" data-source-line="14" id="ent0009"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="162.7207" x="237.64" y="289.3369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142.7207" x="247.64" y="312.332">Remplacement BIRT</text></g><!--entity ESCluster--><g class="entity" data-qualified-name="T1.ESCluster" data-source-line="15" id="ent0010"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="154.3535" x="435.82" y="289.3369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="134.3535" x="445.82" y="312.332">Cluster ES s&#233;curis&#233;</text></g><!--entity Csrf--><g class="entity" data-qualified-name="T1.Csrf" data-source-line="16" id="ent0011"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="107.835" x="63.08" y="440.7869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87.835" x="73.08" y="463.782">CSRF tokens</text></g><!--entity Audit--><g class="entity" data-qualified-name="T1.Audit" data-source-line="17" id="ent0012"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.7695" x="205.62" y="440.7869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68.7695" x="215.62" y="463.782">Audit trail</text></g><!--entity Refacto--><g class="entity" data-qualified-name="T2.Refacto" data-source-line="21" id="ent0014"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="190.3379" x="700.83" y="440.7869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="170.3379" x="710.83" y="463.782">Refactoring composants</text></g><!--entity Vertigo--><g class="entity" data-qualified-name="T2.Vertigo" data-source-line="22" id="ent0015"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="154.5928" x="925.7" y="440.7869"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="134.5928" x="935.7" y="463.782">Migration Vertigo 4</text></g><!--entity Tests--><g class="entity" data-qualified-name="T2.Tests" data-source-line="23" id="ent0016"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="147.9961" x="722" y="584.0769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="127.9961" x="732" y="607.072">Tests automatis&#233;s</text></g><!--entity ZT--><g class="entity" data-qualified-name="T3.ZT" data-source-line="27" id="ent0018"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="183.7139" x="1392.14" y="584.0769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="163.7139" x="1402.14" y="607.072">Architecture Zero Trust</text></g><!--entity Api--><g class="entity" data-qualified-name="T3.Api" data-source-line="28" id="ent0019"><rect fill="#F1F1F1" height="36.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.0059" x="1207" y="584.0769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="130.0059" x="1217" y="607.072">API REST moderne</text></g><g class="entity" data-qualified-name="GMN23" data-source-line="36" id="ent0024"><path d="M1084.94,174.7569 L1084.94,215.0225 L1297.0616,215.0225 L1297.0616,184.7569 L1287.0616,174.7569 L1084.94,174.7569" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><path d="M1287.0616,174.7569 L1287.0616,184.7569 L1297.0616,184.7569 L1287.0616,174.7569" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="126.5532" x="1090.94" y="191.8238">&#128308; Bloquant s&#233;curit&#233;</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="191.1216" x="1090.94" y="206.9566">Risque exploitation imm&#233;diat</text></g><g class="entity" data-qualified-name="GMN26" data-source-line="41" id="ent0027"><path d="M1085.26,287.3569 L1085.26,327.6225 L1288.7424,327.6225 L1288.7424,297.3569 L1278.7424,287.3569 L1085.26,287.3569" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><path d="M1278.7424,287.3569 L1278.7424,297.3569 L1288.7424,297.3569 L1278.7424,287.3569" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="180.7051" x="1091.26" y="304.4238">&#128993; Conformit&#233; r&#233;glementaire</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="182.4824" x="1091.26" y="319.5566">RGPD, RGS niveau standard</text></g><!--link T0 to T1--><g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" data-source-line="31" id="lnk20"><path d="M673.9357,211.8197 C673.8586,211.9719 673.7811,212.125 673.7032,212.2789 C673.3915,212.8944 673.0731,213.523 672.7486,214.1639 C667.5559,224.4178 660.7719,237.815 653.9888,251.2106 C647.2056,264.6063 640.4234,278.0003 635.2345,288.248 C634.9102,288.8884 634.5921,289.5166 634.2807,290.1318 C634.2028,290.2855 636.8358,285.0856 636.7588,285.2378" fill="none" id="T0-to-T1" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="634.0483,290.5907,641.6826,284.3683,636.307,286.1299,634.5454,280.7543,634.0483,290.5907" style="stroke:#181818;stroke-width:1;"/></g><!--link T1 to T2--><g class="link" data-entity-1="ent0007" data-entity-2="ent0013" data-link-type="dependency" data-source-line="32" id="lnk21"><path d="M634.1539,321.6127 C634.2139,321.7017 634.2743,321.791 634.335,321.8806 C635.3059,323.3144 636.355,324.8277 637.4787,326.4024 C639.7261,329.5518 642.2719,332.9466 645.0875,336.4406 C656.35,350.4169 671.93,365.9819 690,373.7869 C710.71,382.7269 1078.27,367.8269 1096,381.7869 C1099.33,384.4069 1102.1467,387.5089 1104.5256,390.9378 C1105.7151,392.6523 1106.7951,394.4484 1107.7751,396.3069 C1108.0201,396.7716 1105.6067,391.8581 1105.8394,392.3302" fill="none" id="T1-to-T2" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1108.4915,397.7122,1108.1013,387.8711,1106.2814,393.2272,1100.9253,391.4073,1108.4915,397.7122" style="stroke:#181818;stroke-width:1;"/></g><!--link T2 to T3--><g class="link" data-entity-1="ent0013" data-entity-2="ent0017" data-link-type="dependency" data-source-line="33" id="lnk22"><path d="M1124.0643,480.281 C1124.1414,480.4755 1124.2189,480.6711 1124.2968,480.8677 C1124.6085,481.6541 1124.9269,482.4573 1125.2514,483.2761 C1130.4441,496.3772 1137.2281,513.4938 1144.0113,530.6081 C1150.7944,547.7225 1157.5766,564.8347 1162.7655,577.927 C1163.0898,578.7453 1163.4079,579.5479 1163.7193,580.3338 C1163.7972,580.5302 1161.664,575.1478 1161.741,575.3421" fill="none" id="T2-to-T3" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="1163.9517,580.92,1164.3542,571.0794,1162.1094,576.2718,1156.9171,574.027,1163.9517,580.92" style="stroke:#181818;stroke-width:1;"/></g><!--link T0 to GMN23--><g class="link" data-entity-1="ent0002" data-entity-2="ent0024" data-link-type="association" data-source-line="36" id="lnk25"><path d="M679.7999,125.4057 C679.8347,125.2128 679.8699,125.02 679.9057,124.8273 C681.0493,118.6621 682.689,112.6193 684.9695,106.9564 C689.5306,95.6306 696.655,85.8244 707.5,79.5969 C770.71,43.2969 966.29,56.7369 1035.5,79.5969 C1092.3,98.3569 1145.29,146.7669 1172.31,174.5269" fill="none" id="T0-GMN23" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/></g><!--link T1 to GMN26--><g class="link" data-entity-1="ent0007" data-entity-2="ent0027" data-link-type="association" data-source-line="41" id="lnk28"><path d="M634.0786,293.0778 C634.1363,292.9821 634.1944,292.886 634.2527,292.7896 C634.3693,292.5968 634.4871,292.4026 634.606,292.2071 C634.8438,291.816 635.0862,291.4196 635.333,291.018 C636.3205,289.4117 637.3801,287.7235 638.5087,285.9698 C640.7659,282.4624 643.2991,278.6934 646.0838,274.7956 C657.2225,259.2044 672.385,241.5519 690,230.3369 C696.78,226.0169 699.53,226.7869 707.5,225.7669 C743.65,221.1169 999.35,221.1169 1035.5,225.7669 C1085,232.1269 1134.39,264.9669 1162.75,287.0269" fill="none" id="T1-GMN26" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/></g><?plantuml-src PLDBRjim4Dth58EiKg02h4-RhWhOhbguS8f0Chn8tGKXqSea4gcGL92Ww3O7ABeFklI-D_1DUe8UeKDISX5NW7vyZpFpvWtr3OgEATP2ATjE2YvCOHuQ3egNXecwuK5WqD12BbdLiWwA_Qxi5Phz3ef5dYq-PGM444_YDAJ7MH0STiB9QaBGecttkmgPWTD9c40hKRyu0M0Q2FuQ05sVr_kTmYro1KjPfzSRCLzdDbmKfcaSl_bYsSlqsfClc2clY5eOrHiDyO6TXAycqUlKiJteDsJtXYl16jIqgrIy8fN86hqHiqM-SlGvhGxid1aE3RPeKDGRGN8e6TsEPy7WstEH4OcSoruPe3GjXzCaZE9dEYCOXPvZhPX1AU0ZksDm1hyVlqCKkTXsPIY1jrt3IjvIeN2eSORAvDm1dZPlUaqfWHpGtXLwEMfM3DX0BFBtOEGD5zghrMhhaMbV8TMj63OESV_70cCIU2uVk1W5Hc4CJ5XvLbqyYilvbfL6AkgR7oVDXF4P1-Yu2Mkk3DOIl6V3doUjk2PpMMzaIrmIvWEvvUC24ofmAIdhK5zCS-RhSrkIiS0f-OY6DlQAmoLN4bQAskG2Nwu6piK2ygnOaO4LJOstVTgXpMddENnBVWRMTFiL1xOxzYi90Y5fSXJMLmRabgQR0lvv-l4BPesyxQaLeqjqTWZAKT_s7FXzrqWqlXyudfM0YmfilF-YHYxgqqyQER6LgdKdKUrtr0axBWoLdOxymyMxb_GiGE0TPpreQbR5LFKly5y0?></g></svg>
+</div>
+
+<hr>
+
+<h2>9. Annexes {#annexes}</h2>
+
+<h3>9.1 Glossaire sécurité</h3>
+
+<p><table>
+<thead>
+<tr>
+<th>Terme</th>
+<th>Définition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**CSRF**</td>
+<td>Cross-Site Request Forgery - Attaque par détournement de session</td>
+</tr>
+<tr>
+<td>**DFD**</td>
+<td>Data Flow Diagram - Diagramme de flux de données</td>
+</tr>
+<tr>
+<td>**EOL**</td>
+<td>End of Life - Fin de support, plus de patches sécurité</td>
+</tr>
+<tr>
+<td>**KSP**</td>
+<td>Vertigo Keyword Scripting Language - DSL pour requêtes MDA</td>
+</tr>
+<tr>
+<td>**MDA**</td>
+<td>Model Driven Architecture - Génération code depuis modèles</td>
+</tr>
+<tr>
+<td>**RCE**</td>
+<td>Remote Code Execution - Exécution code arbitraire à distance</td>
+</tr>
+<tr>
+<td>**SRP**</td>
+<td>Single Responsibility Principle - Principe responsabilité unique</td>
+</tr>
+<tr>
+<td>**SSRF**</td>
+<td>Server-Side Request Forgery - Détournement requêtes serveur</td>
+</tr>
+<tr>
+<td>**STRIDE**</td>
+<td>Modèle de menaces Microsoft (Spoofing, Tampering, Repudiation, Info Disclosure, DoS, Elevation)</td>
+</tr>
+<tr>
+<td>**XXE**</td>
+<td>XML External Entity - Injection entités XML malveillantes</td>
+</tr>
+</tbody>
+</table>### 9.2 Références CVE critiques à surveiller</p>
+
+<p><table>
+<thead>
+<tr>
+<th>CVE</th>
+<th>Score</th>
+<th>Composant</th>
+<th>Description</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CVE-2021-44228</td>
+<td>10.0</td>
+<td>Log4j 2.x</td>
+<td>Log4Shell - RCE via JNDI</td>
+<td>12/2021</td>
+</tr>
+<tr>
+<td>CVE-2023-50164</td>
+<td>9.8</td>
+<td>Struts 2</td>
+<td>Upload path traversal</td>
+<td>12/2023</td>
+</tr>
+<tr>
+<td>CVE-2021-31805</td>
+<td>9.8</td>
+<td>Struts 2</td>
+<td>OGNL injection</td>
+<td>04/2022</td>
+</tr>
+<tr>
+<td>CVE-2024-1597</td>
+<td>8.5</td>
+<td>PostgreSQL JDBC</td>
+<td>SQL injection via placeholder</td>
+<td>02/2024</td>
+</tr>
+</tbody>
+</table>---</p>
+
+<strong>Fin du document d'analyse sécurité</strong>
+
+<em>Document généré pour analyse technique - Ne pas diffuser sans autorisation RSSI</em>
+
+<p><a href="#vue-composants">↩ Retour au sommaire</a>
+```</p>
+
+<hr>
+
+<p>Ce document fournit une <strong>analyse de sécurité approfondie</strong> de l'application SIREINES, identifiant <strong>12 vulnérabilités critiques</strong>, <strong>10 dettes techniques majeures</strong> et un <strong>plan d'action priorisé</strong> conforme aux standards OWASP et STRIDE.</p>
+</body>
+</html>

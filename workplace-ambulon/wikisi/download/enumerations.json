@@ -1,0 +1,6762 @@
+{
+   "Arch_Action": [
+      {
+         "id": 1,
+         "nom": "Plan d'archivage"
+      },
+      {
+         "id": 2,
+         "nom": "Plan d'élimination"
+      },
+      {
+         "id": 3,
+         "nom": "Bilan périodique avec la MAGIE"
+      },
+      {
+         "id": 4,
+         "nom": "Contacter la MAGIE pour décommissionnement"
+      }
+   ],
+   "Arch_Criticite": [
+      {
+         "id": 1,
+         "nom": "Très élevée"
+      },
+      {
+         "id": 2,
+         "nom": "Élevée"
+      },
+      {
+         "id": 3,
+         "nom": "Moyenne"
+      },
+      {
+         "id": 4,
+         "nom": "Faible"
+      }
+   ],
+   "Arch_SortFinal": [
+      {
+         "id": 1,
+         "nom": "Versement"
+      },
+      {
+         "id": 2,
+         "nom": "Élimination"
+      },
+      {
+         "id": 3,
+         "nom": "Tri"
+      }
+   ],
+   "Beneficiaire": [
+      {
+         "id": 1,
+         "nom": "Citoyens"
+      },
+      {
+         "id": 2,
+         "nom": "Entreprises"
+      },
+      {
+         "id": 3,
+         "nom": "Agents"
+      },
+      {
+         "id": 4,
+         "nom": "Services d'administration centrale"
+      },
+      {
+         "id": 5,
+         "nom": "Services régionaux"
+      },
+      {
+         "id": 6,
+         "nom": "Services départementaux"
+      },
+      {
+         "id": 7,
+         "nom": "Opérateurs/agences"
+      },
+      {
+         "id": 8,
+         "nom": "Partenaires métiers"
+      },
+      {
+         "id": 9,
+         "nom": "Europe"
+      },
+      {
+         "id": 10,
+         "nom": "Collectivités territoriales"
+      }
+   ],
+   "CategorieTypeFlux": [
+      {
+         "id": 1,
+         "nom": "Flux interne"
+      },
+      {
+         "id": 2,
+         "nom": "Flux exposé"
+      },
+      {
+         "id": 3,
+         "nom": "Flux consommé"
+      },
+      {
+         "id": 4,
+         "nom": "Flux entrant"
+      },
+      {
+         "id": 5,
+         "nom": "Flux sortant"
+      }
+   ],
+   "CategorieTypeRoleActeur": [
+      {
+         "id": 1,
+         "nom": "Acteur simple"
+      },
+      {
+         "id": 2,
+         "nom": "Acteur MOA habilitée SSI"
+      },
+      {
+         "id": 3,
+         "nom": "Acteur MOE habilitée"
+      }
+   ],
+   "CategorieTypeRoleContact": [
+      {
+         "id": 1,
+         "nom": "Contact simple"
+      },
+      {
+         "id": 2,
+         "nom": "Contact SSI"
+      },
+      {
+         "id": 3,
+         "nom": "Contact MOE"
+      }
+   ],
+   "DataCenter": [
+      {
+         "id": 1,
+         "nom": "Centre-serveur ministériel Paris La Défense"
+      },
+      {
+         "id": 2,
+         "nom": "Centre-serveur ministériel Saint-Malo"
+      },
+      {
+         "id": 3,
+         "nom": "IMT Nord Europe"
+      },
+      {
+         "id": 4,
+         "nom": "Github"
+      },
+      {
+         "id": 5,
+         "nom": "Ordinateur de l'utilisateur"
+      },
+      {
+         "id": 6,
+         "nom": "ATE"
+      },
+      {
+         "id": 7,
+         "nom": "OVHcloud"
+      },
+      {
+         "id": 8,
+         "nom": "CEREMA (Champs-sur-Marne)"
+      },
+      {
+         "id": 9,
+         "nom": "Imprimerie nationale"
+      },
+      {
+         "id": 10,
+         "nom": "BRGM"
+      },
+      {
+         "id": 11,
+         "nom": "Cegedim.cloud"
+      },
+      {
+         "id": 12,
+         "nom": "Scalingo"
+      },
+      {
+         "id": 13,
+         "nom": "3DS Outscale"
+      },
+      {
+         "id": 14,
+         "nom": "Scaleway"
+      },
+      {
+         "id": 15,
+         "nom": "Orange Business"
+      },
+      {
+         "id": 16,
+         "nom": "AWS"
+      },
+      {
+         "id": 17,
+         "nom": "Microsoft Azure"
+      },
+      {
+         "id": 18,
+         "nom": "Google Cloud"
+      },
+      {
+         "id": 19,
+         "nom": "IBM Cloud"
+      },
+      {
+         "id": 20,
+         "nom": "Oracle"
+      },
+      {
+         "id": 21,
+         "nom": "Clever Cloud"
+      },
+      {
+         "id": 22,
+         "nom": "Cloud Temple"
+      },
+      {
+         "id": 23,
+         "nom": "Platform.sh"
+      },
+      {
+         "id": 24,
+         "nom": "Cloud NUBO (DGFiP)"
+      },
+      {
+         "id": 25,
+         "nom": "Alkante"
+      },
+      {
+         "id": 26,
+         "nom": "ADEME"
+      },
+      {
+         "id": 27,
+         "nom": "CSTB"
+      },
+      {
+         "id": 28,
+         "nom": "Worldline"
+      },
+      {
+         "id": 29,
+         "nom": "MNHN"
+      },
+      {
+         "id": 30,
+         "nom": "ads-COM"
+      },
+      {
+         "id": 31,
+         "nom": "AlwaysData"
+      },
+      {
+         "id": 32,
+         "nom": "OFB"
+      },
+      {
+         "id": 33,
+         "nom": "Cheops Technology"
+      },
+      {
+         "id": 34,
+         "nom": "SCHAPI (Toulouse)"
+      },
+      {
+         "id": 35,
+         "nom": "DREALs"
+      },
+      {
+         "id": 36,
+         "nom": "Météo-France"
+      },
+      {
+         "id": 37,
+         "nom": "IFREMER"
+      },
+      {
+         "id": 38,
+         "nom": "OIEau"
+      },
+      {
+         "id": 39,
+         "nom": "shinyapps.io (Posit)"
+      },
+      {
+         "id": 40,
+         "nom": "MAA"
+      },
+      {
+         "id": 41,
+         "nom": "ecedi"
+      },
+      {
+         "id": 42,
+         "nom": "IGN"
+      },
+      {
+         "id": 43,
+         "nom": "O2switch"
+      },
+      {
+         "id": 44,
+         "nom": "Vercel Inc"
+      },
+      {
+         "id": 45,
+         "nom": "Webflow Inc"
+      },
+      {
+         "id": 46,
+         "nom": "INRAE"
+      },
+      {
+         "id": 47,
+         "nom": "ANAH"
+      },
+      {
+         "id": 48,
+         "nom": "Pegasystems"
+      },
+      {
+         "id": 49,
+         "nom": "Devolia"
+      },
+      {
+         "id": 50,
+         "nom": "Coheractio"
+      },
+      {
+         "id": 51,
+         "nom": "INERIS"
+      },
+      {
+         "id": 52,
+         "nom": "Gandi sas"
+      },
+      {
+         "id": 53,
+         "nom": "DRI sarl"
+      },
+      {
+         "id": 54,
+         "nom": "ANSES"
+      },
+      {
+         "id": 55,
+         "nom": "OMP"
+      },
+      {
+         "id": 56,
+         "nom": "DGFiP"
+      },
+      {
+         "id": 57,
+         "nom": "CISIRH"
+      },
+      {
+         "id": 58,
+         "nom": "Téléphone de l'utilisateur"
+      }
+   ],
+   "DeclenchementFlux": [
+      {
+         "id": 1,
+         "nom": "Automatique"
+      },
+      {
+         "id": 2,
+         "nom": "Manuel"
+      }
+   ],
+   "DomaineMetier": [
+      {
+         "id": 1,
+         "nom": "Biodiversité"
+      },
+      {
+         "id": 2,
+         "nom": "Milieux marins et littoraux"
+      },
+      {
+         "id": 3,
+         "nom": "Eau, milieux aquatiques"
+      },
+      {
+         "id": 4,
+         "nom": "Logement, habitat et construction"
+      },
+      {
+         "id": 5,
+         "nom": "Urbanisme, paysages"
+      },
+      {
+         "id": 6,
+         "nom": "Transverse"
+      },
+      {
+         "id": 7,
+         "nom": "Ressources humaines"
+      },
+      {
+         "id": 8,
+         "nom": "***TEMPORAIRE***"
+      },
+      {
+         "id": 9,
+         "nom": "Gestion des systèmes d'information et de communication"
+      },
+      {
+         "id": 10,
+         "nom": "Communication"
+      },
+      {
+         "id": 11,
+         "nom": "Collaboration"
+      },
+      {
+         "id": 12,
+         "nom": "Espace agent"
+      },
+      {
+         "id": 14,
+         "nom": "Pilotage opérationnel des ressources humaines"
+      },
+      {
+         "id": 15,
+         "nom": "Test"
+      },
+      {
+         "id": 16,
+         "nom": "OBSOLÈTE - Statistique"
+      },
+      {
+         "id": 17,
+         "nom": "Ressources minérales"
+      },
+      {
+         "id": 18,
+         "nom": "Économie verte et solidaire"
+      },
+      {
+         "id": 19,
+         "nom": "Foncier, aménagement"
+      },
+      {
+         "id": 20,
+         "nom": "OBSOLÈTE - Services de transport"
+      },
+      {
+         "id": 21,
+         "nom": "OBSOLÈTE - Infrastructures de transport"
+      },
+      {
+         "id": 22,
+         "nom": "Affaires maritimes, pêche et aquaculture"
+      },
+      {
+         "id": 23,
+         "nom": "Risques technologiques"
+      },
+      {
+         "id": 24,
+         "nom": "Nuisances et qualité de l'environnement"
+      },
+      {
+         "id": 25,
+         "nom": "Risques naturels et hydraulique"
+      },
+      {
+         "id": 26,
+         "nom": "Énergie"
+      },
+      {
+         "id": 27,
+         "nom": "Climat, efficacité énergétique, air"
+      },
+      {
+         "id": 28,
+         "nom": "Juridique"
+      },
+      {
+         "id": 29,
+         "nom": "Finance"
+      },
+      {
+         "id": 30,
+         "nom": "Gestion documentaire"
+      },
+      {
+         "id": 31,
+         "nom": "Gestion de la connaissance"
+      },
+      {
+         "id": 32,
+         "nom": "Moyens généraux"
+      },
+      {
+         "id": 33,
+         "nom": "Immobilier"
+      },
+      {
+         "id": 34,
+         "nom": "Navigation aérienne"
+      },
+      {
+         "id": 35,
+         "nom": "Transport aérien"
+      },
+      {
+         "id": 36,
+         "nom": "Sécurité aviation civile"
+      },
+      {
+         "id": 37,
+         "nom": "Transports routiers"
+      },
+      {
+         "id": 38,
+         "nom": "Entretien exploitation modernisation du réseau routier national"
+      },
+      {
+         "id": 39,
+         "nom": "Transports ferroviaires fluviaux et ports"
+      },
+      {
+         "id": 40,
+         "nom": "Multimodalité innovation numérique et territoires"
+      },
+      {
+         "id": 48,
+         "nom": "Métiers de l'IGEDD"
+      },
+      {
+         "id": 49,
+         "nom": "Santé - environnement"
+      }
+   ],
+   "DroitAcces": [
+      {
+         "id": 1,
+         "nom": "Gratuit en libre accès"
+      },
+      {
+         "id": 2,
+         "nom": "Gratuit après enregistrement"
+      },
+      {
+         "id": 3,
+         "nom": "Gratuit après authentification"
+      },
+      {
+         "id": 4,
+         "nom": "Payant"
+      },
+      {
+         "id": 5,
+         "nom": "Gratuit après vérification de l'éligibilité du demandeur"
+      }
+   ],
+   "DroitUsage": [
+      {
+         "id": 1,
+         "nom": "Réutilisable librement"
+      },
+      {
+         "id": 2,
+         "nom": "Réutilisable sous conditions"
+      },
+      {
+         "id": 3,
+         "nom": "Redistribution interdite"
+      }
+   ],
+   "EnvironnementAcces": [
+      {
+         "id": 1,
+         "nom": "Web"
+      },
+      {
+         "id": 2,
+         "nom": "Windows"
+      },
+      {
+         "id": 3,
+         "nom": "Linux"
+      }
+   ],
+   "FamilleApplication": [
+      {
+         "id": 1,
+         "nom": "Applications de gestion du pôle ministériel",
+         "eclairage": null
+      },
+      {
+         "id": 2,
+         "nom": "Applications métiers répondant à une politique publique ou à une mission du service",
+         "eclairage": null
+      },
+      {
+         "id": 3,
+         "nom": "Applications métiers internes au service",
+         "eclairage": null
+      },
+      {
+         "id": 4,
+         "nom": "Applications externes au pôle ministériel",
+         "eclairage": null
+      },
+      {
+         "id": 5,
+         "nom": "Applications de gestion interne au service",
+         "eclairage": null
+      }
+   ],
+   "FNV_CategorieNiv1": [
+      {
+         "id": 1,
+         "nom": "Plateforme publique"
+      },
+      {
+         "id": 2,
+         "nom": "Service numérique"
+      },
+      {
+         "id": 3,
+         "nom": "Plateforme de données"
+      }
+   ],
+   "FNV_CategorieNiv2": [
+      {
+         "id": 1,
+         "nom": "Règles socle",
+         "fnv_categ_niv1_id": 1
+      },
+      {
+         "id": 2,
+         "nom": "Infrastructures socle",
+         "fnv_categ_niv1_id": 1
+      },
+      {
+         "id": 3,
+         "nom": "SI métier cœur",
+         "fnv_categ_niv1_id": 2
+      },
+      {
+         "id": 4,
+         "nom": "pour les professionnels",
+         "fnv_categ_niv1_id": 2
+      },
+      {
+         "id": 5,
+         "nom": "pour les citoyens et les professionnels",
+         "fnv_categ_niv1_id": 2
+      },
+      {
+         "id": 6,
+         "nom": "pour les citoyens",
+         "fnv_categ_niv1_id": 2
+      },
+      {
+         "id": 7,
+         "nom": "pour le pilotage",
+         "fnv_categ_niv1_id": 3
+      },
+      {
+         "id": 8,
+         "nom": "pour la recherche et l'innovation",
+         "fnv_categ_niv1_id": 3
+      }
+   ],
+   "FNV_CategorieNiv3": [
+      {
+         "id": 1,
+         "nom": "Éthique",
+         "fnv_categ_niv2_id": 1
+      },
+      {
+         "id": 2,
+         "nom": "Sécurité",
+         "fnv_categ_niv2_id": 1
+      },
+      {
+         "id": 3,
+         "nom": "Interopérabilité",
+         "fnv_categ_niv2_id": 1
+      },
+      {
+         "id": 4,
+         "nom": "Métier",
+         "fnv_categ_niv2_id": 2
+      },
+      {
+         "id": 5,
+         "nom": "Identité citoyens",
+         "fnv_categ_niv2_id": 2
+      },
+      {
+         "id": 6,
+         "nom": "Identité professionnels et structures",
+         "fnv_categ_niv2_id": 2
+      },
+      {
+         "id": 7,
+         "nom": "Identité autre",
+         "fnv_categ_niv2_id": 2
+      },
+      {
+         "id": 8,
+         "nom": "Échange",
+         "fnv_categ_niv2_id": 2
+      },
+      {
+         "id": 9,
+         "nom": "Partage",
+         "fnv_categ_niv2_id": 2
+      },
+      {
+         "id": 10,
+         "nom": "SI des acteurs publics locaux (déconcentré ou décentralisé)",
+         "fnv_categ_niv2_id": 3
+      },
+      {
+         "id": 11,
+         "nom": "SI des acteurs externes",
+         "fnv_categ_niv2_id": 3
+      }
+   ],
+   "FNV_CategorieNiv4": [
+      {
+         "id": 1,
+         "nom": "Annuaire",
+         "fnv_categ_niv3_id": 5
+      },
+      {
+         "id": 2,
+         "nom": "Outil",
+         "fnv_categ_niv3_id": 5
+      },
+      {
+         "id": 3,
+         "nom": "Annuaire",
+         "fnv_categ_niv3_id": 6
+      },
+      {
+         "id": 4,
+         "nom": "Outil",
+         "fnv_categ_niv3_id": 6
+      }
+   ],
+   "FNV_EtatDesLieux": [
+      {
+         "id": 1,
+         "nom": "Inexistant"
+      },
+      {
+         "id": 2,
+         "nom": "Naissant ou bloqué"
+      },
+      {
+         "id": 3,
+         "nom": "Entamé"
+      },
+      {
+         "id": 4,
+         "nom": "Avancé"
+      },
+      {
+         "id": 5,
+         "nom": "Abouti"
+      }
+   ],
+   "FNV_SousThematique": [
+      {
+         "id": 1,
+         "nom": "Rénovation",
+         "fnv_thematique_id": 1
+      },
+      {
+         "id": 3,
+         "nom": "Construction et urbanisme durables",
+         "fnv_thematique_id": 1
+      },
+      {
+         "id": 4,
+         "nom": "Sobriété des usages",
+         "fnv_thematique_id": 1
+      },
+      {
+         "id": 5,
+         "nom": "Transversal",
+         "fnv_thematique_id": 4
+      },
+      {
+         "id": 6,
+         "nom": "Transports publics",
+         "fnv_thematique_id": 2
+      },
+      {
+         "id": 7,
+         "nom": "Covoiturage",
+         "fnv_thematique_id": 2
+      },
+      {
+         "id": 8,
+         "nom": "Stationnement",
+         "fnv_thematique_id": 2
+      },
+      {
+         "id": 9,
+         "nom": "Recharge véhicules électriques",
+         "fnv_thematique_id": 2
+      },
+      {
+         "id": 10,
+         "nom": "Véhicules partagés",
+         "fnv_thematique_id": 2
+      },
+      {
+         "id": 11,
+         "nom": "Taxis, VTC",
+         "fnv_thematique_id": 2
+      },
+      {
+         "id": 12,
+         "nom": "Produire",
+         "fnv_thematique_id": 3
+      },
+      {
+         "id": 13,
+         "nom": "Transformer",
+         "fnv_thematique_id": 3
+      },
+      {
+         "id": 14,
+         "nom": "Eau et milieux aquatiques",
+         "fnv_thematique_id": 4
+      },
+      {
+         "id": 15,
+         "nom": "Forêt",
+         "fnv_thematique_id": 4
+      },
+      {
+         "id": 16,
+         "nom": "Sols",
+         "fnv_thematique_id": 4
+      },
+      {
+         "id": 17,
+         "nom": "Risques et rejets de polluants",
+         "fnv_thematique_id": 4
+      },
+      {
+         "id": 18,
+         "nom": "Climat",
+         "fnv_thematique_id": 4
+      },
+      {
+         "id": 19,
+         "nom": "Déchets et économie circulaire",
+         "fnv_thematique_id": 4
+      },
+      {
+         "id": 20,
+         "nom": "Santé et environnement",
+         "fnv_thematique_id": 4
+      },
+      {
+         "id": 21,
+         "nom": "Biodiversité",
+         "fnv_thematique_id": 4
+      },
+      {
+         "id": 22,
+         "nom": "Mer et littoral",
+         "fnv_thematique_id": 4
+      },
+      {
+         "id": 23,
+         "nom": "Atmosphère",
+         "fnv_thematique_id": 4
+      },
+      {
+         "id": 24,
+         "nom": "Route",
+         "fnv_thematique_id": 2
+      },
+      {
+         "id": 25,
+         "nom": "Multimodalité",
+         "fnv_thematique_id": 2
+      },
+      {
+         "id": 26,
+         "nom": "Impact carbone/biodiversité \"produits\"",
+         "fnv_thematique_id": 6
+      },
+      {
+         "id": 27,
+         "nom": "Impact carbone/biodiversité \"organisation\"",
+         "fnv_thematique_id": 6
+      },
+      {
+         "id": 28,
+         "nom": "Impact carbone/biodiversité \"finance\"",
+         "fnv_thematique_id": 6
+      },
+      {
+         "id": 29,
+         "nom": "Industrie/frêt/numérique",
+         "fnv_thematique_id": 6
+      },
+      {
+         "id": 30,
+         "nom": "Énergie",
+         "fnv_thematique_id": 6
+      },
+      {
+         "id": 31,
+         "nom": "Économie circulaire",
+         "fnv_thematique_id": 5
+      },
+      {
+         "id": 32,
+         "nom": "Vrac",
+         "fnv_thematique_id": 5
+      },
+      {
+         "id": 33,
+         "nom": "Impact carbone \"personnes\"",
+         "fnv_thematique_id": 5
+      },
+      {
+         "id": 34,
+         "nom": "Affichage environnemental (hors alimentaire)",
+         "fnv_thematique_id": 5
+      },
+      {
+         "id": 35,
+         "nom": "Distribuer",
+         "fnv_thematique_id": 3
+      },
+      {
+         "id": 36,
+         "nom": "Consommer",
+         "fnv_thematique_id": 3
+      },
+      {
+         "id": 37,
+         "nom": "Territoires",
+         "fnv_thematique_id": 7
+      }
+   ],
+   "FNV_Thematique": [
+      {
+         "id": 1,
+         "nom": "Se loger"
+      },
+      {
+         "id": 2,
+         "nom": "Se déplacer"
+      },
+      {
+         "id": 3,
+         "nom": "Se nourrir"
+      },
+      {
+         "id": 4,
+         "nom": "Préserver"
+      },
+      {
+         "id": 5,
+         "nom": "Consommer"
+      },
+      {
+         "id": 6,
+         "nom": "Produire"
+      },
+      {
+         "id": 7,
+         "nom": "Transversal"
+      }
+   ],
+   "FonctionApplication": [
+      {
+         "id": 1,
+         "nom": "Collecte"
+      },
+      {
+         "id": 2,
+         "nom": "Concentration"
+      },
+      {
+         "id": 3,
+         "nom": "Valorisation"
+      },
+      {
+         "id": 4,
+         "nom": "Diffusion"
+      },
+      {
+         "id": 5,
+         "nom": "Support"
+      }
+   ],
+   "FournisseurIdentite": [
+      {
+         "id": 1,
+         "nom": "Cerbère"
+      },
+      {
+         "id": 2,
+         "nom": "Cerbère CAS"
+      },
+      {
+         "id": 3,
+         "nom": "FranceConnect"
+      },
+      {
+         "id": 4,
+         "nom": "AgentConnect"
+      },
+      {
+         "id": 5,
+         "nom": "LDAP"
+      },
+      {
+         "id": 6,
+         "nom": "Interne"
+      },
+      {
+         "id": 7,
+         "nom": "Sans authentification"
+      },
+      {
+         "id": 8,
+         "nom": "FranceConnect+"
+      },
+      {
+         "id": 9,
+         "nom": "ProConnect"
+      }
+   ],
+   "FrequenceMAJ": [
+      {
+         "id": 1,
+         "nom": "Tous les 3 ans"
+      },
+      {
+         "id": 2,
+         "nom": "Tous les ans"
+      },
+      {
+         "id": 3,
+         "nom": "2 fois par an"
+      },
+      {
+         "id": 4,
+         "nom": "3 fois par an"
+      },
+      {
+         "id": 5,
+         "nom": "Tous les 3 mois"
+      },
+      {
+         "id": 6,
+         "nom": "Tous les 2 mois"
+      },
+      {
+         "id": 7,
+         "nom": "Tous les mois"
+      },
+      {
+         "id": 8,
+         "nom": "2 fois par mois"
+      },
+      {
+         "id": 9,
+         "nom": "3 fois par mois"
+      },
+      {
+         "id": 10,
+         "nom": "Toutes les semaines"
+      },
+      {
+         "id": 11,
+         "nom": "2 fois par semaine"
+      },
+      {
+         "id": 12,
+         "nom": "3 fois par semaine"
+      },
+      {
+         "id": 13,
+         "nom": "Tous les jours"
+      },
+      {
+         "id": 14,
+         "nom": "2 fois par jour"
+      },
+      {
+         "id": 15,
+         "nom": "3 fois par jour"
+      },
+      {
+         "id": 16,
+         "nom": "Toutes les heures"
+      },
+      {
+         "id": 17,
+         "nom": "Toutes les 30 minutes"
+      },
+      {
+         "id": 18,
+         "nom": "Toutes les 20 minutes"
+      },
+      {
+         "id": 19,
+         "nom": "Toutes les 10 minutes"
+      },
+      {
+         "id": 20,
+         "nom": "Toutes les minutes"
+      },
+      {
+         "id": 21,
+         "nom": "Toutes les 30 secondes"
+      },
+      {
+         "id": 22,
+         "nom": "Toutes les 20 secondes"
+      },
+      {
+         "id": 23,
+         "nom": "Toutes les 10 secondes"
+      },
+      {
+         "id": 24,
+         "nom": "Toutes les secondes"
+      },
+      {
+         "id": 25,
+         "nom": "En continu"
+      },
+      {
+         "id": 26,
+         "nom": "Tous les 2 ans"
+      },
+      {
+         "id": 27,
+         "nom": "Toutes les 2 semaines"
+      },
+      {
+         "id": 28,
+         "nom": "A intervalles irréguliers"
+      }
+   ],
+   "GranulariteGeographique": [
+      {
+         "id": 1,
+         "nom": "Nationale"
+      },
+      {
+         "id": 2,
+         "nom": "Régionale"
+      },
+      {
+         "id": 3,
+         "nom": "Départementale"
+      },
+      {
+         "id": 4,
+         "nom": "Cantonale"
+      },
+      {
+         "id": 5,
+         "nom": "Intercommunale"
+      },
+      {
+         "id": 6,
+         "nom": "Communale"
+      },
+      {
+         "id": 7,
+         "nom": "Infracommunale"
+      },
+      {
+         "id": 8,
+         "nom": "Parcelle"
+      },
+      {
+         "id": 9,
+         "nom": "Kilomètre-carré"
+      },
+      {
+         "id": 10,
+         "nom": "Mètre-carré"
+      },
+      {
+         "id": 11,
+         "nom": "Zonage"
+      }
+   ],
+   "GranulariteTemporelle": [
+      {
+         "id": 1,
+         "nom": "Année"
+      },
+      {
+         "id": 2,
+         "nom": "Trimestre"
+      },
+      {
+         "id": 3,
+         "nom": "Bimestre"
+      },
+      {
+         "id": 4,
+         "nom": "Mois"
+      },
+      {
+         "id": 5,
+         "nom": "Semaine"
+      },
+      {
+         "id": 6,
+         "nom": "Jour"
+      },
+      {
+         "id": 7,
+         "nom": "Heure"
+      },
+      {
+         "id": 8,
+         "nom": "Minute"
+      },
+      {
+         "id": 9,
+         "nom": "Seconde"
+      },
+      {
+         "id": 10,
+         "nom": "Multi-années"
+      }
+   ],
+   "ModeAcces": [
+      {
+         "id": 1,
+         "nom": "Internet"
+      },
+      {
+         "id": 2,
+         "nom": "Réseau interministériel de l'État (RIE)"
+      },
+      {
+         "id": 3,
+         "nom": "Intranet du ministère"
+      },
+      {
+         "id": 4,
+         "nom": "Offline"
+      },
+      {
+         "id": 5,
+         "nom": "Support numérique"
+      }
+   ],
+   "NatureBase": [
+      {
+         "id": 1,
+         "nom": "Cumulative"
+      },
+      {
+         "id": 2,
+         "nom": "Révisable"
+      }
+   ],
+   "NatureCourriel": [
+      {
+         "id": 1,
+         "nom": "Boîte mail assistance utilisateur"
+      }
+   ],
+   "NatureURL": [
+      {
+         "id": 1,
+         "nom": "Site de production"
+      },
+      {
+         "id": 2,
+         "nom": "Site de pré-production"
+      },
+      {
+         "id": 3,
+         "nom": "Site de recette"
+      },
+      {
+         "id": 4,
+         "nom": "Site école"
+      },
+      {
+         "id": 5,
+         "nom": "Page de l'application sur la forge"
+      },
+      {
+         "id": 6,
+         "nom": "Page de l'application sur Spote"
+      },
+      {
+         "id": 7,
+         "nom": "Page de l'application sur SPS"
+      },
+      {
+         "id": 8,
+         "nom": "Site de ticketing de l'application sur SPS"
+      },
+      {
+         "id": 9,
+         "nom": "Page de l'application dans le wiki SI"
+      },
+      {
+         "id": 10,
+         "nom": "Site d'information"
+      },
+      {
+         "id": 11,
+         "nom": "Site de supervision"
+      },
+      {
+         "id": 12,
+         "nom": "Infocentre"
+      },
+      {
+         "id": 13,
+         "nom": "Page d'échanges sur Ariane"
+      },
+      {
+         "id": 14,
+         "nom": "Page d'échanges sur Tchap"
+      },
+      {
+         "id": 15,
+         "nom": "Page de l'application sur Matomo"
+      },
+      {
+         "id": 16,
+         "nom": "Backoffice de production"
+      },
+      {
+         "id": 17,
+         "nom": "Backoffice de pré-production"
+      },
+      {
+         "id": 18,
+         "nom": "Audiences de visites"
+      }
+   ],
+   "Obligation": [
+      {
+         "id": 1,
+         "nom": "Non"
+      },
+      {
+         "id": 2,
+         "nom": "Réglementaire"
+      },
+      {
+         "id": 3,
+         "nom": "Légale"
+      },
+      {
+         "id": 4,
+         "nom": "Européenne"
+      },
+      {
+         "id": 5,
+         "nom": "Open data"
+      }
+   ],
+   "OpenData_Perspective": [
+      {
+         "id": 1,
+         "nom": "(non pertinent)"
+      },
+      {
+         "id": 2,
+         "nom": "À préciser"
+      },
+      {
+         "id": 3,
+         "nom": "Aucune"
+      },
+      {
+         "id": 4,
+         "nom": "Déjà ouvert"
+      },
+      {
+         "id": 5,
+         "nom": "Oui : à prévoir"
+      },
+      {
+         "id": 6,
+         "nom": "Pas envisagé"
+      }
+   ],
+   "OpenData_Statut": [
+      {
+         "id": 1,
+         "nom": "Non"
+      },
+      {
+         "id": 2,
+         "nom": "Oui"
+      },
+      {
+         "id": 3,
+         "nom": "Oui partiellement"
+      }
+   ],
+   "Outil": [
+      {
+         "id": 1,
+         "nom": "Oracle"
+      },
+      {
+         "id": 2,
+         "nom": "PostgreSQL"
+      },
+      {
+         "id": 3,
+         "nom": "MySQL"
+      },
+      {
+         "id": 4,
+         "nom": "Microsoft Access"
+      },
+      {
+         "id": 5,
+         "nom": "LibreOffice Base"
+      },
+      {
+         "id": 6,
+         "nom": "Microsoft Excel"
+      },
+      {
+         "id": 7,
+         "nom": "LibreOffice Calc"
+      },
+      {
+         "id": 8,
+         "nom": "SAS"
+      },
+      {
+         "id": 9,
+         "nom": "QGIS"
+      },
+      {
+         "id": 10,
+         "nom": "Autre"
+      },
+      {
+         "id": 11,
+         "nom": "MongoDB"
+      },
+      {
+         "id": 13,
+         "nom": "EcoSQL/PostgreSQL"
+      }
+   ],
+   "Plateforme": [
+      {
+         "id": 1,
+         "nom": "Eco Compose (ECO4)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 2,
+         "nom": "DataHub (ECO4)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 3,
+         "nom": "ECO SQL (ECO4)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 4,
+         "nom": "ECO Java (ECO4)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 5,
+         "nom": "ECO PHP (ECO4)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 6,
+         "nom": "IaaS (ECO4)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 7,
+         "nom": "VMware (Clusters ESXi)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 8,
+         "nom": "WACS (Clusters ESXi)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 9,
+         "nom": "Plateforme dédiée",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 10,
+         "nom": "Forge ministérielle (Gitlab)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 11,
+         "nom": "Org. MTES-MCT Fabrique numérique",
+         "dataCenter_id": 4
+      },
+      {
+         "id": 12,
+         "nom": "Hors org. MTES-MCT Fabrique numérique",
+         "dataCenter_id": 4
+      },
+      {
+         "id": 13,
+         "nom": "IaaS (EcoCloud)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 14,
+         "nom": "ECO Java (ECOCloud)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 15,
+         "nom": "ECO PHP (ECOCloud)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 16,
+         "nom": "ACAI - Java ACAI (Clusters ESXi)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 17,
+         "nom": "ALAI - PHP (Clusters ESXi)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 18,
+         "nom": "ADAI - PHP ACAI (Clusters ESXi)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 19,
+         "nom": "WEBSTATIC (Clusters ESXi)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 20,
+         "nom": "PHP",
+         "dataCenter_id": 6
+      },
+      {
+         "id": 21,
+         "nom": "SaaS (ECO4)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 22,
+         "nom": "SaaS (ECOCloud)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 23,
+         "nom": "CaaS (ECO4)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 24,
+         "nom": "CaaS (ECOCloud)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 25,
+         "nom": "SaaS (Clusters ESXi)",
+         "dataCenter_id": 1
+      },
+      {
+         "id": 26,
+         "nom": "demarches-simplifiees.fr",
+         "dataCenter_id": 7
+      },
+      {
+         "id": 27,
+         "nom": "Docker",
+         "dataCenter_id": 1
+      }
+   ],
+   "PorteeGeographique": [
+      {
+         "id": 1,
+         "nom": "Internationale"
+      },
+      {
+         "id": 2,
+         "nom": "Européenne"
+      },
+      {
+         "id": 3,
+         "nom": "Nationale"
+      },
+      {
+         "id": 4,
+         "nom": "Régionale"
+      },
+      {
+         "id": 5,
+         "nom": "Infrarégionale"
+      }
+   ],
+   "QualiteDonnees": [
+      {
+         "id": 1,
+         "nom": "Aucun niveau de qualité garanti"
+      },
+      {
+         "id": 2,
+         "nom": "Déclarations d'utilisateurs"
+      },
+      {
+         "id": 3,
+         "nom": "Processus qualité"
+      },
+      {
+         "id": 4,
+         "nom": "Fiabilité des variables documentée"
+      }
+   ],
+   "Region": [
+      {
+         "id": 1,
+         "nom": "Auvergne-Rhône-Alpes"
+      },
+      {
+         "id": 2,
+         "nom": "Bourgogne-Franche-Comté"
+      },
+      {
+         "id": 3,
+         "nom": "Bretagne"
+      },
+      {
+         "id": 4,
+         "nom": "Centre-Val de Loire"
+      },
+      {
+         "id": 5,
+         "nom": "Corse"
+      },
+      {
+         "id": 6,
+         "nom": "Grand Est"
+      },
+      {
+         "id": 7,
+         "nom": "Hauts-de-France"
+      },
+      {
+         "id": 8,
+         "nom": "Île-de-France"
+      },
+      {
+         "id": 9,
+         "nom": "Normandie"
+      },
+      {
+         "id": 10,
+         "nom": "Nouvelle-Aquitaine"
+      },
+      {
+         "id": 11,
+         "nom": "Occitanie"
+      },
+      {
+         "id": 12,
+         "nom": "Pays de la Loire"
+      },
+      {
+         "id": 13,
+         "nom": "Provence-Alpes-Côte d'Azur"
+      },
+      {
+         "id": 14,
+         "nom": "Guadeloupe"
+      },
+      {
+         "id": 15,
+         "nom": "Guyane"
+      },
+      {
+         "id": 16,
+         "nom": "Martinique"
+      },
+      {
+         "id": 17,
+         "nom": "La Réunion"
+      },
+      {
+         "id": 18,
+         "nom": "Mayotte"
+      }
+   ],
+   "ReseauPublication": [
+      {
+         "id": 1,
+         "nom": "Internet"
+      },
+      {
+         "id": 2,
+         "nom": "RIE"
+      },
+      {
+         "id": 3,
+         "nom": "Intranet"
+      },
+      {
+         "id": 4,
+         "nom": "Interne au centre-serveur"
+      }
+   ],
+   "RGPD_BaseJuridiqueTraitement": [
+      {
+         "id": 1,
+         "nom": "Consentement"
+      },
+      {
+         "id": 2,
+         "nom": "Contrat passé par la personne concernée"
+      },
+      {
+         "id": 3,
+         "nom": "Obligation juridique du responsable du traitement"
+      },
+      {
+         "id": 4,
+         "nom": "Sauvegarde d'intérêts vitaux"
+      },
+      {
+         "id": 5,
+         "nom": "Mission d'intérêt public"
+      }
+   ],
+   "RGPD_CategorieDACP": [
+      {
+         "id": 1,
+         "nom": "1. Données de santé (RGPD-art.9 et LIL-art.6)"
+      },
+      {
+         "id": 2,
+         "nom": "2. Données révélant l'origine raciale ou ethnique, les opinions politiques, les convictions religieuses ou philosophiques ou l'appartenance syndicale (RGPD-art.9 et LIL-art.6)"
+      },
+      {
+         "id": 3,
+         "nom": "3. Données concernant la vie sexuelle ou l'orientation sexuelle d'une personne physique (RGPD-art.9 et LIL-art.6)"
+      },
+      {
+         "id": 4,
+         "nom": "4. Données biométriques ou génétiques (RGPD-art.9 et LIL-art.6)"
+      },
+      {
+         "id": 5,
+         "nom": "5. Données d'ordre fiscal"
+      },
+      {
+         "id": 6,
+         "nom": "6. Numéro d'identification des personnes au registre national d'identification des personnes physiques (numéro NIR – LIL-art. 30 et décret n°2019-341)"
+      },
+      {
+         "id": 7,
+         "nom": "7. Condamnations et décisions de justice inscrites au bulletin du casier judiciaire"
+      },
+      {
+         "id": 8,
+         "nom": "8. Données portant appréciation des personnes concernées"
+      },
+      {
+         "id": 9,
+         "nom": "9. Données relatives aux sanctions ou mesures disciplinaires infligées aux personnes concernées"
+      },
+      {
+         "id": 10,
+         "nom": "10. Données révélant des difficultés d'ordre social et/ou économique"
+      }
+   ],
+   "RGPD_CategorieFinalite": [
+      {
+         "id": 1,
+         "nom": "1. Le traitement a pour objet la mise en œuvre d'un téléservice au sens de l'article 1er de l'ordonnance 2005-1516"
+      },
+      {
+         "id": 2,
+         "nom": "2. Le traitement a un objet en lien avec la sécurité publique, la sécurité du territoire, la défense ou la prévention des actes de terrorisme (LIL-art.31.I.1)"
+      },
+      {
+         "id": 3,
+         "nom": "3. Le traitement a un objet disciplinaire"
+      },
+      {
+         "id": 4,
+         "nom": "4. Le traitement a un objet en lien avec la prévention, la recherche, la constatation et/ ou la poursuite des infractions pénales (RGPD-art.2.2.d et LIL-art.31.I.21)"
+      },
+      {
+         "id": 5,
+         "nom": "5. Le traitement est interconnecté avec d'autres fichiers ou traitements poursuivant une finalité différente"
+      },
+      {
+         "id": 6,
+         "nom": "6. Le traitement a un objet médical"
+      },
+      {
+         "id": 7,
+         "nom": "7. Le traitement transfert des données traitées en dehors de l'administration"
+      },
+      {
+         "id": 8,
+         "nom": "8. Vers l'étranger dans l'UE"
+      },
+      {
+         "id": 9,
+         "nom": "9. Vers l'étranger hors UE (LIL-art.112-114)"
+      }
+   ],
+   "RGPD_CategorieTraceur": [
+      {
+         "id": 1,
+         "nom": "Pas de traceur"
+      },
+      {
+         "id": 2,
+         "nom": "Exemptés de consentement"
+      },
+      {
+         "id": 3,
+         "nom": "Nécessitant le recueil du consentement préalable"
+      }
+   ],
+   "RGPD_CategorieTraitement": [
+      {
+         "id": 1,
+         "nom": "1. Évaluation systématique ou approfondie d'aspects personnels concernant des personnes physiques (RGPD-art.35.3.a et GT29-p.10.1)"
+      },
+      {
+         "id": 2,
+         "nom": "2. Profilage (RGPD-art.35.3.a et GT29-p.11.2)"
+      },
+      {
+         "id": 3,
+         "nom": "3. Décision automatisée avec effet juridique ou effet similaire significatif (RGPD-art.35.3.a et GT29-p.11.2)"
+      },
+      {
+         "id": 4,
+         "nom": "4. Surveillance systématique (RGPD-art.35.3.c et GT29-p.11.3)"
+      },
+      {
+         "id": 5,
+         "nom": "5. Vidéoprotection / vidéosurveillance (RGPD-art.35.3.c et GT29-p.11)"
+      },
+      {
+         "id": 6,
+         "nom": "6. Données à caractère hautement personnel (RGPD-art.9-10 et GT29-p.11.4)"
+      },
+      {
+         "id": 7,
+         "nom": "7. Données personnelles sensibles ou données à caractère personnel relatives à des condamnations pénales et à des infractions au sens des articles 9 et 10 du RGPD traitées à grande échelle (GT29-p.12.5)"
+      },
+      {
+         "id": 8,
+         "nom": "8. Croisement d'ensembles de données (GT29-p.12.6)"
+      },
+      {
+         "id": 9,
+         "nom": "9. Données concernant des personnes vulnérables (GT29-p.12.7)"
+      },
+      {
+         "id": 10,
+         "nom": "10. Usage innovant ou application de nouvelles solutions technologiques ou organisationnelles (GT29-p.12.8)"
+      },
+      {
+         "id": 11,
+         "nom": "11. Exclusion du bénéfice d'un droit, d'un service ou contrat (GT29-p.12.9)"
+      }
+   ],
+   "RGPD_ConformiteTraceur": [
+      {
+         "id": 1,
+         "nom": "Conforme"
+      },
+      {
+         "id": 2,
+         "nom": "Non conforme"
+      }
+   ],
+   "RGPD_ModaliteInfo": [
+      {
+         "id": 1,
+         "nom": "Lors de la saisie dans ce traitement"
+      },
+      {
+         "id": 2,
+         "nom": "Ultérieurement"
+      }
+   ],
+   "RGPD_ModaliteInfo_EnvoiMails": [
+      {
+         "id": 1,
+         "nom": "Envoi automatisé de courriels"
+      },
+      {
+         "id": 2,
+         "nom": "Envoi semi-automatisé de courriels"
+      },
+      {
+         "id": 3,
+         "nom": "Envoi manuel de courriels"
+      },
+      {
+         "id": 4,
+         "nom": "Pas d'envoi de courriels"
+      }
+   ],
+   "RGPD_ModeCollecteDonnees": [
+      {
+         "id": 1,
+         "nom": "Saisies dans ce traitement par la personne concernée"
+      },
+      {
+         "id": 2,
+         "nom": "Obtenues à partir de tiers"
+      }
+   ],
+   "SIFederateur": [
+      {
+         "id": 1,
+         "nom": "SI Milieux marins"
+      },
+      {
+         "id": 2,
+         "nom": "SI Biodiversité"
+      },
+      {
+         "id": 3,
+         "nom": "SI Eau"
+      }
+   ],
+   "SIMetier": [
+      {
+         "id": 1,
+         "nom": "Autorisations d'occupation temporaire du domaine public maritime",
+         "siFederateurReferent_id": 1
+      },
+      {
+         "id": 2,
+         "nom": "Conventions internationales de mers régionales",
+         "siFederateurReferent_id": 1
+      },
+      {
+         "id": 3,
+         "nom": "Directive-cadre sur la planification de l'espace maritime",
+         "siFederateurReferent_id": 1
+      },
+      {
+         "id": 4,
+         "nom": "Politique de contrôle pour l'environnement marin",
+         "siFederateurReferent_id": 1
+      },
+      {
+         "id": 5,
+         "nom": "Pollutions accidentelles milieu marin",
+         "siFederateurReferent_id": 1
+      },
+      {
+         "id": 6,
+         "nom": "Sécurité sanitaire des produits de la mer",
+         "siFederateurReferent_id": 1
+      },
+      {
+         "id": 7,
+         "nom": "Aires marines protégées",
+         "siFederateurReferent_id": 1
+      },
+      {
+         "id": 8,
+         "nom": "Directive-cadre « stratégie pour le milieu marin »",
+         "siFederateurReferent_id": 1
+      },
+      {
+         "id": 9,
+         "nom": "Pêche et aquaculture en mer",
+         "siFederateurReferent_id": 1
+      },
+      {
+         "id": 10,
+         "nom": "Récifs coralliens et mangroves",
+         "siFederateurReferent_id": 1
+      },
+      {
+         "id": 11,
+         "nom": "Accès et le partage des avantages",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 12,
+         "nom": "Artificialisation des sols",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 13,
+         "nom": "CITES",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 14,
+         "nom": "Encadrement des usages du patrimoine naturel",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 15,
+         "nom": "Gestion adaptative des espèces",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 16,
+         "nom": "Inventaire national des ressources forestières",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 17,
+         "nom": "Lutte contre le changement climatique",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 18,
+         "nom": "Paysages",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 19,
+         "nom": "Permis de chasser",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 20,
+         "nom": "Plans nationaux d'action",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 21,
+         "nom": "Réseaux de surveillance épidémiologique de la faune sauvage",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 22,
+         "nom": "Statistique agricole",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 23,
+         "nom": "Trames vertes et bleues",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 24,
+         "nom": "Conservation des espèces et des habitats",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 25,
+         "nom": "Espaces réglementés au titre du patrimoine naturel",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 26,
+         "nom": "Espèces exotiques envahissantes",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 27,
+         "nom": "Études d'impact sur l'environnement",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 28,
+         "nom": "Installations de production d'énergies renouvelables",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 29,
+         "nom": "Inventaire du patrimoine naturel",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 30,
+         "nom": "Mesures compensatoires",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 31,
+         "nom": "Natura 2000",
+         "siFederateurReferent_id": 2
+      },
+      {
+         "id": 32,
+         "nom": "Hydrométrie et prévision des crues",
+         "siFederateurReferent_id": 3
+      },
+      {
+         "id": 33,
+         "nom": "Services publics d'eau et d'assainissement",
+         "siFederateurReferent_id": 3
+      },
+      {
+         "id": 34,
+         "nom": "Aides et redevances",
+         "siFederateurReferent_id": 3
+      },
+      {
+         "id": 35,
+         "nom": "Contrôles de police de l'eau et de la nature",
+         "siFederateurReferent_id": 3
+      },
+      {
+         "id": 36,
+         "nom": "Installations classées pour la protection de l'environnement",
+         "siFederateurReferent_id": 3
+      },
+      {
+         "id": 37,
+         "nom": "Pêche et aquaculture en eau douce",
+         "siFederateurReferent_id": 3
+      },
+      {
+         "id": 38,
+         "nom": "Planification de l'eau et des milieux aquatiques",
+         "siFederateurReferent_id": 3
+      },
+      {
+         "id": 39,
+         "nom": "Réglementation des usages de l'eau",
+         "siFederateurReferent_id": 3
+      },
+      {
+         "id": 40,
+         "nom": "Santé-environnement sur les eaux, comprenant les eaux de baignade",
+         "siFederateurReferent_id": 3
+      },
+      {
+         "id": 41,
+         "nom": "Évaluation et gestion des risques d'inondation",
+         "siFederateurReferent_id": 3
+      }
+   ],
+   "SousDomaineMetier": [
+      {
+         "id": 1,
+         "nom": "Études d'impact sur l'environnement",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 2,
+         "nom": "Échanges et relations",
+         "domaineMetier_id": 7
+      },
+      {
+         "id": 3,
+         "nom": "Information environnementale",
+         "domaineMetier_id": 16
+      },
+      {
+         "id": 4,
+         "nom": "Énergie",
+         "domaineMetier_id": 16
+      },
+      {
+         "id": 5,
+         "nom": "Logement et construction",
+         "domaineMetier_id": 16
+      },
+      {
+         "id": 6,
+         "nom": "Transports",
+         "domaineMetier_id": 16
+      },
+      {
+         "id": 7,
+         "nom": "Mines",
+         "domaineMetier_id": 17
+      },
+      {
+         "id": 8,
+         "nom": "Carrières",
+         "domaineMetier_id": 17
+      },
+      {
+         "id": 9,
+         "nom": "Référentiels",
+         "domaineMetier_id": 17
+      },
+      {
+         "id": 10,
+         "nom": "Référentiels",
+         "domaineMetier_id": 19
+      },
+      {
+         "id": 11,
+         "nom": "Gestion administrative et paie agent",
+         "domaineMetier_id": 7
+      },
+      {
+         "id": 12,
+         "nom": "Parcours professionnels",
+         "domaineMetier_id": 7
+      },
+      {
+         "id": 13,
+         "nom": "Santé, action et dialogue social",
+         "domaineMetier_id": 7
+      },
+      {
+         "id": 14,
+         "nom": "Lutte contre l'habitat indigne",
+         "domaineMetier_id": 4
+      },
+      {
+         "id": 15,
+         "nom": "Référentiels",
+         "domaineMetier_id": 4
+      },
+      {
+         "id": 16,
+         "nom": "Sites et paysages",
+         "domaineMetier_id": 5
+      },
+      {
+         "id": 17,
+         "nom": "Fiscalité",
+         "domaineMetier_id": 5
+      },
+      {
+         "id": 18,
+         "nom": "Référentiels",
+         "domaineMetier_id": 5
+      },
+      {
+         "id": 19,
+         "nom": "Santé-environnement sur les eaux, comprenant les eaux de baignade",
+         "domaineMetier_id": 3
+      },
+      {
+         "id": 20,
+         "nom": "Pilotage et contrôle",
+         "domaineMetier_id": 7
+      },
+      {
+         "id": 21,
+         "nom": "Transports fluviaux",
+         "domaineMetier_id": 20
+      },
+      {
+         "id": 22,
+         "nom": "Transports maritimes",
+         "domaineMetier_id": 20
+      },
+      {
+         "id": 23,
+         "nom": "Transports routiers",
+         "domaineMetier_id": 20
+      },
+      {
+         "id": 24,
+         "nom": "Sûreté des transports",
+         "domaineMetier_id": 20
+      },
+      {
+         "id": 25,
+         "nom": "Transports publics particuliers de personnes",
+         "domaineMetier_id": 20
+      },
+      {
+         "id": 26,
+         "nom": "Transports guidés",
+         "domaineMetier_id": 20
+      },
+      {
+         "id": 27,
+         "nom": "Installations classées pour la protection de l'environnement",
+         "domaineMetier_id": 3
+      },
+      {
+         "id": 28,
+         "nom": "Connaissance du patrimoine routier",
+         "domaineMetier_id": 21
+      },
+      {
+         "id": 29,
+         "nom": "Explication et information routières",
+         "domaineMetier_id": 21
+      },
+      {
+         "id": 30,
+         "nom": "Investissements routiers",
+         "domaineMetier_id": 21
+      },
+      {
+         "id": 31,
+         "nom": "Ingénierie",
+         "domaineMetier_id": 21
+      },
+      {
+         "id": 32,
+         "nom": "Pilotage DIR",
+         "domaineMetier_id": 21
+      },
+      {
+         "id": 33,
+         "nom": "Hydrométrie et prévision des crues",
+         "domaineMetier_id": 3
+      },
+      {
+         "id": 34,
+         "nom": "Sécurité maritime",
+         "domaineMetier_id": 22
+      },
+      {
+         "id": 35,
+         "nom": "Gens de la mer",
+         "domaineMetier_id": 22
+      },
+      {
+         "id": 36,
+         "nom": "Pêche de plaisance",
+         "domaineMetier_id": 22
+      },
+      {
+         "id": 37,
+         "nom": "Evaluation et gestion des risques d'inondation",
+         "domaineMetier_id": 3
+      },
+      {
+         "id": 38,
+         "nom": "Activités à risque",
+         "domaineMetier_id": 23
+      },
+      {
+         "id": 39,
+         "nom": "Pollutions atmosphériques et terrestres",
+         "domaineMetier_id": 23
+      },
+      {
+         "id": 40,
+         "nom": "Accidents industriels",
+         "domaineMetier_id": 23
+      },
+      {
+         "id": 41,
+         "nom": "Sûreté nucléaire",
+         "domaineMetier_id": 23
+      },
+      {
+         "id": 42,
+         "nom": "Référentiels",
+         "domaineMetier_id": 3
+      },
+      {
+         "id": 43,
+         "nom": "Nuisances",
+         "domaineMetier_id": 24
+      },
+      {
+         "id": 44,
+         "nom": "Déchets",
+         "domaineMetier_id": 24
+      },
+      {
+         "id": 45,
+         "nom": "Conventions internationales de mers régionales",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 46,
+         "nom": "Eau inondation",
+         "domaineMetier_id": 25
+      },
+      {
+         "id": 47,
+         "nom": "Prévention des risques majeurs",
+         "domaineMetier_id": 25
+      },
+      {
+         "id": 48,
+         "nom": "Risques naturels terrestres",
+         "domaineMetier_id": 25
+      },
+      {
+         "id": 49,
+         "nom": "Récifs et mangroves",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 50,
+         "nom": "Marchés de l'énergie",
+         "domaineMetier_id": 26
+      },
+      {
+         "id": 51,
+         "nom": "Produits énergétiques",
+         "domaineMetier_id": 26
+      },
+      {
+         "id": 52,
+         "nom": "Sécurité des véhicules",
+         "domaineMetier_id": 27
+      },
+      {
+         "id": 53,
+         "nom": "Autorisation unique environnementale",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 54,
+         "nom": "Efficacité énergétique",
+         "domaineMetier_id": 27
+      },
+      {
+         "id": 55,
+         "nom": "Changement climatique",
+         "domaineMetier_id": 27
+      },
+      {
+         "id": 56,
+         "nom": "Qualité de l'air",
+         "domaineMetier_id": 27
+      },
+      {
+         "id": 57,
+         "nom": "Police de l'eau et de la nature",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 58,
+         "nom": "Gestion des affaires",
+         "domaineMetier_id": 28
+      },
+      {
+         "id": 59,
+         "nom": "Contentieux",
+         "domaineMetier_id": 28
+      },
+      {
+         "id": 60,
+         "nom": "Procédures normatives",
+         "domaineMetier_id": 28
+      },
+      {
+         "id": 61,
+         "nom": "Autorisations d'occupation temporaire du domaine public maritime",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 62,
+         "nom": "Achats",
+         "domaineMetier_id": 29
+      },
+      {
+         "id": 63,
+         "nom": "Eaux de baignade",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 64,
+         "nom": "Courrier",
+         "domaineMetier_id": 30
+      },
+      {
+         "id": 65,
+         "nom": "Documentation",
+         "domaineMetier_id": 30
+      },
+      {
+         "id": 66,
+         "nom": "Aides et redevances des agences et offices de l'eau",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 67,
+         "nom": "Archives",
+         "domaineMetier_id": 31
+      },
+      {
+         "id": 68,
+         "nom": "Politique de contrôle pour l'environnement marin",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 69,
+         "nom": "Gestion des biens mobiliers",
+         "domaineMetier_id": 32
+      },
+      {
+         "id": 70,
+         "nom": "Sécurité sanitaire des produits de la mer",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 71,
+         "nom": "Gestion opérations immobilières",
+         "domaineMetier_id": 33
+      },
+      {
+         "id": 72,
+         "nom": "Planification de l'eau et des milieux aquatiques",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 73,
+         "nom": "Activités et contrôles aérien",
+         "domaineMetier_id": 34
+      },
+      {
+         "id": 74,
+         "nom": "Pollutions accidentelles milieu marin",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 75,
+         "nom": "Supervision des activités aéronautiques",
+         "domaineMetier_id": 35
+      },
+      {
+         "id": 76,
+         "nom": "Directive-cadre « stratégie pour le milieu marin »",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 77,
+         "nom": "Gestion de la sécurité",
+         "domaineMetier_id": 36
+      },
+      {
+         "id": 78,
+         "nom": "Directive-cadre sur la planification de l'espace maritime",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 79,
+         "nom": "Pilotage (planification, urbanisation, affectation des ressources)",
+         "domaineMetier_id": 9
+      },
+      {
+         "id": 80,
+         "nom": "Gestion de la connaissance SI",
+         "domaineMetier_id": 9
+      },
+      {
+         "id": 81,
+         "nom": "Études, développement et entretien des applications",
+         "domaineMetier_id": 9
+      },
+      {
+         "id": 82,
+         "nom": "Construction, évolution et entretien des infrastructures",
+         "domaineMetier_id": 9
+      },
+      {
+         "id": 83,
+         "nom": "Gestion du parc et des configurations",
+         "domaineMetier_id": 9
+      },
+      {
+         "id": 84,
+         "nom": "Production, exploitation et supervision",
+         "domaineMetier_id": 9
+      },
+      {
+         "id": 85,
+         "nom": "Soutien aux utilisateurs",
+         "domaineMetier_id": 9
+      },
+      {
+         "id": 86,
+         "nom": "Sécurité des SI",
+         "domaineMetier_id": 9
+      },
+      {
+         "id": 87,
+         "nom": "Communication",
+         "domaineMetier_id": 10
+      },
+      {
+         "id": 88,
+         "nom": "Campagne",
+         "domaineMetier_id": 10
+      },
+      {
+         "id": 89,
+         "nom": "Satisfaction",
+         "domaineMetier_id": 10
+      },
+      {
+         "id": 90,
+         "nom": "Sondage",
+         "domaineMetier_id": 10
+      },
+      {
+         "id": 91,
+         "nom": "Écoute",
+         "domaineMetier_id": 10
+      },
+      {
+         "id": 92,
+         "nom": "Gestion des tâches",
+         "domaineMetier_id": 11
+      },
+      {
+         "id": 93,
+         "nom": "Agenda",
+         "domaineMetier_id": 11
+      },
+      {
+         "id": 94,
+         "nom": "Collaboratif",
+         "domaineMetier_id": 11
+      },
+      {
+         "id": 95,
+         "nom": "Messagerie",
+         "domaineMetier_id": 11
+      },
+      {
+         "id": 96,
+         "nom": "Échange",
+         "domaineMetier_id": 11
+      },
+      {
+         "id": 97,
+         "nom": "Gestion des documents",
+         "domaineMetier_id": 12
+      },
+      {
+         "id": 98,
+         "nom": "Personnalisations",
+         "domaineMetier_id": 12
+      },
+      {
+         "id": 99,
+         "nom": "Analyse de données en support aux missions",
+         "domaineMetier_id": 48
+      },
+      {
+         "id": 100,
+         "nom": "Connaissance et entretien des compétences",
+         "domaineMetier_id": 48
+      },
+      {
+         "id": 101,
+         "nom": "Réglementation des usages de l'eau",
+         "domaineMetier_id": 3
+      },
+      {
+         "id": 102,
+         "nom": "Planification",
+         "domaineMetier_id": 3
+      },
+      {
+         "id": 103,
+         "nom": "Aides et redevances",
+         "domaineMetier_id": 3
+      },
+      {
+         "id": 104,
+         "nom": "Services publics d'eau et d'assainissement",
+         "domaineMetier_id": 3
+      },
+      {
+         "id": 105,
+         "nom": "Parcours logement privé",
+         "domaineMetier_id": 4
+      },
+      {
+         "id": 106,
+         "nom": "Protection et préservation du milieu marin",
+         "domaineMetier_id": 3
+      },
+      {
+         "id": 108,
+         "nom": "Mesures compensatoires",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 109,
+         "nom": "Fonctions transverses",
+         "domaineMetier_id": 7
+      },
+      {
+         "id": 110,
+         "nom": "Aires marines protégées",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 111,
+         "nom": "Contrôles de police de l'eau et de la nature",
+         "domaineMetier_id": 3
+      },
+      {
+         "id": 112,
+         "nom": "Conservation des espèces et des habitats",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 113,
+         "nom": "OBSOLÈTE - Connaissance de la biodiversité",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 114,
+         "nom": "Espaces réglementés au titre du patrimoine naturel",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 115,
+         "nom": "OBSOLÈTE - Eau - Portails, plates-formes fédératives",
+         "domaineMetier_id": 3
+      },
+      {
+         "id": 116,
+         "nom": "Application du droit des sols",
+         "domaineMetier_id": 5
+      },
+      {
+         "id": 117,
+         "nom": "Qualité de la construction",
+         "domaineMetier_id": 4
+      },
+      {
+         "id": 118,
+         "nom": "Parcours logement social",
+         "domaineMetier_id": 4
+      },
+      {
+         "id": 119,
+         "nom": "Aide à la pierre",
+         "domaineMetier_id": 4
+      },
+      {
+         "id": 120,
+         "nom": "Planification et connaissance",
+         "domaineMetier_id": 5
+      },
+      {
+         "id": 121,
+         "nom": "Espaces protégés",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 122,
+         "nom": "Aménagement durable",
+         "domaineMetier_id": 19
+      },
+      {
+         "id": 123,
+         "nom": "Foncier",
+         "domaineMetier_id": 19
+      },
+      {
+         "id": 124,
+         "nom": "Planification et connaissance",
+         "domaineMetier_id": 4
+      },
+      {
+         "id": 125,
+         "nom": "Information géographique",
+         "domaineMetier_id": 6
+      },
+      {
+         "id": 126,
+         "nom": "Pêche professionnelle",
+         "domaineMetier_id": 22
+      },
+      {
+         "id": 127,
+         "nom": "Aquaculture",
+         "domaineMetier_id": 22
+      },
+      {
+         "id": 128,
+         "nom": "Flotte de commerce",
+         "domaineMetier_id": 22
+      },
+      {
+         "id": 129,
+         "nom": "Décisionnel, Data",
+         "domaineMetier_id": 22
+      },
+      {
+         "id": 139,
+         "nom": "Nucléaire",
+         "domaineMetier_id": 26
+      },
+      {
+         "id": 140,
+         "nom": "Ressources du sous-sol",
+         "domaineMetier_id": 26
+      },
+      {
+         "id": 144,
+         "nom": "Diffusion/publication/archivage",
+         "domaineMetier_id": 48
+      },
+      {
+         "id": 145,
+         "nom": "Marchés du carbone",
+         "domaineMetier_id": 27
+      },
+      {
+         "id": 146,
+         "nom": "Chaleur",
+         "domaineMetier_id": 27
+      },
+      {
+         "id": 147,
+         "nom": "Verdissement des véhicules",
+         "domaineMetier_id": 27
+      },
+      {
+         "id": 151,
+         "nom": "Aires marines protégées",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 152,
+         "nom": "Paysages",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 153,
+         "nom": "Trames vertes et bleues",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 154,
+         "nom": "CITES",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 155,
+         "nom": "Natura 2000",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 156,
+         "nom": "Espèces exotiques envahissantes",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 157,
+         "nom": "Espèces protégées",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 158,
+         "nom": "Référentiels",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 159,
+         "nom": "Inventaire du patrimoine naturel",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 160,
+         "nom": "Espèces exotiques envahissantes",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 161,
+         "nom": "Plans nationaux d'action",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 162,
+         "nom": "Encadrement des usages du patrimoine naturel",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 163,
+         "nom": "Accès et partage des avantages",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 164,
+         "nom": "Natura 2000",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 165,
+         "nom": "Gestion adaptative des espèces",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 166,
+         "nom": "Permis de chasser",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 167,
+         "nom": "Récifs coralliens et mangroves",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 168,
+         "nom": "Pêche et aquaculture en eau douce",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 169,
+         "nom": "Référentiels",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 170,
+         "nom": "Système électrique",
+         "domaineMetier_id": 26
+      },
+      {
+         "id": 171,
+         "nom": "Énergies renouvelables électriques",
+         "domaineMetier_id": 26
+      },
+      {
+         "id": 172,
+         "nom": "Animation des équipes",
+         "domaineMetier_id": 48
+      },
+      {
+         "id": 173,
+         "nom": " Contribution à l'AE",
+         "domaineMetier_id": 48
+      },
+      {
+         "id": 174,
+         "nom": "Gestion des demandes",
+         "domaineMetier_id": 48
+      },
+      {
+         "id": 175,
+         "nom": "Gestion de la qualité des services",
+         "domaineMetier_id": 48
+      },
+      {
+         "id": 176,
+         "nom": "IGRH cadres",
+         "domaineMetier_id": 48
+      },
+      {
+         "id": 177,
+         "nom": "Pilotage des affaires",
+         "domaineMetier_id": 48
+      },
+      {
+         "id": 178,
+         "nom": "Production de l'affaire",
+         "domaineMetier_id": 48
+      },
+      {
+         "id": 179,
+         "nom": "Validation/transfert",
+         "domaineMetier_id": 48
+      },
+      {
+         "id": 180,
+         "nom": "Transports routiers de marchandises et de voyageurs",
+         "domaineMetier_id": 37
+      },
+      {
+         "id": 181,
+         "nom": "Transports publics particuliers de personnes",
+         "domaineMetier_id": 37
+      },
+      {
+         "id": 182,
+         "nom": "Droit social des transports routiers",
+         "domaineMetier_id": 37
+      },
+      {
+         "id": 183,
+         "nom": "Exploitation et information routière",
+         "domaineMetier_id": 38
+      },
+      {
+         "id": 184,
+         "nom": "Entretien du patrimoine routier",
+         "domaineMetier_id": 38
+      },
+      {
+         "id": 185,
+         "nom": "Ingénierie routière",
+         "domaineMetier_id": 38
+      },
+      {
+         "id": 186,
+         "nom": "Investissements routiers",
+         "domaineMetier_id": 38
+      },
+      {
+         "id": 187,
+         "nom": "Infrastructures ferroviaires",
+         "domaineMetier_id": 39
+      },
+      {
+         "id": 188,
+         "nom": "Services ferroviaires",
+         "domaineMetier_id": 39
+      },
+      {
+         "id": 189,
+         "nom": "Systèmes ferroviaires et guidés",
+         "domaineMetier_id": 39
+      },
+      {
+         "id": 190,
+         "nom": "Portuaire",
+         "domaineMetier_id": 39
+      },
+      {
+         "id": 191,
+         "nom": "Transports fluviaux",
+         "domaineMetier_id": 39
+      },
+      {
+         "id": 192,
+         "nom": "Sûreté portuaire et fluviale",
+         "domaineMetier_id": 39
+      },
+      {
+         "id": 193,
+         "nom": "Sûreté transports ferroviaires et collectifs",
+         "domaineMetier_id": 39
+      },
+      {
+         "id": 194,
+         "nom": "Multimodalité",
+         "domaineMetier_id": 40
+      },
+      {
+         "id": 195,
+         "nom": "Mobilités alternatives",
+         "domaineMetier_id": 40
+      },
+      {
+         "id": 200,
+         "nom": "Artificialisation des sols",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 201,
+         "nom": "Inventaire national des ressources forestières",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 202,
+         "nom": "Installations de production d'énergies renouvelables",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 203,
+         "nom": "Lutte contre le changement climatique",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 204,
+         "nom": "Pêche et aquaculture en mer",
+         "domaineMetier_id": 2
+      },
+      {
+         "id": 205,
+         "nom": "Réseaux de surveillance épidémiologique de la faune sauvage",
+         "domaineMetier_id": 1
+      },
+      {
+         "id": 206,
+         "nom": "Statistique agricole",
+         "domaineMetier_id": 1
+      }
+   ],
+   "SSI_DICT_Confidentialite": [
+      {
+         "id": 1,
+         "nom": "Diffusion d'informations publiques"
+      },
+      {
+         "id": 2,
+         "nom": "Diffusion d'informations internes au personnel du ministère"
+      },
+      {
+         "id": 3,
+         "nom": "Diffusion d'informations à un personnel ciblé et authentifié"
+      },
+      {
+         "id": 4,
+         "nom": "Diffusion d'informations à un personnel ciblé, limité et authentifié"
+      }
+   ],
+   "SSI_DICT_Disponibilite": [
+      {
+         "id": 1,
+         "nom": "Supérieure à 2 jours d'interruption tolérable"
+      },
+      {
+         "id": 2,
+         "nom": "De 4h à 2 jours d'interruption tolérable"
+      },
+      {
+         "id": 3,
+         "nom": "De 2h à 4 heures d'interruption tolérable"
+      },
+      {
+         "id": 4,
+         "nom": "Moins de 2 heures d'interruption tolérable - besoin immédiat"
+      }
+   ],
+   "SSI_DICT_Integrite": [
+      {
+         "id": 1,
+         "nom": "Besoin d'intégrité faible"
+      },
+      {
+         "id": 2,
+         "nom": "Besoin d'intégrité moyenne. Une perte temporaire d'intégrité est acceptée mais la détection et la reconstruction sont obligatoires"
+      },
+      {
+         "id": 3,
+         "nom": "Besoin d'intégrité renforcée. Une perte temporaire d'intégrité est acceptée mais la détection et la reconstruction sont obligatoires"
+      },
+      {
+         "id": 4,
+         "nom": "Aucune altération. Aucune perte d'intégrité n'est acceptée"
+      }
+   ],
+   "SSI_DICT_Tracabilite": [
+      {
+         "id": 1,
+         "nom": "Absence de trace acceptable"
+      },
+      {
+         "id": 2,
+         "nom": "Besoin d'identification des acteurs des actions"
+      },
+      {
+         "id": 3,
+         "nom": "Besoin d'imputabilité des actions"
+      },
+      {
+         "id": 4,
+         "nom": "Besoin d'opposabilité légale des actions"
+      }
+   ],
+   "SSI_GraviteImpact_Desorganisation": [
+      {
+         "id": 1,
+         "nom": "Nécessité d'adaptation limitée du mode de fonctionnement habituel"
+      },
+      {
+         "id": 2,
+         "nom": "Augmentation de la charge de travail / Doléances ou plaintes des équipes / Stress élevé des équipes"
+      },
+      {
+         "id": 3,
+         "nom": "Bouleversements importants de la vie des personnes / Mobilisation limitée de moyens ou ressources supplémentaires / Perte limitée de productivité / Mouvements de protestation limités"
+      },
+      {
+         "id": 4,
+         "nom": "Mobilisation importante de moyens ou ressources supplémentaires / Perte importante de productivité / Mouvements de protestation importants"
+      }
+   ],
+   "SSI_GraviteImpact_Financier": [
+      {
+         "id": 1,
+         "nom": "Impact budgétaire limité pour le ministère"
+      },
+      {
+         "id": 2,
+         "nom": "Pertes supérieures à 10 millions d'euros pour le ministère / Impact économique ou financier limité pour un partenaire du ministère"
+      },
+      {
+         "id": 3,
+         "nom": "Pertes supérieures à 50 millions d'euros pour le ministère / Impact économique ou financier important pour un partenaire du ministère"
+      },
+      {
+         "id": 4,
+         "nom": "Pertes supérieures à 200 millions d'euros pour le ministère / Impact économique ou financier critique pour un partenaire du ministère"
+      }
+   ],
+   "SSI_GraviteImpact_Juridique": [
+      {
+         "id": 1,
+         "nom": "Sanction interne au ministère"
+      },
+      {
+         "id": 2,
+         "nom": "Condamnation civile d’un agent du ministère / Mention du ministère dans une affaire civile ou pénale"
+      },
+      {
+         "id": 3,
+         "nom": "Enquête administrative / Condamnation ou amende prononcée à l'encontre du ministère"
+      },
+      {
+         "id": 4,
+         "nom": "Condamnation pénale d'un agent du ministère ou du ministère"
+      }
+   ],
+   "SSI_GraviteImpact_Personnes": [
+      {
+         "id": 1,
+         "nom": "Inconfort ou stress élevé des personnes"
+      },
+      {
+         "id": 2,
+         "nom": "Blessure légère d'agents ou de personnes extérieures au ministère"
+      },
+      {
+         "id": 3,
+         "nom": "Blessure lourde d'agents ou de personnes extérieures au ministère"
+      },
+      {
+         "id": 4,
+         "nom": "Accident grave impliquant un nombre important de personnes / Décès de personnes"
+      }
+   ],
+   "SSI_GraviteImpact_PolitiqueImage": [
+      {
+         "id": 1,
+         "nom": "Plaintes ou doléances limitées d'usagers ou partenaires"
+      },
+      {
+         "id": 2,
+         "nom": "Plaintes ou doléances importantes d'usagers ou partenaires / Mentions limitées dans la presse"
+      },
+      {
+         "id": 3,
+         "nom": "Campagnes dans des médias locaux ou campagnes limitées dans des médias nationaux / Mouvements de protestations locaux ou limités / Perte limitée de pouvoir de négociation"
+      },
+      {
+         "id": 4,
+         "nom": "Campagnes dans des médias nationaux ou internationaux / Mouvements de protestation importants / Perte importante de pouvoir de négociation"
+      }
+   ],
+   "SSI_TypeAudit": [
+      {
+         "id": 1,
+         "nom": "Audit d'architecture"
+      },
+      {
+         "id": 2,
+         "nom": "Audit de code"
+      },
+      {
+         "id": 3,
+         "nom": "Tests d'intrusion"
+      }
+   ],
+   "SSI_TypeEtudeBesoins": [
+      {
+         "id": 1,
+         "nom": "Étude par prestataire externe"
+      },
+      {
+         "id": 2,
+         "nom": "Étude sommaire interne"
+      }
+   ],
+   "SSI_Vulnerabilite_Authentification": [
+      {
+         "id": 1,
+         "nom": "Par Cerbère ou équivalent (partage avec d'autres SI + Choix du niveau de sécurité d'authentification)"
+      },
+      {
+         "id": 2,
+         "nom": "Par FranceConnect"
+      },
+      {
+         "id": 3,
+         "nom": "Par l'application"
+      },
+      {
+         "id": 4,
+         "nom": "Par des comptes génériques ou fonctionnels"
+      }
+   ],
+   "SSI_Vulnerabilite_DetteTechnique": [
+      {
+         "id": 1,
+         "nom": "TMA et suivi/corrections des alertes d'obsolescence, mises à jour fréquentes"
+      },
+      {
+         "id": 2,
+         "nom": "TMA et suivi/corrections des alertes d'obsolescence, mises à jour occasionnelles"
+      },
+      {
+         "id": 3,
+         "nom": "TMA sans suivi/corrections des alertes d'obsolescence"
+      },
+      {
+         "id": 4,
+         "nom": "Absence de TMA et de suivi/corrections des alertes d'obsolescence"
+      }
+   ],
+   "SSI_Vulnerabilite_Hebergement": [
+      {
+         "id": 1,
+         "nom": "France cloud cercle 1 ou 2"
+      },
+      {
+         "id": 2,
+         "nom": "France cloud cercle 3 ou hébergement MTE"
+      },
+      {
+         "id": 3,
+         "nom": "Externe avec clauses spécifiques de sécurité"
+      },
+      {
+         "id": 4,
+         "nom": "Externe sans clauses spécifiques de sécurité"
+      }
+   ],
+   "SSI_Vulnerabilite_Instabilite": [
+      {
+         "id": 1,
+         "nom": "SI technologiquement simple et jugé stable"
+      },
+      {
+         "id": 2,
+         "nom": "SI complexe mais utilisant des technologies éprouvées"
+      },
+      {
+         "id": 3,
+         "nom": "SI utilisant des technologies connues mais jamais utilisées"
+      },
+      {
+         "id": 4,
+         "nom": "SI technologiquement novateur (version libre expérimentale, développement particulier...)"
+      }
+   ],
+   "SSI_Vulnerabilite_Ouverture": [
+      {
+         "id": 1,
+         "nom": "SI fermé et ne communiquant avec aucun autre SI"
+      },
+      {
+         "id": 2,
+         "nom": "SI sur l'intranet, ou sur internet réservé aux utilisateurs MTE avec Cerbère et tests d'intrusion réalisés"
+      },
+      {
+         "id": 3,
+         "nom": "SI accessible depuis internet avec utilisateurs hors MTE et tests d'intrusion réalisés"
+      },
+      {
+         "id": 4,
+         "nom": "SI ouvert sur internet et n'ayant pas bénéficié de tests d'intrusion"
+      }
+   ],
+   "SSI_Vulnerabilite_Sensibilisation": [
+      {
+         "id": 1,
+         "nom": "Utilisateurs et administrateurs sensibilisés sur risques + Revues des habilitations"
+      },
+      {
+         "id": 2,
+         "nom": "Administrateurs sensibilisés régulièrement + Revues des habilitations"
+      },
+      {
+         "id": 3,
+         "nom": "Sensibilisations partielles et occasionnelles"
+      },
+      {
+         "id": 4,
+         "nom": "Aucune sensibilisation"
+      }
+   ],
+   "SSI_Vulnerabilite_SousTraitance": [
+      {
+         "id": 1,
+         "nom": "3 points : Clauses contractuelles de sécurité + Authentification forte + Révision fréquente des droits"
+      },
+      {
+         "id": 2,
+         "nom": "2 points sur 3 parmi Clauses contractuelles de sécurité / Authentification forte / Révision fréquente des droits"
+      },
+      {
+         "id": 3,
+         "nom": "1 point sur 3 parmi Clauses contractuelles de sécurité / Authentification forte / Révision fréquente des droits"
+      },
+      {
+         "id": 4,
+         "nom": "Aucune mesure de contrôle de la sous-traitance"
+      }
+   ],
+   "StatutSI": [
+      {
+         "id": 1,
+         "nom": "En production"
+      },
+      {
+         "id": 2,
+         "nom": "Décommissionné"
+      },
+      {
+         "id": 3,
+         "nom": "À décommissionner"
+      },
+      {
+         "id": 4,
+         "nom": "En construction"
+      },
+      {
+         "id": 5,
+         "nom": "À l'étude"
+      }
+   ],
+   "Technologie": [
+      {
+         "id": 1,
+         "nom": "Java"
+      },
+      {
+         "id": 2,
+         "nom": "Java/J2EE"
+      },
+      {
+         "id": 3,
+         "nom": "XMLRad"
+      },
+      {
+         "id": 4,
+         "nom": "PHP"
+      },
+      {
+         "id": 5,
+         "nom": "SAS"
+      },
+      {
+         "id": 6,
+         "nom": "LAMP"
+      },
+      {
+         "id": 7,
+         "nom": "HTML/CSS/Javascript"
+      },
+      {
+         "id": 8,
+         "nom": "Python"
+      },
+      {
+         "id": 9,
+         "nom": "ETL (extract-transform-load)"
+      },
+      {
+         "id": 10,
+         "nom": "Jedox"
+      },
+      {
+         "id": 11,
+         "nom": ".net"
+      },
+      {
+         "id": 12,
+         "nom": "Node.js"
+      },
+      {
+         "id": 13,
+         "nom": "SAAS (Software As A Service)"
+      },
+      {
+         "id": 14,
+         "nom": "LibreOffice Base"
+      },
+      {
+         "id": 15,
+         "nom": "LibreOffice Calc"
+      },
+      {
+         "id": 16,
+         "nom": "Microsoft Access"
+      },
+      {
+         "id": 17,
+         "nom": "Microsoft Excel"
+      },
+      {
+         "id": 18,
+         "nom": "CMS (Système de gestion de contenu)"
+      },
+      {
+         "id": 19,
+         "nom": "Ruby on Rails"
+      },
+      {
+         "id": 20,
+         "nom": "Microsoft VBA"
+      },
+      {
+         "id": 21,
+         "nom": "R"
+      },
+      {
+         "id": 22,
+         "nom": "R/Shiny"
+      },
+      {
+         "id": 23,
+         "nom": "Progiciel"
+      },
+      {
+         "id": 24,
+         "nom": "C/C++"
+      },
+      {
+         "id": 25,
+         "nom": "LaTeX"
+      },
+      {
+         "id": 26,
+         "nom": "QGIS"
+      },
+      {
+         "id": 27,
+         "nom": "PL/pgSQL"
+      },
+      {
+         "id": 28,
+         "nom": "SPIP (CMS)"
+      },
+      {
+         "id": 29,
+         "nom": "Drupal (CMS)"
+      }
+   ],
+   "TypeAcces": [
+      {
+         "id": 1,
+         "nom": "API"
+      },
+      {
+         "id": 2,
+         "nom": "Atom"
+      },
+      {
+         "id": 3,
+         "nom": "IHM"
+      },
+      {
+         "id": 4,
+         "nom": "Webservices"
+      }
+   ],
+   "TypeCollectionDonnees": [
+      {
+         "id": 1,
+         "nom": "Base de données"
+      },
+      {
+         "id": 2,
+         "nom": "Jeu de données"
+      },
+      {
+         "id": 3,
+         "nom": "Flux de données"
+      },
+      {
+         "id": 4,
+         "nom": "Texte socle européen"
+      },
+      {
+         "id": 5,
+         "nom": "Texte socle français"
+      }
+   ],
+   "TypeConteneur": [
+      {
+         "id": 1,
+         "nom": "Base de données relationnelles"
+      },
+      {
+         "id": 2,
+         "nom": "Fichier de tableur"
+      },
+      {
+         "id": 3,
+         "nom": "Fichier XML"
+      },
+      {
+         "id": 4,
+         "nom": "Fichier CSV"
+      },
+      {
+         "id": 5,
+         "nom": "Fichier PDF"
+      },
+      {
+         "id": 6,
+         "nom": "Fichier texte"
+      },
+      {
+         "id": 7,
+         "nom": "Autre"
+      },
+      {
+         "id": 8,
+         "nom": "Fichier Microsoft Excel"
+      },
+      {
+         "id": 9,
+         "nom": "Fichier LibreOffice Base"
+      },
+      {
+         "id": 10,
+         "nom": "Fichier LibreOffice Calc"
+      },
+      {
+         "id": 11,
+         "nom": "Fichier JSON"
+      },
+      {
+         "id": 12,
+         "nom": "Base NoSQL"
+      }
+   ],
+   "TypeEvenement": [
+      {
+         "id": 1,
+         "nom": "Mise en production"
+      },
+      {
+         "id": 2,
+         "nom": "Suspension de l'application"
+      },
+      {
+         "id": 3,
+         "nom": "Redémarrage de l'application"
+      },
+      {
+         "id": 4,
+         "nom": "Démarrage du projet"
+      },
+      {
+         "id": 5,
+         "nom": "Fin de l'étude amont: Go"
+      },
+      {
+         "id": 6,
+         "nom": "Fin de l'étude amont: No go"
+      },
+      {
+         "id": 7,
+         "nom": "Lauréat de l'appel à projets Fabrique numérique"
+      },
+      {
+         "id": 8,
+         "nom": "Autorisation CNIL"
+      },
+      {
+         "id": 9,
+         "nom": "Démarrage de l'étude amont"
+      },
+      {
+         "id": 10,
+         "nom": "Démarrage de la phase de tests"
+      },
+      {
+         "id": 11,
+         "nom": "Nouvel hébergement"
+      },
+      {
+         "id": 12,
+         "nom": "Démarrage de la phase pilote"
+      },
+      {
+         "id": 13,
+         "nom": "Généralisation de l'utilisation"
+      },
+      {
+         "id": 14,
+         "nom": "Décommissionnement de l'application"
+      },
+      {
+         "id": 15,
+         "nom": "Nouvelle URL"
+      },
+      {
+         "id": 16,
+         "nom": "Changement d'URL"
+      },
+      {
+         "id": 17,
+         "nom": "Homologation PGSSI ferme de l'application"
+      },
+      {
+         "id": 18,
+         "nom": "Homologation PGSSI provisoire de l'application"
+      },
+      {
+         "id": 19,
+         "nom": "Homologation PGSSI ajournée de l'application"
+      },
+      {
+         "id": 20,
+         "nom": "Renouvellement de l'homologation PGSSI de l'application"
+      },
+      {
+         "id": 21,
+         "nom": "Entrée à la fabrique numérique"
+      },
+      {
+         "id": 22,
+         "nom": "Poursuite à la fabrique numérique"
+      },
+      {
+         "id": 23,
+         "nom": "Sortie de la fabrique numérique"
+      },
+      {
+         "id": 24,
+         "nom": "Changement d'hébergement"
+      },
+      {
+         "id": 25,
+         "nom": "Nouvelle version majeure"
+      },
+      {
+         "id": 26,
+         "nom": "Nouvelle version mineure"
+      },
+      {
+         "id": 27,
+         "nom": "Déclaration CNIL"
+      },
+      {
+         "id": 28,
+         "nom": "Qualification transformation numérique"
+      },
+      {
+         "id": 29,
+         "nom": "Cycle de vie évalué par la MAP"
+      },
+      {
+         "id": 30,
+         "nom": "Inscription au registre des traitements à caractère personnel (dans le cadre du RGPD)"
+      }
+   ],
+   "TypeFlux": [
+      {
+         "id": 1,
+         "nom": "Base propre",
+         "nom_pointdevue_donnees": "Application source",
+         "inverse_id": 14,
+         "categ_id": 1
+      },
+      {
+         "id": 2,
+         "nom": "Flux entrant",
+         "nom_pointdevue_donnees": "Flux entrant de",
+         "inverse_id": 3,
+         "categ_id": 4
+      },
+      {
+         "id": 3,
+         "nom": "Flux sortant",
+         "nom_pointdevue_donnees": "Flux sortant de",
+         "inverse_id": 2,
+         "categ_id": 5
+      },
+      {
+         "id": 4,
+         "nom": "Flux de donnée (via API consommée)",
+         "nom_pointdevue_donnees": "API consommée par",
+         "inverse_id": 5,
+         "categ_id": 3
+      },
+      {
+         "id": 5,
+         "nom": "Flux de donnée (via API exposée)",
+         "nom_pointdevue_donnees": "API exposée par",
+         "inverse_id": 4,
+         "categ_id": 2
+      },
+      {
+         "id": 6,
+         "nom": "Flux de fourniture de données (via API consommée)",
+         "nom_pointdevue_donnees": "API consommée (pour fourniture de données) par",
+         "inverse_id": 10,
+         "categ_id": 3
+      },
+      {
+         "id": 7,
+         "nom": "Flux de réception de données (via API consommée)",
+         "nom_pointdevue_donnees": "API consommée (pour réception de données) par",
+         "inverse_id": 9,
+         "categ_id": 3
+      },
+      {
+         "id": 8,
+         "nom": "Flux d'échange de données (via API consommée)",
+         "nom_pointdevue_donnees": "API consommée (pour échange de données) par",
+         "inverse_id": 11,
+         "categ_id": 3
+      },
+      {
+         "id": 9,
+         "nom": "Flux de fourniture de données (via API exposée)",
+         "nom_pointdevue_donnees": "API exposée (pour fourniture de données) par",
+         "inverse_id": 7,
+         "categ_id": 2
+      },
+      {
+         "id": 10,
+         "nom": "Flux de réception de données (via API exposée)",
+         "nom_pointdevue_donnees": "API exposée (pour réception de données) par",
+         "inverse_id": 6,
+         "categ_id": 2
+      },
+      {
+         "id": 11,
+         "nom": "Flux d'échange de données (via API exposée)",
+         "nom_pointdevue_donnees": "API exposée (pour échange de données) par",
+         "inverse_id": 8,
+         "categ_id": 2
+      },
+      {
+         "id": 12,
+         "nom": "Données reçues",
+         "nom_pointdevue_donnees": "Données reçues par",
+         "inverse_id": 13,
+         "categ_id": 4
+      },
+      {
+         "id": 13,
+         "nom": "Données fournies",
+         "nom_pointdevue_donnees": "Données fournies par",
+         "inverse_id": 12,
+         "categ_id": 5
+      },
+      {
+         "id": 14,
+         "nom": "Base utilisée",
+         "nom_pointdevue_donnees": "Base utilisée par",
+         "inverse_id": 1,
+         "categ_id": 3
+      },
+      {
+         "id": 15,
+         "nom": "Jeu de données exporté",
+         "nom_pointdevue_donnees": "Jeu de données exporté par",
+         "inverse_id": 16,
+         "categ_id": 5
+      },
+      {
+         "id": 16,
+         "nom": "Jeu de données importé",
+         "nom_pointdevue_donnees": "Jeu de données importé par",
+         "inverse_id": 15,
+         "categ_id": 4
+      }
+   ],
+   "TypeLicenceCode": [
+      {
+         "id": 1,
+         "nom": "Apache License 2.0",
+         "code": "Apache-2.0"
+      },
+      {
+         "id": 2,
+         "nom": "BSD 2-Clause \"Simplified\" License",
+         "code": "BSD-2-Clause"
+      },
+      {
+         "id": 3,
+         "nom": "BSD 3-Clause \"New\" or \"Revised\" License",
+         "code": "BSD-3-Clause"
+      },
+      {
+         "id": 4,
+         "nom": "CeCILL-B Free Software License Agreement",
+         "code": "CECILL-B"
+      },
+      {
+         "id": 5,
+         "nom": "MIT License",
+         "code": "MIT"
+      },
+      {
+         "id": 6,
+         "nom": "CeCILL Free Software License Agreement v2.1",
+         "code": "CECILL-2.1"
+      },
+      {
+         "id": 7,
+         "nom": "CeCILL-C Free Software License Agreement",
+         "code": "CECILL-C"
+      },
+      {
+         "id": 8,
+         "nom": "GNU General Public License v3.0 only",
+         "code": "GPL-3.0"
+      },
+      {
+         "id": 9,
+         "nom": "GNU Lesser General Public License v3.0",
+         "code": "LGPL-3.0"
+      },
+      {
+         "id": 10,
+         "nom": "GNU Affero General Public License v3.0",
+         "code": "AGPL-3.0"
+      },
+      {
+         "id": 11,
+         "nom": "Mozilla Public License 2.0",
+         "code": "MPL-2.0"
+      },
+      {
+         "id": 13,
+         "nom": "Le type de licence n'est pas encore choisi.",
+         "code": "À préciser"
+      },
+      {
+         "id": 14,
+         "nom": "European Union Public License v1.2",
+         "code": "EUPL v1.2"
+      }
+   ],
+   "TypeLicenceDonnees": [
+      {
+         "id": 1,
+         "nom": "Licence Ouverte version 2.0",
+         "code": "Ouverte-2.0"
+      },
+      {
+         "id": 2,
+         "nom": "ODC Open Database License (ODbL) version 1.0",
+         "code": "ODbL-1.0"
+      },
+      {
+         "id": 3,
+         "nom": "Le type de licence n'est pas encore choisi.",
+         "code": "À préciser"
+      }
+   ],
+   "TypeLienApplications": [
+      {
+         "id": 1,
+         "nom": "Est un composant de",
+         "inverse_id": 2
+      },
+      {
+         "id": 2,
+         "nom": "A comme composant",
+         "inverse_id": 1
+      },
+      {
+         "id": 3,
+         "nom": "Remplace",
+         "inverse_id": 4
+      },
+      {
+         "id": 4,
+         "nom": "Est remplacée par",
+         "inverse_id": 3
+      },
+      {
+         "id": 5,
+         "nom": "Est un module utilisé par",
+         "inverse_id": 6
+      },
+      {
+         "id": 6,
+         "nom": "Utilise le module",
+         "inverse_id": 5
+      },
+      {
+         "id": 7,
+         "nom": "Est une application utilisée par",
+         "inverse_id": 8
+      },
+      {
+         "id": 8,
+         "nom": "Utilise l'application",
+         "inverse_id": 7
+      },
+      {
+         "id": 9,
+         "nom": "Est référencée par",
+         "inverse_id": 10
+      },
+      {
+         "id": 10,
+         "nom": "Référence",
+         "inverse_id": 9
+      }
+   ],
+   "TypeLienDonnees": [
+      {
+         "id": 1,
+         "nom": "A pour source",
+         "inverse_id": 2
+      },
+      {
+         "id": 2,
+         "nom": "Est la source de",
+         "inverse_id": 1
+      }
+   ],
+   "TypeRoleActeur": [
+      {
+         "id": 1,
+         "nom": "MOA stratégique",
+         "categ_id": 1
+      },
+      {
+         "id": 2,
+         "nom": "MOA",
+         "categ_id": 1
+      },
+      {
+         "id": 3,
+         "nom": "MOA déléguée",
+         "categ_id": 1
+      },
+      {
+         "id": 4,
+         "nom": "MOA opérationnelle",
+         "categ_id": 1
+      },
+      {
+         "id": 5,
+         "nom": "MOA métier",
+         "categ_id": 1
+      },
+      {
+         "id": 6,
+         "nom": "AMOA",
+         "categ_id": 1
+      },
+      {
+         "id": 7,
+         "nom": "PND",
+         "categ_id": 1
+      },
+      {
+         "id": 8,
+         "nom": "MOE",
+         "categ_id": 1
+      },
+      {
+         "id": 9,
+         "nom": "Hébergement",
+         "categ_id": 1
+      },
+      {
+         "id": 10,
+         "nom": "MOE externe",
+         "categ_id": 1
+      },
+      {
+         "id": 11,
+         "nom": "MOA Intrapreneur",
+         "categ_id": 1
+      },
+      {
+         "id": 12,
+         "nom": "AMOA Coach",
+         "categ_id": 1
+      },
+      {
+         "id": 13,
+         "nom": "MOE Développeur",
+         "categ_id": 1
+      },
+      {
+         "id": 14,
+         "nom": "Hébergement externe",
+         "categ_id": 1
+      },
+      {
+         "id": 15,
+         "nom": "AMOA externe",
+         "categ_id": 1
+      },
+      {
+         "id": 16,
+         "nom": "MOA habilitée SSI",
+         "categ_id": 2
+      },
+      {
+         "id": 17,
+         "nom": "MOA externe",
+         "categ_id": 1
+      },
+      {
+         "id": 18,
+         "nom": "Éditeur",
+         "categ_id": 1
+      },
+      {
+         "id": 19,
+         "nom": "Contributeur",
+         "categ_id": 1
+      },
+      {
+         "id": 20,
+         "nom": "MOE habilitée",
+         "categ_id": 3
+      }
+   ],
+   "TypeRoleContact": [
+      {
+         "id": 1,
+         "nom": "Contact",
+         "categ_id": 1
+      },
+      {
+         "id": 2,
+         "nom": "RSSI",
+         "categ_id": 2
+      },
+      {
+         "id": 3,
+         "nom": "Directeur/chef de projet MOA",
+         "categ_id": 2
+      },
+      {
+         "id": 4,
+         "nom": "Directeur/chef de projet MOE",
+         "categ_id": 2
+      },
+      {
+         "id": 5,
+         "nom": "Assistant à MOA",
+         "categ_id": 2
+      },
+      {
+         "id": 6,
+         "nom": "Directeur de crise suppléant",
+         "categ_id": 2
+      },
+      {
+         "id": 7,
+         "nom": "Directeur de crise",
+         "categ_id": 2
+      },
+      {
+         "id": 8,
+         "nom": "Responsable communication",
+         "categ_id": 2
+      },
+      {
+         "id": 9,
+         "nom": "Coordinateur de crise",
+         "categ_id": 2
+      },
+      {
+         "id": 10,
+         "nom": "Coordinateur de crise suppléant",
+         "categ_id": 2
+      },
+      {
+         "id": 11,
+         "nom": "Validateur engagement crise",
+         "categ_id": 2
+      },
+      {
+         "id": 12,
+         "nom": "Directeur/Chef de projet MOA suppléant",
+         "categ_id": 2
+      },
+      {
+         "id": 13,
+         "nom": "Représentant MOA associée",
+         "categ_id": 2
+      },
+      {
+         "id": 14,
+         "nom": "Représentant MOA associée suppléant",
+         "categ_id": 2
+      },
+      {
+         "id": 15,
+         "nom": "Responsable MOE",
+         "categ_id": 2
+      },
+      {
+         "id": 16,
+         "nom": "Responsable MOE suppléant",
+         "categ_id": 2
+      },
+      {
+         "id": 17,
+         "nom": "Responsable produit MCO",
+         "categ_id": 2
+      },
+      {
+         "id": 18,
+         "nom": "Responsable produit MCO suppléant",
+         "categ_id": 2
+      },
+      {
+         "id": 19,
+         "nom": "Directeur/Chef de projet MOE suppléant",
+         "categ_id": 2
+      },
+      {
+         "id": 20,
+         "nom": "Responsable communication suppléant",
+         "categ_id": 2
+      },
+      {
+         "id": 21,
+         "nom": "Correspondant ministériel DPD",
+         "categ_id": 2
+      },
+      {
+         "id": 22,
+         "nom": "Référent RGPD",
+         "categ_id": 2
+      },
+      {
+         "id": 23,
+         "nom": "Référent métier",
+         "categ_id": 1
+      },
+      {
+         "id": 24,
+         "nom": "Référent fonctionnel",
+         "categ_id": 1
+      },
+      {
+         "id": 25,
+         "nom": "Référent technique",
+         "categ_id": 1
+      },
+      {
+         "id": 26,
+         "nom": "BizDev",
+         "categ_id": 3
+      },
+      {
+         "id": 27,
+         "nom": "Chef de produit",
+         "categ_id": 3
+      },
+      {
+         "id": 28,
+         "nom": "Déploiement/assistance utilisateurs",
+         "categ_id": 3
+      },
+      {
+         "id": 29,
+         "nom": "Développeur logiciel",
+         "categ_id": 3
+      },
+      {
+         "id": 30,
+         "nom": "Directeur de produit",
+         "categ_id": 3
+      },
+      {
+         "id": 31,
+         "nom": "Product Owner",
+         "categ_id": 3
+      },
+      {
+         "id": 32,
+         "nom": "Scrum Master",
+         "categ_id": 3
+      },
+      {
+         "id": 33,
+         "nom": "Tech Lead",
+         "categ_id": 3
+      }
+   ],
+   "TypeSite": [
+      {
+         "id": 1,
+         "nom": "Production"
+      },
+      {
+         "id": 2,
+         "nom": "Pré-production"
+      },
+      {
+         "id": 3,
+         "nom": "Recette"
+      },
+      {
+         "id": 4,
+         "nom": "École"
+      },
+      {
+         "id": 5,
+         "nom": "Forge"
+      },
+      {
+         "id": 6,
+         "nom": "Développement"
+      }
+   ],
+   "Urba_Cadre": [
+      {
+         "id": 1,
+         "nom": "Métier"
+      },
+      {
+         "id": 2,
+         "nom": "Échanges"
+      },
+      {
+         "id": 3,
+         "nom": "Pilotage et contrôle"
+      },
+      {
+         "id": 4,
+         "nom": "Ressources et support"
+      },
+      {
+         "id": 5,
+         "nom": "Données transverses"
+      }
+   ],
+   "Urba_Ilot": [
+      {
+         "id": 1,
+         "nom": "Contrôle opérationnel",
+         "quartier_id": 249
+      },
+      {
+         "id": 2,
+         "nom": "Contrôle croisé",
+         "quartier_id": 249
+      },
+      {
+         "id": 3,
+         "nom": "Inspections et infractions",
+         "quartier_id": 249
+      },
+      {
+         "id": 4,
+         "nom": "Collecte obligations déclaratives",
+         "quartier_id": 250
+      },
+      {
+         "id": 5,
+         "nom": "Traitement",
+         "quartier_id": 250
+      },
+      {
+         "id": 6,
+         "nom": "Rapportages officiels",
+         "quartier_id": 250
+      },
+      {
+         "id": 7,
+         "nom": "Redressement",
+         "quartier_id": 250
+      },
+      {
+         "id": 8,
+         "nom": "Autorisations",
+         "quartier_id": 255
+      },
+      {
+         "id": 9,
+         "nom": "Concessions",
+         "quartier_id": 255
+      },
+      {
+         "id": 10,
+         "nom": "Quotas",
+         "quartier_id": 255
+      },
+      {
+         "id": 11,
+         "nom": "Taxation aquaculture",
+         "quartier_id": 256
+      },
+      {
+         "id": 12,
+         "nom": "Taxation plaisance",
+         "quartier_id": 256
+      },
+      {
+         "id": 13,
+         "nom": "Portail ENM",
+         "quartier_id": 260
+      },
+      {
+         "id": 14,
+         "nom": "Portail Armateur",
+         "quartier_id": 260
+      },
+      {
+         "id": 15,
+         "nom": "Portail Plaisance",
+         "quartier_id": 260
+      },
+      {
+         "id": 16,
+         "nom": "Portail Plaisance-PRO",
+         "quartier_id": 260
+      },
+      {
+         "id": 17,
+         "nom": "Délivrance",
+         "quartier_id": 260
+      },
+      {
+         "id": 18,
+         "nom": "Activité (protection sociale, DSN)",
+         "quartier_id": 261
+      },
+      {
+         "id": 19,
+         "nom": "Formations continues",
+         "quartier_id": 263
+      },
+      {
+         "id": 20,
+         "nom": "Formations initiales (LPM)",
+         "quartier_id": 263
+      },
+      {
+         "id": 21,
+         "nom": "Adhésion (OP - Comité)",
+         "quartier_id": 264
+      },
+      {
+         "id": 22,
+         "nom": "Pilotage opérationnel",
+         "quartier_id": 216
+      },
+      {
+         "id": 23,
+         "nom": "Écoute utilisateur",
+         "quartier_id": 216
+      },
+      {
+         "id": 24,
+         "nom": "Artificialisation des sols",
+         "quartier_id": 235
+      },
+      {
+         "id": 25,
+         "nom": "Dérangement anthropique en mer",
+         "quartier_id": 235
+      },
+      {
+         "id": 26,
+         "nom": "Dérangement anthropique sur terre",
+         "quartier_id": 235
+      },
+      {
+         "id": 27,
+         "nom": "Pression sur les milieux agricoles",
+         "quartier_id": 235
+      },
+      {
+         "id": 28,
+         "nom": "Pression sur les milieux aquatiques",
+         "quartier_id": 235
+      },
+      {
+         "id": 29,
+         "nom": "Continuités écologiques",
+         "quartier_id": 236
+      },
+      {
+         "id": 30,
+         "nom": "Fragmentation forestière",
+         "quartier_id": 236
+      },
+      {
+         "id": 31,
+         "nom": "Installation Ouvrage Travaux et Aménagement",
+         "quartier_id": 236
+      },
+      {
+         "id": 32,
+         "nom": "Obstacles à l'écoulement",
+         "quartier_id": 236
+      },
+      {
+         "id": 33,
+         "nom": "Obstacles aux déplacements",
+         "quartier_id": 236
+      },
+      {
+         "id": 34,
+         "nom": "Passages à faune",
+         "quartier_id": 236
+      },
+      {
+         "id": 35,
+         "nom": "Réseaux de transport, infrastructures linéaires",
+         "quartier_id": 236
+      },
+      {
+         "id": 36,
+         "nom": "Suivi des collisions",
+         "quartier_id": 236
+      },
+      {
+         "id": 37,
+         "nom": "Pollution des eaux",
+         "quartier_id": 237
+      },
+      {
+         "id": 38,
+         "nom": "Pollution physique",
+         "quartier_id": 237
+      },
+      {
+         "id": 39,
+         "nom": "Pollution lumineuse",
+         "quartier_id": 237
+      },
+      {
+         "id": 40,
+         "nom": "Pollution de l'air",
+         "quartier_id": 237
+      },
+      {
+         "id": 41,
+         "nom": "Pêche",
+         "quartier_id": 238
+      },
+      {
+         "id": 42,
+         "nom": "Chasse",
+         "quartier_id": 238
+      },
+      {
+         "id": 43,
+         "nom": "Augmentation des températures sur terre et océans",
+         "quartier_id": 239
+      },
+      {
+         "id": 44,
+         "nom": "Changement climatique (variation de la température atmosphérique moyenne) (maille INPN 10FR)",
+         "quartier_id": 239
+      },
+      {
+         "id": 45,
+         "nom": "Cyclones, incendies (BDIFF), inondations... (risques naturels)",
+         "quartier_id": 239
+      },
+      {
+         "id": 46,
+         "nom": "Dates de vendanges en France métropolitaine",
+         "quartier_id": 239
+      },
+      {
+         "id": 47,
+         "nom": "Données climat",
+         "quartier_id": 239
+      },
+      {
+         "id": 48,
+         "nom": "Élévation du milieu marin",
+         "quartier_id": 239
+      },
+      {
+         "id": 49,
+         "nom": "Émissions de GES",
+         "quartier_id": 239
+      },
+      {
+         "id": 50,
+         "nom": "Sècheresse",
+         "quartier_id": 239
+      },
+      {
+         "id": 51,
+         "nom": "Série chronologique des températures minimales quotidiennes",
+         "quartier_id": 239
+      },
+      {
+         "id": 52,
+         "nom": "Suivi de la fonte des glaciers alpins et pyrénéens",
+         "quartier_id": 239
+      },
+      {
+         "id": 53,
+         "nom": "Connaissance sur les ressources génétiques",
+         "quartier_id": 240
+      },
+      {
+         "id": 54,
+         "nom": "Connaissance sur les espèces",
+         "quartier_id": 241
+      },
+      {
+         "id": 55,
+         "nom": "Espèces exotiques et envahissantes",
+         "quartier_id": 241
+      },
+      {
+         "id": 56,
+         "nom": "Règlementation sur les espèces",
+         "quartier_id": 241
+      },
+      {
+         "id": 57,
+         "nom": "Gestion et usage des espèces",
+         "quartier_id": 241
+      },
+      {
+         "id": 58,
+         "nom": "Connaissance sur les habitats",
+         "quartier_id": 242
+      },
+      {
+         "id": 59,
+         "nom": "Description des milieux",
+         "quartier_id": 242
+      },
+      {
+         "id": 60,
+         "nom": "État des milieux",
+         "quartier_id": 242
+      },
+      {
+         "id": 61,
+         "nom": "Gestion des espaces",
+         "quartier_id": 242
+      },
+      {
+         "id": 62,
+         "nom": "Règlement sur les espaces (espaces protégés)",
+         "quartier_id": 242
+      },
+      {
+         "id": 63,
+         "nom": "Aides dans le domaine de l'eau",
+         "quartier_id": 243
+      },
+      {
+         "id": 64,
+         "nom": "Aides publiques au développement à l'international liées à la biodiversité",
+         "quartier_id": 243
+      },
+      {
+         "id": 65,
+         "nom": "Coût de la dégradation du milieu marin utilisé dans l'évaluation de la DCSMM",
+         "quartier_id": 243
+      },
+      {
+         "id": 66,
+         "nom": "Dépenses de protection de la biodiversité et des paysages",
+         "quartier_id": 243
+      },
+      {
+         "id": 67,
+         "nom": "Données financières N2000",
+         "quartier_id": 243
+      },
+      {
+         "id": 68,
+         "nom": "Données financières sur les redevances",
+         "quartier_id": 243
+      },
+      {
+         "id": 69,
+         "nom": "Données socio-économiques et comptables sur les filières utilisant les ressources génétiques et leur fonctionnement",
+         "quartier_id": 243
+      },
+      {
+         "id": 70,
+         "nom": "Programmes de financement (life+)",
+         "quartier_id": 243
+      },
+      {
+         "id": 71,
+         "nom": "Rapports extra-financiers des entreprises du CAC 40",
+         "quartier_id": 243
+      },
+      {
+         "id": 72,
+         "nom": "Diplômes de l'enseignement supérieurs",
+         "quartier_id": 244
+      },
+      {
+         "id": 73,
+         "nom": "Diplômes de l'enseignement technique et professionnel délivrés par les ministères de l'Éducation nationale et de l'Agriculture",
+         "quartier_id": 244
+      },
+      {
+         "id": 74,
+         "nom": "Enquête « Conditions de vie et aspirations des français »",
+         "quartier_id": 244
+      },
+      {
+         "id": 75,
+         "nom": "Enquête « Forêt et société »",
+         "quartier_id": 244
+      },
+      {
+         "id": 76,
+         "nom": "Nombre d'animations proposées dans le cadre des 3 principaux événements annuels « Zones humides »",
+         "quartier_id": 244
+      },
+      {
+         "id": 77,
+         "nom": "Nombre de participants actifs aux initiatives de sciences participatives liées à la biodiversité",
+         "quartier_id": 244
+      },
+      {
+         "id": 78,
+         "nom": "Nombre de participants à la Fête de la Nature",
+         "quartier_id": 244
+      },
+      {
+         "id": 79,
+         "nom": "Statistiques de visites des centres d'accueil « Zones humides »",
+         "quartier_id": 244
+      },
+      {
+         "id": 80,
+         "nom": "Études d'impact sur l'environnement",
+         "quartier_id": 245
+      },
+      {
+         "id": 81,
+         "nom": "Mesures compensatoires",
+         "quartier_id": 245
+      },
+      {
+         "id": 82,
+         "nom": "Mesures d'évitement et de réduction",
+         "quartier_id": 245
+      },
+      {
+         "id": 83,
+         "nom": "Plans de contrôle",
+         "quartier_id": 245
+      },
+      {
+         "id": 84,
+         "nom": "Sites de compensation potentiels",
+         "quartier_id": 245
+      },
+      {
+         "id": 85,
+         "nom": "Espaces protégés",
+         "quartier_id": 246
+      },
+      {
+         "id": 86,
+         "nom": "Espèces",
+         "quartier_id": 246
+      },
+      {
+         "id": 87,
+         "nom": "Habitats",
+         "quartier_id": 246
+      },
+      {
+         "id": 88,
+         "nom": "Annuaires",
+         "quartier_id": 219
+      },
+      {
+         "id": 89,
+         "nom": "Compétences",
+         "quartier_id": 219
+      },
+      {
+         "id": 90,
+         "nom": "Biocénose",
+         "quartier_id": 218
+      },
+      {
+         "id": 91,
+         "nom": "Zonages administratifs",
+         "quartier_id": 218
+      },
+      {
+         "id": 92,
+         "nom": "Images satellites et photographies aériennes",
+         "quartier_id": 218
+      },
+      {
+         "id": 93,
+         "nom": "DHFF / Do",
+         "quartier_id": 269
+      },
+      {
+         "id": 94,
+         "nom": "INSPIRE",
+         "quartier_id": 269
+      },
+      {
+         "id": 95,
+         "nom": "DCSMM",
+         "quartier_id": 269
+      }
+   ],
+   "Urba_POS": [
+      {
+         "id": 1,
+         "nom": "Direction des Ressources Humaines"
+      },
+      {
+         "id": 2,
+         "nom": "IGEDD"
+      },
+      {
+         "id": 3,
+         "nom": "DGPR"
+      },
+      {
+         "id": 4,
+         "nom": "Gestion des systèmes d'information et de communication"
+      },
+      {
+         "id": 5,
+         "nom": "Relation avec les agents"
+      },
+      {
+         "id": 6,
+         "nom": "***TEMPORAIRE***"
+      },
+      {
+         "id": 7,
+         "nom": "Information géographique"
+      },
+      {
+         "id": 8,
+         "nom": "DGALN"
+      },
+      {
+         "id": 9,
+         "nom": "DGEC"
+      },
+      {
+         "id": 10,
+         "nom": "CGDD"
+      },
+      {
+         "id": 11,
+         "nom": "SIB"
+      },
+      {
+         "id": 12,
+         "nom": "DGAMPA"
+      },
+      {
+         "id": 13,
+         "nom": "DGITM"
+      },
+      {
+         "id": 14,
+         "nom": "DREAL Hauts-de-France"
+      }
+   ],
+   "Urba_Quartier": [
+      {
+         "id": 1,
+         "nom": "Gestion et contrôle des accès",
+         "zone_id": 1
+      },
+      {
+         "id": 2,
+         "nom": "Relation agent",
+         "zone_id": 1
+      },
+      {
+         "id": 3,
+         "nom": "Relations avec les autorités administratives",
+         "zone_id": 1
+      },
+      {
+         "id": 4,
+         "nom": "Qualité et supervision",
+         "zone_id": 1
+      },
+      {
+         "id": 5,
+         "nom": "Pilotage opérationnel des ressources humaines",
+         "zone_id": 2
+      },
+      {
+         "id": 6,
+         "nom": "Pilotage stratégique des ressources humaines",
+         "zone_id": 2
+      },
+      {
+         "id": 7,
+         "nom": "Données individuelles",
+         "zone_id": 3
+      },
+      {
+         "id": 8,
+         "nom": "Carrière administrative",
+         "zone_id": 3
+      },
+      {
+         "id": 9,
+         "nom": "Actes administratifs",
+         "zone_id": 3
+      },
+      {
+         "id": 10,
+         "nom": "Recours",
+         "zone_id": 3
+      },
+      {
+         "id": 11,
+         "nom": "Gestion du temps et absence",
+         "zone_id": 3
+      },
+      {
+         "id": 12,
+         "nom": "Rémunération",
+         "zone_id": 3
+      },
+      {
+         "id": 13,
+         "nom": "Préparation à la retraite",
+         "zone_id": 3
+      },
+      {
+         "id": 14,
+         "nom": "Recrutement et mobilité",
+         "zone_id": 4
+      },
+      {
+         "id": 15,
+         "nom": "Formation",
+         "zone_id": 4
+      },
+      {
+         "id": 16,
+         "nom": "Emploi et compétences",
+         "zone_id": 4
+      },
+      {
+         "id": 17,
+         "nom": "Évaluation et notation",
+         "zone_id": 4
+      },
+      {
+         "id": 18,
+         "nom": "Dialogue social",
+         "zone_id": 5
+      },
+      {
+         "id": 19,
+         "nom": "Santé du personnel et action sociale",
+         "zone_id": 5
+      },
+      {
+         "id": 20,
+         "nom": "Processus RH",
+         "zone_id": 6
+      },
+      {
+         "id": 21,
+         "nom": "Profils et habilitations",
+         "zone_id": 6
+      },
+      {
+         "id": 22,
+         "nom": "Annuaire agents",
+         "zone_id": 6
+      },
+      {
+         "id": 23,
+         "nom": "Structures",
+         "zone_id": 6
+      },
+      {
+         "id": 24,
+         "nom": "Nomenclatures",
+         "zone_id": 6
+      },
+      {
+         "id": 25,
+         "nom": "Gestion de la base agents",
+         "zone_id": 7
+      },
+      {
+         "id": 26,
+         "nom": "Suivi des entretiens d'orientations",
+         "zone_id": 7
+      },
+      {
+         "id": 27,
+         "nom": "Contribution aux promotions",
+         "zone_id": 7
+      },
+      {
+         "id": 28,
+         "nom": "Contribution aux revue des cadres",
+         "zone_id": 7
+      },
+      {
+         "id": 29,
+         "nom": "Planification",
+         "zone_id": 8
+      },
+      {
+         "id": 30,
+         "nom": "Suivi de la délivrance",
+         "zone_id": 8
+      },
+      {
+         "id": 31,
+         "nom": "Recherches",
+         "zone_id": 8
+      },
+      {
+         "id": 32,
+         "nom": "Gestion de la réception de la demande",
+         "zone_id": 9
+      },
+      {
+         "id": 33,
+         "nom": "Gestion des réunions de bureau",
+         "zone_id": 9
+      },
+      {
+         "id": 34,
+         "nom": "Gestion des appels candidatures",
+         "zone_id": 9
+      },
+      {
+         "id": 35,
+         "nom": "Désignation des missionnés",
+         "zone_id": 9
+      },
+      {
+         "id": 36,
+         "nom": "Cadrage de la mission",
+         "zone_id": 10
+      },
+      {
+         "id": 37,
+         "nom": "Exécution de la mission",
+         "zone_id": 10
+      },
+      {
+         "id": 38,
+         "nom": "Rédaction et finalisation du rapport",
+         "zone_id": 10
+      },
+      {
+         "id": 39,
+         "nom": "Préparation de la transmission",
+         "zone_id": 11
+      },
+      {
+         "id": 40,
+         "nom": "Transmission du  rapport",
+         "zone_id": 11
+      },
+      {
+         "id": 41,
+         "nom": "Clôture",
+         "zone_id": 11
+      },
+      {
+         "id": 42,
+         "nom": "Préparation de la diffusion",
+         "zone_id": 12
+      },
+      {
+         "id": 43,
+         "nom": "Diffusion",
+         "zone_id": 12
+      },
+      {
+         "id": 44,
+         "nom": "Archivage",
+         "zone_id": 12
+      },
+      {
+         "id": 45,
+         "nom": "Pilotage des avis",
+         "zone_id": 13
+      },
+      {
+         "id": 46,
+         "nom": "Gestion des demandes d'avis",
+         "zone_id": 13
+      },
+      {
+         "id": 47,
+         "nom": "Contribution aux avis",
+         "zone_id": 13
+      },
+      {
+         "id": 48,
+         "nom": "Publication",
+         "zone_id": 13
+      },
+      {
+         "id": 49,
+         "nom": "Archivage",
+         "zone_id": 13
+      },
+      {
+         "id": 50,
+         "nom": "Analyse de données en support aux missions",
+         "zone_id": 14
+      },
+      {
+         "id": 51,
+         "nom": "Connaissance et entretien des compétences",
+         "zone_id": 15
+      },
+      {
+         "id": 52,
+         "nom": "Animation des équipes",
+         "zone_id": 16
+      },
+      {
+         "id": 53,
+         "nom": "Veille",
+         "zone_id": 17
+      },
+      {
+         "id": 54,
+         "nom": "Gestion des disponibilités",
+         "zone_id": 18
+      },
+      {
+         "id": 55,
+         "nom": "Gestion du pilotage des affaires",
+         "zone_id": 18
+      },
+      {
+         "id": 56,
+         "nom": "Production des tableaux de bord d'activités",
+         "zone_id": 18
+      },
+      {
+         "id": 57,
+         "nom": "Capitalisation de  l'histoire du pôle ministériel",
+         "zone_id": 19
+      },
+      {
+         "id": 61,
+         "nom": "Ressources humaines IGEDD",
+         "zone_id": 21
+      },
+      {
+         "id": 62,
+         "nom": "Finances",
+         "zone_id": 22
+      },
+      {
+         "id": 63,
+         "nom": "Systèmes d'information",
+         "zone_id": 23
+      },
+      {
+         "id": 64,
+         "nom": "Gestion information et documentaire",
+         "zone_id": 24
+      },
+      {
+         "id": 65,
+         "nom": "Moyens généraux",
+         "zone_id": 25
+      },
+      {
+         "id": 66,
+         "nom": "Référentiels agents IGEDD",
+         "zone_id": 26
+      },
+      {
+         "id": 67,
+         "nom": "Référentiel structure et organisation IGEDD",
+         "zone_id": 27
+      },
+      {
+         "id": 68,
+         "nom": "Référentiels sites IGEDD",
+         "zone_id": 28
+      },
+      {
+         "id": 69,
+         "nom": "Référentiels offre service IGEDD",
+         "zone_id": 29
+      },
+      {
+         "id": 70,
+         "nom": "Référentiel affaire",
+         "zone_id": 30
+      },
+      {
+         "id": 71,
+         "nom": "Échanges Usagers",
+         "zone_id": 31
+      },
+      {
+         "id": 72,
+         "nom": "Échanges internes IGEDD",
+         "zone_id": 32
+      },
+      {
+         "id": 73,
+         "nom": "Échanges pôle ministériel",
+         "zone_id": 33
+      },
+      {
+         "id": 74,
+         "nom": "Nuisances",
+         "zone_id": 34
+      },
+      {
+         "id": 75,
+         "nom": "Déchets",
+         "zone_id": 34
+      },
+      {
+         "id": 76,
+         "nom": "Autre",
+         "zone_id": 34
+      },
+      {
+         "id": 77,
+         "nom": "Eau inondation",
+         "zone_id": 35
+      },
+      {
+         "id": 78,
+         "nom": "Prévention des risques majeurs",
+         "zone_id": 35
+      },
+      {
+         "id": 79,
+         "nom": "Risques naturels terrestres",
+         "zone_id": 35
+      },
+      {
+         "id": 80,
+         "nom": "Autre",
+         "zone_id": 35
+      },
+      {
+         "id": 81,
+         "nom": "Activités à risque",
+         "zone_id": 36
+      },
+      {
+         "id": 82,
+         "nom": "Pollutions atmosphériques et terrestres",
+         "zone_id": 36
+      },
+      {
+         "id": 83,
+         "nom": "Accidents industriels",
+         "zone_id": 36
+      },
+      {
+         "id": 84,
+         "nom": "Sûreté nucléaire",
+         "zone_id": 36
+      },
+      {
+         "id": 85,
+         "nom": "Autre",
+         "zone_id": 36
+      },
+      {
+         "id": 86,
+         "nom": "Pilotage (planification, urbanisation, affectation des ressources)",
+         "zone_id": 37
+      },
+      {
+         "id": 87,
+         "nom": "Gestion de la connaissance SI",
+         "zone_id": 37
+      },
+      {
+         "id": 88,
+         "nom": "Études, développement et entretien des applications",
+         "zone_id": 37
+      },
+      {
+         "id": 89,
+         "nom": "Construction, évolution et entretien des infrastructures",
+         "zone_id": 37
+      },
+      {
+         "id": 90,
+         "nom": "Gestion du parc et des configurations",
+         "zone_id": 37
+      },
+      {
+         "id": 91,
+         "nom": "Production, exploitation et supervision",
+         "zone_id": 37
+      },
+      {
+         "id": 92,
+         "nom": "Soutien aux utilisateurs",
+         "zone_id": 37
+      },
+      {
+         "id": 93,
+         "nom": "Sécurité des SI",
+         "zone_id": 37
+      },
+      {
+         "id": 94,
+         "nom": "Communication",
+         "zone_id": 38
+      },
+      {
+         "id": 95,
+         "nom": "Campagne",
+         "zone_id": 38
+      },
+      {
+         "id": 96,
+         "nom": "Satisfaction",
+         "zone_id": 38
+      },
+      {
+         "id": 97,
+         "nom": "Sondage",
+         "zone_id": 38
+      },
+      {
+         "id": 98,
+         "nom": "Écoute",
+         "zone_id": 38
+      },
+      {
+         "id": 99,
+         "nom": "Gestion des tâches",
+         "zone_id": 39
+      },
+      {
+         "id": 100,
+         "nom": "Agenda",
+         "zone_id": 39
+      },
+      {
+         "id": 101,
+         "nom": "Collaboratif",
+         "zone_id": 39
+      },
+      {
+         "id": 102,
+         "nom": "Messagerie",
+         "zone_id": 39
+      },
+      {
+         "id": 103,
+         "nom": "Échange",
+         "zone_id": 39
+      },
+      {
+         "id": 104,
+         "nom": "Gestion des documents",
+         "zone_id": 40
+      },
+      {
+         "id": 105,
+         "nom": "Personnalisations",
+         "zone_id": 40
+      },
+      {
+         "id": 106,
+         "nom": "Incidents",
+         "zone_id": 41
+      },
+      {
+         "id": 107,
+         "nom": "Reporting",
+         "zone_id": 41
+      },
+      {
+         "id": 108,
+         "nom": "Ouverture des données publiques",
+         "zone_id": 42
+      },
+      {
+         "id": 109,
+         "nom": "Ressources et support",
+         "zone_id": 43
+      },
+      {
+         "id": 110,
+         "nom": "Niveau national",
+         "zone_id": 44
+      },
+      {
+         "id": 111,
+         "nom": "Qualité de la construction",
+         "zone_id": 45
+      },
+      {
+         "id": 112,
+         "nom": "Aide à la pierre",
+         "zone_id": 45
+      },
+      {
+         "id": 113,
+         "nom": "Parcours logement social",
+         "zone_id": 45
+      },
+      {
+         "id": 114,
+         "nom": "Parcours logement privé",
+         "zone_id": 45
+      },
+      {
+         "id": 115,
+         "nom": "Lutte contre l'habitat indigne",
+         "zone_id": 45
+      },
+      {
+         "id": 116,
+         "nom": "Planification et connaissance",
+         "zone_id": 45
+      },
+      {
+         "id": 117,
+         "nom": "Référentiels",
+         "zone_id": 45
+      },
+      {
+         "id": 118,
+         "nom": "Application du droit des sols",
+         "zone_id": 46
+      },
+      {
+         "id": 119,
+         "nom": "Planification et connaissance",
+         "zone_id": 46
+      },
+      {
+         "id": 120,
+         "nom": "Sites et paysages",
+         "zone_id": 46
+      },
+      {
+         "id": 121,
+         "nom": "Fiscalité",
+         "zone_id": 46
+      },
+      {
+         "id": 122,
+         "nom": "Référentiels",
+         "zone_id": 46
+      },
+      {
+         "id": 123,
+         "nom": "Aménagement durable",
+         "zone_id": 47
+      },
+      {
+         "id": 124,
+         "nom": "Foncier",
+         "zone_id": 47
+      },
+      {
+         "id": 125,
+         "nom": "Référentiels",
+         "zone_id": 47
+      },
+      {
+         "id": 126,
+         "nom": "Santé-environnement sur les eaux",
+         "zone_id": 48
+      },
+      {
+         "id": 127,
+         "nom": "Planification",
+         "zone_id": 48
+      },
+      {
+         "id": 128,
+         "nom": "Aides et redevances",
+         "zone_id": 48
+      },
+      {
+         "id": 129,
+         "nom": "Services publics d'eau et d'assainissement",
+         "zone_id": 48
+      },
+      {
+         "id": 130,
+         "nom": "Réglementation des usages de l'eau",
+         "zone_id": 48
+      },
+      {
+         "id": 131,
+         "nom": "Contrôles de police de l'eau et de la nature",
+         "zone_id": 48
+      },
+      {
+         "id": 132,
+         "nom": "Protection et préservation du milieu marin",
+         "zone_id": 48
+      },
+      {
+         "id": 133,
+         "nom": "Installations classées pour la protection de l'environnement",
+         "zone_id": 48
+      },
+      {
+         "id": 134,
+         "nom": "Hydrométrie et prévision des crues",
+         "zone_id": 48
+      },
+      {
+         "id": 135,
+         "nom": "Évaluation et gestion des risques d'inondation",
+         "zone_id": 48
+      },
+      {
+         "id": 136,
+         "nom": "Référentiels",
+         "zone_id": 48
+      },
+      {
+         "id": 137,
+         "nom": "Conventions internationales de mers régionales",
+         "zone_id": 49
+      },
+      {
+         "id": 138,
+         "nom": "Récifs et mangroves",
+         "zone_id": 49
+      },
+      {
+         "id": 139,
+         "nom": "Autorisation unique environnementale",
+         "zone_id": 49
+      },
+      {
+         "id": 140,
+         "nom": "Police de l'eau et de la nature",
+         "zone_id": 49
+      },
+      {
+         "id": 141,
+         "nom": "Autorisations d'occupation temporaire du domaine public maritime",
+         "zone_id": 49
+      },
+      {
+         "id": 142,
+         "nom": "Eaux de baignade",
+         "zone_id": 49
+      },
+      {
+         "id": 143,
+         "nom": "Aides et redevances des agences et offices de l'eau",
+         "zone_id": 49
+      },
+      {
+         "id": 144,
+         "nom": "Politique de contrôle pour l'environnement marin",
+         "zone_id": 49
+      },
+      {
+         "id": 145,
+         "nom": "Sécurité sanitaire des produits de la mer",
+         "zone_id": 49
+      },
+      {
+         "id": 146,
+         "nom": "Directive-cadre sur l'eau",
+         "zone_id": 49
+      },
+      {
+         "id": 147,
+         "nom": "Pollutions accidentelles",
+         "zone_id": 49
+      },
+      {
+         "id": 148,
+         "nom": "Directive-cadre « stratégie pour le milieu marin »",
+         "zone_id": 49
+      },
+      {
+         "id": 149,
+         "nom": "Directive-cadre sur la planification de l'espace maritime",
+         "zone_id": 49
+      },
+      {
+         "id": 150,
+         "nom": "Aires marines protégées",
+         "zone_id": 49
+      },
+      {
+         "id": 151,
+         "nom": "Espaces protégés",
+         "zone_id": 49
+      },
+      {
+         "id": 152,
+         "nom": "Natura 2000",
+         "zone_id": 49
+      },
+      {
+         "id": 153,
+         "nom": "Espèces exotiques envahissantes",
+         "zone_id": 49
+      },
+      {
+         "id": 154,
+         "nom": "Espèces protégées",
+         "zone_id": 49
+      },
+      {
+         "id": 155,
+         "nom": "Référentiels",
+         "zone_id": 49
+      },
+      {
+         "id": 156,
+         "nom": "Études d'impact sur l'environnement",
+         "zone_id": 51
+      },
+      {
+         "id": 157,
+         "nom": "Mesures compensatoires",
+         "zone_id": 51
+      },
+      {
+         "id": 158,
+         "nom": "Espaces réglementés au titre du patrimoine naturel",
+         "zone_id": 51
+      },
+      {
+         "id": 159,
+         "nom": "Aires marines protégées",
+         "zone_id": 51
+      },
+      {
+         "id": 160,
+         "nom": "Paysages",
+         "zone_id": 51
+      },
+      {
+         "id": 161,
+         "nom": "Trames vertes et bleues",
+         "zone_id": 51
+      },
+      {
+         "id": 162,
+         "nom": "CITES",
+         "zone_id": 51
+      },
+      {
+         "id": 163,
+         "nom": "Inventaire du patrimoine naturel, anciennement système d'information sur la nature et les paysages",
+         "zone_id": 51
+      },
+      {
+         "id": 164,
+         "nom": "Espèces exotiques envahissantes",
+         "zone_id": 51
+      },
+      {
+         "id": 165,
+         "nom": "Conservation des espèces et des habitats",
+         "zone_id": 51
+      },
+      {
+         "id": 166,
+         "nom": "Plans nationaux d'action",
+         "zone_id": 51
+      },
+      {
+         "id": 167,
+         "nom": "Encadrement des usages du patrimoine naturel",
+         "zone_id": 51
+      },
+      {
+         "id": 168,
+         "nom": "Accès et partage des avantages",
+         "zone_id": 51
+      },
+      {
+         "id": 169,
+         "nom": "Natura 2000",
+         "zone_id": 51
+      },
+      {
+         "id": 170,
+         "nom": "Gestion adaptative des espèces",
+         "zone_id": 51
+      },
+      {
+         "id": 171,
+         "nom": "Permis de chasser",
+         "zone_id": 51
+      },
+      {
+         "id": 172,
+         "nom": "Récifs coralliens et mangroves",
+         "zone_id": 51
+      },
+      {
+         "id": 173,
+         "nom": "Pêche et aquaculture en eau douce",
+         "zone_id": 51
+      },
+      {
+         "id": 174,
+         "nom": "Référentiels",
+         "zone_id": 51
+      },
+      {
+         "id": 175,
+         "nom": "Mines",
+         "zone_id": 50
+      },
+      {
+         "id": 176,
+         "nom": "Carrières",
+         "zone_id": 50
+      },
+      {
+         "id": 177,
+         "nom": "Référentiels",
+         "zone_id": 50
+      },
+      {
+         "id": 178,
+         "nom": "Marchés de l'énergie",
+         "zone_id": 52
+      },
+      {
+         "id": 179,
+         "nom": "Énergies renouvelables électriques",
+         "zone_id": 52
+      },
+      {
+         "id": 180,
+         "nom": "Produits énergétiques",
+         "zone_id": 52
+      },
+      {
+         "id": 181,
+         "nom": "Système électrique",
+         "zone_id": 52
+      },
+      {
+         "id": 182,
+         "nom": "Changement climatique",
+         "zone_id": 53
+      },
+      {
+         "id": 183,
+         "nom": "Efficacité énergétique",
+         "zone_id": 53
+      },
+      {
+         "id": 184,
+         "nom": "Qualité de l'air",
+         "zone_id": 53
+      },
+      {
+         "id": 185,
+         "nom": "Sécurité des véhicules",
+         "zone_id": 53
+      },
+      {
+         "id": 187,
+         "nom": "Produire les statistiques de la construction neuve",
+         "zone_id": 55
+      },
+      {
+         "id": 188,
+         "nom": "Suivre la conjoncture du logement",
+         "zone_id": 55
+      },
+      {
+         "id": 189,
+         "nom": "Produire des statistiques sur l'offre d'énergie",
+         "zone_id": 56
+      },
+      {
+         "id": 190,
+         "nom": "Produire les statistiques de prix de l'énergie",
+         "zone_id": 56
+      },
+      {
+         "id": 191,
+         "nom": "Suivre la conjonture de l'énergie",
+         "zone_id": 56
+      },
+      {
+         "id": 192,
+         "nom": "Informations sur l'état des milieux",
+         "zone_id": 57
+      },
+      {
+         "id": 193,
+         "nom": "Utilisations des ressources naturelles et pressions sur l'environnement",
+         "zone_id": 57
+      },
+      {
+         "id": 194,
+         "nom": "Informations socioéconomiques",
+         "zone_id": 57
+      },
+      {
+         "id": 195,
+         "nom": "État de l'environnement",
+         "zone_id": 57
+      },
+      {
+         "id": 196,
+         "nom": "Produire des statistiques sur le transport routier de marchandises",
+         "zone_id": 58
+      },
+      {
+         "id": 197,
+         "nom": "Indicateurs DD",
+         "zone_id": 59
+      },
+      {
+         "id": 198,
+         "nom": "Occupation des sols",
+         "zone_id": 59
+      },
+      {
+         "id": 199,
+         "nom": "Synthèses DD",
+         "zone_id": 59
+      },
+      {
+         "id": 200,
+         "nom": "Gérer les produits de diffusion",
+         "zone_id": 60
+      },
+      {
+         "id": 201,
+         "nom": "Instruction dossiers liés à l'environnement",
+         "zone_id": 61
+      },
+      {
+         "id": 202,
+         "nom": "Innover par les données",
+         "zone_id": 62
+      },
+      {
+         "id": 203,
+         "nom": "Impliquer les citoyens dans le dialogue DD",
+         "zone_id": 63
+      },
+      {
+         "id": 204,
+         "nom": "Gérer le pilotage des études et statistiques",
+         "zone_id": 66
+      },
+      {
+         "id": 205,
+         "nom": "Produire le TDB d'activités du CGDD",
+         "zone_id": 66
+      },
+      {
+         "id": 206,
+         "nom": "Gestion de proximité RH",
+         "zone_id": 67
+      },
+      {
+         "id": 207,
+         "nom": "Gérer et exploiter la base administrative des permis de construire",
+         "zone_id": 72
+      },
+      {
+         "id": 208,
+         "nom": "Gérer et exploiter le répertoire des logements locatifs des bailleurs sociaux",
+         "zone_id": 72
+      },
+      {
+         "id": 209,
+         "nom": "Gérer un répertoire des experts",
+         "zone_id": 72
+      },
+      {
+         "id": 210,
+         "nom": "Gérer et exploiter le répertoire statistique des véhicules roulants",
+         "zone_id": 73
+      },
+      {
+         "id": 211,
+         "nom": "Mettre à disposition logiciels statistiques",
+         "zone_id": 74
+      },
+      {
+         "id": 212,
+         "nom": "Piloter l’administration des données statistiques",
+         "zone_id": 74
+      },
+      {
+         "id": 213,
+         "nom": "Stratégies",
+         "zone_id": 77
+      },
+      {
+         "id": 214,
+         "nom": "Suivi opérationnel SIB",
+         "zone_id": 77
+      },
+      {
+         "id": 215,
+         "nom": "Connaissance organisation des SI",
+         "zone_id": 77
+      },
+      {
+         "id": 216,
+         "nom": "Démarche qualité SIB",
+         "zone_id": 77
+      },
+      {
+         "id": 217,
+         "nom": "Indicateurs SIB",
+         "zone_id": 77
+      },
+      {
+         "id": 218,
+         "nom": "Données géographiques",
+         "zone_id": 78
+      },
+      {
+         "id": 219,
+         "nom": "Inventaire des acteurs",
+         "zone_id": 78
+      },
+      {
+         "id": 220,
+         "nom": "Accompagnement à l'utilisation du référentiel technique",
+         "zone_id": 78
+      },
+      {
+         "id": 221,
+         "nom": "Collecte de données",
+         "zone_id": 79
+      },
+      {
+         "id": 222,
+         "nom": "Diffusion de données",
+         "zone_id": 79
+      },
+      {
+         "id": 223,
+         "nom": "Gestion des services en réseau",
+         "zone_id": 80
+      },
+      {
+         "id": 224,
+         "nom": "Ouverture des données",
+         "zone_id": 80
+      },
+      {
+         "id": 225,
+         "nom": "Évaluation de la qualité des données",
+         "zone_id": 80
+      },
+      {
+         "id": 226,
+         "nom": "Communication",
+         "zone_id": 80
+      },
+      {
+         "id": 227,
+         "nom": "Production/gestion du référentiel technique",
+         "zone_id": 80
+      },
+      {
+         "id": 228,
+         "nom": "Diffusion du référentiel technique",
+         "zone_id": 80
+      },
+      {
+         "id": 229,
+         "nom": "Protection des espèces et habitats",
+         "zone_id": 81
+      },
+      {
+         "id": 230,
+         "nom": "Gestion des espaces",
+         "zone_id": 81
+      },
+      {
+         "id": 231,
+         "nom": "Information des citoyens",
+         "zone_id": 81
+      },
+      {
+         "id": 232,
+         "nom": "Consolidation des connaissances",
+         "zone_id": 81
+      },
+      {
+         "id": 233,
+         "nom": "Rapportage",
+         "zone_id": 81
+      },
+      {
+         "id": 234,
+         "nom": "Respect de la réglementation",
+         "zone_id": 81
+      },
+      {
+         "id": 235,
+         "nom": "Dégradation des habitats naturels et semi-naturels",
+         "zone_id": 82
+      },
+      {
+         "id": 236,
+         "nom": "Fragmentation des habitats naturels et semi-naturels",
+         "zone_id": 82
+      },
+      {
+         "id": 237,
+         "nom": "Pollution des milieux",
+         "zone_id": 82
+      },
+      {
+         "id": 238,
+         "nom": "Prélevement des ressources naturelles",
+         "zone_id": 82
+      },
+      {
+         "id": 239,
+         "nom": "Changement climatique",
+         "zone_id": 82
+      },
+      {
+         "id": 240,
+         "nom": "Ressources génétiques",
+         "zone_id": 82
+      },
+      {
+         "id": 241,
+         "nom": "Espèces",
+         "zone_id": 82
+      },
+      {
+         "id": 242,
+         "nom": "Espaces naturels et semi-naturels",
+         "zone_id": 82
+      },
+      {
+         "id": 243,
+         "nom": "Socio-économie et finance",
+         "zone_id": 82
+      },
+      {
+         "id": 244,
+         "nom": "Sensibilisation / Formation",
+         "zone_id": 82
+      },
+      {
+         "id": 245,
+         "nom": "Contrôle des actions anthropiques",
+         "zone_id": 82
+      },
+      {
+         "id": 246,
+         "nom": "Données de référence",
+         "zone_id": 82
+      },
+      {
+         "id": 247,
+         "nom": "Gestion des partenaires et des échanges",
+         "zone_id": 83
+      },
+      {
+         "id": 248,
+         "nom": "Mise à disposition (restreint et grand public)",
+         "zone_id": 83
+      },
+      {
+         "id": 249,
+         "nom": "Contrôle",
+         "zone_id": 84
+      },
+      {
+         "id": 250,
+         "nom": "Obligations déclaratives",
+         "zone_id": 84
+      },
+      {
+         "id": 251,
+         "nom": "Entrée en activité",
+         "zone_id": 85
+      },
+      {
+         "id": 252,
+         "nom": "Suivi de l'activité",
+         "zone_id": 85
+      },
+      {
+         "id": 253,
+         "nom": "Sécurité",
+         "zone_id": 86
+      },
+      {
+         "id": 254,
+         "nom": "Environnement",
+         "zone_id": 86
+      },
+      {
+         "id": 255,
+         "nom": "Droits d'accès",
+         "zone_id": 87
+      },
+      {
+         "id": 256,
+         "nom": "Taxation",
+         "zone_id": 87
+      },
+      {
+         "id": 257,
+         "nom": "Surveillance du trafic",
+         "zone_id": 88
+      },
+      {
+         "id": 258,
+         "nom": "Phares et balises",
+         "zone_id": 88
+      },
+      {
+         "id": 259,
+         "nom": "Pollution (Polmar)",
+         "zone_id": 88
+      },
+      {
+         "id": 260,
+         "nom": "Données administratives",
+         "zone_id": 89
+      },
+      {
+         "id": 261,
+         "nom": "Données sociales",
+         "zone_id": 89
+      },
+      {
+         "id": 262,
+         "nom": "Élections",
+         "zone_id": 89
+      },
+      {
+         "id": 263,
+         "nom": "Formations",
+         "zone_id": 89
+      },
+      {
+         "id": 264,
+         "nom": "Usagers",
+         "zone_id": 89
+      },
+      {
+         "id": 265,
+         "nom": "Contrôle qualité des données",
+         "zone_id": 90
+      },
+      {
+         "id": 266,
+         "nom": "Contrôle objectifs métier",
+         "zone_id": 90
+      },
+      {
+         "id": 267,
+         "nom": "Accès aux applications",
+         "zone_id": 91
+      },
+      {
+         "id": 268,
+         "nom": "Stockage des données",
+         "zone_id": 96
+      },
+      {
+         "id": 269,
+         "nom": "Rapportage",
+         "zone_id": 79
+      },
+      {
+         "id": 270,
+         "nom": "SI transverses",
+         "zone_id": 92
+      },
+      {
+         "id": 278,
+         "nom": "Nucléaire",
+         "zone_id": 52
+      },
+      {
+         "id": 279,
+         "nom": "Ressources du sous-sol",
+         "zone_id": 52
+      },
+      {
+         "id": 280,
+         "nom": "Marchés du carbone",
+         "zone_id": 53
+      },
+      {
+         "id": 281,
+         "nom": "Chaleur",
+         "zone_id": 53
+      },
+      {
+         "id": 282,
+         "nom": "Verdissement des véhicules",
+         "zone_id": 53
+      }
+   ],
+   "Urba_Zone": [
+      {
+         "id": 1,
+         "nom": "Échanges et relations",
+         "cadre_id": 2
+      },
+      {
+         "id": 2,
+         "nom": "Pilotage et contrôle",
+         "cadre_id": 3
+      },
+      {
+         "id": 3,
+         "nom": "Gestion administrative et paie agent",
+         "cadre_id": 1
+      },
+      {
+         "id": 4,
+         "nom": "Parcours professionnels",
+         "cadre_id": 1
+      },
+      {
+         "id": 5,
+         "nom": "Santé, action et dialogue social",
+         "cadre_id": 1
+      },
+      {
+         "id": 6,
+         "nom": "Fonctions transverses",
+         "cadre_id": 4
+      },
+      {
+         "id": 7,
+         "nom": "IGRH Cadres",
+         "cadre_id": 1
+      },
+      {
+         "id": 8,
+         "nom": "Pilotage des affaires",
+         "cadre_id": 1
+      },
+      {
+         "id": 9,
+         "nom": "Gestion des demandes",
+         "cadre_id": 1
+      },
+      {
+         "id": 10,
+         "nom": "Production de l'affaire",
+         "cadre_id": 1
+      },
+      {
+         "id": 11,
+         "nom": "Validation/Transfert",
+         "cadre_id": 1
+      },
+      {
+         "id": 12,
+         "nom": "Diffusion/publication/archivage",
+         "cadre_id": 1
+      },
+      {
+         "id": 13,
+         "nom": "Contribution à l'AE",
+         "cadre_id": 1
+      },
+      {
+         "id": 14,
+         "nom": "Analyse de données en support aux missions",
+         "cadre_id": 1
+      },
+      {
+         "id": 15,
+         "nom": "Connaissance et entretien des compétences",
+         "cadre_id": 1
+      },
+      {
+         "id": 16,
+         "nom": "Animation des équipes",
+         "cadre_id": 1
+      },
+      {
+         "id": 17,
+         "nom": "Veille",
+         "cadre_id": 1
+      },
+      {
+         "id": 18,
+         "nom": "Pilotage de l'IGEDD et des MIGT",
+         "cadre_id": 1
+      },
+      {
+         "id": 19,
+         "nom": "Capitalisation de l'histoire du pôle ministériel",
+         "cadre_id": 1
+      },
+      {
+         "id": 21,
+         "nom": "Ressources humaines",
+         "cadre_id": 4
+      },
+      {
+         "id": 22,
+         "nom": "Finances",
+         "cadre_id": 4
+      },
+      {
+         "id": 23,
+         "nom": "Systèmes d'information",
+         "cadre_id": 4
+      },
+      {
+         "id": 24,
+         "nom": "Gestion information et documentaire",
+         "cadre_id": 4
+      },
+      {
+         "id": 25,
+         "nom": "Moyens généraux",
+         "cadre_id": 4
+      },
+      {
+         "id": 26,
+         "nom": "Référentiels agents IGEDD",
+         "cadre_id": 5
+      },
+      {
+         "id": 27,
+         "nom": "Référentiel structure et organisation IGEDD",
+         "cadre_id": 5
+      },
+      {
+         "id": 28,
+         "nom": "Référentiels sites IGEDD",
+         "cadre_id": 5
+      },
+      {
+         "id": 29,
+         "nom": "Référentiels offre service IGEDD",
+         "cadre_id": 5
+      },
+      {
+         "id": 30,
+         "nom": "Référentiel affaire",
+         "cadre_id": 5
+      },
+      {
+         "id": 31,
+         "nom": "Échanges Usagers",
+         "cadre_id": 2
+      },
+      {
+         "id": 32,
+         "nom": "Échanges internes IGEDD",
+         "cadre_id": 2
+      },
+      {
+         "id": 33,
+         "nom": "Échanges pôle ministériel",
+         "cadre_id": 2
+      },
+      {
+         "id": 34,
+         "nom": "Nuisances et qualité de l'environnement",
+         "cadre_id": 1
+      },
+      {
+         "id": 35,
+         "nom": "Risques naturels et hydraulique",
+         "cadre_id": 1
+      },
+      {
+         "id": 36,
+         "nom": "Risques technologiques",
+         "cadre_id": 1
+      },
+      {
+         "id": 37,
+         "nom": "Gestion des systèmes d'information et de communication",
+         "cadre_id": 4
+      },
+      {
+         "id": 38,
+         "nom": "Communication",
+         "cadre_id": 2
+      },
+      {
+         "id": 39,
+         "nom": "Collaboration",
+         "cadre_id": 2
+      },
+      {
+         "id": 40,
+         "nom": "Espace agent",
+         "cadre_id": 2
+      },
+      {
+         "id": 41,
+         "nom": "Gestion de la qualité des services",
+         "cadre_id": 2
+      },
+      {
+         "id": 42,
+         "nom": "Échanges et relations",
+         "cadre_id": 2
+      },
+      {
+         "id": 43,
+         "nom": "Ressources et support",
+         "cadre_id": 4
+      },
+      {
+         "id": 44,
+         "nom": "Information géographique",
+         "cadre_id": 5
+      },
+      {
+         "id": 45,
+         "nom": "Logement, habitat et construction",
+         "cadre_id": 1
+      },
+      {
+         "id": 46,
+         "nom": "Urbanisme, paysages",
+         "cadre_id": 1
+      },
+      {
+         "id": 47,
+         "nom": "Foncier, aménagement",
+         "cadre_id": 1
+      },
+      {
+         "id": 48,
+         "nom": "Eau, milieux aquatiques",
+         "cadre_id": 1
+      },
+      {
+         "id": 49,
+         "nom": "Milieux marins et littoraux",
+         "cadre_id": 1
+      },
+      {
+         "id": 50,
+         "nom": "Ressources minérales",
+         "cadre_id": 1
+      },
+      {
+         "id": 51,
+         "nom": "Biodiversité",
+         "cadre_id": 1
+      },
+      {
+         "id": 52,
+         "nom": "Énergie",
+         "cadre_id": 1
+      },
+      {
+         "id": 53,
+         "nom": "Climat, efficacité énergétique, air",
+         "cadre_id": 1
+      },
+      {
+         "id": 54,
+         "nom": "Réaliser des ÉTUDES",
+         "cadre_id": 1
+      },
+      {
+         "id": 55,
+         "nom": "Produire les statistiques LOGEMENT CONSTRUCTION",
+         "cadre_id": 1
+      },
+      {
+         "id": 56,
+         "nom": "Produire les statistiques ÉNERGIE",
+         "cadre_id": 1
+      },
+      {
+         "id": 57,
+         "nom": "Produire les statistiques ENVIRONNEMENT",
+         "cadre_id": 1
+      },
+      {
+         "id": 58,
+         "nom": "Produire les statistiques TRANSPORT",
+         "cadre_id": 1
+      },
+      {
+         "id": 59,
+         "nom": "Produire les statistiques DÉVELOPPEMENT DURABLE",
+         "cadre_id": 1
+      },
+      {
+         "id": 60,
+         "nom": "Éditer & diffuser les statistiques",
+         "cadre_id": 1
+      },
+      {
+         "id": 61,
+         "nom": "Fournir des outils aux Services Déconcentrés",
+         "cadre_id": 1
+      },
+      {
+         "id": 62,
+         "nom": "Développer les usages et valoriser les données publiques",
+         "cadre_id": 1
+      },
+      {
+         "id": 63,
+         "nom": "Échanges Usagers",
+         "cadre_id": 2
+      },
+      {
+         "id": 64,
+         "nom": "Échanges Internes CGDD",
+         "cadre_id": 2
+      },
+      {
+         "id": 65,
+         "nom": "Échanges Pôle Ministériel",
+         "cadre_id": 2
+      },
+      {
+         "id": 66,
+         "nom": "Piloter",
+         "cadre_id": 3
+      },
+      {
+         "id": 67,
+         "nom": "Ressources Humaines",
+         "cadre_id": 4
+      },
+      {
+         "id": 68,
+         "nom": "Finances",
+         "cadre_id": 4
+      },
+      {
+         "id": 69,
+         "nom": "Systèmes d'information",
+         "cadre_id": 4
+      },
+      {
+         "id": 70,
+         "nom": "Gestion info & documentaire",
+         "cadre_id": 4
+      },
+      {
+         "id": 71,
+         "nom": "Moyens Généraux",
+         "cadre_id": 4
+      },
+      {
+         "id": 72,
+         "nom": "Répertoires Administratifs",
+         "cadre_id": 5
+      },
+      {
+         "id": 73,
+         "nom": "Répertoires Statistiques",
+         "cadre_id": 5
+      },
+      {
+         "id": 74,
+         "nom": "Gestion du SI Statistique",
+         "cadre_id": 5
+      },
+      {
+         "id": 77,
+         "nom": "Pilotage",
+         "cadre_id": 3
+      },
+      {
+         "id": 78,
+         "nom": "Référentiels",
+         "cadre_id": 5
+      },
+      {
+         "id": 79,
+         "nom": "Échanges",
+         "cadre_id": 2
+      },
+      {
+         "id": 80,
+         "nom": "Services",
+         "cadre_id": 4
+      },
+      {
+         "id": 81,
+         "nom": "Opération SIB",
+         "cadre_id": 1
+      },
+      {
+         "id": 82,
+         "nom": "Données SIB",
+         "cadre_id": 1
+      },
+      {
+         "id": 83,
+         "nom": "SI consultation, valorisation et exploitation data",
+         "cadre_id": 2
+      },
+      {
+         "id": 84,
+         "nom": "Contrôle et obligations déclaratives",
+         "cadre_id": 1
+      },
+      {
+         "id": 85,
+         "nom": "SI navires et sécurité",
+         "cadre_id": 1
+      },
+      {
+         "id": 86,
+         "nom": "SI sécurité et transition écologique des navires",
+         "cadre_id": 1
+      },
+      {
+         "id": 87,
+         "nom": "SI droit à produire et taxation",
+         "cadre_id": 1
+      },
+      {
+         "id": 88,
+         "nom": "SI sécurité maritime",
+         "cadre_id": 1
+      },
+      {
+         "id": 89,
+         "nom": "SI usagers de la mer et social",
+         "cadre_id": 1
+      },
+      {
+         "id": 90,
+         "nom": "Gouvernance des référentiels de données + données métier",
+         "cadre_id": 3
+      },
+      {
+         "id": 91,
+         "nom": "Portail accès",
+         "cadre_id": 5
+      },
+      {
+         "id": 92,
+         "nom": "SI transverses",
+         "cadre_id": 5
+      },
+      {
+         "id": 93,
+         "nom": "Assistance",
+         "cadre_id": 5
+      },
+      {
+         "id": 94,
+         "nom": "Référentiel",
+         "cadre_id": 5
+      },
+      {
+         "id": 95,
+         "nom": "SI authentification",
+         "cadre_id": 4
+      },
+      {
+         "id": 96,
+         "nom": "Archivage numérique",
+         "cadre_id": 4
+      }
+   ],
+   "Utilisateur": [
+      {
+         "id": 1,
+         "nom": "Citoyens"
+      },
+      {
+         "id": 2,
+         "nom": "Entreprises"
+      },
+      {
+         "id": 3,
+         "nom": "Agents"
+      },
+      {
+         "id": 4,
+         "nom": "Services d'administration centrale"
+      },
+      {
+         "id": 5,
+         "nom": "Services régionaux"
+      },
+      {
+         "id": 6,
+         "nom": "Services départementaux"
+      },
+      {
+         "id": 7,
+         "nom": "Opérateurs/agences"
+      },
+      {
+         "id": 8,
+         "nom": "Partenaires métiers"
+      },
+      {
+         "id": 9,
+         "nom": "Europe"
+      },
+      {
+         "id": 10,
+         "nom": "Collectivités territoriales"
+      }
+   ]
+}

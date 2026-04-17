@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>excalidraw</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        .diagram {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #f4f4f4;
+        }
+        .back-to-toc {
+            text-decoration: none;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .table-of-contents {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .table-of-contents h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .table-of-contents ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .table-of-contents ul ul {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+        .table-of-contents li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        .table-of-contents a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+        .table-of-contents a:hover {
+            text-decoration: underline;
+        }
+        blockquote {
+            border-left: 4px solid #ddd;
+            margin: 0;
+            padding-left: 16px;
+            color: #666;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+<p>Je ne peux pas créer de fichiers téléchargeables directement. Cependant, je peux vous fournir le code Markdown avec des diagrammes Excalidraw que vous pourrez copier-coller dans votre éditeur préféré.</p>
+
+<p>Voici un fichier Markdown complet avec plusieurs exemples de diagrammes Excalidraw :</p>
+
+<h1 id="document-avec-diagrammes-excalidraw">Document avec Diagrammes Excalidraw</h1>
+
+<nav class="table-of-contents" id="table-of-contents">
+<h2>Table des matières</h2>
+<ul>
+<li><a id="toc-1-diagramme-de-flux-simple"></a><a href="#1-diagramme-de-flux-simple">1. Diagramme de Flux Simple</a></li>
+</ul>
+<ul>
+<li><a id="toc-2-diagramme-de-base-de-données"></a><a href="#2-diagramme-de-base-de-données">2. Diagramme de Base de Données</a></li>
+</ul>
+<ul>
+<li><a id="toc-3-diagramme-de-réseau"></a><a href="#3-diagramme-de-réseau">3. Diagramme de Réseau</a></li>
+</ul>
+<ul>
+<li><a id="toc-4-diagramme-de-processus-métier"></a><a href="#4-diagramme-de-processus-métier">4. Diagramme de Processus Métier</a></li>
+</ul>
+<ul>
+<ul>
+<li><a id="toc-types-de-formes-disponibles"></a><a href="#types-de-formes-disponibles">Types de formes disponibles :</a></li>
+</ul>
+<ul>
+<li><a id="toc-propriétés-principales"></a><a href="#propriétés-principales">Propriétés principales :</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+Ce document contient plusieurs exemples de diagrammes créés avec la syntaxe Excalidraw.
+
+<p><hr></p>
+
+<h2 id="1-diagramme-de-flux-simple">1. Diagramme de Flux Simple</h2>
+
+<pre><code class="language-excalidraw">{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "rect1",
+      "type": "rectangle",
+      "x": 100,
+      "y": 100,
+      "width": 200,
+      "height": 100,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "Démarrage"
+    },
+    {
+      "id": "rect2",
+      "type": "rectangle",
+      "x": 400,
+      "y": 100,
+      "width": 200,
+      "height": 100,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "Traitement"
+    },
+    {
+      "id": "arrow1",
+      "type": "arrow",
+      "x": 300,
+      "y": 150,
+      "width": 100,
+      "height": 0,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#ffffff"
+  }
+}
+</code></pre>
+<hr>
+
+<h2 id="2-diagramme-de-base-de-données">2. Diagramme de Base de Données</h2>
+
+<pre><code class="language-excalidraw">{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "db1",
+      "type": "cylinder",
+      "x": 200,
+      "y": 200,
+      "width": 150,
+      "height": 200,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "#74c0fc",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "Users DB"
+    },
+    {
+      "id": "server1",
+      "type": "rectangle",
+      "x": 500,
+      "y": 250,
+      "width": 180,
+      "height": 100,
+      "strokeColor": "#2f9e44",
+      "backgroundColor": "#69db7c",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "API Server"
+    },
+    {
+      "id": "client1",
+      "type": "ellipse",
+      "x": 800,
+      "y": 260,
+      "width": 120,
+      "height": 80,
+      "strokeColor": "#e03131",
+      "backgroundColor": "#ff8787",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "Client"
+    },
+    {
+      "id": "arrow1",
+      "type": "arrow",
+      "x": 350,
+      "y": 300,
+      "width": 150,
+      "height": 0,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    },
+    {
+      "id": "arrow2",
+      "type": "arrow",
+      "x": 680,
+      "y": 300,
+      "width": 120,
+      "height": 0,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    }
+  ],
+  "appState": {
+    "gridSize": 20,
+    "viewBackgroundColor": "#f8f9fa"
+  }
+}
+</code></pre>
+<hr>
+
+<h2 id="3-diagramme-de-réseau">3. Diagramme de Réseau</h2>
+
+<pre><code class="language-excalidraw">{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "cloud",
+      "type": "ellipse",
+      "x": 400,
+      "y": 100,
+      "width": 200,
+      "height": 120,
+      "strokeColor": "#495057",
+      "backgroundColor": "#dee2e6",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 2,
+      "opacity": 100,
+      "text": "Internet"
+    },
+    {
+      "id": "router",
+      "type": "rectangle",
+      "x": 450,
+      "y": 300,
+      "width": 100,
+      "height": 60,
+      "strokeColor": "#f76707",
+      "backgroundColor": "#ffc078",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "Router"
+    },
+    {
+      "id": "pc1",
+      "type": "rectangle",
+      "x": 200,
+      "y": 450,
+      "width": 120,
+      "height": 80,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "PC 1"
+    },
+    {
+      "id": "pc2",
+      "type": "rectangle",
+      "x": 400,
+      "y": 450,
+      "width": 120,
+      "height": 80,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "PC 2"
+    },
+    {
+      "id": "pc3",
+      "type": "rectangle",
+      "x": 600,
+      "y": 450,
+      "width": 120,
+      "height": 80,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "PC 3"
+    },
+    {
+      "id": "line1",
+      "type": "line",
+      "x": 500,
+      "y": 220,
+      "width": 0,
+      "height": 80,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    },
+    {
+      "id": "line2",
+      "type": "line",
+      "x": 260,
+      "y": 360,
+      "width": 240,
+      "height": 90,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    },
+    {
+      "id": "line3",
+      "type": "line",
+      "x": 500,
+      "y": 360,
+      "width": 0,
+      "height": 90,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    },
+    {
+      "id": "line4",
+      "type": "line",
+      "x": 500,
+      "y": 360,
+      "width": 160,
+      "height": 90,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    }
+  ],
+  "appState": {
+    "gridSize": 20,
+    "viewBackgroundColor": "#ffffff"
+  }
+}
+</code></pre>
+<hr>
+
+<h2 id="4-diagramme-de-processus-métier">4. Diagramme de Processus Métier</h2>
+
+<pre><code class="language-excalidraw">{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "start",
+      "type": "ellipse",
+      "x": 300,
+      "y": 50,
+      "width": 100,
+      "height": 60,
+      "strokeColor": "#2f9e44",
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "Start"
+    },
+    {
+      "id": "step1",
+      "type": "rectangle",
+      "x": 250,
+      "y": 150,
+      "width": 200,
+      "height": 80,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "Vérifier Stock"
+    },
+    {
+      "id": "decision",
+      "type": "diamond",
+      "x": 275,
+      "y": 280,
+      "width": 150,
+      "height": 100,
+      "strokeColor": "#f08c00",
+      "backgroundColor": "#ffd43b",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "Stock\nOK?"
+    },
+    {
+      "id": "step2",
+      "type": "rectangle",
+      "x": 500,
+      "y": 290,
+      "width": 200,
+      "height": 80,
+      "strokeColor": "#e03131",
+      "backgroundColor": "#ff8787",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "Commander"
+    },
+    {
+      "id": "step3",
+      "type": "rectangle",
+      "x": 250,
+      "y": 450,
+      "width": 200,
+      "height": 80,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "Expédier"
+    },
+    {
+      "id": "end",
+      "type": "ellipse",
+      "x": 300,
+      "y": 600,
+      "width": 100,
+      "height": 60,
+      "strokeColor": "#e03131",
+      "backgroundColor": "#ffa8a8",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100,
+      "text": "End"
+    },
+    {
+      "id": "arrow1",
+      "type": "arrow",
+      "x": 350,
+      "y": 110,
+      "width": 0,
+      "height": 40,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    },
+    {
+      "id": "arrow2",
+      "type": "arrow",
+      "x": 350,
+      "y": 230,
+      "width": 0,
+      "height": 50,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    },
+    {
+      "id": "arrow3",
+      "type": "arrow",
+      "x": 425,
+      "y": 330,
+      "width": 75,
+      "height": 0,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    },
+    {
+      "id": "arrow4",
+      "type": "arrow",
+      "x": 600,
+      "y": 330,
+      "width": -250,
+      "height": 120,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    },
+    {
+      "id": "arrow5",
+      "type": "arrow",
+      "x": 350,
+      "y": 380,
+      "width": 0,
+      "height": 70,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    },
+    {
+      "id": "arrow6",
+      "type": "arrow",
+      "x": 350,
+      "y": 530,
+      "width": 0,
+      "height": 70,
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 2,
+      "roughness": 1
+    }
+  ],
+  "appState": {
+    "gridSize": 20,
+    "viewBackgroundColor": "#ffffff"
+  }
+}
+</code></pre>
+<hr>
+
+<h2 id="instructions-dutilisation">Instructions d'utilisation</h2>
+
+<p>1. <strong>Copiez</strong> le contenu ci-dessus dans un fichier avec l'extension <code>.md</code> ou <code>.excalidraw</code><br>
+2. <strong>Ouvrez</strong> le fichier dans <a href="https://excalidraw.com/">Excalidraw</a> ou dans Obsidian avec le plugin Excalidraw<br>
+3. <strong>Modifiez</strong> les diagrammes selon vos besoins</p>
+
+<h3 id="types-de-formes-disponibles">Types de formes disponibles :</h3>
+<ul>
+<li><code>rectangle</code> - Rectangle</li>
+<li><code>ellipse</code> - Ellipse/Cercle</li>
+<li><code>diamond</code> - Losange (pour décisions)</li>
+<li><code>cylinder</code> - Cylindre (pour bases de données)</li>
+<li><code>arrow</code> - Flèche</li>
+<li><code>line</code> - Ligne</li>
+<li><code>text</code> - Texte</li>
+</ul>
+
+<h3 id="propriétés-principales">Propriétés principales :</h3>
+<ul>
+<li><code>strokeColor</code> - Couleur du contour</li>
+<li><code>backgroundColor</code> - Couleur de remplissage</li>
+<li><code>fillStyle</code> - Style de remplissage (solid, hachure, cross-hatch)</li>
+<li><code>strokeWidth</code> - Épaisseur du trait</li>
+<li><code>roughness</code> - Niveau de "dessin à la main" (0-2)</li>
+<li><code>opacity</code> - Transparence (0-100)</li>
+</ul>
+``<code>
+
+<p>Pour utiliser ces diagrammes :</p>
+
+<p>1. <strong>Copiez</strong> tout le contenu ci-dessus<br>
+2. <strong>Enregistrez-le</strong> dans un fichier texte avec l'extension </code>.md<code> (par exemple </code>diagrammes.md`)<br>
+3. <strong>Ouvrez-le</strong> dans un éditeur compatible comme :<br>
+   - <a href="https://excalidraw.com/">Excalidraw</a> (en ligne)<br>
+   - <strong>Obsidian</strong> avec le plugin Excalidraw<br>
+   - <strong>VS Code</strong> avec l'extension Excalidraw</p>
+
+<p>Les diagrammes incluent :<br>
+<ul><br>
+<li>Un <strong>flux de processus</strong> simple</li><br>
+<li>Une <strong>architecture de base de données</strong></li><br>
+<li>Un <strong>diagramme de réseau</strong></li><br>
+<li>Un <strong>processus métier</strong> avec décision</li><br>
+</ul></p>
+
+<p>Vous pouvez modifier les couleurs, positions, et formes selon vos besoins !</p>
+</body>
+</html>
