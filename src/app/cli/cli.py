@@ -75,6 +75,10 @@ def show_help():
     print("Modules GitHub (gestion des releases):")
     print("  github-release        Créer une release GitHub depuis un tag")
     print()
+    print("Modules ZIP (gestion d'archives):")
+    print("  zip-create            Créer une archive ZIP avec chiffrement AES-256")
+    print("  zip-extract           Extraire une archive ZIP")
+    print()
     print("Modules d'encoding:")
     print("  check-utf8            Vérifier l'encodage des fichiers Markdown")
     print("  fix-utf8              Corriger l'encodage des fichiers Markdown")
@@ -1080,6 +1084,13 @@ def main():
         elif command == 'github-release':
             from app.github.commands.github_release import main as github_release_main
             return github_release_main(sys.argv[2:])
+        # ZIP operations
+        elif command == 'zip-create':
+            from app.zip.commands.zip_create import main as zip_create_main
+            return zip_create_main(sys.argv[2:])
+        elif command == 'zip-extract':
+            from app.zip.commands.zip_extract import main as zip_extract_main
+            return zip_extract_main(sys.argv[2:])
         elif command == 'config':
             return handle_config_command()
         elif command == 'init':

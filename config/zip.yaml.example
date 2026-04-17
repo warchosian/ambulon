@@ -1,0 +1,40 @@
+# Configuration ZIP pour Ambulon - Example Template
+# Copiez ce fichier vers zip.yaml et ajustez les valeurs
+
+zip:
+  # Paramètres de compression par défaut
+  compression:
+    level: 6  # Niveau de compression 0-9 (0=aucune, 9=max)
+    recursive: true  # Inclure les sous-répertoires récursivement
+
+  # Exclusions par défaut (patterns glob)
+  exclude:
+    patterns:
+      - "*.pyc"
+      - "__pycache__"
+      - "*.egg-info"
+      - ".git"
+      - ".pytest_cache"
+      - "node_modules"
+
+  # Chiffrement par défaut
+  encryption:
+    # ⚠️ NE JAMAIS commiter un vrai mot de passe - toujours utiliser une variable d'environnement
+    # Le mot de passe peut être fourni via:
+    #   1. --password (CLI)
+    #   2. --password-file (CLI)
+    #   3. AMBULON_ZIP_PASSWORD (variable d'environnement)
+    #   4. password_file (ce fichier de config)
+    password: "${AMBULON_ZIP_PASSWORD:-}"
+
+    # Ou utiliser un fichier de mot de passe
+    # password_file: ".password"
+
+# Variables d'environnement supportées:
+# - AMBULON_ZIP_PASSWORD: Mot de passe par défaut pour chiffrement
+# - AMBULON_ZIP_COMPRESSION: Niveau de compression (0-9)
+# - AMBULON_HOME: Répertoire de base pour la configuration
+
+# Exemple d'utilisation:
+# export AMBULON_ZIP_PASSWORD="MySecretPassword"
+# ambulon zip-create docs/

@@ -29,6 +29,7 @@ lxml = ">=5.0.0"
 markdown = ">=3.5.0"
 python-slugify = ">=8.0.0"
 kroki = "*"
+pyzipper = ">=0.3.6"
 
 # Chromium pour la conversion HTML -> PDF avec support SVG
 # Install browsers with: poetry run playwright install chromium
