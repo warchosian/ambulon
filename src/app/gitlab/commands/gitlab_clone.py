@@ -7,6 +7,7 @@ import argparse
 import logging
 import os
 import sys
+import shutil
 from pathlib import Path
 from typing import List, Optional
 
@@ -15,6 +16,11 @@ from app.core.logging_config import setup_logging
 from app.core.config_tracker import ConfigTracker, ConfigSource, is_sensitive_key
 from app.gitlab.core.cloning import clone_repository
 from app.gitlab.core.monofile import generate_code_monofile, generate_wiki_monofile, infer_repo_mode
+
+# Post-processing imports (TOC, iTOC, Augment)
+from app.toc.core.markdown_toc_generator import add_toc_to_markdown_logic
+from app.toc.core.markdown_itoc import add_toc_backlinks_logic
+from app.processing.commands.add_augment import augment
 
 # Default configuration for this module
 DEFAULT_CONFIG = {
@@ -72,6 +78,10 @@ Exemples:
 
   # Via variables d'environnement + config file
   GITLAB_PRIVATE_TOKEN=glpat-xxx ambulon gitlab-clone
+
+  # Avec améliorations automatiques des fichiers générés
+  ambulon gitlab-clone --config config/gitlab.yaml --add-toc --add-itoc
+  ambulon gitlab-clone --config config/gitlab.yaml --all-enhancements
 """
     )
 
@@ -82,6 +92,12 @@ Exemples:
     parser.add_argument("-c", "--config", type=str, default="config/gitlab.yaml", help="Path to the gitlab.yaml configuration file.")
     parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose logging.")
     parser.add_argument("-f", "--force", action="store_true", help="Force overwrite of existing monofiles during generation.")
+
+    # Options de post-traitement des fichiers générés
+    parser.add_argument("--add-toc", action="store_true", help="Ajouter automatiquement une table des matières (TOC) aux fichiers Markdown générés")
+    parser.add_argument("--add-itoc", action="store_true", help="Ajouter automatiquement des liens retour (iTOC) aux fichiers Markdown générés")
+    parser.add_argument("--augment", action="store_true", help="Augmenter automatiquement les fichiers HTML générés avec navigation interactive")
+    parser.add_argument("-E", "--all-enhancements", action="store_true", help="Appliquer toutes les améliorations (TOC + iTOC + augment). Produit des fichiers <origine>.enhanced.md")
 
     # Options de traçabilité de configuration
     parser.add_argument(
@@ -100,6 +116,13 @@ Exemples:
     # Setup logging
     log_level = logging.DEBUG if args.verbose else logging.INFO
     setup_logging(level=log_level, log_file_prefix="gitlab_clone")
+
+    # Handle --all-enhancements option
+    if args.all_enhancements:
+        args.add_toc = True
+        args.add_itoc = True
+        args.augment = True
+        logger.info("--all-enhancements enabled: TOC, iTOC, and augment will be applied")
 
     # Initialize configuration tracker
     tracker = ConfigTracker()
@@ -342,9 +365,106 @@ Exemples:
 
                 if exit_code == 0 and output_path:
                     _log_output_path(output_path)
-                    html_path = Path(str(output_path)).with_suffix(".html")
-                    if html_path.exists():
-                        _log_output_path(html_path)
+
+                    # Determine if we need to create enhanced version
+                    has_enhancements = args.add_toc or args.add_itoc or args.augment
+                    enhanced_md_path = None
+                    enhanced_html_path = None
+
+                    # Post-processing: Add TOC/iTOC if requested
+                    if has_enhancements and output_path.suffix == '.md':
+                        # Create enhanced version: <origine>.enhanced.md
+                        enhanced_md_path = output_path.parent / f"{output_path.stem}.enhanced.md"
+                        try:
+                            shutil.copy2(output_path, enhanced_md_path)
+                            logger.info(f"Created enhanced MD: {enhanced_md_path.name}")
+                        except Exception as e:
+                            logger.error(f"Failed to create enhanced MD copy: {e}")
+                            has_errors = True
+                            enhanced_md_path = None
+
+                        # Also create enhanced HTML if original HTML exists
+                        html_path = Path(str(output_path)).with_suffix(".html")
+                        if html_path.exists():
+                            enhanced_html_path = output_path.parent / f"{output_path.stem}.enhanced.html"
+                            try:
+                                shutil.copy2(html_path, enhanced_html_path)
+                                logger.info(f"Created enhanced HTML: {enhanced_html_path.name}")
+                            except Exception as e:
+                                logger.error(f"Failed to create enhanced HTML copy: {e}")
+                                has_errors = True
+                                enhanced_html_path = None
+
+                    # Apply TOC to enhanced version
+                    if args.add_toc and enhanced_md_path:
+                        try:
+                            logger.info(f"Adding TOC to {enhanced_md_path.name}...")
+                            toc_exit_code, toc_output = add_toc_to_markdown_logic(
+                                input_file=enhanced_md_path,
+                                output_file=enhanced_md_path,
+                                min_level=2,
+                                max_level=6,
+                                force=True
+                            )
+                            if toc_exit_code == 0:
+                                logger.info(f"✓ TOC added to {enhanced_md_path.name}")
+                            else:
+                                logger.error(f"Failed to add TOC to {enhanced_md_path.name}")
+                                has_errors = True
+                        except Exception as e:
+                            logger.error(f"Failed to add TOC to {enhanced_md_path.name}: {e}")
+                            has_errors = True
+
+                    # Apply iTOC to enhanced version
+                    if args.add_itoc and enhanced_md_path:
+                        try:
+                            logger.info(f"Adding iTOC backlinks to {enhanced_md_path.name}...")
+                            itoc_exit_code, itoc_output = add_toc_backlinks_logic(
+                                input_file=enhanced_md_path,
+                                output_file=enhanced_md_path,
+                                toc_id='table-of-contents',
+                                link_text='↑',
+                                min_level=2,
+                                max_level=6,
+                                force=True
+                            )
+                            if itoc_exit_code == 0:
+                                logger.info(f"✓ iTOC backlinks added to {enhanced_md_path.name}")
+                            else:
+                                logger.error(f"Failed to add iTOC to {enhanced_md_path.name}")
+                                has_errors = True
+                        except Exception as e:
+                            logger.error(f"Failed to add iTOC to {enhanced_md_path.name}: {e}")
+                            has_errors = True
+
+                    # Log the enhanced files if created
+                    if enhanced_md_path:
+                        _log_output_path(enhanced_md_path)
+
+                    # Augment enhanced HTML if it was created
+                    if args.augment and enhanced_html_path:
+                        try:
+                            logger.info(f"Augmenting {enhanced_html_path.name} with interactive features...")
+                            augment_exit_code = augment(
+                                input_path=str(enhanced_html_path),
+                                output_path=str(enhanced_html_path),
+                                verbose=args.verbose
+                            )
+                            if augment_exit_code == 0:
+                                logger.info(f"✓ HTML augmented: {enhanced_html_path.name}")
+                                _log_output_path(enhanced_html_path)
+                            else:
+                                logger.error(f"Failed to augment {enhanced_html_path.name}")
+                                has_errors = True
+                        except Exception as e:
+                            logger.error(f"Failed to augment {enhanced_html_path.name}: {e}")
+                            has_errors = True
+
+                    # Log original HTML if no enhancements were applied
+                    if not has_enhancements:
+                        html_path = Path(str(output_path)).with_suffix(".html")
+                        if html_path.exists():
+                            _log_output_path(html_path)
                 elif exit_code == 0 and output_path is None:
                     logger.warning(f"Monofile skipped (no Markdown files) for {repo_path}")
                 else:
