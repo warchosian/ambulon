@@ -140,8 +140,9 @@ class GitLabClient:
             )
             upload_response.raise_for_status()
 
-        upload_data = upload_response.json()
-        file_url = upload_data["url"]
+        # The Package Registry API doesn't return the URL in the response,
+        # so we construct it ourselves
+        file_url = package_url
 
         logger.info(f"Asset uploaded to package registry: {file_url}")
 
