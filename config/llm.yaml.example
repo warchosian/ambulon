@@ -1,0 +1,124 @@
+# ============================================================================
+# FICHIER DE CONFIGURATION - MODULE LLM (GÉNÉRATION PAR IA)
+# ============================================================================
+# Ce fichier configure les providers LLM pour la génération de documents
+#
+# INSTRUCTIONS:
+# 1. Copier ce fichier: cp llm.yaml.example llm.yaml
+# 2. Remplir les API keys pour les providers souhaités
+# 3. Le fichier config/llm.yaml est dans .gitignore
+#
+# HIÉRARCHIE: Arguments CLI > YAML > Variables d'environnement > Défauts
+# ============================================================================
+
+llm:
+  # ==========================
+  # CONFIGURATION GÉNÉRALE
+  # ==========================
+
+  # Provider par défaut (kimi, chatgpt, claude)
+  default_provider: "kimi"
+
+  # Timeout pour les requêtes API (en secondes)
+  timeout: 120
+
+  # Nombre maximum de tentatives en cas d'échec
+  max_retries: 3
+
+  # Activer le streaming par défaut
+  enable_streaming: false
+
+  # ==========================
+  # PROVIDERS LLM
+  # ==========================
+  providers:
+    # Kimi (Moonshot AI) - API compatible OpenAI
+    kimi:
+      enabled: true
+
+      # URL de base de l'API
+      base_url: "https://api.moonshot.cn/v1"
+
+      # Token API Kimi (Bearer token)
+      # ⚠️ NE PAS COMMITER CE TOKEN ⚠️
+      # Préférez utiliser la variable d'environnement KIMI_API_KEY
+      api_key: "${KIMI_API_KEY:-}"
+
+      # Modèle par défaut
+      # Options: moonshot-v1-8k, moonshot-v1-32k, moonshot-v1-128k
+      model: "moonshot-v1-8k"
+
+      # Paramètres de génération
+      temperature: 0.7        # Créativité (0.0 à 1.0)
+      max_tokens: 4096        # Longueur maximale de réponse
+
+      # Délai entre les tentatives (en secondes)
+      retry_delay: 2
+
+    # ChatGPT (OpenAI)
+    chatgpt:
+      enabled: false
+      base_url: "https://api.openai.com/v1"
+      api_key: "${OPENAI_API_KEY:-}"
+      model: "gpt-4-turbo-preview"
+      temperature: 0.7
+      max_tokens: 4096
+
+    # Claude (Anthropic)
+    claude:
+      enabled: false
+      base_url: "https://api.anthropic.com/v1"
+      api_key: "${ANTHROPIC_API_KEY:-}"
+      model: "claude-3-opus-20240229"
+      temperature: 1.0
+      max_tokens: 4096
+
+  # ==========================
+  # CONFIGURATION DES DOCUMENTS
+  # ==========================
+  documents:
+    # Séparateur pour l'agrégation de documents
+    separator: "\n\n---\n\n"
+
+    # Inclure les métadonnées des fichiers dans le contexte
+    include_metadata: true
+
+    # Extensions de fichiers acceptées
+    allowed_extensions:
+      - ".md"
+      - ".markdown"
+      - ".txt"
+
+    # Encodage par défaut
+    default_encoding: "utf-8"
+
+  # ==========================
+  # CONFIGURATION DE SORTIE
+  # ==========================
+  output:
+    # Fichier de sortie par défaut
+    default_file: "response.md"
+
+    # Créer le répertoire de sortie si inexistant
+    create_output_dir: true
+
+    # Sauvegarder les métadonnées de génération
+    save_metadata: true
+
+    # Nom du fichier de métadonnées
+    metadata_filename: "generation_metadata.json"
+
+# ==========================
+# EXEMPLES D'UTILISATION
+# ==========================
+# 1. Génération simple:
+#    ambulon llm -i doc1.md -i doc2.md -p prompt.md -o response.md
+#
+# 2. Génération avec streaming:
+#    ambulon llm --input-dir ./docs -p prompt.md --stream
+#
+# 3. Utiliser un provider spécifique:
+#    ambulon llm -i docs/*.md -p prompt.md --provider chatgpt
+#
+# 4. Lister les providers:
+#    ambulon llm --list-providers

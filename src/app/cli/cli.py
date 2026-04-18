@@ -82,6 +82,9 @@ def show_help():
     print("  zip-create            Créer une archive ZIP avec chiffrement AES-256")
     print("  zip-extract           Extraire une archive ZIP")
     print()
+    print("Modules LLM (génération de documents par IA):")
+    print("  llm                   Générer des documents via API LLM (Kimi, ChatGPT, Claude)")
+    print()
     print("Modules d'encoding:")
     print("  check-utf8            Vérifier l'encodage des fichiers Markdown")
     print("  fix-utf8              Corriger l'encodage des fichiers Markdown")
@@ -1098,6 +1101,10 @@ def main():
         elif command == 'zip-extract':
             from app.zip.commands.zip_extract import main as zip_extract_main
             return zip_extract_main(sys.argv[2:])
+        # LLM operations
+        elif command == 'llm':
+            from app.llm.commands.llm import main as llm_main
+            return llm_main(sys.argv[2:])
         elif command == 'config':
             return handle_config_command()
         elif command == 'init':
