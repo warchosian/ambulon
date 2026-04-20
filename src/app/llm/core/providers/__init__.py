@@ -5,13 +5,14 @@ Provider registry for LLM integrations.
 from typing import Dict, Type, List
 from app.llm.core.providers.base import BaseProvider
 from app.llm.core.providers.kimi import KimiProvider
+from app.llm.core.providers.claude import ClaudeProvider
 
 # Provider registry for dynamic loading
 PROVIDERS: Dict[str, Type[BaseProvider]] = {
     'kimi': KimiProvider,
+    'claude': ClaudeProvider,
     # Future providers:
     # 'chatgpt': ChatGPTProvider,
-    # 'claude': ClaudeProvider,
 }
 
 

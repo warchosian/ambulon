@@ -15,14 +15,14 @@ Tu dois produire toute réponse, sauf indication contraire comme un **document t
 
 ### 🖼️ Diagrammes
 - Utilise **Mermaid** par défaut pour tous les schémas (architecture, séquence, flux, etc.), avec la syntaxe :
-  ````markdown
+
   ```mermaid
   graph TD
       A --> B
   ```
   ````
 - Si **PlantUML** est explicitement demandé, utilise la syntaxe :
-  ````plantuml
+  ```plantuml
   @startuml
   A --> B
   @enduml

@@ -84,6 +84,9 @@ def show_help():
     print()
     print("Modules LLM (génération de documents par IA):")
     print("  llm                   Générer des documents via API LLM (Kimi, ChatGPT, Claude)")
+    print("  filter                Filtrer et réduire les gros fichiers code.md")
+    print("  summarize             Résumer intelligemment les fichiers code.md via LLM")
+    print("  plantuml2mermaid      Convertir diagrammes PlantUML en Mermaid")
     print()
     print("Modules d'encoding:")
     print("  check-utf8            Vérifier l'encodage des fichiers Markdown")
@@ -1105,6 +1108,30 @@ def main():
         elif command == 'llm':
             from app.llm.commands.llm import main as llm_main
             return llm_main(sys.argv[2:])
+        elif command == 'filter':
+            from app.llm.commands.filter import main as filter_main
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                return filter_main()
+            finally:
+                sys.argv = original_argv
+        elif command == 'summarize':
+            from app.llm.commands.summarize import main as summarize_main
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                return summarize_main()
+            finally:
+                sys.argv = original_argv
+        elif command == 'plantuml2mermaid':
+            from app.llm.commands.convert_plantuml_to_mermaid import main as plantuml2mermaid_main
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                return plantuml2mermaid_main()
+            finally:
+                sys.argv = original_argv
         elif command == 'config':
             return handle_config_command()
         elif command == 'init':

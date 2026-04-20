@@ -92,6 +92,15 @@ class KimiProvider(BaseProvider):
         for attempt in range(self.max_retries):
             try:
                 response = self.session.post(url, json=payload, timeout=self.timeout)
+
+                # Log error details for debugging
+                if response.status_code != 200:
+                    try:
+                        error_details = response.json()
+                        logger.error(f"Kimi API Error Response: {json.dumps(error_details, indent=2)}")
+                    except Exception:
+                        logger.error(f"Kimi API Error Response (raw): {response.text}")
+
                 response.raise_for_status()
 
                 data = response.json()
