@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.1.0 (2026-04-21)
+
+### Fix
+
+- unblock src/app/gitlab application code and ignore workplace clones explicitly
+- anchor 'gitlab/' gitignore rule to repo root only
+- replace remaining bare except clauses with specific exceptions
+
+### Refactor
+
+- migrate print() to logging in PIAGClient and config_loader
+- **cli**: introduce command registry to replace giant if/elif chain
+- **piag,vscode**: remove mutable module-level globals
+- **mcp**: unify on mcp.core, turn legacy mcp_server/mcp_config into shims
+- **processing**: de-duplicate augment/make_html_interactive commands
+- **scan,vscode**: remove hardcoded personal G:\\WarchoLife paths
+
+### Perf
+
+- **piag,wikisi**: reuse requests.Session for HTTP clients
+
 ## 4.0.0 (2026-04-21)
 
 ### Feat
