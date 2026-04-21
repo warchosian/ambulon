@@ -62,6 +62,7 @@ def show_help():
     print("  filter                Filtrer et réduire les gros fichiers code.md")
     print("  summarize             Résumer intelligemment les fichiers code.md via LLM")
     print("  plantuml2mermaid      Convertir diagrammes PlantUML en Mermaid")
+    print("  generate-docs         Générer des docs depuis les prompts pour toutes les applications")
     print()
     print("Modules d'encoding:")
     print("  check-utf8            Vérifier l'encodage des fichiers Markdown")
