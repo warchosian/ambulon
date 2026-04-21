@@ -4,194 +4,112 @@ Configuration management for LLM module.
 Supports configuration hierarchy:
 1. Command-line arguments (highest priority)
 2. YAML configuration file
-3. Environment variables
-4. Default values
+3. Environment variables (``${VAR:-default}`` substitution)
+4. Default values (:data:`DEFAULT_LLM_CONFIG`)
+
+Pre-4.1.0 this module re-implemented its own ``substitute_env_vars`` and
+``merge_configs`` helpers; they now delegate to :mod:`app.core.config_loader`.
 """
 
-import os
 import logging
-import re
-from pathlib import Path
-from typing import Dict, Any, Optional
-import yaml
+import os
+from typing import Any, Dict, Optional
+
+from app.core.config_loader import deep_merge as _deep_merge, load_config as _load_config
 
 logger = logging.getLogger(__name__)
+
+#: LLM default configuration.
+DEFAULT_LLM_CONFIG: Dict[str, Any] = {
+    "llm": {
+        "default_provider": "kimi",
+        "timeout": 120,
+        "max_retries": 3,
+        "enable_streaming": False,
+        "providers": {
+            "kimi": {
+                "enabled": True,
+                "base_url": "https://api.moonshot.cn/v1",
+                "api_key": "",
+                "model": "moonshot-v1-8k",
+                "temperature": 0.7,
+                "max_tokens": 4096,
+                "retry_delay": 2,
+            },
+            "chatgpt": {
+                "enabled": False,
+                "base_url": "https://api.openai.com/v1",
+                "api_key": "",
+                "model": "gpt-4-turbo-preview",
+                "temperature": 0.7,
+                "max_tokens": 4096,
+            },
+            "claude": {
+                "enabled": False,
+                "base_url": "https://api.anthropic.com/v1",
+                "api_key": "",
+                "model": "claude-3-opus-20240229",
+                "temperature": 1.0,
+                "max_tokens": 4096,
+            },
+            "local": {
+                "enabled": False,
+                "base_url": "http://localhost:11434/v1",
+                "api_key": "local",
+                "model": "qwen2.5-7b",
+                "temperature": 0.7,
+                "max_tokens": 4096,
+            },
+        },
+        "documents": {
+            "separator": "\n\n---\n\n",
+            "include_metadata": True,
+            "allowed_extensions": [".md", ".markdown", ".txt"],
+            "default_encoding": "utf-8",
+        },
+        "output": {
+            "default_file": "response.md",
+            "create_output_dir": True,
+            "save_metadata": True,
+            "metadata_filename": "generation_metadata.json",
+        },
+    }
+}
 
 
 def load_llm_config(config_file: Optional[str] = None) -> Dict[str, Any]:
     """
-    Load LLM configuration from YAML file with environment variable substitution.
+    Load LLM configuration from YAML with environment variable substitution.
 
     Args:
-        config_file: Optional path to config file. If None, uses default location.
+        config_file: Optional path to config file. If None, looks up
+            ``llm.yaml`` via the standard AMBULON_HOME / cwd search.
 
     Returns:
-        Configuration dictionary
-
-    Raises:
-        FileNotFoundError: If config file is specified but doesn't exist
+        Configuration dictionary.
     """
-    # Default configuration
-    default_config = {
-        "llm": {
-            "default_provider": "kimi",
-            "timeout": 120,
-            "max_retries": 3,
-            "enable_streaming": False,
-            "providers": {
-                "kimi": {
-                    "enabled": True,
-                    "base_url": "https://api.moonshot.cn/v1",
-                    "api_key": "",
-                    "model": "moonshot-v1-8k",
-                    "temperature": 0.7,
-                    "max_tokens": 4096,
-                    "retry_delay": 2
-                },
-                "chatgpt": {
-                    "enabled": False,
-                    "base_url": "https://api.openai.com/v1",
-                    "api_key": "",
-                    "model": "gpt-4-turbo-preview",
-                    "temperature": 0.7,
-                    "max_tokens": 4096
-                },
-                "claude": {
-                    "enabled": False,
-                    "base_url": "https://api.anthropic.com/v1",
-                    "api_key": "",
-                    "model": "claude-3-opus-20240229",
-                    "temperature": 1.0,
-                    "max_tokens": 4096
-                },
-                "local": {
-                    "enabled": False,
-                    "base_url": "http://localhost:11434/v1",
-                    "api_key": "local",
-                    "model": "qwen2.5-7b",
-                    "temperature": 0.7,
-                    "max_tokens": 4096
-                }
-            },
-            "documents": {
-                "separator": "\n\n---\n\n",
-                "include_metadata": True,
-                "allowed_extensions": [".md", ".markdown", ".txt"],
-                "default_encoding": "utf-8"
-            },
-            "output": {
-                "default_file": "response.md",
-                "create_output_dir": True,
-                "save_metadata": True,
-                "metadata_filename": "generation_metadata.json"
-            }
-        }
-    }
-
-    # Determine config file path
-    if config_file:
-        config_path = Path(config_file)
-    else:
-        # Try multiple default locations in order
-        search_paths = []
-
-        # 1. Current directory config/llm.yaml
-        search_paths.append(Path.cwd() / "config" / "llm.yaml")
-
-        # 2. AMBULON_HOME/config/llm.yaml
-        ambulon_home = os.getenv("AMBULON_HOME")
-        if ambulon_home:
-            search_paths.append(Path(ambulon_home).expanduser() / "config" / "llm.yaml")
-
-        # Find first existing config file
-        config_path = None
-        for path in search_paths:
-            if path.exists():
-                config_path = path
-                break
-
-        # If none found, use first default location
-        if not config_path:
-            config_path = search_paths[0]
-
-    # If config doesn't exist, return defaults
-    if not config_path.exists():
-        logger.debug(f"Config file not found: {config_path}, using defaults")
-        return default_config
-
-    logger.info(f"Loading LLM config from: {config_path}")
-
-    # Load YAML
-    try:
-        with open(config_path, 'r', encoding='utf-8') as f:
-            raw_config = yaml.safe_load(f)
-
-        # Substitute environment variables
-        config = substitute_env_vars(raw_config or default_config)
-
-        # Merge with defaults
-        merged_config = merge_configs(default_config, config)
-
-        return merged_config
-
-    except yaml.YAMLError as e:
-        logger.error(f"Error parsing YAML config: {e}")
-        return default_config
-    except Exception as e:
-        logger.error(f"Error loading config: {e}")
-        return default_config
+    return _load_config(config_file or "llm", default_config=DEFAULT_LLM_CONFIG)
 
 
+# Backward-compat thin wrappers around app.core.config_loader.
 def substitute_env_vars(config: Any) -> Any:
-    """
-    Recursively substitute environment variables in config.
+    """Alias kept for backward compatibility; uses the shared substitution."""
+    import re
 
-    Syntax: ${VAR_NAME:-default_value}
+    from app.core.config_loader import _replace_env_var
 
-    Args:
-        config: Configuration object (dict, list, or str)
-
-    Returns:
-        Configuration with substituted values
-    """
     if isinstance(config, dict):
-        return {key: substitute_env_vars(value) for key, value in config.items()}
-    elif isinstance(config, list):
+        return {k: substitute_env_vars(v) for k, v in config.items()}
+    if isinstance(config, list):
         return [substitute_env_vars(item) for item in config]
-    elif isinstance(config, str):
-        # Pattern: ${VAR_NAME:-default}
-        pattern = r'\$\{([^}:]+)(?::-(.*?))?\}'
-
-        def replacer(match):
-            var_name = match.group(1)
-            default_value = match.group(2) or ""
-            return os.getenv(var_name, default_value)
-
-        return re.sub(pattern, replacer, config)
-    else:
-        return config
+    if isinstance(config, str):
+        return re.sub(r"\$\{([^}]+)\}", _replace_env_var, config)
+    return config
 
 
 def merge_configs(base: Dict, override: Dict) -> Dict:
-    """
-    Merge two configuration dictionaries recursively.
-
-    Args:
-        base: Base configuration
-        override: Override configuration
-
-    Returns:
-        Merged configuration
-    """
-    result = base.copy()
-
-    for key, value in override.items():
-        if key in result and isinstance(result[key], dict) and isinstance(value, dict):
-            result[key] = merge_configs(result[key], value)
-        else:
-            result[key] = value
-
-    return result
+    """Alias kept for backward compatibility; delegates to ``deep_merge``."""
+    return _deep_merge(base, override)
 
 
 def get_provider_config(provider_name: str, config: Dict[str, Any]) -> Dict[str, Any]:

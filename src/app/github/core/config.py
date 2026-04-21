@@ -1,145 +1,57 @@
 """
 GitHub configuration loader.
 
-Loads GitHub configuration from config/github.yaml with environment variable substitution.
+Thin wrapper around :mod:`app.core.config_loader` that knows the GitHub default
+schema. Pre-4.1.0 this file reimplemented its own ``_deep_merge`` and
+``_substitute_env_vars``; they are gone.
 """
 
-import os
-import re
 import logging
-from pathlib import Path
-from typing import Dict, Any, Optional
+import os
+from typing import Any, Dict, Optional
 
-import yaml
+from app.core.config_loader import load_config as _load_config
 
 logger = logging.getLogger(__name__)
+
+#: GitHub default config — caller can override any key via YAML.
+DEFAULT_GITHUB_CONFIG: Dict[str, Any] = {
+    "github": {
+        "owner": "warchosian",
+        "repo": "ambulon",
+        "token": "",
+        "release": {
+            "draft": False,
+            "prerelease": False,
+            "generate_notes": False,
+        },
+    }
+}
 
 
 def load_github_config(config_path: Optional[str] = None) -> Dict[str, Any]:
     """
-    Load GitHub configuration from YAML file with environment variable substitution.
+    Load GitHub configuration from YAML with environment variable substitution.
 
     Configuration hierarchy (from highest to lowest priority):
     1. Command-line arguments (applied by caller)
     2. YAML configuration file
-    3. Environment variables (via ${VAR:-default} substitution)
-    4. Default values
+    3. Environment variables (via ``${VAR:-default}`` substitution)
+    4. Default values (:data:`DEFAULT_GITHUB_CONFIG`)
 
     Args:
-        config_path: Path to config file (default: config/github.yaml)
+        config_path: Path to config file. If not provided, falls back to
+            the standard AMBULON_HOME / cwd / AMBULON_CONFIG_DIR lookup for
+            ``github.yaml``.
 
     Returns:
-        Configuration dictionary with resolved values
-
-    Example YAML:
-        github:
-          owner: "${GITHUB_OWNER:-warchosian}"
-          repo: "${GITHUB_REPO:-ambulon}"
-          token: "${GITHUB_TOKEN:-}"
+        Configuration dictionary with resolved values.
     """
-    # Default config path
-    if not config_path:
-        config_path = Path(__file__).parent.parent.parent.parent.parent / "config" / "github.yaml"
-    else:
-        config_path = Path(config_path)
-
-    # Default configuration
-    default_config = {
-        "github": {
-            "owner": "warchosian",
-            "repo": "ambulon",
-            "token": "",
-            "release": {
-                "draft": False,
-                "prerelease": False,
-                "generate_notes": False
-            }
-        }
-    }
-
-    # If config file doesn't exist, return defaults
-    if not config_path.exists():
-        logger.warning(f"GitHub config file not found: {config_path}. Using defaults.")
-        return default_config
-
-    try:
-        # Read YAML file
-        with open(config_path, 'r', encoding='utf-8') as f:
-            yaml_content = f.read()
-
-        # Substitute environment variables
-        yaml_content = _substitute_env_vars(yaml_content)
-
-        # Parse YAML
-        config = yaml.safe_load(yaml_content)
-
-        if not config:
-            logger.warning(f"GitHub config file is empty: {config_path}")
-            return default_config
-
-        # Merge with defaults (config overrides defaults)
-        merged_config = _deep_merge(default_config, config)
-
-        logger.debug(f"Loaded GitHub config from {config_path}")
-        return merged_config
-
-    except yaml.YAMLError as e:
-        logger.error(f"Failed to parse YAML file {config_path}: {e}")
-        return default_config
-    except Exception as e:
-        logger.error(f"Unexpected error loading GitHub config: {e}")
-        return default_config
-
-
-def _substitute_env_vars(content: str) -> str:
-    """
-    Substitute ${VAR:-default} patterns with environment variable values.
-
-    Args:
-        content: YAML content with ${VAR:-default} patterns
-
-    Returns:
-        Content with substituted values
-    """
-    def replace_env_var(match):
-        var_expr = match.group(1)
-
-        # Handle ${VAR:-default} syntax
-        if ':-' in var_expr:
-            var_name, default_value = var_expr.split(':-', 1)
-            return os.getenv(var_name, default_value)
-
-        # Handle ${VAR} syntax (required variable)
-        var_name = var_expr
-        value = os.getenv(var_name)
-        if value is None:
-            logger.warning(f"Required environment variable not set: {var_name}")
-            return ""
-        return value
-
-    return re.sub(r'\$\{([^}]+)\}', replace_env_var, content)
-
-
-def _deep_merge(base: Dict, override: Dict) -> Dict:
-    """
-    Deep merge two dictionaries.
-
-    Args:
-        base: Base dictionary
-        override: Override dictionary (values take precedence)
-
-    Returns:
-        Merged dictionary
-    """
-    result = base.copy()
-
-    for key, value in override.items():
-        if key in result and isinstance(result[key], dict) and isinstance(value, dict):
-            result[key] = _deep_merge(result[key], value)
-        else:
-            result[key] = value
-
-    return result
+    # Delegate discovery + substitution + merge to the shared loader.
+    return _load_config(
+        config_path or "github",
+        default_config=DEFAULT_GITHUB_CONFIG,
+    )
 
 
 def get_github_token(config: Dict[str, Any]) -> Optional[str]:

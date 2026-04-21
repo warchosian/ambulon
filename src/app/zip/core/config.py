@@ -6,139 +6,68 @@ Supports configuration hierarchy:
 2. YAML configuration file
 3. Environment variables
 4. Default values
+
+Pre-4.1.0 this module owned its own ``substitute_env_vars`` and
+``merge_configs`` helpers; they now live in :mod:`app.core.config_loader`
+and the public wrappers ``substitute_env_vars`` / ``merge_configs`` remain as
+thin aliases for backward compatibility.
 """
 
-import os
 import logging
+import os
 from pathlib import Path
-from typing import Dict, Any, Optional
-import yaml
-import re
+from typing import Any, Dict, Optional
+
+from app.core.config_loader import deep_merge as _deep_merge, load_config as _load_config
 
 logger = logging.getLogger(__name__)
+
+#: ZIP default configuration.
+DEFAULT_ZIP_CONFIG: Dict[str, Any] = {
+    "zip": {
+        "compression": {"level": 6, "recursive": True},
+        "exclude": {"patterns": []},
+        "encryption": {"password": "", "password_file": None},
+    }
+}
 
 
 def load_zip_config(config_file: Optional[str] = None) -> Dict[str, Any]:
     """
     Load ZIP configuration from YAML file with environment variable substitution.
 
+    Delegates discovery, substitution and defaults-merge to
+    :func:`app.core.config_loader.load_config`.
+
     Args:
-        config_file: Optional path to config file. If None, uses default location.
+        config_file: Optional path to config file. If None, looks up
+            ``zip.yaml`` via the standard AMBULON_HOME / cwd search.
 
     Returns:
-        Configuration dictionary
-
-    Raises:
-        FileNotFoundError: If config file is specified but doesn't exist
+        Configuration dictionary.
     """
-    # Default configuration
-    default_config = {
-        "zip": {
-            "compression": {
-                "level": 6,
-                "recursive": True
-            },
-            "exclude": {
-                "patterns": []
-            },
-            "encryption": {
-                "password": "",
-                "password_file": None
-            }
-        }
-    }
-
-    # Determine config file path
-    if config_file:
-        config_path = Path(config_file)
-    else:
-        # Try default location
-        ambulon_home = os.getenv("AMBULON_HOME")
-        if ambulon_home:
-            base_dir = Path(ambulon_home).expanduser()
-        else:
-            base_dir = Path.cwd()
-
-        config_path = base_dir / "config" / "zip.yaml"
-
-    # If config doesn't exist, return defaults
-    if not config_path.exists():
-        logger.debug(f"Config file not found: {config_path}, using defaults")
-        return default_config
-
-    logger.info(f"Loading ZIP config from: {config_path}")
-
-    # Load YAML
-    try:
-        with open(config_path, 'r', encoding='utf-8') as f:
-            raw_config = yaml.safe_load(f)
-
-        # Substitute environment variables
-        config = substitute_env_vars(raw_config or default_config)
-
-        # Merge with defaults
-        merged_config = merge_configs(default_config, config)
-
-        return merged_config
-
-    except yaml.YAMLError as e:
-        logger.error(f"Error parsing YAML config: {e}")
-        return default_config
-    except Exception as e:
-        logger.error(f"Error loading config: {e}")
-        return default_config
+    return _load_config(config_file or "zip", default_config=DEFAULT_ZIP_CONFIG)
 
 
+# Backward-compat thin wrappers around app.core.config_loader.
 def substitute_env_vars(config: Any) -> Any:
-    """
-    Recursively substitute environment variables in config.
+    """Alias kept for backward compatibility; uses the shared substitution."""
+    import re
 
-    Syntax: ${VAR_NAME:-default_value}
+    from app.core.config_loader import _replace_env_var
 
-    Args:
-        config: Configuration object (dict, list, or str)
-
-    Returns:
-        Configuration with substituted values
-    """
     if isinstance(config, dict):
-        return {key: substitute_env_vars(value) for key, value in config.items()}
-    elif isinstance(config, list):
+        return {k: substitute_env_vars(v) for k, v in config.items()}
+    if isinstance(config, list):
         return [substitute_env_vars(item) for item in config]
-    elif isinstance(config, str):
-        # Pattern: ${VAR_NAME:-default}
-        pattern = r'\$\{([^}:]+)(?::-(.*?))?\}'
-
-        def replacer(match):
-            var_name = match.group(1)
-            default_value = match.group(2) or ""
-            return os.getenv(var_name, default_value)
-
-        return re.sub(pattern, replacer, config)
-    else:
-        return config
+    if isinstance(config, str):
+        return re.sub(r"\$\{([^}]+)\}", _replace_env_var, config)
+    return config
 
 
 def merge_configs(base: Dict, override: Dict) -> Dict:
-    """
-    Merge two configuration dictionaries recursively.
-
-    Args:
-        base: Base configuration
-        override: Override configuration
-
-    Returns:
-        Merged configuration
-    """
-    result = base.copy()
-
-    for key, value in override.items():
-        if key in result and isinstance(result[key], dict) and isinstance(value, dict):
-            result[key] = merge_configs(result[key], value)
-        else:
-            result[key] = value
-
-    return result
+    """Alias kept for backward compatibility; delegates to ``deep_merge``."""
+    return _deep_merge(base, override)
 
 
 def get_compression_level(config: Dict[str, Any]) -> int:
