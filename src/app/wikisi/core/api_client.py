@@ -1,3 +1,10 @@
+"""
+WikiSI API client for enumeration and application data management.
+
+This module provides the WikiSIAPIClient class for interacting with WikiSI APIs,
+loading enumeration data, and managing application information.
+"""
+
 import json
 import requests
 import os
@@ -6,6 +13,7 @@ import logging
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
+
 
 def clean_unicode_separators(data: Any) -> Any:
     """
@@ -31,7 +39,10 @@ def clean_unicode_separators(data: Any) -> Any:
     else:
         return data
 
+
 class WikiSIAPIClient:
+    """Client for WikiSI API operations and enumeration management."""
+
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.api_url = config['api']['url']

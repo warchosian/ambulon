@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Optional, List
 
 from app.core.logging_config import setup_logging
-from ..core.scraper import WikiSIScraper, load_config
+from ..core.web_scraper import WikiSIScraper, load_config
 
 logger = logging.getLogger(__name__)
 
