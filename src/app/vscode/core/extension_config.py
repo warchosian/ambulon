@@ -47,9 +47,9 @@ def _get_vscode_config() -> Dict:
 def __getattr__(name: str) -> Any:
     """Lazy module-level access to YAML-backed dicts (PEP 562)."""
     if name == "RECOMMENDED_EXTENSIONS":
-        return _cached_config().get("recommended_extensions", {})
+        return _get_vscode_config().get("recommended_extensions", {})
     if name == "EXTENSIONS_TO_REMOVE":
-        return _cached_config().get("extensions_to_remove", {})
+        return _get_vscode_config().get("extensions_to_remove", {})
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
@@ -65,7 +65,7 @@ def get_extensions_by_priority(priority: Priority) -> List[str]:
     """
     return [
         ext_id
-        for ext_id, info in _cached_config().get("recommended_extensions", {}).items()
+        for ext_id, info in _get_vscode_config().get("recommended_extensions", {}).items()
         if info["priority"] == priority
     ]
 
