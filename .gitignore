@@ -65,8 +65,9 @@ scans/
 # Logs
 logs/
  
-# Sous-depots gitlab 
-gitlab/ 
+# Sous-depots gitlab (au niveau racine du projet, pas dans src/)
+/gitlab/
+
 
 # WikiSI downloaded data
 wikisi-downloaded/
