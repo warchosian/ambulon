@@ -581,12 +581,12 @@ def main():
 
     if len(sys.argv) > 1:
         command = sys.argv[1]
-        
+
         # Gérer les options d'aide globales
         if command in ['-h', '--help']:
             show_help()
             return 0
-        elif command == '--version':
+        if command == '--version':
             from . import __version__
             print(f"Ambulon version {__version__}")
             import os
@@ -600,52 +600,22 @@ def main():
             print(f"Config base: {base_dir} (source: {origin})")
             print(f"Config dir:  {config_dir} [{status}]")
             return 0
-        elif command == 'scan':
-            # Retirer 'scan' des arguments et lancer le module scan
-            from app.scan.commands.scan import main as scan_main
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]  # Garder le nom du programme et les arguments après 'scan'
-            try:
-                return scan_main()
-            finally:
-                sys.argv = original_argv
-        elif command == 'ocr':
-            # Retirer 'ocr' des arguments et lancer le module ocr
-            from app.ocr.commands.ocr import main as ocr_main
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]  # Garder le nom du programme et les arguments après 'ocr'
-            try:
-                return ocr_main()
-            finally:
-                sys.argv = original_argv
-        elif command == 'mcp':
-            # Retirer 'mcp' des arguments et lancer le module mcp
-            from app.mcp.commands.run_server import main as mcp_main
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]  # Garder le nom du programme et les arguments après 'mcp'
-            try:
-                return mcp_main()
-            finally:
-                sys.argv = original_argv
-        elif command == 'img2pdf':
-            # Retirer 'img2pdf' des arguments et lancer le module img2pdf
-            from app.conversion import img2pdf_main
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                return img2pdf_main()
-            finally:
-                sys.argv = original_argv
-        elif command == 'compress-pdf':
-            # Retirer 'compress-pdf' des arguments et lancer le module compress_pdf
-            from app.conversion import compress_pdf_main
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                return compress_pdf_main()
-            finally:
-                sys.argv = original_argv
-        elif command == 'html2md':
+
+        # Registry-based dispatch for all "standard" commands whose handler
+        # is a plain ``main(argv=None) -> int``. See app.cli.registry.
+        from app.cli.dispatch import dispatch_standard
+        result = dispatch_standard(command)
+        if result is not None:
+            return result
+
+        # Fallback: PIAG module has its own dispatcher.
+        if command.startswith('piag-'):
+            return handle_rag_module(command)
+
+        # Legacy / bespoke-parsing branches live below.
+        # Commands with a plain ``main()`` handler have been migrated to
+        # app.cli.registry and are dispatched via dispatch_standard() above.
+        if command == 'html2md':
             # Convertir HTML en Markdown
             from app.conversion import process_html_to_markdown
             if len(sys.argv) < 3:
@@ -900,106 +870,14 @@ def main():
                 else:
                     i += 1
             return process_json_to_markdown(input_file, output_file, verbose)
-        elif command == 'pdf2html':
-            # Convertir PDF en HTML
-            from app.conversion import pdf2html_main
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                return pdf2html_main()
-            finally:
-                sys.argv = original_argv
-        elif command == 'pdf2md':
-            # Convertir PDF en Markdown
-            from app.conversion import pdf2md_main
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                return pdf2md_main()
-            finally:
-                sys.argv = original_argv
-        elif command == 'check-utf8':
-            # Vérifier l'encodage des fichiers Markdown
-            from app.encoding import check_md_cli
-            return check_md_cli(sys.argv[2:])
-        elif command == 'fix-utf8':
-            # Corriger l'encodage des fichiers Markdown
-            from app.encoding import fix_md_cli
-            return fix_md_cli(sys.argv[2:])
-        elif command == 'wikisi-extract':
-            # Extraire et filtrer des applications depuis JSON
-            from app.wikisi import wikisi_extract_json_cli
-            return wikisi_extract_json_cli(sys.argv[2:])
-        elif command == 'wikisi-md':
-            # Convertir parc applicatif JSON en Markdown
-            from app.wikisi import wikisi_json_to_md_cli
-            return wikisi_json_to_md_cli(sys.argv[2:])
-        elif command == 'wikisi-scrape':
-            # Aspirer récursivement un site web WikiSI
-            from app.wikisi.commands.wikisi_scraper import main as wikisi_scrape_main
-            return wikisi_scrape_main(sys.argv[2:])
-        elif command == 'wikisi-sync-api':
-            # Synchroniser les données (énumérations, applications) depuis l'API WikiSI
-            from app.wikisi.commands.wikisi_sync_api import main as wikisi_sync_api_main
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                return wikisi_sync_api_main()
-            finally:
-                sys.argv = original_argv
-        elif command == 'wikisi-extract-apps':
-            # Extraire les applications désignées en JSON et MD individuels
-            from app.wikisi.commands.wikisi_extract_apps import main as wikisi_extract_apps_main
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                return wikisi_extract_apps_main()
-            finally:
-                sys.argv = original_argv
         elif command == 'add-toc':
-            # Ajouter TOC (détection auto MD/HTML)
+            # Ajouter TOC (détection auto MD/HTML) - bespoke cli wrapper
             from app.toc import add_toc_cli
             return add_toc_cli(sys.argv[2:])
-        elif command == 'add-toc4html':
-            # Ajouter TOC à HTML
-            from app.toc import add_toc4html_cli
-            return add_toc4html_cli(sys.argv[2:])
-        elif command == 'add-toc4md':
-            # Ajouter TOC à Markdown
-            from app.toc import add_toc4md_cli
-            return add_toc4md_cli(sys.argv[2:])
-        elif command == 'add-itoc4md':
-            # Ajouter liens retour (iTOC) à Markdown
-            from app.toc import add_itoc4md_cli
-            return add_itoc4md_cli(sys.argv[2:])
         elif command == 'add-itoc':
             # Ajouter liens retour (iTOC) - détecte automatiquement MD/HTML
             from app.toc import add_itoc_cli
             return add_itoc_cli(sys.argv[2:])
-        elif command == 'check-toc4md':
-            # Vérifier si TOC existe dans Markdown
-            from app.toc import check_toc4md_cli
-            return check_toc4md_cli(sys.argv[2:])
-        elif command == 'check-itoc4md':
-            # Vérifier si liens iTOC existent dans Markdown
-            from app.toc import check_itoc4md_cli
-            return check_itoc4md_cli(sys.argv[2:])
-        elif command == 'diagram2svg4md':
-            # Convertir diagrammes en SVG dans Markdown
-            from app.diagrams import diagram2svg4md_cli
-            return diagram2svg4md_cli(sys.argv[2:])
-        elif command == 'concat-html':
-            # Concaténer HTML
-            from app.processing import concat_html_cli
-            return concat_html_cli(sys.argv[2:])
-        elif command == 'flatten-html':
-            # Aplatir HTML
-            from app.processing import flatten_html_cli
-            return flatten_html_cli(sys.argv[2:])
-        elif command == 'flatten-md':
-            # Aplatir Markdown
-            from app.processing import flatten_md_cli
-            return flatten_md_cli(sys.argv[2:])
         elif command == 'wikisi-flatten':
             # Aplatir WikiSI
             from app.wikisi import flatten_wikisi_directory
@@ -1044,110 +922,10 @@ def main():
             # Convertir MD en HTML interactif complet (TOC + iTOC + HTML + interactif)
             from app.processing.commands.md_to_interactive_html import main as md_to_interactive_main
             return md_to_interactive_main(sys.argv[2:])
-        elif command == 'merge-html':
-            # Fusionner HTML
-            from app.processing import merge_html_cli
-            return merge_html_cli(sys.argv[2:])
-        elif command == 'merge-md':
-            # Fusionner Markdown
-            from app.processing import merge_md_cli
-            return merge_md_cli(sys.argv[2:])
-        elif command == 'md2project':
-            # Convertir Markdown en projet
-            from app.processing import md2project_cli
-            return md2project_cli(sys.argv[2:])
-        elif command == 'project2md':
-            # Convertir projet en Markdown
-            from app.processing import project2md_cli
-            return project2md_cli(sys.argv[2:])
-        elif command == 'code2md':
-            # Encapsuler du code dans des blocs Markdown
-            from app.processing.commands.code2md import main as code2md_main
-            return code2md_main(sys.argv[2:])
-        # Gestion des extensions VS Code
-        elif command == 'vscode-install':
-            from app.vscode.commands.vscode_install import main as vscode_install_main
-            return vscode_install_main(sys.argv[2:])
-        elif command == 'vscode-uninstall':
-            from app.vscode.commands.vscode_uninstall import main as vscode_uninstall_main
-            return vscode_uninstall_main(sys.argv[2:])
-        elif command == 'vscode-list':
-            from app.vscode.commands.vscode_list import main as vscode_list_main
-            return vscode_list_main(sys.argv[2:])
-        # GitHub operations
-        elif command == 'github-release':
-            from app.github.commands.github_release import main as github_release_main
-            return github_release_main(sys.argv[2:])
-        # GitLab operations
-        elif command == 'gitlab-release':
-            from app.gitlab.releases.commands.gitlab_release import main as gitlab_release_main
-            return gitlab_release_main(sys.argv[2:])
-        # ZIP operations
-        elif command == 'zip-create':
-            from app.zip.commands.zip_create import main as zip_create_main
-            return zip_create_main(sys.argv[2:])
-        elif command == 'zip-extract':
-            from app.zip.commands.zip_extract import main as zip_extract_main
-            return zip_extract_main(sys.argv[2:])
-        # LLM operations
-        elif command == 'llm':
-            from app.llm.commands.llm import main as llm_main
-            return llm_main(sys.argv[2:])
-        elif command == 'filter':
-            from app.llm.commands.filter import main as filter_main
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                return filter_main()
-            finally:
-                sys.argv = original_argv
-        elif command == 'summarize':
-            from app.llm.commands.summarize import main as summarize_main
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                return summarize_main()
-            finally:
-                sys.argv = original_argv
-        elif command == 'plantuml2mermaid':
-            from app.llm.commands.convert_plantuml_to_mermaid import main as plantuml2mermaid_main
-            original_argv = sys.argv
-            sys.argv = [sys.argv[0]] + sys.argv[2:]
-            try:
-                return plantuml2mermaid_main()
-            finally:
-                sys.argv = original_argv
         elif command == 'config':
             return handle_config_command()
-        elif command == 'init':
-            from app.cli.commands import handle_init_command
-            return handle_init_command()
-        elif command == 'gitlab-clone':
-            # Cloner des projets GitLab depuis la configuration
-            from app.gitlab.commands.gitlab_clone import main as gitlab_clone_main
-            return gitlab_clone_main(sys.argv[2:])
-        elif command == 'gitlab-monofile':
-            # Generer un monofile depuis un repo clone
-            from app.gitlab.commands.gitlab_monofile import main as gitlab_monofile_main
-            return gitlab_monofile_main(sys.argv[2:])
         elif command == 'test':
             return handle_test_command()
-        # Commandes RAG et Chat PIAG
-        elif command in [
-            # RAG complet
-            'piag-rag-create',
-            # Collections RAG
-            'piag-rag-collection-add', 'piag-rag-collection-list', 'piag-rag-collection-get',
-            'piag-rag-collection-update', 'piag-rag-collection-rm',
-            # Documents RAG
-            'piag-rag-doc-upload', 'piag-rag-doc-list', 'piag-rag-doc-get',
-            'piag-rag-doc-rm', 'piag-rag-doc-chunks',
-            # Recherche RAG
-            'piag-rag-search',
-            # Chat
-            'piag-chat-apikey-info', 'piag-chat-basic-query', 'piag-chat-completion', 'piag-chat-query',
-        ]:
-            return handle_rag_module(command)
         else:
             print(f"Module inconnu: {command}")
             print("Utilisez 'ambulon --help' pour voir les modules disponibles.")
