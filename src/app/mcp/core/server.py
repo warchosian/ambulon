@@ -61,10 +61,15 @@ from app.conversion.commands.compress_pdf import compress_pdf
 from app.wikisi import scrape_wikisi, process_parkjson2json, process_parkjson2md
 
 # Imports Conversion
-from app.conversion import process_html_to_markdown, process_markdown_to_html, process_json_to_markdown
+from app.conversion import (
+    process_html_to_markdown,
+    process_markdown_to_html_simple as process_markdown_to_html,
+    process_json_to_markdown,
+)
 
 # Imports Processing
-from app.processing import add_toc_to_markdown, fusion_markdown_files, flatten_markdown_directory
+from app.processing import fusion_markdown_files, flatten_markdown_directory
+from app.toc.core.markdown_toc_generator import add_toc_to_markdown_logic as add_toc_to_markdown
 
 # Imports Encoding
 from app.encoding import check_md_cli, fix_md_cli
