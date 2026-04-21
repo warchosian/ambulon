@@ -73,3 +73,28 @@ wikisi-downloaded/
 
 # Archives directory (old test/debug files)
 archives/
+
+# Temporary / scratch files at project root
+/ollamatest.py
+/temp_*.py
+/temp_*.yaml
+/temp_*.yml
+/temp_*.json
+/temp_*.md
+/test_context.md
+/test_prompt.md
+
+# Generated LLM outputs at project root
+/applications/llm.md
+
+# WikiSI download artefacts (keep only explicitly tracked reference files)
+workplace-ambulon/wikisi/download/*
+!workplace-ambulon/wikisi/download/applicationsIA.json
+!workplace-ambulon/wikisi/download/applicationsIA_mini.json
+!workplace-ambulon/wikisi/download/applications_all_mini.md
+!workplace-ambulon/wikisi/download/enumerations.json
+
+# Local workplace generated content
+workplace-ambulon/livrables/
+workplace-ambulon/piag-chat/prompts0/
+
