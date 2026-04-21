@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.0.0 (2026-04-21)
+
+### Feat
+
+- **wikisi**: expose short application name as explicit metadata in markdown output
+- **wikisi**: add wikisi-extract-apps command for per-app JSON and MD export
+- **gitlab-clone**: auto-generate filtered and summarized code.md versions
+- **llm**: Add document preprocessing and PlantUML to Mermaid conversion
+- **llm**: Add LLM module for document generation via AI APIs
+
+### Refactor
+
+- **llm**: extract OpenAI-compatible base, add local and chatgpt providers
+
 ## 3.8.0 (2026-04-17)
 
 ### Feat
