@@ -65,8 +65,9 @@ scans/
 # Logs
 logs/
  
-# Sous-depots gitlab (au niveau racine du projet, pas dans src/)
+# Sous-depots gitlab clones (racine + workplace, pas dans src/app/gitlab/)
 /gitlab/
+workplace-ambulon/gitlab/
 
 
 # WikiSI downloaded data
