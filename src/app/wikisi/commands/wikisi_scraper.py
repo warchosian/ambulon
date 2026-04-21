@@ -8,7 +8,7 @@ import sys
 import argparse
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
 from app.core.logging_config import setup_logging
 from ..core.scraper import WikiSIScraper, load_config
@@ -16,7 +16,7 @@ from ..core.scraper import WikiSIScraper, load_config
 logger = logging.getLogger(__name__)
 
 
-def main(argv=None):
+def main(argv: Optional[List[str]] = None) -> int:
     """
     Entry point for wikisi-scrape command.
 

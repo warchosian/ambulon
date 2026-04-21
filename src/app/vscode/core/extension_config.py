@@ -1,12 +1,8 @@
 """
 VS Code extension configuration.
 
-This module loads recommended and redundant extensions for diagram visualization
-from config/vscode.yaml.
-
-The YAML file is read lazily on first access to ``RECOMMENDED_EXTENSIONS`` or
-``EXTENSIONS_TO_REMOVE`` (PEP 562 ``__getattr__``), so importing this module
-does not perform any I/O.
+Uses the centralized ConfigManager for consistent configuration handling
+across all Ambulon modules.
 """
 
 import logging
@@ -14,7 +10,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List, Literal, TypedDict
 
-import yaml
+from app.core.config_manager import ConfigManager
 
 logger = logging.getLogger(__name__)
 
@@ -28,63 +24,24 @@ class ExtensionInfo(TypedDict):
     priority: Priority
 
 
-def _load_vscode_config() -> Dict:
-    """Load VSCode extensions configuration from YAML file."""
-    # Find config directory (go up from src/app/vscode/core to project root)
-    try:
-        config_path = Path(__file__).parent.parent.parent.parent.parent / "config" / "vscode.yaml"
-        config_path = config_path.resolve()  # Resolve to absolute path
-    except Exception as e:
-        logger.error(f"Failed to resolve config path: {e}")
-        return {"recommended_extensions": {}, "extensions_to_remove": {}}
+# Default VSCode configuration
+DEFAULT_VSCODE_CONFIG: Dict[str, Any] = {
+    "recommended_extensions": {},
+    "extensions_to_remove": {}
+}
 
-    # Check if config file exists
-    if not config_path.exists():
-        logger.warning(
-            f"VSCode config file not found: {config_path}. "
-            f"Using empty configuration. Please create config/vscode.yaml in the project root."
-        )
-        return {"recommended_extensions": {}, "extensions_to_remove": {}}
-
-    # Check if parent directory exists
-    if not config_path.parent.exists():
-        logger.error(
-            f"Config directory not found: {config_path.parent}. "
-            f"Please create the 'config' directory in the project root."
-        )
-        return {"recommended_extensions": {}, "extensions_to_remove": {}}
-
-    # Load YAML file
-    try:
-        with open(config_path, 'r', encoding='utf-8') as f:
-            config = yaml.safe_load(f)
-
-            if config is None:
-                logger.warning(f"VSCode config file is empty: {config_path}")
-                return {"recommended_extensions": {}, "extensions_to_remove": {}}
-
-            if not isinstance(config, dict):
-                logger.error(f"VSCode config file has invalid format (not a dictionary): {config_path}")
-                return {"recommended_extensions": {}, "extensions_to_remove": {}}
-
-            logger.debug(f"Loaded VSCode config from {config_path}")
-            return config
-
-    except yaml.YAMLError as e:
-        logger.error(f"Failed to parse YAML file {config_path}: {e}")
-        return {"recommended_extensions": {}, "extensions_to_remove": {}}
-    except PermissionError:
-        logger.error(f"Permission denied reading config file: {config_path}")
-        return {"recommended_extensions": {}, "extensions_to_remove": {}}
-    except Exception as e:
-        logger.error(f"Unexpected error loading VSCode config from {config_path}: {e}")
-        return {"recommended_extensions": {}, "extensions_to_remove": {}}
+# Global config manager instance
+_config_manager = ConfigManager(
+    module_name="vscode",
+    defaults=DEFAULT_VSCODE_CONFIG,
+    env_prefix="AMBULON_VSCODE"
+)
 
 
 @lru_cache(maxsize=1)
-def _cached_config() -> Dict:
-    """Return the parsed vscode.yaml once; subsequent calls are cached."""
-    return _load_vscode_config()
+def _get_vscode_config() -> Dict:
+    """Load VSCode configuration using ConfigManager, cached."""
+    return _config_manager.load(config_path="vscode.yaml")
 
 
 def __getattr__(name: str) -> Any:

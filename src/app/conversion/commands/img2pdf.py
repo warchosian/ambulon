@@ -121,7 +121,7 @@ def images_to_pdf(
         logger.error(f"Failed to create PDF: {e}", exc_info=True)
         return None
 
-def main(argv=None):
+def main(argv: Optional[List[str]] = None) -> int:
     """
     CLI for converting images in a directory to a single PDF file.
 

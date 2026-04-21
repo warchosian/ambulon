@@ -3,10 +3,11 @@
 import os
 import sys
 import argparse
+from typing import Optional, List
 from app.piag.core import PIAGClient, load_config
 
 
-def main(argv=None):
+def main(argv: Optional[List[str]] = None) -> int:
     """
     Script CLI pour créer une collection RAG PIAG.
 

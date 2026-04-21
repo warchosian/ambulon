@@ -1,16 +1,8 @@
 """
 Configuration management for ZIP module.
 
-Supports configuration hierarchy:
-1. Command-line arguments (highest priority)
-2. YAML configuration file
-3. Environment variables
-4. Default values
-
-Pre-4.1.0 this module owned its own ``substitute_env_vars`` and
-``merge_configs`` helpers; they now live in :mod:`app.core.config_loader`
-and the public wrappers ``substitute_env_vars`` / ``merge_configs`` remain as
-thin aliases for backward compatibility.
+Uses the centralized ConfigManager for consistent configuration handling
+across all Ambulon modules.
 """
 
 import logging
@@ -18,7 +10,7 @@ import os
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from app.core.config_loader import deep_merge as _deep_merge, load_config as _load_config
+from app.core.config_manager import ConfigManager
 
 logger = logging.getLogger(__name__)
 
@@ -31,43 +23,61 @@ DEFAULT_ZIP_CONFIG: Dict[str, Any] = {
     }
 }
 
+# Global config manager instance
+_config_manager = ConfigManager(
+    module_name="zip",
+    defaults=DEFAULT_ZIP_CONFIG,
+    env_prefix="AMBULON_ZIP",
+    sensitive_keys=["password"]
+)
 
-def load_zip_config(config_file: Optional[str] = None) -> Dict[str, Any]:
+
+def load_zip_config(
+    config_file: Optional[str] = None,
+    cli_overrides: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
     """
-    Load ZIP configuration from YAML file with environment variable substitution.
+    Load ZIP configuration using the centralized ConfigManager.
 
-    Delegates discovery, substitution and defaults-merge to
-    :func:`app.core.config_loader.load_config`.
+    Configuration hierarchy:
+    1. Command-line arguments (cli_overrides)
+    2. YAML configuration file
+    3. Environment variables (AMBULON_ZIP_*)
+    4. Default values
 
     Args:
         config_file: Optional path to config file. If None, looks up
             ``zip.yaml`` via the standard AMBULON_HOME / cwd search.
+        cli_overrides: CLI argument overrides in format {'zip.compression.level': value}
 
     Returns:
         Configuration dictionary.
     """
-    return _load_config(config_file or "zip", default_config=DEFAULT_ZIP_CONFIG)
+    return _config_manager.load(
+        config_path=config_file or "zip.yaml",
+        cli_overrides=cli_overrides
+    )
 
 
-# Backward-compat thin wrappers around app.core.config_loader.
+def get_config_manager() -> ConfigManager:
+    """Get the ZIP ConfigManager instance for advanced operations."""
+    return _config_manager
+
+
+# Backward-compat thin wrappers - deprecated, use ConfigManager directly
 def substitute_env_vars(config: Any) -> Any:
-    """Alias kept for backward compatibility; uses the shared substitution."""
-    import re
-
-    from app.core.config_loader import _replace_env_var
-
-    if isinstance(config, dict):
-        return {k: substitute_env_vars(v) for k, v in config.items()}
-    if isinstance(config, list):
-        return [substitute_env_vars(item) for item in config]
-    if isinstance(config, str):
-        return re.sub(r"\$\{([^}]+)\}", _replace_env_var, config)
-    return config
+    """Deprecated: Use ConfigManager directly."""
+    import warnings
+    warnings.warn("substitute_env_vars is deprecated, use ConfigManager", DeprecationWarning)
+    return _config_manager._format_value(config)
 
 
 def merge_configs(base: Dict, override: Dict) -> Dict:
-    """Alias kept for backward compatibility; delegates to ``deep_merge``."""
-    return _deep_merge(base, override)
+    """Deprecated: Use ConfigManager directly."""
+    import warnings
+    warnings.warn("merge_configs is deprecated, use ConfigManager", DeprecationWarning)
+    from app.core.config_loader import deep_merge
+    return deep_merge(base, override)
 
 
 def get_compression_level(config: Dict[str, Any]) -> int:
