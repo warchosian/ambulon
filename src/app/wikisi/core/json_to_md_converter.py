@@ -251,6 +251,8 @@ def convert_app_to_markdown(app: Dict, verbose: bool = False) -> str:
     md_lines.append("")
 
     # Basic metadata on same level as title
+    md_lines.append(f"**Nom:** {nom}")
+
     nom_long = get_field(app, "nom long", "nom complet", "full name")
     if nom_long:
         md_lines.append(f"**Nom complet:** {nom_long}")
