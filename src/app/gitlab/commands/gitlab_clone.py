@@ -17,10 +17,12 @@ from app.core.config_tracker import ConfigTracker, ConfigSource, is_sensitive_ke
 from app.gitlab.core.cloning import clone_repository
 from app.gitlab.core.monofile import generate_code_monofile, generate_wiki_monofile, infer_repo_mode
 
-# Post-processing imports (TOC, iTOC, Augment)
+# Post-processing imports (TOC, iTOC, Augment, Filter, Summarize)
 from app.toc.core.markdown_toc_generator import add_toc_to_markdown_logic
 from app.toc.core.markdown_itoc import add_toc_backlinks_logic
 from app.processing.commands.add_augment import augment
+from app.llm.preprocessing.document_filter import filter_document
+from app.llm.preprocessing.document_summarizer import summarize_document
 
 # Default configuration for this module
 DEFAULT_CONFIG = {
@@ -97,7 +99,11 @@ Exemples:
     parser.add_argument("--add-toc", action="store_true", help="Ajouter automatiquement une table des matières (TOC) aux fichiers Markdown générés")
     parser.add_argument("--add-itoc", action="store_true", help="Ajouter automatiquement des liens retour (iTOC) aux fichiers Markdown générés")
     parser.add_argument("--augment", action="store_true", help="Augmenter automatiquement les fichiers HTML générés avec navigation interactive")
-    parser.add_argument("-E", "--all-enhancements", action="store_true", help="Appliquer toutes les améliorations (TOC + iTOC + augment). Produit des fichiers <origine>.enhanced.md")
+    parser.add_argument("--generate-filtered", type=lambda x: x.lower() == 'true', default=True, metavar='true|false',
+                       help="Générer automatiquement les fichiers *.code.filtered.md (défaut: true)")
+    parser.add_argument("--generate-summarized", type=lambda x: x.lower() == 'true', default=True, metavar='true|false',
+                       help="Générer automatiquement les fichiers *.code.summarized.md (défaut: true)")
+    parser.add_argument("-E", "--all-enhancements", action="store_true", help="Appliquer toutes les améliorations (TOC + iTOC + augment + filtered + summarized)")
 
     # Options de traçabilité de configuration
     parser.add_argument(
@@ -122,7 +128,9 @@ Exemples:
         args.add_toc = True
         args.add_itoc = True
         args.augment = True
-        logger.info("--all-enhancements enabled: TOC, iTOC, and augment will be applied")
+        args.generate_filtered = True
+        args.generate_summarized = True
+        logger.info("--all-enhancements enabled: TOC, iTOC, augment, filtered, and summarized will be applied")
 
     # Initialize configuration tracker
     tracker = ConfigTracker()
@@ -365,6 +373,64 @@ Exemples:
 
                 if exit_code == 0 and output_path:
                     _log_output_path(output_path)
+
+                    # Generate filtered and summarized versions if requested (for code.md only)
+                    if mode != "wiki" and output_path.suffix == '.md':
+                        # Generate filtered version
+                        if args.generate_filtered or automation_config.get("generate_filtered", False):
+                            try:
+                                logger.info(f"Generating filtered version of {output_path.name}...")
+
+                                # Auto-generate filtered filename
+                                stem = output_path.stem
+                                if stem.endswith('.md'):
+                                    stem = stem[:-3]
+                                filtered_path = output_path.parent / f"{stem}.filtered.md"
+
+                                stats = filter_document(
+                                    input_file=str(output_path),
+                                    output_file=str(filtered_path),
+                                    max_file_size=5000
+                                )
+
+                                if filtered_path.exists():
+                                    logger.info(f"✓ Filtered version generated: {filtered_path.name}")
+                                    logger.info(f"  Stats: {stats['files_kept']}/{stats['total_files']} files kept, "
+                                              f"{stats.get('reduction_percent', 0):.1f}% size reduction")
+                                    _log_output_path(filtered_path)
+                                else:
+                                    logger.warning(f"Failed to generate filtered version of {output_path.name}")
+                            except Exception as e:
+                                logger.error(f"Error generating filtered version: {e}")
+                                has_errors = True
+
+                        # Generate summarized version
+                        if args.generate_summarized or automation_config.get("generate_summarized", False):
+                            try:
+                                logger.info(f"Generating summarized version of {output_path.name}...")
+
+                                # Auto-generate summarized filename
+                                stem = output_path.stem
+                                if stem.endswith('.md'):
+                                    stem = stem[:-3]
+                                summarized_path = output_path.parent / f"{stem}.summarized.md"
+
+                                stats = summarize_document(
+                                    input_file=str(output_path),
+                                    output_file=str(summarized_path),
+                                    chunk_size=50000
+                                )
+
+                                if summarized_path.exists():
+                                    logger.info(f"✓ Summarized version generated: {summarized_path.name}")
+                                    logger.info(f"  Stats: {stats['num_chunks']} chunks processed, "
+                                              f"{stats.get('reduction_percent', 0):.1f}% size reduction")
+                                    _log_output_path(summarized_path)
+                                else:
+                                    logger.warning(f"Failed to generate summarized version of {output_path.name}")
+                            except Exception as e:
+                                logger.error(f"Error generating summarized version: {e}")
+                                has_errors = True
 
                     # Determine if we need to create enhanced version
                     has_enhancements = args.add_toc or args.add_itoc or args.augment
