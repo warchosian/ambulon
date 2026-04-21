@@ -48,6 +48,22 @@ class PIAGClient:
         self.timeout = get_timeout(self.config)
         self.max_retries = self.config.get('piag', {}).get('rag', {}).get('api', {}).get('max_retries', 3)
         self.force = force
+        # Reuse TCP/TLS connections across API calls
+        self._session = requests.Session()
+
+    def close(self) -> None:
+        """Close the underlying HTTP session."""
+        try:
+            self._session.close()
+        except Exception:
+            pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        self.close()
+        return False
 
     def _log_request(self, method: str, url: str, **kwargs):
         """Log une requête HTTP si le logging est activé."""
@@ -63,7 +79,8 @@ class PIAGClient:
         if should_log_responses(self.config):
             try:
                 print(f"[DEBUG] Réponse: {json.dumps(response.json(), indent=2, ensure_ascii=False)}", file=sys.stderr)
-            except:
+            except (ValueError, json.JSONDecodeError):
+                # Body is not valid JSON, fall back to raw text.
                 print(f"[DEBUG] Réponse (non-JSON): {response.text}", file=sys.stderr)
 
     def _request(
@@ -102,7 +119,7 @@ class PIAGClient:
                 if attempt > 1:
                     print(f"[RETRY] Tentative {attempt}/{self.max_retries}...", file=sys.stderr)
 
-                response = requests.request(
+                response = self._session.request(
                     method,
                     url,
                     headers=headers,

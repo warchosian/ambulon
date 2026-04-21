@@ -45,7 +45,25 @@ class WikiSIAPIClient:
         self.output_dir = Path(config['output']['directory'])
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
+        # Reuse TCP/TLS connection across the dozens of paginated API calls
+        self._session = requests.Session()
+        self._session.headers.update(self.headers)
+
         self.enumerations_dict = self._load_or_fetch_enumerations()
+
+    def close(self) -> None:
+        """Close the underlying HTTP session."""
+        try:
+            self._session.close()
+        except Exception:
+            pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        self.close()
+        return False
 
     def _load_or_fetch_enumerations(self) -> Dict[str, Any]:
         enum_file = self.output_dir / self.config['output']['enumerations_file']
@@ -77,14 +95,14 @@ class WikiSIAPIClient:
         """
         enumerations_dict = {}
         URL = f'{self.api_url}/enumeration/'
-        r = requests.get(URL, headers=self.headers)
-        r.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
+        r = self._session.get(URL)
+        r.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
         result = r.json()
         enumeration_noms = result['enumerations']
         for enumeration_nom in enumeration_noms:
             URL = f'{self.api_url}/enumeration/{enumeration_nom}/'
-            r = requests.get(URL, headers=self.headers)
-            r.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
+            r = self._session.get(URL)
+            r.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
             result = r.json()
             enumeration_objets = result['enumeration']
             enumerations_dict[enumeration_nom] = enumeration_objets
@@ -126,8 +144,8 @@ class WikiSIAPIClient:
         limit = self.config['api'].get('page_limit', 25) # Use config for limit
         while total_count is None or offset < total_count:
             URL = f'{self.api_url}/application/?offset={offset}&limit={limit}'
-            r = requests.get(URL, headers=self.headers)
-            r.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
+            r = self._session.get(URL)
+            r.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
             result = r.json()
             if total_count is None:
                 total_count = result['total_count']
