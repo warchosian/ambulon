@@ -1,4 +1,5 @@
 # Configuration WikiSI API Sync - Example Template
+# Ambulon v4.7.0 - Configuration centralisée avec ConfigManager
 # Copiez ce fichier vers config/wikisi.yaml et ajustez les valeurs.
 # Les valeurs peuvent être surchargées par les arguments CLI et les variables d'environnement.
 

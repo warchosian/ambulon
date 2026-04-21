@@ -5,6 +5,63 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.7.0] - 2026-04-21 - OPUS "Réorganisation de l'architecture d'Ambulon"
+
+### 🏗️ Architecture majeure
+
+- **BREAKING**: Refactorisation complète du CLI avec système de registry
+- **BREAKING**: Centralisation de tous les config loaders vers `ConfigManager`
+- **BREAKING**: Uniformisation des signatures `main(argv: Optional[List[str]] = None) -> int:`
+
+### ✨ Nouvelles fonctionnalités
+
+- Nouveau système de dispatch CLI basé sur registry (`app.cli.registry`, `app.cli.dispatch`)
+- Configuration centralisée avec tracking des sources (`ConfigManager`)
+- Tests d'intégration complets pour CLI et modules critiques
+- Validation automatique des templates YAML embarqués
+
+### 🔧 Améliorations
+
+- Migration complète vers `pathlib` dans tous les modules
+- Extraction des magic numbers en constantes nommées
+- Séparation des gros fichiers en modules spécialisés (`wikisi/core/`)
+- Suppression de la duplication massive (processing, mcp)
+- Amélioration de la gestion d'erreurs (`except:` → `except Exception:`)
+
+### 🐛 Corrections
+
+- Suppression des chemins personnels hardcodés (`G:\WarchoLife\...`)
+- Correction des imports cassés dans `mcp/core/server.py`
+- Validation YAML pour tous les templates de configuration
+- Nettoyage du code mort et des imports commentés
+
+### 🧪 Tests
+
+- Nouveaux tests : `test_cli_registry.py`, `test_cli_integration.py`, `test_config_templates.py`
+- Couverture complète de `PIAGClient` avec tests de résolution et recherche
+- Tests de validation pour tous les templates YAML embarqués
+
+### 📚 Documentation
+
+- Mise à jour complète du document d'amendements
+- Tous les items P0-P3 marqués comme "Fait"
+- Métriques d'impact finales documentées
+
+### 🔄 Migration
+
+Pour migrer depuis 4.1.0 :
+1. Les signatures de commandes ont changé - utilisez `main(argv)` au lieu de variantes
+2. Les config loaders utilisent maintenant `ConfigManager` - API compatible
+3. Tous les modules utilisent `pathlib` - chemins string toujours supportés
+
+### 💥 Breaking Changes
+
+- Signatures des fonctions `main()` dans tous les modules de commandes
+- API des config loaders (rétrocompatibilité via wrappers dépréciés)
+- Structure interne des modules `wikisi/core/` (API publique inchangée)
+
+---
+
 ## 4.1.0 (2026-04-21)
 
 ### Fix
