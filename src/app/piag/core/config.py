@@ -6,6 +6,7 @@ et fournit des valeurs par défaut pour tous les modules PIAG.
 
 import sys
 import yaml
+from functools import lru_cache
 from pathlib import Path
 from typing import Dict, Any, Optional
 from app.core.config_loader import find_config_file
@@ -51,26 +52,22 @@ def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
     return config or {}
 
 
-# Configuration par défaut (chargée à la demande pour éviter warnings au démarrage)
-_DEFAULT_CONFIG = None
-_CONFIG_LOADED = False
 DEFAULT_BASE_URL = "https://preprod.api.piag.e2.rie.gouv.fr/rag/"
 
 
+@lru_cache(maxsize=1)
 def _load_default_config() -> Dict[str, Any]:
-    """Charge la configuration par défaut de manière lazy (à la demande)."""
-    global _DEFAULT_CONFIG, _CONFIG_LOADED
+    """Charge la configuration par défaut de manière lazy (à la demande).
 
-    if not _CONFIG_LOADED:
-        try:
-            _DEFAULT_CONFIG = load_config()
-            _CONFIG_LOADED = True
-        except (FileNotFoundError, KeyError, yaml.YAMLError):
-            # Pas de config trouvée = comportement normal (pas d'avertissement)
-            _DEFAULT_CONFIG = {}
-            _CONFIG_LOADED = True
-
-    return _DEFAULT_CONFIG
+    Uses ``functools.lru_cache`` instead of a module-level mutable to keep the
+    state encapsulated and testable (call ``_load_default_config.cache_clear()``
+    between tests).
+    """
+    try:
+        return load_config()
+    except (FileNotFoundError, KeyError, yaml.YAMLError):
+        # Pas de config trouvée = comportement normal (pas d'avertissement)
+        return {}
 
 
 def get_config(config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:

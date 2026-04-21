@@ -3,11 +3,16 @@ VS Code extension configuration.
 
 This module loads recommended and redundant extensions for diagram visualization
 from config/vscode.yaml.
+
+The YAML file is read lazily on first access to ``RECOMMENDED_EXTENSIONS`` or
+``EXTENSIONS_TO_REMOVE`` (PEP 562 ``__getattr__``), so importing this module
+does not perform any I/O.
 """
 
 import logging
+from functools import lru_cache
 from pathlib import Path
-from typing import Dict, List, Literal, TypedDict
+from typing import Any, Dict, List, Literal, TypedDict
 
 import yaml
 
@@ -76,10 +81,19 @@ def _load_vscode_config() -> Dict:
         return {"recommended_extensions": {}, "extensions_to_remove": {}}
 
 
-# Load configuration from YAML
-_CONFIG = _load_vscode_config()
-RECOMMENDED_EXTENSIONS: Dict[str, ExtensionInfo] = _CONFIG.get("recommended_extensions", {})
-EXTENSIONS_TO_REMOVE: Dict[str, str] = _CONFIG.get("extensions_to_remove", {})
+@lru_cache(maxsize=1)
+def _cached_config() -> Dict:
+    """Return the parsed vscode.yaml once; subsequent calls are cached."""
+    return _load_vscode_config()
+
+
+def __getattr__(name: str) -> Any:
+    """Lazy module-level access to YAML-backed dicts (PEP 562)."""
+    if name == "RECOMMENDED_EXTENSIONS":
+        return _cached_config().get("recommended_extensions", {})
+    if name == "EXTENSIONS_TO_REMOVE":
+        return _cached_config().get("extensions_to_remove", {})
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 def get_extensions_by_priority(priority: Priority) -> List[str]:
@@ -94,7 +108,7 @@ def get_extensions_by_priority(priority: Priority) -> List[str]:
     """
     return [
         ext_id
-        for ext_id, info in RECOMMENDED_EXTENSIONS.items()
+        for ext_id, info in _cached_config().get("recommended_extensions", {}).items()
         if info["priority"] == priority
     ]
 
