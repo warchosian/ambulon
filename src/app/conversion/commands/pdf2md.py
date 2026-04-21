@@ -114,11 +114,8 @@ Examples:
     )
 
     if output_path:
-        try:
-            relative_path = os.path.relpath(output_path)
-        except ValueError:
-            relative_path = output_path.resolve()
-        
+        from app.core.output_paths import format_output_path
+        relative_path = format_output_path(output_path)
         print(f"\n✓ Conversion successful!\nFile produced: {relative_path}")
         return 0
     else:

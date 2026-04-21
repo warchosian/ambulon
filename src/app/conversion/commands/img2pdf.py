@@ -221,10 +221,8 @@ Configuration Hierarchy (from highest to lowest priority):
     )
 
     if result_path:
-        try:
-            relative_path = os.path.relpath(result_path)
-        except ValueError:
-            relative_path = result_path
+        from app.core.output_paths import format_output_path
+        relative_path = format_output_path(result_path)
         print(f"\n✓ Conversion réussie !\nFichier produit : {relative_path}")
         return 0
     else:

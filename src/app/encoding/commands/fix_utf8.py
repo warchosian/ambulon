@@ -110,9 +110,10 @@ Configuration Hierarchy (from highest to lowest priority):
         status = "✅" if r.get('success', False) else "❌"
         msg = r.get('message', 'No message')
         try:
-            path_str = os.path.relpath(r['path']) if 'path' in r else 'Unknown Path'
-        except (ValueError, KeyError):
-            path_str = r.get('path', 'Unknown Path')
+            from app.core.output_paths import format_output_path
+            path_str = format_output_path(r['path']) if 'path' in r else 'Unknown Path'
+        except KeyError:
+            path_str = 'Unknown Path'
         logger.log(logging.INFO if r.get('success', False) else logging.ERROR, f"{status} {path_str} → {msg}")
         if not r.get('success', False):
             has_errors = True
