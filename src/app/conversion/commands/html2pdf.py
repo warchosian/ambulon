@@ -159,15 +159,15 @@ def _try_wkhtmltopdf(
         
         if verbose:
             print(f"[INFO] Command: {' '.join(cmd)}")
-        
-        # Use shell=True on Windows for better compatibility with paths
-        use_shell = sys.platform == 'win32'
+
+        # Always pass arguments as a list with shell=False to avoid shell
+        # injection from paths containing special characters (&, |, $(...)).
         result = subprocess.run(
-            cmd, 
-            check=True, 
-            capture_output=True, 
-            text=True, 
-            shell=use_shell
+            cmd,
+            check=True,
+            capture_output=True,
+            text=True,
+            shell=False,
         )
         
         if verbose and result.stdout:

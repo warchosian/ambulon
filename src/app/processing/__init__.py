@@ -7,9 +7,9 @@ Ajout de TOC, fusion, aplatissement, concatenation.
 
 # Export des fonctions métier (pour MCP et usage programmatique)
 # Import direct depuis commands pour éviter les problèmes d'imports des CLI apps
+# NOTE: add_toc_to_html / add_toc_to_markdown live in app.toc.core since the
+# TOC logic was extracted; use app.toc for those helpers.
 from .commands import (
-    # add_toc_to_html,  # TODO: module n'existe pas encore
-    # add_toc_to_markdown,  # TODO: module n'existe pas encore
     concatenate_html_files,
     flatten_html_directory,
     flatten_markdown_directory,
@@ -128,8 +128,6 @@ def get_cli_apps():
 
 __all__ = [
     # Functions (toujours disponibles)
-    # 'add_toc_to_html',  # TODO: module n'existe pas encore
-    'add_toc_to_markdown',
     'concatenate_html_files',
     'flatten_html_directory',
     'flatten_markdown_directory',

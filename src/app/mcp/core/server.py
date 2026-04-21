@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Forcing recompilation
 """
 Serveur MCP pour Ambulon - Permet à un assistant IA d'utiliser les fonctionnalités d'Ambulon
 """

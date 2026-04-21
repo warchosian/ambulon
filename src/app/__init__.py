@@ -1,3 +1,5 @@
-__version__ = "4.0.0" 
- 
-"Ambulon v" + __version__ 
+"""Ambulon package entry point."""
+
+__version__ = "4.0.0"
+__title__ = f"Ambulon v{__version__}"
+

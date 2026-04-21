@@ -1,38 +1,13 @@
-"""Module CLI pour Ambulon."""
+"""Module CLI pour Ambulon.
+
+All command handlers use lazy imports inside ``main()`` to keep CLI startup
+fast and to avoid pulling heavy dependencies when they are not required.
+"""
 import sys
 import argparse
 import logging
 from datetime import datetime
 from pathlib import Path
-
-# LAZY LOADING - Tous les imports sont faits à la demande
-# from . import hello
-# from app.scan.commands.scan import main as scan_main
-# from app.ocr.commands.ocr import main as ocr_main
-# from app.mcp.commands.run_server import main as mcp_main
-# from app.mcp.core.config import export_mcp_config, get_claude_config_path
-# from app.gitlab.commands.gitlab_clone import main as gitlab_clone_main
-# from app.gitlab.commands.gitlab_monofile import main as gitlab_monofile_main
-
-# Modules de conversion - LAZY LOADING pour éviter le blocage au démarrage
-# Les imports sont faits dans les fonctions qui en ont besoin
-# from app.conversion import (...)
-
-# Modules d'encoding - LAZY LOADING
-# from app.encoding import check_md_cli, fix_md_cli
-
-
-
-# Module WikiSI
-
-
-
-# Module Processing - LAZY LOADING
-# from app.processing import (...)
-
-# from app.core.logging_config import setup_logging
-# from app.cli.commands import handle_init_command
-
 
 
 def show_help():
