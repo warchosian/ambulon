@@ -51,8 +51,9 @@ DEFAULT_CONFIG = {
         'timeout': 60 # For NAPS2
     },
     'tools': {
-        'naps2_console_command': os.getenv('NAPS2_CONSOLE_COMMAND', r'G:\WarchoLife\WarchoPortable\PortableCommon\Naps2\NAPS2.Console.exe'),
-        'naps2_gui_command': os.getenv('NAPS2_GUI_COMMAND', r'G:\WarchoLife\WarchoPortable\PortableCommon\Naps2\NAPS2.exe'),
+        # NAPS2 paths must come from environment or YAML config (no hardcoded personal path)
+        'naps2_console_command': os.getenv('AMBULON_NAPS2_CONSOLE_COMMAND', os.getenv('NAPS2_CONSOLE_COMMAND', 'NAPS2.Console.exe')),
+        'naps2_gui_command': os.getenv('AMBULON_NAPS2_GUI_COMMAND', os.getenv('NAPS2_GUI_COMMAND', 'NAPS2.exe')),
         'tesseract_command': os.getenv('TESSERACT_COMMAND', 'tesseract'),
         'tesseract_enabled': os.getenv('TESSERACT_ENABLED', 'True').lower() == 'true',
         'tesseract_python_alternative': os.getenv('TESSERACT_PYTHON_ALTERNATIVE', 'False').lower() == 'true',

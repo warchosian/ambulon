@@ -216,9 +216,11 @@ def _get_common_paths() -> dict[str, list[str]]:
             r"C:\Program Files\VSCodium\bin\codium.cmd",
             r"C:\Program Files (x86)\VSCodium\bin\codium.cmd",
             os.path.expandvars(r"%LOCALAPPDATA%\Programs\VSCodium\bin\codium.cmd"),
-            # Custom portable path (from original script)
-            r"G:\WarchoLife\WarchoPortable\PortableCommon\VSCodium\vscodium-1.109.41146\bin\codium.cmd",
         ]
+        # Optional portable VSCodium path via env var (e.g. on restricted workstations)
+        _portable_codium = os.getenv("AMBULON_VSCODIUM_PATH")
+        if _portable_codium:
+            paths["codium"].append(_portable_codium)
         paths["cursor"] = [
             os.path.expandvars(r"%LOCALAPPDATA%\Programs\Cursor\resources\app\bin\cursor.cmd"),
             os.path.expandvars(r"%LOCALAPPDATA%\Programs\cursor\resources\app\bin\cursor.cmd"),

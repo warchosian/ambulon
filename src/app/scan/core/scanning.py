@@ -342,9 +342,13 @@ def _perform_twain_scan(output_file: Path, dpi: int, **kwargs) -> bool:
             with open(settings_file, 'r', encoding='utf-8') as f:
                 config = yaml.safe_load(f)
         
-        # Chemin vers NAPS2 Console (par défaut ou depuis la config)
-        naps2_executable = config.get('tools', {}).get('naps2', {}).get('command', 
-                                     r'G:\WarchoLife\WarchoPortable\PortableCommon\Naps2\NAPS2.Console.exe')
+        # Chemin vers NAPS2 Console (config YAML -> env var -> PATH fallback)
+        import os as _os
+        naps2_executable = config.get('tools', {}).get('naps2', {}).get(
+            'command',
+            _os.getenv('AMBULON_NAPS2_CONSOLE_COMMAND',
+                       _os.getenv('NAPS2_CONSOLE_COMMAND', 'NAPS2.Console.exe'))
+        )
         
         # Vérifier que NAPS2 existe
         if not Path(naps2_executable).exists():
@@ -918,8 +922,12 @@ Profils TWAIN disponibles:
                 with open(settings_file, 'r', encoding='utf-8') as f:
                     config = yaml.safe_load(f)
             
-            naps2_gui_executable = config.get('tools', {}).get('naps2_gui', {}).get('command', 
-                                             r'G:\WarchoLife\WarchoPortable\PortableCommon\Naps2\NAPS2.exe')
+            import os as _os
+            naps2_gui_executable = config.get('tools', {}).get('naps2_gui', {}).get(
+                'command',
+                _os.getenv('AMBULON_NAPS2_GUI_COMMAND',
+                           _os.getenv('NAPS2_GUI_COMMAND', 'NAPS2.exe'))
+            )
             
             if Path(naps2_gui_executable).exists():
                 print(f"Ouverture de l'interface de configuration NAPS2...")
