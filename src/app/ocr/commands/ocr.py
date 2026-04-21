@@ -24,11 +24,12 @@ DEFAULT_CONFIG = {
         'oem': '3'  # OCR Engine Mode
     },
     'tools': {
-        'tesseract_command': os.getenv('TESSERACT_COMMAND', 'tesseract'),
-        'tesseract_enabled': os.getenv('TESSERACT_ENABLED', 'True').lower() == 'true',
-        'tesseract_python_alternative': os.getenv('TESSERACT_PYTHON_ALTERNATIVE', 'False').lower() == 'true',
-        'tesseract_fallback_enabled': os.getenv('TESSERACT_FALLBACK_ENABLED', 'False').lower() == 'true',
-        'tesseract_timeout': os.getenv('TESSERACT_TIMEOUT', 60)
+        # Prefer AMBULON_TESSERACT_* but keep legacy TESSERACT_* for retrocompat.
+        'tesseract_command': os.getenv('AMBULON_TESSERACT_COMMAND', os.getenv('TESSERACT_COMMAND', 'tesseract')),
+        'tesseract_enabled': os.getenv('AMBULON_TESSERACT_ENABLED', os.getenv('TESSERACT_ENABLED', 'True')).lower() == 'true',
+        'tesseract_python_alternative': os.getenv('AMBULON_TESSERACT_PYTHON_ALTERNATIVE', os.getenv('TESSERACT_PYTHON_ALTERNATIVE', 'False')).lower() == 'true',
+        'tesseract_fallback_enabled': os.getenv('AMBULON_TESSERACT_FALLBACK_ENABLED', os.getenv('TESSERACT_FALLBACK_ENABLED', 'False')).lower() == 'true',
+        'tesseract_timeout': os.getenv('AMBULON_TESSERACT_TIMEOUT', os.getenv('TESSERACT_TIMEOUT', '60'))
     }
 }
 

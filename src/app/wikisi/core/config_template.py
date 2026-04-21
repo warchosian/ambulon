@@ -1,6 +1,10 @@
-"""Template de configuration WikiSI embarqué dans le code."""
+"""Template de configuration WikiSI embarqué dans le code.
 
-WIKISI_CONFIG_TEMPLATE = """# Configuration WikiSI Scraper - Example Template
+The template is a raw string so backslashes inside regex patterns like
+'.*\\.pdf$' are preserved literally when written to YAML.
+"""
+
+WIKISI_CONFIG_TEMPLATE = r"""# Configuration WikiSI Scraper - Example Template
 # Copiez ce fichier vers config/wikisi.yaml et ajustez les valeurs
 
 # Configuration du site WikiSI à aspirer
@@ -27,8 +31,9 @@ filters:
   exclude_patterns:
     - ".*/logout.*"
     - ".*/admin.*"
-    - ".*\\.pdf$"
-    - ".*\\.zip$"
+    # Use single quotes so the regex backslash is preserved literally in YAML
+    - '.*\.pdf$'
+    - '.*\.zip$'
 
   # Extensions de fichiers à télécharger
   allowed_extensions:

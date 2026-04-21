@@ -128,7 +128,7 @@ def main(argv=None):
     Configuration Hierarchy (from highest to lowest priority):
     1. Command-line arguments (e.g., --output)
     2. YAML configuration file (`--config`)
-    3. Environment variables (e.g., IMG2PDF_COMPRESS, IMG2PDF_QUALITY)
+    3. Environment variables (e.g., AMBULON_IMG2PDF_COMPRESS, AMBULON_IMG2PDF_QUALITY)
     4. Default values
     """
     parser = argparse.ArgumentParser(
@@ -138,7 +138,7 @@ Converts all images in a directory to a single PDF file.
 Configuration Hierarchy (from highest to lowest priority):
 1. Command-line arguments (e.g., --output)
 2. YAML configuration file (--config)
-3. Environment variables (e.g., IMG2PDF_COMPRESS, IMG2PDF_QUALITY)
+3. Environment variables (e.g., AMBULON_IMG2PDF_COMPRESS, AMBULON_IMG2PDF_QUALITY)
 4. Default values
         """,
         formatter_class=argparse.RawDescriptionHelpFormatter
