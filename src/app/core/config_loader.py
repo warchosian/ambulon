@@ -84,8 +84,7 @@ def find_config_file(config_name: str) -> Optional[Path]:
         if path.exists():
             env_home = os.getenv("AMBULON_HOME")
             source_info = f"AMBULON_HOME={env_home}" if env_home else "cwd"
-            print(f"[CONFIG] Found: {path} (source: {source_info})", file=sys.stderr)
-            logger.info(f"Config resolved: {path}")
+            logger.info("Config resolved: %s (source: %s)", path, source_info)
             return path
 
     # Second pass: fallback to .example files
@@ -99,8 +98,9 @@ def find_config_file(config_name: str) -> Optional[Path]:
         if path.exists():
             env_home = os.getenv("AMBULON_HOME")
             source_info = f"AMBULON_HOME={env_home}" if env_home else "cwd"
-            print(f"[CONFIG] Found (using .example): {path} (source: {source_info})", file=sys.stderr)
-            logger.info(f"Config resolved (using example): {path}")
+            logger.info(
+                "Config resolved (using example): %s (source: %s)", path, source_info
+            )
             return path
 
     return None
@@ -124,7 +124,7 @@ def load_config(
         A dictionary containing the merged configuration.
     """
     if yaml is None:
-        print("Warning: PyYAML not installed, cannot load YAML config. Using defaults.", file=sys.stderr)
+        logger.warning("PyYAML not installed, cannot load YAML config. Using defaults.")
         return default_config or {}
 
     config = default_config or {}
@@ -153,24 +153,21 @@ def load_config(
 
         if expanded_path.exists():
             try:
-                try:
-                    from app import __version__ as app_version
-                except Exception:
-                    app_version = "unknown"
-                env_home = os.getenv("AMBULON_HOME")
-                base_dir = Path(env_home).expanduser() if env_home else Path.cwd()
-
-                # Message visible même sans logging activé pour aider au débogage
-                source_info = f"AMBULON_HOME={env_home}" if env_home else "cwd (current working directory)"
-                print(f"[CONFIG] Loading: {expanded_path} (source: {source_info})", file=sys.stderr)
-
-                logger.info(
-                    f"[CONFIG] v{app_version} resolved: {expanded_path} "
-                    f"(base={base_dir}, source={'AMBULON_HOME' if env_home else 'cwd'})"
-                )
+                from app import __version__ as app_version
             except Exception:
-                print(f"[CONFIG] Loading: {expanded_path}", file=sys.stderr)
-                logger.info(f"[CONFIG] resolved: {expanded_path}")
+                app_version = "unknown"
+            env_home = os.getenv("AMBULON_HOME")
+            base_dir = Path(env_home).expanduser() if env_home else Path.cwd()
+            source_info = (
+                f"AMBULON_HOME={env_home}" if env_home else "cwd (current working directory)"
+            )
+            logger.info(
+                "[CONFIG] v%s resolved: %s (base=%s, source=%s)",
+                app_version,
+                expanded_path,
+                base_dir,
+                source_info,
+            )
             try:
                 with open(expanded_path, 'r', encoding='utf-8') as f:
                     yaml_content = f.read()
@@ -183,9 +180,12 @@ def load_config(
                     # Merge YAML config over the defaults
                     config = deep_merge(config, yaml_config)
 
-            except Exception as e:
-                print(f"Error loading or parsing config file at '{config_path}': {e}", file=sys.stderr)
+            except (OSError, yaml.YAMLError) as e:
+                logger.error(
+                    "Error loading or parsing config file at '%s': %s",
+                    config_path,
+                    e,
+                )
                 # In case of error, we stick with the defaults
-                pass
 
     return config

@@ -5,12 +5,19 @@ HTTP vers l'API PIAG avec gestion centralisée de la configuration et des erreur
 """
 
 import json
+import logging
 import sys
 import time
 import requests
 from pathlib import Path
 from typing import Dict, Any, Optional
 import mimetypes
+
+logger = logging.getLogger(__name__)
+
+# Retry / defaults (extracted from inline magic numbers)
+DEFAULT_MAX_RETRIES = 3
+RETRY_SLEEP_SECONDS = 2
 
 from .config import (
     get_config,
@@ -46,7 +53,7 @@ class PIAGClient:
         self.config = get_config(config)
         self.base_url = get_base_url(base_url, self.config)
         self.timeout = get_timeout(self.config)
-        self.max_retries = self.config.get('piag', {}).get('rag', {}).get('api', {}).get('max_retries', 3)
+        self.max_retries = self.config.get('piag', {}).get('rag', {}).get('api', {}).get('max_retries', DEFAULT_MAX_RETRIES)
         self.force = force
         # Reuse TCP/TLS connections across API calls
         self._session = requests.Session()
@@ -68,20 +75,23 @@ class PIAGClient:
     def _log_request(self, method: str, url: str, **kwargs):
         """Log une requête HTTP si le logging est activé."""
         if should_log_requests(self.config):
-            print(f"[DEBUG] Requête {method} vers: {url}", file=sys.stderr)
+            logger.debug("Requête %s vers: %s", method, url)
             if 'data' in kwargs:
-                print(f"[DEBUG] Payload: {kwargs['data']}", file=sys.stderr)
+                logger.debug("Payload: %s", kwargs['data'])
             if 'params' in kwargs:
-                print(f"[DEBUG] Paramètres: {json.dumps(kwargs['params'], indent=2)}", file=sys.stderr)
+                logger.debug("Paramètres: %s", json.dumps(kwargs['params'], indent=2))
 
     def _log_response(self, response: requests.Response):
         """Log une réponse HTTP si le logging est activé."""
         if should_log_responses(self.config):
             try:
-                print(f"[DEBUG] Réponse: {json.dumps(response.json(), indent=2, ensure_ascii=False)}", file=sys.stderr)
+                logger.debug(
+                    "Réponse: %s",
+                    json.dumps(response.json(), indent=2, ensure_ascii=False),
+                )
             except (ValueError, json.JSONDecodeError):
                 # Body is not valid JSON, fall back to raw text.
-                print(f"[DEBUG] Réponse (non-JSON): {response.text}", file=sys.stderr)
+                logger.debug("Réponse (non-JSON): %s", response.text)
 
     def _request(
         self,
@@ -117,7 +127,7 @@ class PIAGClient:
         for attempt in range(1, self.max_retries + 1):
             try:
                 if attempt > 1:
-                    print(f"[RETRY] Tentative {attempt}/{self.max_retries}...", file=sys.stderr)
+                    logger.info("Tentative %s/%s...", attempt, self.max_retries)
 
                 response = self._session.request(
                     method,
@@ -140,21 +150,25 @@ class PIAGClient:
 
             except requests.exceptions.Timeout as e:
                 last_exception = e
-                print(f"Erreur lors de la requête {method} {endpoint}: Timeout après {self.timeout}s", file=sys.stderr)
+                logger.warning(
+                    "Timeout sur %s %s après %ss", method, endpoint, self.timeout
+                )
                 if attempt < self.max_retries:
-                    print(f"[INFO] Nouvelle tentative dans 2 secondes...", file=sys.stderr)
-                    time.sleep(2)
+                    logger.info(
+                        "Nouvelle tentative dans %s secondes...", RETRY_SLEEP_SECONDS
+                    )
+                    time.sleep(RETRY_SLEEP_SECONDS)
                 continue
 
             except requests.exceptions.RequestException as e:
                 # Pour les autres erreurs (404, 500, etc.), on ne retry pas
-                print(f"Erreur lors de la requête {method} {endpoint}: {e}", file=sys.stderr)
+                logger.error("Erreur lors de la requête %s %s: %s", method, endpoint, e)
                 if hasattr(e, 'response') and e.response is not None:
-                    print(f"Réponse API: {e.response.text}", file=sys.stderr)
+                    logger.error("Réponse API: %s", e.response.text)
                 raise
 
         # Si on arrive ici, toutes les tentatives ont échoué
-        print(f"[ERROR] Échec après {self.max_retries} tentatives", file=sys.stderr)
+        logger.error("Échec après %s tentatives", self.max_retries)
         raise last_exception
 
     # Collections
