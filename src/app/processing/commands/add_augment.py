@@ -17,7 +17,7 @@ from typing import Optional
 
 # CSS for interactive features
 INTERACTIVE_CSS = """<style>
-/* Styles pour les fonctionnalits interactives dtk */
+/* Styles pour les fonctionnalités interactives dtk */
 .zoom-indicator {
     position: fixed;
     top: 20px;
@@ -147,7 +147,7 @@ INTERACTIVE_CSS = """<style>
 # JavaScript for interactive features
 INTERACTIVE_JS = """<script>
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('=== Fonctionnalits interactives charges ===');
+    console.log('=== Fonctionnalités interactives chargées ===');
 
     const enabledFeatures = {
         zoom: true,
@@ -157,9 +157,9 @@ document.addEventListener('DOMContentLoaded', function() {
         controls: true
     };
 
-    // Slectionner tous les SVG
+    // Sélectionner tous les SVG
     const svgElements = document.querySelectorAll('svg');
-    console.log('SVG trouv:', svgElements.length);
+    console.log('SVG trouvés:', svgElements.length);
 
     const allInteractiveElements = Array.from(svgElements);
 
@@ -173,32 +173,32 @@ document.addEventListener('DOMContentLoaded', function() {
     let zoomIndicator = null;
     let helpPanel = null;
 
-    // Crer l'indicateur de zoom
+    // Créer l'indicateur de zoom
     function createZoomIndicator() {
         zoomIndicator = document.createElement('div');
         zoomIndicator.className = 'zoom-indicator';
         document.body.appendChild(zoomIndicator);
     }
 
-    // Crer le panneau d'aide
+    // Créer le panneau d'aide
     function createHelpPanel() {
         if (!enabledFeatures.help) return;
 
         helpPanel = document.createElement('div');
         helpPanel.className = 'interaction-help';
 
-        let helpContent = '<strong>Contrles diagramme:</strong><br>';
-        if (enabledFeatures.zoom) helpContent += '• Molette: Zoom/Dzoom<br>';
-        if (enabledFeatures.drag) helpContent += '• Clic + glisser: Dplacer<br>';
-        if (enabledFeatures.drag) helpContent += '• Clic simple: Rinitialiser<br>';
-        if (enabledFeatures.fullscreen) helpContent += '• F/Entre/Espace: Plein cran<br>';
-        if (enabledFeatures.fullscreen) helpContent += '• champ: Quitter plein cran<br>';
+        let helpContent = '<strong>Contrôles diagramme:</strong><br>';
+        if (enabledFeatures.zoom) helpContent += '• Molette: Zoom/Dézoom<br>';
+        if (enabledFeatures.drag) helpContent += '• Clic + glisser: Déplacer<br>';
+        if (enabledFeatures.drag) helpContent += '• Clic simple: Réinitialiser<br>';
+        if (enabledFeatures.fullscreen) helpContent += '• F/Entrée/Espace: Plein écran<br>';
+        if (enabledFeatures.fullscreen) helpContent += '• Échap: Quitter plein écran<br>';
 
         helpPanel.innerHTML = helpContent;
         document.body.appendChild(helpPanel);
     }
 
-    // Mettre jour l'indicateur de zoom
+    // Mettre à jour l'indicateur de zoom
     function updateZoomIndicator(scale, visible = true) {
         if (!zoomIndicator) createZoomIndicator();
         zoomIndicator.textContent = 'Zoom: ' + Math.round(scale * 100) + '%';
@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
-                // Rinitialiser
+                // Réinitialiser
                 scale = 1;
                 translateX = 0;
                 translateY = 0;
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Mode plein cran
+        // Mode plein écran
         if (enabledFeatures.fullscreen) {
             document.addEventListener('keydown', function(e) {
                 if (img.matches(':hover') || isFullscreen) {
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Ajouter des contrles visuels
+        // Ajouter des contrôles visuels
         if (enabledFeatures.controls && (enabledFeatures.zoom || enabledFeatures.drag)) {
             const container = img.closest('.diagram, .diagram-container') || img.parentElement;
 
@@ -367,11 +367,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 let controlsHTML = '';
                 if (enabledFeatures.zoom) {
-                    controlsHTML += '<button class="zoom-in" title="Zoom avant">+</button>';
-                    controlsHTML += '<button class="zoom-out" title="Zoom arrire">-</button>';
+                    controlsHTML += '<button class=\"zoom-in\" title=\"Zoom avant\">+</button>';
+                    controlsHTML += '<button class=\"zoom-out\" title=\"Zoom arrière\">-</button>';
                 }
                 if (enabledFeatures.zoom || enabledFeatures.drag) {
-                    controlsHTML += '<button class="reset" title="Rinitialiser">Reset</button>';
+                    controlsHTML += '<button class=\"reset\" title=\"Réinitialiser\">Reset</button>';
                 }
 
                 controls.innerHTML = controlsHTML;
@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    console.log('=== Setup termin ===');
+    console.log('=== Setup terminé ===');
 });
 </script>"""
 
@@ -448,7 +448,7 @@ def augment(
 
     # Determine output path
     if output_path is None:
-        output_file = input_file.parent / f"{input_file.stem}-interactive{input_file.suffix}"
+        output_file = input_file.parent / f"{input_file.stem}.interactive{input_file.suffix}"
     else:
         output_file = Path(output_path).resolve()
 
@@ -523,7 +523,7 @@ def register_make_interactive_command(subparsers):
     parser = subparsers.add_parser(
         'make-interactive',
         help='Make HTML diagrams interactive with zoom and drag',
-        description='Add interactive capabilities to SVG diagrams in HTML files. ' 
+        description='Add interactive capabilities to SVG diagrams in HTML files. '
                     'Enables zoom (mouse wheel), drag and drop, and visual controls.'
     )
 
@@ -551,3 +551,8 @@ def register_make_interactive_command(subparsers):
         args.output,
         args.verbose
     ))
+
+# Backward-compat alias: the public name was ``augment`` (used by CLI,
+# md_to_interactive_html and gitlab_clone). ``make_html_interactive`` is kept
+# as a synonym used by app.processing.commands.__init__ / app.processing.
+make_html_interactive = augment
