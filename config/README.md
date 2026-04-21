@@ -1,6 +1,23 @@
-# Configuration RAG PIAG
+# Configuration Ambulon v4.7.0
 
-Ce dossier contient les fichiers de configuration pour l'intégration avec l'API RAG PIAG.
+Ce dossier contient les fichiers de configuration pour tous les modules Ambulon.
+
+## 🎯 Nouveautés v4.7.0
+
+### Configuration centralisée
+Tous les modules utilisent maintenant le `ConfigManager` centralisé avec :
+- **Tracking des sources** : Savoir d'où vient chaque paramètre (CLI, YAML, ENV, default)
+- **Validation automatique** : Détection des erreurs de configuration
+- **Hiérarchie cohérente** : CLI > YAML > ENV > Default dans tous les modules
+
+### Commandes de diagnostic
+```bash
+# Afficher les sources de configuration
+ambulon piag-rag-collection-list --show-config-sources
+
+# Vérification rapide de la config
+ambulon piag-rag-collection-list --check-config
+```
 
 ## Fichiers
 

@@ -1,8 +1,25 @@
-# Ambulon
+# Ambulon v4.7.0 - OPUS "Réorganisation de l'architecture"
 
 Suite complète d'outils de numérisation avec serveur MCP pour assistants IA.
 
 Ambulon offre des fonctionnalités de scan, OCR, et traitement PDF, le tout accessible via un serveur MCP (Model Context Protocol) pour une intégration transparente avec les assistants IA.
+
+## 🎯 Nouveautés OPUS 4.7.0
+
+### 🏗️ Architecture repensée
+- **CLI unifié** : Nouveau système de registry remplaçant la cascade if/elif géante
+- **Configuration centralisée** : Tous les modules utilisent `ConfigManager` avec tracking des sources
+- **Signatures uniformisées** : Toutes les commandes utilisent `main(argv: Optional[List[str]] = None) -> int:`
+
+### 🧪 Qualité renforcée
+- **Tests complets** : Couverture étendue pour CLI, PIAGClient, et templates YAML
+- **Pathlib systématique** : Migration complète vers `pathlib` dans tous les modules
+- **Gestion d'erreurs** : Suppression des `except:` nus, spécialisation des exceptions
+
+### 🔧 Maintenabilité améliorée
+- **Modules séparés** : Gros fichiers refactorisés (wikisi/core/, processing/)
+- **Duplication éliminée** : Suppression des triples/doubles clones
+- **Magic numbers extraits** : Constantes nommées pour tous les paramètres
 
 ## 🚀 Fonctionnalités
 
