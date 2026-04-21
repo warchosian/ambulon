@@ -7,14 +7,14 @@ import sys
 import argparse
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
 from app.core.logging_config import setup_logging
 
 logger = logging.getLogger(__name__)
 
 
-def add_toc_cli(argv=None):
+def main(argv: Optional[List[str]] = None) -> int:
     """
     Entry point for add-toc command.
 
@@ -146,4 +146,4 @@ def add_toc_cli(argv=None):
 
 
 if __name__ == '__main__':
-    sys.exit(add_toc_cli())
+    sys.exit(main())

@@ -1,152 +1,85 @@
 """
 Configuration management for GitLab releases module.
 
-Supports configuration hierarchy:
-1. Command-line arguments (highest priority)
-2. YAML configuration file
-3. Environment variables
-4. Default values
+Uses the centralized ConfigManager for consistent configuration handling
+across all Ambulon modules.
 """
 
 import os
 import logging
 from pathlib import Path
 from typing import Dict, Any, Optional
-import yaml
-import re
+
+from app.core.config_manager import ConfigManager
 
 logger = logging.getLogger(__name__)
 
+# Default configuration
+DEFAULT_GITLAB_CONFIG: Dict[str, Any] = {
+    "gitlab": {
+        "token": "",
+        "base_url": "https://gitlab.com",
+        "project_id": "",
+        "release": {
+            "auto_generate_notes": False
+        }
+    }
+}
 
-def load_gitlab_config(config_file: Optional[str] = None) -> Dict[str, Any]:
+# Global config manager instance
+_config_manager = ConfigManager(
+    module_name="gitlab",
+    defaults=DEFAULT_GITLAB_CONFIG,
+    env_prefix="AMBULON_GITLAB",
+    sensitive_keys=["token"]
+)
+
+
+def load_gitlab_config(
+    config_file: Optional[str] = None,
+    cli_overrides: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
     """
-    Load GitLab configuration from YAML file with environment variable substitution.
+    Load GitLab configuration using the centralized ConfigManager.
+
+    Configuration hierarchy:
+    1. Command-line arguments (cli_overrides)
+    2. YAML configuration file
+    3. Environment variables (AMBULON_GITLAB_*)
+    4. Default values
 
     Args:
         config_file: Optional path to config file. If None, uses default location.
+        cli_overrides: CLI argument overrides in format {'gitlab.token': value}
 
     Returns:
         Configuration dictionary
-
-    Raises:
-        FileNotFoundError: If config file is specified but doesn't exist
     """
-    # Default configuration
-    default_config = {
-        "gitlab": {
-            "token": "",
-            "base_url": "https://gitlab.com",
-            "project_id": "",
-            "release": {
-                "auto_generate_notes": False
-            }
-        }
-    }
-
-    # Determine config file path
-    if config_file:
-        config_path = Path(config_file)
-    else:
-        # Try multiple default locations in order
-        search_paths = []
-
-        # 1. Current directory config/gitlab.yaml
-        search_paths.append(Path.cwd() / "config" / "gitlab.yaml")
-
-        # 2. AMBULON_HOME/config/gitlab.yaml
-        ambulon_home = os.getenv("AMBULON_HOME")
-        if ambulon_home:
-            search_paths.append(Path(ambulon_home).expanduser() / "config" / "gitlab.yaml")
-
-        # Find first existing config file
-        config_path = None
-        for path in search_paths:
-            if path.exists():
-                config_path = path
-                break
-
-        # If none found, use first default location
-        if not config_path:
-            config_path = search_paths[0]
-
-    # If config doesn't exist, return defaults
-    if not config_path.exists():
-        logger.debug(f"Config file not found: {config_path}, using defaults")
-        return default_config
-
-    logger.info(f"Loading GitLab config from: {config_path}")
-
-    # Load YAML
-    try:
-        with open(config_path, 'r', encoding='utf-8') as f:
-            raw_config = yaml.safe_load(f)
-
-        # Substitute environment variables
-        config = substitute_env_vars(raw_config or default_config)
-
-        # Merge with defaults
-        merged_config = merge_configs(default_config, config)
-
-        return merged_config
-
-    except yaml.YAMLError as e:
-        logger.error(f"Error parsing YAML config: {e}")
-        return default_config
-    except Exception as e:
-        logger.error(f"Error loading config: {e}")
-        return default_config
+    return _config_manager.load(
+        config_path=config_file or "gitlab.yaml",
+        cli_overrides=cli_overrides
+    )
 
 
+def get_config_manager() -> ConfigManager:
+    """Get the GitLab ConfigManager instance for advanced operations."""
+    return _config_manager
+
+
+# Backward-compat thin wrappers - deprecated, use ConfigManager directly
 def substitute_env_vars(config: Any) -> Any:
-    """
-    Recursively substitute environment variables in config.
-
-    Syntax: ${VAR_NAME:-default_value}
-
-    Args:
-        config: Configuration object (dict, list, or str)
-
-    Returns:
-        Configuration with substituted values
-    """
-    if isinstance(config, dict):
-        return {key: substitute_env_vars(value) for key, value in config.items()}
-    elif isinstance(config, list):
-        return [substitute_env_vars(item) for item in config]
-    elif isinstance(config, str):
-        # Pattern: ${VAR_NAME:-default}
-        pattern = r'\$\{([^}:]+)(?::-(.*?))?\}'
-
-        def replacer(match):
-            var_name = match.group(1)
-            default_value = match.group(2) or ""
-            return os.getenv(var_name, default_value)
-
-        return re.sub(pattern, replacer, config)
-    else:
-        return config
+    """Deprecated: Use ConfigManager directly."""
+    import warnings
+    warnings.warn("substitute_env_vars is deprecated, use ConfigManager", DeprecationWarning)
+    return _config_manager._format_value(config)
 
 
 def merge_configs(base: Dict, override: Dict) -> Dict:
-    """
-    Merge two configuration dictionaries recursively.
-
-    Args:
-        base: Base configuration
-        override: Override configuration
-
-    Returns:
-        Merged configuration
-    """
-    result = base.copy()
-
-    for key, value in override.items():
-        if key in result and isinstance(result[key], dict) and isinstance(value, dict):
-            result[key] = merge_configs(result[key], value)
-        else:
-            result[key] = value
-
-    return result
+    """Deprecated: Use ConfigManager directly."""
+    import warnings
+    warnings.warn("merge_configs is deprecated, use ConfigManager", DeprecationWarning)
+    from app.core.config_loader import deep_merge
+    return deep_merge(base, override)
 
 
 def get_gitlab_token(config: Dict[str, Any]) -> str:

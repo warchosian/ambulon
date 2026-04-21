@@ -1,21 +1,15 @@
 """
 Configuration management for LLM module.
 
-Supports configuration hierarchy:
-1. Command-line arguments (highest priority)
-2. YAML configuration file
-3. Environment variables (``${VAR:-default}`` substitution)
-4. Default values (:data:`DEFAULT_LLM_CONFIG`)
-
-Pre-4.1.0 this module re-implemented its own ``substitute_env_vars`` and
-``merge_configs`` helpers; they now delegate to :mod:`app.core.config_loader`.
+Uses the centralized ConfigManager for consistent configuration handling
+across all Ambulon modules.
 """
 
 import logging
 import os
 from typing import Any, Dict, Optional
 
-from app.core.config_loader import deep_merge as _deep_merge, load_config as _load_config
+from app.core.config_manager import ConfigManager
 
 logger = logging.getLogger(__name__)
 
@@ -77,39 +71,61 @@ DEFAULT_LLM_CONFIG: Dict[str, Any] = {
 }
 
 
-def load_llm_config(config_file: Optional[str] = None) -> Dict[str, Any]:
+# Global config manager instance
+_config_manager = ConfigManager(
+    module_name="llm",
+    defaults=DEFAULT_LLM_CONFIG,
+    env_prefix="AMBULON_LLM",
+    sensitive_keys=["api_key", "token"]
+)
+
+
+def load_llm_config(
+    config_file: Optional[str] = None,
+    cli_overrides: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
     """
-    Load LLM configuration from YAML with environment variable substitution.
+    Load LLM configuration using the centralized ConfigManager.
+
+    Configuration hierarchy:
+    1. Command-line arguments (cli_overrides)
+    2. YAML configuration file
+    3. Environment variables (AMBULON_LLM_*)
+    4. Default values
 
     Args:
         config_file: Optional path to config file. If None, looks up
             ``llm.yaml`` via the standard AMBULON_HOME / cwd search.
+        cli_overrides: CLI argument overrides in format {'llm.providers.kimi.api_key': value}
 
     Returns:
         Configuration dictionary.
     """
-    return _load_config(config_file or "llm", default_config=DEFAULT_LLM_CONFIG)
+    return _config_manager.load(
+        config_path=config_file or "llm.yaml",
+        cli_overrides=cli_overrides
+    )
 
 
-# Backward-compat thin wrappers around app.core.config_loader.
+def get_config_manager() -> ConfigManager:
+    """Get the LLM ConfigManager instance for advanced operations."""
+    return _config_manager
+
+
+# Backward-compat thin wrappers - deprecated, use ConfigManager directly
 def substitute_env_vars(config: Any) -> Any:
-    """Alias kept for backward compatibility; uses the shared substitution."""
-    import re
-
-    from app.core.config_loader import _replace_env_var
-
-    if isinstance(config, dict):
-        return {k: substitute_env_vars(v) for k, v in config.items()}
-    if isinstance(config, list):
-        return [substitute_env_vars(item) for item in config]
-    if isinstance(config, str):
-        return re.sub(r"\$\{([^}]+)\}", _replace_env_var, config)
-    return config
+    """Deprecated: Use ConfigManager directly."""
+    import warnings
+    warnings.warn("substitute_env_vars is deprecated, use ConfigManager", DeprecationWarning)
+    return _config_manager._format_value(config)
 
 
 def merge_configs(base: Dict, override: Dict) -> Dict:
-    """Alias kept for backward compatibility; delegates to ``deep_merge``."""
-    return _deep_merge(base, override)
+    """Deprecated: Use ConfigManager directly."""
+    import warnings
+    warnings.warn("merge_configs is deprecated, use ConfigManager", DeprecationWarning)
+    from app.core.config_loader import deep_merge
+    return deep_merge(base, override)
 
 
 def get_provider_config(provider_name: str, config: Dict[str, Any]) -> Dict[str, Any]:
