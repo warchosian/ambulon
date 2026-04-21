@@ -430,7 +430,7 @@ def handle_test_command():
             result = subprocess.run([
                 sys.executable, "-m", "pytest", 
                 "tests/", "-v", "--tb=short"
-            ], cwd=Path.cwd())
+            ], cwd=str(Path.cwd()))
             return result.returncode
             
         elif test_module in ['config', 'scan', 'ocr', 'mcp', 'mcp-live']:
@@ -444,7 +444,7 @@ def handle_test_command():
                     result1 = subprocess.run([
                         sys.executable, "-m", "pytest", 
                         test_file, "-v", "--tb=short"
-                    ], cwd=Path.cwd())
+                    ], cwd=str(Path.cwd()))
                 
                 print("\nTests d'intégration MCP...")
                 integration_file = "tests/test_mcp_integration.py"
@@ -452,7 +452,7 @@ def handle_test_command():
                     result2 = subprocess.run([
                         sys.executable, "-m", "pytest", 
                         integration_file, "-v", "--tb=short"
-                    ], cwd=Path.cwd())
+                    ], cwd=str(Path.cwd()))
                     return max(result1.returncode if 'result1' in locals() else 0, 
                               result2.returncode)
                 else:
@@ -472,7 +472,7 @@ def handle_test_command():
                 if test_script.exists():
                     result = subprocess.run([
                         sys.executable, str(test_script)
-                    ], cwd=Path.cwd())
+                    ], cwd=str(Path.cwd()))
                     return result.returncode
                 else:
                     print("Script de test MCP non trouvé. Créez test_mcp_server.py")
@@ -486,7 +486,7 @@ def handle_test_command():
                 result = subprocess.run([
                     sys.executable, "-m", "pytest", 
                     test_file, "-v", "--tb=short"
-                ], cwd=Path.cwd())
+                ], cwd=str(Path.cwd()))
                 return result.returncode
         else:
             print(f"Module de test inconnu: {test_module}")
