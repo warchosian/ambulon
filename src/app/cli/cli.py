@@ -430,7 +430,7 @@ def handle_test_command():
             result = subprocess.run([
                 sys.executable, "-m", "pytest", 
                 "tests/", "-v", "--tb=short"
-            ], cwd=os.getcwd())
+            ], cwd=Path.cwd())
             return result.returncode
             
         elif test_module in ['config', 'scan', 'ocr', 'mcp', 'mcp-live']:
@@ -444,7 +444,7 @@ def handle_test_command():
                     result1 = subprocess.run([
                         sys.executable, "-m", "pytest", 
                         test_file, "-v", "--tb=short"
-                    ], cwd=os.getcwd())
+                    ], cwd=Path.cwd())
                 
                 print("\nTests d'intégration MCP...")
                 integration_file = "tests/test_mcp_integration.py"
@@ -452,7 +452,7 @@ def handle_test_command():
                     result2 = subprocess.run([
                         sys.executable, "-m", "pytest", 
                         integration_file, "-v", "--tb=short"
-                    ], cwd=os.getcwd())
+                    ], cwd=Path.cwd())
                     return max(result1.returncode if 'result1' in locals() else 0, 
                               result2.returncode)
                 else:
@@ -472,21 +472,21 @@ def handle_test_command():
                 if test_script.exists():
                     result = subprocess.run([
                         sys.executable, str(test_script)
-                    ], cwd=os.getcwd())
+                    ], cwd=Path.cwd())
                     return result.returncode
                 else:
                     print("Script de test MCP non trouvé. Créez test_mcp_server.py")
                     return 1
             else:
                 test_file = f"tests/test_{test_module}.py"
-                if not os.path.exists(test_file):
+                if not Path(test_file).exists():
                     print(f"Fichier de test {test_file} introuvable")
                     return 1
                 
                 result = subprocess.run([
                     sys.executable, "-m", "pytest", 
                     test_file, "-v", "--tb=short"
-                ], cwd=os.getcwd())
+                ], cwd=Path.cwd())
                 return result.returncode
         else:
             print(f"Module de test inconnu: {test_module}")
@@ -589,8 +589,8 @@ def main():
         if command == '--version':
             from . import __version__
             print(f"Ambulon version {__version__}")
-            import os
             from pathlib import Path
+            import os
             env_home = os.getenv("AMBULON_HOME")
             base_dir = Path(env_home).expanduser() if env_home else Path.cwd()
             config_dir = base_dir / "config"

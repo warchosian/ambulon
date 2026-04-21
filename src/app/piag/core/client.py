@@ -19,6 +19,10 @@ logger = logging.getLogger(__name__)
 DEFAULT_MAX_RETRIES = 3
 RETRY_SLEEP_SECONDS = 2
 
+# ID detection heuristics
+MIN_ID_LENGTH = 10
+MAX_ID_LENGTH = 20
+
 from .config import (
     get_config,
     get_base_url,
@@ -261,10 +265,10 @@ class PIAGClient:
         if not collection_name_or_id:
             raise ValueError("Le nom ou l'ID de la collection ne peut pas être vide.")
 
-        # Heuristique : les IDs sont alphanumériques purs de 10-20 caractères
+        # Heuristique : les IDs sont alphanumériques purs de MIN_ID_LENGTH-MAX_ID_LENGTH caractères
         # Les noms contiennent souvent des underscores, espaces ou caractères spéciaux
         looks_like_id = (
-            10 <= len(collection_name_or_id) <= 20 and
+            MIN_ID_LENGTH <= len(collection_name_or_id) <= MAX_ID_LENGTH and
             collection_name_or_id.isalnum() and
             '_' not in collection_name_or_id and
             ' ' not in collection_name_or_id
