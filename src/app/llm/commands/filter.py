@@ -56,12 +56,12 @@ def get_output_filename(input_file: str) -> str:
     return str(input_path.parent / output_name)
 
 
-def main(args=None):
+def main(argv=None):
     """
     Filter command entry point.
 
     Args:
-        args: Command line arguments (for testing)
+        argv: Command line arguments (for testing). ``None`` uses ``sys.argv``.
     """
     parser = argparse.ArgumentParser(
         description="Filter large code documentation files to reduce size",
@@ -105,7 +105,7 @@ Output:
         help='Enable verbose logging'
     )
 
-    parsed_args = parser.parse_args(args)
+    parsed_args = parser.parse_args(argv)
 
     # Configure logging
     log_level = logging.DEBUG if parsed_args.verbose else logging.INFO

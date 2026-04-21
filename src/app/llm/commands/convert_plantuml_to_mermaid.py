@@ -237,8 +237,12 @@ def process_file(input_file, output_file=None, mode='llm', provider=None):
     return stats
 
 
-def main(args=None):
-    """CLI entry point."""
+def main(argv=None):
+    """CLI entry point.
+
+    Args:
+        argv: Command line arguments (for testing). ``None`` uses ``sys.argv``.
+    """
     parser = argparse.ArgumentParser(
         description="Convert PlantUML diagrams to Mermaid in prompt files",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -284,7 +288,7 @@ Note:
         help='Enable verbose logging'
     )
 
-    parsed_args = parser.parse_args(args)
+    parsed_args = parser.parse_args(argv)
 
     # Configure logging
     log_level = logging.DEBUG if parsed_args.verbose else logging.INFO

@@ -57,6 +57,33 @@ def test_every_registered_handler_is_importable(cmd):
     assert callable(handler), f"{mod_path}.{attr} is not callable"
 
 
+@pytest.mark.parametrize("cmd", sorted(STANDARD_COMMANDS.keys()))
+def test_every_registered_handler_accepts_zero_or_one_arg(cmd):
+    """The dispatcher calls ``handler()`` with no arguments.
+
+    Handlers must therefore accept zero args, or a single optional parameter
+    (conventionally ``argv``) with a default value. Handlers with required
+    positional parameters would crash at dispatch time.
+    """
+    import inspect
+
+    mod_path, attr = STANDARD_COMMANDS[cmd]
+    module = importlib.import_module(mod_path)
+    handler = getattr(module, attr)
+    sig = inspect.signature(handler)
+    params = [
+        p for p in sig.parameters.values()
+        if p.kind not in (inspect.Parameter.VAR_POSITIONAL, inspect.Parameter.VAR_KEYWORD)
+    ]
+    required = [
+        p for p in params if p.default is inspect.Parameter.empty
+    ]
+    assert not required, (
+        f"{cmd} ({mod_path}.{attr}) declares required positional parameter(s) "
+        f"{[p.name for p in required]}; dispatcher calls handler() with no args."
+    )
+
+
 class TestDispatchStandard:
     def test_unknown_command_returns_none(self):
         assert dispatch_standard("definitely-not-a-command-xyz") is None
