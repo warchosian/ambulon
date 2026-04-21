@@ -114,8 +114,8 @@ def is_binary_file(file_path: Path) -> bool:
             # Check for null bytes (common in binary files)
             if b'\x00' in chunk:
                 return True
-    except:
-        return True # Assume binary if cannot read
+    except OSError:
+        return True  # Assume binary if cannot read
 
     return False
 

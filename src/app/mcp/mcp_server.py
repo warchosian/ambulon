@@ -982,7 +982,8 @@ async def _handle_wikisi_to_markdown(arguments: Dict[str, Any]) -> CallToolResul
                     # Limiter à 2000 caractères pour la preview
                     if len(md_content) > 2000:
                         md_content = md_content[:2000] + "\n... (contenu tronqué)"
-            except:
+            except (OSError, UnicodeDecodeError):
+                # Preview is best-effort; ignore read errors and fall through.
                 pass
 
             response_text = f"Conversion WikiSI → Markdown réussie !\n"

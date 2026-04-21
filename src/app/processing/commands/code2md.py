@@ -108,7 +108,7 @@ def detect_format_from_content(content: str) -> str:
             import json
             json.loads(content)
             return 'json'
-        except:
+        except (ValueError, json.JSONDecodeError):
             pass
 
     # Détection YAML (commence souvent par '---' ou contient des clés avec ':')

@@ -416,7 +416,7 @@ def step_chunk(collection_name: str, query: str, prompt_file: str,
                 data = json.load(f)
                 chunks = data.get('chunks', data if isinstance(data, list) else [])
                 print(f"    ✓ {len(chunks)} chunks récupérés")
-        except:
+        except (OSError, json.JSONDecodeError):
             print(f"    ✓ Chunks sauvegardés")
         
         return True
