@@ -6,13 +6,16 @@ from typing import Dict, Type, List
 from app.llm.core.providers.base import BaseProvider
 from app.llm.core.providers.kimi import KimiProvider
 from app.llm.core.providers.claude import ClaudeProvider
+from app.llm.core.providers.local import LocalProvider
+from app.llm.core.providers.chatgpt import ChatGPTProvider
 
 # Provider registry for dynamic loading
 PROVIDERS: Dict[str, Type[BaseProvider]] = {
     'kimi': KimiProvider,
     'claude': ClaudeProvider,
+    'local': LocalProvider,
+    'chatgpt': ChatGPTProvider,
     # Future providers:
-    # 'chatgpt': ChatGPTProvider,
 }
 
 

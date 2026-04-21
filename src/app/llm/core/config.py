@@ -63,6 +63,14 @@ def load_llm_config(config_file: Optional[str] = None) -> Dict[str, Any]:
                     "model": "claude-3-opus-20240229",
                     "temperature": 1.0,
                     "max_tokens": 4096
+                },
+                "local": {
+                    "enabled": False,
+                    "base_url": "http://localhost:11434/v1",
+                    "api_key": "local",
+                    "model": "qwen2.5-7b",
+                    "temperature": 0.7,
+                    "max_tokens": 4096
                 }
             },
             "documents": {
@@ -237,7 +245,8 @@ def get_api_key(provider_name: str, config: Dict[str, Any]) -> str:
     env_var_names = {
         "kimi": "KIMI_API_KEY",
         "chatgpt": "OPENAI_API_KEY",
-        "claude": "ANTHROPIC_API_KEY"
+        "claude": "ANTHROPIC_API_KEY",
+        "local": "LOCAL_LLM_API_KEY"
     }
 
     env_var = env_var_names.get(provider_name)

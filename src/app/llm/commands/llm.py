@@ -151,7 +151,7 @@ See also:
     parser.add_argument(
         "--provider",
         type=str,
-        choices=["kimi", "chatgpt", "claude"],
+        choices=["kimi", "chatgpt", "claude", "local"],
         help="LLM provider to use (default: from config)"
     )
 
