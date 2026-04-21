@@ -94,6 +94,7 @@ def show_help():
     print()
     print("Modules WikiSI (Parc applicatif):")
     print("  wikisi-extract        Extraire et filtrer des applications depuis JSON")
+    print("  wikisi-extract-apps   Extraire les applications désignées en JSON et MD individuels")
     print("  wikisi-md             Convertir parc applicatif JSON en Markdown (RAG)")
     print("  wikisi-scrape         Aspirer récursivement un site web WikiSI")
     print("  wikisi-sync-api       Synchroniser les données (énumérations, applications) depuis l'API WikiSI")
@@ -969,6 +970,15 @@ def main():
             sys.argv = [sys.argv[0]] + sys.argv[2:]
             try:
                 return wikisi_sync_api_main()
+            finally:
+                sys.argv = original_argv
+        elif command == 'wikisi-extract-apps':
+            # Extraire les applications désignées en JSON et MD individuels
+            from app.wikisi.commands.wikisi_extract_apps import main as wikisi_extract_apps_main
+            original_argv = sys.argv
+            sys.argv = [sys.argv[0]] + sys.argv[2:]
+            try:
+                return wikisi_extract_apps_main()
             finally:
                 sys.argv = original_argv
         elif command == 'add-toc':
