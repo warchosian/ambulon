@@ -104,7 +104,7 @@ def migrate_ollama_data(source_paths: dict, destination: Path, dry_run: bool = F
 
 
 def main(argv: Optional[list[str]] = None) -> int:
-    """Point d'entrée principal pour la commande migrate-ollama.
+    """Point d'entrée principal pour la commande llm-migrate-ollama.
     
     Args:
         argv: Arguments de ligne de commande (None pour utiliser sys.argv)
@@ -114,7 +114,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     """
     parser = argparse.ArgumentParser(
         description="Migrer les modèles et configurations Ollama",
-        prog="ambulon migrate-ollama"
+        prog="ambulon llm-migrate-ollama"
     )
     
     parser.add_argument(
@@ -202,10 +202,12 @@ def main(argv: Optional[list[str]] = None) -> int:
             exists = "✓" if path.exists() else "✗"
             logger.info(f"  {data_type}: {path} [{exists}]")
         
-        # Vérifier que le lecteur Z: est accessible
-        if not args.dry_run and not Path("Z:").exists():
-            logger.error("Le lecteur Z: n'est pas accessible. Vérifiez que le réseau est connecté.")
-            return 1
+        # Vérifier l'accessibilité du répertoire de destination
+        if not args.dry_run:
+            dest_drive = Path(args.destination).anchor
+            if dest_drive and not Path(dest_drive).exists():
+                logger.error(f"Le lecteur {dest_drive} n'est pas accessible. Vérifiez que le réseau est connecté.")
+                return 1
         
         # Effectuer la migration
         success = migrate_ollama_data(source_paths, destination, args.dry_run)
