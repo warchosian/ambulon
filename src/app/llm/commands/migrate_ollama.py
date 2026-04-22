@@ -113,7 +113,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         Code de sortie (0 pour succès, non-zéro pour erreur)
     """
     parser = argparse.ArgumentParser(
-        description="Migrer les modèles et configurations Ollama vers Z:\\WarchoLife\\WarchoOllama",
+        description="Migrer les modèles et configurations Ollama vers Z:\\WarchoLife\\WarchoOllamaModels",
         prog="ambulon migrate-ollama"
     )
     
@@ -124,8 +124,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     
     parser.add_argument(
         "--destination", 
-        default=r"Z:\WarchoLife\WarchoOllama",
-        help="Répertoire de destination pour la migration (défaut: Z:\\WarchoLife\\WarchoOllama)"
+        default=r"Z:\WarchoLife\WarchoOllamaModels",
+        help="Répertoire de destination pour la migration (défaut: Z:\\WarchoLife\\WarchoOllamaModels)"
     )
     
     parser.add_argument(
