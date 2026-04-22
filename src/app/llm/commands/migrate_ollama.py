@@ -135,6 +135,12 @@ def main(argv: Optional[list[str]] = None) -> int:
     )
     
     parser.add_argument(
+        "--show-config",
+        action="store_true",
+        help="Afficher la configuration actuelle et quitter"
+    )
+    
+    parser.add_argument(
         "-v", "--verbose",
         action="store_true",
         help="Affichage verbeux"
@@ -153,11 +159,6 @@ def main(argv: Optional[list[str]] = None) -> int:
     )
     
     try:
-        logger.info("Début de la migration Ollama")
-        
-        if args.dry_run:
-            logger.info("Mode dry-run activé - aucune modification ne sera effectuée")
-        
         # Déterminer les chemins source
         if args.source:
             source_base = Path(args.source)
@@ -180,9 +181,26 @@ def main(argv: Optional[list[str]] = None) -> int:
         
         destination = Path(args.destination)
         
-        logger.info(f"Migration vers: {destination}")
+        # Afficher la configuration si demandé
+        if args.show_config:
+            logger.info("=== Configuration de migration Ollama ===")
+            logger.info(f"Destination: {destination}")
+            logger.info("Chemins source détectés:")
+            for data_type, path in source_paths.items():
+                exists = "✓" if path.exists() else "✗"
+                logger.info(f"  {data_type}: {path} [{exists}]")
+            return 0
+        
+        logger.info("Début de la migration Ollama")
+        logger.info(f"Destination: {destination}")
+        
+        if args.dry_run:
+            logger.info("Mode dry-run activé - aucune modification ne sera effectuée")
+        
+        logger.info("Chemins source:")
         for data_type, path in source_paths.items():
-            logger.info(f"  {data_type}: {path}")
+            exists = "✓" if path.exists() else "✗"
+            logger.info(f"  {data_type}: {path} [{exists}]")
         
         # Vérifier que le lecteur Z: est accessible
         if not args.dry_run and not Path("Z:").exists():
