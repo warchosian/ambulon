@@ -14,18 +14,46 @@ logger = logging.getLogger(__name__)
 
 
 def get_default_ollama_paths():
-    """Retourne les chemins par défaut d'Ollama selon l'OS."""
+    """Retourne les chemins par défaut d'Ollama selon l'OS et les variables d'environnement."""
+    # Vérifier les variables d'environnement Ollama en priorité
+    models_path = os.environ.get('OLLAMA_MODELS')
+    home_path = os.environ.get('OLLAMA_HOME')
+    
     if os.name == 'nt':  # Windows
+        # Chemins par défaut Windows
+        default_models = Path.home() / '.ollama' / 'models'
+        default_config = Path.home() / '.ollama'
+        default_data = Path(os.environ.get('LOCALAPPDATA', Path.home() / 'AppData' / 'Local')) / 'Ollama'
+        
+        # Utiliser les variables d'environnement si définies
+        if models_path:
+            default_models = Path(models_path)
+        if home_path:
+            default_config = Path(home_path)
+            default_data = Path(home_path)
+            
         return {
-            'models': Path.home() / '.ollama' / 'models',
-            'config': Path.home() / '.ollama',
-            'data': Path(os.environ.get('LOCALAPPDATA', Path.home() / 'AppData' / 'Local')) / 'Ollama'
+            'models': default_models,
+            'config': default_config,
+            'data': default_data
         }
     else:  # Linux/macOS
+        # Chemins par défaut Unix
+        default_models = Path.home() / '.ollama' / 'models'
+        default_config = Path.home() / '.ollama'
+        default_data = Path.home() / '.ollama'
+        
+        # Utiliser les variables d'environnement si définies
+        if models_path:
+            default_models = Path(models_path)
+        if home_path:
+            default_config = Path(home_path)
+            default_data = Path(home_path)
+            
         return {
-            'models': Path.home() / '.ollama' / 'models',
-            'config': Path.home() / '.ollama',
-            'data': Path.home() / '.ollama'
+            'models': default_models,
+            'config': default_config,
+            'data': default_data
         }
 
 
@@ -140,6 +168,14 @@ def main(argv: Optional[list[str]] = None) -> int:
             }
         else:
             logger.info("Détection automatique des chemins Ollama...")
+            logger.info("Vérification des variables d'environnement OLLAMA_MODELS et OLLAMA_HOME...")
+            
+            # Afficher les variables d'environnement détectées
+            if os.environ.get('OLLAMA_MODELS'):
+                logger.info(f"OLLAMA_MODELS détecté: {os.environ.get('OLLAMA_MODELS')}")
+            if os.environ.get('OLLAMA_HOME'):
+                logger.info(f"OLLAMA_HOME détecté: {os.environ.get('OLLAMA_HOME')}")
+            
             source_paths = get_default_ollama_paths()
         
         destination = Path(args.destination)
