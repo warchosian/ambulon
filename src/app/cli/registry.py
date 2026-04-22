@@ -76,6 +76,7 @@ STANDARD_COMMANDS: Dict[str, Tuple[str, str]] = {
     "summarize": ("app.llm.commands.summarize", "main"),
     "plantuml2mermaid": ("app.llm.commands.convert_plantuml_to_mermaid", "main"),
     "generate-docs": ("app.llm.commands.generate_docs", "main"),
+    "migrate-ollama": ("app.llm.commands.migrate_ollama", "main"),
     # Diagrams
     "diagram2svg4md": ("app.diagrams.commands.diagram2svg4md", "main"),
     # CLI sub-modules
