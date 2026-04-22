@@ -4,10 +4,75 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
+import shutil
 import sys
+from pathlib import Path
 from typing import Optional
 
 logger = logging.getLogger(__name__)
+
+
+def get_default_ollama_paths():
+    """Retourne les chemins par défaut d'Ollama selon l'OS."""
+    if os.name == 'nt':  # Windows
+        return {
+            'models': Path.home() / '.ollama' / 'models',
+            'config': Path.home() / '.ollama',
+            'data': Path(os.environ.get('LOCALAPPDATA', Path.home() / 'AppData' / 'Local')) / 'Ollama'
+        }
+    else:  # Linux/macOS
+        return {
+            'models': Path.home() / '.ollama' / 'models',
+            'config': Path.home() / '.ollama',
+            'data': Path.home() / '.ollama'
+        }
+
+
+def migrate_ollama_data(source_paths: dict, destination: Path, dry_run: bool = False) -> bool:
+    """Migre les données Ollama vers le nouveau répertoire.
+    
+    Args:
+        source_paths: Dictionnaire des chemins source
+        destination: Répertoire de destination
+        dry_run: Si True, affiche seulement les actions sans les exécuter
+        
+    Returns:
+        True si la migration réussit, False sinon
+    """
+    try:
+        if not dry_run:
+            destination.mkdir(parents=True, exist_ok=True)
+        
+        for data_type, source_path in source_paths.items():
+            if not source_path.exists():
+                logger.warning(f"Le répertoire source {data_type} n'existe pas: {source_path}")
+                continue
+                
+            dest_path = destination / data_type
+            
+            if dry_run:
+                logger.info(f"[DRY-RUN] Copierait {source_path} vers {dest_path}")
+                continue
+            
+            logger.info(f"Migration de {data_type}: {source_path} -> {dest_path}")
+            
+            if dest_path.exists():
+                logger.warning(f"Le répertoire de destination existe déjà: {dest_path}")
+                response = input(f"Écraser {dest_path}? (o/N): ")
+                if response.lower() != 'o':
+                    logger.info(f"Migration de {data_type} ignorée")
+                    continue
+                shutil.rmtree(dest_path)
+            
+            shutil.copytree(source_path, dest_path)
+            logger.info(f"Migration de {data_type} terminée")
+        
+        return True
+        
+    except Exception as e:
+        logger.error(f"Erreur lors de la migration: {e}")
+        return False
 
 
 def main(argv: Optional[list[str]] = None) -> int:
@@ -20,18 +85,19 @@ def main(argv: Optional[list[str]] = None) -> int:
         Code de sortie (0 pour succès, non-zéro pour erreur)
     """
     parser = argparse.ArgumentParser(
-        description="Migrer les modèles et configurations Ollama",
+        description="Migrer les modèles et configurations Ollama vers Z:\\WarchoLife\\WarchoOllama",
         prog="ambulon migrate-ollama"
     )
     
     parser.add_argument(
         "--source",
-        help="Répertoire source des modèles Ollama"
+        help="Répertoire source des modèles Ollama (détecté automatiquement si non spécifié)"
     )
     
     parser.add_argument(
         "--destination", 
-        help="Répertoire de destination pour la migration"
+        default=r"Z:\WarchoLife\WarchoOllama",
+        help="Répertoire de destination pour la migration (défaut: Z:\\WarchoLife\\WarchoOllama)"
     )
     
     parser.add_argument(
@@ -64,9 +130,41 @@ def main(argv: Optional[list[str]] = None) -> int:
         if args.dry_run:
             logger.info("Mode dry-run activé - aucune modification ne sera effectuée")
         
-        # TODO: Implémenter la logique de migration
-        logger.info("Migration Ollama terminée avec succès")
-        return 0
+        # Déterminer les chemins source
+        if args.source:
+            source_base = Path(args.source)
+            source_paths = {
+                'models': source_base / 'models',
+                'config': source_base,
+                'data': source_base
+            }
+        else:
+            logger.info("Détection automatique des chemins Ollama...")
+            source_paths = get_default_ollama_paths()
+        
+        destination = Path(args.destination)
+        
+        logger.info(f"Migration vers: {destination}")
+        for data_type, path in source_paths.items():
+            logger.info(f"  {data_type}: {path}")
+        
+        # Vérifier que le lecteur Z: est accessible
+        if not args.dry_run and not Path("Z:").exists():
+            logger.error("Le lecteur Z: n'est pas accessible. Vérifiez que le réseau est connecté.")
+            return 1
+        
+        # Effectuer la migration
+        success = migrate_ollama_data(source_paths, destination, args.dry_run)
+        
+        if success:
+            logger.info("Migration Ollama terminée avec succès")
+            if not args.dry_run:
+                logger.info(f"Les données Ollama ont été migrées vers: {destination}")
+                logger.info("N'oubliez pas de configurer Ollama pour utiliser le nouveau répertoire.")
+            return 0
+        else:
+            logger.error("La migration a échoué")
+            return 1
         
     except Exception as e:
         logger.error(f"Erreur lors de la migration Ollama: {e}")
