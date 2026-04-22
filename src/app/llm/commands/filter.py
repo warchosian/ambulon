@@ -4,9 +4,9 @@
 Filter command for preprocessing large code documentation files.
 
 Usage:
-    ambulon filter -i sireines.code.md
-    ambulon filter -i sireines.code.md -o custom_output.md
-    ambulon filter --input sireines.code.md --max-size 10000
+    ambulon llm-filter -i sireines.code.md
+    ambulon llm-filter -i sireines.code.md -o custom_output.md
+    ambulon llm-filter --input sireines.code.md --max-size 10000
 """
 
 import argparse
@@ -68,9 +68,9 @@ def main(argv=None):
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  ambulon filter -i workplace-ambulon/gitlab/sireines.rag/sireines.code.md
-  ambulon filter -i myproject.code.md -o output.md
-  ambulon filter -i large.code.md --max-size 10000
+  ambulon llm-filter -i workplace-ambulon/gitlab/sireines.rag/sireines.code.md
+  ambulon llm-filter -i myproject.code.md -o output.md
+  ambulon llm-filter -i large.code.md --max-size 10000
 
 Output:
   Creates a filtered version with .filtered.md extension by default.

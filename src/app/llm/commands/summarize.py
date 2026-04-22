@@ -4,9 +4,9 @@
 Summarize command for intelligently summarizing large code documentation files using LLM.
 
 Usage:
-    ambulon summarize -i sireines.code.md
-    ambulon summarize -i sireines.code.md -o custom_output.md
-    ambulon summarize --input sireines.code.md --chunk-size 100000
+    ambulon llm-summarize -i sireines.code.md
+    ambulon llm-summarize -i sireines.code.md -o custom_output.md
+    ambulon llm-summarize --input sireines.code.md --chunk-size 100000
 """
 
 import argparse
@@ -68,9 +68,9 @@ def main(argv=None):
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  ambulon summarize -i workplace-ambulon/gitlab/sireines.rag/sireines.code.md
-  ambulon summarize -i myproject.code.md -o summary.md
-  ambulon summarize -i large.code.md --chunk-size 100000
+  ambulon llm-summarize -i workplace-ambulon/gitlab/sireines.rag/sireines.code.md
+  ambulon llm-summarize -i myproject.code.md -o summary.md
+  ambulon llm-summarize -i large.code.md --chunk-size 100000
 
 Output:
   Creates a summarized version with .summarized.md extension by default.
