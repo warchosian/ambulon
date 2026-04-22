@@ -72,11 +72,11 @@ STANDARD_COMMANDS: Dict[str, Tuple[str, str]] = {
     "zip-extract": ("app.zip.commands.zip_extract", "main"),
     # LLM
     "llm": ("app.llm.commands.llm", "main"),
-    "filter": ("app.llm.commands.filter", "main"),
-    "summarize": ("app.llm.commands.summarize", "main"),
-    "plantuml2mermaid": ("app.llm.commands.convert_plantuml_to_mermaid", "main"),
-    "generate-docs": ("app.llm.commands.generate_docs", "main"),
-    "migrate-ollama": ("app.llm.commands.migrate_ollama", "main"),
+    "llm-filter": ("app.llm.commands.filter", "main"),
+    "llm-summarize": ("app.llm.commands.summarize", "main"),
+    "llm-plantuml2mermaid": ("app.llm.commands.convert_plantuml_to_mermaid", "main"),
+    "llm-generate-docs": ("app.llm.commands.generate_docs", "main"),
+    "llm-migrate-ollama": ("app.llm.commands.migrate_ollama", "main"),
     # Diagrams
     "diagram2svg4md": ("app.diagrams.commands.diagram2svg4md", "main"),
     # CLI sub-modules
