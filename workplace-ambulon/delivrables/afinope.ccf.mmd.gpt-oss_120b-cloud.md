@@ -56,7 +56,7 @@
 ### 4.1 Diagramme de cas d’utilisation (Mermaid)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Opérateur DGFIP as Op;
     actor Data Analyst as DA;
@@ -71,7 +71,6 @@ usecaseDiagram;
         (UC‑06 Orchestrer pipelines) as UC6;
         (UC‑07 Déployer stack) as UC7;
         (UC‑08 Auditer traitements) as UC8;
-    }
 
     Op --> UC1;
     UC1 --> UC2;
@@ -105,7 +104,7 @@ usecaseDiagram;
 ## 5️⃣ Processus métier (BPMN)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Opérateur as OP;
     participant Système as SYS;
@@ -189,7 +188,6 @@ classDiagram
         +dateCloture : date;
         +dateLiquidation : date;
         +dateDocument : date;
-    }
 
     class Structure {
         +codeOrganisme : string;
@@ -198,7 +196,6 @@ classDiagram
         +dateCreation : date;
         +dateCloture : date;
         +dateDocument : date;
-    }
 
     class Nomenc {
         +exercice : int;
@@ -208,7 +205,6 @@ classDiagram
         +sens : string;
         +libelleCompte : string;
         +dateDocument : date;
-    }
 
     class Tiers {
         +codeOrganisme : string;
@@ -217,7 +213,6 @@ classDiagram
         +codeTiers : string;
         +libelleTiers : string;
         +dateDocument : date;
-    }
 
     class Nature {
         +codeOrganisme : string;
@@ -226,7 +221,6 @@ classDiagram
         +codeNature : string;
         +libelleNature : string;
         +dateDocument : date;
-    }
 
     class Destination {
         +codeOrganisme : string;
@@ -235,7 +229,6 @@ classDiagram
         +codeDestination : string;
         +libelleDestination : string;
         +dateDocument : date;
-    }
 
     class Origine {
         +codeOrganisme : string;
@@ -244,7 +237,6 @@ classDiagram
         +codeOrigine : string;
         +libelleOrigine : string;
         +dateDocument : date;
-    }
 
     class Pluriannuel {
         +codeOrganisme : string;
@@ -257,7 +249,6 @@ classDiagram
         +debutOperationPluri : date;
         +finOperationPluri : date;
         +dateDocument : date;
-    }
 
     class Executoire {
         <<abstract>>
@@ -271,7 +262,6 @@ classDiagram
         +codeDevise : string;
         +montant : decimal;
         +dateDocument : date;
-    }
 
     class DESP {
         +codeDestination : string;
@@ -280,12 +270,10 @@ classDiagram
         +typeBudget : string;
         +typeRang : string;
         +typeDocument : string;
-    }
 
     class EFP {
         +codePrevisionExecution : bool;
         +codeCompteFinancier : bool;
-    }
 
     class Execution {
         <<abstract>>
@@ -298,13 +286,11 @@ classDiagram
         +codeDevise : string;
         +montant : decimal;
         +dateDocument : date;
-    }
 
     class ABE {
         +impact : string;
         +codeRecherche : string;
         +typeSequence : string;
-    }
 
     class BAL {
         +codeCompte : bigint;
@@ -319,17 +305,14 @@ classDiagram
         +soldeCrediteur : decimal;
         +typeNomenclature : string;
         +typeSequence : string;
-    }
 
     class BIL {
         +codeLibelle : string;
         +typeSequence : string;
-    }
 
     class CR {
         +codeLibelle : string;
         +typeSequence : string;
-    }
 
     Organisme "1" --> "0..*" Structure : possède;
     Organisme "1" --> "0..*" Nomenc : référence;

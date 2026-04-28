@@ -67,7 +67,7 @@ SIREINES (Système d’Information de REgistre des INtérvenants Experts et Spé
 ## 4️⃣ Cas d’usage (Use Cases)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F81AD', 'edgeLabelBackground':'#fff'}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F81AD', 'edgeLabelBackground':'#fff'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Agent as A;
     actor Membre du Comité as C;
@@ -114,7 +114,7 @@ usecaseDiagram;
 ## 5️⃣ Processus métier (BPMN)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F81AD', 'edgeLabelBackground':'#fff'}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F81AD', 'edgeLabelBackground':'#fff'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Agent;
     participant SIREINES as App;
@@ -203,36 +203,35 @@ classDiagram
         +Date dateReception;
         +String statut;
         +String commentaire;
-    }
+
     class Agent {
         +Long agentId;
         +String nom;
         +String prenom;
         +String email;
         +String structureId;
-    }
+
     class Structure {
         +String strId;
         +String libelleCourt;
-    }
+
     class Comité {
         +Long comId;
         +String libelle;
-    }
+
     class Qualification {
         +Long quaId;
         +String libelle;
-    }
+
     class MotCle {
         +Long mclId;
         +String libelle;
         +Integer niveau;
-    }
+
     class Rapport {
         +Long rapId;
         +String type;
         +Date dateGeneration;
-    }
 
     Dossier --> Agent : "déposé par"
     Dossier --> Structure : "rattaché à"

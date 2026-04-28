@@ -176,7 +176,7 @@ C4Container;
         ContainerExt(jorf, "JORF Service", "HTTP(S) client", "Récupération quotidienne des arrêtés")
         ContainerExt(cerb, "Cerbère", "OAuth2", "Gestion des comptes et des droits")
         ContainerExt(mail, "SMTP Server", "TLS", "Envoi de notifications")
-    }
+
     Rel(web, db, "JDBC", "SQL")
     Rel(web, jorf, "HTTPS", "Flux JORF")
     Rel(web, cerb, "HTTPS", "Authentification")

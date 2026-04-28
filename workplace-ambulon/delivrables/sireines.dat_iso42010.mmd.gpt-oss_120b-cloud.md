@@ -107,7 +107,7 @@ title SIREINES – System Context
 Enterprise_Boundary(b, "Ministère – DRI / AST2") {
   Person(agent, "Agent / Comité", "Utilisateur métier")
   Person(admin, "Administrateur DSI", "Gestion de l’infrastructure")
-}
+
 System_Ext(cerb, "Cerbère", "Service d’authentification")
 System_Ext(birt, "BIRT Server", "Moteur de rapports")
 System_Ext(email, "SMTP", "Envoi de courriels")
@@ -135,7 +135,7 @@ Container(sire, "SIREINES", "Web Application") {
   Component(qualif, "Gestion des qualifications", "Rules, notifications")
   Component(report, "Reporting BIRT", "Export PDF/Excel")
   Component(import, "Import Talend", "Batch files")
-}
+
 Person(agent, "Agent / Comité")
 Rel(agent, dossier, "Crée / consulte")
 Rel(agent, qualif, "Soumet / suit")
@@ -186,26 +186,26 @@ erDiagram;
         string nom;
         string prenom;
         string email;
-    }
+
     DOSSIER {
         int id PK;
         string libelle;
         date dateReception;
         int statut;
-    }
+
     MOT_CLE {
         int id PK;
         string libelle;
-    }
+
     QUALIFICATION {
         int id PK;
         string libelle;
         date dateDecision;
-    }
+
     COMITE {
         int id PK;
         string libelle;
-    }
+
 ```
 
 *Modèle simplifié* – Les tables principales (`DOSSIER`, `AGENT`, `QUALIFICATION`, `COMITE`, `MOT_CLE`) proviennent du modèle PowerDesigner (fichiers `.oom/.pdm`).  
@@ -222,8 +222,7 @@ node("Host ECO4 IaaS") {
     container(sire_app, "sireines‑app", "Tomcat 7 + WAR")
     container(sire_db, "sireines‑db", "PostgreSQL 14‑alpine")
     container(sire_pgadmin, "sireines‑pgadmin", "pgAdmin 4")
-  }
-}
+
 artifact(war, "sireines‑web‑*.war")
 artifact(sql, "scripts/*.sql")
 rel(war, sire_app, "Déployé via Dockerfile")
@@ -267,10 +266,10 @@ title SIREINES – Sécurité (Zonage)
 Boundary(trust, "Zone de confiance (Docker‑network)") {
   Component(web, "sireines‑app")
   Component(db, "sireines‑db")
-}
+
 Boundary(public, "Zone publique (Internet)") {
   Person(user, "Agent / Comité")
-}
+
 Rel(user, web, "HTTPS (TLS 1.2+)")
 Rel(web, db, "SSL‑PostgreSQL (cert‑signed)")
 Rel(web, cerb, "OAuth‑like (token)")

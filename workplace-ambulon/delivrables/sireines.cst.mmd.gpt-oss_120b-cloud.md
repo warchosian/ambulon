@@ -35,13 +35,13 @@ Le système est en production depuis 2024 (v 2.5.20) et repose sur une archite
 ### 2.1 Diagramme de composants (UML)  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#2A9D8F', 'edgeLabelBackground':'#F4A261' }}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#2A9D8F', 'edgeLabelBackground':'#F4A261' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 classDiagram
     direction TB;
     class WebApp {
         +Spring MVC + Struts2 Controllers;
         +BirtReportEngine;
-    }
+
     class ServiceLayer {
         +AgentsService;
         +DossiersService;
@@ -49,23 +49,23 @@ classDiagram
         +CourriersService;
         +ReferentielsService;
         +SearchService (Elasticsearch)
-    }
+
     class Persistence {
         +JPA (Hibernate)
         +PostgreSQL;
         +Vertigo Dynamo (DTO/KSP)
-    }
+
     class Integration {
         +SSO (SAML2/OIDC)
         +Mail (SMTP)
         +Birt (PDF/Excel)
-    }
+
     class DockerRuntime {
         +Tomcat7;
         +Postgres14;
         +PgAdmin4;
         +BirtServlet;
-    }
+
     WebApp --> ServiceLayer : appels métier;
     ServiceLayer --> Persistence : DAO / JPA;
     ServiceLayer --> Integration : services externes;
@@ -123,26 +123,26 @@ classDiagram
         +String statut;
         +List<MotCle> motsCles;
         +Qualification qualification;
-    }
+
     class Agent {
         +Long agentId;
         +String nom;
         +String prenom;
         +String email;
-    }
+
     class Qualification {
         +Long quaId;
         +String libelle;
         +Date dateQualification;
-    }
+
     class MotCle {
         +Long mclId;
         +String libelle;
-    }
+
     class Comite {
         +Long comId;
         +String libelle;
-    }
+
     Dossier "1" --> "*" MotCle : contient;
     Dossier "1" --> "0..1" Qualification : a;
     Dossier "*" --> "1" Agent : soumisPar;
@@ -199,7 +199,7 @@ sequencediagram;
 ### 7.1 Diagramme de déploiement (Docker‑Compose)  
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
 graph TD
     subgraph Host (VM – IaaS ECO4)
         N1[Docker Engine]

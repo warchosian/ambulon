@@ -285,17 +285,16 @@ deploymentDiagram;
     node "Serveur d’applications (Tomcat 6)" {
         component "CAUSALIS.war" {
             artifact "causalis-web‑<version>.war"
-        }
-    }
+
     node "Base de données Oracle (prep37)" {
         artifact "DB schema"
-    }
+
     node "Serveur de WS RH" {
         artifact "WS Grade (SOAP)"
-    }
+
     node "Stockage d’archivage" {
         artifact "Répertoire /archive/causalis"
-    }
+
     component "CAUSALIS.war" --> "DB schema" : JDBC (JNDI)
     component "CAUSALIS.war" --> "WS Grade" : HTTP/HTTPS (SOAP)
     component "CAUSALIS.war" --> "Répertoire /archive" : File I/O (Export)
@@ -335,7 +334,7 @@ classDiagram
         +int gradeId;
         +int agentId;
         +int saisieTerminee;
-    }
+
     class DossierMaladie {
         +int id;
         +Date dateDeclaration;
@@ -344,7 +343,7 @@ classDiagram
         +int gradeId;
         +int agentId;
         +int saisieMaladiesProTerminee;
-    }
+
     class Agent {
         +int id;
         +String nom;
@@ -353,22 +352,21 @@ classDiagram
         +String sexe;
         +int gradeId;
         +int serviceId;
-    }
+
     class Grade {
         +int id;
         +String libelle;
         +int codeGroupementGrade;
-    }
+
     class Service {
         +int id;
         +String libelleCourt;
         +int saisieTerminee;
         +int saisieMaladiesProTerminee;
-    }
+
     class TranscodageGrade {
         +String codeGradeRehucit;
         +String macro;
-    }
 
     DossierAccident "1" --> "1" Agent : agentId;
     DossierAccident "1" --> "1" Grade : gradeId;

@@ -227,7 +227,7 @@ classDiagram
         +int serviceId;
         +int gradeId;
         +int statut;
-    }
+
     class DossierMaladie {
         +int id;
         +Date dateDebut;
@@ -236,7 +236,7 @@ classDiagram
         +int serviceId;
         +int gradeId;
         +int statut;
-    }
+
     class Effectif {
         +int id;
         +int anneeNaissance;
@@ -244,26 +244,25 @@ classDiagram
         +int gradeId;
         +int serviceId;
         +char trancheAge;
-    }
+
     class Service {
         +int id;
         +String libelleCourt;
         +int saisieTerminee;
         +int saisieMaladiesProTerminee;
-    }
+
     class Grade {
         +int id;
         +String libelle;
         +int codeGroupementGrade;
-    }
+
     class TranscodageGrade {
         +String codeGradeRehucit;
         +String macro;
-    }
+
     class DomaineAffectation {
         +int id;
         +String libelle;
-    }
 
     DossierAccident "1" --> "1" Service : serviceId;
     DossierAccident "1" --> "1" Grade : gradeId;

@@ -106,7 +106,7 @@ SIREINES est une application **Web Java/J2EE** qui centralise les demandes de qu
 ## 6️⃣ Vue en briques (C4 ‑ L2)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F80ED', 'edgeLabelBackground':'#f9f9f9'}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F80ED', 'edgeLabelBackground':'#f9f9f9'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 graph TD
     subgraph "Docker‑Compose"
         A[Tomcat 7 (sireines‑app)] -->|JDBC| B[PostgreSQL 14 (sireines‑db)]

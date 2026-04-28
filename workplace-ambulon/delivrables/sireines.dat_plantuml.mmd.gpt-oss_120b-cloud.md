@@ -166,7 +166,7 @@ C4Container;
         Container(db, "PostgreSQL", "PostgreSQL 14", "Persistance des données")
         Container(search, "Vertigo‑Elasticsearch", "Java / ES", "Indexation & recherche plein‑texte")
         Container(birt, "BIRT Engine", "Java", "Génération de rapports PDF/Excel")
-    }
+
     System_Ext(ldap, "Cerbère", "Authorisation‑config XML", "Gestion des droits")
     System_Ext(email, "Serveur Mail", "SMTP", "Envoi de notifications")
     Rel(web, service, "Appel HTTP/Servlet")

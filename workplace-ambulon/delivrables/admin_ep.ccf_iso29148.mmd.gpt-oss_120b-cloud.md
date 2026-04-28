@@ -147,7 +147,7 @@ classDiagram
         +String email;
         +String civilite;
         +String typeProfil (BASEADMIN|CERBERE)
-    }
+
     class Etablissement {
         +Long id;
         +String siren;
@@ -155,52 +155,51 @@ classDiagram
         +String libelle;
         +String libelleDe;
         +TypeInstance typeInstance;
-    }
+
     class Mandat {
         +Long id;
         +Date dateDebut;
         +Date dateFin;
         +TypeMandat type (TITULAIRE|SUPPLEANT)
         +ModeNomination mode;
-    }
+
     class Charge {
         +Long id;
         +String libelle;
-    }
+
     class Ministere {
         +Long id;
         +String sigle;
         +String nom;
         +String statut;
-    }
+
     class College {
         +Long id;
         +String identifiant;
-    }
+
     class TypeInstance {
         +Long id;
         +String type;
         +String a_linstance_de;
         +String de_linstance_de;
-    }
+
     class TypeMandat {
         +Long id;
         +String type;
-    }
+
     class ModeNomination {
         +Long id;
         +String code;
         +String mode;
         +String motCleTitre;
         +String motCleCorpsTexte;
-    }
+
     class TutelleEtablissementCharge {
         +Boolean principale;
-    }
+
     class SynonymeCollege {
         +String synonyme;
         +Boolean defaut;
-    }
 
     %% Relations;
     Administrateur "1" -- "0..*" Mandat : détient >
@@ -223,7 +222,7 @@ classDiagram
 ### 6.1 Cas d’utilisation (UML use‑case)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0066CC','edgeLabelBackground':'#FFFFFF'}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0066CC','edgeLabelBackground':'#FFFFFF'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 useCaseDiagram;
     actor Opérateur as Op;
     actor DG de tutelle as DG;
@@ -244,7 +243,7 @@ useCaseDiagram;
 
         User --> (Se connecter)
         User --> (Accéder selon son profil)
-    }
+
 ```
 
 ### 6.2 Diagramme d’activité – **Processus d’import JORF**

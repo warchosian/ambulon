@@ -29,7 +29,7 @@ Enterprise_Boundary(gov, "Ministère de la Transition Écologique") {
     System_Ext(es, "ElasticSearch", "Indexation / recherche plein texte")
     System_Ext(db, "PostgreSQL", "Base de données métier")
     System(sireines, "SIREINES", "Application web de gestion de dossiers")
-}
+
 Rel(admin, sireines, "Définit les exigences, valide les livraisons")
 Rel(user, sireines, "Utilise l’application (Web UI)")
 Rel(sireines, cerbere, "Vérifie les rôles (RBAC) via API")

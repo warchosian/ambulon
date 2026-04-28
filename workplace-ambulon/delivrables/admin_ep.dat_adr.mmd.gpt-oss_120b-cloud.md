@@ -53,7 +53,7 @@ System_Boundary(admin_ep, "admin_ep") {
     Rel(web, jorf, "Consomme (RSS / .tar.gz)", "HTTPS")
     Rel(web, cerbere, "Vérifie les droits", "OAuth2 / SAML")
     Rel(web, email, "Envoie les alertes", "SMTP")
-}
+
 ```  
 
 **Description**  
@@ -83,7 +83,7 @@ System_Boundary(admin_ep, "admin_ep") {
     Container(batch_job, "Batch JORF Importer", "Java 8, Quartz Scheduler", "Extraction, parsing JORF")
     ContainerDb(db, "PostgreSQL", "9.6.11 (upgrade to 15 envisagée)", "Persist les référentiels")
     Container(email_srv, "Mail Server", "SMTP", "Envoi de notifications")
-}
+
 Rel(web_app, db, "JDBC", "SQL")
 Rel(batch_job, db, "JDBC", "SQL")
 Rel(web_app, batch_job, "Déclenche (cron)", "Quartz")
@@ -361,7 +361,7 @@ Container(web_app, "Web Application", "Java 8 / Tomcat 9") {
     Component(security_pkg, "Security", "Cerbère integration", "AuthN/Z, RightsHelper")
     Component(scheduler_pkg, "Scheduler", "Quartz", "Planification des tâches (ex. import JORF)")
     Component(error_pkg, "Error handling", "ErrorHandler", "Gestion centralisée des exceptions")
-}
+
 Rel(controller_pkg, service_pkg, "Appelle")
 Rel(service_pkg, repo_pkg, "Accède")
 Rel(service_pkg, security_pkg, "Vérifie les droits")
@@ -450,7 +450,7 @@ Deployment_Node(prod, "Environnement Production", "Data Center – Paris La Déf
     Container(web, "admin_ep Web", "Docker (Tomcat 9)", "Application Java")
     Container(batch, "Batch JORF Importer", "Docker (Java)", "Quartz Scheduler")
     Container(email, "Mail Server", "Postfix", "SMTP")
-}
+
 Rel(web, pg, "JDBC")
 Rel(batch, pg, "JDBC")
 Rel(web, email, "SMTP")

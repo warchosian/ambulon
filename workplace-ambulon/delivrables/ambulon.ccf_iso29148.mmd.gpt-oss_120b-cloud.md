@@ -139,7 +139,6 @@ classDiagram
         +String gender;
         +String phone;
         +String address;
-    }
 
     class Ambulance {
         +String id;
@@ -147,7 +146,6 @@ classDiagram
         +String model;
         +String status   // AVAILABLE, EN_ROUTE, MAINTENANCE;
         +String driverId;
-    }
 
     class Mission {
         +String id;
@@ -160,7 +158,6 @@ classDiagram
         +String pickupLocation;
         +String destinationLocation;
         +String notes;
-    }
 
     class User {
         +String id;
@@ -168,7 +165,6 @@ classDiagram
         +String role   // DISPATCHER, DRIVER, ADMIN, PATIENT;
         +String passwordHash;
         +Boolean active;
-    }
 
     class Notification {
         +String id;
@@ -177,7 +173,6 @@ classDiagram
         +String channel   // EMAIL, SMS, PUSH;
         +String status    // SENT, FAILED, PENDING;
         +DateTime sentAt;
-    }
 
     Patient "1" <-- "0..*" Mission : patient;
     Ambulance "1" <-- "0..*" Mission : ambulance;
@@ -201,7 +196,7 @@ classDiagram
 ### 6.1 Diagrammes de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
 usecaseDiagram;
     actor Dispatcher as D;
     actor Driver as DR;

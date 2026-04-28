@@ -28,13 +28,11 @@
 ```mermaid
 classDiagram
     %% Packages;
-    package i2.application.causalis {
+
         class Constantes <<interface>>
         class BeanObject <<entity>>
         class TablesReferences <<entity>>
-    }
 
-    package i2.application.causalis.metiers {
         class Agent;
         class Accident;
         class DossierAccident;
@@ -50,18 +48,14 @@ classDiagram
         class GroupementGrades;
         class Incompatibilites;
         class ... (autres entités)
-    }
 
-    package i2.application.causalis.dao {
         class GenericDao<T> <<dao>>
         class GradeDao <<dao>>
         class DossierAccidentDAO <<dao>>
         class DossierMaladieDAO <<dao>>
         class RechercheDossiersMaladiesDAO <<dao>>
         class TranscodageGradeDao <<dao>>
-    }
 
-    package i2.application.causalis.service {
         class ReferenceService<T> <<service>>
         class GradeService <<service>>
         class DomaineAffectationService <<service>>
@@ -71,9 +65,7 @@ classDiagram
         class SynchronizeService <<interface>>
         class TachePrescriteService <<service>>
         class TranscodageGradeService <<service>>
-    }
 
-    package i2.application.causalis.form {
         class GenericForm <<form>>
         class DossiersForm;
         class EditionDossierForm1;
@@ -83,9 +75,7 @@ classDiagram
         class RechercheDossiersForm;
         class RechercheDossiersMaladieForm;
         class StatistiquesForm;
-    }
 
-    package i2.application.causalis.view {
         class ActionWarning;
         class AdminTableAction;
         class DossiersAction;
@@ -93,9 +83,7 @@ classDiagram
         class EffectifsAction;
         class StatistiquesAction;
         class IndexAction;
-    }
 
-    package i2.application.causalis.ws {
         class WSClientEffectif;
         class WSClientGrade;
         class WSClientService;
@@ -105,29 +93,22 @@ classDiagram
         class TrancheAgeHelper;
         class TranscodageGradePredicate;
         class TranscodageGradeConverter;
-    }
 
-    package i2.application.causalis.exception {
         class CommonException <<exception>>
         class DaoException <<exception>>
         class TechnicalException <<exception>>
         class WSException <<exception>>
-    }
 
-    package i2.application.causalis.taglib {
         class StrutsOptionTag <<tag>>
         class PutIntoSessionTag <<tag>>
         class DateTag <<tag>>
         class PagerTag <<tag>>
-    }
 
-    package i2.application.causalis.tool {
         class DBTools;
         class BeanTool;
         class DateTool;
         class FormTool;
         class GenericFetcher;
-    }
 
     %% Relationships;
     Constantes <|.. BeanObject : uses;
@@ -270,23 +251,22 @@ classDiagram
         +Accident accident;
         +Date dateDeclaration;
         +String statut;
-    }
+
     class Agent {
         +int id;
         +String nom;
         +String prenom;
         +Date dateNaissance;
-    }
+
     class Accident {
         +int code;
         +String libelle;
         +String description;
-    }
+
     class Grade {
         +int code;
         +String libelle;
         +int codeGroupementGrade;
-    }
 
     DossierAccident "1" --> "1" Agent;
     DossierAccident "1" --> "1" Accident;
@@ -334,17 +314,17 @@ classDiagram
         +ListeEnteteTableauEffectifs entetes;
         +ListeTableauEffectifs lignes;
         +String commentaire;
-    }
+
     class ListeEnteteTableauEffectifs {
         +ArrayList<String> items;
-    }
+
     class ListeTableauEffectifs {
         +ArrayList<ItemTableauEffectifs> items;
-    }
+
     class ItemTableauEffectifs {
         +String libelle;
         +int valeur;
-    }
+
     EditionDossierForm3 --> ListeEnteteTableauEffectifs;
     EditionDossierForm3 --> ListeTableauEffectifs;
     ListeTableauEffectifs --> ItemTableauEffectifs
@@ -357,7 +337,7 @@ classDiagram
 #### 2.2.1 Diagramme de **Cas d’Utilisation**  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#bbf','edgeLabelBackground':'#fff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#bbf','edgeLabelBackground':'#fff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Gestionnaire as G;
     actor Utilisateur as U;
@@ -404,7 +384,7 @@ statediagram-v2;
 
     state Retour_Erreur {
         Erreur_Champ --> Remplissage_Formulaire;
-    }
+
 ```
 
 **Notes**  

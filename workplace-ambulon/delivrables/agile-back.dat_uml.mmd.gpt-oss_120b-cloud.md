@@ -22,20 +22,20 @@
 ```mermaid
 classDiagram
     %% Packages;
-    package Entity {
+
         class Abonnements {
             +int id;
             +string utilisateur;
             +string ru;
             +string perimetre;
-        }
+
         class Bop {
             +int id;
             +string libelle_bop;
             +string commentaires_bop;
             +string sigle;
             +bool visible;
-        }
+
         class Dotations {
             +int id;
             +int annee_dotation;
@@ -43,7 +43,7 @@ classDiagram
             +string token;
             +int bopid;
             +string sous_actions;
-        }
+
         class Etudes {
             +int id;
             +string titre_etude;
@@ -52,54 +52,51 @@ classDiagram
             +string theme;
             +string responsable;
             +string statut;
-        }
+
         class Financements {
             +int id;
             +float montant;
             +date date_comite;
             +bool visible;
-        }
+
         class Groupes {
             +int id;
             +string token;
             +string libelle;
-        }
+
         class Profils {
             +int id;
             +string libelle;
-        }
+
         class Services {
             +int id;
             +string service;
             +string direction;
             +bool visible;
             +string region;
-        }
+
         class SousActions {
             +int id;
             +string libelle;
-        }
+
         class Territoires {
             +int id;
             +string territoire;
-        }
+
         class Themes {
             +int id;
             +string theme;
-        }
+
         class Types {
             +int id;
             +string type;
-        }
+
         class Utilisateurs {
             +int id;
             +string nom;
             +string prenom;
             +string email;
-        }
-    }
 
-    package Controller {
         class AbonnementsAdminController;
         class BopAdminController;
         class DotationsAdminController;
@@ -114,18 +111,14 @@ classDiagram
         class UtilisateursAdminController;
         class UtilisateursController;
         class SecurityController;
-    }
 
-    package Service {
         class EtudeService;
         class BopService;
         class DotationService;
         class FinancementService;
         class MailerService;
         class ExportService;
-    }
 
-    package Repository {
         class AbonnementsRepository;
         class BopRepository;
         class DotationsRepository;
@@ -137,9 +130,7 @@ classDiagram
         class SousActionsRepository;
         class ThemesRepository;
         class UtilisateursRepository;
-    }
 
-    package Form {
         class AbonnementsType;
         class BopType;
         class DotationsType;
@@ -151,13 +142,10 @@ classDiagram
         class SousActionsType;
         class ThemesType;
         class UtilisateursType;
-    }
 
-    package DTO {
         class EtudeOutput;
         class FinancementOutput;
         class DotationOutput;
-    }
 
     %% Relationships;
     Abonnements "1" --> "0..*" Etudes : "possède"
@@ -379,39 +367,37 @@ classDiagram
     %% Actors;
     class Utilisateur {
         <<actor>>
-    }
+
     class Administrateur {
         <<actor>>
-    }
+
     class CAS {
         <<actor>>
-    }
 
     %% Use Cases;
     class UC_CreateEtude {
         <<usecase>>
         +Créer une étude;
-    }
+
     class UC_EditEtude {
         <<usecase>>
         +Modifier une étude;
-    }
+
     class UC_ExportEtude {
         <<usecase>>
         +Exporter études (CSV/ODS)
-    }
+
     class UC_ManageAbonnements {
         <<usecase>>
         +Gérer les abonnements;
-    }
+
     class UC_Login {
         <<usecase>>
         +S’authentifier (CAS)
-    }
+
     class UC_ViewDashboard {
         <<usecase>>
         +Consulter tableau de bord;
-    }
 
     %% Associations;
     Utilisateur --> UC_CreateEtude : inclut;
@@ -423,7 +409,7 @@ classDiagram
     %% System Boundary;
     class System {
         <<system>>
-    }
+
     System --> UC_CreateEtude;
     System --> UC_EditEtude;
     System --> UC_ExportEtude;

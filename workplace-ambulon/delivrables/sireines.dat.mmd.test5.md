@@ -18,7 +18,7 @@ classDiagram
         +Imports;
         +Referentiel;
         +Seances;
-    }
+
 ```
 
 ### Objectifs de qualité orientés utilisateur
@@ -37,19 +37,19 @@ classDiagram
         +Imports;
         +Referentiel;
         +Seances;
-    }
+
     class Database {
         +Modele;
         +Script;
-    }
+
     class Deployment {
         +Configuration;
-    }
+
     class WebApplication {
         +JSP;
         +CSS;
         +JavaScript;
-    }
+
     SIRENES --|> Database;
     SIRENES --|> Deployment;
     SIRENES --|> WebApplication

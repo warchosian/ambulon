@@ -29,7 +29,7 @@ System_Ext(PSIN, "Portail de supervision", "Supervision et alertes")
 System_Boundary(causalis, "Causalis") {
     System(webapp, "Causalis WebApp", "Struts 1 + JSP")
     ContainerDb(db, "Oracle", "Base de données relationnelle")
-}
+
 Rel(user, SSO, "S’authentifie via")
 Rel(user, webapp, "Utilise")
 Rel(webapp, db, "Accède aux données (JDO/Castor)")

@@ -50,7 +50,7 @@
 ### 4.1 Diagramme de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#4B8BBE', 'edgeLabelBackground':'#FFF', 'fontSize': '12px' }}%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#4B8BBE', 'edgeLabelBackground':'#FFF', 'fontSize': '12px' }}%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Developer as Dev;
     actor CI/CD System as CICD;
@@ -64,7 +64,7 @@ usecaseDiagram;
         (Initialiser la DB) --> \(Appliquer les scripts SQL)
         (Construire les images) --> \(Installer les dépendances Composer)
         (Accéder à l’application) --> \(Consulter l’UI via navigateur)
-    }
+
 ```
 
 ### 4.2 Table des cas d’usage
@@ -82,7 +82,7 @@ usecaseDiagram;
 ## 5️⃣ Processus métier (BPMN) {#process}
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#4B8BBE', 'edgeLabelBackground':'#FFF', 'fontSize': '12px' }}%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#4B8BBE', 'edgeLabelBackground':'#FFF', 'fontSize': '12px' }}%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Dev as "Développeur"
     participant Docker as "Docker Engine"
@@ -141,22 +141,21 @@ classDiagram
         +string name;
         +string version;
         +string entry_point;
-    }
+
     class Database {
         +string engine;
         +string version;
         +string host;
         +int    port;
         +string name;
-    }
+
     class ConfigFile {
         +string path;
         +string type;
-    }
+
     class EnvVariable {
         +string key;
         +string value;
-    }
 
     Application "1" --> "1" Database : uses;
     Application "1" --> "*" ConfigFile : reads;

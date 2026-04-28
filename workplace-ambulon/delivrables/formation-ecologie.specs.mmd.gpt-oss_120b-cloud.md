@@ -197,16 +197,16 @@ swimlane;
     title Workflow d’import RenoiRH;
     lane "Système RenoiRH (SFTP)" {
         SFTP --> S3 : copy CSV (4_00)
-    }
+
     lane "Django (Cron)" {
         Cron --> Import : trigger import_cisirh (4_30)
         Import --> DB : persistance;
         Import --> Log : log_msg;
         Import --> Reindex : call reindex()
-    }
+
     lane "MeiliSearch" {
         Reindex --> Index : clear + index;
-    }
+
 ```
 
 ### 4.5 Diagramme de classe (simplifié – vue relationnelle)
@@ -219,14 +219,14 @@ classDiagram
         +CharField premier_niveau;
         +CharField public_cible;
         +ForeignKey session;
-    }
+
     class Session {
         +BigAutoField id;
         +CharField label;
         +DateField date_debut;
         +DateField date_fin;
         +CharField code_departement;
-    }
+
     class Periode {
         +IntegerField numero;
         +DateField date_debut;
@@ -235,41 +235,40 @@ classDiagram
         +CharField ville_lieu;
         +CharField lieu;
         +IntegerField etat;
-    }
+
     class Domaine {
         +CharField label;
         +IntegerField number;
         +CharField prefix_type;
-    }
+
     class SousDomaine {
         +CharField label;
         +ForeignKey domaine;
-    }
+
     class Theme {
         +CharField label;
         +ForeignKey sous_domaine;
-    }
+
     class Departement {
         +CharField code;
         +CharField libelle;
-    }
+
     class Partenaire {
         +URLField logo_url;
         +CharField titre;
         +CharField soustitre;
-    }
+
     class BandeauAccueil {
         +CharField titre;
         +TextField message;
-    }
+
     class Subscriber {
         +UUIDField uuid;
         +EmailField email;
-    }
+
     class Subscription {
         +ForeignKey subscriber;
         +ForeignKey session;
-    }
 
     Stage --> Session : belongsTo;
     Session --> Departement : manyToOne;

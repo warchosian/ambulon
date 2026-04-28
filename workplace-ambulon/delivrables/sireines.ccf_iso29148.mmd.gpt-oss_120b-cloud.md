@@ -111,7 +111,7 @@ classDiagram
         +String fonction;
         +String statut   // ACTIVE / INACTIVE;
         +Date dateCreation;
-    }
+
     class Dossier {
         +Long id;
         +String reference;
@@ -119,27 +119,26 @@ classDiagram
         +Date dateReception;
         +Date dateQualification;
         +String commentaire;
-    }
+
     class Qualification {
         +Long id;
         +String libelle;
         +String description;
-    }
+
     class Comité {
         +Long id;
         +String libelle;
         +String type   // DOMAINE / THESAURUS;
-    }
+
     class MotCle {
         +Long id;
         +String libelle;
         +Integer niveau;
-    }
+
     class Rapport {
         +Long id;
         +String type   // BIRT, CSV;
         +Date dateGeneration;
-    }
 
     Expert "1" --> "0..*" Dossier : possède;
     Dossier "1" --> "0..1" Qualification : qualification;
@@ -170,7 +169,7 @@ usecaseDiagram;
         Admin --> (Gérer les utilisateurs)
         Admin --> (Configurer les import/export)
         Admin --> (Consulter les logs)
-    }
+
 ```
 
 ### 6.2 Diagramme d’Activité – Processus de Qualification  

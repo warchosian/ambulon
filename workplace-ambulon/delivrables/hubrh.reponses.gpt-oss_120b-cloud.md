@@ -123,44 +123,44 @@ erDiagram;
         boolean is_multi_agents;
         integer attachments;
         boolean deactivated;
-    }
+
     WALLET {
         integer id PK;
         string title;
         string pole;
         string letters;
         boolean deactivated;
-    }
+
     WALLET_SERVICE {
         integer id PK;
         integer wallet_id FK;
         string service_id;
         string service_name;
-    }
+
     WALLET_CATEGORY {
         integer id PK;
         integer wallet_id FK;
         integer category_id;
         string category_name;
-    }
+
     TPESES {
         integer id PK;
         string matricule;
         string pese;
         unique(matricule, pese)
-    }
+
     TLOTSDEGESTION {
         integer id PK;
         string matricule;
         string lotdegestion;
         unique(matricule, lotdegestion)
-    }
+
     TAFFECTATIONSOP {
         integer id PK;
         string matricule;
         string affectationop;
         unique(matricule, affectationop)
-    }
+
 ```
 
 * Les tables `tpeses`, `tlotsdegestion` et `taffectationsop` sont créées par les migrations `007_create_matricules_perimeters_tables.rb`.  

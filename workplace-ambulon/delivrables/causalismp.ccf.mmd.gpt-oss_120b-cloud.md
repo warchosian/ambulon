@@ -57,7 +57,7 @@
 ### 4.1 Diagramme de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0366d6','edgeLabelBackground':'#f6f8fa','nodeBorder':'#0366d6','clusterBkg':'#e1e4e8'}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0366d6','edgeLabelBackground':'#f6f8fa','nodeBorder':'#0366d6','clusterBkg':'#e1e4e8'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     title Cas d’utilisation – CausalisMP;
     actor Gestionnaire as G;
@@ -107,7 +107,7 @@ usecaseDiagram;
 > Processus « Création et validation d’un dossier d’accident »  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0366d6','edgeLabelBackground':'#f6f8fa','nodeBorder':'#0366d6','clusterBkg':'#e1e4e8'}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0366d6','edgeLabelBackground':'#f6f8fa','nodeBorder':'#0366d6','clusterBkg':'#e1e4e8'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Gestionnaire;
     participant Système;
@@ -178,14 +178,14 @@ bpmnDiagram;
 > Diagramme de classes (UML) représentant les entités métier et leurs relations principales.  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0366d6','edgeLabelBackground':'#f6f8fa','nodeBorder':'#0366d6','clusterBkg':'#e1e4e8'}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0366d6','edgeLabelBackground':'#f6f8fa','nodeBorder':'#0366d6','clusterBkg':'#e1e4e8'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 classDiagram
     class Utilisateur {
         +int id;
         +String login;
         +String nom;
         +String role;
-    }
+
     class DossierAccident {
         +int id;
         +Date dateAccident;
@@ -193,40 +193,39 @@ classDiagram
         +String nature;
         +String gravite;
         +int saisieTerminee;
-    }
+
     class DossierMaladie {
         +int id;
         +Date dateDeclaration;
         +String typeMaladie;
         +int saisieTerminee;
-    }
+
     class Effectif {
         +int id;
         +int anneeNaissance;
         +String sexe;
         +Grade grade;
         +Service service;
-    }
+
     class Grade {
         +int id;
         +String libelle;
         +int codeGroupementGrade;
-    }
+
     class Service {
         +int id;
         +String libelleCourt;
         +String libelleLong;
-    }
+
     class Statistiques {
         +int id;
         +String type (ACC/MA)
         +int annee;
         +int valeur;
-    }
+
     class TranscodageGrade {
         +String codeGradeRehucit;
         +String macro;
-    }
 
     Utilisateur "1" --> "*" DossierAccident : crée >
     Utilisateur "1" --> "*" DossierMaladie : crée >

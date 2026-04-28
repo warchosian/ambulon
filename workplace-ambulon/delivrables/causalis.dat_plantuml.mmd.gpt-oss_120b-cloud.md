@@ -169,36 +169,27 @@ containerDiagram;
     boundary "Cluster ACAI – Paris La Défense" {
         node "Nginx LB (2×)" as Nginx {
             direction TB;
-        }
 
         node "Tomcat (2×)" as Tomcat {
             direction TB;
-        }
 
         component "Web UI (Struts 1.x)" as UI {
             direction TB;
-        }
 
         component "Service Layer (Java)" as Service {
             direction TB;
-        }
 
         component "DAO Layer (Castor JDO)" as DAO {
             direction TB;
-        }
 
         database "Oracle DB\n(userDScausalis)" as Oracle {
             direction TB;
-        }
 
         component "WS Client (StubWS)" as WS {
             direction TB;
-        }
 
         component "Metrics Exporter\n(Prometheus)" as Metrics {
             direction TB;
-        }
-    }
 
     Nginx --> Tomcat : HTTP/HTTPS;
     Tomcat --> UI : Servlets / JSP;

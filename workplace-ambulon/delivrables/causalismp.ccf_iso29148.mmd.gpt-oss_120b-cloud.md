@@ -144,7 +144,7 @@ classDiagram
         +Grade grade;
         +Service service;
         +int saisieTerminee;
-    }
+
     class DossierMaladie {
         +int id;
         +Date dateDiagnostic;
@@ -152,29 +152,29 @@ classDiagram
         +Grade grade;
         +Service service;
         +int saisieMaladiesProTerminee;
-    }
+
     class Grade {
         +int code;
         +String libelle;
         +int codeGroupementGrade;
-    }
+
     class Service {
         +int code;
         +String libelle;
         +int saisieTerminee;
         +int saisieMaladiesProTerminee;
-    }
+
     class Statut {
         +int code;
         +String libelle;
-    }
+
     class Utilisateur {
         +String login;
         +String nom;
         +String prenom;
         +Service service;
         +String role;
-    }
+
     Accident "1" --> "1" Service : appartient à;
     Accident "1" --> "1" Grade   : possède;
     DossierMaladie "1" --> "1" Service : appartient à;

@@ -46,6 +46,11 @@ class RegexDiagramFixer:
             # Fix classdiagram errors: classdiagram; → classDiagram and classdiagram → classDiagram
             (r'\bclassdiagram\b', r'classDiagram'),
             (r'classdiagram;', r'classDiagram'),
+            # Remove PlantUML package syntax from classDiagram (Mermaid doesn't support packages)
+            (r'^\s*package\s+[\w.]+\s*\{\s*$', r''),  # Remove package declarations
+            (r'^\s*\}\s*$', r''),  # Remove closing braces from packages
+            # Clean up multiple blank lines created by package removal
+            (r'\n\s*\n\s*\n', r'\n\n'),  # Replace 3+ newlines with 2
             # Fix graph type declarations with semicolons: graph TB; → graph TB
             (r'\b(graph|flowchart)\s+(TB|LR|TD|BT|RL|DLR|TBL);', r'\1 \2'),
             # Fix end statements with semicolons: end; → end

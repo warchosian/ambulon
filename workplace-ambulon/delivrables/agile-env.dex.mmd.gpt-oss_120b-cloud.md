@@ -105,23 +105,19 @@ graph TB
     package "Phase 1 – Rédaction" {
         rectangle step1 ["Collecte des specs & architecture"]
         rectangle step2 ["Rédaction des 16 sections DEX"]
-    }
 
     package "Phase 2 – Validation croisée" {
         rectangle step3 ["Revue technique (DevOps/Infra)"]
         rectangle step4 ["Validation opérationnelle (Ops)"]
         rectangle step5 ["Validation sécurité & conformité"]
-    }
 
     package "Phase 3 – Go‑Live & Run" {
         rectangle step6 ["Signature & archivage versionné"]
         rectangle step7 ["Intégration runbook & supervision"]
-    }
 
     package "Phase 4 – Maintenance continue" {
         rectangle step8 ["Mise à jour à chaque release"]
         rectangle step9 ["Revue trimestrielle / post‑incident"]
-    }
 
     %% Flux;
     dev -->|Alimente| step1;

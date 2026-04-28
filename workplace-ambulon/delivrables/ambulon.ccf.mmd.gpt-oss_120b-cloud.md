@@ -212,7 +212,6 @@ classDiagram
         +motDePasse : String;
         +type : Enum{PATIENT, CONDUCTEUR, COORDINATEUR, MEDICAL, ADMIN}
         +dateCréation : DateTime;
-    }
 
     class Demande {
         <<entity>>
@@ -221,7 +220,6 @@ classDiagram
         +typeUrgence : Enum{A, B, C}
         +localisation : GeoPoint;
         +statut : Enum{EN_ATTENTE, ASSIGNEE, EN_COURS, TERMINEE, ANNULEE}
-    }
 
     class Ambulance {
         <<entity>>
@@ -229,14 +227,12 @@ classDiagram
         +immatriculation : String;
         +capacite : Integer;
         +etat : Enum{DISPO, OCCUPEE, EN_MAINTENANCE}
-    }
 
     class Mission {
         <<entity>>
         +id : UUID;
         +dateHeureAssignation : DateTime;
         +eta : Duration;
-    }
 
     class Notification {
         <<entity>>
@@ -244,14 +240,12 @@ classDiagram
         +type : Enum{SMS, EMAIL, PUSH}
         +statutEnvoi : Enum{ENVOYE, ECHOUE}
         +dateEnvoi : DateTime;
-    }
 
     class Evenement {
         <<entity>>
         +id : UUID;
         +type : Enum{ARRIVEE, DEPART, CANCELLATION}
         +timestamp : DateTime;
-    }
 
     Utilisateur "1" <-- "0..*" Demande : crée;
     Demande "1" <-- "0..1" Mission : déclenche;

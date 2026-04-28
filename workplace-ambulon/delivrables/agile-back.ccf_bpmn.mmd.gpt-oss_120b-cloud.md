@@ -57,7 +57,7 @@
 ### 3.1 Processus critique – **P‑001 : Gestion du cycle de vie d’une Étude**  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2A7AE2','edgeLabelBackground':'#fff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2A7AE2','edgeLabelBackground':'#fff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 flowchart TD
     %% Pools;
     subgraph Utilisateur ["🧑 Utilisateur"]

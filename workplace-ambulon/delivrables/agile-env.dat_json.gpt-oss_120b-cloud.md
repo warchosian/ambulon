@@ -16,7 +16,7 @@ C4Context;
     System_Boundary(agileEnv, "agile‑env") {
         Container(app, "Application PHP/Apache", "Docker", "Expose les APIs et l’interface web")
         Container(db, "Base de données PostgreSQL", "Docker", "Stocke les données métier")
-    }
+
     System_Ext(externalCAS, "CAS (Central Authentication Service)", "Service d’authentification externe")
     Rel(user, app, "Utilise")
     Rel(app, db, "Lit/écrit des données")

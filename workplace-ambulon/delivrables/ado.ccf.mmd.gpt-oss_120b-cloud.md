@@ -74,7 +74,7 @@ graph LR
 ### 4.1 Diagramme de cas d’utilisation (UML 2.x)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#003366', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#003366', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 useCaseDiagram;
     title ADO – Cas d’usage;
     actor Utilisateur as U;
@@ -113,7 +113,7 @@ useCaseDiagram;
 ### 5.1 Diagramme BPMN – Flux de génération d’un rapport  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#006400', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#006400', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Utilisateur;
     participant Application;
@@ -182,7 +182,7 @@ classDiagram
         +String prenomUsuel;
         +String dateNaissance;
         +String nirDefinitif;
-    }
+
     class EtatCivil{
         +String matriculeRGP;
         +String temoinRenoirh;
@@ -191,26 +191,26 @@ classDiagram
         +String villeNaissance;
         +String paysNaissance;
         +String qualiteStatutaire;
-    }
+
     class Affectation{
         +String matriculeRGP;
         +String dateDebut;
         +String dateFin;
         +String typeAffectation;
         +String libelleOrganisme;
-    }
+
     class Position{
         +String matriculeRGP;
         +String dateEffet;
         +String dateFinReelle;
         +String positionStatutaire;
-    }
+
     class Rapport{
         +String matriculeRGP;
         +String typeRapport;
         +String dateEffet;
         +String dataJSON;
-    }
+
     class Journal{
         +Long id;
         +String dateAccess;
@@ -218,7 +218,6 @@ classDiagram
         +String matricule;
         +String nomRapport;
         +String userEmail;
-    }
 
     Agent "1" --> "1" EtatCivil : possède;
     Agent "1" --> "0..*" Affectation : possède;

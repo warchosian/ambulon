@@ -53,7 +53,7 @@
 ### 4.1 Diagramme de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
 usecaseDiagram;
     actor MOE / DevOps as DevOps;
     actor Utilisateurs finaux as Users;
@@ -66,7 +66,6 @@ usecaseDiagram;
         usecase "Sauvegarder la base" as UC4;
         usecase "Mettre à jour le WAR" as UC5;
         usecase "Vérifier la conformité sécurité" as UC6;
-    }
 
     DevOps --> UC1;
     DevOps --> UC2;
@@ -96,7 +95,7 @@ usecaseDiagram;
 > **Processus clé** : *Déploiement continu de l’application*  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
 bpmnDiagram;
     participant DevOps;
     participant DockerEngine as "Docker Engine"
@@ -169,15 +168,14 @@ classDiagram
         +Long size;
         +DateTime uploadedAt;
         +String path;
-    }
+
     class User {
         +String id {PK}
         +String login;
         +String email;
-    }
+
     class Role {
         +String name {PK}
-    }
 
     User "1" --> "*" Upload : owns;
     User "1" --> "*" Role : has

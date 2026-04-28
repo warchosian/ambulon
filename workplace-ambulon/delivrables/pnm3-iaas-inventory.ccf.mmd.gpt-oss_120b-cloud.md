@@ -181,20 +181,20 @@ classDiagram
         +Portainer portainer;
         +Metrics metrics;
         +System system;
-    }
+
     class Portainer {
         +string edgeId;
         +string edgeKey;
-    }
+
     class Metrics {
         +string name;
         +string url;
         +string pole;
-    }
+
     class System {
         +string name;
         +int version;
-    }
+
     Machine "1" --> "0..1" Portainer;
     Machine "1" --> "1" Metrics;
     Machine "1" --> "1" System

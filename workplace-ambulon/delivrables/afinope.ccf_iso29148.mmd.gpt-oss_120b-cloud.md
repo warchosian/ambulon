@@ -120,7 +120,7 @@ classDiagram
         +date dateCloture;
         +date dateLiquidation;
         +date dateDocument;
-    }
+
     class STRUCTURE {
         +char[10] codeOrganisme;
         +char[2] codeBudget;
@@ -128,7 +128,7 @@ classDiagram
         +date dateCreation;
         +date dateCloture;
         +date dateDocument;
-    }
+
     class NOMENC {
         +int exercice;
         +char[2] typeNomenclature;
@@ -137,7 +137,7 @@ classDiagram
         +char[1] sens;
         +varchar[200] libelleCompte;
         +date dateDocument;
-    }
+
     class BAL {
         +bigint codeCompte;
         +varchar[200] libelleCompte;
@@ -158,7 +158,7 @@ classDiagram
         +char[3] codeDevise;
         +date dateDocument;
         +char[1] typeSequence;
-    }
+
     class ABE {
         +char[2] codeLibelle;
         +char[2] impact;
@@ -172,7 +172,7 @@ classDiagram
         +char[3] codeDevise;
         +date dateDocument;
         +char[1] typeSequence;
-    }
+
     ORGANISME "1" --> "0..*" STRUCTURE : possède;
     ORGANISME "1" --> "0..*" NOMENC : référence;
     ORGANISME "1" --> "0..*" BAL : possède;

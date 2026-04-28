@@ -13,7 +13,7 @@ classDiagram
     class Sireines {
         + Collecte;
         + Concentration;
-    }
+
 ```
 
 ### Objectifs de qualité orientés utilisateur
@@ -87,14 +87,14 @@ classDiagram
         + Controller;
         + Service;
         + Repository;
-    }
+
     class BaseDonnee {
         + PostgreSQL;
-    }
+
     class AutresServices {
         + BIRT;
         + Cerbere;
-    }
+
     ApplicationWeb --|> BaseDonnee;
     ApplicationWeb --|> AutresServices
 ```

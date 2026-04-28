@@ -59,7 +59,7 @@
 ### 4.1 Diagramme de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#003366','edgeLabelBackground':'#ffffff','nodeBorder':'#003366'}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#003366','edgeLabelBackground':'#ffffff','nodeBorder':'#003366'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Opérateur as Op;
     actor DG de tutelle as DG;
@@ -80,7 +80,7 @@ usecaseDiagram;
 
         Cerb --> (Authentifier utilisateur) : <<extend>>
         JORF --> (Importer nominations JORF) : <<include>>
-    }
+
 ```
 
 ### 4.2 Liste détaillée des cas d’usage  
@@ -105,7 +105,7 @@ usecaseDiagram;
 ### 5.1 Diagramme BPMN – Import JORF & Mise à jour des mandats  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
 bpmnDiagram;
     participant "Scheduler" as S;
     participant "Job Import JORF" as J;
@@ -127,7 +127,7 @@ bpmnDiagram;
 ### 5.2 Diagramme BPMN – Gestion du mandat et alerte d’échéance  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
 bpmnDiagram;
     participant "Opérateur" as O;
     participant "Application" as A;
@@ -200,14 +200,14 @@ classDiagram
         +String email;
         +String profilCerb;
         +Date createdAt;
-    }
+
     class Etablissement {
         +Long id;
         +String siren;
         +String libelle;
         +String sigle;
         +TypeInstance typeInstance;
-    }
+
     class Mandat {
         +Long id;
         +Date debut;
@@ -215,33 +215,32 @@ classDiagram
         +TypeMandat typeMandat;
         +ModeNomination modeNomination;
         +String pieceJointePath;
-    }
+
     class TypeMandat {
         +Long id;
         +String libelle;
-    }
+
     class TypeInstance {
         +Long id;
         +String libelle;
-    }
+
     class ModeNomination {
         +Long id;
         +String code;
         +String libelle;
-    }
+
     class Charge {
         +Long id;
         +String libelle;
-    }
+
     class Ministere {
         +Long id;
         +String sigle;
         +String nom;
-    }
+
     class College {
         +Long id;
         +String identifiant;
-    }
 
     Administrateur "1" --> "*" Mandat : possède >
     Etablissement "1" --> "*" Mandat : concerne >

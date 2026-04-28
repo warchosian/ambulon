@@ -22,7 +22,7 @@
 ### 2.1 Diagramme de composants (UML – Mermaid)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#0B5394', 'edgeLabelBackground':'#e8e8e8'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#0B5394', 'edgeLabelBackground':'#e8e8e8'}}%%%%%%}%%
 graph LR
     subgraph MavenModules
         DB[causalismp‑database]:::module
@@ -103,7 +103,7 @@ graph LR
 ### 4.1 Diagramme de classes (UML – Mermaid)
 
 ```mermaid
-%%{init: {'theme':'neutral', 'themeVariables': { 'primaryColor': '#6FA8DC', 'edgeLabelBackground':'#F0F0F0'}}%%}%%
+%%{init: {'theme':'neutral', 'themeVariables': { 'primaryColor': '#6FA8DC', 'edgeLabelBackground':'#F0F0F0'}}%%%%%%}%%
 classDiagram
     direction TB
 
@@ -111,37 +111,31 @@ classDiagram
     class Constantes {
         <<interface>>
         +String NOMDATASOURCE = "jdbc/userDScausalis"
-    }
 
     class GenericDao~T~ {
         <<abstract>>
         +List<T> getAll(String entity, Map<String,Object> filter, String[] operators, String order)
-    }
 
     class ReferenceService~T~ {
         <<abstract>>
         -GenericDao<T> dao
         +List<T> getAll()
-    }
 
     %% Domain model (excerpt)
     class Grade {
         -int codeGroupementGrade
         +int getCodeGroupementGrade()
         +void setCodeGroupementGrade(int)
-    }
 
     class Service {
         -int saisieTerminee
         -int saisieMaladiesProTerminee
         +int getSaisieTerminee()
         +void setSaisieTerminee(int)
-    }
 
     class DomaineAffectation {
         -String code
         +String getCode()
-    }
 
     class TranscodageGrade {
         -String codeGradeRehucit
@@ -150,21 +144,17 @@ classDiagram
         +void setCodeGradeRehucit(String)
         +String getMacro()
         +void setMacro(String)
-    }
 
     %% Services
     class GradeService {
         +List<Grade> getAllGrade()
-    }
 
     class DomaineAffectationService {
         +List<DomaineAffectation> getAllDomaineAffectation()
-    }
 
     class SynchronizeService {
         <<interface>>
         +int synchronize()
-    }
 
     %% Relationships
     GenericDao <|-- GradeDao
@@ -178,15 +168,12 @@ classDiagram
     %% TagLib
     class StrutsOptionTag {
         +int doEndTag()
-    }
 
     class WSClientGrade {
         +Grade getGrade(String id)
-    }
 
     class TranscodageGradePredicate {
         +boolean evaluate(Object)
-    }
 
     StrutsOptionTag ..> JSP : used by
     WSClientGrade ..> TranscodageGradePredicate : collaborates
@@ -277,7 +264,7 @@ flowchart TD
 ### 7.1 Diagramme de déploiement (UML – Mermaid)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#A64D79', 'edgeLabelBackground':'#F5F5F5'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#A64D79', 'edgeLabelBackground':'#F5F5F5'}}%%%%%%}%%
 graph LR
     subgraph CI/CD
         GIT[GitLab Repository]

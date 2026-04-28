@@ -132,16 +132,16 @@ classDiagram
         +string DB_NAME
         +string DB_USER
         +string DB_PASSWORD
-    }
+
     class DatabaseConfig {
         +string POSTGRES_USER
         +string POSTGRES_PASSWORD
         +string POSTGRES_DB
-    }
+
     class ProxyConfig {
         +string HTTP_PROXY
         +string HTTPS_PROXY
-    }
+
     ApplicationConfig --> ProxyConfig : uses
     ApplicationConfig --> DatabaseConfig : connects_to
 ```

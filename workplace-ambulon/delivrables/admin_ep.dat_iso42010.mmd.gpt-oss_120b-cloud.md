@@ -141,30 +141,30 @@ classDiagram
     direction TB;
     class AccueilAction {
         +execute()
-    }
+
     class DetailAdminAction {
         +execute()
-    }
+
     class RechercheAdminsAction {
         +execute()
-    }
+
     class UpsertAdminAction {
         +execute()
-    }
+
     class ArticleServices {
         +search()
         +getById()
-    }
+
     class MandatServices {
         +createMandat()
         +updateMandat()
-    }
+
     class SecurityFilter {
         +doFilter()
-    }
+
     class SchedulerInitializer {
         +init()
-    }
+
     AccueilAction --> AccueilActionSupport : extends;
     DetailAdminAction --> AbstractBaseAdminActionSupport;
     UpsertAdminAction --> AbstractBaseAdminUpsertActionSupport;
@@ -173,11 +173,11 @@ classDiagram
     SchedulerInitializer --> MandatServices : schedules;
     class StrutsConfig {
         +struts.xml;
-    }
+
     class SpringBootConfig {
         +application-config.xml;
         +baseadmin-auth-config.xml;
-    }
+
     AccueilAction ..> StrutsConfig : mapped in;
     UpsertAdminAction ..> SpringBootConfig : bean
 ```
@@ -195,47 +195,47 @@ classDiagram
     class TYPE_MANDAT {
         +tma_id : PK;
         +tma_type;
-    }
+
     class TYPE_INSTANCE {
         +tin_id : PK;
         +tin_type;
         +tin_a_linstance_de;
         +tin_de_linstance_de;
-    }
+
     class MODE_NOMINATION {
         +mno_id : PK;
         +mno_code;
         +mno_mode;
         +mno_mot_cle_titre;
         +mno_mot_cle_corps_texte;
-    }
+
     class CHARGE {
         +cha_id : PK;
         +cha_charge;
         +...
-    }
+
     class MINISTERE {
         +min_id : PK;
         +min_sigle;
         +min_nom;
         +min_statut;
-    }
+
     class COLLEGE {
         +col_id : PK;
         +col_identifiant;
-    }
+
     class ETABLISSEMENT {
         +eta_id : PK;
         +eta_siren;
         +eta_sigle;
         +eta_libelle;
         +tin_id_fk : FK → TYPE_INSTANCE;
-    }
+
     class SYNONYME_COLLEGE {
         +col_id_fk : FK → COLLEGE;
         +syn_synonyme;
         +syn_defaut;
-    }
+
     TYPE_MANDAT --> Mandat;
     TYPE_INSTANCE --> ETABLISSEMENT;
     CHARGE --> MINISTERE_CHARGE;
@@ -255,12 +255,11 @@ deploymentDiagram;
         node "VM/Cluster ESXi (ACAI)" {
             artifact "Tomcat 9.0.8 (Docker container)" as Tomcat;
             artifact "PostgreSQL 9.6.11 (container)" as PG;
-        }
+
         node "VM/Cluster IaaS (ECO4) – Recette" {
             artifact "Tomcat 10 (prévision)" as Tomcat10;
             artifact "PostgreSQL 15 (prévision)" as PG15;
-        }
-    }
+
     Tomcat --> PG : JDBC;
     Tomcat --> "Elasticsearch" : HTTP REST;
     Tomcat --> "Cerbère SSO" : HTTPS SAML/OIDC;
@@ -336,15 +335,15 @@ statediagram-v2;
         CPU --> Memory --> DiskIO --> DBHealth;
         TomcatHealth --> ThreadPool;
         ElasticsearchHealth;
-    }
+
     state Alerting {
         EmailAlert;
         SMSAlert;
-    }
+
     state IncidentManagement {
         TicketCreation;
         AssignToOps;
-    }
+
 ```
 
 * **Supervision** – `SupervisionAction` expose un tableau de bord.  

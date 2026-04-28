@@ -205,8 +205,7 @@ C4Context;
         System(should, "Should Have", "Important pour la qualité, reportable")
         System(could, "Could Have", "Enrichissement optionnel")
         System(wont, "Won't Have (MVP)", "Exclu de la première vague")
-    }
-    
+
     Rel(must, should, "Priorité décroissante")
     Rel(should, could, "Priorité décroissante")
     

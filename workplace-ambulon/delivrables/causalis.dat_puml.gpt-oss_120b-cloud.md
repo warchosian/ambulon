@@ -30,7 +30,7 @@ System_Boundary(causalis, "CAUSALIS") {
     Person(manager, "Gestionnaire", "Rôle métier – saisie & reporting")
     Person(admin, "Administrateur", "Gestion des droits & maintenance")
     Person(sso, "SSO Cerbere", "Authentification unique")
-}
+
 Rel(manager, web, "Utilise")
 Rel(admin, web, "Administre")
 Rel(sso, web, "Authentifie via SSO")
@@ -125,7 +125,7 @@ Container_Boundary(causalis, "CAUSALIS") {
     Container(wsClient, "WS Client (StubWS.jar)", "Java", "Appels aux web‑services RH")
     Container(sso, "Cerbere SSO", "Java", "Authentification unique")
     Container(monitoring, "Supervision", "Prometheus/Grafana/Loki", "Métriques, logs, alertes")
-}
+
 Rel(web, service, "Appelle")
 Rel(service, dao, "Utilise")
 Rel(dao, db, "Lecture/Écriture")

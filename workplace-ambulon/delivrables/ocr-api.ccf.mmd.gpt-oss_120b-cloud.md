@@ -70,7 +70,7 @@ Le service s’appuie sur :
 ### 4.1 Diagramme de cas d’utilisation (UML) – Mermaid
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     title OCR‑API – Cas d’utilisation;
     actor Développeur intégrateur as Dev;
@@ -85,7 +85,7 @@ usecaseDiagram;
         Admin --> (Déployer le service)
         Admin --> (Configurer les variables d’environnement)
         Admin --> (Surveiller la santé du service)
-    }
+
 ```
 
 ### 4.2 Liste détaillée des cas d’usage
@@ -110,7 +110,7 @@ usecaseDiagram;
 ### 5.1 Diagramme du flux de traitement OCR (simplifié)
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6' }}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Client;
     participant API;
@@ -206,7 +206,6 @@ classDiagram
         +String sourceObjectKey;
         +String resultObjectKey;
         +Float confidence;
-    }
 
     class User {
         <<entity>>
@@ -214,7 +213,6 @@ classDiagram
         +String name;
         +String email;
         +Boolean active;
-    }
 
     class Document {
         <<entity>>
@@ -223,7 +221,6 @@ classDiagram
         +Long size;
         +String mimeType;
         +Date uploadedAt;
-    }
 
     class LogEntry {
         <<entity>>
@@ -232,7 +229,6 @@ classDiagram
         +String message;
         +Date timestamp;
         +String jobId;
-    }
 
     User "1" --> "0..*" Job : possèDes;
     Job "1" --> "1" Document : source;

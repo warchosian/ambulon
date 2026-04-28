@@ -21,19 +21,19 @@
 ### 2.1 Diagramme de classes (obligatoire)  
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e0f7fa','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e0f7fa','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 classDiagram
   %% Packages
   package "i2.application.sireines.boot" {
     class ApplicationServletContextListener <<component>>
     class SearchManagerInitializer <<component>>
     class PersistenceManagerInitializer <<component>>
-  }
+
   package "i2.application.sireines.boot.manager" {
     class BirtManager <<interface>> 
     class BirtManagerImpl <<component>>
     class BirtMergerPlugin <<component>>
-  }
+
   package "i2.application.sireines.controller" {
     class AbstractSireinesActionSupport <<abstract>>
     class AccueilAction;
@@ -46,7 +46,7 @@ classDiagram
     class NavigationItem <<enumeration>>
     class Menu <<enumeration>>
     class OngletDossierEnum <<enumeration>>
-  }
+
   package "i2.application.sireines.service" {
     class AgentsServices <<interface>>
     class AgentsServicesImpl <<component>>
@@ -62,21 +62,20 @@ classDiagram
     class ReferentielsServicesImpl <<component>>
     class SeancesServices <<interface>>
     class SeancesServicesImpl <<component>>
-  }
+
   package "i2.application.sireines.util" {
     class CsvExport;
     class StringUtils;
     class CerbereUtil;
     class FormatterAnnee
-  }
+
   package "i2.application.sireines.domain.dossier" {
     class Dossier <<entity>>
     class MotCle <<entity>>
     class Qualification <<entity>>
-  }
+
   package "i2.application.sireines.search" {
     class SearchManager <<component>>
-  }
 
   %% Relations
   ApplicationServletContextListener --> SearchManagerInitializer : init
@@ -129,7 +128,7 @@ classDiagram
 ### 2.2 Diagramme de composants (obligatoire)
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e8f5e9','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e8f5e9','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 graph TB
   subgraph "Docker Host"
     subgraph "Container: sireines‑app (Tomcat 7)"
@@ -185,7 +184,7 @@ graph TB
 ### 2.3 Diagramme de déploiement (obligatoire)
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e3f2fd','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e3f2fd','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 deploymentDiagram
   node DockerHost {
     node "sireines‑app (Tomcat)" {
@@ -198,20 +197,18 @@ deploymentDiagram
       MVC --> Spring;
       Spring --> ES;
       Spring --> BIRT;
-    }
+
     node "sireines‑db (PostgreSQL)" {
       database "PostgreSQL 14" as PGSQL;
-    }
+
     node "pgadmin (dpage/pgadmin4)" {
       component "PgAdmin UI" as PGADMIN;
-    }
+
     node "Docker Volume: sireines_db_vol" {
       artifact "Data files" as DBVOL;
-    }
+
     node "Docker Volume: pgadmin_vol" {
       artifact "Config files" as PGADMINVOL;
-    }
-  }
 
   WAR -[Deploy]-> "sireines‑app"
   PGSQL -[Store]-> DBVOL
@@ -238,7 +235,7 @@ deploymentDiagram
 ### 2.4 Diagramme d’objets (optionnel) – Exemple d’une instance `Dossier`
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff3e0','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff3e0','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 classDiagram
   class Dossier {
     +Long id;
@@ -247,15 +244,15 @@ classDiagram
     +String statut;
     +List~MotCle~ motsCles;
     +Qualification qualification
-  }
+
   class MotCle {
     +Long id;
     +String libelle
-  }
+
   class Qualification {
     +Long id;
     +String libelle
-  }
+
   Dossier "1" --> "*" MotCle : contains
   Dossier "1" --> "1" Qualification : has
 ```
@@ -267,21 +264,19 @@ classDiagram
 ### 2.5 Diagramme de packages (obligatoire)
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e8eaf6','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e8eaf6','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 packageDiagram
   package "i2.application.sireines" {
-    package boot {
+
       [ApplicationServletContextListener]
       [SearchManagerInitializer]
-    }
-    package controller {
+
       [AbstractSireinesActionSupport]
       [AccueilAction]
       [ContactAction]
       [DossierDetailAction]
       [ImportFichierAction]
-    }
-    package service {
+
       package agents { [AgentsServices] }
       package dossiers { [DossiersServices] }
       package extractions { [ExtractionsServices] }
@@ -289,18 +284,18 @@ packageDiagram
       package referentiels { [ReferentielsServices] }
       package seances { [SeancesServices] }
       [CommonServices]
-    }
+
     package util { [CsvExport] [StringUtils] }
     package domain { [Dossier] [MotCle] [Qualification] }
-  }
+
   package "i2.io.vertigo.dynamo.search" {
     [SearchManager]
-  }
+
   package "docker" {
     [sireines‑app] 
     [sireines‑db] 
     [pgadmin]
-  }
+
 ```
 
 **Version du diagramme** : 1.0 – 2024‑04‑27  
@@ -310,14 +305,14 @@ packageDiagram
 ### 2.6 Diagramme de structure composite (optionnel) – Vue de `Dossier`  
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e0f2f1','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e0f2f1','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 classDiagram
   class Dossier {
     +Long id;
     +String libelle;
     +Date dateReception;
     +String statut
-  }
+
   Dossier *-- "0..*" MotCle : <<contain>>
   Dossier *-- "0..1" Qualification : <<has>>
 ```

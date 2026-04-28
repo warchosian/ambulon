@@ -172,13 +172,12 @@ deploymentDiagram;
         component "Service Versement" as SV;
         component "Service Demande" as SD;
         component "Service Mouvement" as SM;
-    }
+
     node "Base de données" as DBSrv {
         artifact "Oracle prep37" as DB;
-    }
+
     node "Poste client" as Client {
         artifact "Navigateur Web" as Browser;
-    }
 
     Browser --> GW : HTTPS;
     GW --> SV : gRPC/REST;

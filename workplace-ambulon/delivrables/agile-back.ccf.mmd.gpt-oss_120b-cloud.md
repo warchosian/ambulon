@@ -56,7 +56,7 @@
 > Diagramme UML de cas d’utilisation (Mermaid)  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff', 'nodeBorder':'#0366d6' }}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff', 'nodeBorder':'#0366d6' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Admin as A;
     actor Utilisateur métier as U;
@@ -73,7 +73,7 @@ usecaseDiagram;
         U --> (Créer/Modifier une étude)
         U --> (Suivre la valorisation)
         C --> (Authentifier)
-    }
+
 ```
 
 ### 4.1 Tableau récapitulatif des cas d’usage  
@@ -96,7 +96,7 @@ usecaseDiagram;
 > Diagramme BPMN (Mermaid) décrivant le processus de **création d’une étude**.  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff', 'nodeBorder':'#0366d6' }}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff', 'nodeBorder':'#0366d6' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Utilisateur;
     participant CAS;
@@ -159,7 +159,7 @@ bpmnDiagram;
 > Diagramme de classes UML abstrait (Mermaid) représentant les entités métier et leurs relations.  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff', 'nodeBorder':'#0366d6' }}%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff', 'nodeBorder':'#0366d6' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
 classDiagram
     class Utilisateurs {
         +int id;
@@ -168,35 +168,35 @@ classDiagram
         +string email;
         +string token;
         +datetime createdAt;
-    }
+
     class Profils {
         +int id;
         +string libelle;
         +bool admin;
-    }
+
     class Groupes {
         +int id;
         +string token;
         +string libelle;
-    }
+
     class Services {
         +int id;
         +string service;
         +string direction;
         +bool visible;
         +string region;
-    }
+
     class Themes {
         +int id;
         +string theme;
-    }
+
     class Bop {
         +int id;
         +string libelle_bop;
         +string commentaires_bop;
         +string sigle;
         +bool visible;
-    }
+
     class Etudes {
         +int id;
         +string titre_etude;
@@ -206,22 +206,21 @@ classDiagram
         +string resultat_attendu;
         +string methode;
         +string objectif;
-    }
+
     class Dotations {
         +int id;
         +int annee;
         +float montantdotation;
-    }
+
     class Financements {
         +int id;
         +float montant;
         +date date_comite;
-    }
+
     class Valorisation {
         +int id;
         +string commentaire;
         +string url;
-    }
 
     Utilisateurs "1" --> "0..*" Profils : possède >
     Utilisateurs "1" --> "0..*" Groupes : appartient à >

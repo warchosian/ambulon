@@ -163,7 +163,6 @@ C4Container;
         Container(cas, "CAS Client", "phpCAS", "Authentification SSO via serveur CAS")
         Container(mail, "Mailer", "Symfony Mailer", "Envoi de notifications e‑mail")
         Container(prom, "Supervision", "Prometheus/Grafana/Loki", "Métriques, logs, alertes")
-    }
 
     Rel(nginx, app, "HTTP/HTTPS", "REST, HTML")
     Rel(app, db, "JDBC/SQL", "Doctrine ORM")
