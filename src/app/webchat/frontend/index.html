@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Ambulon WebChat</title>
+<style>
+  body {font-family: Arial, sans-serif; margin: 2rem;}
+  #answer {margin-top: 1rem; white-space: pre-wrap; background:#f9f9f9; padding:1rem; border:1px solid #ddd;}
+  #chunks {margin-top:0.5rem;}
+  .chunk {margin-bottom:0.5rem; padding:0.5rem; background:#fff; border:1px solid #eee;}
+  button {margin-top:0.5rem;}
+</style>
+</head>
+<body>
+<h1>Ambulon WebChat</h1>
+<textarea id="question" rows="4" cols="60" placeholder="Posez votre question…"></textarea><br>
+<button id="send">Envoyer</button>
+<div id="answer"></div>
+<script>
+  document.getElementById('send').onclick = async () => {
+    const q = document.getElementById('question').value;
+    const resp = await fetch('/api/query', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({question: q})
+    });
+    const data = await resp.json();
+    const ansDiv = document.getElementById('answer');
+    // Show answer with line break
+    ansDiv.innerHTML = `<strong>Answer:</strong> ${data.answer}<br>`;
+    // Show chunks nicely
+    if (Array.isArray(data.chunks) && data.chunks.length) {
+      const chunksHtml = data.chunks.map(c => `
+        <div class="chunk">
+          <strong>ID:</strong> ${c.id}<br>
+          <strong>Similarity:</strong> ${c.similarity}<br>
+          <strong>Content:</strong> ${c.content}<br>
+          <strong>Metadata:</strong> <pre>${JSON.stringify(c.metadata, null, 2)}</pre>
+        </div>`).join('');
+      ansDiv.innerHTML += `<div id="chunks"><strong>Chunks:</strong><br>${chunksHtml}</div>`;
+    }
+  };
+</script>
+</body>
+</html>

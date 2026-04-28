@@ -13,7 +13,7 @@ from typing import Dict, Any, List, Optional
 
 from app.core.config_loader import load_config as load_app_config
 from app.core.logging_config import setup_logging
-from app.ocr.core.ocr_logic import perform_ocr_single_file, process_multiple_files
+from app.ocr.core.ocr_logic import perform_ocr_single_file, process_multiple_files, _process_pdf_ocr
 
 logger = logging.getLogger(__name__)
 
@@ -123,14 +123,23 @@ Environment variables:
     elif input_path.is_file():
         # Mode: single file
         logger.info(f"Mode: Processing single file: {args.input}")
-        result_file = perform_ocr_single_file(
-            image_file=input_path,
-            ocr_config=ocr_tool_config,
-            language=final_language,
-            output_file=args.output
-        )
-        if result_file:
-            generated_files = [result_file]
+        if input_path.suffix.lower() == '.pdf':
+            # Determine output: same path/name as input, extension .md
+            if args.output:
+                output_file = Path(args.output)
+            else:
+                output_file = input_path.with_suffix('.md')
+            result = _process_pdf_ocr(input_path, final_language, output_file)
+            if result.get('success') and result.get('output_file'):
+                generated_files = [Path(result['output_file'])]
+        else:
+            result_file = perform_ocr_single_file(
+                image_file=input_path,
+                language=final_language,
+                output_file=args.output
+            )
+            if result_file:
+                generated_files = [result_file]
     else:
         logger.error(f"Input '{args.input}' is not a valid file, directory or glob pattern.")
         return 1
@@ -141,7 +150,7 @@ Environment variables:
             try:
                 relative_path = os.path.relpath(f)
             except ValueError:
-                relative_path = f.resolve()
+                relative_path = str(f)
             print(f"\n✓ OCR réussi !\nFichier produit : {relative_path}")
         return 0
     else:

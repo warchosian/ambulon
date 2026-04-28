@@ -48,6 +48,7 @@ class OpenAICompatibleProvider(BaseProvider):
         self.timeout = config.get("timeout", 120)
         self.max_retries = config.get("max_retries", 3)
         self.retry_delay = config.get("retry_delay", 2)
+        self.ssl_verify = config.get("ssl_verify", True)
 
     def generate(
         self,
@@ -84,7 +85,7 @@ class OpenAICompatibleProvider(BaseProvider):
         # Retry logic
         for attempt in range(self.max_retries):
             try:
-                response = self.session.post(url, json=payload, timeout=self.timeout)
+                response = self.session.post(url, json=payload, timeout=self.timeout, verify=self.ssl_verify)
 
                 if response.status_code != 200:
                     try:
@@ -164,7 +165,7 @@ class OpenAICompatibleProvider(BaseProvider):
             if key not in payload:
                 payload[key] = value
 
-        response = self.session.post(url, json=payload, timeout=self.timeout, stream=True)
+        response = self.session.post(url, json=payload, timeout=self.timeout, stream=True, verify=self.ssl_verify)
         response.raise_for_status()
 
         for line in response.iter_lines():
@@ -188,7 +189,7 @@ class OpenAICompatibleProvider(BaseProvider):
         """Test API connectivity."""
         try:
             url = f"{self.base_url.rstrip('/')}/models"
-            response = self.session.get(url, timeout=5)
+            response = self.session.get(url, timeout=5, verify=self.ssl_verify)
             return response.status_code == 200
         except Exception:
             # Fallback to a simple generation test

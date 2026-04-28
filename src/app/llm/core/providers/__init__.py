@@ -8,6 +8,8 @@ from app.llm.core.providers.kimi import KimiProvider
 from app.llm.core.providers.claude import ClaudeProvider
 from app.llm.core.providers.local import LocalProvider
 from app.llm.core.providers.chatgpt import ChatGPTProvider
+from app.llm.core.providers.gemini import GeminiProvider
+from app.llm.core.providers.openai_compatible import OpenAICompatibleProvider
 
 # Provider registry for dynamic loading
 PROVIDERS: Dict[str, Type[BaseProvider]] = {
@@ -15,7 +17,24 @@ PROVIDERS: Dict[str, Type[BaseProvider]] = {
     'claude': ClaudeProvider,
     'local': LocalProvider,
     'chatgpt': ChatGPTProvider,
-    # Future providers:
+    'gemini': GeminiProvider,
+    # Cloud provider aliases (same implementation as non-cloud)
+    'cloud_kimi': KimiProvider,
+    'cloud_kimi_k2': KimiProvider,
+    'cloud_claude': ClaudeProvider,
+    'cloud_chatgpt': ChatGPTProvider,
+    'cloud_gemini': GeminiProvider,
+    # OpenAI-compatible cloud providers
+    'cloud_glm': OpenAICompatibleProvider,
+    'cloud_glm_4_7': OpenAICompatibleProvider,
+    'cloud_qwen': OpenAICompatibleProvider,
+    'cloud_deepseek': OpenAICompatibleProvider,
+    'cloud_deepseek_v4': OpenAICompatibleProvider,
+    # Ollama local models (with cloud naming convention)
+    'cloud_gpt_oss_120b': OpenAICompatibleProvider,
+    'cloud_gpt_oss_20b': OpenAICompatibleProvider,
+    'cloud_qwen3_coder_480b': OpenAICompatibleProvider,
+    'cloud_deepseek_v3_1_671b': OpenAICompatibleProvider,
 }
 
 

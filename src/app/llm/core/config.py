@@ -39,7 +39,7 @@ DEFAULT_LLM_CONFIG: Dict[str, Any] = {
                 "max_tokens": 4096,
             },
             "claude": {
-                "enabled": False,
+                "enabled": True,
                 "base_url": "https://api.anthropic.com/v1",
                 "api_key": "",
                 "model": "claude-3-opus-20240229",
@@ -50,7 +50,180 @@ DEFAULT_LLM_CONFIG: Dict[str, Any] = {
                 "enabled": False,
                 "base_url": "http://localhost:11434/v1",
                 "api_key": "local",
-                "model": "qwen2.5-7b",
+                "model": "qwen2.5:1.5b",
+                "temperature": 0.7,
+                "max_tokens": 4096,
+            },
+            "local_llama3_1_8b": {
+                "enabled": True,
+                "base_url": "http://localhost:11434/v1",
+                "api_key": "local",
+                "model": "llama3.1:8b",
+                "temperature": 0.7,
+                "max_tokens": 16384,
+            },
+            "local_qwen2_5_1_5b": {
+                "enabled": True,
+                "base_url": "http://localhost:11434/v1",
+                "api_key": "local",
+                "model": "qwen2.5:1.5b",
+                "temperature": 0.7,
+                "max_tokens": 4096,
+            },
+            "local_phi3_mini": {
+                "enabled": True,
+                "base_url": "http://localhost:11434/v1",
+                "api_key": "local",
+                "model": "phi3:mini",
+                "temperature": 0.7,
+                "max_tokens": 4096,
+            },
+            "cloud_gpt_oss_120b": {
+                "enabled": True,
+                "base_url": "http://localhost:11434/v1",
+                "api_key": "local",
+                "model": "gpt-oss:120b-cloud",
+                "temperature": 0.7,
+                "max_tokens": 16384,
+            },
+            "cloud_gpt_oss_20b": {
+                "enabled": True,
+                "base_url": "http://localhost:11434/v1",
+                "api_key": "local",
+                "model": "gpt-oss:20b-cloud",
+                "temperature": 0.7,
+                "max_tokens": 4096,
+            },
+            "cloud_qwen3_coder_480b": {
+                "enabled": True,
+                "base_url": "http://localhost:11434/v1",
+                "api_key": "local",
+                "model": "qwen3-coder:480b-cloud",
+                "temperature": 0.7,
+                "max_tokens": 4096,
+            },
+            "cloud_deepseek_v3_1_671b": {
+                "enabled": True,
+                "base_url": "http://localhost:11434/v1",
+                "api_key": "local",
+                "model": "deepseek-v3.1:671b-cloud",
+                "temperature": 0.7,
+                "max_tokens": 4096,
+            },
+            "glm": {
+                "enabled": True,
+                "base_url": "https://open.bigmodel.cn/api/paas/v4",
+                "api_key": "",
+                "model": "glm-5.1-cloud",
+                "temperature": 0.7,
+                "max_tokens": 8192,
+                "retry_delay": 2,
+            },
+            "qwen": {
+                "enabled": True,
+                "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+                "api_key": "",
+                "model": "qwen-3.6-max",
+                "temperature": 0.7,
+                "max_tokens": 8192,
+                "retry_delay": 2,
+            },
+            "deepseek": {
+                "enabled": True,
+                "base_url": "https://api.deepseek.com/chat/completions",
+                "api_key": "",
+                "model": "deepseek-chat",
+                "temperature": 0.7,
+                "max_tokens": 8192,
+                "retry_delay": 2,
+            },
+            # Cloud providers with standardized names
+            "cloud_kimi": {
+                "enabled": True,
+                "base_url": "https://api.moonshot.cn/v1",
+                "api_key": "",
+                "model": "moonshot-v1-128k",
+                "temperature": 0.7,
+                "max_tokens": 16384,
+                "retry_delay": 2,
+            },
+            "cloud_kimi_k2": {
+                "enabled": True,
+                "base_url": "https://api.moonshot.cn/v1",
+                "api_key": "",
+                "model": "kimi-k2.6:cloud",
+                "temperature": 0.7,
+                "max_tokens": 16384,
+                "retry_delay": 2,
+            },
+            "cloud_glm": {
+                "enabled": True,
+                "base_url": "https://open.bigmodel.cn/api/paas/v4",
+                "api_key": "",
+                "model": "glm-5.1-cloud",
+                "temperature": 0.7,
+                "max_tokens": 8192,
+                "retry_delay": 2,
+                "ssl_verify": False,
+            },
+            "cloud_glm_4_7": {
+                "enabled": True,
+                "base_url": "https://open.bigmodel.cn/api/paas/v4",
+                "api_key": "",
+                "model": "glm-4.7-flash",
+                "temperature": 0.7,
+                "max_tokens": 8192,
+                "retry_delay": 2,
+                "ssl_verify": False,
+            },
+            "cloud_qwen": {
+                "enabled": True,
+                "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+                "api_key": "",
+                "model": "qwen-3.6-max",
+                "temperature": 0.7,
+                "max_tokens": 8192,
+                "retry_delay": 2,
+            },
+            "cloud_deepseek": {
+                "enabled": True,
+                "base_url": "https://api.deepseek.com/chat/completions",
+                "api_key": "",
+                "model": "deepseek-chat",
+                "temperature": 0.7,
+                "max_tokens": 8192,
+                "retry_delay": 2,
+            },
+            "cloud_deepseek_v4": {
+                "enabled": True,
+                "base_url": "https://api.deepseek.com/chat/completions",
+                "api_key": "",
+                "model": "deepseek-v4-flash",
+                "temperature": 0.7,
+                "max_tokens": 8192,
+                "retry_delay": 2,
+            },
+            "cloud_claude": {
+                "enabled": True,
+                "base_url": "https://api.anthropic.com/v1",
+                "api_key": "",
+                "model": "claude-3-haiku-20240307",
+                "temperature": 1.0,
+                "max_tokens": 4096,
+            },
+            "cloud_chatgpt": {
+                "enabled": True,
+                "base_url": "https://api.openai.com/v1",
+                "api_key": "",
+                "model": "gpt-4-turbo-preview",
+                "temperature": 0.7,
+                "max_tokens": 4096,
+            },
+            "cloud_gemini": {
+                "enabled": True,
+                "base_url": "https://generativelanguage.googleapis.com/v1beta",
+                "api_key": "",
+                "model": "gemini-2.5-flash",
                 "temperature": 0.7,
                 "max_tokens": 4096,
             },
@@ -146,7 +319,9 @@ def get_provider_config(provider_name: str, config: Dict[str, Any]) -> Dict[str,
         provider_config = config["llm"]["providers"][provider_name]
         return provider_config
     except KeyError:
-        raise ValueError(f"Provider '{provider_name}' not found in configuration")
+        # List available for debugging
+        available = list(config.get("llm", {}).get("providers", {}).keys())
+        raise ValueError(f"Provider '{provider_name}' not found. Available: {available}")
 
 
 def get_api_key(provider_name: str, config: Dict[str, Any]) -> str:
@@ -180,7 +355,26 @@ def get_api_key(provider_name: str, config: Dict[str, Any]) -> str:
         "kimi": "KIMI_API_KEY",
         "chatgpt": "OPENAI_API_KEY",
         "claude": "ANTHROPIC_API_KEY",
-        "local": "LOCAL_LLM_API_KEY"
+        "glm": "GLM_API_KEY",
+        "qwen": "ALIBABA_API_KEY",
+        "deepseek": "DEEPSEEK_API_KEY",
+        "alibaba": "ALIBABA_API_KEY",
+        "local": "LOCAL_LLM_API_KEY",
+        # Cloud provider names
+        "cloud_kimi": "KIMI_API_KEY",
+        "cloud_kimi_k2": "KIMI_API_KEY",
+        "cloud_chatgpt": "OPENAI_API_KEY",
+        "cloud_claude": "ANTHROPIC_API_KEY",
+        "cloud_gemini": "GEMINI_API_KEY",
+        "cloud_glm": "GLM_API_KEY",
+        "cloud_glm_4_7": "GLM_API_KEY",
+        "cloud_qwen": "ALIBABA_API_KEY",
+        "cloud_deepseek": "DEEPSEEK_API_KEY",
+        "cloud_deepseek_v4": "DEEPSEEK_API_KEY",
+        "cloud_gpt_oss_120b": "LOCAL_LLM_API_KEY",
+        "cloud_gpt_oss_20b": "LOCAL_LLM_API_KEY",
+        "cloud_qwen3_coder_480b": "LOCAL_LLM_API_KEY",
+        "cloud_deepseek_v3_1_671b": "LOCAL_LLM_API_KEY",
     }
 
     env_var = env_var_names.get(provider_name)
@@ -191,7 +385,7 @@ def get_api_key(provider_name: str, config: Dict[str, Any]) -> str:
 
     raise ValueError(
         f"API key for provider '{provider_name}' not found. "
-        f"Set {env_var} environment variable or configure 'llm.providers.{provider_name}.api_key' in config/llm.yaml"
+        f"Set {env_var or 'appropriate'} environment variable or configure 'llm.providers.{provider_name}.api_key' in config/llm.yaml"
     )
 
 

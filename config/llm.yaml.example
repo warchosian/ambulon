@@ -1,136 +1,59 @@
-# ============================================================================
-# FICHIER DE CONFIGURATION - MODULE LLM (GÉNÉRATION PAR IA)
-# ============================================================================
-# Ce fichier configure les providers LLM pour la génération de documents
-#
-# INSTRUCTIONS:
-# 1. Copier ce fichier: cp llm.yaml.example llm.yaml
-# 2. Remplir les API keys pour les providers souhaités
-# 3. Le fichier config/llm.yaml est dans .gitignore
-#
-# HIÉRARCHIE: Arguments CLI > YAML > Variables d'environnement > Défauts
-# ============================================================================
-
 llm:
-  # ==========================
-  # CONFIGURATION GÉNÉRALE
-  # ==========================
-
-  # Provider par défaut (kimi, chatgpt, claude)
   default_provider: "kimi"
-
-  # Timeout pour les requêtes API (en secondes)
-  timeout: 120
-
-  # Nombre maximum de tentatives en cas d'échec
+  timeout: 900
   max_retries: 3
-
-  # Activer le streaming par défaut
   enable_streaming: false
 
-  # ==========================
-  # PROVIDERS LLM
-  # ==========================
   providers:
-    # Kimi (Moonshot AI) - API compatible OpenAI
-    kimi:
+    # Alibaba Cloud (Qwen) - https://help.aliyun.com/zh/dashscope/
+    alibaba:
       enabled: true
-
-      # URL de base de l'API
-      base_url: "https://api.moonshot.cn/v1"
-
-      # Token API Kimi (Bearer token)
-      # ⚠️ NE PAS COMMITER CE TOKEN ⚠️
-      # Préférez utiliser la variable d'environnement KIMI_API_KEY
-      api_key: "${KIMI_API_KEY:-}"
-
-      # Modèle par défaut
-      # Options: moonshot-v1-8k, moonshot-v1-32k, moonshot-v1-128k
-      model: "moonshot-v1-8k"
-
-      # Paramètres de génération
-      temperature: 0.7        # Créativité (0.0 à 1.0)
-      max_tokens: 4096        # Longueur maximale de réponse
-
-      # Délai entre les tentatives (en secondes)
+      base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+      api_key: "${ALIBABA_API_KEY:-}"  # Définir dans .env : ALIBABA_API_KEY=sk-xxx
+      model: "qwen-plus"  # Options: qwen-turbo, qwen-plus, qwen-max
+      temperature: 0.7
+      max_tokens: 8192
       retry_delay: 2
 
-    # ChatGPT (OpenAI)
-    chatgpt:
-      enabled: false
-      base_url: "https://api.openai.com/v1"
-      api_key: "${OPENAI_API_KEY:-}"
-      model: "gpt-4-turbo-preview"
+    # Kimi (Moonshot AI)
+    kimi:
+      enabled: true
+      base_url: "https://api.moonshot.cn/v1"
+      api_key: "${KIMI_API_KEY:-}"  # Définir dans .env
+      model: "moonshot-v1-128k"
       temperature: 0.7
-      max_tokens: 4096
+      max_tokens: 16384
+      retry_delay: 2
 
-    # Claude (Anthropic)
+    # Anthropic Claude
     claude:
-      enabled: false
+      enabled: true
       base_url: "https://api.anthropic.com/v1"
-      api_key: "${ANTHROPIC_API_KEY:-}"
-      model: "claude-3-opus-20240229"
+      api_key: "${ANTHROPIC_API_KEY:-}"  # Définir dans .env
+      model: "claude-3-haiku-20240307"
       temperature: 1.0
       max_tokens: 4096
 
-    # Local LLM (Ollama, LM Studio, vLLM)
-    local:
-      enabled: false
-      # Ollama default URL
-      base_url: "http://localhost:11434/v1"
-      # Usually not needed for local, but can be configured
-      api_key: "local"
-      # Recommended models: qwen2.5-7b, qwen3.5-7b, gemma2-9b, gemma4-9b
-      model: "qwen2.5-7b"
+    # Google Gemini
+    gemini:
+      enabled: true
+      base_url: "https://generativelanguage.googleapis.com/v1beta"
+      api_key: "${GEMINI_API_KEY:-}"  # Définir dans .env
+      model: "gemini-2.5-flash"
       temperature: 0.7
       max_tokens: 4096
 
-  # ==========================
-  # CONFIGURATION DES DOCUMENTS
-  # ==========================
   documents:
-    # Séparateur pour l'agrégation de documents
     separator: "\n\n---\n\n"
-
-    # Inclure les métadonnées des fichiers dans le contexte
     include_metadata: true
-
-    # Extensions de fichiers acceptées
     allowed_extensions:
       - ".md"
       - ".markdown"
       - ".txt"
-
-    # Encodage par défaut
     default_encoding: "utf-8"
 
-  # ==========================
-  # CONFIGURATION DE SORTIE
-  # ==========================
   output:
-    # Fichier de sortie par défaut
     default_file: "response.md"
-
-    # Créer le répertoire de sortie si inexistant
     create_output_dir: true
-
-    # Sauvegarder les métadonnées de génération
     save_metadata: true
-
-    # Nom du fichier de métadonnées
     metadata_filename: "generation_metadata.json"
-
-# ==========================
-# EXEMPLES D'UTILISATION
-# ==========================
-# 1. Génération simple:
-#    ambulon llm -i doc1.md -i doc2.md -p prompt.md -o response.md
-#
-# 2. Génération avec streaming:
-#    ambulon llm --input-dir ./docs -p prompt.md --stream
-#
-# 3. Utiliser un provider spécifique:
-#    ambulon llm -i docs/*.md -p prompt.md --provider chatgpt
-#
-# 4. Lister les providers:
-#    ambulon llm --list-providers

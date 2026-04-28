@@ -1,0 +1,27 @@
+G:\WarchoLife\WarchoPortable\PortableWork\Anaconda\anaconda-3\envs\ambulon\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.2.3) or chardet (6.0.0.post1)/charset_normalizer (3.4.1) doesn't match a supported version!
+  warnings.warn(
+2026-04-21 20:40:48,475 [INFO] app.llm.commands.generate_docs: [START] Batch document generation
+2026-04-21 20:40:48,476 [INFO] app.llm.commands.generate_docs: Using provider: kimi
+2026-04-21 20:40:48,477 [INFO] app.llm.commands.generate_docs: Found 24 prompts in workplace-ambulon\piag-chat\prompts
+2026-04-21 20:40:48,482 [INFO] app.llm.commands.generate_docs: Found 42 applications in workplace-ambulon\gitlab
+
+📋 Generation Plan
+   Prompts: 1
+   Applications: 1
+   Documents to generate: 1
+   Provider: kimi
+
+======================================================================
+🚀 Starting generation...
+
+[1/1] Generating sireines.dex.md... 2026-04-21 20:40:48,483 [ERROR] app.llm.commands.generate_docs: Failed to generate sireines.dex.md: API key for provider 'kimi' not found. Set KIMI_API_KEY environment variable or configure 'llm.providers.kimi.api_key' in config/llm.yaml
+Traceback (most recent call last):
+  File "G:\WarchoLife\WarchoDevplace\Gitlab_Applications\ambulon\src\app\llm\commands\generate_docs.py", line 171, in generate_document
+    api_key = get_api_key(provider_name, config)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\WarchoLife\WarchoDevplace\Gitlab_Applications\ambulon\src\app\llm\core\config.py", line 192, in get_api_key
+    raise ValueError(
+ValueError: API key for provider 'kimi' not found. Set KIMI_API_KEY environment variable or configure 'llm.providers.kimi.api_key' in config/llm.yaml
+✗
+
+❌ Generation failed. Use --skip-errors to continue on errors.

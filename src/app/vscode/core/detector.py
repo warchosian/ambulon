@@ -43,7 +43,7 @@ def find_vscode_command(preferred_editor: Optional[str] = None) -> str:
     for cmd, paths in _get_common_paths().items():
         for path in paths:
             checked_paths.append(path)
-            if os.path.exists(path):
+            if Path(path).exists():
                 logger.info(f"Using {path} (auto-detected)")
                 return path
 
@@ -86,10 +86,10 @@ def get_vscode_version(vscode_cmd: str) -> str:
             capture_output=True,
             text=True,
             check=True,
-            timeout=10
+            timeout=10,
         )
         # First line is the version
-        lines = result.stdout.strip().split('\n')
+        lines = result.stdout.strip().split("\n")
         if lines:
             version = lines[0].strip()
             logger.debug(f"Detected version: {version}")
@@ -133,6 +133,7 @@ def is_vscode_installed(preferred_editor: Optional[str] = None) -> bool:
 
 # Private helper functions
 
+
 def _find_specific_editor(editor: str) -> str:
     """Find a specific editor (code, codium, cursor, or code-insiders)."""
     # Validate editor choice
@@ -152,7 +153,7 @@ def _find_specific_editor(editor: str) -> str:
     checked_paths = []
     for path in paths:
         checked_paths.append(path)
-        if os.path.exists(path):
+        if Path(path).exists():
             logger.info(f"Using {path} (specified)")
             return path
 
@@ -161,13 +162,12 @@ def _find_specific_editor(editor: str) -> str:
         "code": "VS Code",
         "codium": "VSCodium",
         "cursor": "Cursor",
-        "code-insiders": "VS Code Insiders"
+        "code-insiders": "VS Code Insiders",
     }
     editor_name = editor_names.get(editor, editor)
 
     error_msg = (
-        f"{editor_name} ('{editor}') not found on this system.\n"
-        f"Checked locations:\n"
+        f"{editor_name} ('{editor}') not found on this system.\nChecked locations:\n"
     )
     for path in checked_paths:
         error_msg += f"  - {path}\n"
@@ -186,31 +186,27 @@ def _find_specific_editor(editor: str) -> str:
 def _is_command_available(cmd: str) -> bool:
     """Check if a command is available in PATH."""
     try:
-        subprocess.run(
-            [cmd, "--version"],
-            capture_output=True,
-            check=True,
-            timeout=5
-        )
+        subprocess.run([cmd, "--version"], capture_output=True, check=True, timeout=5)
         return True
-    except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
+    except (
+        subprocess.CalledProcessError,
+        FileNotFoundError,
+        subprocess.TimeoutExpired,
+    ):
         return False
 
 
 def _get_common_paths() -> dict[str, list[str]]:
     """Get common installation paths for VS Code, VSCodium, Cursor, and VS Code Insiders."""
-    paths = {
-        "code": [],
-        "codium": [],
-        "cursor": [],
-        "code-insiders": []
-    }
+    paths = {"code": [], "codium": [], "cursor": [], "code-insiders": []}
 
     if os.name == "nt":  # Windows
         paths["code"] = [
             r"C:\Program Files\Microsoft VS Code\bin\code.cmd",
             r"C:\Program Files (x86)\Microsoft VS Code\bin\code.cmd",
-            os.path.expandvars(r"%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd"),
+            os.path.expandvars(
+                r"%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd"
+            ),
         ]
         paths["codium"] = [
             r"C:\Program Files\VSCodium\bin\codium.cmd",
@@ -222,14 +218,20 @@ def _get_common_paths() -> dict[str, list[str]]:
         if _portable_codium:
             paths["codium"].append(_portable_codium)
         paths["cursor"] = [
-            os.path.expandvars(r"%LOCALAPPDATA%\Programs\Cursor\resources\app\bin\cursor.cmd"),
-            os.path.expandvars(r"%LOCALAPPDATA%\Programs\cursor\resources\app\bin\cursor.cmd"),
+            os.path.expandvars(
+                r"%LOCALAPPDATA%\Programs\Cursor\resources\app\bin\cursor.cmd"
+            ),
+            os.path.expandvars(
+                r"%LOCALAPPDATA%\Programs\cursor\resources\app\bin\cursor.cmd"
+            ),
             r"C:\Program Files\Cursor\resources\app\bin\cursor.cmd",
         ]
         paths["code-insiders"] = [
             r"C:\Program Files\Microsoft VS Code Insiders\bin\code-insiders.cmd",
             r"C:\Program Files (x86)\Microsoft VS Code Insiders\bin\code-insiders.cmd",
-            os.path.expandvars(r"%LOCALAPPDATA%\Programs\Microsoft VS Code Insiders\bin\code-insiders.cmd"),
+            os.path.expandvars(
+                r"%LOCALAPPDATA%\Programs\Microsoft VS Code Insiders\bin\code-insiders.cmd"
+            ),
         ]
     elif os.name == "posix":  # Linux/macOS
         paths["code"] = [
@@ -255,9 +257,17 @@ def _get_common_paths() -> dict[str, list[str]]:
 
         # macOS specific paths
         if os.uname().sysname == "Darwin":
-            paths["code"].append("/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code")
-            paths["codium"].append("/Applications/VSCodium.app/Contents/Resources/app/bin/codium")
-            paths["cursor"].append("/Applications/Cursor.app/Contents/Resources/app/bin/cursor")
-            paths["code-insiders"].append("/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin/code-insiders")
+            paths["code"].append(
+                "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+            )
+            paths["codium"].append(
+                "/Applications/VSCodium.app/Contents/Resources/app/bin/codium"
+            )
+            paths["cursor"].append(
+                "/Applications/Cursor.app/Contents/Resources/app/bin/cursor"
+            )
+            paths["code-insiders"].append(
+                "/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin/code-insiders"
+            )
 
     return paths

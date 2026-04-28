@@ -1,0 +1,58 @@
+# Pre-commit hooks pour Ambulon
+# Installation: pip install pre-commit
+# Activation: pre-commit install
+
+repos:
+  # === Sécurité : Détection de secrets ===
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        name: Detect secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: \.secrets\.baseline$
+
+  # === Qualité Python : ruff (linter + formatter) ===
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.6
+    hooks:
+      - id: ruff
+        name: Ruff linter
+        args: [--fix]
+      - id: ruff-format
+        name: Ruff formatter
+
+  # === Imports : isort ===
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: Sort imports
+        args: ["--profile", "black", "--line-length", "100"]
+
+  # === Fichiers : trailing whitespace, EOF, YAML ===
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        name: Trim trailing whitespace
+      - id: end-of-file-fixer
+        name: Fix end of files
+      - id: check-yaml
+        name: Check YAML syntax
+        exclude: \.secrets\.baseline$
+      - id: check-added-large-files
+        name: Check for large files
+        args: ['--maxkb=5000']
+      - id: check-merge-conflict
+        name: Check for merge conflicts
+      - id: mixed-line-ending
+        name: Fix mixed line endings
+
+  # === Git : interdire commits sur main/master ===
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: no-commit-to-branch
+        name: Don't commit to main/master
+        args: ['--branch', 'main', '--branch', 'master']

@@ -430,26 +430,26 @@ def _process_pdf_ocr(pdf_file: Path, language: str = 'fra', output_file: Path = 
                 except Exception as e:
                     logging.warning(f"[OCR] Erreur OCR page {page_num + 1}: {e}")
                     all_text.append(f"=== Page {page_num + 1} (erreur OCR) ===\nErreur: {e}\n")
-        
+
         doc.close()
-        
+
         # Écrire tout le texte dans le fichier de sortie
-        combined_text = "\n".join(all_text)
+        combined_text = "\n\n".join(all_text)
         with open(ocr_output_file, 'w', encoding='utf-8') as f:
             f.write(combined_text)
-        
+
         ocr_size = ocr_output_file.stat().st_size
         logging.info(f"[OCR] OCR PDF réussi : {ocr_output_file} ({ocr_size} octets)")
-        
+
         return {
             'success': True,
             'input_file': pdf_file,
             'output_file': ocr_output_file,
             'language': language,
             'file_size': ocr_size,
-            'pages_processed': len(doc)
+            'pages_processed': pages_count
         }
-        
+
     except ImportError:
         return {
             'success': False,
@@ -612,95 +612,184 @@ def perform_ocr_single_file(image_file: Path, language: str = 'fra', output_file
         }
 
 
+def _table_to_markdown(table: List[List[str]]) -> str:
+    """Convertit un tableau en format markdown avec préservation de la structure."""
+    if not table or not table[0]:
+        return ""
+
+    def clean_cell(cell, preserve_breaks=True):
+        """Nettoie le contenu d'une cellule."""
+        if cell is None:
+            return ""
+        text = str(cell).strip()
+        if not preserve_breaks:
+            # Pour les titres, garder sur une seule ligne
+            text = " ".join(text.split())
+            return text
+        # Préserver les sauts de ligne mais nettoyer les espaces excessifs
+        lines = [line.strip() for line in text.split('\n')]
+        lines = [line for line in lines if line]
+        return '<br>'.join(lines) if lines else ""
+
+    num_cols = len(table[0])
+    is_title_table = num_cols == 1
+    is_content_box = num_cols == 1 and len(table) == 2 and len(str(table[1][0])) > 200
+
+    # Cas spécial: boîte de contenu texte (une colonne, beaucoup de texte)
+    if is_content_box:
+        content = str(table[1][0]).strip()
+        # Garder la structure avec sauts de ligne
+        lines = [line.strip() for line in content.split('\n')]
+        lines = [line for line in lines if line]
+        return "\n".join(lines) + "\n"
+
+    header = [clean_cell(cell, preserve_breaks=not is_title_table) for cell in table[0]]
+    if not any(header):
+        return ""
+
+    markdown = "| " + " | ".join(header) + " |\n"
+    markdown += "|" + "|".join(["---" for _ in header]) + "|\n"
+    for row in table[1:]:
+        clean_row = [clean_cell(cell, preserve_breaks=not is_title_table) for cell in row]
+        if any(clean_row):
+            markdown += "| " + " | ".join(clean_row) + " |\n"
+    return markdown
+
+
 def _process_pdf_ocr(pdf_file: Path, language: str = 'fra', output_file: Path = None) -> Dict[str, Any]:
     """
-    Effectue l'OCR sur un fichier PDF en extrayant d'abord les images
-    
+    Effectue l'OCR sur un fichier PDF en détectant et convertissant les tableaux.
+
     Args:
         pdf_file: Fichier PDF à traiter
         language: Langue pour l'OCR
         output_file: Fichier de sortie (optionnel)
-        
+
     Returns:
         Dict contenant les informations sur l'OCR
     """
     try:
-        import fitz  # PyMuPDF
-        
+        import pdfplumber
+
         # Générer le nom du fichier de sortie OCR
         if output_file is None:
             ocr_output_file = pdf_file.with_suffix('.txt')
         else:
             ocr_output_file = output_file
-        
-        logging.info(f"[OCR] Traitement PDF : {pdf_file}")
-        
-        # Ouvrir le PDF
-        doc = fitz.open(pdf_file)
+
+        logging.info(f"[OCR] Traitement PDF avec extraction de tableaux : {pdf_file}")
+
         all_text = []
-        
-        for page_num in range(len(doc)):
-            page = doc[page_num]
-            
-            # D'abord essayer d'extraire le texte directement
-            text = page.get_text()
-            if text.strip():
-                all_text.append(f"=== Page {page_num + 1} (texte direct) ===\n{text}\n")
-                logging.info(f"[OCR] Page {page_num + 1}: texte extrait directement")
-            else:
-                # Si pas de texte, convertir en image et faire l'OCR
-                logging.info(f"[OCR] Page {page_num + 1}: conversion en image pour OCR")
-                
-                # Rendre la page en image
-                mat = fitz.Matrix(2.0, 2.0)  # Zoom 2x pour meilleure qualité OCR
-                pix = page.get_pixmap(matrix=mat, alpha=False)
-                
-                # Sauvegarder temporairement l'image
-                temp_image = pdf_file.parent / f"temp_page_{page_num + 1}.png"
-                pix.save(temp_image)
-                
-                try:
-                    # Faire l'OCR sur l'image temporaire
-                    temp_output = pdf_file.parent / f"temp_page_{page_num + 1}.txt"
-                    ocr_result = perform_ocr_single_file(temp_image, language, temp_output)
-                    
-                    if ocr_result['success'] and temp_output.exists():
-                        with open(temp_output, 'r', encoding='utf-8') as f:
-                            page_text = f.read()
-                        all_text.append(f"=== Page {page_num + 1} (OCR) ===\n{page_text}\n")
+        pages_count = 0
+
+        with pdfplumber.open(pdf_file) as pdf:
+            pages_count = len(pdf.pages)
+
+            for page_num, page in enumerate(pdf.pages):
+                page_content = []
+
+                # Extraire le texte ET les tableaux
+                text = page.extract_text()
+                tables = page.extract_tables()
+
+                # Créer une liste de lignes de tableau pour comparaison
+                table_lines = set()
+                for table in tables:
+                    for row in table:
+                        for cell in row:
+                            if cell:
+                                # Ajouter plusieurs variantes de nettoyage pour maximiser la correspondance
+                                cell_text = str(cell).strip()
+                                if cell_text:
+                                    table_lines.add(cell_text[:100])
+                                    # Ajouter aussi des versions simplifiées
+                                    table_lines.add(" ".join(cell_text.split())[:100])
+
+                # Nettoyer le texte: supprimer les lignes qui sont dans les tableaux
+                if text and table_lines:
+                    text_lines = text.split('\n')
+                    filtered_lines = []
+                    for line in text_lines:
+                        line_clean = line.strip()
+                        line_simplified = " ".join(line_clean.split())
                         
-                        # Nettoyer les fichiers temporaires
-                        temp_output.unlink(missing_ok=True)
-                    
-                    temp_image.unlink(missing_ok=True)
-                    
-                except Exception as e:
-                    logging.warning(f"[OCR] Erreur OCR page {page_num + 1}: {e}")
-                    all_text.append(f"=== Page {page_num + 1} (erreur OCR) ===\nErreur: {e}\n")
-        
-        doc.close()
-        
+                        # Vérifier si la ligne ou son début est dans un tableau
+                        is_in_table = False
+                        for t_line in table_lines:
+                            if line_clean and (line_clean.startswith(t_line) or t_line.startswith(line_clean[:50])):
+                                is_in_table = True
+                                break
+                            if line_simplified and (line_simplified.startswith(t_line) or t_line.startswith(line_simplified[:50])):
+                                is_in_table = True
+                                break
+                                
+                        if not is_in_table:
+                            filtered_lines.append(line)
+                    text = '\n'.join(filtered_lines) if filtered_lines else None
+
+                # Ajouter le texte (nettoyé de la duplication)
+                if text and text.strip():
+                    page_content.append(text)
+
+                # Ajouter les tableaux formatés
+                if tables:
+                    logging.info(f"[OCR] Page {page_num + 1}: {len(tables)} tableau(x) détecté(s)")
+                    for table in tables:
+                        markdown_table = _table_to_markdown(table)
+                        if markdown_table:
+                            page_content.append(markdown_table)
+
+                # Ajouter le contenu de la page
+                if page_content:
+                    all_text.append(f"\n--- Page {page_num + 1} ---\n")
+                    all_text.extend(page_content)
+                else:
+                    # Si aucune extraction réussie, essayer avec OCR image
+                    logging.info(f"[OCR] Page {page_num + 1}: aucun contenu détecté, conversion en image")
+                    try:
+                        import fitz
+                        doc = fitz.open(pdf_file)
+                        page_fitz = doc[page_num]
+                        mat = fitz.Matrix(2.0, 2.0)
+                        pix = page_fitz.get_pixmap(matrix=mat, alpha=False)
+                        temp_image = pdf_file.parent / f"temp_page_{page_num + 1}.png"
+                        pix.save(temp_image)
+                        doc.close()
+
+                        temp_output = pdf_file.parent / f"temp_page_{page_num + 1}.txt"
+                        ocr_result = perform_ocr_single_file(temp_image, language, temp_output)
+
+                        if ocr_result['success'] and temp_output.exists():
+                            with open(temp_output, 'r', encoding='utf-8') as f:
+                                page_text = f.read()
+                            all_text.append(f"\n--- Page {page_num + 1} (OCR) ---\n{page_text}\n")
+                            temp_output.unlink(missing_ok=True)
+
+                        temp_image.unlink(missing_ok=True)
+                    except Exception as e:
+                        logging.warning(f"[OCR] Erreur OCR page {page_num + 1}: {e}")
+
         # Écrire tout le texte dans le fichier de sortie
-        combined_text = "\n".join(all_text)
+        combined_text = "\n\n".join(all_text)
         with open(ocr_output_file, 'w', encoding='utf-8') as f:
             f.write(combined_text)
-        
+
         ocr_size = ocr_output_file.stat().st_size
         logging.info(f"[OCR] OCR PDF réussi : {ocr_output_file} ({ocr_size} octets)")
-        
+
         return {
             'success': True,
             'input_file': pdf_file,
             'output_file': ocr_output_file,
             'language': language,
             'file_size': ocr_size,
-            'pages_processed': len(doc)
+            'pages_processed': pages_count
         }
-        
-    except ImportError:
+
+    except ImportError as e:
         return {
             'success': False,
-            'error': 'PyMuPDF non installé. Installez avec: pip install PyMuPDF'
+            'error': f'Dépendance manquante: {str(e)}'
         }
     except Exception as e:
         return {
