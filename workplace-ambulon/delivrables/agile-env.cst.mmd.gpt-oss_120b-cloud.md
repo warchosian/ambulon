@@ -23,7 +23,7 @@
 ### 2.1 Diagramme de composants (UML)  
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%
 componentDiagram;
     direction LR
     %% Conteneurs Docker
@@ -92,7 +92,7 @@ componentDiagram;
 ### 4.1 Diagramme de classes (UML)
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%
 classDiagram
     class ConfigLoader {
     +loadFromEnv(): array
@@ -138,7 +138,7 @@ classDiagram
 ### 5.1 Diagramme de séquence – Démarrage de l’environnement
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%
 sequenceDiagram
     participant Dev as Développeur
     participant Compose as Docker‑Compose
@@ -159,7 +159,7 @@ sequenceDiagram
 ### 5.2 Diagramme d’états – Cycle de vie d’un conteneur WebApp
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%
 stateDiagram-v2
     [*] --> Created
     Created --> Starting
@@ -173,7 +173,7 @@ stateDiagram-v2
 ### 5.3 Diagramme d’activités – Traitement d’une requête HTTP
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%
 flowchart TD
     A[Requête HTTP entrante] --> B[Apache reçoit la requête]
     B --> C[PHP‑FPM exécute le script index.php]
@@ -243,7 +243,7 @@ components:
 ### 7.1 Diagramme de déploiement (UML)
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%
 deploymentDiagram;
     node "Dev‑Host" {
     container "docker‑compose (dev)" {

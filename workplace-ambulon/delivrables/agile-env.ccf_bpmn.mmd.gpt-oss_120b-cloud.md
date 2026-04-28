@@ -49,7 +49,7 @@
 ### 3.1 Diagramme de **Collaboration** – Provisionnement complet
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F80ED', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F80ED', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram
   participant DevOps as "DevOps Engineer"
   participant DB as "PostgreSQL DB"
@@ -77,7 +77,7 @@ bpmnDiagram
 ### 3.2 Diagramme de **Processus** – *Construire l’image DB* (P‑001‑A)
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 bpmnDiagram
   startEvent(start1, "Déclenchement manuel / CI")
   task(buildDocker, "docker build –f docker/db/Dockerfile .")
@@ -90,7 +90,7 @@ bpmnDiagram
 ### 3.3 Diagramme de **Processus** – *Construire l’image App* (P‑001‑B)
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 bpmnDiagram
   startEvent(start2, "Déclenchement manuel / CI")
   task(prepareComposer, "Stage 1 : FROM composer_latest → copy /usr/bin/composer")
@@ -106,7 +106,7 @@ bpmnDiagram
 ### 3.4 Diagramme de **Choreography** – *Orchestration Docker‑Compose* (optionnel)
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 bpmnDiagram
   choreographyTask(startCompose, "docker‑compose -f docker‑compose.dev.yml up", "DevOps Engineer")
   choreographyTask(startDB, "Démarrage du service db", "PostgreSQL DB")
@@ -119,7 +119,7 @@ bpmnDiagram
 ### 3.5 Diagramme de **Conversation** – *Gestion des variables d’environnement* (optionnel)
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 bpmnDiagram
   conversation(convEnv, "Gestion .env")
   participant DevOps

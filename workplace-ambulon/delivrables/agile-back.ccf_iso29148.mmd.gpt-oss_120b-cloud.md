@@ -230,7 +230,7 @@ classDiagram
 ### 6.1 Diagramme de cas d’utilisation  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Admin as A;
     actor Utilisateur as U;

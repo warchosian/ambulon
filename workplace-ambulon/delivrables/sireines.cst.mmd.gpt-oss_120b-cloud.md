@@ -35,7 +35,7 @@ Le système est en production depuis 2024 (v 2.5.20) et repose sur une archite
 ### 2.1 Diagramme de composants (UML)  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#2A9D8F', 'edgeLabelBackground':'#F4A261' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#2A9D8F', 'edgeLabelBackground':'#F4A261' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 classDiagram
     direction TB;
     class WebApp {
@@ -199,7 +199,7 @@ sequencediagram;
 ### 7.1 Diagramme de déploiement (Docker‑Compose)  
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 graph TD
     subgraph Host (VM – IaaS ECO4)
     N1[Docker Engine]

@@ -22,7 +22,7 @@
 ### 2.1 Diagramme de composants (UML – Mermaid)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#0B5394', 'edgeLabelBackground':'#e8e8e8'}}%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#0B5394', 'edgeLabelBackground':'#e8e8e8'}}%%%%%%%%%%%%%%%%}%%
 graph LR
     subgraph MavenModules
     DB[causalismp‑database]:::module
@@ -103,7 +103,7 @@ graph LR
 ### 4.1 Diagramme de classes (UML – Mermaid)
 
 ```mermaid
-%%{init: {'theme':'neutral', 'themeVariables': { 'primaryColor': '#6FA8DC', 'edgeLabelBackground':'#F0F0F0'}}%%%%%%%%%%%%}%%
+%%{init: {'theme':'neutral', 'themeVariables': { 'primaryColor': '#6FA8DC', 'edgeLabelBackground':'#F0F0F0'}}%%%%%%%%%%%%%%%%}%%
 classDiagram
     direction TB
 
@@ -160,7 +160,7 @@ classDiagram
     GenericDao <|-- GradeDao
     ReferenceService <|-- GradeService
     ReferenceService <|-- DomaineAffectationService
-    SynchronizeService <|.. TranscodageGradeService : implements
+    SynchronizeService <|-- TranscodageGradeService : implements
     GradeService --> GradeDao : uses
     DomaineAffectationService --> GenericDao : uses
     TranscodageGradeService --> TranscodageGradeDao : uses
@@ -264,7 +264,7 @@ flowchart TD
 ### 7.1 Diagramme de déploiement (UML – Mermaid)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#A64D79', 'edgeLabelBackground':'#F5F5F5'}}%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#A64D79', 'edgeLabelBackground':'#F5F5F5'}}%%%%%%%%%%%%%%%%}%%
 graph LR
     subgraph CI/CD
     GIT[GitLab Repository]

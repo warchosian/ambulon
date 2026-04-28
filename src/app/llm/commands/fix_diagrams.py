@@ -57,6 +57,13 @@ class RegexDiagramFixer:
             (r'^        (?!$)', r'    '),  # Replace 8 spaces at line start with 4
             # Remove invalid class declarations with dots and parentheses
             (r'^\s*class\s+\.\.\.\s*\(.*\)\s*$', r''),  # Remove "class ... (text)" lines
+            # Remove generic type parameters from class names (Mermaid doesn't support <T>, <K,V>, etc)
+            (r'(class\s+\w+)<[^>]+>((?:\s*<<\w+>>)?)', r'\1\2'),  # Remove <generics> from class names
+            # Fix relationship syntax: <|. and <|.. should be <|--
+            (r'<\|\.+', r'<|--'),  # <|. and <|.. → <|--
+            # Remove semicolons from relationship statements
+            (r'(.*<\|--.*)\s*;\s*$', r'\1'),  # Remove ; from relationships
+            (r'(.*\.\.\>.*)\s*;\s*$', r'\1'),  # Remove ; from dependencies
             # Fix graph type declarations with semicolons: graph TB; → graph TB
             (r'\b(graph|flowchart)\s+(TB|LR|TD|BT|RL|DLR|TBL);', r'\1 \2'),
             # Fix end statements with semicolons: end; → end

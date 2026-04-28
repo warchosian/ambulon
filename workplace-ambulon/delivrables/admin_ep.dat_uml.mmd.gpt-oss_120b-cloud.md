@@ -20,7 +20,7 @@
 ### 2.1 Diagramme de Classes  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#005B9F','edgeLabelBackground':'#e8f1ff'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#005B9F','edgeLabelBackground':'#e8f1ff'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 classDiagram
     %% Packages;
     package "Model" {
@@ -156,11 +156,11 @@ classDiagram
     College "*" --> "*" Synonyme : possède;
     Charge "*" --> "*" Ministere : chargeDe;
     Ministere "*" --> "*" Direction : rattaché à;
-    AdminService ..> AdminDAO : uses;
-    EtablissementService ..> EtablissementDAO : uses;
+    AdminService ..> AdminDAO : uses
+    EtablissementService ..> EtablissementDAO : uses
     IntegrationService ..|> OutilRecherche : impl;
-    SecurityFilter ..> RightsHelper : uses;
-    SecurityFilter ..> BaseAdminUserSession : validates;
+    SecurityFilter ..> RightsHelper : uses
+    SecurityFilter ..> BaseAdminUserSession : validates
     %% Constraints (OCL – see section 7)
     note top of Admin "«inv»\nemail.matches('.+@.+\\..+')"
     note top of Mandat "«inv»\ndebut < fin"
@@ -185,7 +185,7 @@ classDiagram
 ### 2.2 Diagramme de Composants  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#00695c','edgeLabelBackground':'#e0f2f1'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#00695c','edgeLabelBackground':'#e0f2f1'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 componentDiagram;
     %% Components;
     component "admin_ep‑web" as WEB {
@@ -253,7 +253,7 @@ componentDiagram;
 ### 2.3 Diagramme de Déploiement  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#3e2723','edgeLabelBackground':'#d7ccc8'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#3e2723','edgeLabelBackground':'#d7ccc8'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 deploymentDiagram;
     node "Serveur d’applications\n(Tomcat 9 – Java 8)" as APP {
     artifact "admin_ep‑web.war"
@@ -334,7 +334,7 @@ classDiagram
 ### 2.5 Diagramme de Packages  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#283593','edgeLabelBackground':'#c5cae9'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#283593','edgeLabelBackground':'#c5cae9'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 graph TD
     subgraph "web"
     C[controller] --> S[service]
@@ -397,7 +397,7 @@ classDiagram
 ### 3.1 Diagramme de Cas d’Utilisation (Use‑case)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#00695c','edgeLabelBackground':'#e0f2f1'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#00695c','edgeLabelBackground':'#e0f2f1'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Administrateur as Admin;
     actor Gestionnaire as Gest;
@@ -431,7 +431,7 @@ usecaseDiagram;
 ### 3.2 Diagramme d’Activités (Activity)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#4e342e','edgeLabelBackground':'#d7ccc8'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#4e342e','edgeLabelBackground':'#d7ccc8'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 flowchart TD
     A[Début] --> B[Authentifier via Cerbère]
     B --> C{Authentification OK ?}
@@ -490,7 +490,7 @@ statediagram-v2;
 ### 4.1 Diagramme de Séquence – **Scénario de création d’un administrateur**  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#1a237e','edgeLabelBackground':'#c5cae9'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#1a237e','edgeLabelBackground':'#c5cae9'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 sequencediagram;
     participant UI as "Navigateur (JSP/FTL)"
     participant Ctrl as "AdminController"
@@ -529,7 +529,7 @@ sequencediagram;
 ### 4.2 Diagramme de Communication – **Import JORF**  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#004d40','edgeLabelBackground':'#b2dfdb'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#004d40','edgeLabelBackground':'#b2dfdb'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 graph LR
     Scheduler["Scheduler (Quartz)"] -->|trigger| JORFExtractor["JORFExtractor"]
     JORFExtractor -->|parse XML| ArticleParser["ArticleParser"]
@@ -583,7 +583,7 @@ flowchart TD
 ### 4.4 Diagramme de Temps (optionnel) – **Expiration d’un mandat**  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#bf360c','edgeLabelBackground':'#ffccbc'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#bf360c','edgeLabelBackground':'#ffccbc'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 timeline;
     title Expiration du mandat;
     2022-01-01 : Début mandat;

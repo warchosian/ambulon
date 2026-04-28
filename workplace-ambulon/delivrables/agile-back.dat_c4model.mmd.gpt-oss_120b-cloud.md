@@ -27,7 +27,7 @@
 ## 2️⃣ Niveau 1 – Vue Contexte (C4 L1)
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Context.puml
 
 Person(user, "Agent métier", "Utilise l’interface back‑office pour gérer les études")
@@ -112,7 +112,7 @@ Rel(front, app, "Consomme l’API")
 ## 5️⃣ Niveau 2 – Vue Conteneurs (C4 L2)
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Container.puml
 
 System_Boundary(agile_back, "agile‑back") {
@@ -178,7 +178,7 @@ Rel(front, web, "Consomme API")
 **Conteneur ciblé** : *Web App (Symfony)*  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Component.puml
 
 Container(web, "Web App (Symfony)", "PHP‑FPM") {
@@ -297,7 +297,7 @@ sequencediagram;
 ## 9️⃣ Vue Déploiement *(section standardisée)*  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Deployment.puml
 
 Deployment_Node(cloud, "Cloud ECO4", "OpenStack Tenant pnm3") {

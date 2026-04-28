@@ -222,7 +222,7 @@ classDiagram
 ### 6.1 Cas d’utilisation (UML use‑case)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0066CC','edgeLabelBackground':'#FFFFFF'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0066CC','edgeLabelBackground':'#FFFFFF'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 useCaseDiagram;
     actor Opérateur as Op;
     actor DG de tutelle as DG;

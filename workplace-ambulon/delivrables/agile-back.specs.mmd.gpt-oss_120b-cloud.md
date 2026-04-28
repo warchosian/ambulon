@@ -71,7 +71,7 @@
 ### 3.1 Acteurs & cas d’usage  
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 usecaseDiagram;
     actor Administrateur as Admin;
     actor Utilisateur métier as User;
@@ -343,7 +343,7 @@ statediagram-v2;
 ### 8.1 Diagramme de cas d’usage (déjà affiché en 3.1)  
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 usecaseDiagram;
     actor Administrateur as Admin;
     actor Utilisateur métier as User;

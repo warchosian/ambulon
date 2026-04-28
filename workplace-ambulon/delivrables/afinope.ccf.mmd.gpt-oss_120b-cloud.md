@@ -56,7 +56,7 @@
 ### 4.1 Diagramme de cas d’utilisation (Mermaid)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Opérateur DGFIP as Op;
     actor Data Analyst as DA;
@@ -104,7 +104,7 @@ usecaseDiagram;
 ## 5️⃣ Processus métier (BPMN)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Opérateur as OP;
     participant Système as SYS;
@@ -321,11 +321,11 @@ classDiagram
     Organisme "1" --> "0..*" Destination : référence;
     Organisme "1" --> "0..*" Origine : référence;
     Organisme "1" --> "0..*" Pluriannuel : référence;
-    Executoire <|-- DESP;
-    Executoire <|-- EFP;
-    Execution <|-- ABE;
-    Execution <|-- BAL;
-    Execution <|-- BIL;
+    Executoire <|-- DESP
+    Executoire <|-- EFP
+    Execution <|-- ABE
+    Execution <|-- BAL
+    Execution <|-- BIL
     Execution <|-- CR
 ```
 

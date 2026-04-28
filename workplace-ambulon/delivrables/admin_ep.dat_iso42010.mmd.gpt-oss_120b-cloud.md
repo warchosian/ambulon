@@ -178,7 +178,7 @@ classDiagram
     +application-config.xml;
     +baseadmin-auth-config.xml;
 
-    AccueilAction ..> StrutsConfig : mapped in;
+    AccueilAction ..> StrutsConfig : mapped in
     UpsertAdminAction ..> SpringBootConfig : bean
 ```
 

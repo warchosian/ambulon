@@ -48,14 +48,14 @@ classDiagram
     class GroupementGrades
     class Incompatibilites
 
-    class GenericDao<T> <<dao>>
+    class GenericDao <<dao>>
     class GradeDao <<dao>>
     class DossierAccidentDAO <<dao>>
     class DossierMaladieDAO <<dao>>
     class RechercheDossiersMaladiesDAO <<dao>>
     class TranscodageGradeDao <<dao>>
 
-    class ReferenceService<T> <<service>>
+    class ReferenceService <<service>>
     class GradeService <<service>>
     class DomaineAffectationService <<service>>
     class StatutService <<service>>
@@ -110,43 +110,43 @@ classDiagram
     class GenericFetcher
 
     %% Relationships;
-    Constantes <|.. BeanObject : uses;
-    BeanObject <|.. TablesReferences : extends;
-    TablesReferences <|.. * : extends;
-    GenericDao <|-- GradeDao;
-    GenericDao <|-- DossierAccidentDAO;
-    GenericDao <|-- DossierMaladieDAO;
-    GenericDao <|-- RechercheDossiersMaladiesDAO;
-    GenericDao <|-- TranscodageGradeDao;
-    ReferenceService <|-- GradeService;
-    ReferenceService <|-- DomaineAffectationService;
-    ReferenceService <|-- StatutService;
-    ReferenceService <|-- EffectifService;
-    ReferenceService <|-- ServiceService;
-    ReferenceService <|-- TachePrescriteService;
-    ReferenceService <|-- TranscodageGradeService;
-    GenericForm <|-- DossiersForm;
-    GenericForm <|-- EditionDossierForm1;
-    GenericForm <|-- EditionDossierForm2;
-    GenericForm <|-- EditionDossierForm3;
-    GenericForm <|-- EffectifsForm;
-    GenericForm <|-- RechercheDossiersForm;
-    GenericForm <|-- RechercheDossiersMaladieForm;
-    GenericForm <|-- StatistiquesForm;
-    AdminTableAction ..> GenericForm : uses;
-    DossiersAction ..> DossiersForm;
-    EditionDossierAction ..> EditionDossierForm1;
-    EffectifsAction ..> EffectifsForm;
-    StatistiquesAction ..> StatistiquesForm;
-    WSClientEffectif ..> EffectifDetailleConverter;
-    WSClientGrade ..> TranscodageGradePredicate;
-    WSClientService ..> ServiceConverter;
-    TechnicalException ..> Exception : encapsulates;
-    DaoException ..> CommonException;
-    WSException ..> CommonException;
-    StrutsOptionTag ..> OptionTag : extends;
-    PutIntoSessionTag ..> TagSupport : extends;
-    DBTools ..> QueryResults : uses;
+    Constantes <|-- BeanObject : uses
+    BeanObject <|-- TablesReferences : extends
+    TablesReferences <|-- * : extends
+    GenericDao <|-- GradeDao
+    GenericDao <|-- DossierAccidentDAO
+    GenericDao <|-- DossierMaladieDAO
+    GenericDao <|-- RechercheDossiersMaladiesDAO
+    GenericDao <|-- TranscodageGradeDao
+    ReferenceService <|-- GradeService
+    ReferenceService <|-- DomaineAffectationService
+    ReferenceService <|-- StatutService
+    ReferenceService <|-- EffectifService
+    ReferenceService <|-- ServiceService
+    ReferenceService <|-- TachePrescriteService
+    ReferenceService <|-- TranscodageGradeService
+    GenericForm <|-- DossiersForm
+    GenericForm <|-- EditionDossierForm1
+    GenericForm <|-- EditionDossierForm2
+    GenericForm <|-- EditionDossierForm3
+    GenericForm <|-- EffectifsForm
+    GenericForm <|-- RechercheDossiersForm
+    GenericForm <|-- RechercheDossiersMaladieForm
+    GenericForm <|-- StatistiquesForm
+    AdminTableAction ..> GenericForm : uses
+    DossiersAction ..> DossiersForm
+    EditionDossierAction ..> EditionDossierForm1
+    EffectifsAction ..> EffectifsForm
+    StatistiquesAction ..> StatistiquesForm
+    WSClientEffectif ..> EffectifDetailleConverter
+    WSClientGrade ..> TranscodageGradePredicate
+    WSClientService ..> ServiceConverter
+    TechnicalException ..> Exception : encapsulates
+    DaoException ..> CommonException
+    WSException ..> CommonException
+    StrutsOptionTag ..> OptionTag : extends
+    PutIntoSessionTag ..> TagSupport : extends
+    DBTools ..> QueryResults : uses
     BeanTool ..> BeanUtils : uses
 ```
 
@@ -336,7 +336,7 @@ classDiagram
 #### 2.2.1 Diagramme de **Cas d’Utilisation**  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#bbf','edgeLabelBackground':'#fff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#bbf','edgeLabelBackground':'#fff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Gestionnaire as G;
     actor Utilisateur as U;

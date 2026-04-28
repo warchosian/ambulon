@@ -67,7 +67,7 @@
 ### 4.1 Diagramme UML de cas d’utilisation  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#ffffff'}}%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#ffffff'}}%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Utilisateur as U
     actor Administrateur as A
@@ -107,7 +107,7 @@ usecaseDiagram;
 > Le processus **« Traitement OCR d’un document »** est présenté ci‑dessous.  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6'}}%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6'}}%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Utilisateur
     participant Backend

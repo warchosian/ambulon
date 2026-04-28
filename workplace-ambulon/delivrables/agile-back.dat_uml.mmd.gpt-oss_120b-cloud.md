@@ -161,15 +161,15 @@ classDiagram
     Etudes "1" --> "0..*" Bop : "référence"
 
     %% Controllers use Services & Repositories;
-    AbonnementsAdminController ..> AbonnementsService : uses;
-    EtudesController ..> EtudeService : uses;
-    EtudesController ..> EtudesRepository : reads/writes;
-    BopAdminController ..> BopService : uses;
-    ServicesAdminController ..> ServicesRepository : reads/writes;
+    AbonnementsAdminController ..> AbonnementsService : uses
+    EtudesController ..> EtudeService : uses
+    EtudesController ..> EtudesRepository : reads/writes
+    BopAdminController ..> BopService : uses
+    ServicesAdminController ..> ServicesRepository : reads/writes
     %% Services depend on Repositories;
-    EtudeService ..> EtudesRepository : uses;
-    BopService ..> BopRepository : uses;
-    DotationService ..> DotationsRepository : uses;
+    EtudeService ..> EtudesRepository : uses
+    BopService ..> BopRepository : uses
+    DotationService ..> DotationsRepository : uses
     %% Forms bind to Entities;
     AbonnementsType --> Abonnements : data_class;
     BopType --> Bop : data_class;

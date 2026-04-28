@@ -50,7 +50,7 @@
 ### 3.1 Process : Gestion des administrateurs (CRUD)
 
 ```mermaid
-%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% }%%
+%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% }%%
 graph TD
     subgraph "Pool : admin_ep"
     direction LR;
@@ -81,7 +81,7 @@ graph TD
 ### 3.2 Process : Import JORF (automatique)
 
 ```mermaid
-%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% }%%
+%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% }%%
 graph TD
     subgraph "Pool : admin_ep"
     direction TB;
@@ -103,7 +103,7 @@ graph TD
 ### 3.3 Process : Gestion des mandats (CRUD + archivage)
 
 ```mermaid
-%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% }%%
+%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% }%%
 graph LR
     subgraph "Pool : admin_ep"
     lane1[Gestionnaire] --> start((Start))

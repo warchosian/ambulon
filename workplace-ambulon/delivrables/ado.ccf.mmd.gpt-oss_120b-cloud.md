@@ -74,7 +74,7 @@ graph LR
 ### 4.1 Diagramme de cas d’utilisation (UML 2.x)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#003366', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#003366', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 useCaseDiagram;
     title ADO – Cas d’usage;
     actor Utilisateur as U;
@@ -113,7 +113,7 @@ useCaseDiagram;
 ### 5.1 Diagramme BPMN – Flux de génération d’un rapport  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#006400', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#006400', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Utilisateur;
     participant Application;

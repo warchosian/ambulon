@@ -196,7 +196,7 @@ classDiagram
 ### 6.1 Diagrammes de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 usecaseDiagram;
     actor Dispatcher as D;
     actor Driver as DR;

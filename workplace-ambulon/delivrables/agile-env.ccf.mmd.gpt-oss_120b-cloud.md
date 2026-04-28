@@ -50,7 +50,7 @@
 ### 4.1 Diagramme de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#4B8BBE', 'edgeLabelBackground':'#FFF', 'fontSize': '12px' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#4B8BBE', 'edgeLabelBackground':'#FFF', 'fontSize': '12px' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Developer as Dev;
     actor CI/CD System as CICD;
@@ -82,7 +82,7 @@ usecaseDiagram;
 ## 5️⃣ Processus métier (BPMN) {#process}
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#4B8BBE', 'edgeLabelBackground':'#FFF', 'fontSize': '12px' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#4B8BBE', 'edgeLabelBackground':'#FFF', 'fontSize': '12px' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Dev as "Développeur"
     participant Docker as "Docker Engine"

@@ -53,7 +53,7 @@
 ### 4.1 Diagramme de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 usecaseDiagram;
     actor MOE / DevOps as DevOps;
     actor Utilisateurs finaux as Users;
@@ -95,7 +95,7 @@ usecaseDiagram;
 > **Processus clé** : *Déploiement continu de l’application*  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 bpmnDiagram;
     participant DevOps;
     participant DockerEngine as "Docker Engine"
