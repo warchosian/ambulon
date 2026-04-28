@@ -178,7 +178,7 @@ Quand la méthode MoSCoW a du mal à réduire le scope (réflexe « tout mettr
 
 ## 9️⃣ Diagramme Mermaid du processus d’atelier MVP (admin_ep)  {#mermaid}
 ```mermaid
-graph TB;
+graph TB
     %% Acteurs;
     actor_pm[👤 Chef de produit]
     actor_tech[👤 Tech Lead]

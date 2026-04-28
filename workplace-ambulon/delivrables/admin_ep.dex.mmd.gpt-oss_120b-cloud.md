@@ -81,7 +81,7 @@
 ### 5.1 Diagramme d’architecture (Mermaid)  
 
 ```mermaid
-graph LR;
+graph LR
     style db fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
     style app fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
     style web fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
@@ -91,7 +91,7 @@ graph LR;
         app(("Java WebApp<br/>Tomcat 9.0.8<br/>v1.3.3"))
         web(("Front‑end<br/>HTML/JS"))
         monitor(("Monitoring<br/>Grafana/Prometheus"))
-    end;
+    end
     web -->|HTTP/HTTPS| app;
     app -->|JDBC| db;
     app -->|REST API| monitor;
@@ -181,7 +181,7 @@ graph LR;
 ## 🔄 10️⃣ Diagramme Mermaid du cycle de vie du DEX  
 
 ```mermaid
-graph TB;
+graph TB
     style dev fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
     style ops fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
     style sec fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
@@ -198,20 +198,20 @@ graph TB;
     subgraph p1["Phase 1 – Rédaction"]
         step1;
         step2;
-    end;
+    end
     subgraph p2["Phase 2 – Validation croisée"]
         step3;
         step4;
         step5;
-    end;
+    end
     subgraph p3["Phase 3 – Go‑Live & Run"]
         step6;
         step7;
-    end;
+    end
     subgraph p4["Phase 4 – Maintenance continue"]
         step8;
         step9;
-    end;
+    end
     click p1 "javascript_void(0)" "Phase 1"
     click p2 "javascript_void(0)" "Phase 2"
     click p3 "javascript_void(0)" "Phase 3"

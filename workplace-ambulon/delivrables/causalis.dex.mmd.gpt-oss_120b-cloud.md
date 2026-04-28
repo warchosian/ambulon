@@ -91,7 +91,7 @@
 ## 6️⃣ Diagramme Mermaid du cycle de vie du DEX  
 
 ```mermaid
-graph TB;
+graph TB
     style dev fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
     style ops fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
     style sec fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
@@ -112,20 +112,20 @@ graph TB;
     subgraph p1["Phase 1 - Rédaction"]
         step1;
         step2;
-    end;
+    end
     subgraph p2["Phase 2 - Validation croisée"]
         step3;
         step4;
         step5;
-    end;
+    end
     subgraph p3["Phase 3 - Go‑Live & Run"]
         step6;
         step7;
-    end;
+    end
     subgraph p4["Phase 4 - Maintenance continue"]
         step8;
         step9;
-    end;
+    end
     click p1 "javascript_void(0)" "Aller à Phase 1"
     click p2 "javascript_void(0)" "Aller à Phase 2"
     click p3 "javascript_void(0)" "Aller à Phase 3"
@@ -200,17 +200,17 @@ graph TB;
 ### A. Diagramme d’architecture (Mermaid)
 
 ```mermaid
-graph LR;
+graph LR
     subgraph Front;
         UI[UI JSP/Struts]
-    end;
+    end
     subgraph Web;
         S1[Struts Action] --> S2[Service Layer]
         S2 --> D1[DAO Layer]
-    end;
+    end
     subgraph DB;
         DB1[(Oracle DB)]
-    end;
+    end
     UI --> S1;
     D1 --> DB1;
     style UI fill:#f9f,stroke:#333,stroke-width_2px;

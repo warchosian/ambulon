@@ -199,7 +199,7 @@ Lorsque la méthode MoSCoW conduit à trop de *Must*, privilégiez un **scénari
 ## 8️⃣ Diagramme Mermaid du processus d’atelier  
 
 ```mermaid
-flowchart TB;
+flowchart TB
     %% Acteurs;
     pm[👤 Chef de produit / PO]
     tech[👤 Lead technique]
@@ -212,19 +212,19 @@ flowchart TB;
         p1[Vision produit & hypothèses] 
         p2[Story‑map ou épics] 
         p3[Contraintes (RGPD, Docker, BIRT)] 
-    end;
+    end
     subgraph workshop["Phase 2 – Atelier MoSCoW"]
         w1[Intro & alignement] 
         w2[Rappel périmètre fonctionnel] 
         w3[Classification MoSCoW] 
         w4[Validation du périmètre MVP] 
         w5[Roadmap & actions] 
-    end;
+    end
     subgraph post["Phase 3 – Post‑MVP"]
         t1[Tests fonctionnels (Import, Qualification, BIRT)] 
         t2[Collecte métriques] 
         t3[Revue post‑MVP → Pivot / Persévérer / Arrêter] 
-    end;
+    end
     %% Flux;
     pm -->|Guide| p1;
     tech -->|Vérif. technique| p3;

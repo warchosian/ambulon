@@ -11,7 +11,7 @@ Elle permet :
 
 ## 1.1 Schéma C4 – Niveau 1 (Contexte) {#c4-l1}
 ```mermaid
-graph LR;
+graph LR
     Utilisateurs[Utilisateurs (SPES, DG de tutelle, Opérateurs)] -->|HTTPS| WebApp[Admin EP (Tomcat + Struts2)]
     WebApp -->|JDBC| DB[(PostgreSQL)]
     WebApp -->|HTTPS| Auth[Service Cerbère (SSO)]
@@ -132,23 +132,23 @@ graph LR;
 
 # 6. Vue en briques (C4 – Niveau 2) {#c4-l2}
 ```mermaid
-graph LR;
+graph LR
     subgraph DMZ;
         Nginx[Nginx (Reverse‑proxy)]
-    end;
+    end
     subgraph APP;
         Tomcat[Tomcat (Webapp WAR)]
         Scheduler[Quartz Scheduler (Alertes)]
         Auth[Filter Cerbère (SSO)]
-    end;
+    end
     subgraph DB;
         PG[PostgreSQL]
         ES[Elasticsearch]
-    end;
+    end
     subgraph EXT;
         JORF[Source JORF (HTTPS)]
         PSIN[Supervision PSIN]
-    end;
+    end
     Nginx --> Tomcat;
     Tomcat --> Auth;
     Tomcat --> PG;
@@ -223,7 +223,7 @@ sequencediagram;
 
 ### 8.2 Infrastructure
 ```mermaid
-graph TD;
+graph TD
     N[Nginx LB] --> T1[Tomcat‑01]
     N --> T2[Tomcat‑02]
     N --> T3[Tomcat‑03]

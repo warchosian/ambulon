@@ -58,7 +58,7 @@ SIREINES (Système d’Information de REgistre des INExpertises) est un **réper
 ### 2.1 Cas d’usage (UML)  
 
 ```mermaid
-flowchart TD;
+flowchart TD
     A[Agent] -->|1. Crée dossier| UC1[Création de dossier]
     A -->|2. Dépose demande| UC2[Soumission de qualification]
     A -->|3. Consulte statut| UC3[Suivi dossier]
@@ -134,10 +134,10 @@ sequencediagram;
 ### 3.1 Architecture logique (Vue arc42)
 
 ```mermaid
-graph LR;
+graph LR
     subgraph Client;
         UI[Struts2 / JSP UI]
-    end;
+    end
     subgraph Server;
         A[Tomcat 7 (Java 8)]
         B[Spring Core + Vertigo (DI, Search)]
@@ -145,15 +145,15 @@ graph LR;
         D[Business Services (Dossiers, Extractions, Imports)]
         E[BIRT Engine (4.3)]
         F[Elasticsearch Embedded (search index)]
-    end;
+    end
     subgraph DB;
         G[Oracle PREP37]
-    end;
+    end
     subgraph Infra;
         H[Docker (dev / test) – images: tomcat, postgres]
         I[GitLab CI/CD – Maven assembly, Dockerfile]
         J[NGINX reverse‑proxy (prod)]
-    end;
+    end
     UI --> A;
     A --> B;
     B --> C;
@@ -186,7 +186,7 @@ graph LR;
 ### 3.2 Diagramme de déploiement (prod)
 
 ```mermaid
-graph TB;
+graph TB
     LB[NGINX (TLS)]
     LB -->|HTTPS| Tomcat[Tomcat 7 (Docker)]
     Tomcat -->|JDBC| Oracle[Oracle PREP37]
@@ -199,19 +199,19 @@ graph TB;
 ### 3.3 Flux de données (simplifié)
 
 ```mermaid
-flowchart LR;
+flowchart LR
     subgraph UI;
         A[Formulaire création dossier]
         B[Formulaire qualification]
-    end;
+    end
     subgraph Service;
         C[DossierService]
         D[QualificationService]
         E[ExportService (BIRT)]
-    end;
+    end
     subgraph DB;
         F[(Oracle PREP37)]
-    end;
+    end
     A --> C --> F;
     B --> D --> F;
     D --> E --> F

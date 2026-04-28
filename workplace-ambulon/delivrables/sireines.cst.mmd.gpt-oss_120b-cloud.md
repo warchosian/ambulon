@@ -35,8 +35,8 @@ Le système est en production depuis 2024 (v 2.5.20) et repose sur une archite
 ### 2.1 Diagramme de composants (UML)  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#2A9D8F', 'edgeLabelBackground':'#F4A261' }}%%}%%
-classdiagram;
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#2A9D8F', 'edgeLabelBackground':'#F4A261' }}%%%%%%%%%%%%%%%%%%%%}%%
+classDiagram
     direction TB;
     class WebApp {
         +Spring MVC + Struts2 Controllers;
@@ -114,7 +114,7 @@ classdiagram;
 ### 4.1 Diagramme de classes (UML) – vue simplifiée du domaine  
 
 ```mermaid
-classdiagram;
+classDiagram
     direction LR;
     class Dossier {
         +Long dosId;
@@ -171,7 +171,7 @@ sequencediagram;
     loop for each id;
         Svc->>DB: SELECT * FROM Dossier WHERE dosId = ?
         DB-->>Svc: Dossier DTO;
-    end;
+    end
     Svc-->>Ctrl: List<DossierDTO>
     Ctrl->>UI: render(list)
 ```
@@ -199,16 +199,16 @@ sequencediagram;
 ### 7.1 Diagramme de déploiement (Docker‑Compose)  
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%
-graph TD;
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%
+graph TD
     subgraph Host (VM – IaaS ECO4)
         N1[Docker Engine]
-    end;
+    end
     subgraph Services;
         A[Tomcat7 – sireines_app_usine_container]:::app;
         B[Postgres 14 – sireines_db_usine_container]:::db;
         C[PgAdmin4 – sireines_pgadmin_container]:::admin;
-    end;
+    end
     N1 --> A;
     N1 --> B;
     N1 --> C;

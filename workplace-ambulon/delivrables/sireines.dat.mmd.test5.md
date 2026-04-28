@@ -9,7 +9,7 @@ Le projet SIRENES est un système web Java basé sur le framework Struts2, conç
 
 ### Schéma C4-L1
 ```mermaid
-classdiagram;
+classDiagram
     class SIRENES {
         +Accueil;
         +Agents;
@@ -28,7 +28,7 @@ classdiagram;
 
 ### Schéma C4-L2
 ```mermaid
-classdiagram;
+classDiagram
     class SIRENES {
         +Accueil;
         +Agents;
@@ -136,7 +136,7 @@ sequencediagram;
 Le produit est hébergé sur le cloud interne ECO4 basé sur Openstack, dans le tenant 'pnm3' du département.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] --> B[Application]
     B --> C[Base de données]
     B --> D[Autres services]

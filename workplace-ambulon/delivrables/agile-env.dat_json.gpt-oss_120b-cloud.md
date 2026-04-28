@@ -250,7 +250,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **Openstack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx Load‑Balancer] --> B[agile‑env‑app]
     B --> C[PostgreSQL DB]
     B --> D[Autres services (ex. job‑scheduler)]

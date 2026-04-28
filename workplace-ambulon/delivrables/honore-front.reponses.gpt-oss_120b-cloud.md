@@ -20,7 +20,7 @@ Le build est réalisé avec **Vue‑CLI** qui produit un répertoire `dist/` con
 ## 🏗️ 2️⃣ Architecture technique  
 
 ```mermaid
-graph TD;
+graph TD
     %% CI/CD pipeline;
     subgraph CI;
         A[GitLab CI] --> B[Install dependencies]
@@ -28,7 +28,7 @@ graph TD;
         C --> D[Build (Vue‑CLI) → dist/]
         D --> E[Docker build (nginx + dist/)]
         E --> F[Push image to registry]
-    end;
+    end
     %% Runtime;
     subgraph Runtime;
         G[Docker container (nginx)] --> H[nginx.conf]
@@ -36,7 +36,7 @@ graph TD;
         I --> J[SPA fallback: /index.html]
         J --> K[Vue router → <router‑view/>]
         K --> L[Modules (home, folders, onBoarding …)]
-    end;
+    end
     %% Artefacts;
     style CI fill:#f9f9f9,stroke:#333,stroke-width_1px;
     style Runtime fill:#e8f5e9,stroke:#333,stroke-width_1px

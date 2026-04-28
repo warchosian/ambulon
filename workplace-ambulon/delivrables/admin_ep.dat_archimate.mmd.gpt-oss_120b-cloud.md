@@ -69,7 +69,7 @@ graph TB
 ### 2.5 Diagramme de Vue Organisationnelle  
 
 ```mermaid
-graph LR;
+graph LR
     classDef actor fill:#FFCC99,stroke:#333,stroke-width_2px;
     classDef role fill:#FFFF99,stroke:#333,stroke-width_2px;
     classDef service fill:#FFFF66,stroke:#333,stroke-width_2px;
@@ -113,7 +113,7 @@ graph LR;
 ### 3.3 Fonctions & interactions applicatives  
 
 ```mermaid
-graph TD;
+graph TD
     classDef comp fill:#99CCFF,stroke:#333,stroke-width_2px;
     classDef srv fill:#99FF99,stroke:#333,stroke-width_2px;
     UI[UI Struts2]:::comp -->|Appel| AdminCtrl[AdminController]:::comp;
@@ -129,7 +129,7 @@ graph TD;
 ### 3.4 Diagramme de Vue Applicative  
 
 ```mermaid
-graph LR;
+graph LR
     classDef app fill:#99CCFF,stroke:#333,stroke-width_2px;
     classDef srv fill:#99FF99,stroke:#333,stroke-width_2px;
     Web[admin_ep‑web (WAR)]:::app -->|Expose| AdminAPI[AdminManagementService]:::srv;
@@ -178,7 +178,7 @@ graph LR;
 ### 4.4 Diagramme d’Infrastructure  
 
 ```mermaid
-graph TB;
+graph TB
     classDef node fill:#99FF99,stroke:#333,stroke-width_2px;
     classDef svc fill:#99CCFF,stroke:#333,stroke-width_2px;
     LB[Load‑Balancer (HAProxy)]:::node -->|HTTPS| Tomcat[Tomcat 9 (Node 1)]:::node;
@@ -228,7 +228,7 @@ graph TB;
 ### 5.4 Value Stream  
 
 ```mermaid
-graph LR;
+graph LR
     VS[Value Stream – Gestion des mandats] --> B1[Création mandat (admin)]
     B1 --> B2[Stockage DB]
     B2 --> B3[Publication JORF]

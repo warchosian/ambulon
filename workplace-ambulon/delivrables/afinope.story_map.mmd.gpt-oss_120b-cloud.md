@@ -185,7 +185,7 @@ Fonctionnalités associées (axe vertical ↓ sous chaque étape) :
 ## 9️⃣ Diagramme Mermaid du Story Map
 
 ```mermaid
-graph TB;
+graph TB
     %% Backbone – Parcours utilisateur;
     subgraph backbone[" BACKBONE – Parcours utilisateur "]
         step1["Ingestion des CSV"]
@@ -194,7 +194,7 @@ graph TB;
         step4["Transformation"]
         step5["Rapport d'exécution"]
         step6["Visualisation"]
-    end;
+    end
     %% MVP – Fonctionnalités indispensables;
     subgraph mvp[" MVP – Fonctionnalités indispensables "]
         f11["Lister les fichiers .csv"]
@@ -203,7 +203,7 @@ graph TB;
         f14["Calculer les agrégats"]
         f15["Exporter le rapport"]
         f16["Afficher le tableau de bord"]
-    end;
+    end
     %% V2+ – Fonctionnalités reportables;
     subgraph v2[" V2+ – Fonctionnalités à prioriser ultérieurement "]
         f21["Déplacer les fichiers traités"]
@@ -212,7 +212,7 @@ graph TB;
         f24["Vue matérialisée tdb_view"]
         f25["Export PDF"]
         f26["Alertes SMS"]
-    end;
+    end
     %% Flux;
     step1 --> f11;
     step2 --> f12;

@@ -91,14 +91,14 @@ Using the **project context** provided below, generate a **complete Dossier d’
 ## 4️⃣ Exemple de diagramme Mermaid (à insérer dans la section 5)
 
 ```mermaid
-graph TB;
+graph TB
     subgraph DockerHost["Docker Host (Paris‑La Défense)"]
         direction LR;
         Tomcat["Tomcat 7 (sireines_app_usine_container)"]
         PG["PostgreSQL 14.1 (sireines_db_usine_container)"]
         PgAdmin["pgAdmin (sireines_pgadmin_container)"]
         BIRT["BIRT 4.3 (intégré)"]
-    end;
+    end
     Tomcat -->|JDBC| PG;
     Tomcat -->|BIRT reports| BIRT;
     PgAdmin -->|admin UI| PG;

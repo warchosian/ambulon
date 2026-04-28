@@ -78,7 +78,7 @@
 ### Cartographie des parties prenantes  
 
 ```mermaid
-graph LR;
+graph LR
     MOA[MOA – Gestionnaires / Analystes] --> C[CAUSALIS]
     MOE[MOE – Développeurs / Admin] --> C;
     SSI[MOA / SSI – Sécurité] --> C;
@@ -218,7 +218,7 @@ bpmnDiagram;
 > Diagramme UML simplifié (classes + associations).  
 
 ```mermaid
-classdiagram;
+classDiagram
     class DossierAccident {
         +int id;
         +Date dateAccident;

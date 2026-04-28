@@ -15,7 +15,7 @@
 ### 1.1 Vue fonctionnelle (C4‑L1)  
 
 ```mermaid
-graph LR;
+graph LR
     %% System Context;
     subgraph Ext[Environnements externes]
         MOA[MOA – CGDD/DRI/AST4] 
@@ -26,13 +26,13 @@ graph LR;
         DB[Base PostgreSQL] 
         Docker[Docker / Docker‑Compose] 
         Cerbere[Cerbère (Gestion des droits)] 
-    end;
+    end
     subgraph SIREINES[Application SIREINES]
         WebApp[WebApp (Struts2 / Tomcat 7)] 
         Search[Recherche (Vertigo‑Elasticsearch)] 
         Service[Services métiers (Java 8, Maven)] 
         UI[Interface utilisateur (HTML/FTL)] 
-    end;
+    end
     Users -->|utilise| UI;
     UI -->|appel| WebApp;
     WebApp -->|appelle| Service;
@@ -256,14 +256,14 @@ sequencediagram;
 ### 8.2 Infrastructure  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph ECO4_IaaS["ECO4 – IaaS (Paris La Défense)"]
         LB[Load‑Balancer (HAProxy)]
         APP[Docker‑Host (Tomcat + App)]
         DB[Docker‑Host (PostgreSQL + pgAdmin)]
         MON[Prometheus/Grafana]
         BACKUP[Backup Service (AES‑256, Object Storage B3, SecNumCloud, GCP)]
-    end;
+    end
     User[Utilisateurs] --> LB;
     LB --> APP;
     APP --> DB;

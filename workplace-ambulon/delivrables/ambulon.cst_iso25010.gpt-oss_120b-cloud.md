@@ -131,7 +131,7 @@ Chaque caractéristique est détaillée ci‑après avec ses sous‑caractérist
 > **⚠️ À compléter** – Le diagramme ci‑dessous doit refléter la vraie architecture du projet (micro‑services, base de données, bus d’événements, etc.).  
 
 ```mermaid
-graph TD;
+graph TD
     A[Client (Web / Mobile)] --> B[API Gateway]
     B --> C[Service Auth]
     B --> D[Service Patient]

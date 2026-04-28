@@ -67,10 +67,10 @@ All configuration files are YAML and respect Symfony’s convention‑over‑con
 ## 4. Core Architecture  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph Front‑End;
         FE[HTML / Twig] -->|Requests| HTTP[Web Server]
-    end;
+    end
     subgraph Symfony;
         HTTP -->|Routing| R[Router]
         R -->|Dispatch| C[Controller]
@@ -79,11 +79,11 @@ graph TD;
         S -->|Persists| DB[(PostgreSQL)]
         S -->|Sends| Mail[Mailer]
         C -->|Serialises| API[API Platform]
-    end;
+    end
     subgraph Auth;
         CAS[CAS Server] -->|Ticket| HTTP;
         HTTP -->|Validate| Auth[Security/Voter]
-    end;
+    end
     DB -->|Entity Mapping| E[Doctrine Entities]
     API -->|DTO| D[Data Transfer Objects]
     S -->|Uses| U[Utilities]

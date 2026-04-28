@@ -29,24 +29,24 @@ SIREINES (Système d’Information REgistre des Experts et Spécialistes) recens
 
 ### 1.2 Schéma C4‑L1 (Vue du système)  
 ```mermaid
-graph LR;
+graph LR
     subgraph Utilisateurs;
         UA[Agent] 
         UB[Administrateur]
-    end;
+    end
     subgraph Frontend;
         UI[Interface Web (Struts2 + FreeMarker)]
-    end;
+    end
     subgraph Backend;
         APP[Application Java (Tomcat 7, J2EE, Spring, Vertigo)]
         BIRT[BIRT Reporting]
         ES[Elasticsearch Embedded (recherche)]
-    end;
+    end
     DB[(PostgreSQL 14 – schéma SIREINES)]
     subgraph Infra;
         DOCKER[Docker / Docker‑Compose]
         IaaS[Eco4 IaaS – Paris La Défense]
-    end;
+    end
     UA --> UI;
     UB --> UI;
     UI --> APP;
@@ -176,16 +176,16 @@ graph LR;
 ## 6️⃣ Vue en briques (C4 L2) <a id="6️⃣-vue‑en‑briques"></a>
 
 ```mermaid
-graph TB;
+graph TB
     subgraph "Docker‑Compose"
         APP[📦 sireines_app_usine_container<br/>Tomcat 7 + WAR]
         DB[📦 sireines_db_usine_container<br/>PostgreSQL 14]
         PGADMIN[📦 sireines_pgadmin_container<br/>pgAdmin 4]
-    end;
+    end
     subgraph "Volumes persistants"
         VDB[(sireines_db_sireines_vol)]
         VPG[(sireines_pgadmin_sireines_vol)]
-    end;
+    end
     APP -->|JDBC| DB;
     APP -->|HTTP (BIRT)| BIRT[🖨 BIRT Engine (embedded)]
     APP -->|REST/HTML| UI[🖥 Struts2 + FreeMarker UI]
@@ -223,7 +223,7 @@ sequencediagram;
         S->>UI: Affiche lien téléchargement;
     else Succès;
         IS->>UI: Retour OK;
-    end;
+    end
     UI->>Agent: Affiche résultat (succès ou rapport)
 ```
 

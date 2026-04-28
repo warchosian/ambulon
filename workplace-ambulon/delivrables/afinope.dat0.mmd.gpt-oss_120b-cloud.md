@@ -10,23 +10,23 @@
 ### 1.1 Vue d’ensemble fonctionnelle (C4 – Niveau 1)  
 
 ```mermaid
-graph LR;
+graph LR
     subgraph Utilisateurs;
         UA[Analystes financiers] 
         UB[Administrateurs système] 
         UC[Responsable sécurité] 
-    end;
+    end
     subgraph Système Afinope;
         A1[Dagster orchestrateur] 
         A2[Web UI (Dagster Webserver)] 
         A3[Modules d’ingestion CSV] 
         A4[Base de données PostgreSQL] 
         A5[Superset dashboards] 
-    end;
+    end
     subgraph Externes;
         E1[Sources CSV (ex‑fileshare)] 
         E2[Service de sauvegarde (B3/Outscale/GC)] 
-    end;
+    end
     UA -->|consultation| A5;
     UA -->|déclenchement manuel| A2;
     UB -->|déploiement & monitoring| A1;
@@ -155,7 +155,7 @@ Il produit les tableaux de bord **Superset** utilisés par les analystes pour 
 ## 6. Vue en Briques (C4 – Niveau 2)  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Conteneurs"
         C1[nginx (load‑balancer)] 
         C2[dagster‑webserver] 
@@ -163,7 +163,7 @@ graph TD;
         C4[afinope‑app (Python ETL)] 
         C5[postgres (db)] 
         C6[superset (BI)] 
-    end;
+    end
     C1 --> C2;
     C1 --> C6;
     C2 --> C3;
@@ -231,7 +231,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **Openstack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] -- B[Application]
     B -- C[Base de données]
     B -- D[Autres services]

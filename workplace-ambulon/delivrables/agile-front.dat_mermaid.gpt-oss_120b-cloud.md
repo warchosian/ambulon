@@ -17,7 +17,7 @@
 ### Diagramme C4 – Niveau 1 (Contexte système)  
 
 ```mermaid
-graph LR;
+graph LR
     %% acteurs externes;
     User[Utilisateur] -->|Navigateur Web| SPA[agile‑front (Vue SPA)]
     SPA -->|Appels HTTP| API[API Backend (Legacy Proxy)]
@@ -141,20 +141,20 @@ graph LR;
 ## 6️⃣ Vue en Briques (C4 – Niveau 2) {#containers}
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Infrastructure"
         Nginx[Nginx Load‑Balancer]
         Docker[Docker Engine]
-    end;
+    end
     subgraph "Application"
         SPA[Vue SPA (agile‑front)] 
         API[Legacy Proxy Service] 
         Auth[Security Service] 
         Export[Export Service] 
-    end;
+    end
     subgraph "Données"
         DB[(PostgreSQL DB)]
-    end;
+    end
     Nginx -->|HTTPS| SPA;
     SPA -->|REST| API;
     API -->|REST| Auth;
@@ -253,7 +253,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **Openstack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de **Nginx load‑balancés** en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] --> B[Application]
     B --> C[Base de données]
     B --> D[Autres services]

@@ -17,7 +17,7 @@
 - **Statistiques & alertes** : tableau de bord et notification par mail des mandats proches de l’échéance.  
 
 ```mermaid
-graph TD;
+graph TD
     A[Utilisateurs (SPES, DG, Opérateurs)] -->|HTTPS| B[Web App (Tomcat 9, Struts2)]
     B -->|JDBC| C[PostgreSQL 9.6 (baseadmin)]
     B -->|Scheduler| D[Job JORF Ingestion (Java)]
@@ -165,14 +165,14 @@ graph TD;
 ## 6️⃣ Vue en Briques (C4 – Niveau 2)  
 
 ```mermaid
-graph TB;
+graph TB
     subgraph "Infrastructure"
         DB[(PostgreSQL<br/>baseadmin)]
         APP[(Tomcat 9<br/>admin_ep.war)]
         JORF[(Job JORF Ingestion<br/>Java Scheduler)]
         AUTH[(Cerbère SSO)]
         MON[(Prometheus/Grafana<br/>Monitoring)]
-    end;
+    end
     USER[Utilisateur] -->|HTTPS| APP;
     APP -->|JDBC| DB;
     APP -->|SAML| AUTH;
@@ -257,7 +257,7 @@ sequencediagram;
     A->>DB: INSERT / UPDATE nouvelles entités;
     alt Mandat proche échéance;
         A->>M: sendAlertMail()
-    end;
+    end
     J->>S: Job terminé (status OK)
 ```
 
@@ -278,20 +278,20 @@ sequencediagram;
 | **Production** | IaaS ECO4 – tenant `pnm3` (cluster ESXi) | 2× Tomcat 9 (HA), 1× PostgreSQL 15 (post‑migration) | VLAN dédié, filtrage firewall | TLS 1.2+, sauvegardes multi‑site (B3, Outscale, GCP) |
 
 ```mermaid
-graph LR;
+graph LR
     subgraph DEV[Développement]
         devT[Tomcat (Docker)]
         devDB[PostgreSQL (Docker)]
-    end;
+    end
     subgraph REC[Recette]
         recT[Tomcat (ECO4 VM)]
         recDB[PostgreSQL 9.6 (ECO4 VM)]
-    end;
+    end
     subgraph PROD[Production]
         prodT1[Tomcat 9 – Node A]
         prodT2[Tomcat 9 – Node B]
         prodDB[PostgreSQL 15 – Cluster]
-    end;
+    end
     DEV --> REC --> PROD
 ```
 
@@ -301,7 +301,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **Openstack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx LB] --> B[Tomcat 9 – Node A]
     A --> C[Tomcat 9 – Node B]
     B --> D[PostgreSQL 15]

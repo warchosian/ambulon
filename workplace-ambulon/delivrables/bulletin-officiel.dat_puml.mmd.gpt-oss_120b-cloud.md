@@ -11,16 +11,16 @@
 ### 1.1 Vue d’ensemble fonctionnelle (C4‑L1)
 
 ```mermaid
-graph TD;
+graph TD
     %% System Context (C4‑L1)
     subgraph Ext[Acteurs externes]
         MOA[MOA / RSSI] 
         Utilisateurs[Utilisateurs métier<br/>(agents, rédacteurs)]
         AutresSyst[Autres systèmes<br/>(ex. portail public, GED)]
-    end;
+    end
     subgraph Sys[Bulletin Officiel]
         BO[Application Bulletin Officiel<br/>(API + UI)]
-    end;
+    end
     MOA -->|Définit exigences| BO;
     Utilisateurs -->|Consomme UI / API| BO;
     AutresSyst -->|Intègre données| BO
@@ -142,14 +142,14 @@ graph TD;
 ## 6️⃣ Vue en Briques (C4‑L2) {#containers}
 
 ```mermaid
-graph TD;
+graph TD
     %% Container diagram (C4‑L2)
     subgraph K8s[Cluster Kubernetes]
         UI[Container: UI (React)]
         API[Container: API (Spring Boot)]
         DB[StatefulSet: PostgreSQL]
         Proxy[Nginx Load‑Balancer]
-    end;
+    end
     Utilisateurs -->|HTTPS| UI;
     UI -->|REST/JSON| API;
     API -->|JDBC| DB;
@@ -211,7 +211,7 @@ sequencediagram;
 ### 7.3 Scénario critique : Déploiement continu (pipeline)  
 
 ```mermaid
-flowchart TD;
+flowchart TD
     A[Git push] --> B[GitLab CI]
     B --> C{Run tests}
     C -->|Success| D[Build Docker images]
@@ -240,7 +240,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **OpenStack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph LR;
+graph LR
     Nginx[Nginx Load‑Balancers] --> API;
     API[Application API] --> DB[PostgreSQL HA]
     API --> UI[Application UI]

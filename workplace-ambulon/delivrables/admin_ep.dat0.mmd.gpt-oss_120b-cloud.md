@@ -8,7 +8,7 @@
 ### 1.1 Vue d’ensemble fonctionnelle (C4 ‑ Level 1)  
 
 ```mermaid
-graph TD;
+graph TD
     A[Utilisateurs] -->|HTTPS| B[Web‑App (Tomcat 9 + Java 8)]
     B -->|JDBC| C[Base de données PostgreSQL]
     B -->|REST / HTTP| D[Service JORF (cron)]
@@ -131,19 +131,19 @@ graph TD;
 ## 6. Vue en Briques (C4 ‑ Level 2)  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Infrastructure"
         N1[Nginx LB] 
         N2[Nginx LB]
         DB[(PostgreSQL Cluster)]
         S1[Prometheus] 
         S2[Grafana] 
-    end;
+    end
     subgraph "Application"
         A1[admin_ep‑web (Tomcat)] 
         A2[admin_ep‑batch (import JORF)] 
         A3[admin_ep‑mail (notification)] 
-    end;
+    end
     N1 --> A1;
     N2 --> A1;
     A1 --> DB;
@@ -230,7 +230,7 @@ sequencediagram;
     loop for each mandat;
         S->>M: SEND mail (to référent)
         M-->>S: ACK;
-    end;
+    end
     S->>S: Log notification (Log4j2)
 ```
 
@@ -250,7 +250,7 @@ sequencediagram;
 ```
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] -- B[Application]
     B -- C[Base de données]
     B -- D[Autres services]

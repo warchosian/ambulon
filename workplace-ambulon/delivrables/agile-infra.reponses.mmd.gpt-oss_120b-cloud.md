@@ -76,7 +76,7 @@ run_recette:
 ### Diagramme du flux CI
 
 ```mermaid
-flowchart TD;
+flowchart TD
     A[Commit sur branche] -->|Modifications sous recette/| B[GitLab CI déclenche run_recette]
     B --> C[Docker: pasta‑cooker-client]
     C --> D[Ansible exécute recette/main.yml]

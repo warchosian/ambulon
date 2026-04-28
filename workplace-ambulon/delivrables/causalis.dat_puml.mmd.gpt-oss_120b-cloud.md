@@ -247,8 +247,8 @@ sequencediagram;
             Service->>DAO: insert(grade)
         else;
             Service->>DAO: updateIfNeeded(grade)
-        end;
-    end;
+        end
+    end
     SyncService->>Scheduler: Retour (nb lignes insérées)
 ```
 
@@ -285,7 +285,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **OpenStack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph LR;
+graph LR
     Nginx["Nginx LB (2×)"]
     Tomcat1["Tomcat 6 – Instance 1"]
     Tomcat2["Tomcat 6 – Instance 2"]

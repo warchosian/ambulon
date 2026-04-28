@@ -23,20 +23,20 @@
 ## 2️⃣ Description de l’Écosystème (System/Software Context)
 
 ```mermaid
-graph LR;
+graph LR
     subgraph "Utilisateurs / Acteurs"
         OP[Opérateur (chargement CSV)]
         ADM[Administrateur (déploiement & configuration)]
         DB[Base de données PostgreSQL]
         SUP[Superset (visualisation)]
         DAG[Dagster Web‑Server]
-    end;
+    end
     subgraph "Système afinope"
         APP[Application Python (afinope)]
         PIPE[Pipeline Dagster]
         CFG[Config JSON]
         CONTAINER[Docker]
-    end;
+    end
     OP -->|dépose CSV| APP;
     ADM -->|déploie / configure| CONTAINER;
     APP -->|lit configuration| CFG;
@@ -110,7 +110,7 @@ graph LR;
 ## 5️⃣ Modèle de Données Conceptuel  
 
 ```mermaid
-classdiagram;
+classDiagram
     class ORGANISME {
         +char[10] codeOrganisme;
         +varchar[150] libelleOrganisme;
@@ -251,7 +251,7 @@ sequencediagram;
     else Validation KO;
         APP->>FS: Move file.csv -> flux.erreur;
         APP->>APP: Log error;
-    end;
+    end
     APP->>DAG: Notify status
 ```
 

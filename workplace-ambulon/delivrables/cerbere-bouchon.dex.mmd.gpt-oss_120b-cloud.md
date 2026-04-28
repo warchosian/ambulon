@@ -86,7 +86,7 @@
 ## 6️⃣ Diagramme Mermaid du cycle de vie DEX  
 
 ```mermaid
-graph TB;
+graph TB
     %% Styles -------------------------------------------------
     style dev fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
     style ops fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;

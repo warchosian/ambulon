@@ -21,7 +21,7 @@ Les données sont stockées dans une base **PostgreSQL** et l’accès est prot�
 ### 1.2 Diagramme C4 – Niveau 1 (System Context)  
 
 ```mermaid
-graph TD;
+graph TD
     %% Actors;
     User[Utilisateur (admin)] -->|Navigue| Front[Agile‑front (UI Web)]
     User -->|Accès via CAS| CAS[CAS SSO]
@@ -184,10 +184,10 @@ graph TD;
 ## 6️⃣ Vue en Briques (C4 – Niveau 2)  
 
 ```mermaid
-graph TB;
+graph TB
     subgraph Nginx;
         Nginx[NGINX (reverse‑proxy)]
-    end;
+    end
     subgraph PHP_FPM["PHP‑FPM (Symfony)"]
         App[agile‑back (Kernel)]
         API[API‑Platform (REST)]
@@ -195,13 +195,13 @@ graph TB;
         Voter[Security Voter]
         Export[Export Util]
         Cmd[Commandes (services)]
-    end;
+    end
     subgraph DB[PostgreSQL]
         DB[(DB)]
-    end;
+    end
     subgraph CAS["CAS Server"]
         CASsrv[CAS v1.3.5]
-    end;
+    end
     Nginx -->|HTTP/HTTPS| App;
     App -->|Doctrine ORM| DB;
     App -->|Mail| Mailer;

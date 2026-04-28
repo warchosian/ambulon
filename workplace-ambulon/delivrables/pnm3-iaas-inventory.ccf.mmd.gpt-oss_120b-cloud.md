@@ -169,7 +169,7 @@ bpmnDiagram
 ## 8️⃣ Modèle Conceptuel de Données (MCD) {#mcd}
 
 ```mermaid
-classdiagram;
+classDiagram
     class Machine {
         +string machine;
         +string ip;

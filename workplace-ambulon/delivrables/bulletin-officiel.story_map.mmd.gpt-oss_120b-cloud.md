@@ -200,7 +200,7 @@ Fonctionnalités associées (↓ sous chaque étape) :
 ## 9️⃣ Diagramme Mermaid du Story Map
 
 ```mermaid
-graph TB;
+graph TB
     %% Backbone – Parcours utilisateur;
     subgraph backbone[" BACKBONE - Parcours Utilisateur "]
         step1["Se connecter"]
@@ -210,7 +210,7 @@ graph TB;
         step5["Ajouter pièces"]
         step6["Soumettre"]
         step7["Suivre publication"]
-    end;
+    end
     %% MVP – Fonctionnalités indispensables;
     subgraph mvp[" MVP – Fonctionnalités essentielles "]
         f11["Auth FranceConnect"]
@@ -220,7 +220,7 @@ graph TB;
         f15["Upload PDF <5 Mo"]
         f16["Accusé de réception"]
         f17["Tableau de suivi"]
-    end;
+    end
     %% V2+ – Fonctionnalités reportables;
     subgraph v2[" V2+ – Améliorations "]
         f21["Gestion mot de passe"]
@@ -230,7 +230,7 @@ graph TB;
         f25["Notifications SMS"]
         f26["Historique des versions"]
         f27["Export CSV des notices"]
-    end;
+    end
     %% Flux;
     step1 --> f11;
     step2 --> f12;

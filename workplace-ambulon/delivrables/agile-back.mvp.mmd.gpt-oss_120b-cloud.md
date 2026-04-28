@@ -206,7 +206,7 @@ Lorsque la méthode MoSCoW peine à réduire le scope (réflexe “tout mettre d
 
 ## 9️⃣ Diagramme Mermaid du processus de définition du MVP
 ```mermaid
-graph TB;
+graph TB
     %% Acteurs;
     pm[👤 Chef de produit]:::acteur;
     tech[👤 Tech Lead]:::acteur;
@@ -217,25 +217,25 @@ graph TB;
         vision[Vision & hypothèses]:::phasePrep;
         storymap[Story Mapping / Backlog]:::phasePrep;
         constraints[Contraintes (tech, reg.)]:::phasePrep;
-    end;
+    end
     %% Phase 2 – Atelier MoSCoW;
     subgraph workshop["Phase 2 – Atelier MoSCoW"]
         align[Alignement : objectifs MVP]:::phaseWorkshop;
         classify[Classification MoSCoW]:::phaseWorkshop;
         validate[Validation périmètre MVP]:::phaseWorkshop;
-    end;
+    end
     %% Phase 3 – Livrables & suite;
     subgraph deliver["Phase 3 – Livrables & suite"]
         matrix[Matrice MoSCoW]:::phaseDeliver;
         roadmap[Roadmap MVP → V1]:::phaseDeliver;
         metrics[Hypothèses de test & métriques]:::phaseDeliver;
-    end;
+    end
     %% Phase 4 – Boucle d’apprentissage;
     subgraph loop["Phase 4 – Boucle d’apprentissage"]
         test[Tests utilisateurs MVP]:::phaseLoop;
         learn[Analyse des retours]:::phaseLoop;
         decide[Décision : pivot / persévérer / arrêter]:::phaseLoop;
-    end;
+    end
     %% Flux principaux;
     vision --> align;
     storymap --> align;

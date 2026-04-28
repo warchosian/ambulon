@@ -56,7 +56,7 @@
 > Diagramme UML de cas d’utilisation (Mermaid)  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff', 'nodeBorder':'#0366d6' }}%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff', 'nodeBorder':'#0366d6' }}%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Admin as A;
     actor Utilisateur métier as U;
@@ -96,7 +96,7 @@ usecaseDiagram;
 > Diagramme BPMN (Mermaid) décrivant le processus de **création d’une étude**.  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff', 'nodeBorder':'#0366d6' }}%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff', 'nodeBorder':'#0366d6' }}%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Utilisateur;
     participant CAS;
@@ -159,8 +159,8 @@ bpmnDiagram;
 > Diagramme de classes UML abstrait (Mermaid) représentant les entités métier et leurs relations.  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff', 'nodeBorder':'#0366d6' }}%%}%%
-classdiagram;
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff', 'nodeBorder':'#0366d6' }}%%%%%%%%%%%%%%%%%%%%}%%
+classDiagram
     class Utilisateurs {
         +int id;
         +string nom;

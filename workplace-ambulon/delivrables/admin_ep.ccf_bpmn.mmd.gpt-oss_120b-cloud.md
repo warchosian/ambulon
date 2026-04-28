@@ -50,8 +50,8 @@
 ### 3.1 Process : Gestion des administrateurs (CRUD)
 
 ```mermaid
-%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%% }%%
-graph TD;
+%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%% }%%
+graph TD
     subgraph "Pool : admin_ep"
         direction LR;
         lane1[Gestionnaire] --> start((Start))
@@ -81,8 +81,8 @@ graph TD;
 ### 3.2 Process : Import JORF (automatique)
 
 ```mermaid
-%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%% }%%
-graph TD;
+%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%% }%%
+graph TD
     subgraph "Pool : admin_ep"
         direction TB;
         lane1[Scheduler] --> start((Start – Cron 02_00))
@@ -103,8 +103,8 @@ graph TD;
 ### 3.3 Process : Gestion des mandats (CRUD + archivage)
 
 ```mermaid
-%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%% }%%
-graph LR;
+%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%% }%%
+graph LR
     subgraph "Pool : admin_ep"
         lane1[Gestionnaire] --> start((Start))
         start --> task1[Rechercher mandat existant]
@@ -126,7 +126,7 @@ graph LR;
 ### 3.4 Process : Recherche (full‑text)
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Pool : admin_ep"
         lane1[Utilisateur] --> start((Start – saisie recherche))
         start --> task1[Construire requête Lucene/Elasticsearch]
@@ -139,7 +139,7 @@ graph TD;
 ### 3.5 Process : Supervision & reporting
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Pool : admin_ep"
         lane1[Ops] --> start((Start – Scheduler 00_00))
         start --> task1[Collecter métriques (JVM, DB, temps de traitement JORF)]

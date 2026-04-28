@@ -15,33 +15,33 @@ The **Causalis** application is a Java‑based solution for the collection, proc
 ## 🏗️ Architecture Overview  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph Packaging;
         A[Assembly – scripts.zip] --> B[Assembly – sources.zip]
         B --> C[Assembly – docs.zip]
-    end;
+    end
     subgraph Persistence;
         D[Oracle DB] -->|JNDI jdbc/userDScausalis| E[Castor JDO]
         E --> F[DAO Layer]
-    end;
+    end
     subgraph Service;
         F --> G[ReferenceService<T>]
         G --> H[GradeService, StatutService, …]
-    end;
+    end
     subgraph Web_Tier;
         H --> I[Struts 1.x Actions]
         I --> J[Struts Forms]
         J --> K[JSP Views & Fragments]
         K --> L[Custom TagLibs]
-    end;
+    end
     subgraph WS_Adapters;
         M[WS Client Stubs] --> N[Converters & Predicates]
         N --> H;
-    end;
+    end
     subgraph Build;
         O[Maven] --> P[Assembly Plugin]
         O --> Q[Dependencies (Castor, Commons‑Collections, …)]
-    end;
+    end
     Packaging --> Build;
     Persistence --> Service;
     Service --> Web_Tier;

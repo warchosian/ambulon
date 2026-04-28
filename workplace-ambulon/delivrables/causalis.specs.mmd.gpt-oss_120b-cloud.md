@@ -207,7 +207,7 @@ sequencediagram;
 ### 6.2 Swim‑lane – Synchronisation des grades  
 
 ```mermaid
-flowchart TD;
+flowchart TD
     subgraph Batch["Processus de synchronisation"]
         direction LR;
         A[Start] --> B[GradeService.getAllGrade()]
@@ -231,7 +231,7 @@ flowchart TD;
 ### 7.1 Contexte système  
 
 ```mermaid
-graph LR;
+graph LR
     A[Utilisateurs (Gestionnaires, Opérateurs, Admins)]
     B[CAUSALIS (Web UI – Struts1)]
     C[Oracle prep37]
@@ -325,7 +325,7 @@ deploymentDiagram;
 > Le diagramme ne montre que les entités majeures utilisées dans les cas d’usage.  
 
 ```mermaid
-classdiagram;
+classDiagram
     class DossierAccident {
         +int id;
         +Date dateSurvenue;

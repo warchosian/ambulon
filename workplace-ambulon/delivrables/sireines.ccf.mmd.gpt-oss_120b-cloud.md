@@ -67,7 +67,7 @@ SIREINES (Système d’Information de REgistre des INtérvenants Experts et Spé
 ## 4️⃣ Cas d’usage (Use Cases)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F81AD', 'edgeLabelBackground':'#fff'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F81AD', 'edgeLabelBackground':'#fff'}}%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Agent as A;
     actor Membre du Comité as C;
@@ -114,7 +114,7 @@ usecaseDiagram;
 ## 5️⃣ Processus métier (BPMN)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F81AD', 'edgeLabelBackground':'#fff'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F81AD', 'edgeLabelBackground':'#fff'}}%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Agent;
     participant SIREINES as App;
@@ -197,7 +197,7 @@ bpmnDiagram;
 ## 8️⃣ Modèle Conceptuel de Données (MCD)  
 
 ```mermaid
-classdiagram;
+classDiagram
     class Dossier {
         +Long dosId;
         +Date dateReception;

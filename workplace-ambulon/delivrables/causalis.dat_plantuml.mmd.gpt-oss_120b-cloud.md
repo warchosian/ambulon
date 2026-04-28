@@ -17,14 +17,14 @@ Causalis est l’application ministérielle de **statistiques nationales sur les
 ### 1.2 Diagramme C4 – Niveau 1 (Contexte)  
 
 ```mermaid
-graph LR;
+graph LR
     subgraph Ext[Environnement externe]
         Users[Utilisateurs<br/>Gestionnaires, Admins] 
         Cerb[Cerbere SSO]
         WS[Web‑services externes<br/>(StubWS, Référentiels RH)]
         PSIN[Supervision PSIN]
         DB[(Base de données Oracle)]
-    end;
+    end
     Caus[Application Causalis<br/>(Struts 1 + Java 8)] 
 
     Users -->|authentification| Cerb;
@@ -302,7 +302,7 @@ Le produit est hébergé sur le **cloud interne ECO4** basé sur OpenStack, dans
 Le reverse‑proxy Nginx du schéma ci‑dessus est en fait une **paire de Nginx load‑balancés** en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx (LB) - Pair] --> B[Tomcat (Cluster) - Causalis Web]
     B --> C[Oracle DB (JNDI datasource)]
     B --> D[StubWS (External Grade Service)]

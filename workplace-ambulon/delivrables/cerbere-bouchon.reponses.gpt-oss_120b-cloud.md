@@ -20,7 +20,7 @@
 ## 📁 Arborescence des Fichiers
 
 ```mermaid
-graph TD;
+graph TD
     A[README.md]:::file;
     classDef file fill:#f9f,stroke:#333,stroke-width_1px;
 ```

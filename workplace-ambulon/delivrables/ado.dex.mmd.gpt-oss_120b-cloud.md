@@ -88,7 +88,7 @@
 ## 6️⃣ Diagramme Mermaid du cycle de vie DEX
 
 ```mermaid
-graph TB;
+graph TB
     %% Styles;
     style dev fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
     style ops fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
@@ -108,20 +108,20 @@ graph TB;
     subgraph p1["Phase 1 – Rédaction"]
         step1(("Collecte des specs & architecture"))
         step2(("Rédaction des 16 sections DEX"))
-    end;
+    end
     subgraph p2["Phase 2 – Validation croisée"]
         step3(("Revue technique (DevOps/Infra)"))
         step4(("Validation exploitation & support"))
         step5(("Validation sécurité & conformité"))
-    end;
+    end
     subgraph p3["Phase 3 – Go‑Live & Run"]
         step6(("Signature & archivage versionné"))
         step7(("Intégration run‑book & supervision"))
-    end;
+    end
     subgraph p4["Phase 4 – Maintenance continue"]
         step8(("Mise à jour à chaque release"))
         step9(("Revue trimestrielle / post‑incident"))
-    end;
+    end
     %% Flux;
     dev -->|Alimente| step1;
     dev -->|Rédige| step2;

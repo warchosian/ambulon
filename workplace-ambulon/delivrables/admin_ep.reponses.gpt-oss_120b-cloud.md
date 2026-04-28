@@ -40,21 +40,21 @@
 ## 🏗️ 2. Architecture générale <a id="architecture-generale"></a>
 
 ```mermaid
-graph TD;
+graph TD
     subgraph Frontend;
         UI[Interface Web (JSP/Struts2)] -->|HTTPS| SecFilter[SecurityFilter]
-    end;
+    end
     subgraph Backend;
         Controllers[Contrôleurs (Struts2 actions)] --> Services[Services métier]
         Services --> DAO[DAO (JPA/Hibernate)]
         DAO --> DB[(PostgreSQL)]
         Controllers --> Util[Utilitaires (StringUtil, OdsUtil, …)]
         Controllers --> Sec[Security (Roles, RightsHelper)]
-    end;
+    end
     subgraph Integration;
         JORF[Extractor JORF] --> Analyzer[ArticleAnalyser]
         Analyzer --> DAO;
-    end;
+    end
     subgraph Infrastructure;
         Tomcat[Tomcat] --> Frontend;
         Tomcat --> Backend;
@@ -236,7 +236,7 @@ public class DetailAdminAction extends AbstractBaseAdminActionSupport {
 ### 6.1. Structure Maven
 
 ```mermaid
-graph TD;
+graph TD
     parent[pom.xml (parent)] --> db[adminep-database]
     parent --> dep[adminep-deployment]
     parent --> doc[adminep-doc]

@@ -25,20 +25,20 @@
 ## 2️⃣ Vision du Système & Modèle de Contexte (UML)
 
 ```mermaid
-graph LR;
+graph LR
     subgraph Utilisateurs;
         U1[Chef de projet] 
         U2[Agent (expert)] 
         U3[Comité de domaine] 
         U4[Administrateur] 
-    end;
+    end
     subgraph Système;
         S1[SIREINES Web] 
         S2[Base PostgreSQL] 
         S3[ElasticSearch] 
         S4[BIRT Reporting] 
         S5[Cerbère – AuthZ] 
-    end;
+    end
     U1 -->|déploiement, suivi| S1;
     U2 -->|consultation, saisie| S1;
     U3 -->|qualification, vote| S1;
@@ -102,7 +102,7 @@ graph LR;
 ## 5️⃣ Modèle de Données Conceptuel (UML)  
 
 ```mermaid
-classdiagram;
+classDiagram
     class Expert {
         +Long id;
         +String nom;

@@ -12,15 +12,15 @@
 ### 1.1 Diagramme C4 – Niveau 1 (System Context)  
 
 ```mermaid
-flowchart LR;
+flowchart LR
     subgraph Utilisateurs;
         UI[« Utilisateur »]
-    end;
+    end
     subgraph Système;
         APP[« agile‑env (PHP/Apache) »]
         DB[« PostgreSQL »]
         CAS[« CAS (authentification) »]
-    end;
+    end
     UI -->|HTTP/HTTPS| APP;
     APP -->|JDBC/SQL| DB;
     APP -->|CAS ticket| CAS;
@@ -137,12 +137,12 @@ flowchart LR;
 ### 6.1 Diagramme C4 – Conteneurs  
 
 ```mermaid
-flowchart LR;
+flowchart LR
     subgraph "Docker Host"
         NGINX[Nginx (load‑balancer)] 
         APP[php‑apache (agile‑env)] 
         DB[(PostgreSQL 11)]
-    end;
+    end
     NGINX -->|HTTP/HTTPS| APP;
     APP -->|SQL| DB;
     APP -->|CAS ticket| CAS[CAS (auth)]
@@ -234,7 +234,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **OpenStack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     NGINX["Nginx (LB)"]
     APP1["agile‑env (app) #1"]
     APP2["agile‑env (app) #2"]

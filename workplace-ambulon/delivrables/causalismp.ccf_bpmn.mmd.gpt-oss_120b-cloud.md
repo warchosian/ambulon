@@ -49,7 +49,7 @@
 ### 3.1 Processus : **Déclaration Accident** (P‑002)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram
   participant Utilisateur as U
   participant WebApp as WA

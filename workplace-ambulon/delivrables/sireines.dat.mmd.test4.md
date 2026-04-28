@@ -7,7 +7,7 @@
 Voici une vue d'ensemble fonctionnelle courte de l'application Sireines. L'objectif principal est de fournir un outil de gestion des dossiers pour les agents de la Direction régionale et des services compétents.
 
 ```mermaid
-graph LR;
+graph LR
     A[Application Sireines] -->|Utilisateurs| B(User)
     A -->|Données| C(Base de données)
     A -->|Services externes| D(Services REST)
@@ -60,7 +60,7 @@ La solution Sireines interagit avec les partenaires suivants :
 ## Vue en Briques
 
 ```mermaid
-graph LR;
+graph LR
     A[Web Application] --> B[Base de données]
     A --> C[Services REST]
     B --> D[Data Storage]
@@ -95,7 +95,7 @@ graph LR;
 Le produit est hébergé sur le cloud interne ECO4 basé sur Openstack, dans le tenant 'pnm3' du département.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] --> B[Application]
     B --> C[Base de données]
     B --> D[Autres services]

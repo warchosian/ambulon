@@ -14,7 +14,7 @@
 SIREINES est la **base de données des experts et spécialistes scientifiques et techniques** du Ministère de la Transition Écologique. Elle recense les demandes de qualification, suit leur évolution et informe les agents des décisions des comités de domaine.  
 
 ```mermaid
-graph TD;
+graph TD
     A[Agent (utilisateur) ] -->|dépose une demande| B[SIREINES Web]
     B -->|requête| C[(PostgreSQL)]
     B -->|rapports BIRT| D[BI / BIRT]
@@ -114,12 +114,12 @@ graph TD;
 # 6️⃣ Vue en Briques (C4 L2)  
 
 ```mermaid
-graph TB;
+graph TB
     subgraph "Docker‑Compose"
         A[Container: sireines_app_usine]:::app;
         B[Container: sireines_db_usine]:::db;
         C[Container: sireines_pgadmin]:::admin;
-    end;
+    end
     A -->|JDBC| B;
     A -->|HTTP| D[BIRT Server]
     A -->|HTTP Headers| E[Cerbère IAM]
@@ -188,13 +188,13 @@ sequencediagram;
 **Infrastructure**  
 
 ```mermaid
-graph LR;
+graph LR
     subgraph "ECO4 Cloud"
         LB[Load‑Balancer Nginx] --> A1[App #1]
         LB --> A2[App #2]:::prod;
         A1 & A2 --> DB[(PostgreSQL Cluster)]
         A1 & A2 --> BIRT[(BIRT Server)]
-    end;
+    end
     classDef prod fill:#ffebee,stroke:#b71c1c;
 ```
 

@@ -53,7 +53,7 @@
 ### 4.1 Diagramme de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%
 usecaseDiagram;
     actor MOE / DevOps as DevOps;
     actor Utilisateurs finaux as Users;
@@ -96,7 +96,7 @@ usecaseDiagram;
 > **Processus clé** : *Déploiement continu de l’application*  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%
 bpmnDiagram;
     participant DevOps;
     participant DockerEngine as "Docker Engine"
@@ -162,7 +162,7 @@ bpmnDiagram;
 > **Note** : Le modèle ci‑dessous ne décrit que les entités liées à la **gestion des uploads** (exemple simplifié). Les tables métiers propres à l’application sont hors périmètre du présent CCF.
 
 ```mermaid
-classdiagram;
+classDiagram
     class Upload {
         +String id {PK}
         +String filename;

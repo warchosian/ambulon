@@ -9,7 +9,7 @@
 ## 1️⃣ Vue d’ensemble ArchiMate  
 
 ```mermaid
-graph TD;
+graph TD
     %% Business layer;
     BActor[Business Actor<br/>SG/DRH]:::businessActor;
     BActor2[Business Actor<br/>SG/DNUM/PNM/DPNM3]:::businessActor;
@@ -224,7 +224,7 @@ graph TD;
 ### 8.1 Vue de Coopération (Business ↔ Application)
 
 ```mermaid
-graph LR;
+graph LR
     BActor[Business Actor<br/>SG/DRH]:::businessActor --> BService[Business Service<br/>Consultation dossiers RH]:::businessService;
     BService --> AComp[Application Component<br/>ADO‑Web]:::applicationComponent;
     BActor -->|utilise| AComp;
@@ -238,7 +238,7 @@ graph LR;
 ### 8.2 Vue de Réalisation (Business → Application → Technology)
 
 ```mermaid
-graph TD;
+graph TD
     BService[Business Service<br/>Consultation dossiers RH]:::businessService --> AService[Application Service<br/>AgentService]:::applicationService;
     AService -->|uses| ARepo[Application Component<br/>AgentRepository]:::applicationComponent;
     ARepo -->|connects to| JDBC[JDBC]:::technologyService;

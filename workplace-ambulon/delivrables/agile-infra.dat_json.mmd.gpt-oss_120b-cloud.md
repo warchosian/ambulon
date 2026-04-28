@@ -17,7 +17,7 @@
 ### 1.1 Diagramme C4 – Niveau 1 (System Context)  
 
 ```mermaid
-graph TD;
+graph TD
     %% Actors;
     Dev[Développeurs] -->|Push / Merge Request| CI[GitLab CI/CD]
     Ops[Équipe Ops / SRE] -->|Supervision & Gestion| CI;
@@ -167,15 +167,15 @@ graph TD;
 ### 6.1 Diagramme C4 – Conteneur  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph CI[GitLab CI/CD]
         CI_Runner[GitLab Runner] -->|exécute| Ansible[Ansible Playbooks]
-    end;
+    end
     subgraph Deploy[Environnement cible]
         Nginx[Nginx (load‑balanced)]
         DB[PostgreSQL]
         AppSrv[Conteneurs d’application (front, back)]
-    end;
+    end
     Ansible -->|génère| Compose[docker‑compose.yml]
     Compose -->|déploie| Nginx;
     Compose -->|déploie| DB;
@@ -251,7 +251,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **Openstack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] --> B[Application]
     B --> C[Base de données]
     B --> D[Autres services]

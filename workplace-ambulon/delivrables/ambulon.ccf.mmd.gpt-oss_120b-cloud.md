@@ -125,7 +125,7 @@ bpmnDiagram;
     else Aucun véhicule;
         Système->>Coordinateur: Alerte indisponibilité;
         Coordinateur->>Patient: Informer délai;
-    end;
+    end
     Système->>Coordinateur: Archiver intervention
 ```
 
@@ -204,7 +204,7 @@ bpmnDiagram;
 ### 8.1 Diagramme de classes UML (abstrait)  
 
 ```mermaid
-classdiagram;
+classDiagram
     class Utilisateur {
         <<entity>>
         +id : UUID;

@@ -342,25 +342,25 @@ Gère la liste des études, les filtres, la pagination, etc.
 ## 🏗️ Diagramme d’architecture frontale  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph UI;
         A[Vue Components] --> B[Views (router-view)]
         B --> C[App.vue]
-    end;
+    end
     subgraph State;
         D[Vuex Store] --> E[Modules: security, studies]
-    end;
+    end
     subgraph Services;
         F[LegacyProxyService] 
         G[SecurityService] 
         H[ExportService] 
         I[StudiesService]
-    end;
+    end
     subgraph Config;
         J[vuetify.js] 
         K[router.js] 
         L[env variables]
-    end;
+    end
     C --> D;
     C --> F;
     C --> G;

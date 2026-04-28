@@ -33,14 +33,14 @@ graph LR
     DB -->|Contient| REF[Tables de référence (Grade, Service, Statut, …)]
     DB -->|Contient| DACC[Table ACCIDENT]
     DB -->|Contient| DMAL[Table MALADIE]
-    WS -->|Synchronise| REF
-    subgraph Environnement
+    WS -->|Synchronise| REF;
+    subgraph Environnement;
         J[Serveur d’application (Tomcat / JBoss)]
         O[Serveur Oracle]
         S[Serveur de web‑services externes]
     end
-    J --> W
-    O --> DB
+    J --> W;
+    O --> DB;
     S --> WS
 ```
 
@@ -138,48 +138,48 @@ graph LR
 ```mermaid
 classDiagram
     class Accident {
-        +int id
-        +Date dateAccident
-        +String description
-        +Grade grade
-        +Service service
-        +int saisieTerminee
+        +int id;
+        +Date dateAccident;
+        +String description;
+        +Grade grade;
+        +Service service;
+        +int saisieTerminee;
     }
     class DossierMaladie {
-        +int id
-        +Date dateDiagnostic
-        +String description
-        +Grade grade
-        +Service service
-        +int saisieMaladiesProTerminee
+        +int id;
+        +Date dateDiagnostic;
+        +String description;
+        +Grade grade;
+        +Service service;
+        +int saisieMaladiesProTerminee;
     }
     class Grade {
-        +int code
-        +String libelle
-        +int codeGroupementGrade
+        +int code;
+        +String libelle;
+        +int codeGroupementGrade;
     }
     class Service {
-        +int code
-        +String libelle
-        +int saisieTerminee
-        +int saisieMaladiesProTerminee
+        +int code;
+        +String libelle;
+        +int saisieTerminee;
+        +int saisieMaladiesProTerminee;
     }
     class Statut {
-        +int code
-        +String libelle
+        +int code;
+        +String libelle;
     }
     class Utilisateur {
-        +String login
-        +String nom
-        +String prenom
-        +Service service
-        +String role
+        +String login;
+        +String nom;
+        +String prenom;
+        +Service service;
+        +String role;
     }
-    Accident "1" --> "1" Service : appartient à
-    Accident "1" --> "1" Grade   : possède
-    DossierMaladie "1" --> "1" Service : appartient à
-    DossierMaladie "1" --> "1" Grade   : possède
-    Utilisateur "1" --> "1" Service : travaille pour
+    Accident "1" --> "1" Service : appartient à;
+    Accident "1" --> "1" Grade   : possède;
+    DossierMaladie "1" --> "1" Service : appartient à;
+    DossierMaladie "1" --> "1" Grade   : possède;
+    Utilisateur "1" --> "1" Service : travaille pour;
     Utilisateur "1" --> "1" Statut  : a
 ```
 
@@ -192,12 +192,11 @@ classDiagram
 ### 6.1 Diagrammes de cas d’utilisation  
 
 ```mermaid
-usecaseDiagram
-    actor Agent
-    actor Médecin
-    actor GestionnaireRH
-    actor Auditeur
-
+usecaseDiagram;
+    actor Agent;
+    actor Médecin;
+    actor GestionnaireRH;
+    actor Auditeur;
     Agent --> (Saisir un dossier d’accident)
     Agent --> (Saisir un dossier de maladie)
     Agent --> (Consulter ses dossiers)
@@ -211,40 +210,40 @@ usecaseDiagram
 ### 6.2 Diagrammes d’activités (exemple : création d’un dossier d’accident)
 
 ```mermaid
-stateDiagram-v2
-    [*] --> Authentifier
-    Authentifier --> SaisirFormulaire
-    SaisirFormulaire --> ValiderFormulaire
-    ValiderFormulaire -->|OK| PersisterDossier
-    ValiderFormulaire -->|Erreur| AfficherErreur
-    PersisterDossier --> EnregistrerLog
+statediagram-v2;
+    [*] --> Authentifier;
+    Authentifier --> SaisirFormulaire;
+    SaisirFormulaire --> ValiderFormulaire;
+    ValiderFormulaire -->|OK| PersisterDossier;
+    ValiderFormulaire -->|Erreur| AfficherErreur;
+    PersisterDossier --> EnregistrerLog;
     EnregistrerLog --> [*]
 ```
 
 ### 6.3 Diagrammes d’états (exemple : cycle de vie d’un dossier)
 
 ```mermaid
-stateDiagram
-    [*] --> Brouillon
-    Brouillon --> EnCours : Soumission
-    EnCours --> Terminé : Validation
-    EnCours --> Rejeté : Refus
-    Terminé --> Archivé : 30 jours
+statediagram;
+    [*] --> Brouillon;
+    Brouillon --> EnCours : Soumission;
+    EnCours --> Terminé : Validation;
+    EnCours --> Rejeté : Refus;
+    Terminé --> Archivé : 30 jours;
     Rejeté --> Archivé : 30 jours
 ```
 
 ### 6.4 Diagrammes de séquence (exemple : synchronisation des grades)
 
 ```mermaid
-sequenceDiagram
+sequencediagram;
     participant UI as "Interface admin"
     participant Service as "GradeService"
     participant WS as "WSClientGrade"
     participant DB as "Base Oracle"
     UI->>Service: demanderSynchronisation()
     Service->>WS: getGradesExternes()
-    WS-->>Service: listeGrades
-    Service->>DB: comparer & insérer nouveaux grades
+    WS-->>Service: listeGrades;
+    Service->>DB: comparer & insérer nouveaux grades;
     DB-->>Service: résultat (nb lignes insérées)
     Service-->>UI: nbLignesInsérées
 ```

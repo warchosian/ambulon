@@ -11,7 +11,7 @@ Le Système d'Information des REcensements des Nomes d'INErieursScientifiques, d
 ### Schéma C4-L1 en Mermaid
 
 ```mermaid
-graph TD;
+graph TD
     A[Système SIRENES] -->|Utilise| B[Base de données]
     A -->|Communique avec| C[Comités de domaine]
     A -->|Informat| D[Agents]
@@ -64,7 +64,7 @@ graph TD;
 ### Schéma C4-L2 en Mermaid (vue conteneur)
 
 ```mermaid
-graph TD;
+graph TD
     A[Web Application] --> B[Database]
     A --> C[File Storage]
     B --> D[Data]

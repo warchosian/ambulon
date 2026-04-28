@@ -18,7 +18,7 @@ SIREINES est une application métier Java/J2EE qui recense, suit et évalue les 
 Les agents publics remplissent des dossiers, les comités de domaine les examinent, et les résultats sont consultables via une interface web.
 
 ```mermaid
-flowchart TD;
+flowchart TD
     A[Agent] -->|Saisie dossier| B[SIREINES (Web UI)]
     B -->|Persist| C[(PostgreSQL DB)]
     B -->|Rapports BIRT| D[BIRT Engine]
@@ -125,12 +125,12 @@ flowchart TD;
 ## 6️⃣ Vue en Briques (C4 ‑ L2)  
 
 ```mermaid
-graph LR;
+graph LR
     subgraph "Docker‑Compose"
         APP[Container: sireines_app_usine_container<br/>Image: sireines_app_usine_image]
         DB[Container: sireines_db_usine_container<br/>Image: postgres_14‑alpine]
         PGADMIN[Container: sireines_pgadmin_container<br/>Image: dpage/pgadmin4]
-    end;
+    end
     APP -->|JDBC| DB;
     APP -->|Elasticsearch (embedded)| DB;
     APP -->|SMTP| MAIL[Service Mail]

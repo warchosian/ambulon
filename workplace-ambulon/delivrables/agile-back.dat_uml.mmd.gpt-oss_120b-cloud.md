@@ -20,7 +20,7 @@
 ### 2.1 Diagramme de classes (Class Diagram)  
 
 ```mermaid
-classdiagram;
+classDiagram
     %% Packages;
     package Entity {
         class Abonnements {
@@ -223,7 +223,7 @@ classdiagram;
 ### 2.2 Diagramme de composants (Component Diagram)
 
 ```mermaid
-graph TD;
+graph TD
     %% Core Symfony bundles;
     SymfonyFramework[Symfony Framework]:::bundle;
     DoctrineORM[Doctrine ORM]:::bundle;
@@ -293,7 +293,7 @@ graph TD;
 ### 2.3 Diagramme de déploiement (Deployment Diagram)
 
 ```mermaid
-graph LR;
+graph LR
     %% Nodes;
     LB[Load Balancer<br/>HAProxy]:::node;
     WebSrv[Web Server<br/>Nginx + PHP‑FPM]:::node;
@@ -335,7 +335,7 @@ graph LR;
 ### 2.4 Diagramme de packages (Package Diagram)
 
 ```mermaid
-graph TD;
+graph TD
     PackageEntity[Package: Entity]:::pkg;
     PackageController[Package: Controller]:::pkg;
     PackageService[Package: Service]:::pkg;
@@ -375,7 +375,7 @@ graph TD;
 > *Mermaid ne possède pas de notation native Use‑Case ; on utilise un diagramme de classe simplifié avec les stéréotypes `<<actor>>` et `<<usecase>>`.*
 
 ```mermaid
-classdiagram;
+classDiagram
     %% Actors;
     class Utilisateur {
         <<actor>>
@@ -559,7 +559,7 @@ sequencediagram;
 ### 4.2 Diagramme de communication – *Création d’une étude (identique au scénario séquence)*  
 
 ```mermaid
-graph TD;
+graph TD
     UI[UI (Browser)] -->|GET /etudes/new| C[EtudesController]
     C -->|render| UI;
     UI -->|POST form| C;

@@ -106,8 +106,8 @@ SIREINES est une application **Web Java/J2EE** qui centralise les demandes de qu
 ## 6️⃣ Vue en briques (C4 ‑ L2)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F80ED', 'edgeLabelBackground':'#f9f9f9'}}%%}%%
-graph TD;
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2F80ED', 'edgeLabelBackground':'#f9f9f9'}}%%%%%%%%%%%%%%%%%%%%}%%
+graph TD
     subgraph "Docker‑Compose"
         A[Tomcat 7 (sireines‑app)] -->|JDBC| B[PostgreSQL 14 (sireines‑db)]
         A -->|HTTP| C[Elasticsearch]
@@ -115,7 +115,7 @@ graph TD;
         A -->|HTTP| E[Nginx LB (2 instances)]
         B -->|Backup| F[GTI Storage (AES‑256)]
         G[PgAdmin] --> B;
-    end;
+    end
     style A fill:#E3F2FD,stroke:#2F80ED,stroke-width_2px;
     style B fill:#FFF3E0,stroke:#FF9800,stroke-width_2px;
     style C fill:#E8F5E9,stroke:#4CAF50,stroke-width_2px;
@@ -202,7 +202,7 @@ sequencediagram;
 ### 8.1 Infrastructure (standard)
 
 ```mermaid
-flowchart LR;
+flowchart LR
     subgraph IaaS_ECO4["ECO4 IaaS – Paris La Défense"]
         N[Reverse‑proxy Nginx (2 instances)]
         T1[Tomcat – sireines‑app (1)]
@@ -210,7 +210,7 @@ flowchart LR;
         P[PostgreSQL – sireines‑db]
         E[Elasticsearch]
         B[BIRT Server]
-    end;
+    end
     N --> T1 & T2;
     T1 --> P & E & B;
     T2 --> P & E & B

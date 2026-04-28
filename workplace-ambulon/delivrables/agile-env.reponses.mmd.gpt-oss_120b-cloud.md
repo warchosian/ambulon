@@ -131,14 +131,14 @@ Ces fichiers sont montés dans le conteneur via le `docker‑compose.dev.yml` (v
 ## 🏗️ Diagramme d’architecture (Docker)  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph Host;
         A[Docker Engine]
-    end;
+    end
     subgraph Services;
         DB[PostgreSQL<br/>agile-env-db] 
         APP[PHP 7.3 + Apache<br/>agile-env-app]
-    end;
+    end
     A --> DB;
     A --> APP;
     DB -->|postgres://user_pwd@db_5432/dbname| APP;

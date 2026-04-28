@@ -113,14 +113,14 @@ Ces vues sont exploitées par les tableaux de bord Superset pour le suivi budgé
 ## 4️⃣ Architecture applicative (Docker)
 
 ```mermaid
-graph TD;
+graph TD
     subgraph Host;
         A[Docker Compose]
-    end;
+    end
     subgraph Services;
         DB[(PostgreSQL<br/>afinope-db)]
         APP[(Python Dagster<br/>afinope-app)]
-    end;
+    end
     A --> DB;
     A --> APP;
     APP -->|SQLAlchemy| DB;
@@ -143,7 +143,7 @@ graph TD;
 ## 5️⃣ Processus de traitement des CSV  
 
 ```mermaid
-flowchart TD;
+flowchart TD
     Start[Début] --> ListFiles[GestionnaireFichiersCSV.lister_les_fichiers()]
     ListFiles --> ForEach[Boucle sur chaque CSV]
     ForEach --> LoadCSV[read_csv → pandas.DataFrame]

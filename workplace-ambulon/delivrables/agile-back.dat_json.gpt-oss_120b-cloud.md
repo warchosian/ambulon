@@ -12,7 +12,7 @@ Le projet est développé en **PHP 8** avec le framework **Symfony 5/6** et 
 ### Vue d’ensemble (C4‑L1)
 
 ```mermaid
-graph TD;
+graph TD
     %% System Context;
     A[Utilisateurs (front‑office)] -->|HTTP| B[Agile‑front]
     B -->|API JSON/CSV| C[agile‑back]
@@ -180,7 +180,7 @@ graph TD;
 ## 6️⃣ Vue en briques (C4‑L2) <a id="vue-en-briques"></a>
 
 ```mermaid
-graph TB;
+graph TB
     subgraph "Infrastructure"
         NGINX[Nginx (reverse‑proxy)]
         PHPFPM[PHP‑FPM (Symfony)]
@@ -188,7 +188,7 @@ graph TB;
         CAS[(CAS Server)]
         MAIL[(SMTP Mail Server)]
         PROM[Prometheus / Grafana]
-    end;
+    end
     NGINX --> PHPFPM;
     PHPFPM --> DB;
     PHPFPM --> CAS;
@@ -196,7 +196,7 @@ graph TB;
     PHPFPM --> PROM;
     subgraph "Utilisateurs"
         UI[Utilisateurs (navigateurs)]
-    end;
+    end
     UI --> NGINX
 ```
 
@@ -312,7 +312,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **Openstack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] --> B[Application (PHP‑FPM / Symfony)]
     B --> C[Base de données (PostgreSQL)]
     B --> D[Autres services (CAS client, Mailer)]

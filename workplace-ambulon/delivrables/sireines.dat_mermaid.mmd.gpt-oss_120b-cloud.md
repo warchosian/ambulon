@@ -29,7 +29,7 @@
 SIREINES (Système d’Information de Référentiel des Experts et Spécialistes) recense les demandes de qualification des agents, assure le suivi des comités de domaine, produit les rapports BIRT et notifie les agents par courriel.
 
 ```mermaid
-flowchart LR;
+flowchart LR
     A[Agent/Utilisateur] --> B[Web UI (Struts2)]
     B --> C[Controller (Spring/Vertigo)]
     C --> D[Service Layer]
@@ -122,12 +122,12 @@ flowchart LR;
 ## 6️⃣ Vue en briques (C4‑L2) <a id="vue-en-briques"></a>
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Docker‑Compose"
         A[nginx‑lb] --> B[sireines_app_usine_container]
         B --> C[(PostgreSQL)]
         B --> D[sireines_pgadmin_container]
-    end;
+    end
     B -->|REST/HTML| UI[Browser (HTML/JS)]
     UI -->|Auth JWT| Cerb[Cerbère (OAuth2)]
     B -->|BIRT| RPT[BIRT Engine]
@@ -239,13 +239,13 @@ sequencediagram;
 ### Infrastructure
 
 ```mermaid
-graph LR;
+graph LR
     subgraph "ECO4 – IaaS"
         LB[nginx (2×) LB] -->|HTTPS| APP[Tomcat (sireines_app)]
         APP --> DB[PostgreSQL]
         APP --> BIRT[BIRT Engine]
         APP --> SMTP[SMTP (TLS)]
-    end;
+    end
     subgraph "Docker‑Host"
         DB -->|pg_dump| Backup[Backup Service]
     end

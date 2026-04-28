@@ -199,59 +199,53 @@ Intégrer les actions dans le **backlog produit** (Jira, Trello…) et les plani
 
 ```mermaid
 graph TB
-    %% Acteurs
+    %% Acteurs;
     team["👥 Équipe produit"]
     ref["🎓 Référent accessibilité"]
     dev["💻 Développeur"]
     jur["⚖️ Juriste"]
     user["👤 Représentant utilisateurs"]
 
-    %% Phases
+    %% Phases;
     subgraph phase1["Phase 1 – Cadrage"]
         step1["📋 Définir périmètre & critères"]
         step2["📦 Inventaire des composants"]
     end
-
     subgraph phase2["Phase 2 – Évaluation"]
         step3["🧪 Tests (manuel + outils)"]
         step4["📊 Calcul du taux de conformité"]
     end
-
     subgraph phase3["Phase 3 – Priorisation"]
         step5["⚠️ Matrice Impact/Effort"]
         step6["📝 Plan d’action (P1‑P4)"]
     end
-
     subgraph phase4["Phase 4 – Documentation"]
         step7["📘 Déclaration d’accessibilité"]
         step8["📜 Dossier d’homologation"]
     end
-
     subgraph loop["Amélioration continue"]
         monitor["🔄 Re‑tests à chaque release"]
         feedback["💬 Traitement des signalements"]
     end
-
-    %% Flux
-    team -->|Initie| step1
-    ref -->|Guide| step2
-    dev -->|Exécute| step3
-    ref -->|Valide| step4
-    team -->|Priorise| step5
-    team -->|Planifie| step6
-    jur -->|Valide| step7
-    jur -->|Homologue| step8
-    user -.->|Signalements| feedback
-    feedback -->|Alimente backlog| step6
-    monitor -.->|Re‑évaluation périodique| step3
-
-    %% Styles
-    classDef acteur fill:#E3F2FD,stroke:#1976D2,stroke-width:2px;
-    classDef phase1 fill:#ADD8E6,stroke:#333,stroke-width:2px;
-    classDef phase2 fill:#90EE90,stroke:#333,stroke-width:2px;
-    classDef phase3 fill:#FFFFE0,stroke:#333,stroke-width:2px;
-    classDef phase4 fill:#FFB6C1,stroke:#333,stroke-width:2px;
-    classDef loop fill:#E6E6FA,stroke:#333,stroke-width:2px;
+    %% Flux;
+    team -->|Initie| step1;
+    ref -->|Guide| step2;
+    dev -->|Exécute| step3;
+    ref -->|Valide| step4;
+    team -->|Priorise| step5;
+    team -->|Planifie| step6;
+    jur -->|Valide| step7;
+    jur -->|Homologue| step8;
+    user -.->|Signalements| feedback;
+    feedback -->|Alimente backlog| step6;
+    monitor -.->|Re‑évaluation périodique| step3;
+    %% Styles;
+    classDef acteur fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
+    classDef phase1 fill:#ADD8E6,stroke:#333,stroke-width_2px;
+    classDef phase2 fill:#90EE90,stroke:#333,stroke-width_2px;
+    classDef phase3 fill:#FFFFE0,stroke:#333,stroke-width_2px;
+    classDef phase4 fill:#FFB6C1,stroke:#333,stroke-width_2px;
+    classDef loop fill:#E6E6FA,stroke:#333,stroke-width_2px;
 
     class team,ref,dev,jur,user acteur;
     class step1,step2 phase1;

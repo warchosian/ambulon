@@ -22,7 +22,7 @@ Elle fonctionne en **HTTPS**, est accessible via le web et est hébergée sur le
 ↩ [↩ Retour au sommaire](#documentation-technique-du-projet-hubrh)
 
 ```mermaid
-graph TD;
+graph TD
     A[Utilisateurs (agents, services, admin)] -->|HTTPS| B[Load Balancer (reverse‑proxy)]
     B --> C[Conteneur Docker – Redmine Core]
     C --> D[Plugins Ruby (Deface, Select2, CKEditor, Datetime, HubRH, Impersonate, OmniAuth‑CAS)]
@@ -69,19 +69,19 @@ graph TD;
 ↩ [↩ Retour au sommaire](#documentation-technique-du-projet-hubrh)
 
 ```mermaid
-graph LR;
+graph LR
     subgraph CI;
         A[Commit / Tag] --> B[.gitlab-ci.yml]
         B --> C[Kaniko Builder (gcr.io/kaniko-project/executor_debug)]
         C --> D[Build Image Docker]
         D --> E[Push Image to GitLab Registry]
-    end;
+    end
     subgraph CD;
         E --> F[Deploy on Kubernetes / Docker‑Compose]
         F --> G[Run DB Migrations (rake db_migrate)]
         G --> H[Install Plugin Dependencies (bundle install)]
-        H --> I[Run Redmine Plugin Migrations (rake redmine_plugins:migrate)]
-        I --> J[Create Sessions Table (rake db_sessions:create)]
+        H --> I[Run Redmine Plugin Migrations (rake redmine_plugins_migrate)]
+        I --> J[Create Sessions Table (rake db_sessions_create)]
     end
 ```
 

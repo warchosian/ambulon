@@ -14,18 +14,18 @@
 ### 1.1 Vue fonctionnelle (C4‑L1)
 
 ```mermaid
-graph LR;
+graph LR
     subgraph Utilisateurs;
         U1[Administrateur] 
         U2[Utilisateur métier] 
         U3[Auditeur / RSSI]
-    end;
+    end
     subgraph Systèmes externes;
         CAS[CAS Authentication Server]
         SMTP[Serveur SMTP (mail)]
         DB[PostgreSQL DB]
         FE[Agile‑front (Angular/React)]
-    end;
+    end
     NGINX[Nginx Reverse‑Proxy] --> PHP[Symfony (agile‑back)]
     PHP --> DB;
     PHP --> CAS;
@@ -165,7 +165,7 @@ graph LR;
 ## 6️⃣ Vue en Briques (C4‑L2) {#vue-briques}
 
 ```mermaid
-graph TB;
+graph TB
     subgraph "Infrastructure OpenStack"
         NGINX[Nginx Load‑Balancer] 
         PHPFPM[PHP‑FPM (Symfony)] 
@@ -173,7 +173,7 @@ graph TB;
         REDIS[Redis] 
         SMTP[SMTP Relay] 
         CAS[CAS Server (ext.)]
-    end;
+    end
     NGINX --> PHPFPM;
     PHPFPM --> POSTGRES;
     PHPFPM --> REDIS;

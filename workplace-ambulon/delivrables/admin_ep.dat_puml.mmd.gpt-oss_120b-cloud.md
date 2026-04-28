@@ -17,23 +17,23 @@ L’application **admin_ep** (Administration des établissements publics) centra
 ### C4 – Niveau 1 – Contexte système (Mermaid)  
 
 ```mermaid
-flowchart LR;
+flowchart LR
     subgraph Users;
         U1[SPES / DG de tutelle] 
         U2[Opérateurs] 
         U3[Auditeurs / RSSI] 
-    end;
+    end
     subgraph External;
         Ext1[JORF (OpenData)] 
         Ext2[Cerbère (authentification)] 
         Ext3[ElasticSearch] 
-    end;
+    end
     subgraph System;
         Nginx[Nginx (reverse‑proxy)]
         App[admin_ep (Tomcat 9, Struts2, Java 8)]
         DB[(PostgreSQL 9.6)]
         Monitoring[Prometheus + Grafana]
-    end;
+    end
     U1 -->|HTTPS| Nginx;
     U2 -->|HTTPS| Nginx;
     U3 -->|HTTPS| Nginx;
@@ -165,7 +165,7 @@ Le **périmètre fonctionnel** inclut : saisie manuelle, ingestion JORF, reche
 ## 6️⃣ Vue en Briques (C4 – Niveau 2)  
 
 ```mermaid
-graph TB;
+graph TB
     subgraph "Infrastructure"
         Nginx[Nginx (LB/Reverse‑proxy)]
         Tomcat[Tomcat 9 (admin_ep WAR)]
@@ -175,7 +175,7 @@ graph TB;
         Graf[Grafana]
         Loki[Loki]
         Port[Portainer]
-    end;
+    end
     Nginx --> Tomcat;
     Tomcat --> DB;
     Tomcat --> ES;
@@ -255,7 +255,7 @@ sequencediagram;
     DB-->>App: Resultset;
     loop for each mandate;
         App->>Mail: Send e‑mail to référent;
-    end;
+    end
     App-->>Scheduler: Alerts sent
 ```  
 

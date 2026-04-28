@@ -16,7 +16,7 @@ Le projet est développé en PHP avec le framework Symfony (architecture MVC) et
 ## 🗂️ Arborescence simplifiée
 
 ```mermaid
-graph TD;
+graph TD
     A[config] --> B[packages]
     A --> C[routes]
     A --> D[bundles.php]
@@ -41,7 +41,7 @@ graph TD;
         P4[lib]
         P5[style]
         P6[index.php]
-    end;
+    end
     subgraph src;
         S1[Commandes]
         S2[Controller]
@@ -56,7 +56,7 @@ graph TD;
         S11[Services]
         S12[util]
         S13[Kernel.php]
-    end;
+    end
     subgraph templates;
         T1[abonnements_admin]
         T2[bop_admin]
@@ -74,7 +74,7 @@ graph TD;
         T14[valorisations]
         T15[base.html.twig]
         T16[base_admin.html.twig]
-    end;
+    end
     A -.-> public;
     A -.-> src;
     A -.-> templates

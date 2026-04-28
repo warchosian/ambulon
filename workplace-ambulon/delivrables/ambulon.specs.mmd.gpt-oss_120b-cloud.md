@@ -133,19 +133,19 @@ sequencediagram;
 ### 3.1 Architecture logique <a id="architecture-logique"></a>
 
 ```mermaid
-graph LR;
+graph LR
     subgraph UI[Interface Utilisateur]
         Web[Web UI (HTML/JS)]
-    end;
+    end
     subgraph BE[Logique Métier]
         API[REST API]
         ServiceV[Service Versement]
         ServiceD[Service Demande]
         ServiceM[Service Mouvement]
-    end;
+    end
     subgraph DB[Persistance]
         Oracle[(Oracle prep37)]
-    end;
+    end
     Web --> API;
     API --> ServiceV;
     API --> ServiceD;

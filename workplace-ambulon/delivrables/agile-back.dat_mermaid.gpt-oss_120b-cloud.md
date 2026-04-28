@@ -10,7 +10,7 @@
 *agile‑back* est le **back‑office** de l’application *Agile* ; il permet la création, la modification et la consultation d’études, de financements, de dotations, de groupes, etc. Les données sont stockées dans une base PostgreSQL et exposées via une API REST (API Platform) et une interface web (Twig).  
 
 ```mermaid
-graph TD;
+graph TD
     A[Utilisateurs] -->|Utilisation| B[agile‑back]
     B -->|Authentification CAS| C[CAS Server]
     B -->|Persistance| D[(PostgreSQL)]
@@ -138,11 +138,11 @@ graph TD;
 ## 6️⃣ Vue en Briques (C4 – Niveau 2) <a id="vue-en-briques"></a>
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Utilisateurs"
         U1[Agent] 
         U2[Analyste]
-    end;
+    end
     subgraph "Conteneurs"
         Nginx[Nginx (LB)]
         PHP[PHP‑FPM (Symfony app)]
@@ -150,7 +150,7 @@ graph TD;
         Cache[Redis / Filesystem Cache]
         Mail[Mailer (SMTP)]
         CAS[CAS Client lib]
-    end;
+    end
     U1 -->|HTTPS| Nginx;
     U2 -->|HTTPS| Nginx;
     Nginx -->|FastCGI| PHP;
@@ -262,7 +262,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **OpenStack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     LB[Nginx LB] -->|HTTPS| PHP1[PHP‑FPM 1]
     LB -->|HTTPS| PHP2[PHP‑FPM 2]
     PHP1 -->|SQL| DB1[PostgreSQL Primary]

@@ -35,24 +35,24 @@ The application is organized into **four Maven modules**:
 <a id="architecture-diagram"></a>
 
 ```mermaid
-graph TD;
+graph TD
     subgraph MavenModules;
         DB[causalismp-database]
         DEP[causalismp-deployment]
         DOC[causalismp-doc]
         WEB[causalismp-web]
-    end;
+    end
     subgraph WEBLayer;
         STR[Struts Actions & JSP]
         SVC[Service Layer]
         DAO[DAO (Castor JDO)]
         MOD[Domain Model (POJOs)]
-    end;
+    end
     subgraph Infra;
         ORA[(Oracle DB)]
         JNDI[(JNDI DataSource<br/>java_comp/env/jdbc/userDScausalis)]
         WS[External Web Services<br/>(StubWS.jar)]
-    end;
+    end
     DB -->|SQL scripts| ORA;
     WEB --> STR;
     STR --> SVC;
@@ -234,7 +234,7 @@ java.lang.Throwable
 <a id="synchronisation-flow"></a>
 
 ```mermaid
-flowchart TD;
+flowchart TD
     A[Start Batch] --> B[Fetch Grades from WS]
     B --> C{TranscodageGradePredicate}
     C -->|Not present| D[Insert new TranscodageGrade]

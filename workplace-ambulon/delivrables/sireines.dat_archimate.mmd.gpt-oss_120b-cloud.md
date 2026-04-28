@@ -7,7 +7,7 @@
 ## 1️⃣ Vue d’ensemble ArchiMate  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#FFCC00', 'edgeLabelBackground':'#FFFFFF'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#FFCC00', 'edgeLabelBackground':'#FFFFFF'}}%%%%%%%%%%%%%%%%%%%%}%%
 archimateDiagram;
     title SIREINES – Couches Métier / Application / Technologie;
     BusinessActor "MOA CGDD/DRI/AST4" as MOA;

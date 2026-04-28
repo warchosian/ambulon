@@ -9,7 +9,7 @@
 ### 1.1 Vue d’ensemble fonctionnelle (C4‑L1)  
 
 ```mermaid
-graph TD;
+graph TD
     A[Développeur] -->|push code| B[GitLab Repository]
     B -->|pipeline déclenché| C[GitLab CI Runner]
     C -->|exécute| D[Ansible Playbook (recette/main.yml)]
@@ -139,11 +139,11 @@ graph TD;
 ## 6. Vue en Briques (C4‑L2)  
 
 ```mermaid
-graph TB;
+graph TB
     subgraph CI;
         CI[GitLab CI Runner]
         CI -->|trigger| ANS[Ansible Executor (pasta‑cooker)]
-    end;
+    end
     subgraph Infra;
         ANS -->|playbook| TPL[Template Engine (Jinja2)]
         ANS -->|creates| DC[Docker‑Compose File]
@@ -152,16 +152,16 @@ graph TB;
         APP -->|backend| BE[Container: back]
         APP -->|db| DB[Container: postgres]
         APP -->|proxy| NG[Nginx (load‑balanced pair)]
-    end;
+    end
     subgraph Monitoring;
         MON[Prometheus/Grafana/Loki]
         APP -.-> MON;
         NG -.-> MON;
-    end;
+    end
     subgraph Backup;
         BCK[Backup Scripts (AES‑256)]
         DB --> BCK;
-    end;
+    end
     style CI fill:#E3F2FD,stroke:#2196F3;
     style ANS fill:#F3E5F5,stroke:#AB47BC;
     style TPL fill:#FFF3E0,stroke:#FB8C00;
@@ -233,7 +233,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **Openstack**, 
 Le reverse-proxy **Nginx** du schéma ci-dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] -- B[Application]
     B -- C[Base de données]
     B -- D[Autres services]

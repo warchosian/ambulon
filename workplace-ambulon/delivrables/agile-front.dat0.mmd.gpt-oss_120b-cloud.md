@@ -16,7 +16,7 @@ Le produit **agile‑front** est une application mono‑page (SPA) développée 
 ### 1.2 Diagramme C4 – Niveau 1 (Contexte)  
 
 ```mermaid
-graph LR;
+graph LR
     A[Utilisateurs] -->|Navigateur HTTP| B[agile‑front (SPA)]
     B -->|API REST (HTTPS)| C[API Back‑office (Legacy)]
     C -->|Base de données| D[(DB Études)]
@@ -135,21 +135,21 @@ L’application est destinée aux **agents de pilotage** et **chercheurs** du mi
 ### 6.1 Vue conteneur (C4 – Niveau 2)  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Frontend Container"
         FE[Vue SPA (agile‑front)]
         FE -->|axios| API[Legacy Proxy Service]
         FE -->|store| Vuex[Vuex Store]
         FE -->|router| Router[Vue‑Router]
-    end;
+    end
     subgraph "Backend Container"
         API -->|REST| BE[API Legacy (Java/Node)]
         BE -->|SQL| DB[(PostgreSQL)]
-    end;
+    end
     subgraph "Infrastructure"
         NGINX[Nginx LB] --> FE;
         NGINX --> BE;
-    end;
+    end
     style FE fill:#f9f,stroke:#333,stroke-width_2px;
     style API fill:#bbf,stroke:#333,stroke-width_2px;
     style BE fill:#bfb,stroke:#333,stroke-width_2px;
@@ -226,7 +226,7 @@ Le produit est hébergé sur le cloud interne ECO4 basé sur Openstack, dans le 
 Le reverse-proxy Nginx du schéma ci-dessous est en fait une paire de Nginx load-balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] -- B[Application]
     B -- C[Base de données]
     B -- D[Autres services]

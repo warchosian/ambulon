@@ -16,7 +16,7 @@ Le *Bulletin Officiel* (BO) est une plateforme de diffusion et de consultation d
 ### C4 – Niveau 1 – Diagramme *System Context*  
 
 ```mermaid
-graph LR;
+graph LR
     %% Actors;
     User[Utilisateur (public, agent)] 
     Admin[Administrateur BO] 
@@ -163,7 +163,7 @@ graph LR;
 ## 6️⃣ Vue en Briques (C4 – Niveau 2)  
 
 ```mermaid
-graph TB;
+graph TB
     %% Containers;
     subgraph "Kubernetes Cluster"
         UI[Web UI (React) <br/> Container] 
@@ -172,7 +172,7 @@ graph TB;
         Auth[Keycloak <br/> Container] 
         Cache[Redis <br/> Container] 
         Bus[Kafka (optional) <br/> Container] 
-    end;
+    end
     %% External systems;
     Users((Utilisateurs))
     Notix[NotixBase (REST)]
@@ -226,7 +226,7 @@ sequencediagram;
         API->>DB: SELECT * FROM notices WHERE id=123;
         DB-->>API: Notice JSON;
         API->>Cache: SET notice_123 (TTL 5 min)
-    end;
+    end
     API-->>UI: Notice JSON;
     UI->>User: Rendu HTML
 ```

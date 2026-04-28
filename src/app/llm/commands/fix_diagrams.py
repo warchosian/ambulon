@@ -43,8 +43,19 @@ class RegexDiagramFixer:
         self.patterns = [
             # Fix unclosed code blocks (critical)
             (r'(```mermaid\n[^`]+?)(?!```)\n(?=\n[^`]|$)', r'\1\n```\n'),
-            # Fix missing semicolons at end of lines
-            (r'(\w+)\s*\n(?=\s{4,})', r'\1;\n'),
+            # Fix classdiagram errors: classdiagram; → classDiagram and classdiagram → classDiagram
+            (r'\bclassdiagram\b', r'classDiagram'),
+            (r'classdiagram;', r'classDiagram'),
+            # Fix graph type declarations with semicolons: graph TB; → graph TB
+            (r'\b(graph|flowchart)\s+(TB|LR|TD|BT|RL|DLR|TBL);', r'\1 \2'),
+            # Fix end statements with semicolons: end; → end
+            (r'\bend;', r'end'),
+            # Fix CSS stroke-width syntax: stroke-width_2px → stroke-width:2px
+            (r'stroke-width_(\d+)px', r'stroke-width:\1px'),
+            # Fix missing semicolons at end of lines (skip diagram keywords)
+            # This pattern intentionally left simpler - avoid matching declaration lines
+            # Only apply to non-keyword lines (like method/property definitions)
+            (r'^(?!(?:graph|flowchart|Graph|Flowchart|classDiagram|classdiagram|sequenceDiagram|stateDiagram|gantt|pie|mindmap|---)\b)(\w+)\s*\n(?=\s{4,})', r'\1;\n'),
             # Fix unclosed strings in quotes
             (r'(".*?)(?<!\\)"(?!")(?!.*")', r'\1"'),
             # Fix arrow syntax variations
@@ -57,9 +68,9 @@ class RegexDiagramFixer:
              r'\1 as \3 #\2'),
             # Fix missing colons in init blocks
             (r"%%\{init:\s*\{([^}]+)\}\}", r"%%{init: {\1}}%%"),
-            # Fix diagram type capitalization
-            (r'(graph|flowchart|classDiagram|stateDiagram|sequenceDiagram|gantt|pie|mindmap|timeline)',
-             lambda m: m.group(1).lower()),
+            # Fix graph/flowchart lowercase (but NOT classDiagram which should be camelCase)
+            (r'\b(Graph|FlowChart|GRAPH|FLOWCHART)\b',
+             lambda m: 'graph' if m.group(1).lower().startswith('graph') else 'flowchart'),
             # Remove problematic special chars from node IDs (Mermaid rule)
             (r'(\w+):(\w+)', r'\1_\2'),  # Replace : with _
             # Fix empty diagram blocks
@@ -90,13 +101,14 @@ class RegexDiagramFixer:
         """
         fixed = content
         fixes_applied = []
+        block_count = 0
 
-        # Extract and process each mermaid diagram
-        mermaid_blocks = re.findall(r'```mermaid\n(.*?)\n```', fixed, re.DOTALL)
-
-        for i, block in enumerate(mermaid_blocks):
-            original = block
-            fixed_block = block
+        # Process each mermaid block and apply fixes
+        def fix_mermaid_block(match):
+            nonlocal block_count, fixes_applied
+            block_count += 1
+            original = match.group(1)
+            fixed_block = original
 
             # Apply regex patterns
             for pattern, replacement in self.patterns:
@@ -107,9 +119,13 @@ class RegexDiagramFixer:
 
             # Track applied fixes
             if original != fixed_block:
-                fixes_applied.append(f"Block {i+1}: Fixed diagram syntax")
-                fixed = fixed.replace(f'```mermaid\n{original}\n```',
-                                    f'```mermaid\n{fixed_block}\n```', 1)
+                fixes_applied.append(f"Block {block_count}: Fixed diagram syntax")
+                return f'```mermaid\n{fixed_block}\n```'
+            return match.group(0)
+
+        # Apply fixes to all mermaid blocks
+        mermaid_pattern = r'```mermaid\n(.*?)\n```'
+        fixed = re.sub(mermaid_pattern, fix_mermaid_block, fixed, flags=re.DOTALL)
 
         return fixed, fixes_applied
 

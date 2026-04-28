@@ -203,7 +203,7 @@ Fonctionnalités associées (axe vertical ↓) :
 ## 9️⃣ Diagramme Mermaid du Story Map  
 
 ```mermaid
-graph TB;
+graph TB
     %% Backbone – Parcours utilisateur;
     subgraph backbone[" BACKBONE - Parcours utilisateur "]
         step1["Se connecter"]
@@ -212,7 +212,7 @@ graph TB;
         step4["Saisir / mettre à jour un mandat"]
         step5["Générer un rapport"]
         step6["Recevoir une alerte échéance"]
-    end;
+    end
     %% MVP – Fonctionnalités indispensables;
     subgraph mvp[" MVP – Fonctionnalités indispensables "]
         f11["Auth Cerbère"]
@@ -221,7 +221,7 @@ graph TB;
         f41["Formulaire mandat"]
         f51["Export PDF (V2)"]
         f61["Mail alerte 30j"]
-    end;
+    end
     %% V2+ – Fonctionnalités reportables;
     subgraph v2plus[" V2+ – À prioriser ultérieurement "]
         f12["Gestion mot de passe"]
@@ -230,7 +230,7 @@ graph TB;
         f42["Historisation"]
         f52["Export CSV"]
         f62["Dashboard d’alertes"]
-    end;
+    end
     %% Flux;
     step1 --> f11;
     step2 --> f21;

@@ -18,18 +18,18 @@ Admin EP est une application métier permettant de :
 ### 1.1 Schéma C4 – Niveau 1 (System Context)  
 
 ```mermaid
-graph TB;
+graph TB
     subgraph Utilisateurs;
         U1[DG de tutelle] 
         U2[Opérateurs] 
         U3[SPES] 
-    end;
+    end
     subgraph Systèmes externes;
         JORF[Source JORF (RSS / TAR.GZ)] 
         CERB[Service d’authentification Cerbère] 
         SUP[Supervision PSIN / GTI] 
         MON[Monitoring (Prometheus/Grafana)] 
-    end;
+    end
     AdminEP[Admin EP (Web + DB)] 
 
     U1 -->|Connexion HTTPS| AdminEP;
@@ -156,7 +156,7 @@ graph TB;
 ## 6️⃣ Vue en briques (C4 – Niveau 2)  
 
 ```mermaid
-graph TB;
+graph TB
     subgraph Infra;
         NGINX[Nginx (load‑balanced pair)] 
         TOMCAT1[Tomcat 9 – Webapp]
@@ -164,12 +164,12 @@ graph TB;
         PG[PostgreSQL]
         MON[Prometheus/Grafana]
         SUP[Supervision PSIN]
-    end;
+    end
     subgraph Ext;
         USER[Utilisateurs (DG, Opérateurs, SPES)]
         CERB[Service Cerbère]
         JORF[Source JORF (RSS/TAR.GZ)]
-    end;
+    end
     USER -->|HTTPS| NGINX;
     NGINX -->|HTTP| TOMCAT1;
     NGINX -->|HTTP| TOMCAT2;
@@ -284,7 +284,7 @@ sequencediagram;
 ```
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] --> B[Application]
     B --> C[Base de données]
     B --> D[Autres services]

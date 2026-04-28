@@ -60,7 +60,7 @@
 ### 2.1 Acteurs & cas d’usage (Use‑Case)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#004080', 'secondaryColor': '#cce6ff'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#004080', 'secondaryColor': '#cce6ff'}}%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Gestionnaire (Cerbère) as G;
     actor Opérateur as O;
@@ -107,7 +107,7 @@ usecaseDiagram;
 | **Code** | 1 | 1 | 2 |
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%
 decisionTable;
     title Type de mandat selon la durée;
     condition Durée > 12;
@@ -127,7 +127,7 @@ decisionTable;
 | `Budget` | `Ministre chargé du budget` |
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%
 decisionTable;
     title Nom de la charge affiché;
     condition Charge = "Affaires étrangères"
@@ -158,26 +158,26 @@ decisionTable;
 ### 3.1 Vue d’ensemble (Composants)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#006400', 'secondaryColor': '#e6ffe6'}}%%}%%
-graph TD;
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#006400', 'secondaryColor': '#e6ffe6'}}%%%%%%%%%%%%%%%%%%%%}%%
+graph TD
     subgraph Client;
         UI[UI Web (HTML/JS/CSS)]
-    end;
+    end
     subgraph "Web‑Tier (Tomcat 9)"
         C1[Struts2 Controllers]
         C2[Vertigo/Vega Filters]
         C3[SecurityFilter (Cerbère)]
-    end;
+    end
     subgraph "Service‑Tier (Java)"
         S1[Business Services]
         S2[Domain Model (DTO/Entity)]
         S3[DAO (JPA / Hibernate)]
         S4[Job Scheduler (Quartz)]
         S5[ArticleAnalyser (JO‑Import)]
-    end;
+    end
     subgraph "Data‑Tier"
         DB[(Oracle / PostgreSQL – schema *integration*)]
-    end;
+    end
     UI --> C1;
     C1 --> C3;
     C1 --> S1;
@@ -204,7 +204,7 @@ graph TD;
 ### 3.2 Diagramme de séquence – Authentification  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%
 sequencediagram;
     participant U as Utilisateur;
     participant F as SecurityFilter;
@@ -224,7 +224,7 @@ sequencediagram;
 ### 3.3 Diagramme de séquence – Création d’un mandat  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%
 sequencediagram;
     participant O as Opérateur;
     participant C as UpsertMandatAction (Struts)
@@ -245,8 +245,8 @@ sequencediagram;
 ### 3.4 Diagramme de classes (schéma simplifié)  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%
-classdiagram;
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%
+classDiagram
     class Administrateur {
         +Long id;
         +String nom;
@@ -291,19 +291,19 @@ classdiagram;
 ### 3.5 Déploiement (Vue physique)  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%
-graph LR;
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%
+graph LR
     subgraph "Data‑Center – Paris La Défense"
         DBP[(PostgreSQL – prep37)]
-    end;
+    end
     subgraph "Serveur Prod"
         TOMCAT[Tomcat 9 + admin_ep.war]
         DOCKER[Docker (future)]
-    end;
+    end
     subgraph "CI/CD"
         GIT[Gitlab Repository]
         CI[Gitlab‑CI Runner]
-    end;
+    end
     GIT --> CI --> DOCKER --> TOMCAT;
     TOMCAT --> DBP
 ```

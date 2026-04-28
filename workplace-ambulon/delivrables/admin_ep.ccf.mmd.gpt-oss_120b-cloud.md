@@ -59,7 +59,7 @@
 ### 4.1 Diagramme de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#003366','edgeLabelBackground':'#ffffff','nodeBorder':'#003366'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#003366','edgeLabelBackground':'#ffffff','nodeBorder':'#003366'}}%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Opérateur as Op;
     actor DG de tutelle as DG;
@@ -105,7 +105,7 @@ usecaseDiagram;
 ### 5.1 Diagramme BPMN – Import JORF & Mise à jour des mandats  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%
 bpmnDiagram;
     participant "Scheduler" as S;
     participant "Job Import JORF" as J;
@@ -120,14 +120,14 @@ bpmnDiagram;
         DB->>N: Générer notification (mail)
     else Aucune nouveauté;
         note right of DB: Pas d’action;
-    end;
+    end
     J->>S: Fin du job (log)
 ```
 
 ### 5.2 Diagramme BPMN – Gestion du mandat et alerte d’échéance  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%
 bpmnDiagram;
     participant "Opérateur" as O;
     participant "Application" as A;
@@ -192,7 +192,7 @@ bpmnDiagram;
 > Diagramme UML simplifié (classes, attributs clés, relations).  
 
 ```mermaid
-classdiagram;
+classDiagram
     class Administrateur {
         +Long id;
         +String nom;

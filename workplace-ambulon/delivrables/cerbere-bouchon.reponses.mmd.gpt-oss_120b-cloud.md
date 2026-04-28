@@ -22,7 +22,7 @@ Il regroupe :
 ### 2.1 Arborescence des fichiers  
 
 ```mermaid
-graph TD;
+graph TD
     root["cerbere-bouchon"] --> README["README.md (124 octets)"]
 ```
 

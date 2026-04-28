@@ -18,10 +18,10 @@ Il permet aux agents de :
 **C4 – Niveau 1 (System Context)**  
 
 ```mermaid
-graph TB;
+graph TB
     subgraph Utilisateurs;
         U[Agents / Utilisateurs finaux]
-    end;
+    end
     subgraph Systèmes;
         B[agile‑back] 
         F[agile‑front] 
@@ -29,7 +29,7 @@ graph TB;
         DB[(PostgreSQL)] 
         M[SMTP / Mailer] 
         P[Prometheus / Grafana] 
-    end;
+    end
     U -->|HTTP(S) + session CAS| B;
     B -->|API REST (JSON/CSV)| F;
     B -->|Auth via CAS| C;
@@ -181,7 +181,7 @@ graph TB;
 ## 6. Vue en Briques (C4 – Niveau 2)  <a id="container-view"></a>
 
 ```mermaid
-graph TD;
+graph TD
     %% Conteneurs internes;
     subgraph "Infrastructure"
         Nginx[Nginx (reverse‑proxy, load‑balancing)]
@@ -190,7 +190,7 @@ graph TD;
         CAS[CAS Server (auth)]
         Mail[SMTP / SwiftMailer]
         Metrics[Prometheus Exporter]
-    end;
+    end
     %% Flux;
     User[Agent / Navigateur] -->|HTTPS| Nginx;
     Nginx -->|FastCGI| PHPFPM;
@@ -264,7 +264,7 @@ sequencediagram;
     loop for each étude;
         PHP->>Mail: sendMail(alerte, étude)
         Mail-->>PHP: Mail sent;
-    end;
+    end
     PHP->>Scheduler: Retour code 0
 ```
 
@@ -307,7 +307,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **OpenStack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx (HA)] --> B[PHP‑FPM (4 instances)]
     B --> C[PostgreSQL (HA)]
     B --> D[CAS (auth)]

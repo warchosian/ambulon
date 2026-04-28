@@ -28,12 +28,12 @@
 ## 2️⃣ Description de l’écosystème (System/Software Context)
 
 ```mermaid
-graph LR;
+graph LR
     subgraph Ext[Environnement externe]
         JORF[Source JORF (OpenData)] -->|Flux d’alimentation| ETL[Module d’analyse (ArticleAnalyser)]
         LDAP[Annuaire Cerbère] -->|AuthN/AuthZ| WEB[Web UI (Struts2/JSP)]
         SMTP[Mail serveur] -->|Envoi notifications| NOTIF[Service de notification]
-    end;
+    end
     subgraph SYS[admin_ep System]
         WEB -->|Appels REST/Action| BLL[Business Logic Layer]
         BLL -->|CRUD| DB[(PostgreSQL)]
@@ -41,7 +41,7 @@ graph LR;
         BLL -->|Planification| SCHED[Scheduler (Quartz)]
         SCHED -->|Tâches périodiques| ETL;
         NOTIF -->|Envoi mail| USER[Utilisateurs (SPES, DG, Opérateurs)]
-    end;
+    end
     Ext -->|HTTPS| WEB
 ```
 
@@ -138,7 +138,7 @@ graph LR;
 ## 5️⃣ Modèle de données conceptuel (UML class)
 
 ```mermaid
-classdiagram;
+classDiagram
     %% Entités principales;
     class Administrateur {
         +Long id;
@@ -223,7 +223,7 @@ classdiagram;
 ### 6.1 Cas d’utilisation (UML use‑case)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0066CC','edgeLabelBackground':'#FFFFFF'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0066CC','edgeLabelBackground':'#FFFFFF'}}%%%%%%%%%%%%%%%%%%%%}%%
 useCaseDiagram;
     actor Opérateur as Op;
     actor DG de tutelle as DG;

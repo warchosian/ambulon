@@ -84,7 +84,7 @@ admin_ep
 ### 2.1. Diagramme de modules Maven
 
 ```mermaid
-graph TD;
+graph TD
     A[admin_ep (aggregator)] --> B[adminep-database]
     A --> C[adminep-deployment]
     A --> D[adminep-doc]
@@ -306,18 +306,18 @@ Puis copie le WAR dans le répertoire de déploiement Tomcat et redémarre le se
 ### 6.1. Vue d’ensemble
 
 ```mermaid
-flowchart LR;
+flowchart LR
     subgraph WEB[Web Tier]
         A[Struts2 Controllers] --> B[Vertigo Services]
         B --> C[DAO (JDBC)]
-    end;
+    end
     subgraph BATCH[Batch / Scheduler]
         D[ArticleAnalyser] --> B;
         D --> E[JORF Extractor]
-    end;
+    end
     subgraph DB[PostgreSQL]
         C --> F[(integration schema)]
-    end;
+    end
     A --> G[HTML/JSP Views]
     G --> H[Static assets (CSS, JS, images)]
 ```

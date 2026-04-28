@@ -9,7 +9,7 @@
 ### 1.1 Vue d’ensemble fonctionnelle (C4 ‑ Level 1)  
 
 ```mermaid
-graph TD;
+graph TD
     A[Utilisateurs (agents, experts, administrateurs)] -->|Utilise| B[SIREINES Web App]
     B -->|Accède aux données| C[(PostgreSQL DB)]
     B -->|Génère des rapports| D[BIRT Reporting Engine]
@@ -101,11 +101,11 @@ SIREINES sert le **CGDD / DRI / AST4** à :
 ## 6. Vue en Briques (C4 ‑ Level 2)
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Docker‑Compose"
         A[Tomcat Container (sireines‑app)] --> B[PostgreSQL Container (sireines‑db)]
         A --> C[pgAdmin Container (sireines‑pgadmin)]
-    end;
+    end
     A --> D[War: sireines‑web.war]
     D -->|Struts2 / Spring| E[Business Logic (Java packages i2.application.sireines.*)]
     E -->|Vertigo Search| F[Embedded Elasticsearch]
@@ -179,7 +179,7 @@ Le produit est hébergé sur le cloud interne ECO4 basé sur Openstack, dans le 
 Le reverse-proxy Nginx du schéma ci-dessous est en fait une paire de Nginx load-balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] -- B[Application]
     B -- C[Base de données]
     B -- D[Autres services]

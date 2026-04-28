@@ -81,7 +81,7 @@ Les fichiers `.gitkeep` permettent de garder les répertoires vides dans le VCS.
 ## 3. Architecture technique  
 
 ```mermaid
-graph TD;
+graph TD
     A[Développeur] -->|npm run build| B[Vue‑CLI]
     B --> C[dist/ (bundle static)]
     C --> D[Docker build]

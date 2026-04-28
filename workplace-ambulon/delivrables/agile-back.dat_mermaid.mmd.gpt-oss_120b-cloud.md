@@ -13,7 +13,7 @@ L’interface web est rendue avec Twig ; les API REST/JSON sont exposées via 
 
 ### 1.2 Schéma C4 – Niveau 1 (Système)
 ```mermaid
-graph TD;
+graph TD
     U[Utilisateur (Administrateur, Gestionnaire)] -->|Utilise| AB[agile‑back]
     AB -->|Consomme| API[API Platform (REST/JSON)]
     AB -->|Accède à| DB[(PostgreSQL DB)]
@@ -151,17 +151,17 @@ graph TD;
 ## 6️⃣ Vue en Briques (C4 – Niveau 2) {#vue-en-briques}
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Infrastructure"
         N[nginx (reverse‑proxy)]
         P[php‑fpm]
         DB[(PostgreSQL)]
         CAS[CAS Server]
         MON[Prometheus/Grafana/Loki]
-    end;
+    end
     subgraph "Application"
         APP[agile‑back (Symfony)]
-    end;
+    end
     N --> P --> APP;
     APP --> DB;
     APP --> CAS;
@@ -261,7 +261,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **OpenStack**, 
 Le reverse‑proxy Nginx du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx Load‑Balancer] --> B[PHP‑FPM (x4)]
     B --> C[Symfony (agile‑back)]
     C --> D[PostgreSQL Primary]

@@ -22,7 +22,7 @@
 ### 2.1 Diagramme de composants (UML)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2B6A9B', 'edgeLabelBackground':'#E8F1FA'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#2B6A9B', 'edgeLabelBackground':'#E8F1FA'}}%%%%%%%%%%%%%%%%%%%%}%%
 componentDiagram;
     direction TB;
     component "Web UI (Struts2 / V‑ega)" as UI;
@@ -101,8 +101,8 @@ componentDiagram;
 ### 4.1 Diagramme de classes (UML)  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%
-classdiagram;
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%
+classDiagram
     direction TB;
     class Administrateur {
         +Long id;
@@ -230,7 +230,7 @@ statediagram-v2;
 ### 5.3 Diagramme d’activités (Batch JORF)  
 
 ```mermaid
-flowchart TD;
+flowchart TD
     A[Scheduler (Quartz)] --> B[Download JORF .tar.gz]
     B --> C[Extract articles]
     C --> D[Parse XML (JORFExtractor)]
@@ -265,7 +265,7 @@ flowchart TD;
 ### 7.1 Diagramme de déploiement (UML)  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%
 deploymentDiagram;
     node "Kubernetes Cluster (ECO4)" {
         component "Ingress (TLS)" as Ingress;

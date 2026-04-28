@@ -70,7 +70,7 @@ sireines/
 ## 4️⃣ Méthodologie d’audit – Processus en 5 étapes  
 
 ```mermaid
-flowchart TD;
+flowchart TD
     A[🔎 Pré‑audit] --> B[📂 Inventaire & périmètre]
     B --> C[🧪 Tests fonctionnels & outils]
     C --> D[✅ Évaluation & matrice de conformité]

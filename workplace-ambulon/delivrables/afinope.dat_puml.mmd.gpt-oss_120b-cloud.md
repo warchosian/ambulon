@@ -17,22 +17,22 @@ Elle orchestre :
 ### 1.2 Diagramme C4 – Niveau 1 (Contexte)  
 
 ```mermaid
-graph LR;
+graph LR
     subgraph Utilisateurs;
         U[« Utilisateur métier »] 
         A[« Analyste / Data‑Scientist »]
-    end;
+    end
     subgraph Systèmes externes;
         CSV[« Sources CSV »] 
         SUP[« Superset »] 
         LOG[« Système de supervision GTI »] 
         BCK[« Stockage objet (B3 / Outscale / GCP) »]
-    end;
+    end
     subgraph afinope;
         APP[« afinope (Dagster Webserver) »] 
         DB[« PostgreSQL »] 
         NGINX[« Nginx Load‑Balancer »] 
-    end;
+    end
     U -->|consultation tableau| SUP;
     A -->|exploration données| SUP;
     CSV -->|dépose fichiers| APP;
@@ -168,13 +168,13 @@ graph LR;
 ## 6️⃣ Vue en Briques (C4 – Niveau 2)  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Infrastructure ECO4"
         NGINX["Nginx (load‑balancer)"]
         APP["afinope (Dagster Webserver)"]
         DB["PostgreSQL"]
         SUP["Superset (external)"]
-    end;
+    end
     CSV["Répertoire CSV (host)"]
     LOG["GTI Monitoring (Portainer, Prometheus)"]
     BCK["Stockage objet (B3 / Outscale / GCP)"]
@@ -280,7 +280,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **OpenStack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     NGINX1["Nginx (LB)"]
     NGINX2["Nginx (LB)"]
     APP1["afinope‑app (Dagster)"]

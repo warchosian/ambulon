@@ -71,12 +71,11 @@
 ### 3.1 Acteurs & cas d’usage  
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%
-usecaseDiagram
-    actor "Administrateur" as Admin
-    actor "Utilisateur métier" as User
-    actor "CAS SSO" as CAS
-
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%
+usecaseDiagram;
+    actor Administrateur as Admin;
+    actor Utilisateur métier as User;
+    actor CAS SSO as CAS;
     Admin --> (Gérer les Groupes)
     Admin --> (Gérer les BOP)
     Admin --> (Gérer les Services)
@@ -88,9 +87,9 @@ usecaseDiagram
     User --> (Déposer Demande)
     User --> (Déplacer Étude)
 
-    (Créer / Modifier Étude) --> CAS : Authentifie
-    (Saisir Versement) --> CAS : Authentifie
-    (Déposer Demande) --> CAS : Authentifie
+    (Créer / Modifier Étude) --> CAS : Authentifie;
+    (Saisir Versement) --> CAS : Authentifie;
+    (Déposer Demande) --> CAS : Authentifie;
     (Déplacer Étude) --> CAS : Authentifie
 ```
 
@@ -170,7 +169,6 @@ flowchart LR
     subgraph "Web Server"
         Apache[Apache / php-fpm]
     end
-
     subgraph "PHP Application"
         Index["public/index.php"]
         Router["Routing (annotations)"]
@@ -183,23 +181,21 @@ flowchart LR
         Security["Security (CAS, Voter)"]
         Templates["Twig Templates"]
     end
-
     subgraph "Database"
         Oracle["Oracle (prep37)"]
     end
-
-    Apache --> Index
-    Index --> Router
-    Router --> Controllers
-    Controllers --> Services
-    Controllers --> Forms
-    Services --> Repositories
-    Repositories --> Oracle
-    Services --> Entities
-    Entities --> Oracle
-    Controllers --> Templates
-    Controllers --> Events
-    Events --> Services
+    Apache --> Index;
+    Index --> Router;
+    Router --> Controllers;
+    Controllers --> Services;
+    Controllers --> Forms;
+    Services --> Repositories;
+    Repositories --> Oracle;
+    Services --> Entities;
+    Entities --> Oracle;
+    Controllers --> Templates;
+    Controllers --> Events;
+    Events --> Services;
     Security --> Controllers
 ```
 
@@ -211,21 +207,17 @@ flowchart TB
         LB[Load Balancer] --> Web1[Web Server 1<br>(Apache+PHP)]
         LB --> Web2[Web Server 2<br>(Apache+PHP)]
     end
-
     subgraph "App Tier"
-        Web1 --> App1[Docker container<br>php:8.2‑apache]
-        Web2 --> App2[Docker container<br>php:8.2‑apache]
+        Web1 --> App1[Docker container<br>php_8.2‑apache]
+        Web2 --> App2[Docker container<br>php_8.2‑apache]
     end
-
     subgraph "Data Tier"
         DB[Oracle (prep37)<br>RAC (optional)]
     end
-
-    App1 --> DB
-    App2 --> DB
-
-    style LB fill:#f9f,stroke:#333,stroke-width:2px
-    style DB fill:#bbf,stroke:#333,stroke-width:2px
+    App1 --> DB;
+    App2 --> DB;
+    style LB fill:#f9f,stroke:#333,stroke-width_2px;
+    style DB fill:#bbf,stroke:#333,stroke-width_2px
 ```
 
 *Notes*  
@@ -237,46 +229,46 @@ flowchart TB
 ```mermaid
 classDiagram
     class Etudes {
-        +int id
-        +string titre_etude
-        +string zone_geographique
-        +date date_creation
-        +float solde
+        +int id;
+        +string titre_etude;
+        +string zone_geographique;
+        +date date_creation;
+        +float solde;
     }
     class Groupes {
-        +int id
-        +string token
-        +string libelle
+        +int id;
+        +string token;
+        +string libelle;
     }
     class Bop {
-        +int id
-        +string libelle_bop
-        +string sigle
-        +bool visible
+        +int id;
+        +string libelle_bop;
+        +string sigle;
+        +bool visible;
     }
     class Versements {
-        +int id
-        +float montant
-        +date date_versement
+        +int id;
+        +float montant;
+        +date date_versement;
         +string type   // + ou -
     }
     class Demandes {
-        +int id
-        +string type
-        +string motif
-        +date date_demande
+        +int id;
+        +string type;
+        +string motif;
+        +date date_demande;
     }
     class Utilisateurs {
-        +int id
-        +string email
-        +string nom
-        +string prenom
+        +int id;
+        +string email;
+        +string nom;
+        +string prenom;
     }
 
-    Etudes "*" --> "1" Groupes : appartient à
-    Etudes "1" --> "*" Versements : possède
-    Etudes "1" --> "*" Demandes : possède
-    Etudes "*" --> "1" Bop : lié à
+    Etudes "*" --> "1" Groupes : appartient à;
+    Etudes "1" --> "*" Versements : possède;
+    Etudes "1" --> "*" Demandes : possède;
+    Etudes "*" --> "1" Bop : lié à;
     Utilisateurs "1" --> "*" Etudes : crée
 ```
 
@@ -285,8 +277,8 @@ classDiagram
 ### 4.4 Diagramme d’états – Étude  
 
 ```mermaid
-stateDiagram-v2
-    [*] --> Brouillon
+statediagram-v2;
+    [*] --> Brouillon;
     Brouillon --> Validée : soumettre()
     Validée --> EnCours : accepter()
     EnCours --> Terminée : clôturer()
@@ -294,9 +286,9 @@ stateDiagram-v2
     Terminée --> [*]
     Annulée --> [*]
 
-    note right of Brouillon : aucune donnée de versement
-    note right of Validée : données de base enregistrées
-    note right of EnCours : versements et mouvements possibles
+    note right of Brouillon : aucune donnée de versement;
+    note right of Validée : données de base enregistrées;
+    note right of EnCours : versements et mouvements possibles;
     note right of Terminée : archivage définitif
 ```
 
@@ -352,12 +344,11 @@ stateDiagram-v2
 ### 8.1 Diagramme de cas d’usage (déjà affiché en 3.1)  
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%
-usecaseDiagram
-    actor "Administrateur" as Admin
-    actor "Utilisateur métier" as User
-    actor "CAS SSO" as CAS
-
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%
+usecaseDiagram;
+    actor Administrateur as Admin;
+    actor Utilisateur métier as User;
+    actor CAS SSO as CAS;
     Admin --> (Gérer les Groupes)
     Admin --> (Gérer les BOP)
     Admin --> (Gérer les Services)
@@ -369,9 +360,9 @@ usecaseDiagram
     User --> (Déposer Demande)
     User --> (Déplacer Étude)
 
-    (Créer / Modifier Étude) --> CAS : Authentifie
-    (Saisir Versement) --> CAS : Authentifie
-    (Déposer Demande) --> CAS : Authentifie
+    (Créer / Modifier Étude) --> CAS : Authentifie;
+    (Saisir Versement) --> CAS : Authentifie;
+    (Déposer Demande) --> CAS : Authentifie;
     (Déplacer Étude) --> CAS : Authentifie
 ```
 
@@ -382,7 +373,6 @@ flowchart LR
     subgraph "Web Server"
         Apache[Apache / php-fpm]
     end
-
     subgraph "PHP Application"
         Index["public/index.php"]
         Router["Routing (annotations)"]
@@ -395,23 +385,21 @@ flowchart LR
         Security["Security (CAS, Voter)"]
         Templates["Twig Templates"]
     end
-
     subgraph "Database"
         Oracle["Oracle (prep37)"]
     end
-
-    Apache --> Index
-    Index --> Router
-    Router --> Controllers
-    Controllers --> Services
-    Controllers --> Forms
-    Services --> Repositories
-    Repositories --> Oracle
-    Services --> Entities
-    Entities --> Oracle
-    Controllers --> Templates
-    Controllers --> Events
-    Events --> Services
+    Apache --> Index;
+    Index --> Router;
+    Router --> Controllers;
+    Controllers --> Services;
+    Controllers --> Forms;
+    Services --> Repositories;
+    Repositories --> Oracle;
+    Services --> Entities;
+    Entities --> Oracle;
+    Controllers --> Templates;
+    Controllers --> Events;
+    Events --> Services;
     Security --> Controllers
 ```
 
@@ -423,28 +411,24 @@ flowchart TB
         LB[Load Balancer] --> Web1[Web Server 1<br>(Apache+PHP)]
         LB --> Web2[Web Server 2<br>(Apache+PHP)]
     end
-
     subgraph "App Tier"
-        Web1 --> App1[Docker container<br>php:8.2‑apache]
-        Web2 --> App2[Docker container<br>php:8.2‑apache]
+        Web1 --> App1[Docker container<br>php_8.2‑apache]
+        Web2 --> App2[Docker container<br>php_8.2‑apache]
     end
-
     subgraph "Data Tier"
         DB[Oracle (prep37)<br>RAC (optional)]
     end
-
-    App1 --> DB
-    App2 --> DB
-
-    style LB fill:#f9f,stroke:#333,stroke-width:2px
-    style DB fill:#bbf,stroke:#333,stroke-width:2px
+    App1 --> DB;
+    App2 --> DB;
+    style LB fill:#f9f,stroke:#333,stroke-width_2px;
+    style DB fill:#bbf,stroke:#333,stroke-width_2px
 ```
 
 ### 8.4 Diagramme d’états – Étude (déjà affiché en 4.4)  
 
 ```mermaid
-stateDiagram-v2
-    [*] --> Brouillon
+statediagram-v2;
+    [*] --> Brouillon;
     Brouillon --> Validée : soumettre()
     Validée --> EnCours : accepter()
     EnCours --> Terminée : clôturer()
@@ -452,9 +436,9 @@ stateDiagram-v2
     Terminée --> [*]
     Annulée --> [*]
 
-    note right of Brouillon : aucune donnée de versement
-    note right of Validée : données de base enregistrées
-    note right of EnCours : versements et mouvements possibles
+    note right of Brouillon : aucune donnée de versement;
+    note right of Validée : données de base enregistrées;
+    note right of EnCours : versements et mouvements possibles;
     note right of Terminée : archivage définitif
 ```
 
@@ -463,46 +447,46 @@ stateDiagram-v2
 ```mermaid
 classDiagram
     class Etudes {
-        +int id
-        +string titre_etude
-        +string zone_geographique
-        +date date_creation
-        +float solde
+        +int id;
+        +string titre_etude;
+        +string zone_geographique;
+        +date date_creation;
+        +float solde;
     }
     class Groupes {
-        +int id
-        +string token
-        +string libelle
+        +int id;
+        +string token;
+        +string libelle;
     }
     class Bop {
-        +int id
-        +string libelle_bop
-        +string sigle
-        +bool visible
+        +int id;
+        +string libelle_bop;
+        +string sigle;
+        +bool visible;
     }
     class Versements {
-        +int id
-        +float montant
-        +date date_versement
+        +int id;
+        +float montant;
+        +date date_versement;
         +string type   // + ou -
     }
     class Demandes {
-        +int id
-        +string type
-        +string motif
-        +date date_demande
+        +int id;
+        +string type;
+        +string motif;
+        +date date_demande;
     }
     class Utilisateurs {
-        +int id
-        +string email
-        +string nom
-        +string prenom
+        +int id;
+        +string email;
+        +string nom;
+        +string prenom;
     }
 
-    Etudes "*" --> "1" Groupes : appartient à
-    Etudes "1" --> "*" Versements : possède
-    Etudes "1" --> "*" Demandes : possède
-    Etudes "*" --> "1" Bop : lié à
+    Etudes "*" --> "1" Groupes : appartient à;
+    Etudes "1" --> "*" Versements : possède;
+    Etudes "1" --> "*" Demandes : possède;
+    Etudes "*" --> "1" Bop : lié à;
     Utilisateurs "1" --> "*" Etudes : crée
 ```
 

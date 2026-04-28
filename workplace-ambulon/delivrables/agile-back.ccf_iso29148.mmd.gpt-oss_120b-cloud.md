@@ -19,22 +19,22 @@
 ## 2️⃣ Description de l’écosystème (System/Software Context)
 
 ```mermaid
-graph LR;
+graph LR
     subgraph "Utilisateur"
         U1[Utilisateur (admin)]
         U2[Utilisateur (consultant)]
-    end;
+    end
     subgraph "Système agile‑back"
         B[agile‑back (Symfony/PHP)]
         DB[(PostgreSQL DB)]
         CAS[CAS (phpCAS)]
         API[API Platform (REST/JSON)]
         UI[Interface web (Twig)]
-    end;
+    end
     subgraph "Systèmes externes"
         FE[agile‑front (Vue/JS)]
         ES[Services d’e‑mail (SMTP)]
-    end;
+    end
     U1 -->|login| B;
     U2 -->|login| B;
     B -->|authentification| CAS;
@@ -138,7 +138,7 @@ graph LR;
 ## 5️⃣ Modèle de données conceptuel  
 
 ```mermaid
-classdiagram;
+classDiagram
     class Etudes {
         +int id;
         +string titreEtude;
@@ -231,7 +231,7 @@ classdiagram;
 ### 6.1 Diagramme de cas d’utilisation  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Admin as A;
     actor Utilisateur as U;

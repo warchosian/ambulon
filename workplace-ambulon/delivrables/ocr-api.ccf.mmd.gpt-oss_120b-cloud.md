@@ -70,7 +70,7 @@ Le service s’appuie sur :
 ### 4.1 Diagramme de cas d’utilisation (UML) – Mermaid
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     title OCR‑API – Cas d’utilisation;
     actor Développeur intégrateur as Dev;
@@ -110,7 +110,7 @@ usecaseDiagram;
 ### 5.1 Diagramme du flux de traitement OCR (simplifié)
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6' }}%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6' }}%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Client;
     participant API;
@@ -128,7 +128,7 @@ bpmnDiagram;
         Worker->>Worker: Execute Tesseract OCR;
         Worker->>MinIO: Store result (bucket ocr-output)
         Worker->>Redis: Update job status = done;
-    end;
+    end
     Client->>API: GET /v1/ocr/{jobId}
     API->>Redis: Query status;
     API->>Client: Return status / result URL
@@ -196,7 +196,7 @@ bpmnDiagram;
 ### 8.1 Diagramme de classes (UML – abstrait)
 
 ```mermaid
-classdiagram;
+classDiagram
     class Job {
         <<entity>>
         +String id;

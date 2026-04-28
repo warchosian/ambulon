@@ -9,7 +9,7 @@ Sireines est une application web développée par la mission des compétences sc
 Sireines permet aux agents de soumettre des demandes de qualification, aux comités de domaine de traiter ces demandes et aux utilisateurs de suivre l'état de leurs demandes. L'application est accessible via un interface web et est hébergée sur des serveurs cloud.
 
 ```mermaid
-graph LR;
+graph LR
     A[Utilisateurs] -- soumettre des demandes --> B[Sireines]
     C[Comités de domaine] -- évaluer les demandes --> B;
     B -- notifier les décisions --> A
@@ -90,7 +90,7 @@ Sireines interagit avec les comités de domaine via des flux de travail de valid
 ## Vue en Briques
 
 ```mermaid
-graph LR;
+graph LR
     A[Sireines] --- B[Web Server]
     A --- C[Base de données PostgreSQL]
     A --- D[Cache]
@@ -138,7 +138,7 @@ Le produit est hébergé sur le cloud interne ECO4 basé sur Openstack, dans le 
 Le reverse-proxy Nginx du schéma ci-dessous est en fait une paire de Nginx load-balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] --> B[Application]
     B --> C[Base de données]
     B --> D[Autres services]

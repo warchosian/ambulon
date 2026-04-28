@@ -191,27 +191,27 @@ Le composant `Login.vue` ne communique pas directement avec le service ; il se
 ## 🏗️ Diagramme d’architecture <a id="diagramme-d-architecture"></a>
 
 ```mermaid
-graph TD;
+graph TD
     subgraph UI;
         A[App.vue] --> B[Router]
         B --> C[Views]
         C --> D[Components]
         C --> E[Mixins]
-    end;
+    end
     subgraph State;
         F[Vuex Store] --> G[Modules]
         G --> security[security.js]
         G --> studies[studies.js]
-    end;
+    end
     subgraph Services;
         H[LegacyProxyService] --> I[API / Etudes]
         H --> J[API / Export]
         K[SecurityService] --> L[API / Security]
-    end;
+    end
     subgraph Build;
         M[Vue‑CLI] --> N[Webpack]
         N --> O[Dist]
-    end;
+    end
     UI --> F;
     UI --> H;
     UI --> K;

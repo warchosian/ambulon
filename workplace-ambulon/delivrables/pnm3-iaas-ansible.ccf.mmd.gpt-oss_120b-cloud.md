@@ -179,7 +179,7 @@ bpmnDiagram;
 ## 8. Modèle Conceptuel de Données (MCD)  <a id="mcd"></a>
 
 ```mermaid
-classdiagram;
+classDiagram
     class Host {
         +string hostname;
         +string ip;

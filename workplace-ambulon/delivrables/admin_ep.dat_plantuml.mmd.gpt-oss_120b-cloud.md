@@ -18,7 +18,7 @@ Elle permet :
 ### 1.2 Schéma C4 – Niveau 1 (System Context)  
 
 ```mermaid
-graph LR;
+graph LR
     A[Utilisateurs<br/>(SPES, DG de tutelle, Opérateurs)] -->|Web UI| B[admin_ep<br/>Application Java]
     B -->|HTTPS / Auth Cerbère| C[Service d’authentification Cerbère]
     B -->|JDBC| D[PostgreSQL 9.6 / 15]
@@ -172,24 +172,24 @@ graph LR;
 ## 6️⃣ Vue en Briques (C4 – Niveau 2)  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph DMZ;
         NGINX[Nginx (load‑balancer)]
-    end;
+    end
     subgraph APP;
         TOMCAT[Tomcat 9 (WAR)]
         WEB[admin_ep Web UI]
         SRV[Struts2 Controllers & Services]
-    end;
+    end
     subgraph DB;
         PG[PostgreSQL]
-    end;
+    end
     subgraph EXT;
         JORF[Flux JORF (RSS)]
         CERB[Service Cerbère (SSO)]
         MAIL[Serveur Mail]
         PSIN[Supervision PSIN]
-    end;
+    end
     NGINX --> TOMCAT;
     TOMCAT --> WEB;
     WEB --> SRV;
@@ -300,22 +300,22 @@ sequencediagram;
 | **Production** | MSP – Centre‑serveur ministériel Paris La Défense | 2 x Tomcat (load‑balanced) + PostgreSQL 15 | DMZ + réseau interne | Haute disponibilité, sauvegarde AES‑256, monitoring PSIN |
 
 ```mermaid
-graph TD;
+graph TD
     subgraph DEV[Développement]
         DEV_NGINX[Nginx (local)]
         DEV_TOMCAT[Tomcat (Docker)]
         DEV_PG[PostgreSQL (Docker)]
-    end;
+    end
     subgraph REC[Recette]
         REC_NGINX[Nginx]
         REC_TOMCAT[Tomcat Cluster]
         REC_PG[PostgreSQL 15]
-    end;
+    end
     subgraph PROD[Production]
         PROD_NGINX[Nginx (pair)]
         PROD_TOMCAT[Tomcat Cluster]
         PROD_PG[PostgreSQL 15]
-    end;
+    end
     DEV_NGINX --> DEV_TOMCAT --> DEV_PG;
     REC_NGINX --> REC_TOMCAT --> REC_PG;
     PROD_NGINX --> PROD_TOMCAT --> PROD_PG
@@ -326,7 +326,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **OpenStack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessus est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.  
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx LB] --> B[Application]
     B --> C[Base de données]
     B --> D[Autres services]

@@ -55,7 +55,7 @@
 ### Cartographie des parties prenantes  
 
 ```mermaid
-graph LR;
+graph LR
     U[Utilisateur métier] -->|requêtes| WEB[Application ADO]
     ADMIN[Administrateur fonctionnel] -->|gestion| WEB;
     MOE[MOE DNUM/PNM3] -->|déploiement| WEB;
@@ -74,7 +74,7 @@ graph LR;
 ### 4.1 Diagramme de cas d’utilisation (UML 2.x)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#003366', 'edgeLabelBackground':'#fff' }}%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#003366', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%}%%
 useCaseDiagram;
     title ADO – Cas d’usage;
     actor Utilisateur as U;
@@ -113,7 +113,7 @@ useCaseDiagram;
 ### 5.1 Diagramme BPMN – Flux de génération d’un rapport  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#006400', 'edgeLabelBackground':'#fff' }}%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#006400', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Utilisateur;
     participant Application;
@@ -173,7 +173,7 @@ bpmnDiagram;
 ## 8️⃣ Modèle Conceptuel de Données (MCD)  
 
 ```mermaid
-classdiagram;
+classDiagram
     direction TB;
     class Agent{
         +String matriculeRGP;

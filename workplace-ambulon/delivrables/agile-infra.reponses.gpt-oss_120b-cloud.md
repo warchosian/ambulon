@@ -172,7 +172,7 @@ Il est déclenché uniquement lorsqu’une exécution réelle (non `dry_run`) a 
 ### 5.1 Pipeline CI/CD (Mermaid)
 
 ```mermaid
-graph TD;
+graph TD
     A[GitLab Repository] -->|Commit changes| B[GitLab CI Runner]
     B --> C[Docker image: pasta-cooker-client]
     C --> D[Run pasta-cooker]
@@ -186,13 +186,13 @@ graph TD;
 ### 5.2 Flux de déploiement Ansible (Mermaid)
 
 ```mermaid
-flowchart TD;
+flowchart TD
     subgraph Playbook;
         P1[Set application path] --> P2[Create target directory]
         P2 --> P3[Load secrets]
         P3 --> P4[Load versions]
         P4 --> P5[Render docker‑compose.yml]
-    end;
+    end
     P5 -->|notify| H[Handler: up the containers]
     H --> D[Docker Compose up -d]
     D --> S[Services running]

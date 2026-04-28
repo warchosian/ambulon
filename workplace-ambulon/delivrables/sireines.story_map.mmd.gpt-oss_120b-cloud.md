@@ -210,7 +210,7 @@ Suivre le statut
 ## 9️⃣ Diagramme Mermaid – Backbone + MVP <a id="mermaid"></a>
 
 ```mermaid
-graph TB;
+graph TB
     %% Backbone – parcours horizontal;
     subgraph backbone[" BACKBONE – Parcours Utilisateur "]
         step1["Se connecter"]
@@ -219,7 +219,7 @@ graph TB;
         step4["Déposer les pièces‑jointes"]
         step5["Soumettre"]
         step6["Suivre le statut"]
-    end;
+    end
     %% MVP – fonctionnalités indispensables (au‑dessus)
     subgraph mvp[" MVP – Fonctionnalités essentielles "]
         f1["Auth FranceConnect"]
@@ -228,7 +228,7 @@ graph TB;
         f4["Upload PDF < 5 Mo"]
         f5["Envoi mail de confirmation"]
         f6["Tableau de bord état"]
-    end;
+    end
     %% V2+ – fonctionalités à reporter (en‑dessous)
     subgraph future[" V2+ – Améliorations "]
         v1["Gestion mdp oublié"]
@@ -237,7 +237,7 @@ graph TB;
         v4["Vérif format + historique uploads"]
         v5["PDF BIRT récapitulatif"]
         v6["Export CSV + historique actions"]
-    end;
+    end
     %% Flux horizontal;
     step1 --> step2 --> step3 --> step4 --> step5 --> step6;
     %% Liaisons verticales MVP;

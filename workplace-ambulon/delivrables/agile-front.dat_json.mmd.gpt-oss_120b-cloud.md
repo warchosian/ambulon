@@ -18,11 +18,11 @@ Elle propose aux utilisateurs :
 ### 1.2 Diagramme C4 – Niveau 1 (System Context)  
 
 ```mermaid
-graph TB;
+graph TB
     %% System;
     subgraph System["agile‑front (SPA)"]
         FE[Frontend Vue.js]
-    end;
+    end
     %% External actors / systems;
     User[Utilisateur] --> FE;
     API[API Backend (Legacy)] --> FE;
@@ -165,21 +165,21 @@ graph TB;
 ## 6️⃣ Vue en Briques (C4 – Niveau 2)  
 
 ```mermaid
-graph TD;
+graph TD
     %% Containers;
     subgraph Front["agile‑front (SPA)"]
         A[Vue App] 
         B[Vuex Store] 
         C[Vuetify UI] 
-    end;
+    end
     subgraph Services["API Legacy (Backend)"]
         D[Études Service] 
         E[Export Service] 
         F[Security Service] 
-    end;
+    end
     subgraph Auth["Service d’authentification"]
         G[Auth Provider] 
-    end;
+    end
     %% Relations;
     A -->|uses| B;
     A -->|UI components| C;
@@ -287,7 +287,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **Openstack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] --> B[Application (Docker container)]
     B --> C[Base de données (via API Backend)]
     B --> D[Autres services (Export, Auth, …)]

@@ -185,7 +185,7 @@ Utiliser la **check‑list** suivante :
 ## 9️⃣ Diagramme Mermaid du processus de définition du MVP (MoSCoW)
 
 ```mermaid
-graph TB;
+graph TB
     %% Acteurs;
     pm[👤 Chef de produit]
     dev[👤 Lead technique]
@@ -197,7 +197,7 @@ graph TB;
     subgraph prep["Phase 1 – Pré‑préparation"]
         ctx[Contexte (product, personas, hypothèses)]
         story[Story‑mapping / parcours]
-    end;
+    end
     %% Phase 2 - Atelier;
     subgraph workshop["Phase 2 – Atelier MoSCoW"]
         intro[Intro & objectifs]
@@ -205,20 +205,20 @@ graph TB;
         classify[Classification MoSCoW]
         validate[Validation périmètre MVP]
         roadmap[Roadmap & prochaines étapes]
-    end;
+    end
     %% Phase 3 - Livrables;
     subgraph deliver["Phase 3 – Livrables & suite"]
         matrix[Matrice MoSCoW<br/>validée]
         scope[Périmètre MVP<br/>(Must Have)]
         plan[Roadmap MVP → V1]
         metrics[Hypothèses + métriques]
-    end;
+    end
     %% Phase 4 - Boucle d’apprentissage;
     subgraph loop["Phase 4 – Boucle d’apprentissage"]
         test[Tests utilisateurs<br/>MVP]
         analyse[Analyse des retours]
         decide[Décision : persévérer / pivoter / arrêter]
-    end;
+    end
     %% Flux;
     pm -->|Cadrage| ctx;
     dev -->|Apports techniques| ctx;

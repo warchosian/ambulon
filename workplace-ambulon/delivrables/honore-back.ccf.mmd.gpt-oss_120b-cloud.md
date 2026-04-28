@@ -175,7 +175,7 @@ bpmnDiagram;
 ### 8.1 Diagramme de classes UML (Mermaid)
 
 ```mermaid
-classdiagram;
+classDiagram
     class User {
         +uuid id;
         +string email;

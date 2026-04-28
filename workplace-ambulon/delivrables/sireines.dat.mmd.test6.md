@@ -13,7 +13,7 @@ Ce document fournit une vue d'ensemble de l'architecture technique de l'applicat
   3. Maintenabilité: Assurer une maintenance facile et rapide des composants de l'application.
 
 ```mermaid
-graph LR;
+graph LR
     A[Sireines] -->|Affiche| B(Demandes de qualification)
     A -->|Gère| C(Évaluation par comité)
     A -->|Tient informés| D(Agents des suites de leurs demandes)
@@ -64,7 +64,7 @@ L'application Sireines interagit avec les partenaires suivants:
 ## Vue en Briques
 
 ```mermaid
-graph LR;
+graph LR
     A[Application Sireines] --> B[Web Application]
     A --> C[Base de données PostgreSQL]
     B --> D[Interface utilisateur]
@@ -112,7 +112,7 @@ Le produit est hébergé sur le cloud interne ECO4 basé sur Openstack, dans le 
 Le reverse-proxy Nginx du schéma ci-dessous est en fait une paire de Nginx load-balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] --> B[Application]
     B --> C[Base de données]
     B --> D[Autres services]

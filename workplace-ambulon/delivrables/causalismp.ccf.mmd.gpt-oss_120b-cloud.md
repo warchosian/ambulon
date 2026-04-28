@@ -57,7 +57,7 @@
 ### 4.1 Diagramme de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0366d6','edgeLabelBackground':'#f6f8fa','nodeBorder':'#0366d6','clusterBkg':'#e1e4e8'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0366d6','edgeLabelBackground':'#f6f8fa','nodeBorder':'#0366d6','clusterBkg':'#e1e4e8'}}%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     title Cas d’utilisation – CausalisMP;
     actor Gestionnaire as G;
@@ -107,7 +107,7 @@ usecaseDiagram;
 > Processus « Création et validation d’un dossier d’accident »  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0366d6','edgeLabelBackground':'#f6f8fa','nodeBorder':'#0366d6','clusterBkg':'#e1e4e8'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0366d6','edgeLabelBackground':'#f6f8fa','nodeBorder':'#0366d6','clusterBkg':'#e1e4e8'}}%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Gestionnaire;
     participant Système;
@@ -178,8 +178,8 @@ bpmnDiagram;
 > Diagramme de classes (UML) représentant les entités métier et leurs relations principales.  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0366d6','edgeLabelBackground':'#f6f8fa','nodeBorder':'#0366d6','clusterBkg':'#e1e4e8'}}%%}%%
-classdiagram;
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0366d6','edgeLabelBackground':'#f6f8fa','nodeBorder':'#0366d6','clusterBkg':'#e1e4e8'}}%%%%%%%%%%%%%%%%%%%%}%%
+classDiagram
     class Utilisateur {
         +int id;
         +String login;

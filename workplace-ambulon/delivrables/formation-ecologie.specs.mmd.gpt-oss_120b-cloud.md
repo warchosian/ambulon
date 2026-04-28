@@ -212,7 +212,7 @@ swimlane;
 ### 4.5 Diagramme de classe (simplifié – vue relationnelle)
 
 ```mermaid
-classdiagram;
+classDiagram
     class Stage {
         +BigAutoField id;
         +CharField label;
@@ -287,7 +287,7 @@ classdiagram;
 ### 5.1 Diagramme de composants (arc42 – Section 5)
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Application Django (app)"
         A1[Models] --> A2[Views]
         A2 --> A3[Templates]
@@ -295,18 +295,18 @@ graph TD;
         A1 --> A5[Signals]
         A1 --> A6[Management Commands]
         A1 --> A7[Services (log, cleanup, reindex)]
-    end;
+    end
     subgraph "Moteur de recherche"
         B1[MeiliSearch] 
-    end;
+    end
     subgraph "Base de données"
         C1[PostgreSQL]
-    end;
+    end
     subgraph "Infrastructure"
         D1[Nginx (reverse‑proxy)]
         D2[Docker Engine]
         D3[Docker‑Compose]
-    end;
+    end
     A1 --> C1;
     A2 --> C1;
     A7 --> B1;
@@ -335,7 +335,7 @@ graph TD;
 ### 6.1 Diagramme d’activité – Recherche utilisateur
 
 ```mermaid
-flowchart TD;
+flowchart TD
     Start[Début] --> UI[User saisit requête]
     UI --> Front[Front (JS/HTML)]
     Front --> Django[Vue Django (search_with_map)]
@@ -364,13 +364,13 @@ statediagram-v2;
 ### 7.1 Diagramme de déploiement (arc42 – Section 7)
 
 ```mermaid
-graph LR;
+graph LR
     subgraph "Environnement Production"
         Nginx[Nginx (LB + Reverse‑proxy)]
         DjangoApp[Django (container)]
         DB[PostgreSQL (container)]
         Search[MeiliSearch (container)]
-    end;
+    end
     Nginx -->|HTTP/HTTPS| DjangoApp;
     DjangoApp -->|SQL| DB;
     DjangoApp -->|REST| Search;

@@ -24,19 +24,19 @@
 ## 2. Description de l’écosystème (System/Software Context)  
 
 ```mermaid
-graph LR;
+graph LR
     subgraph "Système ambulon"
         A[Application Front‑end] 
         B[API / Service Back‑end] 
         C[Base de données (PostgreSQL)] 
         D[Service de messagerie (RabbitMQ / Kafka)] 
         E[Service d’authentification (OAuth2/OIDC)] 
-    end;
+    end
     subgraph "Systèmes externes"
         X[Plateforme de cartographie (OSM / Google Maps)] 
         Y[ERP Hospitalier] 
         Z[Service de notification (SMS/Email)] 
-    end;
+    end
     A --> B;
     B --> C;
     B --> D;
@@ -130,7 +130,7 @@ graph LR;
 ## 5. Modèle de données conceptuel  
 
 ```mermaid
-classdiagram;
+classDiagram
     class Patient {
         +String id;
         +String firstName;
@@ -201,7 +201,7 @@ classdiagram;
 ### 6.1 Diagrammes de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%
 usecaseDiagram;
     actor Dispatcher as D;
     actor Driver as DR;

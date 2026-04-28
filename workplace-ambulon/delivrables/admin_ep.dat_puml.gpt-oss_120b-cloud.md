@@ -17,20 +17,20 @@
 **C4 – Niveau 1 – Schéma système (Mermaid)**  
 
 ```mermaid
-graph LR;
+graph LR
     subgraph Utilisateurs;
         MOA[Maîtrise d’Ouvrage (SG/SPES)]
         MOE[Maîtrise d’Œuvre (SG/DNUM/PNM3/BPN)]
         Ops[Opérateurs (DG de tutelle, SPES)]
-    end;
+    end
     subgraph Système;
         AdminEP[admin_ep<br/>Web + DB]
-    end;
+    end
     subgraph Services externes;
         JORF[(JORF – flux OpenData)]
         Mail[(Serveur de mail)]
         Auth[(Cerbère – Authentification)]
-    end;
+    end
     MOA --> AdminEP;
     MOE --> AdminEP;
     Ops --> AdminEP;

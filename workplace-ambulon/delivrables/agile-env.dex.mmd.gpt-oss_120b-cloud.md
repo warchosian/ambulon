@@ -92,7 +92,7 @@
 ## 6️⃣ Diagramme Mermaid du cycle de vie du DEX  
 
 ```mermaid
-graph TB;
+graph TB
     %% Style des acteurs;
     skinparam actorStyle Fill:#E3F2FD,Stroke:#1976D2,StrokeWidth_2px,FontColor:#1976D2;
     %% Acteurs;
@@ -202,7 +202,7 @@ graph TB;
 ## 📎 Annexes (exemple de diagramme d’architecture)  
 
 ```mermaid
-graph LR;
+graph LR
     subgraph "Docker‑Compose (dev)"
         direction TB;
         apache["php_7.3‑apache (web)"]
@@ -211,7 +211,7 @@ graph LR;
         volume_cfg["volume: /docker/conf/000‑default.conf"]
         volume_app["volume: /app (src)"]
         volume_db["volume: /var/lib/postgresql/data"]
-    end;
+    end
     apache -->|Montage| volume_cfg;
     apache -->|Montage| volume_app;
     apache -->|Connexion| postgres;

@@ -9,7 +9,7 @@ Ce Dossier d'Architecture Technique (DAT) décrit l'architecture de l'applicatio
 L'application SIRENES est un outil metier qui permet la collecte et la concentration des informations relatives aux experts et spécialistes. Elle intègre les demandes de qualifications par les comités de domaine et suit l'évolution de ces données.
 
 ```mermaid
-classdiagram;
+classDiagram
     class Sireines {
         + Collecte;
         + Concentration;
@@ -82,7 +82,7 @@ L'application SIRENES interagit avec divers partenaires fonctionnels tels que le
 ## Vue en Briques
 
 ```mermaid
-classdiagram;
+classDiagram
     class ApplicationWeb {
         + Controller;
         + Service;
@@ -124,7 +124,7 @@ Le produit est hébergé sur le cloud interne ECO4 basé sur Openstack, dans le 
 Le reverse-proxy Nginx du schéma ci-dessous est en fait une paire de Nginx load-balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx] --> B[Application]
     B --> C[Base de données]
     B --> D[Autres services]

@@ -162,3 +162,5 @@
 ## 8️⃣ Conseils de facilitation
 
 | ✅ Bonnes pratiques |
+
+<!-- Emoji Support Test: emoji: 'fa-check' -->

@@ -182,7 +182,7 @@ Fonctionnalités associées (axe vertical ↓ sous chaque étape) :
 ## 9️⃣ Diagramme Mermaid du Story Map (adapté à *agile‑infra*)  
 
 ```mermaid
-graph TB;
+graph TB
     %% Backbone - Parcours utilisateur;
     subgraph backbone[" BACKBONE - Parcours utilisateur "]
         step1["Préparer l'environnement"]
@@ -191,7 +191,7 @@ graph TB;
         step4["Uploader le docker‑compose"]
         step5["Démarrer les containers"]
         step6["Vérifier le déploiement"]
-    end;
+    end
     %% MVP - Fonctionnalités indispensables;
     subgraph mvp[" MVP – Fonctionnalités essentielles "]
         f11["Sélectionner target (prod/test)"]
@@ -200,7 +200,7 @@ graph TB;
         f41["Rendre le template docker‑compose"]
         f51["docker compose up -d"]
         f61["Accusé de réception HTTP"]
-    end;
+    end
     %% V2+ - Fonctionnalités complémentaires;
     subgraph v2[" V2+ – Améliorations "]
         f12["Activer dry‑run"]
@@ -209,7 +209,7 @@ graph TB;
         f42["Copier fichier dans {{ app_path }}"]
         f52["Gestion des logs"]
         f62["Health‑check détaillé"]
-    end;
+    end
     %% Flux;
     step1 --> f11;
     step2 --> f21;

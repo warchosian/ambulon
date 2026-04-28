@@ -47,8 +47,8 @@
 #### 3.1.1 Diagramme de collaboration  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0066CC','edgeLabelBackground':'#fff','nodeBorder':'#0066CC'}}%%}%%
-graph LR;
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0066CC','edgeLabelBackground':'#fff','nodeBorder':'#0066CC'}}%%%%%%%%%%%%%%%%%%%%}%%
+graph LR
     subgraph "Agent (Pool)"
         A1[Start Event] --> A2[Task: Saisir données du dossier]
         A2 --> A3[User Task: Valider le formulaire]
@@ -58,7 +58,7 @@ graph LR;
         A6 --> A7[End Event: Dossier créé]
         A4 -- Non --> A8[Task: Afficher erreurs & Retour saisie]
         A8 --> A2;
-    end;
+    end
     subgraph "Comité (Pool)"
         B1[Message Start: NouveauDossier] --> B2[Task: Examiner le dossier]
         B2 --> B3[Exclusive Gateway: Décision ?]
@@ -73,8 +73,8 @@ graph LR;
 #### 3.1.2 Diagramme de processus (déclenché par l’agent)  
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#2E7D32','edgeLabelBackground':'#fff','nodeBorder':'#2E7D32'}}%%}%%
-flowchart TD;
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#2E7D32','edgeLabelBackground':'#fff','nodeBorder':'#2E7D32'}}%%%%%%%%%%%%%%%%%%%%}%%
+flowchart TD
     st1([Start]) --> t1[« Saisir données du dossier »]
     t1 --> t2[« Valider le formulaire »]
     t2 --> g1{« Dossier complet ? »}
@@ -88,7 +88,7 @@ flowchart TD;
 #### 3.1.3 Diagramme de choreography (échange de messages)  
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#D84315','edgeLabelBackground':'#fff','nodeBorder':'#D84315'}}%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#D84315','edgeLabelBackground':'#fff','nodeBorder':'#D84315'}}%%%%%%%%%%%%%%%%%%%%}%%
 choreography;
     participant Agent;
     participant Comité;
@@ -99,8 +99,8 @@ choreography;
 #### 3.1.4 Diagramme de conversation (vue synthétique)  
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#6A1B9A','edgeLabelBackground':'#fff','nodeBorder':'#6A1B9A'}}%%}%%
-graph LR;
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#6A1B9A','edgeLabelBackground':'#fff','nodeBorder':'#6A1B9A'}}%%%%%%%%%%%%%%%%%%%%}%%
+graph LR
     conv1[Conversation: Gestion d’un Dossier] --> msg1[NouveauDossier]
     conv1 --> msg2[DossierQualifié]
 ```
@@ -260,8 +260,8 @@ graph LR;
 *(exemple de sous‑processus « CRUD Structure »)*  
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1565C0','edgeLabelBackground':'#fff','nodeBorder':'#1565C0'}}%%}%%
-flowchart TD;
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1565C0','edgeLabelBackground':'#fff','nodeBorder':'#1565C0'}}%%%%%%%%%%%%%%%%%%%%}%%
+flowchart TD
     subgraph "Référentiel (Pool)"
         S1[Start] --> S2[Task: Lister les structures]
         S2 --> G1{Gateway: Action ?}
@@ -277,8 +277,8 @@ flowchart TD;
 ### Annexe B – Diagramme BPMN du processus **Import de fichiers CSV**  
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#00897B','edgeLabelBackground':'#fff','nodeBorder':'#00897B'}}%%}%%
-flowchart TD;
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#00897B','edgeLabelBackground':'#fff','nodeBorder':'#00897B'}}%%%%%%%%%%%%%%%%%%%%}%%
+flowchart TD
     I1[Start] --> I2[Task: Upload fichier CSV]
     I2 --> I3[Service Task: Valider format & contraintes]
     I3 --> I4{Gateway: Validé ?}
@@ -293,8 +293,8 @@ flowchart TD;
 ### Annexe C – Diagramme BPMN du processus **Génération de rapports BIRT**  
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#6D4C41','edgeLabelBackground':'#fff','nodeBorder':'#6D4C41'}}%%}%%
-flowchart TD;
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#6D4C41','edgeLabelBackground':'#fff','nodeBorder':'#6D4C41'}}%%%%%%%%%%%%%%%%%%%%}%%
+flowchart TD
     R1[Start] --> R2[User Task: Sélection du type de rapport]
     R2 --> R3[Call Activity: BirtManager.publish (template, data)]
     R3 --> R4[Task: Stocker le fichier PDF/Excel]

@@ -187,7 +187,7 @@ Pour chaque P1/P2 :
 ## 9️⃣ Diagramme Mermaid du processus d’homologation RGAA  
 
 ```mermaid
-graph TB;
+graph TB
     %% Acteurs;
     team["👥 Équipe produit"]
     expert["🎓 Référent accessibilité"]
@@ -200,23 +200,23 @@ graph TB;
     subgraph phase1["Phase 1 – Cadrage & Identification"]
         step1["📋 Définir périmètre & critères"]
         step2["📦 Inventaire des composants UI"]
-    end;
+    end
     subgraph phase2["Phase 2 – Évaluation & Scoring"]
         step3["🧪 Tests manuels + outils"]
         step4["📊 Calcul du taux de conformité"]
-    end;
+    end
     subgraph phase3["Phase 3 – Priorisation & Correction"]
         step5["⚠️ Matrice Impact/Effort"]
         step6["📝 Plan d’action (P1‑P4)"]
-    end;
+    end
     subgraph phase4["Phase 4 – Documentation & Homologation"]
         step7["📘 Déclaration d’accessibilité"]
         step8["📜 Dossier d’homologation + suivi"]
-    end;
+    end
     subgraph loop["Amélioration continue"]
         monitor["🔄 Re‑tests à chaque release"]
         feedback["💬 Traitement des signalements"]
-    end;
+    end
     %% Flux principaux;
     team -->|Initie| step1;
     expert -->|Guide| step2;

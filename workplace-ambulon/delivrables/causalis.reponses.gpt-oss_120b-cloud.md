@@ -96,28 +96,28 @@ Ce document regroupe l’ensemble des informations techniques relatives à **Cau
 ## 🏛️ Architecture Overview  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph Persistence;
         DB[(Oracle Database)]
         Castor[Castor JDO]
-    end;
+    end
     subgraph ServiceLayer;
         RefSrv[Reference Services]
         GradeSrv[GradeService]
         StatutSrv[StatutService]
         DomaineSrv[DomaineAffectationService]
         SyncSrv[SynchronizeService]
-    end;
+    end
     subgraph WebLayer;
         Struts[Struts 1.x]
         Actions[Struts Actions]
         Forms[Struts Forms]
         JSPs[JSP Views]
-    end;
+    end
     subgraph WebServices;
         WSClient[WS Client]
         WSHelper[WS Helpers & Predicates]
-    end;
+    end
     DB --> Castor;
     Castor --> RefSrv;
     RefSrv --> GradeSrv;

@@ -71,7 +71,7 @@ bpmn
     alt Grade absent;
       Causalis->>WS: 6.1. Créer TranscodageGrade (WSClientGrade)
       WS-->>Causalis: 6.2. Confirmation insertion;
-    end;
+    end
     Causalis->>Utilisateur: 7. Confirmation (dossier créé, statut=« En cours »)
   else Validation métier KO;
     Causalis->>Utilisateur: 8. Retour erreurs (warnings)

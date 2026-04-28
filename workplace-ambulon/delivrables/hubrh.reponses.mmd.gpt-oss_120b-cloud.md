@@ -29,18 +29,18 @@ Hub RH is a Redmine‑based application used by the French Ministry of Ecologica
 The architecture combines a **core Redmine instance**, a set of **custom plugins**, a **PostgreSQL** database, and a **Docker‑based CI/CD pipeline** that builds and publishes the application image.
 
 ```mermaid
-graph TD;
+graph TD
     subgraph CI/CD;
         CI[GitLab CI] -->|Build image| Kaniko[Kaniko Executor]
         Kaniko -->|Push| Registry[Docker Registry]
-    end;
+    end
     subgraph Runtime;
         DB[(PostgreSQL)]
         App[Redmine Core]
         Plugins[Custom Plugins]
         Assets[Static Assets (CSS/JS)]
         Web[HTTPS Endpoint]
-    end;
+    end
     Registry -->|Deploy| Docker[Docker Container]
     Docker --> App;
     App -->|uses| DB;

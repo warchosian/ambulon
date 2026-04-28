@@ -209,7 +209,7 @@ Fonctionnalités (axe vertical ↓ sous chaque étape) :
 ## 9️⃣ Diagramme Mermaid du Story Map  
 
 ```mermaid
-graph TB;
+graph TB
     %% Backbone – Parcours utilisateur;
     subgraph backbone[" BACKBONE – Parcours utilisateur "]
         step1["Se connecter"]
@@ -219,7 +219,7 @@ graph TB;
         step5["Valider"]
         step6["Suivre"]
         step7["Exporter"]
-    end;
+    end
     %% MVP – Fonctionnalités indispensables;
     subgraph mvp[" MVP – Fonctionnalités essentielles "]
         f11["Formulaire login / CAS"]
@@ -229,7 +229,7 @@ graph TB;
         f51["Bouton Soumettre + email"]
         f61["Tableau d’avancement"]
         f71["Export CSV / PDF"]
-    end;
+    end
     %% V2+ – Fonctionnalités reportables;
     subgraph v2[" V2+ – À prioriser ultérieurement "]
         f12["Gestion du token + rappel mdp"]
@@ -239,7 +239,7 @@ graph TB;
         f52["Confirmation + suivi automatisé"]
         f62["Historique + commentaires"]
         f72["Export personnalisable"]
-    end;
+    end
     %% Flux;
     step1 --> f11;
     step2 --> f21;

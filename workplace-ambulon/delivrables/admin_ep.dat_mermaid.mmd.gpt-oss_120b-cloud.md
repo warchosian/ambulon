@@ -17,7 +17,7 @@
 ### Diagramme C4 – Niveau 1 (System Context) <a id="c4-l1"></a>
 
 ```mermaid
-graph TD;
+graph TD
     User[Utilisateur (SPES, DG de tutelle, Opérateurs)] -->|Web UI| App[admin_ep (Tomcat / Java)]
     App -->|Auth (Cerbère)| Auth[Service d’authentification Cerbère]
     App -->|JDBC| DB[(PostgreSQL DB)]
@@ -143,17 +143,17 @@ graph TD;
 ## 6️⃣ Vue en Briques (C4 – Niveau 2) <a id="vue-briques"></a>
 
 ```mermaid
-graph TD;
+graph TD
     subgraph Container;
         A[Tomcat (admin_ep‑web)] --> B[PostgreSQL (admin_ep‑db)]
         A --> C[Scheduler (ArticleAnalyser)]
         A --> D[Cerbère SSO Client]
         A --> E[Mail Sender]
-    end;
+    end
     subgraph External;
         F[JORF Feed] --> C;
         G[PSIN Supervision] --> A;
-    end;
+    end
     User --> A
 ```
 
@@ -248,7 +248,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **OpenStack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx LB] --> B[Tomcat‑1]
     A --> C[Tomcat‑2]
     B --> D[Postgres‑Primary]

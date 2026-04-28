@@ -213,7 +213,7 @@ Fonctionnalités associées (axe vertical ↓ sous chaque étape) :
 ## 9️⃣ Diagramme Mermaid du Story Map
 
 ```mermaid
-graph TB;
+graph TB
     %% Backbone – Parcours utilisateur;
     subgraph backbone[" BACKBONE - Parcours Utilisateur "]
         step1["Accéder au<br/>portail"]
@@ -222,7 +222,7 @@ graph TB;
         step4["Explorer la<br/>carte"]
         step5["Voir le<br/>détail d’une session"]
         step6["S’inscrire /<br/>télécharger le formulaire"]
-    end;
+    end
     %% MVP – Fonctionnalités indispensables;
     subgraph mvp[" MVP – Fonctionnalités essentielles "]
         f11["Page d’accueil<br/>responsive (DSFR)"]
@@ -233,7 +233,7 @@ graph TB;
         f51["Page détaillée<br/>session"]
         f52["PDF d’inscription"]
         f61["Formulaire<br/>inscription"]
-    end;
+    end
     %% V2+ – Fonctionnalités à prioriser ultérieurement;
     subgraph v2[" V2+ – Fonctionnalités reportables "]
         f12["Export CSV du catalogue"]
@@ -245,7 +245,7 @@ graph TB;
         f51b["Contact organisateur"]
         f61b["Confirmation<br/>par mail"]
         f62["Gestion désinscription<br/>via UUID"]
-    end;
+    end
     %% Flux – Placement sous chaque étape;
     step1 --> f11;
     step2 --> f21;

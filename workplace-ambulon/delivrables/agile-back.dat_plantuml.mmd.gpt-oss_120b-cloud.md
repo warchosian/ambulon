@@ -17,7 +17,7 @@ L’accès se fait via le **CAS** (Central Authentication Service) et l’interf
 
 ### 1.1 Schéma C4 – Niveau 1 (System Context) {#c4-l1}
 ```mermaid
-graph TD;
+graph TD
     Front[Agile‑front<br/>Interface utilisateur] -->|REST/HTML| App[agile‑back<br/>Symfony (MVC + API‑Platform)]
     App -->|JDBC/SQL| DB[(PostgreSQL<br/>DB)]
     App -->|CAS 2.0| CAS[CAS Server<br/>(authentification SSO)]
@@ -287,7 +287,7 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **OpenStack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-graph TD;
+graph TD
     A[Nginx (HA)] --> B[Symfony Application]
     B --> C[PostgreSQL]
     B --> D[CAS Client]

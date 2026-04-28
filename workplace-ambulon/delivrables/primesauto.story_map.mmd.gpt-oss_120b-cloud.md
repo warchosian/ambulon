@@ -191,7 +191,7 @@ Fonctionnalités associées (axe vertical ↓ sous chaque étape) :
 ## 9️⃣ Diagramme Mermaid du Story Map  
 
 ```mermaid
-graph TB;
+graph TB
     %% Backbone - Parcours utilisateur;
     subgraph backbone[" BACKBONE - Parcours utilisateur "]
         step1["Paramétrer<br/>les coefficients"]
@@ -199,7 +199,7 @@ graph TB;
         step3["Gérer<br/>les bonifications"]
         step4["Exporter<br/>les résultats"]
         step5["Suivre &<br/>auditer"]
-    end;
+    end
     %% MVP - Fonctionnalités essentielles;
     subgraph mvp[" MVP – Fonctionnalités indispensables "]
         f11["Saisir taux<br/>coefficient"]
@@ -212,7 +212,7 @@ graph TB;
         f42["Envoyer aux destinataires"]
         f51["Consulter suivi<br/>des jobs"]
         f52["Exporter journal d’audit"]
-    end;
+    end
     %% V2+ - Fonctionnalités reportables;
     subgraph v2[" V2 – Améliorations & confort "]
         f13["Historiser changements"]
@@ -220,7 +220,7 @@ graph TB;
         f33["Modifier bonification"]
         f43["Archiver rapport"]
         f53["Déclencher alerte"]
-    end;
+    end
     %% Flux;
     step1 --> f11;
     step1 --> f12;

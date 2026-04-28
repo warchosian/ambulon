@@ -26,7 +26,7 @@
 #### 2.1.1 Diagramme de **Classes**  
 
 ```mermaid
-classdiagram;
+classDiagram
     %% Packages;
     package i2.application.causalis {
         class Constantes <<interface>>
@@ -187,18 +187,18 @@ classdiagram;
 #### 2.1.2 Diagramme de **Composants**  
 
 ```mermaid
-graph TB;
+graph TB
     subgraph "Maven Build"
         A[causalis‑web] --> B[causalis‑war]
         C[causalis‑database] --> D[SQL‑scripts.zip]
         E[causalis‑deployment] --> F[Sources.zip]
         G[causalis‑doc] --> H[Docs.zip]
-    end;
+    end
     subgraph "Runtime"
         I[Tomcat (ACAI Cluster)] -->|déploie| B;
         J[Oracle DB (Paris La Défense)] -->|stocke| B;
         K[External WS (Rehucit, Référentiels)] -->|appel SOAP/REST| B;
-    end;
+    end
     B -->|contains| i2.application.causalis.web (WAR)
     B -->|contains| i2.application.causalis.dao;
     B -->|contains| i2.application.causalis.service;
@@ -231,12 +231,12 @@ graph TB;
 #### 2.1.3 Diagramme de **Déploiement**  
 
 ```mermaid
-graph LR;
+graph LR
     subgraph "Data Center – Paris La Défense"
         N1[Tomcat (ACAI – Cluster ESXi)] 
         N2[Oracle 9i/10g] 
         N3[WS Server (Rehucit, Référentiels)]
-    end;
+    end
     N1 -->|déploie| WAR[causalis.war]
     N1 -->|accède à| DB[(JDBC – java_comp/env/jdbc/userDScausalis)]
     N1 -->|consomme| WS[Web Service Endpoint]
@@ -263,7 +263,7 @@ graph LR;
 *Exemple d’instanciation à un instant T (saisie d’un accident)*  
 
 ```mermaid
-classdiagram;
+classDiagram
     class DossierAccident {
         +int id;
         +Agent agent;
@@ -298,7 +298,7 @@ classdiagram;
 #### 2.1.5 Diagramme de **Paquetages**  
 
 ```mermaid
-graph TD;
+graph TD
     A[i2.application.causalis] --> B[comparator]
     A --> C[dao]
     A --> D[exception]
@@ -313,7 +313,7 @@ graph TD;
 
     subgraph "Form Sub‑packages"
         F --> F1[validator]
-    end;
+    end
     subgraph "WS Sub‑packages"
         L --> L1[client]
         L --> L2[converter]
@@ -329,7 +329,7 @@ graph TD;
 *Illustration de la composition du formulaire `EditionDossierForm3` qui contient plusieurs listes d’objets.*  
 
 ```mermaid
-classdiagram;
+classDiagram
     class EditionDossierForm3 {
         +ListeEnteteTableauEffectifs entetes;
         +ListeTableauEffectifs lignes;
@@ -357,7 +357,7 @@ classdiagram;
 #### 2.2.1 Diagramme de **Cas d’Utilisation**  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#bbf','edgeLabelBackground':'#fff','fontSize':12}}%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#bbf','edgeLabelBackground':'#fff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Gestionnaire as G;
     actor Utilisateur as U;
@@ -468,7 +468,7 @@ sequencediagram;
 #### 2.3.2 Diagramme de **Communication** (exemple : synchronisation des grades)  
 
 ```mermaid
-graph TD;
+graph TD
     A[GradeService] --> B[WSClientGrade]
     B --> C[TranscodageGradePredicate]
     C --> D[TranscodageGradeService]

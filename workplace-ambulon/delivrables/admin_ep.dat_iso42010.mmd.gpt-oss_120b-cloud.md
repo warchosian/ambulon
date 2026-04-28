@@ -89,13 +89,13 @@ Le périmètre inclut :
 ### 4.1 VP‑01 – Vue Contexte (System Context)  
 
 ```mermaid
-graph LR;
+graph LR
     subgraph External[Environnement externe]
         A[Utilisateurs (SPES, DG, Opérateurs)] -->|Web UI| UI[admin_ep Web App]
         B[Service Cerbère] -->|AuthN/AuthZ| UI;
         C[JORF (Open Data)] -->|Flux XML| ETL[ArticleAnalyser]
         D[Elasticsearch] -->|Recherche plein texte| UI;
-    end;
+    end
     UI -->|JDBC| DB[(PostgreSQL – integration schema)]
     UI -->|HTTP| Tomcat[Tomcat 9.0.8]
     Tomcat -->|Docker (en cours) | Container[Container]
@@ -112,20 +112,20 @@ graph LR;
 ### 4.2 VP‑02 – Vue Fonctionnelle / Métier  
 
 ```mermaid
-flowchart TD;
+flowchart TD
     subgraph BusinessCapabilities[Capacités métier]
         C1[Gestion des administrateurs] --> C2[Gestion des établissements]
         C2 --> C3[Gestion des mandats (Titulaire / Suppléant)]
         C3 --> C4[Alertes d’échéance]
         C4 --> C5[Statistiques & Reporting]
         C5 --> C6[Recherche avancée]
-    end;
+    end
     subgraph Processes[Processus CCF]
         P1[Création / Mise à jour d’un administrateur] --> P2[Assignation à un mandat]
         P2 --> P3[Calcul de la date d’échéance]
         P3 --> P4[Envoi d’email de rappel]
         P4 --> P5[Archivage du mandat expiré]
-    end;
+    end
     BusinessCapabilities -.-> Processes
 ```
 
@@ -137,7 +137,7 @@ flowchart TD;
 ### 4.3 VP‑03 – Vue Applicative / Logicielle (Component Diagram)  
 
 ```mermaid
-classdiagram;
+classDiagram
     direction TB;
     class AccueilAction {
         +execute()
@@ -190,7 +190,7 @@ classdiagram;
 ### 4.4 VP‑04 – Vue Données et Information  
 
 ```mermaid
-classdiagram;
+classDiagram
     direction TB;
     class TYPE_MANDAT {
         +tma_id : PK;
@@ -302,14 +302,14 @@ sequencediagram;
 ### 4.7 VP‑07 – Vue Sécurité  
 
 ```mermaid
-graph TD;
+graph TD
     subgraph "Défense in depth"
         A[Front‑end (HTTPS, CSP, HSTS)]
         B[Tomcat (TLS, security‑constraints, role‑based access)]
         C[Application (Cerbère, RightsHelper, Roles)]
         D[Database (pg_hba.conf, encryption at rest)]
         E[Logs (log4j2, audit trail)]
-    end;
+    end
     A --> B --> C --> D;
     C -->|AuthZ| F[Confidentialité (D‑I‑C‑T)]
     D -->|Intégrité| F;

@@ -56,7 +56,7 @@
 ### 4.1 Diagramme de cas d’utilisation (Mermaid)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Opérateur DGFIP as Op;
     actor Data Analyst as DA;
@@ -105,7 +105,7 @@ usecaseDiagram;
 ## 5️⃣ Processus métier (BPMN)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Opérateur as OP;
     participant Système as SYS;
@@ -179,7 +179,7 @@ bpmnDiagram;
 > **Note** : Le diagramme ci‑dessous est une version **abstraite** (pas de types SQL) afin de rester indépendant de l’implémentation technique.  
 
 ```mermaid
-classdiagram;
+classDiagram
     class Organisme {
         +codeOrganisme : string;
         +libelleOrganisme : string;

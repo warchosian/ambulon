@@ -167,7 +167,7 @@ services:
 ### Diagramme d’interaction  
 
 ```mermaid
-graph LR;
+graph LR
     A[Développeur] -->|docker‑compose up| W[Conteneur web (PHP/Apache)]
     A -->|docker‑compose up| D[Conteneur db (PostgreSQL)]
     W -->|requêtes HTTP| B[Application PHP]
