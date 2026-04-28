@@ -214,27 +214,27 @@ graph TB
     user[👤 Utilisateur référent]:::acteur;
     %% Phase 1 – Pré‑préparation;
     subgraph prep["Phase 1 – Pré‑préparation"]
-        vision[Vision & hypothèses]:::phasePrep;
-        storymap[Story Mapping / Backlog]:::phasePrep;
-        constraints[Contraintes (tech, reg.)]:::phasePrep;
+    vision[Vision & hypothèses]:::phasePrep;
+    storymap[Story Mapping / Backlog]:::phasePrep;
+    constraints[Contraintes (tech, reg.)]:::phasePrep;
     end
     %% Phase 2 – Atelier MoSCoW;
     subgraph workshop["Phase 2 – Atelier MoSCoW"]
-        align[Alignement : objectifs MVP]:::phaseWorkshop;
-        classify[Classification MoSCoW]:::phaseWorkshop;
-        validate[Validation périmètre MVP]:::phaseWorkshop;
+    align[Alignement : objectifs MVP]:::phaseWorkshop;
+    classify[Classification MoSCoW]:::phaseWorkshop;
+    validate[Validation périmètre MVP]:::phaseWorkshop;
     end
     %% Phase 3 – Livrables & suite;
     subgraph deliver["Phase 3 – Livrables & suite"]
-        matrix[Matrice MoSCoW]:::phaseDeliver;
-        roadmap[Roadmap MVP → V1]:::phaseDeliver;
-        metrics[Hypothèses de test & métriques]:::phaseDeliver;
+    matrix[Matrice MoSCoW]:::phaseDeliver;
+    roadmap[Roadmap MVP → V1]:::phaseDeliver;
+    metrics[Hypothèses de test & métriques]:::phaseDeliver;
     end
     %% Phase 4 – Boucle d’apprentissage;
     subgraph loop["Phase 4 – Boucle d’apprentissage"]
-        test[Tests utilisateurs MVP]:::phaseLoop;
-        learn[Analyse des retours]:::phaseLoop;
-        decide[Décision : pivot / persévérer / arrêter]:::phaseLoop;
+    test[Tests utilisateurs MVP]:::phaseLoop;
+    learn[Analyse des retours]:::phaseLoop;
+    decide[Décision : pivot / persévérer / arrêter]:::phaseLoop;
     end
     %% Flux principaux;
     vision --> align;

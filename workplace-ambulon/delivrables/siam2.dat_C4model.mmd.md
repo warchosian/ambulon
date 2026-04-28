@@ -130,11 +130,11 @@ C4Container;
     Person(demandeur, "Demandeur", "Commande de consultation.")
 
     System_Boundary(siam, "SIAM") {
-        Container(web, "Application Web SIAM", "Application Monolithique", "Interface de saisie, recherche et gestion des flux métier.")
-        Container(batch, "Moteur d'extraction", "PL/SQL & Python", "Scripts d'export CSV, mappings et notebooks de transformation.")
-        ContainerDb(oracle, "Base SIAM", "Oracle", "Schéma métier 103 tables, logique procédurale PL/SQL, données de production.")
-        Container(index, "Index Full-Text", "Lucene / Oracle Text", "Indexation des contenus et des métadonnées pour la recherche.")
-        Container(files, "Fichiers d'échange", "CSV / Flat Files", "Exports vers LIGEO et Spark Archives (exports planifiés).")
+    Container(web, "Application Web SIAM", "Application Monolithique", "Interface de saisie, recherche et gestion des flux métier.")
+    Container(batch, "Moteur d'extraction", "PL/SQL & Python", "Scripts d'export CSV, mappings et notebooks de transformation.")
+    ContainerDb(oracle, "Base SIAM", "Oracle", "Schéma métier 103 tables, logique procédurale PL/SQL, données de production.")
+    Container(index, "Index Full-Text", "Lucene / Oracle Text", "Indexation des contenus et des métadonnées pour la recherche.")
+    Container(files, "Fichiers d'échange", "CSV / Flat Files", "Exports vers LIGEO et Spark Archives (exports planifiés).")
 
     System(spark, "Spark Archives", "Consultation")
     System(ligeo, "LIGEO", "Migration cible")
@@ -205,11 +205,11 @@ C4Component;
     ContainerDb(oracle, "Base SIAM", "Oracle", "Données métier et référentiels.")
 
     Container_Boundary(extraction, "Moteur d'extraction") {
-        Component(export_entite, "Export Entités", "PL/SQL", "Extraction de la hierarchie des entités productrices vers CSV.")
-        Component(export_versement, "Export Versements", "PL/SQL", "Extraction des versements et métadonnées associées.")
-        Component(export_stock, "Export Stock", "PL/SQL", "Extraction de l'état des conditionnements et emplacements.")
-        Component(mapping, "Mapping Référentiel", "PL/SQL", "Génération des arborescences et tables de correspondance LIGEO.")
-        Component(cleanup, "Cleanup & Encode", "Python / Jupyter", "Conversion d'encodage, protection des champs, uniformisation des séparateurs.")
+    Component(export_entite, "Export Entités", "PL/SQL", "Extraction de la hierarchie des entités productrices vers CSV.")
+    Component(export_versement, "Export Versements", "PL/SQL", "Extraction des versements et métadonnées associées.")
+    Component(export_stock, "Export Stock", "PL/SQL", "Extraction de l'état des conditionnements et emplacements.")
+    Component(mapping, "Mapping Référentiel", "PL/SQL", "Génération des arborescences et tables de correspondance LIGEO.")
+    Component(cleanup, "Cleanup & Encode", "Python / Jupyter", "Conversion d'encodage, protection des champs, uniformisation des séparateurs.")
 
     Container(files, "Fichiers CSV", "CSV", "Fichiers d'échange")
 
@@ -315,15 +315,15 @@ Le système SIAM est hébergé sur une **infrastructure on-premise** du ministè
 C4Deployment;
     title Deployment Diagram - Infrastructure SIAM;
     Deployment_Node(dc, "Datacenter Ministère", "Site physique principal") {
-        Deployment_Node(prod, "Serveur Production", "Oracle Database") {
-            ContainerDb(db_prod, "SIAM PROD", "Oracle", "Base de production, SID prod37")
+    Deployment_Node(prod, "Serveur Production", "Oracle Database") {
+    ContainerDb(db_prod, "SIAM PROD", "Oracle", "Base de production, SID prod37")
 
-        Deployment_Node(pp, "VM Préproduction", "Oracle Linux") {
-            ContainerDb(db_pp, "SIAM PREP", "Oracle", "Base prep37, IP 10.167.132.110")
-            Container(scripts, "Scripts Export", "PL/SQL", "Procédures UTL_FILE")
+    Deployment_Node(pp, "VM Préproduction", "Oracle Linux") {
+    ContainerDb(db_pp, "SIAM PREP", "Oracle", "Base prep37, IP 10.167.132.110")
+    Container(scripts, "Scripts Export", "PL/SQL", "Procédures UTL_FILE")
 
     Deployment_Node(stockage, "Stockage Objet", "B3 / Outscale / GCS") {
-        Container(dumps, "Dumps Quotidiens", ".dmp.gz", "Sauvegardes chiffrées AES-256")
+    Container(dumps, "Dumps Quotidiens", ".dmp.gz", "Sauvegardes chiffrées AES-256")
 
     Rel(db_prod, dumps, "Export quotidien")
     Rel(dumps, db_pp, "Restauration auto (import_siam.sh)")

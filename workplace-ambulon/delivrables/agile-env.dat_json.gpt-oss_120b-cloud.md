@@ -14,8 +14,8 @@ C4Context;
     title Contexte C4 – Niveau 1 (Vue système)
     Person(user, "Utilisateur", "Consomme les services web de l’application")
     System_Boundary(agileEnv, "agile‑env") {
-        Container(app, "Application PHP/Apache", "Docker", "Expose les APIs et l’interface web")
-        Container(db, "Base de données PostgreSQL", "Docker", "Stocke les données métier")
+    Container(app, "Application PHP/Apache", "Docker", "Expose les APIs et l’interface web")
+    Container(db, "Base de données PostgreSQL", "Docker", "Stocke les données métier")
 
     System_Ext(externalCAS, "CAS (Central Authentication Service)", "Service d’authentification externe")
     Rel(user, app, "Utilise")

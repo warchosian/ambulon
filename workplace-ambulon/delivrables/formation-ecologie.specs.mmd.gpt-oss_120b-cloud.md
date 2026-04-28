@@ -196,16 +196,16 @@ sequencediagram;
 swimlane;
     title Workflow d’import RenoiRH;
     lane "Système RenoiRH (SFTP)" {
-        SFTP --> S3 : copy CSV (4_00)
+    SFTP --> S3 : copy CSV (4_00)
 
     lane "Django (Cron)" {
-        Cron --> Import : trigger import_cisirh (4_30)
-        Import --> DB : persistance;
-        Import --> Log : log_msg;
-        Import --> Reindex : call reindex()
+    Cron --> Import : trigger import_cisirh (4_30)
+    Import --> DB : persistance;
+    Import --> Log : log_msg;
+    Import --> Reindex : call reindex()
 
     lane "MeiliSearch" {
-        Reindex --> Index : clear + index;
+    Reindex --> Index : clear + index;
 
 ```
 
@@ -214,61 +214,61 @@ swimlane;
 ```mermaid
 classDiagram
     class Stage {
-        +BigAutoField id;
-        +CharField label;
-        +CharField premier_niveau;
-        +CharField public_cible;
-        +ForeignKey session;
+    +BigAutoField id;
+    +CharField label;
+    +CharField premier_niveau;
+    +CharField public_cible;
+    +ForeignKey session;
 
     class Session {
-        +BigAutoField id;
-        +CharField label;
-        +DateField date_debut;
-        +DateField date_fin;
-        +CharField code_departement;
+    +BigAutoField id;
+    +CharField label;
+    +DateField date_debut;
+    +DateField date_fin;
+    +CharField code_departement;
 
     class Periode {
-        +IntegerField numero;
-        +DateField date_debut;
-        +DateField date_fin;
-        +CharField departement_lieu;
-        +CharField ville_lieu;
-        +CharField lieu;
-        +IntegerField etat;
+    +IntegerField numero;
+    +DateField date_debut;
+    +DateField date_fin;
+    +CharField departement_lieu;
+    +CharField ville_lieu;
+    +CharField lieu;
+    +IntegerField etat;
 
     class Domaine {
-        +CharField label;
-        +IntegerField number;
-        +CharField prefix_type;
+    +CharField label;
+    +IntegerField number;
+    +CharField prefix_type;
 
     class SousDomaine {
-        +CharField label;
-        +ForeignKey domaine;
+    +CharField label;
+    +ForeignKey domaine;
 
     class Theme {
-        +CharField label;
-        +ForeignKey sous_domaine;
+    +CharField label;
+    +ForeignKey sous_domaine;
 
     class Departement {
-        +CharField code;
-        +CharField libelle;
+    +CharField code;
+    +CharField libelle;
 
     class Partenaire {
-        +URLField logo_url;
-        +CharField titre;
-        +CharField soustitre;
+    +URLField logo_url;
+    +CharField titre;
+    +CharField soustitre;
 
     class BandeauAccueil {
-        +CharField titre;
-        +TextField message;
+    +CharField titre;
+    +TextField message;
 
     class Subscriber {
-        +UUIDField uuid;
-        +EmailField email;
+    +UUIDField uuid;
+    +EmailField email;
 
     class Subscription {
-        +ForeignKey subscriber;
-        +ForeignKey session;
+    +ForeignKey subscriber;
+    +ForeignKey session;
 
     Stage --> Session : belongsTo;
     Session --> Departement : manyToOne;
@@ -288,23 +288,23 @@ classDiagram
 ```mermaid
 graph TD
     subgraph "Application Django (app)"
-        A1[Models] --> A2[Views]
-        A2 --> A3[Templates]
-        A1 --> A4[Forms]
-        A1 --> A5[Signals]
-        A1 --> A6[Management Commands]
-        A1 --> A7[Services (log, cleanup, reindex)]
+    A1[Models] --> A2[Views]
+    A2 --> A3[Templates]
+    A1 --> A4[Forms]
+    A1 --> A5[Signals]
+    A1 --> A6[Management Commands]
+    A1 --> A7[Services (log, cleanup, reindex)]
     end
     subgraph "Moteur de recherche"
-        B1[MeiliSearch] 
+    B1[MeiliSearch] 
     end
     subgraph "Base de données"
-        C1[PostgreSQL]
+    C1[PostgreSQL]
     end
     subgraph "Infrastructure"
-        D1[Nginx (reverse‑proxy)]
-        D2[Docker Engine]
-        D3[Docker‑Compose]
+    D1[Nginx (reverse‑proxy)]
+    D2[Docker Engine]
+    D3[Docker‑Compose]
     end
     A1 --> C1;
     A2 --> C1;
@@ -365,10 +365,10 @@ statediagram-v2;
 ```mermaid
 graph LR
     subgraph "Environnement Production"
-        Nginx[Nginx (LB + Reverse‑proxy)]
-        DjangoApp[Django (container)]
-        DB[PostgreSQL (container)]
-        Search[MeiliSearch (container)]
+    Nginx[Nginx (LB + Reverse‑proxy)]
+    DjangoApp[Django (container)]
+    DB[PostgreSQL (container)]
+    Search[MeiliSearch (container)]
     end
     Nginx -->|HTTP/HTTPS| DjangoApp;
     DjangoApp -->|SQL| DB;

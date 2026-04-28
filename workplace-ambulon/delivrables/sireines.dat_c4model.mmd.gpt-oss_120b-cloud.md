@@ -22,7 +22,7 @@
 ## 2️⃣ Niveau 1 – Vue *Contexte* (C4‑L1)
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Context.puml
 
 Person(admin, "Administrateur fonctionnel", "Gestion des paramètres, versionnage, supervision")
@@ -66,7 +66,7 @@ Rel(sireines, sonarqube, "Envoie métriques qualité", "API")
 ## 3️⃣ Niveau 2 – Vue *Conteneurs* (C4‑L2)
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Container.puml
 
 System_Boundary(sireines, "SIREINES") {
@@ -124,7 +124,7 @@ Volumes persistants :
 ## 4️⃣ Niveau 3 – Vue *Composants* (C4‑L3) – **SIREINES‑Web** (exemple)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Component.puml
 
 Container(web_app, "SIREINES‑Web", "Java / Spring + Struts2", "Conteneur d’application")
@@ -164,7 +164,7 @@ Rel(service_pkg, search_mgr, "Indexe / Recherche")
 ### 6.1 Extraction d’un rapport BIRT (exemple)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Sequence.puml
 
 Title Extraction d’un rapport de “Pyramide d’âge”
@@ -188,7 +188,7 @@ Web ->> Agent: download / display
 ### 6.2 Authentification / Vérification des droits (Cerbère)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Sequence.puml
 
 Title Authentification d’un agent
@@ -211,18 +211,18 @@ Web ->> Agent: Session cookie + UI
 ## 7️⃣ Vue *Déploiement* (section standardisée)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Deployment.puml
 
 Deployment_Node(cloud, "Cloud ECO4", "OpenStack tenant *pnm3*") {
     Deployment_Node(nginx, "Nginx Cluster", "Load‑balancer") {
-        Container(app, "SIREINES‑Web", "Docker container (Tomcat)", "Application métier")
+    Container(app, "SIREINES‑Web", "Docker container (Tomcat)", "Application métier")
 
     Deployment_Node(db, "PostgreSQL", "Docker container") {
-        ContainerDb(database, "SIREINES‑DB", "PostgreSQL", "Données métier")
+    ContainerDb(database, "SIREINES‑DB", "PostgreSQL", "Données métier")
 
     Deployment_Node(birt, "BIRT Server", "Docker container") {
-        Container(birt_srv, "BIRT", "Java / BIRT 4.3", "Moteur de reporting")
+    Container(birt_srv, "BIRT", "Java / BIRT 4.3", "Moteur de reporting")
 
 Rel(nginx, app, "HTTP/HTTPS")
 Rel(app, database, "JDBC")

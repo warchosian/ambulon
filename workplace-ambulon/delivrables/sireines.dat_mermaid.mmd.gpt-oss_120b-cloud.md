@@ -124,9 +124,9 @@ flowchart LR
 ```mermaid
 graph TD
     subgraph "Docker‑Compose"
-        A[nginx‑lb] --> B[sireines_app_usine_container]
-        B --> C[(PostgreSQL)]
-        B --> D[sireines_pgadmin_container]
+    A[nginx‑lb] --> B[sireines_app_usine_container]
+    B --> C[(PostgreSQL)]
+    B --> D[sireines_pgadmin_container]
     end
     B -->|REST/HTML| UI[Browser (HTML/JS)]
     UI -->|Auth JWT| Cerb[Cerbère (OAuth2)]
@@ -241,13 +241,13 @@ sequencediagram;
 ```mermaid
 graph LR
     subgraph "ECO4 – IaaS"
-        LB[nginx (2×) LB] -->|HTTPS| APP[Tomcat (sireines_app)]
-        APP --> DB[PostgreSQL]
-        APP --> BIRT[BIRT Engine]
-        APP --> SMTP[SMTP (TLS)]
+    LB[nginx (2×) LB] -->|HTTPS| APP[Tomcat (sireines_app)]
+    APP --> DB[PostgreSQL]
+    APP --> BIRT[BIRT Engine]
+    APP --> SMTP[SMTP (TLS)]
     end
     subgraph "Docker‑Host"
-        DB -->|pg_dump| Backup[Backup Service]
+    DB -->|pg_dump| Backup[Backup Service]
     end
 ```
 

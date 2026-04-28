@@ -14,12 +14,12 @@
 ```mermaid
 flowchart LR
     subgraph Utilisateurs;
-        UI[« Utilisateur »]
+    UI[« Utilisateur »]
     end
     subgraph Système;
-        APP[« agile‑env (PHP/Apache) »]
-        DB[« PostgreSQL »]
-        CAS[« CAS (authentification) »]
+    APP[« agile‑env (PHP/Apache) »]
+    DB[« PostgreSQL »]
+    CAS[« CAS (authentification) »]
     end
     UI -->|HTTP/HTTPS| APP;
     APP -->|JDBC/SQL| DB;
@@ -139,9 +139,9 @@ flowchart LR
 ```mermaid
 flowchart LR
     subgraph "Docker Host"
-        NGINX[Nginx (load‑balancer)] 
-        APP[php‑apache (agile‑env)] 
-        DB[(PostgreSQL 11)]
+    NGINX[Nginx (load‑balancer)] 
+    APP[php‑apache (agile‑env)] 
+    DB[(PostgreSQL 11)]
     end
     NGINX -->|HTTP/HTTPS| APP;
     APP -->|SQL| DB;

@@ -53,19 +53,19 @@
 ### 4.1 Diagramme de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 usecaseDiagram;
     actor MOE / DevOps as DevOps;
     actor Utilisateurs finaux as Users;
     actor Administrateur DB as DBA;
     actor RSSI as Sec;
     rectangle "Système ocle‑docker" {
-        usecase "Déployer l’application" as UC1;
-        usecase "Démarrer/Arrêter les conteneurs" as UC2;
-        usecase "Uploader un fichier" as UC3;
-        usecase "Sauvegarder la base" as UC4;
-        usecase "Mettre à jour le WAR" as UC5;
-        usecase "Vérifier la conformité sécurité" as UC6;
+    usecase "Déployer l’application" as UC1;
+    usecase "Démarrer/Arrêter les conteneurs" as UC2;
+    usecase "Uploader un fichier" as UC3;
+    usecase "Sauvegarder la base" as UC4;
+    usecase "Mettre à jour le WAR" as UC5;
+    usecase "Vérifier la conformité sécurité" as UC6;
 
     DevOps --> UC1;
     DevOps --> UC2;
@@ -95,7 +95,7 @@ usecaseDiagram;
 > **Processus clé** : *Déploiement continu de l’application*  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 bpmnDiagram;
     participant DevOps;
     participant DockerEngine as "Docker Engine"
@@ -110,10 +110,10 @@ bpmnDiagram;
     DockerEngine->>Tomcat: create container + copy WAR;
     Tomcat->>DB: test connexion JDBC;
     alt Connexion OK;
-        Tomcat->>DevOps: Application ready (HTTP 200)
+    Tomcat->>DevOps: Application ready (HTTP 200)
     else Connexion KO;
-        Tomcat->>DevOps: Erreur de démarrage;
-        DevOps->>DockerEngine: docker compose down;
+    Tomcat->>DevOps: Erreur de démarrage;
+    DevOps->>DockerEngine: docker compose down;
     end
 ```
 
@@ -163,19 +163,19 @@ bpmnDiagram;
 ```mermaid
 classDiagram
     class Upload {
-        +String id {PK}
-        +String filename;
-        +Long size;
-        +DateTime uploadedAt;
-        +String path;
+    +String id {PK}
+    +String filename;
+    +Long size;
+    +DateTime uploadedAt;
+    +String path;
 
     class User {
-        +String id {PK}
-        +String login;
-        +String email;
+    +String id {PK}
+    +String login;
+    +String email;
 
     class Role {
-        +String name {PK}
+    +String name {PK}
 
     User "1" --> "*" Upload : owns;
     User "1" --> "*" Role : has

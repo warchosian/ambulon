@@ -60,25 +60,25 @@
 ### 2.1 Acteurs & cas d’usage (Use‑Case)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#004080', 'secondaryColor': '#cce6ff'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#004080', 'secondaryColor': '#cce6ff'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Gestionnaire (Cerbère) as G;
     actor Opérateur as O;
     actor Service JORF (Automatisé) as J;
     rectangle AdminEP {
-        G --> (Authentifier l’utilisateur)
-        G --> (Consulter la liste des administrateurs)
-        G --> (Créer / Mettre à jour un administrateur)
-        G --> (Gérer les établissements / colleges)
-        G --> (Définir les mandats (Titulaire / Suppléant))
-        G --> (Configurer les alertes d’échéance)
-        G --> (Consulter les statistiques)
+    G --> (Authentifier l’utilisateur)
+    G --> (Consulter la liste des administrateurs)
+    G --> (Créer / Mettre à jour un administrateur)
+    G --> (Gérer les établissements / colleges)
+    G --> (Définir les mandats (Titulaire / Suppléant))
+    G --> (Configurer les alertes d’échéance)
+    G --> (Consulter les statistiques)
 
-        O --> (Rechercher un établissement ou un administrateur)
-        O --> (Visualiser les mandats en cours)
+    O --> (Rechercher un établissement ou un administrateur)
+    O --> (Visualiser les mandats en cours)
 
-        J --> (Importer les articles JORF)
-        J --> (Enrichir la base de données)
+    J --> (Importer les articles JORF)
+    J --> (Enrichir la base de données)
 
 ```
 
@@ -107,7 +107,7 @@ usecaseDiagram;
 | **Code** | 1 | 1 | 2 |
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 decisionTable;
     title Type de mandat selon la durée;
     condition Durée > 12;
@@ -127,7 +127,7 @@ decisionTable;
 | `Budget` | `Ministre chargé du budget` |
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 decisionTable;
     title Nom de la charge affiché;
     condition Charge = "Affaires étrangères"
@@ -158,25 +158,25 @@ decisionTable;
 ### 3.1 Vue d’ensemble (Composants)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#006400', 'secondaryColor': '#e6ffe6'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#006400', 'secondaryColor': '#e6ffe6'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 graph TD
     subgraph Client;
-        UI[UI Web (HTML/JS/CSS)]
+    UI[UI Web (HTML/JS/CSS)]
     end
     subgraph "Web‑Tier (Tomcat 9)"
-        C1[Struts2 Controllers]
-        C2[Vertigo/Vega Filters]
-        C3[SecurityFilter (Cerbère)]
+    C1[Struts2 Controllers]
+    C2[Vertigo/Vega Filters]
+    C3[SecurityFilter (Cerbère)]
     end
     subgraph "Service‑Tier (Java)"
-        S1[Business Services]
-        S2[Domain Model (DTO/Entity)]
-        S3[DAO (JPA / Hibernate)]
-        S4[Job Scheduler (Quartz)]
-        S5[ArticleAnalyser (JO‑Import)]
+    S1[Business Services]
+    S2[Domain Model (DTO/Entity)]
+    S3[DAO (JPA / Hibernate)]
+    S4[Job Scheduler (Quartz)]
+    S5[ArticleAnalyser (JO‑Import)]
     end
     subgraph "Data‑Tier"
-        DB[(Oracle / PostgreSQL – schema *integration*)]
+    DB[(Oracle / PostgreSQL – schema *integration*)]
     end
     UI --> C1;
     C1 --> C3;
@@ -204,7 +204,7 @@ graph TD
 ### 3.2 Diagramme de séquence – Authentification  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sequencediagram;
     participant U as Utilisateur;
     participant F as SecurityFilter;
@@ -214,17 +214,17 @@ sequencediagram;
     U->>F: Envoi du token Cerbère (Cookie/Authorization)
     F->>DB: Vérification du token (table ROLES)
     alt Token valide;
-        F->>S: Création de la session;
-        S-->>U: Redirection vers /accueil;
+    F->>S: Création de la session;
+    S-->>U: Redirection vers /accueil;
     else Token invalide;
-        F-->>U: 401 Unauthorized;
+    F-->>U: 401 Unauthorized;
     end
 ```
 
 ### 3.3 Diagramme de séquence – Création d’un mandat  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sequencediagram;
     participant O as Opérateur;
     participant C as UpsertMandatAction (Struts)
@@ -245,39 +245,39 @@ sequencediagram;
 ### 3.4 Diagramme de classes (schéma simplifié)  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 classDiagram
     class Administrateur {
-        +Long id;
-        +String nom;
-        +String prenom;
-        +String civilite;
+    +Long id;
+    +String nom;
+    +String prenom;
+    +String civilite;
 
     class Mandat {
-        +Long id;
-        +Date debut;
-        +Date fin;
-        +String type (Titulaire/Suppléant)
-        +String modeNomination;
+    +Long id;
+    +Date debut;
+    +Date fin;
+    +String type (Titulaire/Suppléant)
+    +String modeNomination;
 
     class Etablissement {
-        +Long id;
-        +String siren;
-        +String libelle;
-        +String sigle;
+    +Long id;
+    +String siren;
+    +String libelle;
+    +String sigle;
 
     class College {
-        +Long id;
-        +String identifiant;
+    +Long id;
+    +String identifiant;
 
     class Charge {
-        +Long id;
-        +String libelle;
+    +Long id;
+    +String libelle;
 
     class Ministere {
-        +Long id;
-        +String sigle;
-        +String nom;
+    +Long id;
+    +String sigle;
+    +String nom;
 
     Administrateur "1" <-- "0..*" Mandat : possède;
     Etablissement "1" <-- "0..*" Mandat : concerne;
@@ -290,18 +290,18 @@ classDiagram
 ### 3.5 Déploiement (Vue physique)  
 
 ```mermaid
-%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 graph LR
     subgraph "Data‑Center – Paris La Défense"
-        DBP[(PostgreSQL – prep37)]
+    DBP[(PostgreSQL – prep37)]
     end
     subgraph "Serveur Prod"
-        TOMCAT[Tomcat 9 + admin_ep.war]
-        DOCKER[Docker (future)]
+    TOMCAT[Tomcat 9 + admin_ep.war]
+    DOCKER[Docker (future)]
     end
     subgraph "CI/CD"
-        GIT[Gitlab Repository]
-        CI[Gitlab‑CI Runner]
+    GIT[Gitlab Repository]
+    CI[Gitlab‑CI Runner]
     end
     GIT --> CI --> DOCKER --> TOMCAT;
     TOMCAT --> DBP

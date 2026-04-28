@@ -206,30 +206,30 @@ Fonctionnalités associées (axe vertical ↓) :
 graph TB
     %% Backbone – Parcours utilisateur;
     subgraph backbone[" BACKBONE - Parcours utilisateur "]
-        step1["Se connecter"]
-        step2["Consulter le tableau de bord"]
-        step3["Rechercher un établissement"]
-        step4["Saisir / mettre à jour un mandat"]
-        step5["Générer un rapport"]
-        step6["Recevoir une alerte échéance"]
+    step1["Se connecter"]
+    step2["Consulter le tableau de bord"]
+    step3["Rechercher un établissement"]
+    step4["Saisir / mettre à jour un mandat"]
+    step5["Générer un rapport"]
+    step6["Recevoir une alerte échéance"]
     end
     %% MVP – Fonctionnalités indispensables;
     subgraph mvp[" MVP – Fonctionnalités indispensables "]
-        f11["Auth Cerbère"]
-        f21["Vue synthétique mandats"]
-        f31["Recherche nom/SIREN"]
-        f41["Formulaire mandat"]
-        f51["Export PDF (V2)"]
-        f61["Mail alerte 30j"]
+    f11["Auth Cerbère"]
+    f21["Vue synthétique mandats"]
+    f31["Recherche nom/SIREN"]
+    f41["Formulaire mandat"]
+    f51["Export PDF (V2)"]
+    f61["Mail alerte 30j"]
     end
     %% V2+ – Fonctionnalités reportables;
     subgraph v2plus[" V2+ – À prioriser ultérieurement "]
-        f12["Gestion mot de passe"]
-        f22["Statistiques globales"]
-        f32["Filtres avancés"]
-        f42["Historisation"]
-        f52["Export CSV"]
-        f62["Dashboard d’alertes"]
+    f12["Gestion mot de passe"]
+    f22["Statistiques globales"]
+    f32["Filtres avancés"]
+    f42["Historisation"]
+    f52["Export CSV"]
+    f62["Dashboard d’alertes"]
     end
     %% Flux;
     step1 --> f11;

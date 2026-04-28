@@ -14,14 +14,14 @@
 C4Context;
     title System Context – Formation Écologie;
     Enterprise_Boundary(gouv, "Ministère de la Transition écologique") {
-        Person(user, "Utilisateur ministériel", "Recherche de formations")
-        System(formation, "Portail Formation Écologie", "Application Django de consultation du catalogue RenoiRH")
-        System_Ext(renoirh, "RenoiRH", "Système source des données de formation")
-        System_Ext(meilisearch, "MeiliSearch", "Moteur de recherche plein‑texte")
+    Person(user, "Utilisateur ministériel", "Recherche de formations")
+    System(formation, "Portail Formation Écologie", "Application Django de consultation du catalogue RenoiRH")
+    System_Ext(renoirh, "RenoiRH", "Système source des données de formation")
+    System_Ext(meilisearch, "MeiliSearch", "Moteur de recherche plein‑texte")
 
     Enterprise_Boundary(gti, "Groupe Technique Informatique (GTI)") {
-        System_Ext(db, "PostgreSQL", "Base de données métier")
-        System_Ext(infra, "OpenStack/ECO4", "Infrastructure cloud interne")
+    System_Ext(db, "PostgreSQL", "Base de données métier")
+    System_Ext(infra, "OpenStack/ECO4", "Infrastructure cloud interne")
 
     user --> formation : Utilise l’interface web;
     formation --> renoirh : Lecture du catalogue (CSV via S3/SFTP)
@@ -147,11 +147,11 @@ Le portail permet aux agents du ministère de :
 C4Container;
     title Container Diagram – Formation Écologie;
     Enterprise_Boundary(gouv, "Ministère") {
-        Person(user, "Utilisateur")
-        Container(web, "Django Web App", "Python/Django", "Gestion du MVT, API, Authentification")
-        ContainerDb(db, "PostgreSQL", "Base de données relationnelle", "Persist les modèles métier")
-        Container(search, "MeiliSearch", "Moteur de recherche plein‑texte", "Indexe Stage & Session")
-        Container(static, "Nginx", "Reverse‑proxy + serveur static", "Expose /static, /media, TLS termination")
+    Person(user, "Utilisateur")
+    Container(web, "Django Web App", "Python/Django", "Gestion du MVT, API, Authentification")
+    ContainerDb(db, "PostgreSQL", "Base de données relationnelle", "Persist les modèles métier")
+    Container(search, "MeiliSearch", "Moteur de recherche plein‑texte", "Indexe Stage & Session")
+    Container(static, "Nginx", "Reverse‑proxy + serveur static", "Expose /static, /media, TLS termination")
 
     Rel(user, web, "Interaction UI (HTTPS)")
     Rel(web, db, "ORM (SQL)")

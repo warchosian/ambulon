@@ -103,21 +103,21 @@ graph TB
 
     %% Phases (packages)
     package "Phase 1 – Rédaction" {
-        rectangle step1 ["Collecte des specs & architecture"]
-        rectangle step2 ["Rédaction des 16 sections DEX"]
+    rectangle step1 ["Collecte des specs & architecture"]
+    rectangle step2 ["Rédaction des 16 sections DEX"]
 
     package "Phase 2 – Validation croisée" {
-        rectangle step3 ["Revue technique (DevOps/Infra)"]
-        rectangle step4 ["Validation opérationnelle (Ops)"]
-        rectangle step5 ["Validation sécurité & conformité"]
+    rectangle step3 ["Revue technique (DevOps/Infra)"]
+    rectangle step4 ["Validation opérationnelle (Ops)"]
+    rectangle step5 ["Validation sécurité & conformité"]
 
     package "Phase 3 – Go‑Live & Run" {
-        rectangle step6 ["Signature & archivage versionné"]
-        rectangle step7 ["Intégration runbook & supervision"]
+    rectangle step6 ["Signature & archivage versionné"]
+    rectangle step7 ["Intégration runbook & supervision"]
 
     package "Phase 4 – Maintenance continue" {
-        rectangle step8 ["Mise à jour à chaque release"]
-        rectangle step9 ["Revue trimestrielle / post‑incident"]
+    rectangle step8 ["Mise à jour à chaque release"]
+    rectangle step9 ["Revue trimestrielle / post‑incident"]
 
     %% Flux;
     dev -->|Alimente| step1;
@@ -131,10 +131,10 @@ graph TB
     step9 -.->|Boucle d’amélioration| step2;
     %% Notes;
     note right of step5;
-        <b>Points de contrôle</b>\n- Complétude des accès\n- Procédures de rollback\n- Matrice d’escalade testée;
+    <b>Points de contrôle</b>\n- Complétude des accès\n- Procédures de rollback\n- Matrice d’escalade testée;
     end note;
     note bottom of step9;
-        <b>Règle d’or</b>\nPas de mise en production\nsans DEX à jour;
+    <b>Règle d’or</b>\nPas de mise en production\nsans DEX à jour;
     end note;
     %% Clickable phases (optional)
     click step1 "javascript_void(0)" "Voir Phase 1"
@@ -200,13 +200,13 @@ graph TB
 ```mermaid
 graph LR
     subgraph "Docker‑Compose (dev)"
-        direction TB;
-        apache["php_7.3‑apache (web)"]
-        composer["composer_latest (builder)"]
-        postgres["postgres_11‑alpine (db)"]
-        volume_cfg["volume: /docker/conf/000‑default.conf"]
-        volume_app["volume: /app (src)"]
-        volume_db["volume: /var/lib/postgresql/data"]
+    direction TB;
+    apache["php_7.3‑apache (web)"]
+    composer["composer_latest (builder)"]
+    postgres["postgres_11‑alpine (db)"]
+    volume_cfg["volume: /docker/conf/000‑default.conf"]
+    volume_app["volume: /app (src)"]
+    volume_db["volume: /var/lib/postgresql/data"]
     end
     apache -->|Montage| volume_cfg;
     apache -->|Montage| volume_app;

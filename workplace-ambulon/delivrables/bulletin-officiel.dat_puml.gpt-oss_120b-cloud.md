@@ -166,12 +166,12 @@ graph LR
 graph TB
     %% Containers;
     subgraph "Kubernetes Cluster"
-        UI[Web UI (React) <br/> Container] 
-        API[API BO (Node/Express) <br/> Container] 
-        DB[(PostgreSQL) <br/> StatefulSet] 
-        Auth[Keycloak <br/> Container] 
-        Cache[Redis <br/> Container] 
-        Bus[Kafka (optional) <br/> Container] 
+    UI[Web UI (React) <br/> Container] 
+    API[API BO (Node/Express) <br/> Container] 
+    DB[(PostgreSQL) <br/> StatefulSet] 
+    Auth[Keycloak <br/> Container] 
+    Cache[Redis <br/> Container] 
+    Bus[Kafka (optional) <br/> Container] 
     end
     %% External systems;
     Users((Utilisateurs))
@@ -221,11 +221,11 @@ sequencediagram;
     UI->>API: GET /api/notices/123 (JWT)
     API->>Cache: GET notice_123;
     alt Cache hit;
-        Cache-->>API: Notice JSON;
+    Cache-->>API: Notice JSON;
     else Cache miss;
-        API->>DB: SELECT * FROM notices WHERE id=123;
-        DB-->>API: Notice JSON;
-        API->>Cache: SET notice_123 (TTL 5 min)
+    API->>DB: SELECT * FROM notices WHERE id=123;
+    DB-->>API: Notice JSON;
+    API->>Cache: SET notice_123 (TTL 5 min)
     end
     API-->>UI: Notice JSON;
     UI->>User: Rendu HTML

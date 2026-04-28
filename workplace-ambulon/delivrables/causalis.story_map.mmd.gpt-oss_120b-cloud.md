@@ -200,30 +200,30 @@ Fonctionnalités associées (axe vertical ↓ sous chaque étape) :
 graph TB
     %% Backbone - Parcours utilisateur;
     subgraph backbone[" BACKBONE - Parcours Utilisateur "]
-        step1["Se connecter"]
-        step2["Sélectionner le type"]
-        step3["Saisir informations"]
-        step4["Ajouter détails"]
-        step5["Valider / Soumettre"]
-        step6["Suivre le statut"]
+    step1["Se connecter"]
+    step2["Sélectionner le type"]
+    step3["Saisir informations"]
+    step4["Ajouter détails"]
+    step5["Valider / Soumettre"]
+    step6["Suivre le statut"]
     end
     %% MVP / V1;
     subgraph mvp[" MVP / V1 - Fonctionnalités indispensables "]
-        f11["Auth via FranceConnect"]
-        f21["Choix Accident / Maladie"]
-        f31["Nom / Prénom / Service"]
-        f41["Cause & gravité"]
-        f51["Bouton Soumettre + accusé"]
-        f61["Tableau de suivi"]
+    f11["Auth via FranceConnect"]
+    f21["Choix Accident / Maladie"]
+    f31["Nom / Prénom / Service"]
+    f41["Cause & gravité"]
+    f51["Bouton Soumettre + accusé"]
+    f61["Tableau de suivi"]
     end
     %% V2+ - À prioriser ultérieurement;
     subgraph v2plus[" V2+ - Améliorations futures "]
-        f12["Gestion mdp oublié"]
-        f22["Filtre par service"]
-        f32["Recherche auto‑complétion"]
-        f42["Upload pièces jointes"]
-        f52["Workflow validation multi‑niveau"]
-        f62["Export CSV / PDF"]
+    f12["Gestion mdp oublié"]
+    f22["Filtre par service"]
+    f32["Recherche auto‑complétion"]
+    f42["Upload pièces jointes"]
+    f52["Workflow validation multi‑niveau"]
+    f62["Export CSV / PDF"]
     end
     %% Flux;
     step1 --> f11;

@@ -134,20 +134,20 @@ graph LR
 ```mermaid
 graph LR
     subgraph DMZ;
-        Nginx[Nginx (Reverse‑proxy)]
+    Nginx[Nginx (Reverse‑proxy)]
     end
     subgraph APP;
-        Tomcat[Tomcat (Webapp WAR)]
-        Scheduler[Quartz Scheduler (Alertes)]
-        Auth[Filter Cerbère (SSO)]
+    Tomcat[Tomcat (Webapp WAR)]
+    Scheduler[Quartz Scheduler (Alertes)]
+    Auth[Filter Cerbère (SSO)]
     end
     subgraph DB;
-        PG[PostgreSQL]
-        ES[Elasticsearch]
+    PG[PostgreSQL]
+    ES[Elasticsearch]
     end
     subgraph EXT;
-        JORF[Source JORF (HTTPS)]
-        PSIN[Supervision PSIN]
+    JORF[Source JORF (HTTPS)]
+    PSIN[Supervision PSIN]
     end
     Nginx --> Tomcat;
     Tomcat --> Auth;
@@ -201,9 +201,9 @@ sequencediagram;
     S->>DB: SELECT mandats WHERE date_fin < now() + 7 days AND not_notified;
     DB-->>S: Liste des mandats à notifier;
     loop pour chaque mandat;
-        S->>M: SEND mail (référent)
-        S->>DB: UPDATE mandat SET notifié = true;
-        S->>L: LOG "Mandat X notifié"
+    S->>M: SEND mail (référent)
+    S->>DB: UPDATE mandat SET notifié = true;
+    S->>L: LOG "Mandat X notifié"
     end
 ```
 

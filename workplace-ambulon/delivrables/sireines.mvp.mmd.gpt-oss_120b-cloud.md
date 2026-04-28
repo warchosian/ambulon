@@ -209,21 +209,21 @@ flowchart TB
 
     %% Phases;
     subgraph prep["Phase 1 – Pré‑atelier"]
-        p1[Vision produit & hypothèses] 
-        p2[Story‑map ou épics] 
-        p3[Contraintes (RGPD, Docker, BIRT)] 
+    p1[Vision produit & hypothèses] 
+    p2[Story‑map ou épics] 
+    p3[Contraintes (RGPD, Docker, BIRT)] 
     end
     subgraph workshop["Phase 2 – Atelier MoSCoW"]
-        w1[Intro & alignement] 
-        w2[Rappel périmètre fonctionnel] 
-        w3[Classification MoSCoW] 
-        w4[Validation du périmètre MVP] 
-        w5[Roadmap & actions] 
+    w1[Intro & alignement] 
+    w2[Rappel périmètre fonctionnel] 
+    w3[Classification MoSCoW] 
+    w4[Validation du périmètre MVP] 
+    w5[Roadmap & actions] 
     end
     subgraph post["Phase 3 – Post‑MVP"]
-        t1[Tests fonctionnels (Import, Qualification, BIRT)] 
-        t2[Collecte métriques] 
-        t3[Revue post‑MVP → Pivot / Persévérer / Arrêter] 
+    t1[Tests fonctionnels (Import, Qualification, BIRT)] 
+    t2[Collecte métriques] 
+    t3[Revue post‑MVP → Pivot / Persévérer / Arrêter] 
     end
     %% Flux;
     pm -->|Guide| p1;

@@ -194,32 +194,32 @@ Fonctionnalités associées (axe vertical ↓ sous chaque étape) :
 graph TB
     %% Backbone - Parcours utilisateur;
     subgraph backbone[" BACKBONE - Parcours utilisateur "]
-        step1["Paramétrer<br/>les coefficients"]
-        step2["Calculer<br/>les primes"]
-        step3["Gérer<br/>les bonifications"]
-        step4["Exporter<br/>les résultats"]
-        step5["Suivre &<br/>auditer"]
+    step1["Paramétrer<br/>les coefficients"]
+    step2["Calculer<br/>les primes"]
+    step3["Gérer<br/>les bonifications"]
+    step4["Exporter<br/>les résultats"]
+    step5["Suivre &<br/>auditer"]
     end
     %% MVP - Fonctionnalités essentielles;
     subgraph mvp[" MVP – Fonctionnalités indispensables "]
-        f11["Saisir taux<br/>coefficient"]
-        f12["Importer grille CSV"]
-        f21["Lancer batch"]
-        f22["Visualiser synthèse"]
-        f31["Créer bonification ISS"]
-        f32["Appliquer plafonnement"]
-        f41["Générer PDF/Excel"]
-        f42["Envoyer aux destinataires"]
-        f51["Consulter suivi<br/>des jobs"]
-        f52["Exporter journal d’audit"]
+    f11["Saisir taux<br/>coefficient"]
+    f12["Importer grille CSV"]
+    f21["Lancer batch"]
+    f22["Visualiser synthèse"]
+    f31["Créer bonification ISS"]
+    f32["Appliquer plafonnement"]
+    f41["Générer PDF/Excel"]
+    f42["Envoyer aux destinataires"]
+    f51["Consulter suivi<br/>des jobs"]
+    f52["Exporter journal d’audit"]
     end
     %% V2+ - Fonctionnalités reportables;
     subgraph v2[" V2 – Améliorations & confort "]
-        f13["Historiser changements"]
-        f23["Gestion des erreurs<br/>de calcul"]
-        f33["Modifier bonification"]
-        f43["Archiver rapport"]
-        f53["Déclencher alerte"]
+    f13["Historiser changements"]
+    f23["Gestion des erreurs<br/>de calcul"]
+    f33["Modifier bonification"]
+    f43["Archiver rapport"]
+    f53["Déclencher alerte"]
     end
     %% Flux;
     step1 --> f11;

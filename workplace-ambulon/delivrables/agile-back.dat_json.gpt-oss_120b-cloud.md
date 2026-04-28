@@ -182,12 +182,12 @@ graph TD
 ```mermaid
 graph TB
     subgraph "Infrastructure"
-        NGINX[Nginx (reverse‑proxy)]
-        PHPFPM[PHP‑FPM (Symfony)]
-        DB[(PostgreSQL)]
-        CAS[(CAS Server)]
-        MAIL[(SMTP Mail Server)]
-        PROM[Prometheus / Grafana]
+    NGINX[Nginx (reverse‑proxy)]
+    PHPFPM[PHP‑FPM (Symfony)]
+    DB[(PostgreSQL)]
+    CAS[(CAS Server)]
+    MAIL[(SMTP Mail Server)]
+    PROM[Prometheus / Grafana]
     end
     NGINX --> PHPFPM;
     PHPFPM --> DB;
@@ -195,7 +195,7 @@ graph TB
     PHPFPM --> MAIL;
     PHPFPM --> PROM;
     subgraph "Utilisateurs"
-        UI[Utilisateurs (navigateurs)]
+    UI[Utilisateurs (navigateurs)]
     end
     UI --> NGINX
 ```

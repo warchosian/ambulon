@@ -208,27 +208,27 @@ graph TB
 
     %% Phase 1 - Préparation;
     subgraph prep["Phase 1 – Préparation"]
-        vision[Vision produit & hypothèses]
-        story[Story Mapping / épics]
-        contraintes[Contraintes identifiées]
+    vision[Vision produit & hypothèses]
+    story[Story Mapping / épics]
+    contraintes[Contraintes identifiées]
     end
     %% Phase 2 - Atelier;
     subgraph workshop["Phase 2 – Atelier MoSCoW"]
-        align[Alignement : objectifs MVP]
-        classify[Classification : Must / Should / Could / Won’t]
-        validate[Validation du périmètre MVP]
+    align[Alignement : objectifs MVP]
+    classify[Classification : Must / Should / Could / Won’t]
+    validate[Validation du périmètre MVP]
     end
     %% Phase 3 - Livrables;
     subgraph deliver["Phase 3 – Livrables & suite"]
-        matrix[Matrice MoSCoW validée]
-        roadmap[Roadmap MVP → V1 → Backlog]
-        metrics[Hypothèses de test & métriques]
+    matrix[Matrice MoSCoW validée]
+    roadmap[Roadmap MVP → V1 → Backlog]
+    metrics[Hypothèses de test & métriques]
     end
     %% Phase 4 - Boucle d’apprentissage;
     subgraph loop["Phase 4 – Boucle d’apprentissage"]
-        test[Tests utilisateurs du MVP]
-        learn[Analyse des retours]
-        decide[Décision : pivoter / persévérer / arrêter]
+    test[Tests utilisateurs du MVP]
+    learn[Analyse des retours]
+    decide[Décision : pivoter / persévérer / arrêter]
     end
     %% Flux principaux;
     pm -->|Cadrage| vision;

@@ -144,13 +144,13 @@ bpmnDiagram;
     Application->Gestionnaire: Afficher formulaire;
     Gestionnaire->Application: Soumettre formulaire;
     alt Validation réussie;
-        Application->BaseDeDonnées: INSERT dossier;
-        BaseDeDonnées --> Application: OK;
-        Application->Audit: Créer entrée audit;
-        Audit --> Application: OK;
-        Application->Gestionnaire: Confirmation + affichage dossier;
+    Application->BaseDeDonnées: INSERT dossier;
+    BaseDeDonnées --> Application: OK;
+    Application->Audit: Créer entrée audit;
+    Audit --> Application: OK;
+    Application->Gestionnaire: Confirmation + affichage dossier;
     else Validation échouée;
-        Application->Gestionnaire: Message d’erreur (ActionWarning)
+    Application->Gestionnaire: Message d’erreur (ActionWarning)
     end
 ```
 
@@ -220,49 +220,49 @@ bpmnDiagram;
 ```mermaid
 classDiagram
     class DossierAccident {
-        +int id;
-        +Date dateAccident;
-        +String typeAccident;
-        +String description;
-        +int serviceId;
-        +int gradeId;
-        +int statut;
+    +int id;
+    +Date dateAccident;
+    +String typeAccident;
+    +String description;
+    +int serviceId;
+    +int gradeId;
+    +int statut;
 
     class DossierMaladie {
-        +int id;
-        +Date dateDebut;
-        +Date dateFin;
-        +String typeMaladie;
-        +int serviceId;
-        +int gradeId;
-        +int statut;
+    +int id;
+    +Date dateDebut;
+    +Date dateFin;
+    +String typeMaladie;
+    +int serviceId;
+    +int gradeId;
+    +int statut;
 
     class Effectif {
-        +int id;
-        +int anneeNaissance;
-        +String sexe;
-        +int gradeId;
-        +int serviceId;
-        +char trancheAge;
+    +int id;
+    +int anneeNaissance;
+    +String sexe;
+    +int gradeId;
+    +int serviceId;
+    +char trancheAge;
 
     class Service {
-        +int id;
-        +String libelleCourt;
-        +int saisieTerminee;
-        +int saisieMaladiesProTerminee;
+    +int id;
+    +String libelleCourt;
+    +int saisieTerminee;
+    +int saisieMaladiesProTerminee;
 
     class Grade {
-        +int id;
-        +String libelle;
-        +int codeGroupementGrade;
+    +int id;
+    +String libelle;
+    +int codeGroupementGrade;
 
     class TranscodageGrade {
-        +String codeGradeRehucit;
-        +String macro;
+    +String codeGradeRehucit;
+    +String macro;
 
     class DomaineAffectation {
-        +int id;
-        +String libelle;
+    +int id;
+    +String libelle;
 
     DossierAccident "1" --> "1" Service : serviceId;
     DossierAccident "1" --> "1" Grade : gradeId;

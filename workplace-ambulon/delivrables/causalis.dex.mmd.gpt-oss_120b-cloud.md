@@ -110,21 +110,21 @@ graph TB
     maint -->|Met à jour| step8(("Mise à jour à chaque release"))
     step9(("Revue trimestrielle ou post‑incident")) -.->|Boucle d'amélioration| step2;
     subgraph p1["Phase 1 - Rédaction"]
-        step1;
-        step2;
+    step1;
+    step2;
     end
     subgraph p2["Phase 2 - Validation croisée"]
-        step3;
-        step4;
-        step5;
+    step3;
+    step4;
+    step5;
     end
     subgraph p3["Phase 3 - Go‑Live & Run"]
-        step6;
-        step7;
+    step6;
+    step7;
     end
     subgraph p4["Phase 4 - Maintenance continue"]
-        step8;
-        step9;
+    step8;
+    step9;
     end
     click p1 "javascript_void(0)" "Aller à Phase 1"
     click p2 "javascript_void(0)" "Aller à Phase 2"
@@ -202,14 +202,14 @@ graph TB
 ```mermaid
 graph LR
     subgraph Front;
-        UI[UI JSP/Struts]
+    UI[UI JSP/Struts]
     end
     subgraph Web;
-        S1[Struts Action] --> S2[Service Layer]
-        S2 --> D1[DAO Layer]
+    S1[Struts Action] --> S2[Service Layer]
+    S2 --> D1[DAO Layer]
     end
     subgraph DB;
-        DB1[(Oracle DB)]
+    DB1[(Oracle DB)]
     end
     UI --> S1;
     D1 --> DB1;

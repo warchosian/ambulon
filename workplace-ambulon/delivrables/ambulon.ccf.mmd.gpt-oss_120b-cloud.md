@@ -114,17 +114,17 @@ bpmnDiagram;
     Patient->>Système: Déclarer demande;
     Système->>Coordinateur: Notifier demande;
     alt Ambulance disponible;
-        Coordinateur->>Système: Proposer affectation;
-        Système->>Conducteur: Notifier mission;
-        Conducteur->>Système: Accepter mission;
-        Système->>Patient: Confirmer prise en charge;
-        Système->>Patient: Suivi GPS (boucle)
-        Conducteur->>Patient: Arrivée patient;
-        Système->>Médecin: Transmettre dossier;
-        Médecin->>Système: Enregistrer prise en charge;
+    Coordinateur->>Système: Proposer affectation;
+    Système->>Conducteur: Notifier mission;
+    Conducteur->>Système: Accepter mission;
+    Système->>Patient: Confirmer prise en charge;
+    Système->>Patient: Suivi GPS (boucle)
+    Conducteur->>Patient: Arrivée patient;
+    Système->>Médecin: Transmettre dossier;
+    Médecin->>Système: Enregistrer prise en charge;
     else Aucun véhicule;
-        Système->>Coordinateur: Alerte indisponibilité;
-        Coordinateur->>Patient: Informer délai;
+    Système->>Coordinateur: Alerte indisponibilité;
+    Coordinateur->>Patient: Informer délai;
     end
     Système->>Coordinateur: Archiver intervention
 ```
@@ -206,46 +206,46 @@ bpmnDiagram;
 ```mermaid
 classDiagram
     class Utilisateur {
-        <<entity>>
-        +id : UUID;
-        +email : String;
-        +motDePasse : String;
-        +type : Enum{PATIENT, CONDUCTEUR, COORDINATEUR, MEDICAL, ADMIN}
-        +dateCréation : DateTime;
+    <<entity>>
+    +id : UUID;
+    +email : String;
+    +motDePasse : String;
+    +type : Enum{PATIENT, CONDUCTEUR, COORDINATEUR, MEDICAL, ADMIN}
+    +dateCréation : DateTime;
 
     class Demande {
-        <<entity>>
-        +id : UUID;
-        +dateHeure : DateTime;
-        +typeUrgence : Enum{A, B, C}
-        +localisation : GeoPoint;
-        +statut : Enum{EN_ATTENTE, ASSIGNEE, EN_COURS, TERMINEE, ANNULEE}
+    <<entity>>
+    +id : UUID;
+    +dateHeure : DateTime;
+    +typeUrgence : Enum{A, B, C}
+    +localisation : GeoPoint;
+    +statut : Enum{EN_ATTENTE, ASSIGNEE, EN_COURS, TERMINEE, ANNULEE}
 
     class Ambulance {
-        <<entity>>
-        +id : UUID;
-        +immatriculation : String;
-        +capacite : Integer;
-        +etat : Enum{DISPO, OCCUPEE, EN_MAINTENANCE}
+    <<entity>>
+    +id : UUID;
+    +immatriculation : String;
+    +capacite : Integer;
+    +etat : Enum{DISPO, OCCUPEE, EN_MAINTENANCE}
 
     class Mission {
-        <<entity>>
-        +id : UUID;
-        +dateHeureAssignation : DateTime;
-        +eta : Duration;
+    <<entity>>
+    +id : UUID;
+    +dateHeureAssignation : DateTime;
+    +eta : Duration;
 
     class Notification {
-        <<entity>>
-        +id : UUID;
-        +type : Enum{SMS, EMAIL, PUSH}
-        +statutEnvoi : Enum{ENVOYE, ECHOUE}
-        +dateEnvoi : DateTime;
+    <<entity>>
+    +id : UUID;
+    +type : Enum{SMS, EMAIL, PUSH}
+    +statutEnvoi : Enum{ENVOYE, ECHOUE}
+    +dateEnvoi : DateTime;
 
     class Evenement {
-        <<entity>>
-        +id : UUID;
-        +type : Enum{ARRIVEE, DEPART, CANCELLATION}
-        +timestamp : DateTime;
+    <<entity>>
+    +id : UUID;
+    +type : Enum{ARRIVEE, DEPART, CANCELLATION}
+    +timestamp : DateTime;
 
     Utilisateur "1" <-- "0..*" Demande : crée;
     Demande "1" <-- "0..1" Mission : déclenche;

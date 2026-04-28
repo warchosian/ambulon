@@ -21,7 +21,7 @@ Elle propose aux utilisateurs :
 graph TB
     %% System;
     subgraph System["agile‑front (SPA)"]
-        FE[Frontend Vue.js]
+    FE[Frontend Vue.js]
     end
     %% External actors / systems;
     User[Utilisateur] --> FE;
@@ -168,17 +168,17 @@ graph TB
 graph TD
     %% Containers;
     subgraph Front["agile‑front (SPA)"]
-        A[Vue App] 
-        B[Vuex Store] 
-        C[Vuetify UI] 
+    A[Vue App] 
+    B[Vuex Store] 
+    C[Vuetify UI] 
     end
     subgraph Services["API Legacy (Backend)"]
-        D[Études Service] 
-        E[Export Service] 
-        F[Security Service] 
+    D[Études Service] 
+    E[Export Service] 
+    F[Security Service] 
     end
     subgraph Auth["Service d’authentification"]
-        G[Auth Provider] 
+    G[Auth Provider] 
     end
     %% Relations;
     A -->|uses| B;

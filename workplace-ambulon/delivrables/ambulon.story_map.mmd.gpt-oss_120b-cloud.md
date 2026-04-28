@@ -164,27 +164,27 @@ Fonctionnalités associées (axe vertical ↓ sous chaque étape) :
 graph TB
     %% Backbone – Parcours utilisateur;
     subgraph backbone[" BACKBONE – Parcours Utilisateur "]
-        step1["[Étape 1] <br/>[Verbe d’action]"]
-        step2["[Étape 2] <br/>[Verbe d’action]"]
-        step3["[Étape 3] <br/>[Verbe d’action]"]
-        step4["[Étape 4] <br/>[Verbe d’action]"]
-        step5["[Étape 5] <br/>[Verbe d’action]"]
+    step1["[Étape 1] <br/>[Verbe d’action]"]
+    step2["[Étape 2] <br/>[Verbe d’action]"]
+    step3["[Étape 3] <br/>[Verbe d’action]"]
+    step4["[Étape 4] <br/>[Verbe d’action]"]
+    step5["[Étape 5] <br/>[Verbe d’action]"]
     end
     %% MVP – Fonctionnalités indispensables;
     subgraph mvp[" MVP – Fonctionnalités indispensables "]
-        f11["[Fonctionnalité 1.1]"]
-        f21["[Fonctionnalité 2.1]"]
-        f31["[Fonctionnalité 3.1]"]
-        f41["[Fonctionnalité 4.1]"]
-        f51["[Fonctionnalité 5.1]"]
+    f11["[Fonctionnalité 1.1]"]
+    f21["[Fonctionnalité 2.1]"]
+    f31["[Fonctionnalité 3.1]"]
+    f41["[Fonctionnalité 4.1]"]
+    f51["[Fonctionnalité 5.1]"]
     end
     %% V2+ – Fonctionnalités reportables;
     subgraph v2plus[" V2+ – Fonctionnalités reportables "]
-        f12["[Fonctionnalité 1.2]"]
-        f22["[Fonctionnalité 2.2]"]
-        f32["[Fonctionnalité 3.2]"]
-        f42["[Fonctionnalité 4.2]"]
-        f52["[Fonctionnalité 5.2]"]
+    f12["[Fonctionnalité 1.2]"]
+    f22["[Fonctionnalité 2.2]"]
+    f32["[Fonctionnalité 3.2]"]
+    f42["[Fonctionnalité 4.2]"]
+    f52["[Fonctionnalité 5.2]"]
     end
     %% Flux;
     step1 --> f11;

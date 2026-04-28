@@ -115,11 +115,11 @@ Ces vues sont exploitées par les tableaux de bord Superset pour le suivi budgé
 ```mermaid
 graph TD
     subgraph Host;
-        A[Docker Compose]
+    A[Docker Compose]
     end
     subgraph Services;
-        DB[(PostgreSQL<br/>afinope-db)]
-        APP[(Python Dagster<br/>afinope-app)]
+    DB[(PostgreSQL<br/>afinope-db)]
+    APP[(Python Dagster<br/>afinope-app)]
     end
     A --> DB;
     A --> APP;

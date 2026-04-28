@@ -50,20 +50,20 @@
 ### 4.1 Diagramme de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#4B8BBE', 'edgeLabelBackground':'#FFF', 'fontSize': '12px' }}%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#4B8BBE', 'edgeLabelBackground':'#FFF', 'fontSize': '12px' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Developer as Dev;
     actor CI/CD System as CICD;
     rectangle "Environnement agile‑env" {
-        Dev --> (Lancer l’environnement)
-        Dev --> (Accéder à l’application)
-        Dev --> (Modifier la configuration)
-        CICD --> (Construire les images)
-        CICD --> (Exécuter les tests)
-        (Lancer l’environnement) --> \(Initialiser la DB)
-        (Initialiser la DB) --> \(Appliquer les scripts SQL)
-        (Construire les images) --> \(Installer les dépendances Composer)
-        (Accéder à l’application) --> \(Consulter l’UI via navigateur)
+    Dev --> (Lancer l’environnement)
+    Dev --> (Accéder à l’application)
+    Dev --> (Modifier la configuration)
+    CICD --> (Construire les images)
+    CICD --> (Exécuter les tests)
+    (Lancer l’environnement) --> \(Initialiser la DB)
+    (Initialiser la DB) --> \(Appliquer les scripts SQL)
+    (Construire les images) --> \(Installer les dépendances Composer)
+    (Accéder à l’application) --> \(Consulter l’UI via navigateur)
 
 ```
 
@@ -82,7 +82,7 @@ usecaseDiagram;
 ## 5️⃣ Processus métier (BPMN) {#process}
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#4B8BBE', 'edgeLabelBackground':'#FFF', 'fontSize': '12px' }}%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#4B8BBE', 'edgeLabelBackground':'#FFF', 'fontSize': '12px' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Dev as "Développeur"
     participant Docker as "Docker Engine"
@@ -99,7 +99,7 @@ bpmnDiagram;
     Docker-->>Dev: Environnement prêt;
     Dev->>Dev: Teste l’application (browser)
     alt Erreur de démarrage;
-        Docker->>Dev: Log d’erreur;
+    Docker->>Dev: Log d’erreur;
     end
 ```
 
@@ -138,24 +138,24 @@ bpmnDiagram;
 ```mermaid
 classDiagram
     class Application {
-        +string name;
-        +string version;
-        +string entry_point;
+    +string name;
+    +string version;
+    +string entry_point;
 
     class Database {
-        +string engine;
-        +string version;
-        +string host;
-        +int    port;
-        +string name;
+    +string engine;
+    +string version;
+    +string host;
+    +int    port;
+    +string name;
 
     class ConfigFile {
-        +string path;
-        +string type;
+    +string path;
+    +string type;
 
     class EnvVariable {
-        +string key;
-        +string value;
+    +string key;
+    +string value;
 
     Application "1" --> "1" Database : uses;
     Application "1" --> "*" ConfigFile : reads;

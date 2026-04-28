@@ -193,14 +193,14 @@ sequencediagram;
     Action->>Form: setParameters(...)
     Form->>Form: validateEmptyFields()
     alt Validation OK;
-        Form->>DAO: save(dossier)
-        DAO->>DB: INSERT INTO DOSSIER_ACCIDENT ...
-        DB-->>DAO: OK (id=1234)
-        DAO-->>Action: dossier persisté;
-        Action-->>UI: redirige vers confirmation;
+    Form->>DAO: save(dossier)
+    DAO->>DB: INSERT INTO DOSSIER_ACCIDENT ...
+    DB-->>DAO: OK (id=1234)
+    DAO-->>Action: dossier persisté;
+    Action-->>UI: redirige vers confirmation;
     else Validation KO;
-        Form-->>Action: warnings;
-        Action-->>UI: affichage warnings (ActionWarning)
+    Form-->>Action: warnings;
+    Action-->>UI: affichage warnings (ActionWarning)
     end
 ```
 
@@ -209,16 +209,16 @@ sequencediagram;
 ```mermaid
 flowchart TD
     subgraph Batch["Processus de synchronisation"]
-        direction LR;
-        A[Start] --> B[GradeService.getAllGrade()]
-        B --> C{Pour chaque Grade}
-        C -->|Présent| D[Ignorer]
-        C -->|Absent| E[WSClientGrade.send(grade)]
-        E --> F[TranscodageGradeService.insert(transcodage)]
-        D --> G[Next grade]
-        F --> G;
-        G -->|Fin| H[Log nb insert]
-        H --> I[End]
+    direction LR;
+    A[Start] --> B[GradeService.getAllGrade()]
+    B --> C{Pour chaque Grade}
+    C -->|Présent| D[Ignorer]
+    C -->|Absent| E[WSClientGrade.send(grade)]
+    E --> F[TranscodageGradeService.insert(transcodage)]
+    D --> G[Next grade]
+    F --> G;
+    G -->|Fin| H[Log nb insert]
+    H --> I[End]
     end
 ```
 
@@ -283,17 +283,17 @@ graph LR
 ```mermaid
 deploymentDiagram;
     node "Serveur d’applications (Tomcat 6)" {
-        component "CAUSALIS.war" {
-            artifact "causalis-web‑<version>.war"
+    component "CAUSALIS.war" {
+    artifact "causalis-web‑<version>.war"
 
     node "Base de données Oracle (prep37)" {
-        artifact "DB schema"
+    artifact "DB schema"
 
     node "Serveur de WS RH" {
-        artifact "WS Grade (SOAP)"
+    artifact "WS Grade (SOAP)"
 
     node "Stockage d’archivage" {
-        artifact "Répertoire /archive/causalis"
+    artifact "Répertoire /archive/causalis"
 
     component "CAUSALIS.war" --> "DB schema" : JDBC (JNDI)
     component "CAUSALIS.war" --> "WS Grade" : HTTP/HTTPS (SOAP)
@@ -326,47 +326,47 @@ deploymentDiagram;
 ```mermaid
 classDiagram
     class DossierAccident {
-        +int id;
-        +Date dateSurvenue;
-        +String cause;
-        +String localisation;
-        +int serviceId;
-        +int gradeId;
-        +int agentId;
-        +int saisieTerminee;
+    +int id;
+    +Date dateSurvenue;
+    +String cause;
+    +String localisation;
+    +int serviceId;
+    +int gradeId;
+    +int agentId;
+    +int saisieTerminee;
 
     class DossierMaladie {
-        +int id;
-        +Date dateDeclaration;
-        +String natureMaladie;
-        +int serviceId;
-        +int gradeId;
-        +int agentId;
-        +int saisieMaladiesProTerminee;
+    +int id;
+    +Date dateDeclaration;
+    +String natureMaladie;
+    +int serviceId;
+    +int gradeId;
+    +int agentId;
+    +int saisieMaladiesProTerminee;
 
     class Agent {
-        +int id;
-        +String nom;
-        +String prenom;
-        +int anneeNaissance;
-        +String sexe;
-        +int gradeId;
-        +int serviceId;
+    +int id;
+    +String nom;
+    +String prenom;
+    +int anneeNaissance;
+    +String sexe;
+    +int gradeId;
+    +int serviceId;
 
     class Grade {
-        +int id;
-        +String libelle;
-        +int codeGroupementGrade;
+    +int id;
+    +String libelle;
+    +int codeGroupementGrade;
 
     class Service {
-        +int id;
-        +String libelleCourt;
-        +int saisieTerminee;
-        +int saisieMaladiesProTerminee;
+    +int id;
+    +String libelleCourt;
+    +int saisieTerminee;
+    +int saisieMaladiesProTerminee;
 
     class TranscodageGrade {
-        +String codeGradeRehucit;
-        +String macro;
+    +String codeGradeRehucit;
+    +String macro;
 
     DossierAccident "1" --> "1" Agent : agentId;
     DossierAccident "1" --> "1" Grade : gradeId;

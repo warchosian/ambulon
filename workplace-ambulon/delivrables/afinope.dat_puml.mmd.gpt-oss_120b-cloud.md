@@ -19,19 +19,19 @@ Elle orchestre :
 ```mermaid
 graph LR
     subgraph Utilisateurs;
-        U[« Utilisateur métier »] 
-        A[« Analyste / Data‑Scientist »]
+    U[« Utilisateur métier »] 
+    A[« Analyste / Data‑Scientist »]
     end
     subgraph Systèmes externes;
-        CSV[« Sources CSV »] 
-        SUP[« Superset »] 
-        LOG[« Système de supervision GTI »] 
-        BCK[« Stockage objet (B3 / Outscale / GCP) »]
+    CSV[« Sources CSV »] 
+    SUP[« Superset »] 
+    LOG[« Système de supervision GTI »] 
+    BCK[« Stockage objet (B3 / Outscale / GCP) »]
     end
     subgraph afinope;
-        APP[« afinope (Dagster Webserver) »] 
-        DB[« PostgreSQL »] 
-        NGINX[« Nginx Load‑Balancer »] 
+    APP[« afinope (Dagster Webserver) »] 
+    DB[« PostgreSQL »] 
+    NGINX[« Nginx Load‑Balancer »] 
     end
     U -->|consultation tableau| SUP;
     A -->|exploration données| SUP;
@@ -170,10 +170,10 @@ graph LR
 ```mermaid
 graph TD
     subgraph "Infrastructure ECO4"
-        NGINX["Nginx (load‑balancer)"]
-        APP["afinope (Dagster Webserver)"]
-        DB["PostgreSQL"]
-        SUP["Superset (external)"]
+    NGINX["Nginx (load‑balancer)"]
+    APP["afinope (Dagster Webserver)"]
+    DB["PostgreSQL"]
+    SUP["Superset (external)"]
     end
     CSV["Répertoire CSV (host)"]
     LOG["GTI Monitoring (Portainer, Prometheus)"]

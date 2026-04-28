@@ -91,10 +91,10 @@ Le périmètre inclut :
 ```mermaid
 graph LR
     subgraph External[Environnement externe]
-        A[Utilisateurs (SPES, DG, Opérateurs)] -->|Web UI| UI[admin_ep Web App]
-        B[Service Cerbère] -->|AuthN/AuthZ| UI;
-        C[JORF (Open Data)] -->|Flux XML| ETL[ArticleAnalyser]
-        D[Elasticsearch] -->|Recherche plein texte| UI;
+    A[Utilisateurs (SPES, DG, Opérateurs)] -->|Web UI| UI[admin_ep Web App]
+    B[Service Cerbère] -->|AuthN/AuthZ| UI;
+    C[JORF (Open Data)] -->|Flux XML| ETL[ArticleAnalyser]
+    D[Elasticsearch] -->|Recherche plein texte| UI;
     end
     UI -->|JDBC| DB[(PostgreSQL – integration schema)]
     UI -->|HTTP| Tomcat[Tomcat 9.0.8]
@@ -114,17 +114,17 @@ graph LR
 ```mermaid
 flowchart TD
     subgraph BusinessCapabilities[Capacités métier]
-        C1[Gestion des administrateurs] --> C2[Gestion des établissements]
-        C2 --> C3[Gestion des mandats (Titulaire / Suppléant)]
-        C3 --> C4[Alertes d’échéance]
-        C4 --> C5[Statistiques & Reporting]
-        C5 --> C6[Recherche avancée]
+    C1[Gestion des administrateurs] --> C2[Gestion des établissements]
+    C2 --> C3[Gestion des mandats (Titulaire / Suppléant)]
+    C3 --> C4[Alertes d’échéance]
+    C4 --> C5[Statistiques & Reporting]
+    C5 --> C6[Recherche avancée]
     end
     subgraph Processes[Processus CCF]
-        P1[Création / Mise à jour d’un administrateur] --> P2[Assignation à un mandat]
-        P2 --> P3[Calcul de la date d’échéance]
-        P3 --> P4[Envoi d’email de rappel]
-        P4 --> P5[Archivage du mandat expiré]
+    P1[Création / Mise à jour d’un administrateur] --> P2[Assignation à un mandat]
+    P2 --> P3[Calcul de la date d’échéance]
+    P3 --> P4[Envoi d’email de rappel]
+    P4 --> P5[Archivage du mandat expiré]
     end
     BusinessCapabilities -.-> Processes
 ```
@@ -140,30 +140,30 @@ flowchart TD
 classDiagram
     direction TB;
     class AccueilAction {
-        +execute()
+    +execute()
 
     class DetailAdminAction {
-        +execute()
+    +execute()
 
     class RechercheAdminsAction {
-        +execute()
+    +execute()
 
     class UpsertAdminAction {
-        +execute()
+    +execute()
 
     class ArticleServices {
-        +search()
-        +getById()
+    +search()
+    +getById()
 
     class MandatServices {
-        +createMandat()
-        +updateMandat()
+    +createMandat()
+    +updateMandat()
 
     class SecurityFilter {
-        +doFilter()
+    +doFilter()
 
     class SchedulerInitializer {
-        +init()
+    +init()
 
     AccueilAction --> AccueilActionSupport : extends;
     DetailAdminAction --> AbstractBaseAdminActionSupport;
@@ -172,11 +172,11 @@ classDiagram
     MandatServices --> ArticleServices : uses;
     SchedulerInitializer --> MandatServices : schedules;
     class StrutsConfig {
-        +struts.xml;
+    +struts.xml;
 
     class SpringBootConfig {
-        +application-config.xml;
-        +baseadmin-auth-config.xml;
+    +application-config.xml;
+    +baseadmin-auth-config.xml;
 
     AccueilAction ..> StrutsConfig : mapped in;
     UpsertAdminAction ..> SpringBootConfig : bean
@@ -193,48 +193,48 @@ classDiagram
 classDiagram
     direction TB;
     class TYPE_MANDAT {
-        +tma_id : PK;
-        +tma_type;
+    +tma_id : PK;
+    +tma_type;
 
     class TYPE_INSTANCE {
-        +tin_id : PK;
-        +tin_type;
-        +tin_a_linstance_de;
-        +tin_de_linstance_de;
+    +tin_id : PK;
+    +tin_type;
+    +tin_a_linstance_de;
+    +tin_de_linstance_de;
 
     class MODE_NOMINATION {
-        +mno_id : PK;
-        +mno_code;
-        +mno_mode;
-        +mno_mot_cle_titre;
-        +mno_mot_cle_corps_texte;
+    +mno_id : PK;
+    +mno_code;
+    +mno_mode;
+    +mno_mot_cle_titre;
+    +mno_mot_cle_corps_texte;
 
     class CHARGE {
-        +cha_id : PK;
-        +cha_charge;
-        +...
+    +cha_id : PK;
+    +cha_charge;
+    +...
 
     class MINISTERE {
-        +min_id : PK;
-        +min_sigle;
-        +min_nom;
-        +min_statut;
+    +min_id : PK;
+    +min_sigle;
+    +min_nom;
+    +min_statut;
 
     class COLLEGE {
-        +col_id : PK;
-        +col_identifiant;
+    +col_id : PK;
+    +col_identifiant;
 
     class ETABLISSEMENT {
-        +eta_id : PK;
-        +eta_siren;
-        +eta_sigle;
-        +eta_libelle;
-        +tin_id_fk : FK → TYPE_INSTANCE;
+    +eta_id : PK;
+    +eta_siren;
+    +eta_sigle;
+    +eta_libelle;
+    +tin_id_fk : FK → TYPE_INSTANCE;
 
     class SYNONYME_COLLEGE {
-        +col_id_fk : FK → COLLEGE;
-        +syn_synonyme;
-        +syn_defaut;
+    +col_id_fk : FK → COLLEGE;
+    +syn_synonyme;
+    +syn_defaut;
 
     TYPE_MANDAT --> Mandat;
     TYPE_INSTANCE --> ETABLISSEMENT;
@@ -252,13 +252,13 @@ classDiagram
 ```mermaid
 deploymentDiagram;
     node "MSP Data Center – Paris La Défense" {
-        node "VM/Cluster ESXi (ACAI)" {
-            artifact "Tomcat 9.0.8 (Docker container)" as Tomcat;
-            artifact "PostgreSQL 9.6.11 (container)" as PG;
+    node "VM/Cluster ESXi (ACAI)" {
+    artifact "Tomcat 9.0.8 (Docker container)" as Tomcat;
+    artifact "PostgreSQL 9.6.11 (container)" as PG;
 
-        node "VM/Cluster IaaS (ECO4) – Recette" {
-            artifact "Tomcat 10 (prévision)" as Tomcat10;
-            artifact "PostgreSQL 15 (prévision)" as PG15;
+    node "VM/Cluster IaaS (ECO4) – Recette" {
+    artifact "Tomcat 10 (prévision)" as Tomcat10;
+    artifact "PostgreSQL 15 (prévision)" as PG15;
 
     Tomcat --> PG : JDBC;
     Tomcat --> "Elasticsearch" : HTTP REST;
@@ -303,11 +303,11 @@ sequencediagram;
 ```mermaid
 graph TD
     subgraph "Défense in depth"
-        A[Front‑end (HTTPS, CSP, HSTS)]
-        B[Tomcat (TLS, security‑constraints, role‑based access)]
-        C[Application (Cerbère, RightsHelper, Roles)]
-        D[Database (pg_hba.conf, encryption at rest)]
-        E[Logs (log4j2, audit trail)]
+    A[Front‑end (HTTPS, CSP, HSTS)]
+    B[Tomcat (TLS, security‑constraints, role‑based access)]
+    C[Application (Cerbère, RightsHelper, Roles)]
+    D[Database (pg_hba.conf, encryption at rest)]
+    E[Logs (log4j2, audit trail)]
     end
     A --> B --> C --> D;
     C -->|AuthZ| F[Confidentialité (D‑I‑C‑T)]
@@ -332,17 +332,17 @@ statediagram-v2;
     Resolution --> [*]
 
     state Monitoring {
-        CPU --> Memory --> DiskIO --> DBHealth;
-        TomcatHealth --> ThreadPool;
-        ElasticsearchHealth;
+    CPU --> Memory --> DiskIO --> DBHealth;
+    TomcatHealth --> ThreadPool;
+    ElasticsearchHealth;
 
     state Alerting {
-        EmailAlert;
-        SMSAlert;
+    EmailAlert;
+    SMSAlert;
 
     state IncidentManagement {
-        TicketCreation;
-        AssignToOps;
+    TicketCreation;
+    AssignToOps;
 
 ```
 

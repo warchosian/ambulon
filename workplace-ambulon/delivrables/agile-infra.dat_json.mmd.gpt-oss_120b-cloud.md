@@ -169,12 +169,12 @@ graph TD
 ```mermaid
 graph TD
     subgraph CI[GitLab CI/CD]
-        CI_Runner[GitLab Runner] -->|exécute| Ansible[Ansible Playbooks]
+    CI_Runner[GitLab Runner] -->|exécute| Ansible[Ansible Playbooks]
     end
     subgraph Deploy[Environnement cible]
-        Nginx[Nginx (load‑balanced)]
-        DB[PostgreSQL]
-        AppSrv[Conteneurs d’application (front, back)]
+    Nginx[Nginx (load‑balanced)]
+    DB[PostgreSQL]
+    AppSrv[Conteneurs d’application (front, back)]
     end
     Ansible -->|génère| Compose[docker‑compose.yml]
     Compose -->|déploie| Nginx;

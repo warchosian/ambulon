@@ -103,8 +103,8 @@ SIREINES sert le **CGDD / DRI / AST4** à :
 ```mermaid
 graph TD
     subgraph "Docker‑Compose"
-        A[Tomcat Container (sireines‑app)] --> B[PostgreSQL Container (sireines‑db)]
-        A --> C[pgAdmin Container (sireines‑pgadmin)]
+    A[Tomcat Container (sireines‑app)] --> B[PostgreSQL Container (sireines‑db)]
+    A --> C[pgAdmin Container (sireines‑pgadmin)]
     end
     A --> D[War: sireines‑web.war]
     D -->|Struts2 / Spring| E[Business Logic (Java packages i2.application.sireines.*)]
@@ -114,9 +114,9 @@ graph TD
     B -->|Dump / Restore| I[Backup Store (B3 / SecNumCloud / GCP)]
     C -->|UI| J[pgAdmin UI]
     subgraph "External"
-        K[GitLab CI] -->|Artifacts| A;
-        L[Prometheus / Grafana] -->|Metrics| A;
-        M[Portainer] -->|Container Mgmt| A;
+    K[GitLab CI] -->|Artifacts| A;
+    L[Prometheus / Grafana] -->|Metrics| A;
+    M[Portainer] -->|Container Mgmt| A;
     end
 ```
 

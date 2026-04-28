@@ -189,40 +189,40 @@ bpmnDiagram;
 ```mermaid
 classDiagram
     class Archive {
-        +id : UUID;
-        +titre : String;
-        +dateCréation : Date;
-        +provenance : String;
-        +statut : Enum{Collectée, Enrichie, Concentrée, Diffusée}
-        +checksum : String;
+    +id : UUID;
+    +titre : String;
+    +dateCréation : Date;
+    +provenance : String;
+    +statut : Enum{Collectée, Enrichie, Concentrée, Diffusée}
+    +checksum : String;
 
     class Metadonnée {
-        +cle : String;
-        +valeur : String;
-        +type : Enum{Descriptive, Technique, Juridique}
+    +cle : String;
+    +valeur : String;
+    +type : Enum{Descriptive, Technique, Juridique}
 
     class Utilisateur {
-        +id : UUID;
-        +nom : String;
-        +email : String;
-        +role : Enum{Agent, ServiceCentral, ServiceDept, ServiceReg, MOA, MOE}
+    +id : UUID;
+    +nom : String;
+    +email : String;
+    +role : Enum{Agent, ServiceCentral, ServiceDept, ServiceReg, MOA, MOE}
 
     class Droit {
-        +disponibilité : Int;
-        +intégrité : Int;
-        +confidentialité : Int;
-        +traçabilité : Int;
+    +disponibilité : Int;
+    +intégrité : Int;
+    +confidentialité : Int;
+    +traçabilité : Int;
 
     class Lot {
-        +id : UUID;
-        +nom : String;
-        +volume : Decimal;
+    +id : UUID;
+    +nom : String;
+    +volume : Decimal;
 
     class JournalAudit {
-        +id : UUID;
-        +timestamp : DateTime;
-        +action : String;
-        +utilisateurId : UUID;
+    +id : UUID;
+    +timestamp : DateTime;
+    +action : String;
+    +utilisateurId : UUID;
 
     Archive "1" <-- "0..*" Metadonnée : possède;
     Archive "1" <-- "0..*" Lot : appartient à;

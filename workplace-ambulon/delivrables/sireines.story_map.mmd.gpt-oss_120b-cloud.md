@@ -213,30 +213,30 @@ Suivre le statut
 graph TB
     %% Backbone – parcours horizontal;
     subgraph backbone[" BACKBONE – Parcours Utilisateur "]
-        step1["Se connecter"]
-        step2["Créer / Rechercher un dossier"]
-        step3["Compléter le formulaire"]
-        step4["Déposer les pièces‑jointes"]
-        step5["Soumettre"]
-        step6["Suivre le statut"]
+    step1["Se connecter"]
+    step2["Créer / Rechercher un dossier"]
+    step3["Compléter le formulaire"]
+    step4["Déposer les pièces‑jointes"]
+    step5["Soumettre"]
+    step6["Suivre le statut"]
     end
     %% MVP – fonctionnalités indispensables (au‑dessus)
     subgraph mvp[" MVP – Fonctionnalités essentielles "]
-        f1["Auth FranceConnect"]
-        f2["Création dossier + recherche par ID"]
-        f3["Saisie infos perso + sélection comité"]
-        f4["Upload PDF < 5 Mo"]
-        f5["Envoi mail de confirmation"]
-        f6["Tableau de bord état"]
+    f1["Auth FranceConnect"]
+    f2["Création dossier + recherche par ID"]
+    f3["Saisie infos perso + sélection comité"]
+    f4["Upload PDF < 5 Mo"]
+    f5["Envoi mail de confirmation"]
+    f6["Tableau de bord état"]
     end
     %% V2+ – fonctionalités à reporter (en‑dessous)
     subgraph future[" V2+ – Améliorations "]
-        v1["Gestion mdp oublié"]
-        v2["Recherche par nom/prénom"]
-        v3["Type de qualification avancé"]
-        v4["Vérif format + historique uploads"]
-        v5["PDF BIRT récapitulatif"]
-        v6["Export CSV + historique actions"]
+    v1["Gestion mdp oublié"]
+    v2["Recherche par nom/prénom"]
+    v3["Type de qualification avancé"]
+    v4["Vérif format + historique uploads"]
+    v5["PDF BIRT récapitulatif"]
+    v6["Export CSV + historique actions"]
     end
     %% Flux horizontal;
     step1 --> step2 --> step3 --> step4 --> step5 --> step6;

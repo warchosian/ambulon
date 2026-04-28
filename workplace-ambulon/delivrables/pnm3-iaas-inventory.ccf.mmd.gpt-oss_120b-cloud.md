@@ -171,29 +171,29 @@ bpmnDiagram
 ```mermaid
 classDiagram
     class Machine {
-        +string machine;
-        +string ip;
-        +list~string~ dns;
-        +list~string~ products;
-        +list~string~ appUrls;
-        +string environment;
-        +list~string~ tags;
-        +Portainer portainer;
-        +Metrics metrics;
-        +System system;
+    +string machine;
+    +string ip;
+    +list~string~ dns;
+    +list~string~ products;
+    +list~string~ appUrls;
+    +string environment;
+    +list~string~ tags;
+    +Portainer portainer;
+    +Metrics metrics;
+    +System system;
 
     class Portainer {
-        +string edgeId;
-        +string edgeKey;
+    +string edgeId;
+    +string edgeKey;
 
     class Metrics {
-        +string name;
-        +string url;
-        +string pole;
+    +string name;
+    +string url;
+    +string pole;
 
     class System {
-        +string name;
-        +int version;
+    +string name;
+    +int version;
 
     Machine "1" --> "0..1" Portainer;
     Machine "1" --> "1" Metrics;

@@ -70,21 +70,21 @@ Le service s’appuie sur :
 ### 4.1 Diagramme de cas d’utilisation (UML) – Mermaid
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     title OCR‑API – Cas d’utilisation;
     actor Développeur intégrateur as Dev;
     actor Opérateur de données as Op;
     actor Administrateur système as Admin;
     rectangle OCR_API {
-        Dev --> (Soumettre un document)
-        Dev --> (Interroger le statut du job)
-        Dev --> (Récupérer le résultat OCR)
-        Op --> (Uploader un lot de documents)
-        Op --> (Consulter le rapport de traitement)
-        Admin --> (Déployer le service)
-        Admin --> (Configurer les variables d’environnement)
-        Admin --> (Surveiller la santé du service)
+    Dev --> (Soumettre un document)
+    Dev --> (Interroger le statut du job)
+    Dev --> (Récupérer le résultat OCR)
+    Op --> (Uploader un lot de documents)
+    Op --> (Consulter le rapport de traitement)
+    Admin --> (Déployer le service)
+    Admin --> (Configurer les variables d’environnement)
+    Admin --> (Surveiller la santé du service)
 
 ```
 
@@ -110,7 +110,7 @@ usecaseDiagram;
 ### 5.1 Diagramme du flux de traitement OCR (simplifié)
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Client;
     participant API;
@@ -123,11 +123,11 @@ bpmnDiagram;
     API->>Client: 202 Accepted (jobId)
 
     loop Traitement as Job;
-        Redis->>Worker: Pull job;
-        Worker->>MinIO: Retrieve source file;
-        Worker->>Worker: Execute Tesseract OCR;
-        Worker->>MinIO: Store result (bucket ocr-output)
-        Worker->>Redis: Update job status = done;
+    Redis->>Worker: Pull job;
+    Worker->>MinIO: Retrieve source file;
+    Worker->>Worker: Execute Tesseract OCR;
+    Worker->>MinIO: Store result (bucket ocr-output)
+    Worker->>Redis: Update job status = done;
     end
     Client->>API: GET /v1/ocr/{jobId}
     API->>Redis: Query status;
@@ -198,37 +198,37 @@ bpmnDiagram;
 ```mermaid
 classDiagram
     class Job {
-        <<entity>>
-        +String id;
-        +String status;
-        +Date createdAt;
-        +Date updatedAt;
-        +String sourceObjectKey;
-        +String resultObjectKey;
-        +Float confidence;
+    <<entity>>
+    +String id;
+    +String status;
+    +Date createdAt;
+    +Date updatedAt;
+    +String sourceObjectKey;
+    +String resultObjectKey;
+    +Float confidence;
 
     class User {
-        <<entity>>
-        +String apiKey;
-        +String name;
-        +String email;
-        +Boolean active;
+    <<entity>>
+    +String apiKey;
+    +String name;
+    +String email;
+    +Boolean active;
 
     class Document {
-        <<entity>>
-        +String bucket;
-        +String objectKey;
-        +Long size;
-        +String mimeType;
-        +Date uploadedAt;
+    <<entity>>
+    +String bucket;
+    +String objectKey;
+    +Long size;
+    +String mimeType;
+    +Date uploadedAt;
 
     class LogEntry {
-        <<entity>>
-        +String id;
-        +String level;
-        +String message;
-        +Date timestamp;
-        +String jobId;
+    <<entity>>
+    +String id;
+    +String level;
+    +String message;
+    +Date timestamp;
+    +String jobId;
 
     User "1" --> "0..*" Job : possèDes;
     Job "1" --> "1" Document : source;

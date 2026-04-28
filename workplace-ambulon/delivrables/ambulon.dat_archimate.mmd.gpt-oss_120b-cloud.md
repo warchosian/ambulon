@@ -33,7 +33,7 @@
 ## 🛠️ Exemple de squelette de diagrammes **Mermaid / ArchiMate** (à compléter)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#FFFF99','secondaryColor':'#99CCFF','tertiaryColor':'#99FF99'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#FFFF99','secondaryColor':'#99CCFF','tertiaryColor':'#99FF99'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 archimateDiagram;
     businessActor "Gestionnaire des urgences" as GA;
     businessRole "Opérateur d’appel" as OR;

@@ -18,20 +18,20 @@
 graph LR
     %% System Context;
     subgraph Ext[Environnements externes]
-        MOA[MOA – CGDD/DRI/AST4] 
-        MOE[MOE – Klee Group / SG‑DNUM] 
-        Users[Utilisateurs (agents, experts, référentiels)] 
-        BIRT[BIRT Reporting] 
-        Email[Serveur de mail] 
-        DB[Base PostgreSQL] 
-        Docker[Docker / Docker‑Compose] 
-        Cerbere[Cerbère (Gestion des droits)] 
+    MOA[MOA – CGDD/DRI/AST4] 
+    MOE[MOE – Klee Group / SG‑DNUM] 
+    Users[Utilisateurs (agents, experts, référentiels)] 
+    BIRT[BIRT Reporting] 
+    Email[Serveur de mail] 
+    DB[Base PostgreSQL] 
+    Docker[Docker / Docker‑Compose] 
+    Cerbere[Cerbère (Gestion des droits)] 
     end
     subgraph SIREINES[Application SIREINES]
-        WebApp[WebApp (Struts2 / Tomcat 7)] 
-        Search[Recherche (Vertigo‑Elasticsearch)] 
-        Service[Services métiers (Java 8, Maven)] 
-        UI[Interface utilisateur (HTML/FTL)] 
+    WebApp[WebApp (Struts2 / Tomcat 7)] 
+    Search[Recherche (Vertigo‑Elasticsearch)] 
+    Service[Services métiers (Java 8, Maven)] 
+    UI[Interface utilisateur (HTML/FTL)] 
     end
     Users -->|utilise| UI;
     UI -->|appel| WebApp;
@@ -161,11 +161,11 @@ Le système SIREINES regroupe un front‑end web (Struts2, FreeMarker) hébergé
 C4Container;
     title SIREINES – Conteneurs;
     Container_Boundary(sireines, "SIREINES") {
-        Container(web, "WebApp (Struts2 / Tomcat)", "Java", "Interface utilisateur (HTML/FTL)")
-        Container(service, "Service Métiers", "Java (Maven)", "Gestion des dossiers, recherche, BIRT, email")
-        Container(db, "PostgreSQL", "PostgreSQL 14", "Persistance des données")
-        Container(search, "Vertigo‑Elasticsearch", "Java / ES", "Indexation & recherche plein‑texte")
-        Container(birt, "BIRT Engine", "Java", "Génération de rapports PDF/Excel")
+    Container(web, "WebApp (Struts2 / Tomcat)", "Java", "Interface utilisateur (HTML/FTL)")
+    Container(service, "Service Métiers", "Java (Maven)", "Gestion des dossiers, recherche, BIRT, email")
+    Container(db, "PostgreSQL", "PostgreSQL 14", "Persistance des données")
+    Container(search, "Vertigo‑Elasticsearch", "Java / ES", "Indexation & recherche plein‑texte")
+    Container(birt, "BIRT Engine", "Java", "Génération de rapports PDF/Excel")
 
     System_Ext(ldap, "Cerbère", "Authorisation‑config XML", "Gestion des droits")
     System_Ext(email, "Serveur Mail", "SMTP", "Envoi de notifications")
@@ -258,11 +258,11 @@ sequencediagram;
 ```mermaid
 graph TD
     subgraph ECO4_IaaS["ECO4 – IaaS (Paris La Défense)"]
-        LB[Load‑Balancer (HAProxy)]
-        APP[Docker‑Host (Tomcat + App)]
-        DB[Docker‑Host (PostgreSQL + pgAdmin)]
-        MON[Prometheus/Grafana]
-        BACKUP[Backup Service (AES‑256, Object Storage B3, SecNumCloud, GCP)]
+    LB[Load‑Balancer (HAProxy)]
+    APP[Docker‑Host (Tomcat + App)]
+    DB[Docker‑Host (PostgreSQL + pgAdmin)]
+    MON[Prometheus/Grafana]
+    BACKUP[Backup Service (AES‑256, Object Storage B3, SecNumCloud, GCP)]
     end
     User[Utilisateurs] --> LB;
     LB --> APP;

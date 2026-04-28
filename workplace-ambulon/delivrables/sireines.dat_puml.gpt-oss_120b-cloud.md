@@ -127,9 +127,9 @@ flowchart TD
 ```mermaid
 graph LR
     subgraph "Docker‑Compose"
-        APP[Container: sireines_app_usine_container<br/>Image: sireines_app_usine_image]
-        DB[Container: sireines_db_usine_container<br/>Image: postgres_14‑alpine]
-        PGADMIN[Container: sireines_pgadmin_container<br/>Image: dpage/pgadmin4]
+    APP[Container: sireines_app_usine_container<br/>Image: sireines_app_usine_image]
+    DB[Container: sireines_db_usine_container<br/>Image: postgres_14‑alpine]
+    PGADMIN[Container: sireines_pgadmin_container<br/>Image: dpage/pgadmin4]
     end
     APP -->|JDBC| DB;
     APP -->|Elasticsearch (embedded)| DB;

@@ -56,21 +56,21 @@
 ### 4.1 Diagramme de cas d’utilisation (Mermaid)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Opérateur DGFIP as Op;
     actor Data Analyst as DA;
     actor Administrateur Système as AS;
     actor MOA as MOA;
     rectangle "Système afinope" {
-        (UC‑01 Collecter fichiers) as UC1;
-        (UC‑02 Valider & nettoyer) as UC2;
-        (UC‑03 Charger en BDD) as UC3;
-        (UC‑04 Générer vues d’analyse) as UC4;
-        (UC‑05 Produire rapports d’erreurs) as UC5;
-        (UC‑06 Orchestrer pipelines) as UC6;
-        (UC‑07 Déployer stack) as UC7;
-        (UC‑08 Auditer traitements) as UC8;
+    (UC‑01 Collecter fichiers) as UC1;
+    (UC‑02 Valider & nettoyer) as UC2;
+    (UC‑03 Charger en BDD) as UC3;
+    (UC‑04 Générer vues d’analyse) as UC4;
+    (UC‑05 Produire rapports d’erreurs) as UC5;
+    (UC‑06 Orchestrer pipelines) as UC6;
+    (UC‑07 Déployer stack) as UC7;
+    (UC‑08 Auditer traitements) as UC8;
 
     Op --> UC1;
     UC1 --> UC2;
@@ -104,7 +104,7 @@ usecaseDiagram;
 ## 5️⃣ Processus métier (BPMN)  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2F80ED','edgeLabelBackground':'#fff','fontFamily':'Helvetica'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 bpmnDiagram;
     participant Opérateur as OP;
     participant Système as SYS;
@@ -180,139 +180,139 @@ bpmnDiagram;
 ```mermaid
 classDiagram
     class Organisme {
-        +codeOrganisme : string;
-        +libelleOrganisme : string;
-        +siret : string;
-        +dateJuridique : date;
-        +dateCreation : date;
-        +dateCloture : date;
-        +dateLiquidation : date;
-        +dateDocument : date;
+    +codeOrganisme : string;
+    +libelleOrganisme : string;
+    +siret : string;
+    +dateJuridique : date;
+    +dateCreation : date;
+    +dateCloture : date;
+    +dateLiquidation : date;
+    +dateDocument : date;
 
     class Structure {
-        +codeOrganisme : string;
-        +codeBudget : string;
-        +libelleBudget : string;
-        +dateCreation : date;
-        +dateCloture : date;
-        +dateDocument : date;
+    +codeOrganisme : string;
+    +codeBudget : string;
+    +libelleBudget : string;
+    +dateCreation : date;
+    +dateCloture : date;
+    +dateDocument : date;
 
     class Nomenc {
-        +exercice : int;
-        +typeNomenclature : string;
-        +libelleNomenclature : string;
-        +numeroCompte : bigint;
-        +sens : string;
-        +libelleCompte : string;
-        +dateDocument : date;
+    +exercice : int;
+    +typeNomenclature : string;
+    +libelleNomenclature : string;
+    +numeroCompte : bigint;
+    +sens : string;
+    +libelleCompte : string;
+    +dateDocument : date;
 
     class Tiers {
-        +codeOrganisme : string;
-        +codeBudget : string;
-        +exercice : int;
-        +codeTiers : string;
-        +libelleTiers : string;
-        +dateDocument : date;
+    +codeOrganisme : string;
+    +codeBudget : string;
+    +exercice : int;
+    +codeTiers : string;
+    +libelleTiers : string;
+    +dateDocument : date;
 
     class Nature {
-        +codeOrganisme : string;
-        +codeBudget : string;
-        +exercice : int;
-        +codeNature : string;
-        +libelleNature : string;
-        +dateDocument : date;
+    +codeOrganisme : string;
+    +codeBudget : string;
+    +exercice : int;
+    +codeNature : string;
+    +libelleNature : string;
+    +dateDocument : date;
 
     class Destination {
-        +codeOrganisme : string;
-        +codeBudget : string;
-        +exercice : int;
-        +codeDestination : string;
-        +libelleDestination : string;
-        +dateDocument : date;
+    +codeOrganisme : string;
+    +codeBudget : string;
+    +exercice : int;
+    +codeDestination : string;
+    +libelleDestination : string;
+    +dateDocument : date;
 
     class Origine {
-        +codeOrganisme : string;
-        +codeBudget : string;
-        +exercice : int;
-        +codeOrigine : string;
-        +libelleOrigine : string;
-        +dateDocument : date;
+    +codeOrganisme : string;
+    +codeBudget : string;
+    +exercice : int;
+    +codeOrigine : string;
+    +libelleOrigine : string;
+    +dateDocument : date;
 
     class Pluriannuel {
-        +codeOrganisme : string;
-        +codeBudget : string;
-        +exercice : int;
-        +codePluriannuel : string;
-        +libellePluriannuel : string;
-        +typologieOperation : string;
-        +codeOperationFlechee : bool;
-        +debutOperationPluri : date;
-        +finOperationPluri : date;
-        +dateDocument : date;
+    +codeOrganisme : string;
+    +codeBudget : string;
+    +exercice : int;
+    +codePluriannuel : string;
+    +libellePluriannuel : string;
+    +typologieOperation : string;
+    +codeOperationFlechee : bool;
+    +debutOperationPluri : date;
+    +finOperationPluri : date;
+    +dateDocument : date;
 
     class Executoire {
-        <<abstract>>
-        +dateExecutoire : date;
-        +codeLibelle : string;
-        +codeOrganisme : string;
-        +exercice : int;
-        +typeDocument : string;
-        +typeBudget : string;
-        +typeRang : string;
-        +codeDevise : string;
-        +montant : decimal;
-        +dateDocument : date;
+    <<abstract>>
+    +dateExecutoire : date;
+    +codeLibelle : string;
+    +codeOrganisme : string;
+    +exercice : int;
+    +typeDocument : string;
+    +typeBudget : string;
+    +typeRang : string;
+    +codeDevise : string;
+    +montant : decimal;
+    +dateDocument : date;
 
     class DESP {
-        +codeDestination : string;
-        +codeOrigine : string;
-        +impact : string;
-        +typeBudget : string;
-        +typeRang : string;
-        +typeDocument : string;
+    +codeDestination : string;
+    +codeOrigine : string;
+    +impact : string;
+    +typeBudget : string;
+    +typeRang : string;
+    +typeDocument : string;
 
     class EFP {
-        +codePrevisionExecution : bool;
-        +codeCompteFinancier : bool;
+    +codePrevisionExecution : bool;
+    +codeCompteFinancier : bool;
 
     class Execution {
-        <<abstract>>
-        +codeLibelle : string;
-        +codeOrganisme : string;
-        +exercice : int;
-        +typeDocument : string;
-        +typeBudget : string;
-        +typeRang : string;
-        +codeDevise : string;
-        +montant : decimal;
-        +dateDocument : date;
+    <<abstract>>
+    +codeLibelle : string;
+    +codeOrganisme : string;
+    +exercice : int;
+    +typeDocument : string;
+    +typeBudget : string;
+    +typeRang : string;
+    +codeDevise : string;
+    +montant : decimal;
+    +dateDocument : date;
 
     class ABE {
-        +impact : string;
-        +codeRecherche : string;
-        +typeSequence : string;
+    +impact : string;
+    +codeRecherche : string;
+    +typeSequence : string;
 
     class BAL {
-        +codeCompte : bigint;
-        +libelleCompte : string;
-        +debitEntree : decimal;
-        +debitCumul : decimal;
-        +debitTotal : decimal;
-        +creditEntree : decimal;
-        +creditCumul : decimal;
-        +creditTotal : decimal;
-        +soldeDebiteur : decimal;
-        +soldeCrediteur : decimal;
-        +typeNomenclature : string;
-        +typeSequence : string;
+    +codeCompte : bigint;
+    +libelleCompte : string;
+    +debitEntree : decimal;
+    +debitCumul : decimal;
+    +debitTotal : decimal;
+    +creditEntree : decimal;
+    +creditCumul : decimal;
+    +creditTotal : decimal;
+    +soldeDebiteur : decimal;
+    +soldeCrediteur : decimal;
+    +typeNomenclature : string;
+    +typeSequence : string;
 
     class BIL {
-        +codeLibelle : string;
-        +typeSequence : string;
+    +codeLibelle : string;
+    +typeSequence : string;
 
     class CR {
-        +codeLibelle : string;
-        +typeSequence : string;
+    +codeLibelle : string;
+    +typeSequence : string;
 
     Organisme "1" --> "0..*" Structure : possède;
     Organisme "1" --> "0..*" Nomenc : référence;

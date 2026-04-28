@@ -22,23 +22,23 @@
 ### 2.1 Diagramme de composants (UML – Mermaid)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#0B5394', 'edgeLabelBackground':'#e8e8e8'}}%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#0B5394', 'edgeLabelBackground':'#e8e8e8'}}%%%%%%%%%%%%}%%
 graph LR
     subgraph MavenModules
-        DB[causalismp‑database]:::module
-        DEP[causalismp‑deployment]:::module
-        DOC[causalismp‑doc]:::module
-        WEB[causalismp‑web]:::module
+    DB[causalismp‑database]:::module
+    DEP[causalismp‑deployment]:::module
+    DOC[causalismp‑doc]:::module
+    WEB[causalismp‑web]:::module
     end
 
     subgraph WEB_Components
-        STRUTS[Struts 1 MVC]:::layer
-        JSP[JSP Views]:::layer
-        TAG[Custom TagLib]:::layer
-        SVC[Service Layer]:::layer
-        DAO[DAO (Castor JDO)]:::layer
-        MODEL[Domain Model]:::layer
-        WS[WS Client (StubWS)]:::layer
+    STRUTS[Struts 1 MVC]:::layer
+    JSP[JSP Views]:::layer
+    TAG[Custom TagLib]:::layer
+    SVC[Service Layer]:::layer
+    DAO[DAO (Castor JDO)]:::layer
+    MODEL[Domain Model]:::layer
+    WS[WS Client (StubWS)]:::layer
     end
 
     DB -->|SQL scripts| Oracle[(Oracle DB)]
@@ -103,58 +103,58 @@ graph LR
 ### 4.1 Diagramme de classes (UML – Mermaid)
 
 ```mermaid
-%%{init: {'theme':'neutral', 'themeVariables': { 'primaryColor': '#6FA8DC', 'edgeLabelBackground':'#F0F0F0'}}%%%%%%}%%
+%%{init: {'theme':'neutral', 'themeVariables': { 'primaryColor': '#6FA8DC', 'edgeLabelBackground':'#F0F0F0'}}%%%%%%%%%%%%}%%
 classDiagram
     direction TB
 
     %% Interfaces / abstractions
     class Constantes {
-        <<interface>>
-        +String NOMDATASOURCE = "jdbc/userDScausalis"
+    <<interface>>
+    +String NOMDATASOURCE = "jdbc/userDScausalis"
 
     class GenericDao~T~ {
-        <<abstract>>
-        +List<T> getAll(String entity, Map<String,Object> filter, String[] operators, String order)
+    <<abstract>>
+    +List<T> getAll(String entity, Map<String,Object> filter, String[] operators, String order)
 
     class ReferenceService~T~ {
-        <<abstract>>
-        -GenericDao<T> dao
-        +List<T> getAll()
+    <<abstract>>
+    -GenericDao<T> dao
+    +List<T> getAll()
 
     %% Domain model (excerpt)
     class Grade {
-        -int codeGroupementGrade
-        +int getCodeGroupementGrade()
-        +void setCodeGroupementGrade(int)
+    -int codeGroupementGrade
+    +int getCodeGroupementGrade()
+    +void setCodeGroupementGrade(int)
 
     class Service {
-        -int saisieTerminee
-        -int saisieMaladiesProTerminee
-        +int getSaisieTerminee()
-        +void setSaisieTerminee(int)
+    -int saisieTerminee
+    -int saisieMaladiesProTerminee
+    +int getSaisieTerminee()
+    +void setSaisieTerminee(int)
 
     class DomaineAffectation {
-        -String code
-        +String getCode()
+    -String code
+    +String getCode()
 
     class TranscodageGrade {
-        -String codeGradeRehucit
-        -String macro
-        +String getCodeGradeRehucit()
-        +void setCodeGradeRehucit(String)
-        +String getMacro()
-        +void setMacro(String)
+    -String codeGradeRehucit
+    -String macro
+    +String getCodeGradeRehucit()
+    +void setCodeGradeRehucit(String)
+    +String getMacro()
+    +void setMacro(String)
 
     %% Services
     class GradeService {
-        +List<Grade> getAllGrade()
+    +List<Grade> getAllGrade()
 
     class DomaineAffectationService {
-        +List<DomaineAffectation> getAllDomaineAffectation()
+    +List<DomaineAffectation> getAllDomaineAffectation()
 
     class SynchronizeService {
-        <<interface>>
-        +int synchronize()
+    <<interface>>
+    +int synchronize()
 
     %% Relationships
     GenericDao <|-- GradeDao
@@ -167,13 +167,13 @@ classDiagram
 
     %% TagLib
     class StrutsOptionTag {
-        +int doEndTag()
+    +int doEndTag()
 
     class WSClientGrade {
-        +Grade getGrade(String id)
+    +Grade getGrade(String id)
 
     class TranscodageGradePredicate {
-        +boolean evaluate(Object)
+    +boolean evaluate(Object)
 
     StrutsOptionTag ..> JSP : used by
     WSClientGrade ..> TranscodageGradePredicate : collaborates
@@ -264,17 +264,17 @@ flowchart TD
 ### 7.1 Diagramme de déploiement (UML – Mermaid)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#A64D79', 'edgeLabelBackground':'#F5F5F5'}}%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#A64D79', 'edgeLabelBackground':'#F5F5F5'}}%%%%%%%%%%%%}%%
 graph LR
     subgraph CI/CD
-        GIT[GitLab Repository]
-        PIPE[GitLab‑CI Pipeline]
-        SONAR[SonarQube]
+    GIT[GitLab Repository]
+    PIPE[GitLab‑CI Pipeline]
+    SONAR[SonarQube]
     end
 
     subgraph Environnement
-        TOMCAT[Tomcat 9 / JBoss EAP 7]
-        ORACLE[Oracle 19c]
+    TOMCAT[Tomcat 9 / JBoss EAP 7]
+    ORACLE[Oracle 19c]
     end
 
     GIT --> PIPE

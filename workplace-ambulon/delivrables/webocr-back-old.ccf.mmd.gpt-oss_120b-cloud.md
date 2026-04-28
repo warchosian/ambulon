@@ -67,21 +67,21 @@
 ### 4.1 Diagramme UML de cas d’utilisation  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#ffffff'}}%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#ffffff'}}%%%%%%%%%%}%%
 usecaseDiagram;
     actor Utilisateur as U
     actor Administrateur as A
     actor Service CAS as CAS
     rectangle WebOCR_Back {
-        U --> (S'authentifier)
-        U --> (Uploader un document)
-        U --> (Consulter le statut du job)
-        U --> (Télécharger le résultat OCR)
-        U --> (Consulter les statistiques personnelles)
-        A --> (Gérer les utilisateurs)
-        A --> (Configurer la purge)
-        A --> (Consulter les logs)
-        CAS --> (Valider le ticket CAS)
+    U --> (S'authentifier)
+    U --> (Uploader un document)
+    U --> (Consulter le statut du job)
+    U --> (Télécharger le résultat OCR)
+    U --> (Consulter les statistiques personnelles)
+    A --> (Gérer les utilisateurs)
+    A --> (Configurer la purge)
+    A --> (Consulter les logs)
+    CAS --> (Valider le ticket CAS)
 
 ```
 
@@ -107,7 +107,7 @@ usecaseDiagram;
 > Le processus **« Traitement OCR d’un document »** est présenté ci‑dessous.  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6'}}%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6'}}%%%%%%%%%%}%%
 bpmnDiagram;
     participant Utilisateur
     participant Backend
@@ -202,50 +202,50 @@ bpmnDiagram;
 ```mermaid
 classDiagram
     class User {
-        <<entity>>
-        +uuid id
-        +string email
-        +string name
-        +boolean tosConsent
-        +timestamp createdAt
-        +timestamp updatedAt
+    <<entity>>
+    +uuid id
+    +string email
+    +string name
+    +boolean tosConsent
+    +timestamp createdAt
+    +timestamp updatedAt
 
     class Document {
-        <<entity>>
-        +uuid id
-        +uuid ownerId
-        +string originalName
-        +string md5
-        +integer sizeBytes
-        +string mimeType
-        +timestamp uploadedAt
-        +timestamp processedAt
-        +enum status { pending, processing, done, error }
-        +integer pages
-        +integer processingTimeSec
+    <<entity>>
+    +uuid id
+    +uuid ownerId
+    +string originalName
+    +string md5
+    +integer sizeBytes
+    +string mimeType
+    +timestamp uploadedAt
+    +timestamp processedAt
+    +enum status { pending, processing, done, error }
+    +integer pages
+    +integer processingTimeSec
 
     class OCRResult {
-        <<entity>>
-        +uuid id
-        +uuid documentId
-        +text content
-        +timestamp createdAt
+    <<entity>>
+    +uuid id
+    +uuid documentId
+    +text content
+    +timestamp createdAt
 
     class Job {
-        <<entity>>
-        +uuid id
-        +uuid documentId
-        +enum state { queued, running, succeeded, failed }
-        +timestamp queuedAt
-        +timestamp startedAt
-        +timestamp finishedAt
-        +string errorMessage
+    <<entity>>
+    +uuid id
+    +uuid documentId
+    +enum state { queued, running, succeeded, failed }
+    +timestamp queuedAt
+    +timestamp startedAt
+    +timestamp finishedAt
+    +string errorMessage
 
     class Session {
-        <<entity>>
-        +string sid
-        +uuid userId
-        +timestamp expiresAt
+    <<entity>>
+    +string sid
+    +uuid userId
+    +timestamp expiresAt
 
     User "1" --> "0..*" Document : possède >
     Document "1" --> "0..1" OCRResult : génère >

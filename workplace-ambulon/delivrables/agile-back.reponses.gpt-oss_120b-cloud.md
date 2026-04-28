@@ -69,20 +69,20 @@ All configuration files are YAML and respect Symfony’s convention‑over‑con
 ```mermaid
 graph TD
     subgraph Front‑End;
-        FE[HTML / Twig] -->|Requests| HTTP[Web Server]
+    FE[HTML / Twig] -->|Requests| HTTP[Web Server]
     end
     subgraph Symfony;
-        HTTP -->|Routing| R[Router]
-        R -->|Dispatch| C[Controller]
-        C -->|Calls| S[Service Layer]
-        C -->|Renders| V[Twig Views]
-        S -->|Persists| DB[(PostgreSQL)]
-        S -->|Sends| Mail[Mailer]
-        C -->|Serialises| API[API Platform]
+    HTTP -->|Routing| R[Router]
+    R -->|Dispatch| C[Controller]
+    C -->|Calls| S[Service Layer]
+    C -->|Renders| V[Twig Views]
+    S -->|Persists| DB[(PostgreSQL)]
+    S -->|Sends| Mail[Mailer]
+    C -->|Serialises| API[API Platform]
     end
     subgraph Auth;
-        CAS[CAS Server] -->|Ticket| HTTP;
-        HTTP -->|Validate| Auth[Security/Voter]
+    CAS[CAS Server] -->|Ticket| HTTP;
+    HTTP -->|Validate| Auth[Security/Voter]
     end
     DB -->|Entity Mapping| E[Doctrine Entities]
     API -->|DTO| D[Data Transfer Objects]

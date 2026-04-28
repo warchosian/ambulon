@@ -87,10 +87,10 @@ graph LR
     style web fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
     style monitor fill:#E3F2FD,stroke:#1976D2,stroke-width_2px;
     subgraph "Infrastructure"
-        db(("PostgreSQL<br/>baseadmin<br/>v9.6.11‑15"))
-        app(("Java WebApp<br/>Tomcat 9.0.8<br/>v1.3.3"))
-        web(("Front‑end<br/>HTML/JS"))
-        monitor(("Monitoring<br/>Grafana/Prometheus"))
+    db(("PostgreSQL<br/>baseadmin<br/>v9.6.11‑15"))
+    app(("Java WebApp<br/>Tomcat 9.0.8<br/>v1.3.3"))
+    web(("Front‑end<br/>HTML/JS"))
+    monitor(("Monitoring<br/>Grafana/Prometheus"))
     end
     web -->|HTTP/HTTPS| app;
     app -->|JDBC| db;
@@ -196,21 +196,21 @@ graph TB
     maint -->|Met à jour| step8(("Mise à jour à chaque release"))
     step9(("Revue trimestrielle ou post‑incident")) -.->|Boucle d’amélioration| step2;
     subgraph p1["Phase 1 – Rédaction"]
-        step1;
-        step2;
+    step1;
+    step2;
     end
     subgraph p2["Phase 2 – Validation croisée"]
-        step3;
-        step4;
-        step5;
+    step3;
+    step4;
+    step5;
     end
     subgraph p3["Phase 3 – Go‑Live & Run"]
-        step6;
-        step7;
+    step6;
+    step7;
     end
     subgraph p4["Phase 4 – Maintenance continue"]
-        step8;
-        step9;
+    step8;
+    step9;
     end
     click p1 "javascript_void(0)" "Phase 1"
     click p2 "javascript_void(0)" "Phase 2"

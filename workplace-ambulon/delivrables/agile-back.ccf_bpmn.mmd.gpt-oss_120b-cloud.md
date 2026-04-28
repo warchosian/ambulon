@@ -57,35 +57,35 @@
 ### 3.1 Processus critique – **P‑001 : Gestion du cycle de vie d’une Étude**  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2A7AE2','edgeLabelBackground':'#fff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#2A7AE2','edgeLabelBackground':'#fff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 flowchart TD
     %% Pools;
     subgraph Utilisateur ["🧑 Utilisateur"]
-        U_Start([Déclencheur : Accès à l’URL /etudes])
-        U_Select[Choix action : Créer / Modifier / Supprimer / Lire]
+    U_Start([Déclencheur : Accès à l’URL /etudes])
+    U_Select[Choix action : Créer / Modifier / Supprimer / Lire]
     end
     subgraph BackOffice ["🖥️ Agile‑Back (Symfony)"]
-        subgraph Controller ["Controller"]
-            C_Route{{Route /etudes}}
-            C_Create[UserTask : Afficher formulaire création]
-            C_Edit[UserTask : Afficher formulaire modification]
-            C_Delete[UserTask : Confirmation suppression]
-            C_View[UserTask : Afficher détail]
-        end
-        subgraph Service ["Service"]
-            S_Validate[ScriptTask : Validation métier (ruleset RB‑ETU‑001…) ]
-            S_Save[ServiceTask : Persistance (EntityManager)]
-            S_Notify[ServiceTask : Envoi email (SiteUpdateMailer)]
-        end
-        subgraph Repository ["Repository"]
-            R_Persist[Task : INSERT / UPDATE / DELETE]
-        end
+    subgraph Controller ["Controller"]
+    C_Route{{Route /etudes}}
+    C_Create[UserTask : Afficher formulaire création]
+    C_Edit[UserTask : Afficher formulaire modification]
+    C_Delete[UserTask : Confirmation suppression]
+    C_View[UserTask : Afficher détail]
+    end
+    subgraph Service ["Service"]
+    S_Validate[ScriptTask : Validation métier (ruleset RB‑ETU‑001…) ]
+    S_Save[ServiceTask : Persistance (EntityManager)]
+    S_Notify[ServiceTask : Envoi email (SiteUpdateMailer)]
+    end
+    subgraph Repository ["Repository"]
+    R_Persist[Task : INSERT / UPDATE / DELETE]
+    end
     end
     subgraph CAS ["🔐 CAS SSO"]
-        CAS_Auth[MessageEvent : Authentifier l’utilisateur]
+    CAS_Auth[MessageEvent : Authentifier l’utilisateur]
     end
     subgraph Mail ["📧 Service Mail"]
-        Mail_Send[MessageEvent : Envoi email]
+    Mail_Send[MessageEvent : Envoi email]
     end
     %% Flow;
     U_Start -->|Navigue| C_Route;
@@ -120,25 +120,25 @@ flowchart TD
 ```mermaid
 flowchart TD
     subgraph Utilisateur ["🧑 Utilisateur"]
-        US_Start([Accès à /abonnements])
-        US_Choice[Choix : Nouveau / Modifier / Supprimer]
+    US_Start([Accès à /abonnements])
+    US_Choice[Choix : Nouveau / Modifier / Supprimer]
     end
     subgraph BackOffice ["🖥️ Agile‑Back"]
-        subgraph Controller;
-            AB_Route{{Route /abonnements}}
-            AB_Form[UserTask : Afficher formulaire]
-            AB_Confirm[UserTask : Confirmation]
-        end
-        subgraph Service;
-            AB_Valid[ScriptTask : Vérif. droits (RB‑AB‑001)]
-            AB_Save[ServiceTask : Persistance]
-        end
-        subgraph Repository;
-            AB_DB[Task : INSERT / UPDATE / DELETE]
-        end
+    subgraph Controller;
+    AB_Route{{Route /abonnements}}
+    AB_Form[UserTask : Afficher formulaire]
+    AB_Confirm[UserTask : Confirmation]
+    end
+    subgraph Service;
+    AB_Valid[ScriptTask : Vérif. droits (RB‑AB‑001)]
+    AB_Save[ServiceTask : Persistance]
+    end
+    subgraph Repository;
+    AB_DB[Task : INSERT / UPDATE / DELETE]
+    end
     end
     subgraph Mail ["📧 Mail"]
-        AB_Mail[MessageEvent : Envoi notification abonnement]
+    AB_Mail[MessageEvent : Envoi notification abonnement]
     end
     US_Start --> AB_Route --> US_Choice;
     US_Choice -->|Nouveau| AB_Form --> AB_Valid --> AB_Save --> AB_DB --> AB_Mail;
@@ -159,15 +159,15 @@ flowchart TD
 ```mermaid
 flowchart TD
     subgraph Utilisateur ["🧑 Utilisateur"]
-        U_Login[Action : Cliquer « Se connecter »]
+    U_Login[Action : Cliquer « Se connecter »]
     end
     subgraph Front ["🌐 Public (CAS)"]
-        C_Connect[MessageEvent : Rediriger vers /cas/connexionCAS.php]
-        C_Exec[ScriptTask : Initialise session CAS]
+    C_Connect[MessageEvent : Rediriger vers /cas/connexionCAS.php]
+    C_Exec[ScriptTask : Initialise session CAS]
     end
     subgraph BackOffice ["🖥️ Agile‑Back"]
-        B_Validate[Task : Vérifier ticket CAS]
-        B_Grant[Task : Créer session Symfony]
+    B_Validate[Task : Vérifier ticket CAS]
+    B_Grant[Task : Créer session Symfony]
     end
     U_Login --> C_Connect --> C_Exec --> B_Validate --> B_Grant -->|OK| U_Login
 ```
@@ -182,12 +182,12 @@ flowchart TD
 ```mermaid
 flowchart TD
     subgraph ServiceMail ["📧 Service Mail"]
-        M_Trigger[Message Event : Déclenché par Service (SiteUpdateMailer)]
-        M_Template[ScriptTask : Générer corps (Twig template)]
-        M_Send[ServiceTask : smtp / swiftmailer]
+    M_Trigger[Message Event : Déclenché par Service (SiteUpdateMailer)]
+    M_Template[ScriptTask : Générer corps (Twig template)]
+    M_Send[ServiceTask : smtp / swiftmailer]
     end
     subgraph BackOffice ["🖥️ Agile‑Back"]
-        S_Trigger[ServiceTask : Décision d’envoi (ex : création d’étude)]
+    S_Trigger[ServiceTask : Décision d’envoi (ex : création d’étude)]
     end
     S_Trigger --> M_Trigger --> M_Template --> M_Send
 ```
@@ -202,13 +202,13 @@ flowchart TD
 ```mermaid
 flowchart TD
     subgraph Utilisateur ["🧑 Utilisateur"]
-        EX_Start[Action : Cliquer « Export »]
+    EX_Start[Action : Cliquer « Export »]
     end
     subgraph BackOffice ["🖥️ Agile‑Back"]
-        EX_Controller[UserTask : Choix format CSV / ODS]
-        EX_Service[ServiceTask : Récupérer données (Repository)]
-        EX_Transform[ScriptTask : Transformer DTO → CSV/ODS]
-        EX_Download[MessageEvent : Retourner fichier]
+    EX_Controller[UserTask : Choix format CSV / ODS]
+    EX_Service[ServiceTask : Récupérer données (Repository)]
+    EX_Transform[ScriptTask : Transformer DTO → CSV/ODS]
+    EX_Download[MessageEvent : Retourner fichier]
     end
     EX_Start --> EX_Controller --> EX_Service --> EX_Transform --> EX_Download
 ```
@@ -223,12 +223,12 @@ flowchart TD
 ```mermaid
 flowchart TD
     subgraph Scheduler ["⏰ Cron / Symfony Console"]
-        J_Trigger[Timer Event : Chaque nuit 02_00]
+    J_Trigger[Timer Event : Chaque nuit 02_00]
     end
     subgraph BackOffice ["🖥️ Agile‑Back"]
-        J_Runner[ServiceTask : Exécuter SiteUpdateAbonnementsRunner]
-        J_Process[ScriptTask : Parcourir abonnements, mettre à jour état]
-        J_Log[Task : Log résultat]
+    J_Runner[ServiceTask : Exécuter SiteUpdateAbonnementsRunner]
+    J_Process[ScriptTask : Parcourir abonnements, mettre à jour état]
+    J_Log[Task : Log résultat]
     end
     J_Trigger --> J_Runner --> J_Process --> J_Log
 ```

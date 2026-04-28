@@ -106,21 +106,21 @@ graph TB
 
     %% Phases;
     subgraph p1["Phase 1 – Rédaction"]
-        step1(("Collecte des specs & architecture"))
-        step2(("Rédaction des 16 sections DEX"))
+    step1(("Collecte des specs & architecture"))
+    step2(("Rédaction des 16 sections DEX"))
     end
     subgraph p2["Phase 2 – Validation croisée"]
-        step3(("Revue technique (DevOps/Infra)"))
-        step4(("Validation exploitation & support"))
-        step5(("Validation sécurité & conformité"))
+    step3(("Revue technique (DevOps/Infra)"))
+    step4(("Validation exploitation & support"))
+    step5(("Validation sécurité & conformité"))
     end
     subgraph p3["Phase 3 – Go‑Live & Run"]
-        step6(("Signature & archivage versionné"))
-        step7(("Intégration run‑book & supervision"))
+    step6(("Signature & archivage versionné"))
+    step7(("Intégration run‑book & supervision"))
     end
     subgraph p4["Phase 4 – Maintenance continue"]
-        step8(("Mise à jour à chaque release"))
-        step9(("Revue trimestrielle / post‑incident"))
+    step8(("Mise à jour à chaque release"))
+    step9(("Revue trimestrielle / post‑incident"))
     end
     %% Flux;
     dev -->|Alimente| step1;

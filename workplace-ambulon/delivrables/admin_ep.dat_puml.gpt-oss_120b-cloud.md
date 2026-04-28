@@ -19,17 +19,17 @@
 ```mermaid
 graph LR
     subgraph Utilisateurs;
-        MOA[Maîtrise d’Ouvrage (SG/SPES)]
-        MOE[Maîtrise d’Œuvre (SG/DNUM/PNM3/BPN)]
-        Ops[Opérateurs (DG de tutelle, SPES)]
+    MOA[Maîtrise d’Ouvrage (SG/SPES)]
+    MOE[Maîtrise d’Œuvre (SG/DNUM/PNM3/BPN)]
+    Ops[Opérateurs (DG de tutelle, SPES)]
     end
     subgraph Système;
-        AdminEP[admin_ep<br/>Web + DB]
+    AdminEP[admin_ep<br/>Web + DB]
     end
     subgraph Services externes;
-        JORF[(JORF – flux OpenData)]
-        Mail[(Serveur de mail)]
-        Auth[(Cerbère – Authentification)]
+    JORF[(JORF – flux OpenData)]
+    Mail[(Serveur de mail)]
+    Auth[(Cerbère – Authentification)]
     end
     MOA --> AdminEP;
     MOE --> AdminEP;
@@ -171,11 +171,11 @@ graph LR
 C4Container;
     title admin_ep – Niveau 2 (Conteneurs)
     Enterprise_Boundary(b0, "admin_ep") {
-        Container(web, "Web Application", "Java (Struts2 + Vertigo)", "Interface utilisateur, API REST interne")
-        ContainerDb(db, "PostgreSQL", "PostgreSQL 9.6", "Stockage persistant des données métier")
-        ContainerExt(jorf, "JORF Service", "HTTP(S) client", "Récupération quotidienne des arrêtés")
-        ContainerExt(cerb, "Cerbère", "OAuth2", "Gestion des comptes et des droits")
-        ContainerExt(mail, "SMTP Server", "TLS", "Envoi de notifications")
+    Container(web, "Web Application", "Java (Struts2 + Vertigo)", "Interface utilisateur, API REST interne")
+    ContainerDb(db, "PostgreSQL", "PostgreSQL 9.6", "Stockage persistant des données métier")
+    ContainerExt(jorf, "JORF Service", "HTTP(S) client", "Récupération quotidienne des arrêtés")
+    ContainerExt(cerb, "Cerbère", "OAuth2", "Gestion des comptes et des droits")
+    ContainerExt(mail, "SMTP Server", "TLS", "Envoi de notifications")
 
     Rel(web, db, "JDBC", "SQL")
     Rel(web, jorf, "HTTPS", "Flux JORF")

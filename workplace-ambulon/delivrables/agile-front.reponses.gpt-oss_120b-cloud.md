@@ -344,22 +344,22 @@ Gère la liste des études, les filtres, la pagination, etc.
 ```mermaid
 graph TD
     subgraph UI;
-        A[Vue Components] --> B[Views (router-view)]
-        B --> C[App.vue]
+    A[Vue Components] --> B[Views (router-view)]
+    B --> C[App.vue]
     end
     subgraph State;
-        D[Vuex Store] --> E[Modules: security, studies]
+    D[Vuex Store] --> E[Modules: security, studies]
     end
     subgraph Services;
-        F[LegacyProxyService] 
-        G[SecurityService] 
-        H[ExportService] 
-        I[StudiesService]
+    F[LegacyProxyService] 
+    G[SecurityService] 
+    H[ExportService] 
+    I[StudiesService]
     end
     subgraph Config;
-        J[vuetify.js] 
-        K[router.js] 
-        L[env variables]
+    J[vuetify.js] 
+    K[router.js] 
+    L[env variables]
     end
     C --> D;
     C --> F;

@@ -30,7 +30,7 @@
 ## 2. Niveau 1 – Vue Contexte (System Context)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Context.puml
 
 Person(admin, "Administrateur", "Configure l’application via l’UI")
@@ -110,7 +110,7 @@ Rel(app, pg, "Lecture/écriture de configuration")
 ## 5. Niveau 2 – Vue Conteneurs (Containers)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Container.puml
 
 System_Boundary(s1, "agile‑env") {
@@ -164,7 +164,7 @@ System_Ext(cas, "CAS Server", "Authentification unique")
 ## 6. Niveau 3 – Vue Composants (Components) *(exemple sur le conteneur WebApp)*  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Component.puml
 
 Container(web, "WebApp", "PHP 7.3‑Apache", "Application principale") {
@@ -280,15 +280,15 @@ Le produit est hébergé sur le cloud interne **ECO4** basé sur **OpenStack**, 
 Le reverse‑proxy **Nginx** du schéma ci‑dessous est en fait une paire de Nginx load‑balancés en frontal des produits hébergés sur le tenant.
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Mermaid/master/C4_Deployment.puml
 
 Deployment_Node(cloud, "Cloud ECO4", "OpenStack Tenant pnm3") {
     Deployment_Node(nginxCluster, "Nginx Cluster", "Load Balancer") {
-        Container(app, "agile‑env WebApp", "Docker", "PHP‑Apache")
+    Container(app, "agile‑env WebApp", "Docker", "PHP‑Apache")
 
     Deployment_Node(dbNode, "Base de données", "PostgreSQL") {
-        ContainerDb(database, "agile‑env DB", "PostgreSQL", "Persist la configuration")
+    ContainerDb(database, "agile‑env DB", "PostgreSQL", "Persist la configuration")
 
 Rel(nginxCluster, app, "HTTP/HTTPS")
 Rel(app, database, "JDBC/SQL")

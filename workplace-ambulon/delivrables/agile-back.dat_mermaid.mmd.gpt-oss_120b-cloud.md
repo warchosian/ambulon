@@ -153,14 +153,14 @@ graph TD
 ```mermaid
 graph TD
     subgraph "Infrastructure"
-        N[nginx (reverse‑proxy)]
-        P[php‑fpm]
-        DB[(PostgreSQL)]
-        CAS[CAS Server]
-        MON[Prometheus/Grafana/Loki]
+    N[nginx (reverse‑proxy)]
+    P[php‑fpm]
+    DB[(PostgreSQL)]
+    CAS[CAS Server]
+    MON[Prometheus/Grafana/Loki]
     end
     subgraph "Application"
-        APP[agile‑back (Symfony)]
+    APP[agile‑back (Symfony)]
     end
     N --> P --> APP;
     APP --> DB;

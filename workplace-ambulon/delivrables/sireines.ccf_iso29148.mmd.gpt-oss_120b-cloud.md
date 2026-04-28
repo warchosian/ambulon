@@ -27,17 +27,17 @@
 ```mermaid
 graph LR
     subgraph Utilisateurs;
-        U1[Chef de projet] 
-        U2[Agent (expert)] 
-        U3[Comité de domaine] 
-        U4[Administrateur] 
+    U1[Chef de projet] 
+    U2[Agent (expert)] 
+    U3[Comité de domaine] 
+    U4[Administrateur] 
     end
     subgraph Système;
-        S1[SIREINES Web] 
-        S2[Base PostgreSQL] 
-        S3[ElasticSearch] 
-        S4[BIRT Reporting] 
-        S5[Cerbère – AuthZ] 
+    S1[SIREINES Web] 
+    S2[Base PostgreSQL] 
+    S3[ElasticSearch] 
+    S4[BIRT Reporting] 
+    S5[Cerbère – AuthZ] 
     end
     U1 -->|déploiement, suivi| S1;
     U2 -->|consultation, saisie| S1;
@@ -104,41 +104,41 @@ graph LR
 ```mermaid
 classDiagram
     class Expert {
-        +Long id;
-        +String nom;
-        +String prenom;
-        +String email;
-        +String fonction;
-        +String statut   // ACTIVE / INACTIVE;
-        +Date dateCreation;
+    +Long id;
+    +String nom;
+    +String prenom;
+    +String email;
+    +String fonction;
+    +String statut   // ACTIVE / INACTIVE;
+    +Date dateCreation;
 
     class Dossier {
-        +Long id;
-        +String reference;
-        +String etat   // EN_ATTENTE, QUALIFIE, REJETTE;
-        +Date dateReception;
-        +Date dateQualification;
-        +String commentaire;
+    +Long id;
+    +String reference;
+    +String etat   // EN_ATTENTE, QUALIFIE, REJETTE;
+    +Date dateReception;
+    +Date dateQualification;
+    +String commentaire;
 
     class Qualification {
-        +Long id;
-        +String libelle;
-        +String description;
+    +Long id;
+    +String libelle;
+    +String description;
 
     class Comité {
-        +Long id;
-        +String libelle;
-        +String type   // DOMAINE / THESAURUS;
+    +Long id;
+    +String libelle;
+    +String type   // DOMAINE / THESAURUS;
 
     class MotCle {
-        +Long id;
-        +String libelle;
-        +Integer niveau;
+    +Long id;
+    +String libelle;
+    +Integer niveau;
 
     class Rapport {
-        +Long id;
-        +String type   // BIRT, CSV;
-        +Date dateGeneration;
+    +Long id;
+    +String type   // BIRT, CSV;
+    +Date dateGeneration;
 
     Expert "1" --> "0..*" Dossier : possède;
     Dossier "1" --> "0..1" Qualification : qualification;
@@ -161,14 +161,14 @@ usecaseDiagram;
     actor Comité as Comité;
     actor Administrateur as Admin;
     rectangle SIREINES {
-        Agent --> (Saisir un dossier)
-        Agent --> (Consulter son profil)
-        Agent --> (Exporter ses dossiers)
-        Comité --> (Qualifier un dossier)
-        Comité --> (Consulter les rapports)
-        Admin --> (Gérer les utilisateurs)
-        Admin --> (Configurer les import/export)
-        Admin --> (Consulter les logs)
+    Agent --> (Saisir un dossier)
+    Agent --> (Consulter son profil)
+    Agent --> (Exporter ses dossiers)
+    Comité --> (Qualifier un dossier)
+    Comité --> (Consulter les rapports)
+    Admin --> (Gérer les utilisateurs)
+    Admin --> (Configurer les import/export)
+    Admin --> (Consulter les logs)
 
 ```
 

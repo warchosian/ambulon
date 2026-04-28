@@ -14,12 +14,12 @@
 graph TD
     %% System Context (C4‑L1)
     subgraph Ext[Acteurs externes]
-        MOA[MOA / RSSI] 
-        Utilisateurs[Utilisateurs métier<br/>(agents, rédacteurs)]
-        AutresSyst[Autres systèmes<br/>(ex. portail public, GED)]
+    MOA[MOA / RSSI] 
+    Utilisateurs[Utilisateurs métier<br/>(agents, rédacteurs)]
+    AutresSyst[Autres systèmes<br/>(ex. portail public, GED)]
     end
     subgraph Sys[Bulletin Officiel]
-        BO[Application Bulletin Officiel<br/>(API + UI)]
+    BO[Application Bulletin Officiel<br/>(API + UI)]
     end
     MOA -->|Définit exigences| BO;
     Utilisateurs -->|Consomme UI / API| BO;
@@ -145,10 +145,10 @@ graph TD
 graph TD
     %% Container diagram (C4‑L2)
     subgraph K8s[Cluster Kubernetes]
-        UI[Container: UI (React)]
-        API[Container: API (Spring Boot)]
-        DB[StatefulSet: PostgreSQL]
-        Proxy[Nginx Load‑Balancer]
+    UI[Container: UI (React)]
+    API[Container: API (Spring Boot)]
+    DB[StatefulSet: PostgreSQL]
+    Proxy[Nginx Load‑Balancer]
     end
     Utilisateurs -->|HTTPS| UI;
     UI -->|REST/JSON| API;

@@ -42,24 +42,24 @@
 ```mermaid
 graph TD
     subgraph Frontend;
-        UI[Interface Web (JSP/Struts2)] -->|HTTPS| SecFilter[SecurityFilter]
+    UI[Interface Web (JSP/Struts2)] -->|HTTPS| SecFilter[SecurityFilter]
     end
     subgraph Backend;
-        Controllers[Contrôleurs (Struts2 actions)] --> Services[Services métier]
-        Services --> DAO[DAO (JPA/Hibernate)]
-        DAO --> DB[(PostgreSQL)]
-        Controllers --> Util[Utilitaires (StringUtil, OdsUtil, …)]
-        Controllers --> Sec[Security (Roles, RightsHelper)]
+    Controllers[Contrôleurs (Struts2 actions)] --> Services[Services métier]
+    Services --> DAO[DAO (JPA/Hibernate)]
+    DAO --> DB[(PostgreSQL)]
+    Controllers --> Util[Utilitaires (StringUtil, OdsUtil, …)]
+    Controllers --> Sec[Security (Roles, RightsHelper)]
     end
     subgraph Integration;
-        JORF[Extractor JORF] --> Analyzer[ArticleAnalyser]
-        Analyzer --> DAO;
+    JORF[Extractor JORF] --> Analyzer[ArticleAnalyser]
+    Analyzer --> DAO;
     end
     subgraph Infrastructure;
-        Tomcat[Tomcat] --> Frontend;
-        Tomcat --> Backend;
-        Tomcat --> Integration;
-        DB --> Tomcat;
+    Tomcat[Tomcat] --> Frontend;
+    Tomcat --> Backend;
+    Tomcat --> Integration;
+    DB --> Tomcat;
     end
 ```
 

@@ -157,12 +157,12 @@ graph TD
 C4Container;
     title agi­le‑back – Vue en Briques;
     Enterprise_Boundary(b, "agile‑back") {
-        Container(nginx, "Nginx", "Reverse‑proxy + Load Balancer", "Termine TLS, répartit le trafic HTTP")
-        Container(app, "Symfony Application", "PHP", "MVC + API‑Platform, gestion des entités, logique métier")
-        ContainerDb(db, "PostgreSQL", "SGBD", "Stockage persistant des études, financements, etc.")
-        Container(cas, "CAS Client", "phpCAS", "Authentification SSO via serveur CAS")
-        Container(mail, "Mailer", "Symfony Mailer", "Envoi de notifications e‑mail")
-        Container(prom, "Supervision", "Prometheus/Grafana/Loki", "Métriques, logs, alertes")
+    Container(nginx, "Nginx", "Reverse‑proxy + Load Balancer", "Termine TLS, répartit le trafic HTTP")
+    Container(app, "Symfony Application", "PHP", "MVC + API‑Platform, gestion des entités, logique métier")
+    ContainerDb(db, "PostgreSQL", "SGBD", "Stockage persistant des études, financements, etc.")
+    Container(cas, "CAS Client", "phpCAS", "Authentification SSO via serveur CAS")
+    Container(mail, "Mailer", "Symfony Mailer", "Envoi de notifications e‑mail")
+    Container(prom, "Supervision", "Prometheus/Grafana/Loki", "Métriques, logs, alertes")
 
     Rel(nginx, app, "HTTP/HTTPS", "REST, HTML")
     Rel(app, db, "JDBC/SQL", "Doctrine ORM")

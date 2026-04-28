@@ -106,25 +106,25 @@ graph TB
 
     %% Phases;
     subgraph p1["Phase 1 – Rédaction"]
-        direction TB;
-        step1(("Collecte specs & architecture"))
-        step2(("Rédaction des 16 sections DEX"))
+    direction TB;
+    step1(("Collecte specs & architecture"))
+    step2(("Rédaction des 16 sections DEX"))
     end
     subgraph p2["Phase 2 – Validation croisée"]
-        direction TB;
-        step3(("Revue technique (DevOps/Infra)"))
-        step4(("Validation opérabilité (Ops)"))
-        step5(("Validation conformité (Sécurité)"))
+    direction TB;
+    step3(("Revue technique (DevOps/Infra)"))
+    step4(("Validation opérabilité (Ops)"))
+    step5(("Validation conformité (Sécurité)"))
     end
     subgraph p3["Phase 3 – Go‑Live & Run"]
-        direction TB;
-        step6(("Signature & archivage versionné"))
-        step7(("Intégration run‑book & supervision"))
+    direction TB;
+    step6(("Signature & archivage versionné"))
+    step7(("Intégration run‑book & supervision"))
     end
     subgraph p4["Phase 4 – Maintenance continue"]
-        direction TB;
-        step8(("Mise à jour à chaque release"))
-        step9(("Revue trimestrielle / post‑incident"))
+    direction TB;
+    step8(("Mise à jour à chaque release"))
+    step9(("Revue trimestrielle / post‑incident"))
     end
     %% Links;
     dev -->|Alimente| step1;
@@ -138,10 +138,10 @@ graph TB
     step9 -.->|Boucle d’amélioration| step2;
     %% Notes;
     note right of step2;
-        <b>Points de contrôle</b>\n- Accès SSH\n- Procédures rollback\n- Matrice d’escalade testée;
+    <b>Points de contrôle</b>\n- Accès SSH\n- Procédures rollback\n- Matrice d’escalade testée;
     end note;
     note right of step9;
-        <b>Règle d’or</b>\nPas de mise en prod sans DEX à jour;
+    <b>Règle d’or</b>\nPas de mise en prod sans DEX à jour;
     end note;
     class dev,ops,sec,maint dev,ops,sec,maint;
     class step1,step2,step3,step4,step5,step6,step7,step8,step9 phase1,phase2,phase3,phase4;

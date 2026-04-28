@@ -37,21 +37,21 @@ The application is organized into **four Maven modules**:
 ```mermaid
 graph TD
     subgraph MavenModules;
-        DB[causalismp-database]
-        DEP[causalismp-deployment]
-        DOC[causalismp-doc]
-        WEB[causalismp-web]
+    DB[causalismp-database]
+    DEP[causalismp-deployment]
+    DOC[causalismp-doc]
+    WEB[causalismp-web]
     end
     subgraph WEBLayer;
-        STR[Struts Actions & JSP]
-        SVC[Service Layer]
-        DAO[DAO (Castor JDO)]
-        MOD[Domain Model (POJOs)]
+    STR[Struts Actions & JSP]
+    SVC[Service Layer]
+    DAO[DAO (Castor JDO)]
+    MOD[Domain Model (POJOs)]
     end
     subgraph Infra;
-        ORA[(Oracle DB)]
-        JNDI[(JNDI DataSource<br/>java_comp/env/jdbc/userDScausalis)]
-        WS[External Web Services<br/>(StubWS.jar)]
+    ORA[(Oracle DB)]
+    JNDI[(JNDI DataSource<br/>java_comp/env/jdbc/userDScausalis)]
+    WS[External Web Services<br/>(StubWS.jar)]
     end
     DB -->|SQL scripts| ORA;
     WEB --> STR;

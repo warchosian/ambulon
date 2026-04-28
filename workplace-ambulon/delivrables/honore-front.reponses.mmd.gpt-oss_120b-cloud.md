@@ -89,9 +89,9 @@ graph TD
     E --> F[Conteneur Docker (production)]
     F --> G[Clients (navigateurs)]
     subgraph CI/CD;
-        CI[GitLab CI] -->|build| D;
-        CI -->|tests| T[JUnit (dummy)]
-        CI -->|push| R[Registry Docker]
+    CI[GitLab CI] -->|build| D;
+    CI -->|tests| T[JUnit (dummy)]
+    CI -->|push| R[Registry Docker]
     end
 ```
 

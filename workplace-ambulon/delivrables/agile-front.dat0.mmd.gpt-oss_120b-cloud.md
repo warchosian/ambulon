@@ -137,18 +137,18 @@ L’application est destinée aux **agents de pilotage** et **chercheurs** du mi
 ```mermaid
 graph TD
     subgraph "Frontend Container"
-        FE[Vue SPA (agile‑front)]
-        FE -->|axios| API[Legacy Proxy Service]
-        FE -->|store| Vuex[Vuex Store]
-        FE -->|router| Router[Vue‑Router]
+    FE[Vue SPA (agile‑front)]
+    FE -->|axios| API[Legacy Proxy Service]
+    FE -->|store| Vuex[Vuex Store]
+    FE -->|router| Router[Vue‑Router]
     end
     subgraph "Backend Container"
-        API -->|REST| BE[API Legacy (Java/Node)]
-        BE -->|SQL| DB[(PostgreSQL)]
+    API -->|REST| BE[API Legacy (Java/Node)]
+    BE -->|SQL| DB[(PostgreSQL)]
     end
     subgraph "Infrastructure"
-        NGINX[Nginx LB] --> FE;
-        NGINX --> BE;
+    NGINX[Nginx LB] --> FE;
+    NGINX --> BE;
     end
     style FE fill:#f9f,stroke:#333,stroke-width_2px;
     style API fill:#bbf,stroke:#333,stroke-width_2px;

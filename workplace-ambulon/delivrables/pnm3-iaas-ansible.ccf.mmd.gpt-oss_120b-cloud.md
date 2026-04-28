@@ -181,35 +181,35 @@ bpmnDiagram;
 ```mermaid
 classDiagram
     class Host {
-        +string hostname;
-        +string ip;
-        +list<string> groups;
-        +dict facts;
+    +string hostname;
+    +string ip;
+    +list<string> groups;
+    +dict facts;
 
     class Role {
-        +string name;
-        +list<string> tasks;
-        +dict vars;
+    +string name;
+    +list<string> tasks;
+    +dict vars;
 
     class VariableSet {
-        +string name;
-        +dict values;
+    +string name;
+    +dict values;
 
     class MetricTarget {
-        +string url;
-        +string pole;
-        +string instance;
+    +string url;
+    +string pole;
+    +string instance;
 
     class Credential {
-        +string type   "ssh|aws|gcloud"
-        +string value  "public key / access key"
+    +string type   "ssh|aws|gcloud"
+    +string value  "public key / access key"
 
     class LogEntry {
-        +datetime ts;
-        +string host;
-        +string playbook;
-        +string level;
-        +string message;
+    +datetime ts;
+    +string host;
+    +string playbook;
+    +string level;
+    +string message;
 
     Host "1" --> "*" Role : uses;
     Host "1" --> "1" VariableSet : has;

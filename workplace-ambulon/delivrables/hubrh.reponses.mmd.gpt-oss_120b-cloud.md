@@ -31,15 +31,15 @@ The architecture combines a **core Redmine instance**, a set of **custom plugins
 ```mermaid
 graph TD
     subgraph CI/CD;
-        CI[GitLab CI] -->|Build image| Kaniko[Kaniko Executor]
-        Kaniko -->|Push| Registry[Docker Registry]
+    CI[GitLab CI] -->|Build image| Kaniko[Kaniko Executor]
+    Kaniko -->|Push| Registry[Docker Registry]
     end
     subgraph Runtime;
-        DB[(PostgreSQL)]
-        App[Redmine Core]
-        Plugins[Custom Plugins]
-        Assets[Static Assets (CSS/JS)]
-        Web[HTTPS Endpoint]
+    DB[(PostgreSQL)]
+    App[Redmine Core]
+    Plugins[Custom Plugins]
+    Assets[Static Assets (CSS/JS)]
+    Web[HTTPS Endpoint]
     end
     Registry -->|Deploy| Docker[Docker Container]
     Docker --> App;

@@ -186,21 +186,21 @@ graph TD
 ```mermaid
 graph TB
     subgraph Nginx;
-        Nginx[NGINX (reverse‑proxy)]
+    Nginx[NGINX (reverse‑proxy)]
     end
     subgraph PHP_FPM["PHP‑FPM (Symfony)"]
-        App[agile‑back (Kernel)]
-        API[API‑Platform (REST)]
-        Mailer[Mailer Service]
-        Voter[Security Voter]
-        Export[Export Util]
-        Cmd[Commandes (services)]
+    App[agile‑back (Kernel)]
+    API[API‑Platform (REST)]
+    Mailer[Mailer Service]
+    Voter[Security Voter]
+    Export[Export Util]
+    Cmd[Commandes (services)]
     end
     subgraph DB[PostgreSQL]
-        DB[(DB)]
+    DB[(DB)]
     end
     subgraph CAS["CAS Server"]
-        CASsrv[CAS v1.3.5]
+    CASsrv[CAS v1.3.5]
     end
     Nginx -->|HTTP/HTTPS| App;
     App -->|Doctrine ORM| DB;

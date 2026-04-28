@@ -214,28 +214,28 @@ graph TB
 
     %% Phase 1 – Cadrage;
     subgraph phase1["Phase 1 – Cadrage & identification"]
-        step1["📋 Définir périmètre & critères"]
-        step2["📦 Inventaire des artefacts (CI, Ansible, templates)"]
+    step1["📋 Définir périmètre & critères"]
+    step2["📦 Inventaire des artefacts (CI, Ansible, templates)"]
     end
     %% Phase 2 – Évaluation;
     subgraph phase2["Phase 2 – Évaluation & scoring"]
-        step3["🧪 Tests manuels + outils automatiques"]
-        step4["📊 Calcul du taux de conformité"]
+    step3["🧪 Tests manuels + outils automatiques"]
+    step4["📊 Calcul du taux de conformité"]
     end
     %% Phase 3 – Priorisation;
     subgraph phase3["Phase 3 – Priorisation & correction"]
-        step5["⚠️ Matrice Impact/Effort"]
-        step6["📝 Plan d’action (P1‑P4)"]
+    step5["⚠️ Matrice Impact/Effort"]
+    step6["📝 Plan d’action (P1‑P4)"]
     end
     %% Phase 4 – Documentation;
     subgraph phase4["Phase 4 – Documentation & homologation"]
-        step7["📘 Déclaration d’accessibilité"]
-        step8["📜 Dossier d’homologation + engagement"]
+    step7["📘 Déclaration d’accessibilité"]
+    step8["📜 Dossier d’homologation + engagement"]
     end
     %% Phase 5 – Amélioration continue;
     subgraph loop["🔄 Amélioration continue"]
-        monitor["🔁 Re‑tests à chaque release"]
-        feedback["💬 Traitement des signalements"]
+    monitor["🔁 Re‑tests à chaque release"]
+    feedback["💬 Traitement des signalements"]
     end
     %% Flux principaux;
     team --> step1;

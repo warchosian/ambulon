@@ -23,19 +23,19 @@ Le build est réalisé avec **Vue‑CLI** qui produit un répertoire `dist/` con
 graph TD
     %% CI/CD pipeline;
     subgraph CI;
-        A[GitLab CI] --> B[Install dependencies]
-        B --> C[Run lint & tests]
-        C --> D[Build (Vue‑CLI) → dist/]
-        D --> E[Docker build (nginx + dist/)]
-        E --> F[Push image to registry]
+    A[GitLab CI] --> B[Install dependencies]
+    B --> C[Run lint & tests]
+    C --> D[Build (Vue‑CLI) → dist/]
+    D --> E[Docker build (nginx + dist/)]
+    E --> F[Push image to registry]
     end
     %% Runtime;
     subgraph Runtime;
-        G[Docker container (nginx)] --> H[nginx.conf]
-        H --> I[Serve static files from /app]
-        I --> J[SPA fallback: /index.html]
-        J --> K[Vue router → <router‑view/>]
-        K --> L[Modules (home, folders, onBoarding …)]
+    G[Docker container (nginx)] --> H[nginx.conf]
+    H --> I[Serve static files from /app]
+    I --> J[SPA fallback: /index.html]
+    J --> K[Vue router → <router‑view/>]
+    K --> L[Modules (home, folders, onBoarding …)]
     end
     %% Artefacts;
     style CI fill:#f9f9f9,stroke:#333,stroke-width_1px;

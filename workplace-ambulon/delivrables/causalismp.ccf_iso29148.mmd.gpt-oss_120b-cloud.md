@@ -35,9 +35,9 @@ graph LR
     DB -->|Contient| DMAL[Table MALADIE]
     WS -->|Synchronise| REF;
     subgraph Environnement;
-        J[Serveur d’application (Tomcat / JBoss)]
-        O[Serveur Oracle]
-        S[Serveur de web‑services externes]
+    J[Serveur d’application (Tomcat / JBoss)]
+    O[Serveur Oracle]
+    S[Serveur de web‑services externes]
     end
     J --> W;
     O --> DB;
@@ -138,42 +138,42 @@ graph LR
 ```mermaid
 classDiagram
     class Accident {
-        +int id;
-        +Date dateAccident;
-        +String description;
-        +Grade grade;
-        +Service service;
-        +int saisieTerminee;
+    +int id;
+    +Date dateAccident;
+    +String description;
+    +Grade grade;
+    +Service service;
+    +int saisieTerminee;
 
     class DossierMaladie {
-        +int id;
-        +Date dateDiagnostic;
-        +String description;
-        +Grade grade;
-        +Service service;
-        +int saisieMaladiesProTerminee;
+    +int id;
+    +Date dateDiagnostic;
+    +String description;
+    +Grade grade;
+    +Service service;
+    +int saisieMaladiesProTerminee;
 
     class Grade {
-        +int code;
-        +String libelle;
-        +int codeGroupementGrade;
+    +int code;
+    +String libelle;
+    +int codeGroupementGrade;
 
     class Service {
-        +int code;
-        +String libelle;
-        +int saisieTerminee;
-        +int saisieMaladiesProTerminee;
+    +int code;
+    +String libelle;
+    +int saisieTerminee;
+    +int saisieMaladiesProTerminee;
 
     class Statut {
-        +int code;
-        +String libelle;
+    +int code;
+    +String libelle;
 
     class Utilisateur {
-        +String login;
-        +String nom;
-        +String prenom;
-        +Service service;
-        +String role;
+    +String login;
+    +String nom;
+    +String prenom;
+    +Service service;
+    +String role;
 
     Accident "1" --> "1" Service : appartient à;
     Accident "1" --> "1" Grade   : possède;

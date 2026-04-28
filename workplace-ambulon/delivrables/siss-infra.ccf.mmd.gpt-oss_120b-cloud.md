@@ -176,24 +176,24 @@ bpmnDiagram;
 ```mermaid
 classDiagram
     class Environment {
-        <<enumeration>>
-        name
+    <<enumeration>>
+    name
 
     class ApplicationVersion {
-        appVersion : string
+    appVersion : string
 
     class DBVersion {
-        dbVersion : string
+    dbVersion : string
 
     class Secret {
-        key : string
-        encryptedValue : string
+    key : string
+    encryptedValue : string
 
     class DeploymentTask {
-        id : UUID
-        timestamp : datetime
-        status : enum{SUCCESS,FAILURE}
-        log : text
+    id : UUID
+    timestamp : datetime
+    status : enum{SUCCESS,FAILURE}
+    log : text
 
     Environment "1" <-- "0..*" DeploymentTask : "déploie"
     DeploymentTask "1" --> "1" ApplicationVersion : "utilise"

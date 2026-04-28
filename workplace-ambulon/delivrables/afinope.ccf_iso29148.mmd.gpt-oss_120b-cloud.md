@@ -25,17 +25,17 @@
 ```mermaid
 graph LR
     subgraph "Utilisateurs / Acteurs"
-        OP[Opérateur (chargement CSV)]
-        ADM[Administrateur (déploiement & configuration)]
-        DB[Base de données PostgreSQL]
-        SUP[Superset (visualisation)]
-        DAG[Dagster Web‑Server]
+    OP[Opérateur (chargement CSV)]
+    ADM[Administrateur (déploiement & configuration)]
+    DB[Base de données PostgreSQL]
+    SUP[Superset (visualisation)]
+    DAG[Dagster Web‑Server]
     end
     subgraph "Système afinope"
-        APP[Application Python (afinope)]
-        PIPE[Pipeline Dagster]
-        CFG[Config JSON]
-        CONTAINER[Docker]
+    APP[Application Python (afinope)]
+    PIPE[Pipeline Dagster]
+    CFG[Config JSON]
+    CONTAINER[Docker]
     end
     OP -->|dépose CSV| APP;
     ADM -->|déploie / configure| CONTAINER;
@@ -112,66 +112,66 @@ graph LR
 ```mermaid
 classDiagram
     class ORGANISME {
-        +char[10] codeOrganisme;
-        +varchar[150] libelleOrganisme;
-        +char[14] siret;
-        +date dateJuridique;
-        +date dateCreation;
-        +date dateCloture;
-        +date dateLiquidation;
-        +date dateDocument;
+    +char[10] codeOrganisme;
+    +varchar[150] libelleOrganisme;
+    +char[14] siret;
+    +date dateJuridique;
+    +date dateCreation;
+    +date dateCloture;
+    +date dateLiquidation;
+    +date dateDocument;
 
     class STRUCTURE {
-        +char[10] codeOrganisme;
-        +char[2] codeBudget;
-        +varchar[120] libelleBudget;
-        +date dateCreation;
-        +date dateCloture;
-        +date dateDocument;
+    +char[10] codeOrganisme;
+    +char[2] codeBudget;
+    +varchar[120] libelleBudget;
+    +date dateCreation;
+    +date dateCloture;
+    +date dateDocument;
 
     class NOMENC {
-        +int exercice;
-        +char[2] typeNomenclature;
-        +varchar[20] libelleNomenclature;
-        +bigint numeroCompte;
-        +char[1] sens;
-        +varchar[200] libelleCompte;
-        +date dateDocument;
+    +int exercice;
+    +char[2] typeNomenclature;
+    +varchar[20] libelleNomenclature;
+    +bigint numeroCompte;
+    +char[1] sens;
+    +varchar[200] libelleCompte;
+    +date dateDocument;
 
     class BAL {
-        +bigint codeCompte;
-        +varchar[200] libelleCompte;
-        +numeric debitEntree;
-        +numeric debitCumul;
-        +numeric debitTotal;
-        +numeric creditEntree;
-        +numeric creditCumul;
-        +numeric creditTotal;
-        +numeric soldeDebiteur;
-        +numeric soldeCrediteur;
-        +char[10] codeOrganisme;
-        +int exercice;
-        +char[2] typeNomenclature;
-        +char[2] typeDocument;
-        +char[2] typeBudget;
-        +char[2] typeRang;
-        +char[3] codeDevise;
-        +date dateDocument;
-        +char[1] typeSequence;
+    +bigint codeCompte;
+    +varchar[200] libelleCompte;
+    +numeric debitEntree;
+    +numeric debitCumul;
+    +numeric debitTotal;
+    +numeric creditEntree;
+    +numeric creditCumul;
+    +numeric creditTotal;
+    +numeric soldeDebiteur;
+    +numeric soldeCrediteur;
+    +char[10] codeOrganisme;
+    +int exercice;
+    +char[2] typeNomenclature;
+    +char[2] typeDocument;
+    +char[2] typeBudget;
+    +char[2] typeRang;
+    +char[3] codeDevise;
+    +date dateDocument;
+    +char[1] typeSequence;
 
     class ABE {
-        +char[2] codeLibelle;
-        +char[2] impact;
-        +char[10] codeRecherche;
-        +numeric montant;
-        +char[10] codeOrganisme;
-        +int exercice;
-        +char[2] typeDocument;
-        +char[2] typeBudget;
-        +char[2] typeRang;
-        +char[3] codeDevise;
-        +date dateDocument;
-        +char[1] typeSequence;
+    +char[2] codeLibelle;
+    +char[2] impact;
+    +char[10] codeRecherche;
+    +numeric montant;
+    +char[10] codeOrganisme;
+    +int exercice;
+    +char[2] typeDocument;
+    +char[2] typeBudget;
+    +char[2] typeRang;
+    +char[3] codeDevise;
+    +date dateDocument;
+    +char[1] typeSequence;
 
     ORGANISME "1" --> "0..*" STRUCTURE : possède;
     ORGANISME "1" --> "0..*" NOMENC : référence;
@@ -244,13 +244,13 @@ sequencediagram;
     APP->>APP: DetecterCSV()
     APP->>APP: ValiderCSV(file.csv)
     alt Validation OK;
-        APP->>APP: Transformer(file.csv)
-        APP->>DB: INSERT INTO target_table;
-        DB-->>APP: OK / rows inserted;
-        APP->>FS: Move file.csv -> flux.sortie;
+    APP->>APP: Transformer(file.csv)
+    APP->>DB: INSERT INTO target_table;
+    DB-->>APP: OK / rows inserted;
+    APP->>FS: Move file.csv -> flux.sortie;
     else Validation KO;
-        APP->>FS: Move file.csv -> flux.erreur;
-        APP->>APP: Log error;
+    APP->>FS: Move file.csv -> flux.erreur;
+    APP->>APP: Log error;
     end
     APP->>DAG: Notify status
 ```

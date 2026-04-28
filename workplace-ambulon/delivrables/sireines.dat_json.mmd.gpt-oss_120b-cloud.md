@@ -31,21 +31,21 @@ SIREINES (Système d’Information REgistre des Experts et Spécialistes) recens
 ```mermaid
 graph LR
     subgraph Utilisateurs;
-        UA[Agent] 
-        UB[Administrateur]
+    UA[Agent] 
+    UB[Administrateur]
     end
     subgraph Frontend;
-        UI[Interface Web (Struts2 + FreeMarker)]
+    UI[Interface Web (Struts2 + FreeMarker)]
     end
     subgraph Backend;
-        APP[Application Java (Tomcat 7, J2EE, Spring, Vertigo)]
-        BIRT[BIRT Reporting]
-        ES[Elasticsearch Embedded (recherche)]
+    APP[Application Java (Tomcat 7, J2EE, Spring, Vertigo)]
+    BIRT[BIRT Reporting]
+    ES[Elasticsearch Embedded (recherche)]
     end
     DB[(PostgreSQL 14 – schéma SIREINES)]
     subgraph Infra;
-        DOCKER[Docker / Docker‑Compose]
-        IaaS[Eco4 IaaS – Paris La Défense]
+    DOCKER[Docker / Docker‑Compose]
+    IaaS[Eco4 IaaS – Paris La Défense]
     end
     UA --> UI;
     UB --> UI;
@@ -178,13 +178,13 @@ graph LR
 ```mermaid
 graph TB
     subgraph "Docker‑Compose"
-        APP[📦 sireines_app_usine_container<br/>Tomcat 7 + WAR]
-        DB[📦 sireines_db_usine_container<br/>PostgreSQL 14]
-        PGADMIN[📦 sireines_pgadmin_container<br/>pgAdmin 4]
+    APP[📦 sireines_app_usine_container<br/>Tomcat 7 + WAR]
+    DB[📦 sireines_db_usine_container<br/>PostgreSQL 14]
+    PGADMIN[📦 sireines_pgadmin_container<br/>pgAdmin 4]
     end
     subgraph "Volumes persistants"
-        VDB[(sireines_db_sireines_vol)]
-        VPG[(sireines_pgadmin_sireines_vol)]
+    VDB[(sireines_db_sireines_vol)]
+    VPG[(sireines_pgadmin_sireines_vol)]
     end
     APP -->|JDBC| DB;
     APP -->|HTTP (BIRT)| BIRT[🖨 BIRT Engine (embedded)]
@@ -218,11 +218,11 @@ sequencediagram;
     S->>IS: ImportsServices.importFile(file)
     IS->>DB: INSERT/UPDATE tables (import, logs)
     alt Erreur de validation;
-        IS->>B: Génère rapport d’erreur BIRT;
-        B->>S: Retour du PDF d’erreur;
-        S->>UI: Affiche lien téléchargement;
+    IS->>B: Génère rapport d’erreur BIRT;
+    B->>S: Retour du PDF d’erreur;
+    S->>UI: Affiche lien téléchargement;
     else Succès;
-        IS->>UI: Retour OK;
+    IS->>UI: Retour OK;
     end
     UI->>Agent: Affiche résultat (succès ou rapport)
 ```

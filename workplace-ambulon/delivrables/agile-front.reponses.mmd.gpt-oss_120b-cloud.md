@@ -193,24 +193,24 @@ Le composant `Login.vue` ne communique pas directement avec le service ; il se
 ```mermaid
 graph TD
     subgraph UI;
-        A[App.vue] --> B[Router]
-        B --> C[Views]
-        C --> D[Components]
-        C --> E[Mixins]
+    A[App.vue] --> B[Router]
+    B --> C[Views]
+    C --> D[Components]
+    C --> E[Mixins]
     end
     subgraph State;
-        F[Vuex Store] --> G[Modules]
-        G --> security[security.js]
-        G --> studies[studies.js]
+    F[Vuex Store] --> G[Modules]
+    G --> security[security.js]
+    G --> studies[studies.js]
     end
     subgraph Services;
-        H[LegacyProxyService] --> I[API / Etudes]
-        H --> J[API / Export]
-        K[SecurityService] --> L[API / Security]
+    H[LegacyProxyService] --> I[API / Etudes]
+    H --> J[API / Export]
+    K[SecurityService] --> L[API / Security]
     end
     subgraph Build;
-        M[Vue‑CLI] --> N[Webpack]
-        N --> O[Dist]
+    M[Vue‑CLI] --> N[Webpack]
+    N --> O[Dist]
     end
     UI --> F;
     UI --> H;

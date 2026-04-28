@@ -26,16 +26,16 @@
 ```mermaid
 graph LR
     subgraph "Système ambulon"
-        A[Application Front‑end] 
-        B[API / Service Back‑end] 
-        C[Base de données (PostgreSQL)] 
-        D[Service de messagerie (RabbitMQ / Kafka)] 
-        E[Service d’authentification (OAuth2/OIDC)] 
+    A[Application Front‑end] 
+    B[API / Service Back‑end] 
+    C[Base de données (PostgreSQL)] 
+    D[Service de messagerie (RabbitMQ / Kafka)] 
+    E[Service d’authentification (OAuth2/OIDC)] 
     end
     subgraph "Systèmes externes"
-        X[Plateforme de cartographie (OSM / Google Maps)] 
-        Y[ERP Hospitalier] 
-        Z[Service de notification (SMS/Email)] 
+    X[Plateforme de cartographie (OSM / Google Maps)] 
+    Y[ERP Hospitalier] 
+    Z[Service de notification (SMS/Email)] 
     end
     A --> B;
     B --> C;
@@ -132,47 +132,47 @@ graph LR
 ```mermaid
 classDiagram
     class Patient {
-        +String id;
-        +String firstName;
-        +String lastName;
-        +Date   birthDate;
-        +String gender;
-        +String phone;
-        +String address;
+    +String id;
+    +String firstName;
+    +String lastName;
+    +Date   birthDate;
+    +String gender;
+    +String phone;
+    +String address;
 
     class Ambulance {
-        +String id;
-        +String licensePlate;
-        +String model;
-        +String status   // AVAILABLE, EN_ROUTE, MAINTENANCE;
-        +String driverId;
+    +String id;
+    +String licensePlate;
+    +String model;
+    +String status   // AVAILABLE, EN_ROUTE, MAINTENANCE;
+    +String driverId;
 
     class Mission {
-        +String id;
-        +DateTime requestTime;
-        +DateTime startTime;
-        +DateTime endTime;
-        +String status   // PENDING, ASSIGNED, EN_ROUTE, ARRIVED, COMPLETED, CANCELED;
-        +String patientId;
-        +String ambulanceId;
-        +String pickupLocation;
-        +String destinationLocation;
-        +String notes;
+    +String id;
+    +DateTime requestTime;
+    +DateTime startTime;
+    +DateTime endTime;
+    +String status   // PENDING, ASSIGNED, EN_ROUTE, ARRIVED, COMPLETED, CANCELED;
+    +String patientId;
+    +String ambulanceId;
+    +String pickupLocation;
+    +String destinationLocation;
+    +String notes;
 
     class User {
-        +String id;
-        +String email;
-        +String role   // DISPATCHER, DRIVER, ADMIN, PATIENT;
-        +String passwordHash;
-        +Boolean active;
+    +String id;
+    +String email;
+    +String role   // DISPATCHER, DRIVER, ADMIN, PATIENT;
+    +String passwordHash;
+    +Boolean active;
 
     class Notification {
-        +String id;
-        +String missionId;
-        +String recipientId;
-        +String channel   // EMAIL, SMS, PUSH;
-        +String status    // SENT, FAILED, PENDING;
-        +DateTime sentAt;
+    +String id;
+    +String missionId;
+    +String recipientId;
+    +String channel   // EMAIL, SMS, PUSH;
+    +String status    // SENT, FAILED, PENDING;
+    +DateTime sentAt;
 
     Patient "1" <-- "0..*" Mission : patient;
     Ambulance "1" <-- "0..*" Mission : ambulance;
@@ -196,7 +196,7 @@ classDiagram
 ### 6.1 Diagrammes de cas d’utilisation (UML)  
 
 ```mermaid
-%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'default'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 usecaseDiagram;
     actor Dispatcher as D;
     actor Driver as DR;

@@ -107,22 +107,22 @@ graph TD
     D -->|restore script| H[restore.sh]
 
     subgraph "Configuration"
-        I[.env] --> C
-        J[param.ini] --> D
-        K[config_CAS.php] --> C
+    I[.env] --> C
+    J[param.ini] --> D
+    K[config_CAS.php] --> C
     end
 
     subgraph "CI/CD"
-        L[GitLab Runner] -->|build| C
-        L -->|test| D
-        L -->|scan| M[Trivy/OWASP‑ZAP]
+    L[GitLab Runner] -->|build| C
+    L -->|test| D
+    L -->|scan| M[Trivy/OWASP‑ZAP]
     end
 
     subgraph "Monitoring"
-        N[Prometheus] --> C
-        N --> D
-        O[Grafana] --> N
-        P[ELK] --> L
+    N[Prometheus] --> C
+    N --> D
+    O[Grafana] --> N
+    P[ELK] --> L
     end
 ```
 

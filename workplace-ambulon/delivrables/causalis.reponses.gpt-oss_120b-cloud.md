@@ -98,25 +98,25 @@ Ce document regroupe l’ensemble des informations techniques relatives à **Cau
 ```mermaid
 graph TD
     subgraph Persistence;
-        DB[(Oracle Database)]
-        Castor[Castor JDO]
+    DB[(Oracle Database)]
+    Castor[Castor JDO]
     end
     subgraph ServiceLayer;
-        RefSrv[Reference Services]
-        GradeSrv[GradeService]
-        StatutSrv[StatutService]
-        DomaineSrv[DomaineAffectationService]
-        SyncSrv[SynchronizeService]
+    RefSrv[Reference Services]
+    GradeSrv[GradeService]
+    StatutSrv[StatutService]
+    DomaineSrv[DomaineAffectationService]
+    SyncSrv[SynchronizeService]
     end
     subgraph WebLayer;
-        Struts[Struts 1.x]
-        Actions[Struts Actions]
-        Forms[Struts Forms]
-        JSPs[JSP Views]
+    Struts[Struts 1.x]
+    Actions[Struts Actions]
+    Forms[Struts Forms]
+    JSPs[JSP Views]
     end
     subgraph WebServices;
-        WSClient[WS Client]
-        WSHelper[WS Helpers & Predicates]
+    WSClient[WS Client]
+    WSHelper[WS Helpers & Predicates]
     end
     DB --> Castor;
     Castor --> RefSrv;

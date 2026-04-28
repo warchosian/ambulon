@@ -174,21 +174,21 @@ graph LR
 ```mermaid
 graph TD
     subgraph DMZ;
-        NGINX[Nginx (load‑balancer)]
+    NGINX[Nginx (load‑balancer)]
     end
     subgraph APP;
-        TOMCAT[Tomcat 9 (WAR)]
-        WEB[admin_ep Web UI]
-        SRV[Struts2 Controllers & Services]
+    TOMCAT[Tomcat 9 (WAR)]
+    WEB[admin_ep Web UI]
+    SRV[Struts2 Controllers & Services]
     end
     subgraph DB;
-        PG[PostgreSQL]
+    PG[PostgreSQL]
     end
     subgraph EXT;
-        JORF[Flux JORF (RSS)]
-        CERB[Service Cerbère (SSO)]
-        MAIL[Serveur Mail]
-        PSIN[Supervision PSIN]
+    JORF[Flux JORF (RSS)]
+    CERB[Service Cerbère (SSO)]
+    MAIL[Serveur Mail]
+    PSIN[Supervision PSIN]
     end
     NGINX --> TOMCAT;
     TOMCAT --> WEB;
@@ -302,19 +302,19 @@ sequencediagram;
 ```mermaid
 graph TD
     subgraph DEV[Développement]
-        DEV_NGINX[Nginx (local)]
-        DEV_TOMCAT[Tomcat (Docker)]
-        DEV_PG[PostgreSQL (Docker)]
+    DEV_NGINX[Nginx (local)]
+    DEV_TOMCAT[Tomcat (Docker)]
+    DEV_PG[PostgreSQL (Docker)]
     end
     subgraph REC[Recette]
-        REC_NGINX[Nginx]
-        REC_TOMCAT[Tomcat Cluster]
-        REC_PG[PostgreSQL 15]
+    REC_NGINX[Nginx]
+    REC_TOMCAT[Tomcat Cluster]
+    REC_PG[PostgreSQL 15]
     end
     subgraph PROD[Production]
-        PROD_NGINX[Nginx (pair)]
-        PROD_TOMCAT[Tomcat Cluster]
-        PROD_PG[PostgreSQL 15]
+    PROD_NGINX[Nginx (pair)]
+    PROD_TOMCAT[Tomcat Cluster]
+    PROD_PG[PostgreSQL 15]
     end
     DEV_NGINX --> DEV_TOMCAT --> DEV_PG;
     REC_NGINX --> REC_TOMCAT --> REC_PG;

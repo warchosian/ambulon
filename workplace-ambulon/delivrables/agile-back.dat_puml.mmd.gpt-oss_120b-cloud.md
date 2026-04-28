@@ -16,15 +16,15 @@
 ```mermaid
 graph LR
     subgraph Utilisateurs;
-        U1[Administrateur] 
-        U2[Utilisateur métier] 
-        U3[Auditeur / RSSI]
+    U1[Administrateur] 
+    U2[Utilisateur métier] 
+    U3[Auditeur / RSSI]
     end
     subgraph Systèmes externes;
-        CAS[CAS Authentication Server]
-        SMTP[Serveur SMTP (mail)]
-        DB[PostgreSQL DB]
-        FE[Agile‑front (Angular/React)]
+    CAS[CAS Authentication Server]
+    SMTP[Serveur SMTP (mail)]
+    DB[PostgreSQL DB]
+    FE[Agile‑front (Angular/React)]
     end
     NGINX[Nginx Reverse‑Proxy] --> PHP[Symfony (agile‑back)]
     PHP --> DB;
@@ -167,12 +167,12 @@ graph LR
 ```mermaid
 graph TB
     subgraph "Infrastructure OpenStack"
-        NGINX[Nginx Load‑Balancer] 
-        PHPFPM[PHP‑FPM (Symfony)] 
-        POSTGRES[PostgreSQL] 
-        REDIS[Redis] 
-        SMTP[SMTP Relay] 
-        CAS[CAS Server (ext.)]
+    NGINX[Nginx Load‑Balancer] 
+    PHPFPM[PHP‑FPM (Symfony)] 
+    POSTGRES[PostgreSQL] 
+    REDIS[Redis] 
+    SMTP[SMTP Relay] 
+    CAS[CAS Server (ext.)]
     end
     NGINX --> PHPFPM;
     PHPFPM --> POSTGRES;

@@ -11,13 +11,13 @@ Le projet SIRENES est un système web Java basé sur le framework Struts2, conç
 ```mermaid
 classDiagram
     class SIRENES {
-        +Accueil;
-        +Agents;
-        +Dossiers;
-        +Extractions;
-        +Imports;
-        +Referentiel;
-        +Seances;
+    +Accueil;
+    +Agents;
+    +Dossiers;
+    +Extractions;
+    +Imports;
+    +Referentiel;
+    +Seances;
 
 ```
 
@@ -30,25 +30,25 @@ classDiagram
 ```mermaid
 classDiagram
     class SIRENES {
-        +Accueil;
-        +Agents;
-        +Dossiers;
-        +Extractions;
-        +Imports;
-        +Referentiel;
-        +Seances;
+    +Accueil;
+    +Agents;
+    +Dossiers;
+    +Extractions;
+    +Imports;
+    +Referentiel;
+    +Seances;
 
     class Database {
-        +Modele;
-        +Script;
+    +Modele;
+    +Script;
 
     class Deployment {
-        +Configuration;
+    +Configuration;
 
     class WebApplication {
-        +JSP;
-        +CSS;
-        +JavaScript;
+    +JSP;
+    +CSS;
+    +JavaScript;
 
     SIRENES --|> Database;
     SIRENES --|> Deployment;

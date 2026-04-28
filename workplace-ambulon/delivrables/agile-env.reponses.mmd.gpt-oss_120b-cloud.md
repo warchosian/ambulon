@@ -133,11 +133,11 @@ Ces fichiers sont montés dans le conteneur via le `docker‑compose.dev.yml` (v
 ```mermaid
 graph TD
     subgraph Host;
-        A[Docker Engine]
+    A[Docker Engine]
     end
     subgraph Services;
-        DB[PostgreSQL<br/>agile-env-db] 
-        APP[PHP 7.3 + Apache<br/>agile-env-app]
+    DB[PostgreSQL<br/>agile-env-db] 
+    APP[PHP 7.3 + Apache<br/>agile-env-app]
     end
     A --> DB;
     A --> APP;

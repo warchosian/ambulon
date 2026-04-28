@@ -12,20 +12,20 @@
 ```mermaid
 graph LR
     subgraph Utilisateurs;
-        UA[Analystes financiers] 
-        UB[Administrateurs système] 
-        UC[Responsable sécurité] 
+    UA[Analystes financiers] 
+    UB[Administrateurs système] 
+    UC[Responsable sécurité] 
     end
     subgraph Système Afinope;
-        A1[Dagster orchestrateur] 
-        A2[Web UI (Dagster Webserver)] 
-        A3[Modules d’ingestion CSV] 
-        A4[Base de données PostgreSQL] 
-        A5[Superset dashboards] 
+    A1[Dagster orchestrateur] 
+    A2[Web UI (Dagster Webserver)] 
+    A3[Modules d’ingestion CSV] 
+    A4[Base de données PostgreSQL] 
+    A5[Superset dashboards] 
     end
     subgraph Externes;
-        E1[Sources CSV (ex‑fileshare)] 
-        E2[Service de sauvegarde (B3/Outscale/GC)] 
+    E1[Sources CSV (ex‑fileshare)] 
+    E2[Service de sauvegarde (B3/Outscale/GC)] 
     end
     UA -->|consultation| A5;
     UA -->|déclenchement manuel| A2;
@@ -157,12 +157,12 @@ Il produit les tableaux de bord **Superset** utilisés par les analystes pour 
 ```mermaid
 graph TD
     subgraph "Conteneurs"
-        C1[nginx (load‑balancer)] 
-        C2[dagster‑webserver] 
-        C3[dagster‑daemon (scheduler)] 
-        C4[afinope‑app (Python ETL)] 
-        C5[postgres (db)] 
-        C6[superset (BI)] 
+    C1[nginx (load‑balancer)] 
+    C2[dagster‑webserver] 
+    C3[dagster‑daemon (scheduler)] 
+    C4[afinope‑app (Python ETL)] 
+    C5[postgres (db)] 
+    C6[superset (BI)] 
     end
     C1 --> C2;
     C1 --> C6;

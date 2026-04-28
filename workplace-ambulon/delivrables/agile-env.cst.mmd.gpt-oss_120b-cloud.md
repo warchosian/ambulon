@@ -23,12 +23,12 @@
 ### 2.1 Diagramme de composants (UML)  
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%
 componentDiagram;
     direction LR
     %% Conteneurs Docker
     component "WebApp (PHP‑Apache)" as WEB {
-        [php‑fpm] --> [Apache]
+    [php‑fpm] --> [Apache]
 
     component "PostgreSQL DB" as DB
     component "Config / Secrets" as CONF
@@ -40,9 +40,9 @@ componentDiagram;
 
     %% Environnement d’exécution
     node "Docker‑Host" {
-        WEB
-        DB
-        CONF
+    WEB
+    DB
+    CONF
 
 ```
 
@@ -92,27 +92,27 @@ componentDiagram;
 ### 4.1 Diagramme de classes (UML)
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%
 classDiagram
     class ConfigLoader {
-        +loadFromEnv(): array
-        +loadFromIni(filePath): array
-        -parseIni(content): array
+    +loadFromEnv(): array
+    +loadFromIni(filePath): array
+    -parseIni(content): array
 
     class DatabaseConnector {
-        +connect(): PDO
-        -buildDsn(): string
+    +connect(): PDO
+    -buildDsn(): string
 
     class RequestHandler {
-        +handle(Request): Response
-        -route(Request): Controller
+    +handle(Request): Response
+    -route(Request): Controller
 
     class Controller {
-        <<interface>>
-        +execute(Request): Response
+    <<interface>>
+    +execute(Request): Response
 
     class UserController {
-        +execute(Request): Response
+    +execute(Request): Response
 
     ConfigLoader --> DatabaseConnector : uses
     RequestHandler --> Controller : delegates
@@ -138,7 +138,7 @@ classDiagram
 ### 5.1 Diagramme de séquence – Démarrage de l’environnement
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%
 sequenceDiagram
     participant Dev as Développeur
     participant Compose as Docker‑Compose
@@ -159,7 +159,7 @@ sequenceDiagram
 ### 5.2 Diagramme d’états – Cycle de vie d’un conteneur WebApp
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%
 stateDiagram-v2
     [*] --> Created
     Created --> Starting
@@ -173,7 +173,7 @@ stateDiagram-v2
 ### 5.3 Diagramme d’activités – Traitement d’une requête HTTP
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%
 flowchart TD
     A[Requête HTTP entrante] --> B[Apache reçoit la requête]
     B --> C[PHP‑FPM exécute le script index.php]
@@ -243,22 +243,22 @@ components:
 ### 7.1 Diagramme de déploiement (UML)
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%
 deploymentDiagram;
     node "Dev‑Host" {
-        container "docker‑compose (dev)" {
-            component "WebApp (php‑apache)" as WA
-            component "Postgres (db)" as PG
+    container "docker‑compose (dev)" {
+    component "WebApp (php‑apache)" as WA
+    component "Postgres (db)" as PG
 
     node "CI/CD‑Runner" {
-        component "Build Stage" as Build
-        component "Test Stage" as Test
-        component "Release Stage" as Release
+    component "Build Stage" as Build
+    component "Test Stage" as Test
+    component "Release Stage" as Release
 
     node "Prod‑Cluster" {
-        container "K8s / Swarm" {
-            component "WebApp (replicas)" as WA_P
-            component "Postgres (HA)" as PG_P
+    container "K8s / Swarm" {
+    component "WebApp (replicas)" as WA_P
+    component "Postgres (HA)" as PG_P
 
     WA --> PG : PDO
     Build --> WA : build image

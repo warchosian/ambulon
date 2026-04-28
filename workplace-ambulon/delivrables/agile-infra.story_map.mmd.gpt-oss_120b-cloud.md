@@ -185,30 +185,30 @@ Fonctionnalités associées (axe vertical ↓ sous chaque étape) :
 graph TB
     %% Backbone - Parcours utilisateur;
     subgraph backbone[" BACKBONE - Parcours utilisateur "]
-        step1["Préparer l'environnement"]
-        step2["Charger les secrets"]
-        step3["Choisir les versions"]
-        step4["Uploader le docker‑compose"]
-        step5["Démarrer les containers"]
-        step6["Vérifier le déploiement"]
+    step1["Préparer l'environnement"]
+    step2["Charger les secrets"]
+    step3["Choisir les versions"]
+    step4["Uploader le docker‑compose"]
+    step5["Démarrer les containers"]
+    step6["Vérifier le déploiement"]
     end
     %% MVP - Fonctionnalités indispensables;
     subgraph mvp[" MVP – Fonctionnalités essentielles "]
-        f11["Sélectionner target (prod/test)"]
-        f21["Récupérer secretKey du vault"]
-        f31["Choisir back/front/db version"]
-        f41["Rendre le template docker‑compose"]
-        f51["docker compose up -d"]
-        f61["Accusé de réception HTTP"]
+    f11["Sélectionner target (prod/test)"]
+    f21["Récupérer secretKey du vault"]
+    f31["Choisir back/front/db version"]
+    f41["Rendre le template docker‑compose"]
+    f51["docker compose up -d"]
+    f61["Accusé de réception HTTP"]
     end
     %% V2+ - Fonctionnalités complémentaires;
     subgraph v2[" V2+ – Améliorations "]
-        f12["Activer dry‑run"]
-        f22["Décrypter variables"]
-        f32["Appliquer tags Docker"]
-        f42["Copier fichier dans {{ app_path }}"]
-        f52["Gestion des logs"]
-        f62["Health‑check détaillé"]
+    f12["Activer dry‑run"]
+    f22["Décrypter variables"]
+    f32["Appliquer tags Docker"]
+    f42["Copier fichier dans {{ app_path }}"]
+    f52["Gestion des logs"]
+    f62["Health‑check détaillé"]
     end
     %% Flux;
     step1 --> f11;

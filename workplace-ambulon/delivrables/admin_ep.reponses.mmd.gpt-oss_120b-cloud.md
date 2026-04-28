@@ -308,15 +308,15 @@ Puis copie le WAR dans le répertoire de déploiement Tomcat et redémarre le se
 ```mermaid
 flowchart LR
     subgraph WEB[Web Tier]
-        A[Struts2 Controllers] --> B[Vertigo Services]
-        B --> C[DAO (JDBC)]
+    A[Struts2 Controllers] --> B[Vertigo Services]
+    B --> C[DAO (JDBC)]
     end
     subgraph BATCH[Batch / Scheduler]
-        D[ArticleAnalyser] --> B;
-        D --> E[JORF Extractor]
+    D[ArticleAnalyser] --> B;
+    D --> E[JORF Extractor]
     end
     subgraph DB[PostgreSQL]
-        C --> F[(integration schema)]
+    C --> F[(integration schema)]
     end
     A --> G[HTML/JSP Views]
     G --> H[Static assets (CSS, JS, images)]

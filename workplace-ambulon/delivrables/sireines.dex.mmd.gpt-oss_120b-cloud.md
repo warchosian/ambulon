@@ -93,11 +93,11 @@ Using the **project context** provided below, generate a **complete Dossier d’
 ```mermaid
 graph TB
     subgraph DockerHost["Docker Host (Paris‑La Défense)"]
-        direction LR;
-        Tomcat["Tomcat 7 (sireines_app_usine_container)"]
-        PG["PostgreSQL 14.1 (sireines_db_usine_container)"]
-        PgAdmin["pgAdmin (sireines_pgadmin_container)"]
-        BIRT["BIRT 4.3 (intégré)"]
+    direction LR;
+    Tomcat["Tomcat 7 (sireines_app_usine_container)"]
+    PG["PostgreSQL 14.1 (sireines_db_usine_container)"]
+    PgAdmin["pgAdmin (sireines_pgadmin_container)"]
+    BIRT["BIRT 4.3 (intégré)"]
     end
     Tomcat -->|JDBC| PG;
     Tomcat -->|BIRT reports| BIRT;

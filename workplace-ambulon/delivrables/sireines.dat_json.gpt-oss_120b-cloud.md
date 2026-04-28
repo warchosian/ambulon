@@ -116,9 +116,9 @@ graph TD
 ```mermaid
 graph TB
     subgraph "Docker‑Compose"
-        A[Container: sireines_app_usine]:::app;
-        B[Container: sireines_db_usine]:::db;
-        C[Container: sireines_pgadmin]:::admin;
+    A[Container: sireines_app_usine]:::app;
+    B[Container: sireines_db_usine]:::db;
+    C[Container: sireines_pgadmin]:::admin;
     end
     A -->|JDBC| B;
     A -->|HTTP| D[BIRT Server]
@@ -153,15 +153,15 @@ sequencediagram;
     Note right of W: SSO, jeton stocké en session;
     W->>D: Vérification des droits (RBAC)
     alt droit ok;
-        W->>W: Affiche formulaire d’extraction;
-        U->>W: Soumet paramètres (extraction 04)
-        W->>D: Query SQL (index = IDX_MOTS_CLEFS)
-        D-->>W: Résultat (JSON)
-        W->>B: Request report (template = 04_extraction_totale.rptdesign)
-        B-->>W: PDF (ou CSV)
-        W->>U: Téléchargement du rapport;
+    W->>W: Affiche formulaire d’extraction;
+    U->>W: Soumet paramètres (extraction 04)
+    W->>D: Query SQL (index = IDX_MOTS_CLEFS)
+    D-->>W: Résultat (JSON)
+    W->>B: Request report (template = 04_extraction_totale.rptdesign)
+    B-->>W: PDF (ou CSV)
+    W->>U: Téléchargement du rapport;
     else droit refusé;
-        W->>U: Message d’erreur (403)
+    W->>U: Message d’erreur (403)
     end
 ```
 
@@ -190,10 +190,10 @@ sequencediagram;
 ```mermaid
 graph LR
     subgraph "ECO4 Cloud"
-        LB[Load‑Balancer Nginx] --> A1[App #1]
-        LB --> A2[App #2]:::prod;
-        A1 & A2 --> DB[(PostgreSQL Cluster)]
-        A1 & A2 --> BIRT[(BIRT Server)]
+    LB[Load‑Balancer Nginx] --> A1[App #1]
+    LB --> A2[App #2]:::prod;
+    A1 & A2 --> DB[(PostgreSQL Cluster)]
+    A1 & A2 --> BIRT[(BIRT Server)]
     end
     classDef prod fill:#ffebee,stroke:#b71c1c;
 ```

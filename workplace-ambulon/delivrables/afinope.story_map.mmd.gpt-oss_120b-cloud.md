@@ -188,30 +188,30 @@ Fonctionnalités associées (axe vertical ↓ sous chaque étape) :
 graph TB
     %% Backbone – Parcours utilisateur;
     subgraph backbone[" BACKBONE – Parcours utilisateur "]
-        step1["Ingestion des CSV"]
-        step2["Validation & nettoyage"]
-        step3["Stockage en base"]
-        step4["Transformation"]
-        step5["Rapport d'exécution"]
-        step6["Visualisation"]
+    step1["Ingestion des CSV"]
+    step2["Validation & nettoyage"]
+    step3["Stockage en base"]
+    step4["Transformation"]
+    step5["Rapport d'exécution"]
+    step6["Visualisation"]
     end
     %% MVP – Fonctionnalités indispensables;
     subgraph mvp[" MVP – Fonctionnalités indispensables "]
-        f11["Lister les fichiers .csv"]
-        f12["Valider le schéma"]
-        f13["Insérer les données"]
-        f14["Calculer les agrégats"]
-        f15["Exporter le rapport"]
-        f16["Afficher le tableau de bord"]
+    f11["Lister les fichiers .csv"]
+    f12["Valider le schéma"]
+    f13["Insérer les données"]
+    f14["Calculer les agrégats"]
+    f15["Exporter le rapport"]
+    f16["Afficher le tableau de bord"]
     end
     %% V2+ – Fonctionnalités reportables;
     subgraph v2[" V2+ – Fonctionnalités à prioriser ultérieurement "]
-        f21["Déplacer les fichiers traités"]
-        f22["Rapport d’erreurs détaillé"]
-        f23["Gestion des duplicatas"]
-        f24["Vue matérialisée tdb_view"]
-        f25["Export PDF"]
-        f26["Alertes SMS"]
+    f21["Déplacer les fichiers traités"]
+    f22["Rapport d’erreurs détaillé"]
+    f23["Gestion des duplicatas"]
+    f24["Vue matérialisée tdb_view"]
+    f25["Export PDF"]
+    f26["Alertes SMS"]
     end
     %% Flux;
     step1 --> f11;

@@ -51,6 +51,12 @@ class RegexDiagramFixer:
             (r'^\s*\}\s*$', r''),  # Remove closing braces from packages
             # Clean up multiple blank lines created by package removal
             (r'\n\s*\n\s*\n', r'\n\n'),  # Replace 3+ newlines with 2
+            # Fix classDiagram: remove semicolons from simple class declarations
+            (r'(class\s+[\w<>\.]+)\s*;(\s*)$', r'\1\2'),  # class Name; → class Name
+            # Fix over-indentation (8 spaces → 4 spaces) in classDiagram content
+            (r'^        (?!$)', r'    '),  # Replace 8 spaces at line start with 4
+            # Remove invalid class declarations with dots and parentheses
+            (r'^\s*class\s+\.\.\.\s*\(.*\)\s*$', r''),  # Remove "class ... (text)" lines
             # Fix graph type declarations with semicolons: graph TB; → graph TB
             (r'\b(graph|flowchart)\s+(TB|LR|TD|BT|RL|DLR|TBL);', r'\1 \2'),
             # Fix end statements with semicolons: end; → end

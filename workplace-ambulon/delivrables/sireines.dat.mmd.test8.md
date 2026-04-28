@@ -11,8 +11,8 @@ L'application SIRENES est un outil metier qui permet la collecte et la concentra
 ```mermaid
 classDiagram
     class Sireines {
-        + Collecte;
-        + Concentration;
+    + Collecte;
+    + Concentration;
 
 ```
 
@@ -84,16 +84,16 @@ L'application SIRENES interagit avec divers partenaires fonctionnels tels que le
 ```mermaid
 classDiagram
     class ApplicationWeb {
-        + Controller;
-        + Service;
-        + Repository;
+    + Controller;
+    + Service;
+    + Repository;
 
     class BaseDonnee {
-        + PostgreSQL;
+    + PostgreSQL;
 
     class AutresServices {
-        + BIRT;
-        + Cerbere;
+    + BIRT;
+    + Cerbere;
 
     ApplicationWeb --|> BaseDonnee;
     ApplicationWeb --|> AutresServices

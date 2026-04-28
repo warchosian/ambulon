@@ -145,14 +145,14 @@ graph TD
 ```mermaid
 graph TD
     subgraph Container;
-        A[Tomcat (admin_ep‑web)] --> B[PostgreSQL (admin_ep‑db)]
-        A --> C[Scheduler (ArticleAnalyser)]
-        A --> D[Cerbère SSO Client]
-        A --> E[Mail Sender]
+    A[Tomcat (admin_ep‑web)] --> B[PostgreSQL (admin_ep‑db)]
+    A --> C[Scheduler (ArticleAnalyser)]
+    A --> D[Cerbère SSO Client]
+    A --> E[Mail Sender]
     end
     subgraph External;
-        F[JORF Feed] --> C;
-        G[PSIN Supervision] --> A;
+    F[JORF Feed] --> C;
+    G[PSIN Supervision] --> A;
     end
     User --> A
 ```

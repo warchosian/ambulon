@@ -136,23 +136,23 @@ sequencediagram;
 ```mermaid
 graph LR
     subgraph Client;
-        UI[Struts2 / JSP UI]
+    UI[Struts2 / JSP UI]
     end
     subgraph Server;
-        A[Tomcat 7 (Java 8)]
-        B[Spring Core + Vertigo (DI, Search)]
-        C[Struts2 Action Controllers]
-        D[Business Services (Dossiers, Extractions, Imports)]
-        E[BIRT Engine (4.3)]
-        F[Elasticsearch Embedded (search index)]
+    A[Tomcat 7 (Java 8)]
+    B[Spring Core + Vertigo (DI, Search)]
+    C[Struts2 Action Controllers]
+    D[Business Services (Dossiers, Extractions, Imports)]
+    E[BIRT Engine (4.3)]
+    F[Elasticsearch Embedded (search index)]
     end
     subgraph DB;
-        G[Oracle PREP37]
+    G[Oracle PREP37]
     end
     subgraph Infra;
-        H[Docker (dev / test) – images: tomcat, postgres]
-        I[GitLab CI/CD – Maven assembly, Dockerfile]
-        J[NGINX reverse‑proxy (prod)]
+    H[Docker (dev / test) – images: tomcat, postgres]
+    I[GitLab CI/CD – Maven assembly, Dockerfile]
+    J[NGINX reverse‑proxy (prod)]
     end
     UI --> A;
     A --> B;
@@ -201,16 +201,16 @@ graph TB
 ```mermaid
 flowchart LR
     subgraph UI;
-        A[Formulaire création dossier]
-        B[Formulaire qualification]
+    A[Formulaire création dossier]
+    B[Formulaire qualification]
     end
     subgraph Service;
-        C[DossierService]
-        D[QualificationService]
-        E[ExportService (BIRT)]
+    C[DossierService]
+    D[QualificationService]
+    E[ExportService (BIRT)]
     end
     subgraph DB;
-        F[(Oracle PREP37)]
+    F[(Oracle PREP37)]
     end
     A --> C --> F;
     B --> D --> F;

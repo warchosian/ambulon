@@ -21,19 +21,19 @@
 ```mermaid
 graph LR
     subgraph "Utilisateur"
-        U1[Utilisateur (admin)]
-        U2[Utilisateur (consultant)]
+    U1[Utilisateur (admin)]
+    U2[Utilisateur (consultant)]
     end
     subgraph "Système agile‑back"
-        B[agile‑back (Symfony/PHP)]
-        DB[(PostgreSQL DB)]
-        CAS[CAS (phpCAS)]
-        API[API Platform (REST/JSON)]
-        UI[Interface web (Twig)]
+    B[agile‑back (Symfony/PHP)]
+    DB[(PostgreSQL DB)]
+    CAS[CAS (phpCAS)]
+    API[API Platform (REST/JSON)]
+    UI[Interface web (Twig)]
     end
     subgraph "Systèmes externes"
-        FE[agile‑front (Vue/JS)]
-        ES[Services d’e‑mail (SMTP)]
+    FE[agile‑front (Vue/JS)]
+    ES[Services d’e‑mail (SMTP)]
     end
     U1 -->|login| B;
     U2 -->|login| B;
@@ -140,75 +140,75 @@ graph LR
 ```mermaid
 classDiagram
     class Etudes {
-        +int id;
-        +string titreEtude;
-        +string zoneGeographique;
-        +string contexte;
-        +string problematique;
-        +string resultatsAttendus;
-        +string objectifs;
-        +string methode;
-        +string valorisationComment;
-        +string valorisationUrl;
-        +DateTime createdAt;
-        +DateTime updatedAt;
+    +int id;
+    +string titreEtude;
+    +string zoneGeographique;
+    +string contexte;
+    +string problematique;
+    +string resultatsAttendus;
+    +string objectifs;
+    +string methode;
+    +string valorisationComment;
+    +string valorisationUrl;
+    +DateTime createdAt;
+    +DateTime updatedAt;
 
     class Bop {
-        +int id;
-        +string libelleBop;
-        +string commentairesBop;
-        +string sigle;
-        +bool visible;
+    +int id;
+    +string libelleBop;
+    +string commentairesBop;
+    +string sigle;
+    +bool visible;
 
     class Dotations {
-        +int id;
-        +int anneeDotation;
-        +float montantDotation;
-        +string sousAction;
-        +bool visible;
+    +int id;
+    +int anneeDotation;
+    +float montantDotation;
+    +string sousAction;
+    +bool visible;
 
     class Financements {
-        +int id;
-        +float demandeE;
-        +DateTime dateComite;
-        +float aeE;
-        +float cpE;
+    +int id;
+    +float demandeE;
+    +DateTime dateComite;
+    +float aeE;
+    +float cpE;
 
     class Groupes {
-        +int id;
-        +string token;
-        +string libelle;
+    +int id;
+    +string token;
+    +string libelle;
 
     class Profils {
-        +int id;
-        +string libelle;
+    +int id;
+    +string libelle;
 
     class Services {
-        +int id;
-        +string service;
-        +string direction;
-        +bool visible;
-        +string region;
+    +int id;
+    +string service;
+    +string direction;
+    +bool visible;
+    +string region;
 
     class Utilisateurs {
-        +int id;
-        +string email;
-        +string nom;
-        +string prenom;
-        +string ru;
-        +bool actif;
+    +int id;
+    +string email;
+    +string nom;
+    +string prenom;
+    +string ru;
+    +bool actif;
 
     class Territoires {
-        +int id;
-        +string territoire;
+    +int id;
+    +string territoire;
 
     class Themes {
-        +int id;
-        +string theme;
+    +int id;
+    +string theme;
 
     class Types {
-        +int id;
-        +string type;
+    +int id;
+    +string type;
 
     Etudes --> "1" Bop : bopId;
     Etudes --> "1..*" Dotations : dotations;
@@ -230,7 +230,7 @@ classDiagram
 ### 6.1 Diagramme de cas d’utilisation  
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0366d6', 'edgeLabelBackground':'#fff' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Admin as A;
     actor Utilisateur as U;

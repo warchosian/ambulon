@@ -19,20 +19,20 @@ L’application **admin_ep** (Administration des établissements publics) centra
 ```mermaid
 flowchart LR
     subgraph Users;
-        U1[SPES / DG de tutelle] 
-        U2[Opérateurs] 
-        U3[Auditeurs / RSSI] 
+    U1[SPES / DG de tutelle] 
+    U2[Opérateurs] 
+    U3[Auditeurs / RSSI] 
     end
     subgraph External;
-        Ext1[JORF (OpenData)] 
-        Ext2[Cerbère (authentification)] 
-        Ext3[ElasticSearch] 
+    Ext1[JORF (OpenData)] 
+    Ext2[Cerbère (authentification)] 
+    Ext3[ElasticSearch] 
     end
     subgraph System;
-        Nginx[Nginx (reverse‑proxy)]
-        App[admin_ep (Tomcat 9, Struts2, Java 8)]
-        DB[(PostgreSQL 9.6)]
-        Monitoring[Prometheus + Grafana]
+    Nginx[Nginx (reverse‑proxy)]
+    App[admin_ep (Tomcat 9, Struts2, Java 8)]
+    DB[(PostgreSQL 9.6)]
+    Monitoring[Prometheus + Grafana]
     end
     U1 -->|HTTPS| Nginx;
     U2 -->|HTTPS| Nginx;
@@ -167,14 +167,14 @@ Le **périmètre fonctionnel** inclut : saisie manuelle, ingestion JORF, reche
 ```mermaid
 graph TB
     subgraph "Infrastructure"
-        Nginx[Nginx (LB/Reverse‑proxy)]
-        Tomcat[Tomcat 9 (admin_ep WAR)]
-        DB[(PostgreSQL)]
-        ES[ElasticSearch]
-        Prom[Prometheus]
-        Graf[Grafana]
-        Loki[Loki]
-        Port[Portainer]
+    Nginx[Nginx (LB/Reverse‑proxy)]
+    Tomcat[Tomcat 9 (admin_ep WAR)]
+    DB[(PostgreSQL)]
+    ES[ElasticSearch]
+    Prom[Prometheus]
+    Graf[Grafana]
+    Loki[Loki]
+    Port[Portainer]
     end
     Nginx --> Tomcat;
     Tomcat --> DB;
@@ -254,7 +254,7 @@ sequencediagram;
     App->>DB: SELECT mandates WHERE end_date BETWEEN now() AND now()+7;
     DB-->>App: Resultset;
     loop for each mandate;
-        App->>Mail: Send e‑mail to référent;
+    App->>Mail: Send e‑mail to référent;
     end
     App-->>Scheduler: Alerts sent
 ```  

@@ -50,21 +50,21 @@
 ### 3.1 Process : Gestion des administrateurs (CRUD)
 
 ```mermaid
-%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%%%%%% }%%
+%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% }%%
 graph TD
     subgraph "Pool : admin_ep"
-        direction LR;
-        lane1[Gestionnaire] --> start((Start))
-        start --> task1[Afficher liste des administrateurs]
-        task1 --> gateway{Action ?}
-        gateway -->|Créer| task2[Formulaire création]
-        gateway -->|Modifier| task3[Formulaire modification]
-        gateway -->|Supprimer| task4[Confirmer suppression]
-        task2 --> task5[Valider saisie]
-        task3 --> task5;
-        task4 --> task5;
-        task5 --> service1[(Service : AdminService.saveOrUpdate())]
-        service1 --> end((End))
+    direction LR;
+    lane1[Gestionnaire] --> start((Start))
+    start --> task1[Afficher liste des administrateurs]
+    task1 --> gateway{Action ?}
+    gateway -->|Créer| task2[Formulaire création]
+    gateway -->|Modifier| task3[Formulaire modification]
+    gateway -->|Supprimer| task4[Confirmer suppression]
+    task2 --> task5[Valider saisie]
+    task3 --> task5;
+    task4 --> task5;
+    task5 --> service1[(Service : AdminService.saveOrUpdate())]
+    service1 --> end((End))
     end
 ```
 
@@ -81,19 +81,19 @@ graph TD
 ### 3.2 Process : Import JORF (automatique)
 
 ```mermaid
-%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%%%%%% }%%
+%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% }%%
 graph TD
     subgraph "Pool : admin_ep"
-        direction TB;
-        lane1[Scheduler] --> start((Start – Cron 02_00))
-        start --> task1[Downloader JORF (RSS/ZIP)]
-        task1 --> task2[Extractor JORF (XML) ]
-        task2 --> task3[Parser ArticleAnalyser]
-        task3 --> gateway{Article valide ?}
-        gateway -->|Oui| task4[Recherche établissements déjà présents]
-        gateway -->|Non| task5[Log rejet]
-        task4 --> task6[Création / mise à jour mandat (Call Activity)]
-        task6 --> end((End))
+    direction TB;
+    lane1[Scheduler] --> start((Start – Cron 02_00))
+    start --> task1[Downloader JORF (RSS/ZIP)]
+    task1 --> task2[Extractor JORF (XML) ]
+    task2 --> task3[Parser ArticleAnalyser]
+    task3 --> gateway{Article valide ?}
+    gateway -->|Oui| task4[Recherche établissements déjà présents]
+    gateway -->|Non| task5[Log rejet]
+    task4 --> task6[Création / mise à jour mandat (Call Activity)]
+    task6 --> end((End))
     end
 ```
 
@@ -103,20 +103,20 @@ graph TD
 ### 3.3 Process : Gestion des mandats (CRUD + archivage)
 
 ```mermaid
-%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%%%%%% }%%
+%%{init: {'theme':'base', 'flowchart':{'curve':'linear'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% }%%
 graph LR
     subgraph "Pool : admin_ep"
-        lane1[Gestionnaire] --> start((Start))
-        start --> task1[Rechercher mandat existant]
-        task1 --> gateway{Mandat trouvé ?}
-        gateway -->|Oui| task2[Mettre à jour mandat]
-        gateway -->|Non| task3[Créer nouveau mandat]
-        task2 --> task4[Calculer dates d’échéance]
-        task3 --> task4;
-        task4 --> service1[(MandatService.save())]
-        service1 --> boundary{Date d’échéance < 30j ?}
-        boundary -->|Oui| notify[SendMail Notification]
-        boundary -->|Non| end((End))
+    lane1[Gestionnaire] --> start((Start))
+    start --> task1[Rechercher mandat existant]
+    task1 --> gateway{Mandat trouvé ?}
+    gateway -->|Oui| task2[Mettre à jour mandat]
+    gateway -->|Non| task3[Créer nouveau mandat]
+    task2 --> task4[Calculer dates d’échéance]
+    task3 --> task4;
+    task4 --> service1[(MandatService.save())]
+    service1 --> boundary{Date d’échéance < 30j ?}
+    boundary -->|Oui| notify[SendMail Notification]
+    boundary -->|Non| end((End))
     end
 ```
 
@@ -128,11 +128,11 @@ graph LR
 ```mermaid
 graph TD
     subgraph "Pool : admin_ep"
-        lane1[Utilisateur] --> start((Start – saisie recherche))
-        start --> task1[Construire requête Lucene/Elasticsearch]
-        task1 --> service1[(SearchService.search())]
-        service1 --> task2[Afficher résultats paginés]
-        task2 --> end((End))
+    lane1[Utilisateur] --> start((Start – saisie recherche))
+    start --> task1[Construire requête Lucene/Elasticsearch]
+    task1 --> service1[(SearchService.search())]
+    service1 --> task2[Afficher résultats paginés]
+    task2 --> end((End))
     end
 ```
 
@@ -141,11 +141,11 @@ graph TD
 ```mermaid
 graph TD
     subgraph "Pool : admin_ep"
-        lane1[Ops] --> start((Start – Scheduler 00_00))
-        start --> task1[Collecter métriques (JVM, DB, temps de traitement JORF)]
-        task1 --> task2[Enregistrer dans Prometheus / Grafana]
-        task2 --> task3[Générer rapports PDF (stats, alertes)]
-        task3 --> end((End))
+    lane1[Ops] --> start((Start – Scheduler 00_00))
+    start --> task1[Collecter métriques (JVM, DB, temps de traitement JORF)]
+    task1 --> task2[Enregistrer dans Prometheus / Grafana]
+    task2 --> task3[Générer rapports PDF (stats, alertes)]
+    task3 --> end((End))
     end
 ```
 

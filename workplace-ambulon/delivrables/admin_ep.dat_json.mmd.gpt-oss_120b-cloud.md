@@ -20,15 +20,15 @@ Admin EP est une application métier permettant de :
 ```mermaid
 graph TB
     subgraph Utilisateurs;
-        U1[DG de tutelle] 
-        U2[Opérateurs] 
-        U3[SPES] 
+    U1[DG de tutelle] 
+    U2[Opérateurs] 
+    U3[SPES] 
     end
     subgraph Systèmes externes;
-        JORF[Source JORF (RSS / TAR.GZ)] 
-        CERB[Service d’authentification Cerbère] 
-        SUP[Supervision PSIN / GTI] 
-        MON[Monitoring (Prometheus/Grafana)] 
+    JORF[Source JORF (RSS / TAR.GZ)] 
+    CERB[Service d’authentification Cerbère] 
+    SUP[Supervision PSIN / GTI] 
+    MON[Monitoring (Prometheus/Grafana)] 
     end
     AdminEP[Admin EP (Web + DB)] 
 
@@ -158,17 +158,17 @@ graph TB
 ```mermaid
 graph TB
     subgraph Infra;
-        NGINX[Nginx (load‑balanced pair)] 
-        TOMCAT1[Tomcat 9 – Webapp]
-        TOMCAT2[Tomcat 9 – Webapp]
-        PG[PostgreSQL]
-        MON[Prometheus/Grafana]
-        SUP[Supervision PSIN]
+    NGINX[Nginx (load‑balanced pair)] 
+    TOMCAT1[Tomcat 9 – Webapp]
+    TOMCAT2[Tomcat 9 – Webapp]
+    PG[PostgreSQL]
+    MON[Prometheus/Grafana]
+    SUP[Supervision PSIN]
     end
     subgraph Ext;
-        USER[Utilisateurs (DG, Opérateurs, SPES)]
-        CERB[Service Cerbère]
-        JORF[Source JORF (RSS/TAR.GZ)]
+    USER[Utilisateurs (DG, Opérateurs, SPES)]
+    CERB[Service Cerbère]
+    JORF[Source JORF (RSS/TAR.GZ)]
     end
     USER -->|HTTPS| NGINX;
     NGINX -->|HTTP| TOMCAT1;

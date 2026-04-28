@@ -71,17 +71,17 @@ graph TD
 ```mermaid
 graph LR
     subgraph CI;
-        A[Commit / Tag] --> B[.gitlab-ci.yml]
-        B --> C[Kaniko Builder (gcr.io/kaniko-project/executor_debug)]
-        C --> D[Build Image Docker]
-        D --> E[Push Image to GitLab Registry]
+    A[Commit / Tag] --> B[.gitlab-ci.yml]
+    B --> C[Kaniko Builder (gcr.io/kaniko-project/executor_debug)]
+    C --> D[Build Image Docker]
+    D --> E[Push Image to GitLab Registry]
     end
     subgraph CD;
-        E --> F[Deploy on Kubernetes / Docker‑Compose]
-        F --> G[Run DB Migrations (rake db_migrate)]
-        G --> H[Install Plugin Dependencies (bundle install)]
-        H --> I[Run Redmine Plugin Migrations (rake redmine_plugins_migrate)]
-        I --> J[Create Sessions Table (rake db_sessions_create)]
+    E --> F[Deploy on Kubernetes / Docker‑Compose]
+    F --> G[Run DB Migrations (rake db_migrate)]
+    G --> H[Install Plugin Dependencies (bundle install)]
+    H --> I[Run Redmine Plugin Migrations (rake redmine_plugins_migrate)]
+    I --> J[Create Sessions Table (rake db_sessions_create)]
     end
 ```
 
@@ -118,48 +118,48 @@ erDiagram;
     USERS ||--o{ ISSUES : "creates"
     ISSUES ||--o{ ISSUE_CATEGORIES : "belongs to"
     ISSUE_CATEGORIES {
-        integer id PK;
-        string name;
-        boolean is_multi_agents;
-        integer attachments;
-        boolean deactivated;
+    integer id PK;
+    string name;
+    boolean is_multi_agents;
+    integer attachments;
+    boolean deactivated;
 
     WALLET {
-        integer id PK;
-        string title;
-        string pole;
-        string letters;
-        boolean deactivated;
+    integer id PK;
+    string title;
+    string pole;
+    string letters;
+    boolean deactivated;
 
     WALLET_SERVICE {
-        integer id PK;
-        integer wallet_id FK;
-        string service_id;
-        string service_name;
+    integer id PK;
+    integer wallet_id FK;
+    string service_id;
+    string service_name;
 
     WALLET_CATEGORY {
-        integer id PK;
-        integer wallet_id FK;
-        integer category_id;
-        string category_name;
+    integer id PK;
+    integer wallet_id FK;
+    integer category_id;
+    string category_name;
 
     TPESES {
-        integer id PK;
-        string matricule;
-        string pese;
-        unique(matricule, pese)
+    integer id PK;
+    string matricule;
+    string pese;
+    unique(matricule, pese)
 
     TLOTSDEGESTION {
-        integer id PK;
-        string matricule;
-        string lotdegestion;
-        unique(matricule, lotdegestion)
+    integer id PK;
+    string matricule;
+    string lotdegestion;
+    unique(matricule, lotdegestion)
 
     TAFFECTATIONSOP {
-        integer id PK;
-        string matricule;
-        string affectationop;
-        unique(matricule, affectationop)
+    integer id PK;
+    string matricule;
+    string affectationop;
+    unique(matricule, affectationop)
 
 ```
 

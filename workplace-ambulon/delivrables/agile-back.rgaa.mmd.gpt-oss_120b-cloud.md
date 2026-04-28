@@ -208,24 +208,24 @@ graph TB
 
     %% Phases;
     subgraph phase1["Phase 1 – Cadrage"]
-        step1["📋 Définir périmètre & critères"]
-        step2["📦 Inventaire des composants"]
+    step1["📋 Définir périmètre & critères"]
+    step2["📦 Inventaire des composants"]
     end
     subgraph phase2["Phase 2 – Évaluation"]
-        step3["🧪 Tests (manuel + outils)"]
-        step4["📊 Calcul du taux de conformité"]
+    step3["🧪 Tests (manuel + outils)"]
+    step4["📊 Calcul du taux de conformité"]
     end
     subgraph phase3["Phase 3 – Priorisation"]
-        step5["⚠️ Matrice Impact/Effort"]
-        step6["📝 Plan d’action (P1‑P4)"]
+    step5["⚠️ Matrice Impact/Effort"]
+    step6["📝 Plan d’action (P1‑P4)"]
     end
     subgraph phase4["Phase 4 – Documentation"]
-        step7["📘 Déclaration d’accessibilité"]
-        step8["📜 Dossier d’homologation"]
+    step7["📘 Déclaration d’accessibilité"]
+    step8["📜 Dossier d’homologation"]
     end
     subgraph loop["Amélioration continue"]
-        monitor["🔄 Re‑tests à chaque release"]
-        feedback["💬 Traitement des signalements"]
+    monitor["🔄 Re‑tests à chaque release"]
+    feedback["💬 Traitement des signalements"]
     end
     %% Flux;
     team -->|Initie| step1;

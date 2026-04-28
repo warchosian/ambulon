@@ -29,86 +29,85 @@
 classDiagram
     %% Packages;
 
-        class Constantes <<interface>>
-        class BeanObject <<entity>>
-        class TablesReferences <<entity>>
+    class Constantes <<interface>>
+    class BeanObject <<entity>>
+    class TablesReferences <<entity>>
 
-        class Agent;
-        class Accident;
-        class DossierAccident;
-        class DossierMaladie;
-        class Grade;
-        class Service;
-        class Statut;
-        class TranscodageGrade;
-        class Annee;
-        class EffectifDetaille;
-        class Effectifs;
-        class MacroGrade;
-        class GroupementGrades;
-        class Incompatibilites;
-        class ... (autres entités)
+    class Agent
+    class Accident
+    class DossierAccident
+    class DossierMaladie
+    class Grade
+    class Service
+    class Statut
+    class TranscodageGrade
+    class Annee
+    class EffectifDetaille
+    class Effectifs
+    class MacroGrade
+    class GroupementGrades
+    class Incompatibilites
 
-        class GenericDao<T> <<dao>>
-        class GradeDao <<dao>>
-        class DossierAccidentDAO <<dao>>
-        class DossierMaladieDAO <<dao>>
-        class RechercheDossiersMaladiesDAO <<dao>>
-        class TranscodageGradeDao <<dao>>
+    class GenericDao<T> <<dao>>
+    class GradeDao <<dao>>
+    class DossierAccidentDAO <<dao>>
+    class DossierMaladieDAO <<dao>>
+    class RechercheDossiersMaladiesDAO <<dao>>
+    class TranscodageGradeDao <<dao>>
 
-        class ReferenceService<T> <<service>>
-        class GradeService <<service>>
-        class DomaineAffectationService <<service>>
-        class StatutService <<service>>
-        class EffectifService <<service>>
-        class ServiceService <<service>>
-        class SynchronizeService <<interface>>
-        class TachePrescriteService <<service>>
-        class TranscodageGradeService <<service>>
+    class ReferenceService<T> <<service>>
+    class GradeService <<service>>
+    class DomaineAffectationService <<service>>
+    class StatutService <<service>>
+    class EffectifService <<service>>
+    class ServiceService <<service>>
+    class SynchronizeService <<interface>>
+    class TachePrescriteService <<service>>
+    class TranscodageGradeService <<service>>
 
-        class GenericForm <<form>>
-        class DossiersForm;
-        class EditionDossierForm1;
-        class EditionDossierForm2;
-        class EditionDossierForm3;
-        class EffectifsForm;
-        class RechercheDossiersForm;
-        class RechercheDossiersMaladieForm;
-        class StatistiquesForm;
+    class GenericForm <<form>>
+    class DossiersForm
+    class EditionDossierForm1
+    class EditionDossierForm2
+    class EditionDossierForm3
+    class EffectifsForm
+    class RechercheDossiersForm
+    class RechercheDossiersMaladieForm
+    class StatistiquesForm
 
-        class ActionWarning;
-        class AdminTableAction;
-        class DossiersAction;
-        class EditionDossierAction;
-        class EffectifsAction;
-        class StatistiquesAction;
-        class IndexAction;
+    class ActionWarning
+    class AdminTableAction
+    class DossiersAction
+    class EditionDossierAction
+    class EffectifsAction
+    class StatistiquesAction
+    class IndexAction
 
-        class WSClientEffectif;
-        class WSClientGrade;
-        class WSClientService;
-        class EffectifDetailleConverter;
-        class SaveEffectifsConverter;
-        class ServiceConverter;
-        class TrancheAgeHelper;
-        class TranscodageGradePredicate;
-        class TranscodageGradeConverter;
+    class WSClientEffectif
+    class WSClientGrade
+    class WSClientService
+    class EffectifDetailleConverter
+    class SaveEffectifsConverter
+    class ServiceConverter
+    class TrancheAgeHelper
+    class TranscodageGradePredicate
+    class TranscodageGradeConverter
 
-        class CommonException <<exception>>
-        class DaoException <<exception>>
-        class TechnicalException <<exception>>
-        class WSException <<exception>>
+    class CommonException <<exception>>
+    class DaoException <<exception>>
+    class TechnicalException <<exception>>
+    class WSException <<exception>>
 
-        class StrutsOptionTag <<tag>>
-        class PutIntoSessionTag <<tag>>
-        class DateTag <<tag>>
-        class PagerTag <<tag>>
+    class StrutsOptionTag <<tag>>
+    class PutIntoSessionTag <<tag>>
+    class DateTag <<tag>>
+    class PagerTag <<tag>>
 
-        class DBTools;
-        class BeanTool;
-        class DateTool;
-        class FormTool;
-        class GenericFetcher;
+    class DBTools
+    class BeanTool
+    class DateTool
+    class FormTool
+    class GenericFetcher
 
     %% Relationships;
     Constantes <|.. BeanObject : uses;
@@ -170,15 +169,15 @@ classDiagram
 ```mermaid
 graph TB
     subgraph "Maven Build"
-        A[causalis‑web] --> B[causalis‑war]
-        C[causalis‑database] --> D[SQL‑scripts.zip]
-        E[causalis‑deployment] --> F[Sources.zip]
-        G[causalis‑doc] --> H[Docs.zip]
+    A[causalis‑web] --> B[causalis‑war]
+    C[causalis‑database] --> D[SQL‑scripts.zip]
+    E[causalis‑deployment] --> F[Sources.zip]
+    G[causalis‑doc] --> H[Docs.zip]
     end
     subgraph "Runtime"
-        I[Tomcat (ACAI Cluster)] -->|déploie| B;
-        J[Oracle DB (Paris La Défense)] -->|stocke| B;
-        K[External WS (Rehucit, Référentiels)] -->|appel SOAP/REST| B;
+    I[Tomcat (ACAI Cluster)] -->|déploie| B;
+    J[Oracle DB (Paris La Défense)] -->|stocke| B;
+    K[External WS (Rehucit, Référentiels)] -->|appel SOAP/REST| B;
     end
     B -->|contains| i2.application.causalis.web (WAR)
     B -->|contains| i2.application.causalis.dao;
@@ -214,9 +213,9 @@ graph TB
 ```mermaid
 graph LR
     subgraph "Data Center – Paris La Défense"
-        N1[Tomcat (ACAI – Cluster ESXi)] 
-        N2[Oracle 9i/10g] 
-        N3[WS Server (Rehucit, Référentiels)]
+    N1[Tomcat (ACAI – Cluster ESXi)] 
+    N2[Oracle 9i/10g] 
+    N3[WS Server (Rehucit, Référentiels)]
     end
     N1 -->|déploie| WAR[causalis.war]
     N1 -->|accède à| DB[(JDBC – java_comp/env/jdbc/userDScausalis)]
@@ -246,27 +245,27 @@ graph LR
 ```mermaid
 classDiagram
     class DossierAccident {
-        +int id;
-        +Agent agent;
-        +Accident accident;
-        +Date dateDeclaration;
-        +String statut;
+    +int id;
+    +Agent agent;
+    +Accident accident;
+    +Date dateDeclaration;
+    +String statut;
 
     class Agent {
-        +int id;
-        +String nom;
-        +String prenom;
-        +Date dateNaissance;
+    +int id;
+    +String nom;
+    +String prenom;
+    +Date dateNaissance;
 
     class Accident {
-        +int code;
-        +String libelle;
-        +String description;
+    +int code;
+    +String libelle;
+    +String description;
 
     class Grade {
-        +int code;
-        +String libelle;
-        +int codeGroupementGrade;
+    +int code;
+    +String libelle;
+    +int codeGroupementGrade;
 
     DossierAccident "1" --> "1" Agent;
     DossierAccident "1" --> "1" Accident;
@@ -292,13 +291,13 @@ graph TD
     A --> L[ws]
 
     subgraph "Form Sub‑packages"
-        F --> F1[validator]
+    F --> F1[validator]
     end
     subgraph "WS Sub‑packages"
-        L --> L1[client]
-        L --> L2[converter]
-        L --> L3[filter]
-        L --> L4[strategy]
+    L --> L1[client]
+    L --> L2[converter]
+    L --> L3[filter]
+    L --> L4[strategy]
     end
 ```
 
@@ -311,19 +310,19 @@ graph TD
 ```mermaid
 classDiagram
     class EditionDossierForm3 {
-        +ListeEnteteTableauEffectifs entetes;
-        +ListeTableauEffectifs lignes;
-        +String commentaire;
+    +ListeEnteteTableauEffectifs entetes;
+    +ListeTableauEffectifs lignes;
+    +String commentaire;
 
     class ListeEnteteTableauEffectifs {
-        +ArrayList<String> items;
+    +ArrayList<String> items;
 
     class ListeTableauEffectifs {
-        +ArrayList<ItemTableauEffectifs> items;
+    +ArrayList<ItemTableauEffectifs> items;
 
     class ItemTableauEffectifs {
-        +String libelle;
-        +int valeur;
+    +String libelle;
+    +int valeur;
 
     EditionDossierForm3 --> ListeEnteteTableauEffectifs;
     EditionDossierForm3 --> ListeTableauEffectifs;
@@ -337,7 +336,7 @@ classDiagram
 #### 2.2.1 Diagramme de **Cas d’Utilisation**  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#bbf','edgeLabelBackground':'#fff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#bbf','edgeLabelBackground':'#fff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Gestionnaire as G;
     actor Utilisateur as U;
@@ -383,7 +382,7 @@ statediagram-v2;
     Confirmation --> [*]
 
     state Retour_Erreur {
-        Erreur_Champ --> Remplissage_Formulaire;
+    Erreur_Champ --> Remplissage_Formulaire;
 
 ```
 

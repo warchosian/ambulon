@@ -240,14 +240,14 @@ sequencediagram;
     SyncService->>WSClient: fetchAllGrades()
     WSClient-->>SyncService: List<Grade> (externe)
     loop for each grade;
-        SyncService->>Service: isPresent(grade)?
-        Service->>DAO: getByCode(grade.code)
-        DAO-->>Service: null / existing;
-        alt grade absent;
-            Service->>DAO: insert(grade)
-        else;
-            Service->>DAO: updateIfNeeded(grade)
-        end
+    SyncService->>Service: isPresent(grade)?
+    Service->>DAO: getByCode(grade.code)
+    DAO-->>Service: null / existing;
+    alt grade absent;
+    Service->>DAO: insert(grade)
+    else;
+    Service->>DAO: updateIfNeeded(grade)
+    end
     end
     SyncService->>Scheduler: Retour (nb lignes insérées)
 ```

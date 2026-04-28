@@ -167,11 +167,11 @@ graph TD
 ```mermaid
 graph TB
     subgraph "Infrastructure"
-        DB[(PostgreSQL<br/>baseadmin)]
-        APP[(Tomcat 9<br/>admin_ep.war)]
-        JORF[(Job JORF Ingestion<br/>Java Scheduler)]
-        AUTH[(Cerbère SSO)]
-        MON[(Prometheus/Grafana<br/>Monitoring)]
+    DB[(PostgreSQL<br/>baseadmin)]
+    APP[(Tomcat 9<br/>admin_ep.war)]
+    JORF[(Job JORF Ingestion<br/>Java Scheduler)]
+    AUTH[(Cerbère SSO)]
+    MON[(Prometheus/Grafana<br/>Monitoring)]
     end
     USER[Utilisateur] -->|HTTPS| APP;
     APP -->|JDBC| DB;
@@ -256,7 +256,7 @@ sequencediagram;
     A->>DB: SELECT nouvelles mentions JORF;
     A->>DB: INSERT / UPDATE nouvelles entités;
     alt Mandat proche échéance;
-        A->>M: sendAlertMail()
+    A->>M: sendAlertMail()
     end
     J->>S: Job terminé (status OK)
 ```
@@ -280,17 +280,17 @@ sequencediagram;
 ```mermaid
 graph LR
     subgraph DEV[Développement]
-        devT[Tomcat (Docker)]
-        devDB[PostgreSQL (Docker)]
+    devT[Tomcat (Docker)]
+    devDB[PostgreSQL (Docker)]
     end
     subgraph REC[Recette]
-        recT[Tomcat (ECO4 VM)]
-        recDB[PostgreSQL 9.6 (ECO4 VM)]
+    recT[Tomcat (ECO4 VM)]
+    recDB[PostgreSQL 9.6 (ECO4 VM)]
     end
     subgraph PROD[Production]
-        prodT1[Tomcat 9 – Node A]
-        prodT2[Tomcat 9 – Node B]
-        prodDB[PostgreSQL 15 – Cluster]
+    prodT1[Tomcat 9 – Node A]
+    prodT2[Tomcat 9 – Node B]
+    prodDB[PostgreSQL 15 – Cluster]
     end
     DEV --> REC --> PROD
 ```

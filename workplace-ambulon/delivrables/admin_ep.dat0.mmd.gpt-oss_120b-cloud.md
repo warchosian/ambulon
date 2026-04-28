@@ -133,16 +133,16 @@ graph TD
 ```mermaid
 graph TD
     subgraph "Infrastructure"
-        N1[Nginx LB] 
-        N2[Nginx LB]
-        DB[(PostgreSQL Cluster)]
-        S1[Prometheus] 
-        S2[Grafana] 
+    N1[Nginx LB] 
+    N2[Nginx LB]
+    DB[(PostgreSQL Cluster)]
+    S1[Prometheus] 
+    S2[Grafana] 
     end
     subgraph "Application"
-        A1[admin_ep‑web (Tomcat)] 
-        A2[admin_ep‑batch (import JORF)] 
-        A3[admin_ep‑mail (notification)] 
+    A1[admin_ep‑web (Tomcat)] 
+    A2[admin_ep‑batch (import JORF)] 
+    A3[admin_ep‑mail (notification)] 
     end
     N1 --> A1;
     N2 --> A1;
@@ -228,8 +228,8 @@ sequencediagram;
     S->>DB: SELECT mandats WHERE date_fin BETWEEN now() + 30d AND now()
     DB-->>S: Liste de mandats;
     loop for each mandat;
-        S->>M: SEND mail (to référent)
-        M-->>S: ACK;
+    S->>M: SEND mail (to référent)
+    M-->>S: ACK;
     end
     S->>S: Log notification (Log4j2)
 ```

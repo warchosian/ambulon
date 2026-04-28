@@ -27,7 +27,7 @@ SIREINES est conçue comme **une application monolithique** (WAR) exécutée dan
 ## 2️⃣ Niveau 1 – Vue **Contexte** (C4‑L1)
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0066CC', 'edgeLabelBackground':'#f8f8f8' }}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0066CC', 'edgeLabelBackground':'#f8f8f8' }}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Model/master/C4_Context.puml
 
 Person(user, "Agent / Utilisateur métier", "Dépose, consulte et suit ses dossiers de qualification.")
@@ -53,7 +53,7 @@ Rel(sireines, "PostgreSQL", "Persistance des données")
 ## 3️⃣ Niveau 2 – Vue **Conteneurs** (C4‑L2)
 
 ```mermaid
-%%{init: {'theme': 'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme': 'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Model/master/C4_Container.puml
 
 System_Boundary(sireines, "SIREINES") {
@@ -84,7 +84,7 @@ Rel(app, "Cerbère", "SSO (SAML)", "HTTP")
 ## 4️⃣ Niveau 3 – Vue **Composants** (C4‑L3)
 
 ```mermaid
-%%{init: {'theme': 'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme': 'base'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 !include https://raw.githubusercontent.com/Mermaid-stdlib/C4-Model/master/C4_Component.puml
 
 Container(app, "SIREINES‑Web", "Java /J2EE", "Tomcat") {

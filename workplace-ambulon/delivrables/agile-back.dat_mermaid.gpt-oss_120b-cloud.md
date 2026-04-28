@@ -140,16 +140,16 @@ graph TD
 ```mermaid
 graph TD
     subgraph "Utilisateurs"
-        U1[Agent] 
-        U2[Analyste]
+    U1[Agent] 
+    U2[Analyste]
     end
     subgraph "Conteneurs"
-        Nginx[Nginx (LB)]
-        PHP[PHP‑FPM (Symfony app)]
-        DB[(PostgreSQL)]
-        Cache[Redis / Filesystem Cache]
-        Mail[Mailer (SMTP)]
-        CAS[CAS Client lib]
+    Nginx[Nginx (LB)]
+    PHP[PHP‑FPM (Symfony app)]
+    DB[(PostgreSQL)]
+    Cache[Redis / Filesystem Cache]
+    Mail[Mailer (SMTP)]
+    CAS[CAS Client lib]
     end
     U1 -->|HTTPS| Nginx;
     U2 -->|HTTPS| Nginx;

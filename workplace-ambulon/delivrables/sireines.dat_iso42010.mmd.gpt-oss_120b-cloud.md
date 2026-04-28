@@ -182,29 +182,29 @@ erDiagram;
     AGENT ||--o{ COMITE : "membre de"
     AGENT ||--o{ QUALIFICATION : "recev. avis"
     AGENT {
-        int id PK;
-        string nom;
-        string prenom;
-        string email;
+    int id PK;
+    string nom;
+    string prenom;
+    string email;
 
     DOSSIER {
-        int id PK;
-        string libelle;
-        date dateReception;
-        int statut;
+    int id PK;
+    string libelle;
+    date dateReception;
+    int statut;
 
     MOT_CLE {
-        int id PK;
-        string libelle;
+    int id PK;
+    string libelle;
 
     QUALIFICATION {
-        int id PK;
-        string libelle;
-        date dateDecision;
+    int id PK;
+    string libelle;
+    date dateDecision;
 
     COMITE {
-        int id PK;
-        string libelle;
+    int id PK;
+    string libelle;
 
 ```
 

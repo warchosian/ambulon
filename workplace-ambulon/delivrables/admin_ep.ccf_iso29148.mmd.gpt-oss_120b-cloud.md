@@ -30,17 +30,17 @@
 ```mermaid
 graph LR
     subgraph Ext[Environnement externe]
-        JORF[Source JORF (OpenData)] -->|Flux d’alimentation| ETL[Module d’analyse (ArticleAnalyser)]
-        LDAP[Annuaire Cerbère] -->|AuthN/AuthZ| WEB[Web UI (Struts2/JSP)]
-        SMTP[Mail serveur] -->|Envoi notifications| NOTIF[Service de notification]
+    JORF[Source JORF (OpenData)] -->|Flux d’alimentation| ETL[Module d’analyse (ArticleAnalyser)]
+    LDAP[Annuaire Cerbère] -->|AuthN/AuthZ| WEB[Web UI (Struts2/JSP)]
+    SMTP[Mail serveur] -->|Envoi notifications| NOTIF[Service de notification]
     end
     subgraph SYS[admin_ep System]
-        WEB -->|Appels REST/Action| BLL[Business Logic Layer]
-        BLL -->|CRUD| DB[(PostgreSQL)]
-        BLL -->|Recherche| ES[Elasticsearch (facultatif)]
-        BLL -->|Planification| SCHED[Scheduler (Quartz)]
-        SCHED -->|Tâches périodiques| ETL;
-        NOTIF -->|Envoi mail| USER[Utilisateurs (SPES, DG, Opérateurs)]
+    WEB -->|Appels REST/Action| BLL[Business Logic Layer]
+    BLL -->|CRUD| DB[(PostgreSQL)]
+    BLL -->|Recherche| ES[Elasticsearch (facultatif)]
+    BLL -->|Planification| SCHED[Scheduler (Quartz)]
+    SCHED -->|Tâches périodiques| ETL;
+    NOTIF -->|Envoi mail| USER[Utilisateurs (SPES, DG, Opérateurs)]
     end
     Ext -->|HTTPS| WEB
 ```
@@ -141,65 +141,65 @@ graph LR
 classDiagram
     %% Entités principales;
     class Administrateur {
-        +Long id;
-        +String nom;
-        +String prenom;
-        +String email;
-        +String civilite;
-        +String typeProfil (BASEADMIN|CERBERE)
+    +Long id;
+    +String nom;
+    +String prenom;
+    +String email;
+    +String civilite;
+    +String typeProfil (BASEADMIN|CERBERE)
 
     class Etablissement {
-        +Long id;
-        +String siren;
-        +String sigle;
-        +String libelle;
-        +String libelleDe;
-        +TypeInstance typeInstance;
+    +Long id;
+    +String siren;
+    +String sigle;
+    +String libelle;
+    +String libelleDe;
+    +TypeInstance typeInstance;
 
     class Mandat {
-        +Long id;
-        +Date dateDebut;
-        +Date dateFin;
-        +TypeMandat type (TITULAIRE|SUPPLEANT)
-        +ModeNomination mode;
+    +Long id;
+    +Date dateDebut;
+    +Date dateFin;
+    +TypeMandat type (TITULAIRE|SUPPLEANT)
+    +ModeNomination mode;
 
     class Charge {
-        +Long id;
-        +String libelle;
+    +Long id;
+    +String libelle;
 
     class Ministere {
-        +Long id;
-        +String sigle;
-        +String nom;
-        +String statut;
+    +Long id;
+    +String sigle;
+    +String nom;
+    +String statut;
 
     class College {
-        +Long id;
-        +String identifiant;
+    +Long id;
+    +String identifiant;
 
     class TypeInstance {
-        +Long id;
-        +String type;
-        +String a_linstance_de;
-        +String de_linstance_de;
+    +Long id;
+    +String type;
+    +String a_linstance_de;
+    +String de_linstance_de;
 
     class TypeMandat {
-        +Long id;
-        +String type;
+    +Long id;
+    +String type;
 
     class ModeNomination {
-        +Long id;
-        +String code;
-        +String mode;
-        +String motCleTitre;
-        +String motCleCorpsTexte;
+    +Long id;
+    +String code;
+    +String mode;
+    +String motCleTitre;
+    +String motCleCorpsTexte;
 
     class TutelleEtablissementCharge {
-        +Boolean principale;
+    +Boolean principale;
 
     class SynonymeCollege {
-        +String synonyme;
-        +Boolean defaut;
+    +String synonyme;
+    +Boolean defaut;
 
     %% Relations;
     Administrateur "1" -- "0..*" Mandat : détient >
@@ -222,27 +222,27 @@ classDiagram
 ### 6.1 Cas d’utilisation (UML use‑case)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0066CC','edgeLabelBackground':'#FFFFFF'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#0066CC','edgeLabelBackground':'#FFFFFF'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 useCaseDiagram;
     actor Opérateur as Op;
     actor DG de tutelle as DG;
     actor SPES (MOA) as SPES;
     actor Utilisateur (Cerbère) as User;
     rectangle "admin_ep" {
-        Op --> (Saisir Administrateur)
-        Op --> (Saisir Etablissement)
-        Op --> (Gérer Mandat)
-        Op --> (Recherche)
-        Op --> (Exporter données)
+    Op --> (Saisir Administrateur)
+    Op --> (Saisir Etablissement)
+    Op --> (Gérer Mandat)
+    Op --> (Recherche)
+    Op --> (Exporter données)
 
-        DG --> (Recevoir notifications d’échéance)
-        DG --> (Valider / Refuser mandat)
+    DG --> (Recevoir notifications d’échéance)
+    DG --> (Valider / Refuser mandat)
 
-        SPES --> (Définir paramètres de notification)
-        SPES --> (Consulter tableau de bord)
+    SPES --> (Définir paramètres de notification)
+    SPES --> (Consulter tableau de bord)
 
-        User --> (Se connecter)
-        User --> (Accéder selon son profil)
+    User --> (Se connecter)
+    User --> (Accéder selon son profil)
 
 ```
 

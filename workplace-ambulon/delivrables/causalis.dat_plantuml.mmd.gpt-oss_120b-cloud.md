@@ -19,11 +19,11 @@ Causalis est l’application ministérielle de **statistiques nationales sur les
 ```mermaid
 graph LR
     subgraph Ext[Environnement externe]
-        Users[Utilisateurs<br/>Gestionnaires, Admins] 
-        Cerb[Cerbere SSO]
-        WS[Web‑services externes<br/>(StubWS, Référentiels RH)]
-        PSIN[Supervision PSIN]
-        DB[(Base de données Oracle)]
+    Users[Utilisateurs<br/>Gestionnaires, Admins] 
+    Cerb[Cerbere SSO]
+    WS[Web‑services externes<br/>(StubWS, Référentiels RH)]
+    PSIN[Supervision PSIN]
+    DB[(Base de données Oracle)]
     end
     Caus[Application Causalis<br/>(Struts 1 + Java 8)] 
 
@@ -167,29 +167,29 @@ containerDiagram;
     title Causalis – Vue en Briques (C4 L2)
 
     boundary "Cluster ACAI – Paris La Défense" {
-        node "Nginx LB (2×)" as Nginx {
-            direction TB;
+    node "Nginx LB (2×)" as Nginx {
+    direction TB;
 
-        node "Tomcat (2×)" as Tomcat {
-            direction TB;
+    node "Tomcat (2×)" as Tomcat {
+    direction TB;
 
-        component "Web UI (Struts 1.x)" as UI {
-            direction TB;
+    component "Web UI (Struts 1.x)" as UI {
+    direction TB;
 
-        component "Service Layer (Java)" as Service {
-            direction TB;
+    component "Service Layer (Java)" as Service {
+    direction TB;
 
-        component "DAO Layer (Castor JDO)" as DAO {
-            direction TB;
+    component "DAO Layer (Castor JDO)" as DAO {
+    direction TB;
 
-        database "Oracle DB\n(userDScausalis)" as Oracle {
-            direction TB;
+    database "Oracle DB\n(userDScausalis)" as Oracle {
+    direction TB;
 
-        component "WS Client (StubWS)" as WS {
-            direction TB;
+    component "WS Client (StubWS)" as WS {
+    direction TB;
 
-        component "Metrics Exporter\n(Prometheus)" as Metrics {
-            direction TB;
+    component "Metrics Exporter\n(Prometheus)" as Metrics {
+    direction TB;
 
     Nginx --> Tomcat : HTTP/HTTPS;
     Tomcat --> UI : Servlets / JSP;

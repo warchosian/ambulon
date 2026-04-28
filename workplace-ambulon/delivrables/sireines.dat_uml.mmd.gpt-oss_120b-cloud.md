@@ -21,7 +21,7 @@
 ### 2.1 Diagramme de classes (obligatoire)  
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e0f7fa','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e0f7fa','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 classDiagram
   %% Packages
   package "i2.application.sireines.boot" {
@@ -36,13 +36,13 @@ classDiagram
 
   package "i2.application.sireines.controller" {
     class AbstractSireinesActionSupport <<abstract>>
-    class AccueilAction;
-    class ContactAction;
-    class MentionsLegalesAction;
-    class DossierDetailAction;
-    class DossierRechercheAction;
-    class Extraction01Action;
-    class ImportFichierAction;
+    class AccueilAction
+    class ContactAction
+    class MentionsLegalesAction
+    class DossierDetailAction
+    class DossierRechercheAction
+    class Extraction01Action
+    class ImportFichierAction
     class NavigationItem <<enumeration>>
     class Menu <<enumeration>>
     class OngletDossierEnum <<enumeration>>
@@ -64,9 +64,9 @@ classDiagram
     class SeancesServicesImpl <<component>>
 
   package "i2.application.sireines.util" {
-    class CsvExport;
-    class StringUtils;
-    class CerbereUtil;
+    class CsvExport
+    class StringUtils
+    class CerbereUtil
     class FormatterAnnee
 
   package "i2.application.sireines.domain.dossier" {
@@ -128,7 +128,7 @@ classDiagram
 ### 2.2 Diagramme de composants (obligatoire)
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e8f5e9','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e8f5e9','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 graph TB
   subgraph "Docker Host"
     subgraph "Container: sireines‑app (Tomcat 7)"
@@ -184,7 +184,7 @@ graph TB
 ### 2.3 Diagramme de déploiement (obligatoire)
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e3f2fd','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e3f2fd','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 deploymentDiagram
   node DockerHost {
     node "sireines‑app (Tomcat)" {
@@ -235,7 +235,7 @@ deploymentDiagram
 ### 2.4 Diagramme d’objets (optionnel) – Exemple d’une instance `Dossier`
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff3e0','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff3e0','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 classDiagram
   class Dossier {
     +Long id;
@@ -264,7 +264,7 @@ classDiagram
 ### 2.5 Diagramme de packages (obligatoire)
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e8eaf6','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e8eaf6','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 packageDiagram
   package "i2.application.sireines" {
 
@@ -305,7 +305,7 @@ packageDiagram
 ### 2.6 Diagramme de structure composite (optionnel) – Vue de `Dossier`  
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e0f2f1','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#e0f2f1','edgeLabelBackground':'#ffffff','fontSize':12}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 classDiagram
   class Dossier {
     +Long id;

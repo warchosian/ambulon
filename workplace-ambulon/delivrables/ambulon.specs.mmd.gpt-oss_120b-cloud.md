@@ -95,11 +95,11 @@ sequencediagram;
     UI->>S: POST /versements;
     S->>S: Validation des règles R‑01, R‑02, R‑03;
     alt Validation OK;
-        S->>DB: INSERT versement;
-        DB-->>S: OK;
-        S->>UI: 201 Created;
+    S->>DB: INSERT versement;
+    DB-->>S: OK;
+    S->>UI: 201 Created;
     else Erreur de validation;
-        S->>UI: 400 Bad Request (détails)
+    S->>UI: 400 Bad Request (détails)
     end
 ```
 
@@ -135,16 +135,16 @@ sequencediagram;
 ```mermaid
 graph LR
     subgraph UI[Interface Utilisateur]
-        Web[Web UI (HTML/JS)]
+    Web[Web UI (HTML/JS)]
     end
     subgraph BE[Logique Métier]
-        API[REST API]
-        ServiceV[Service Versement]
-        ServiceD[Service Demande]
-        ServiceM[Service Mouvement]
+    API[REST API]
+    ServiceV[Service Versement]
+    ServiceD[Service Demande]
+    ServiceM[Service Mouvement]
     end
     subgraph DB[Persistance]
-        Oracle[(Oracle prep37)]
+    Oracle[(Oracle prep37)]
     end
     Web --> API;
     API --> ServiceV;
@@ -168,16 +168,16 @@ graph LR
 ```mermaid
 deploymentDiagram;
     node "Serveur d’application" as AppSrv {
-        component "API Gateway" as GW;
-        component "Service Versement" as SV;
-        component "Service Demande" as SD;
-        component "Service Mouvement" as SM;
+    component "API Gateway" as GW;
+    component "Service Versement" as SV;
+    component "Service Demande" as SD;
+    component "Service Mouvement" as SM;
 
     node "Base de données" as DBSrv {
-        artifact "Oracle prep37" as DB;
+    artifact "Oracle prep37" as DB;
 
     node "Poste client" as Client {
-        artifact "Navigateur Web" as Browser;
+    artifact "Navigateur Web" as Browser;
 
     Browser --> GW : HTTPS;
     GW --> SV : gRPC/REST;

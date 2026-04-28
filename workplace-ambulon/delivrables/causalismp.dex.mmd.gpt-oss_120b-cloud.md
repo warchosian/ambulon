@@ -104,25 +104,25 @@ graph TB
 
     %% Phases;
     subgraph p1["Phase 1 – Rédaction"]
-        direction TB;
-        step1(("Collecte des specs & architecture"))
-        step2(("Rédaction des 16 sections DEX"))
+    direction TB;
+    step1(("Collecte des specs & architecture"))
+    step2(("Rédaction des 16 sections DEX"))
     end
     subgraph p2["Phase 2 – Validation croisée"]
-        direction TB;
-        step3(("Revue technique (DevOps/Infra)"))
-        step4(("Validation ops & support"))
-        step5(("Validation sécurité & conformité"))
+    direction TB;
+    step3(("Revue technique (DevOps/Infra)"))
+    step4(("Validation ops & support"))
+    step5(("Validation sécurité & conformité"))
     end
     subgraph p3["Phase 3 – Go‑Live & Run"]
-        direction TB;
-        step6(("Signature & archivage versionné"))
-        step7(("Intégration run‑book & supervision"))
+    direction TB;
+    step6(("Signature & archivage versionné"))
+    step7(("Intégration run‑book & supervision"))
     end
     subgraph p4["Phase 4 – Maintenance continue"]
-        direction TB;
-        step8(("Mise à jour à chaque release"))
-        step9(("Revue trimestrielle ou post‑incident"))
+    direction TB;
+    step8(("Mise à jour à chaque release"))
+    step9(("Revue trimestrielle ou post‑incident"))
     end
     %% Links;
     dev -->|Alimente| step1;

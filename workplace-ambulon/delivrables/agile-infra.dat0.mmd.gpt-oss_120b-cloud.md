@@ -141,26 +141,26 @@ graph TD
 ```mermaid
 graph TB
     subgraph CI;
-        CI[GitLab CI Runner]
-        CI -->|trigger| ANS[Ansible Executor (pasta‑cooker)]
+    CI[GitLab CI Runner]
+    CI -->|trigger| ANS[Ansible Executor (pasta‑cooker)]
     end
     subgraph Infra;
-        ANS -->|playbook| TPL[Template Engine (Jinja2)]
-        ANS -->|creates| DC[Docker‑Compose File]
-        DC -->|orchestrates| APP[Application Stack]
-        APP -->|frontend| FE[Container: front]
-        APP -->|backend| BE[Container: back]
-        APP -->|db| DB[Container: postgres]
-        APP -->|proxy| NG[Nginx (load‑balanced pair)]
+    ANS -->|playbook| TPL[Template Engine (Jinja2)]
+    ANS -->|creates| DC[Docker‑Compose File]
+    DC -->|orchestrates| APP[Application Stack]
+    APP -->|frontend| FE[Container: front]
+    APP -->|backend| BE[Container: back]
+    APP -->|db| DB[Container: postgres]
+    APP -->|proxy| NG[Nginx (load‑balanced pair)]
     end
     subgraph Monitoring;
-        MON[Prometheus/Grafana/Loki]
-        APP -.-> MON;
-        NG -.-> MON;
+    MON[Prometheus/Grafana/Loki]
+    APP -.-> MON;
+    NG -.-> MON;
     end
     subgraph Backup;
-        BCK[Backup Scripts (AES‑256)]
-        DB --> BCK;
+    BCK[Backup Scripts (AES‑256)]
+    DB --> BCK;
     end
     style CI fill:#E3F2FD,stroke:#2196F3;
     style ANS fill:#F3E5F5,stroke:#AB47BC;

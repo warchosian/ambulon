@@ -20,131 +20,131 @@
 ### 2.1 Diagramme de Classes  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#005B9F','edgeLabelBackground':'#e8f1ff'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#005B9F','edgeLabelBackground':'#e8f1ff'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 classDiagram
     %% Packages;
     package "Model" {
-        class Admin {
-            +Long id;
-            +String nom;
-            +String prenom;
-            +String email;
-            +Set~Role~ roles;
-            +Set~Mandat~ mandats;
-            +String login;
-            +String passwordHash;
+    class Admin {
+    +Long id;
+    +String nom;
+    +String prenom;
+    +String email;
+    +Set~Role~ roles;
+    +Set~Mandat~ mandats;
+    +String login;
+    +String passwordHash;
 
-        class Gestionnaire {
-            +Long id;
-            +String nom;
-            +String prenom;
-            +String email;
+    class Gestionnaire {
+    +Long id;
+    +String nom;
+    +String prenom;
+    +String email;
 
-        class Etablissement {
-            +Long id;
-            +String siren;
-            +String sigle;
-            +String libelle;
-            +TypeInstance typeInstance;
-            +Set~College~ colleges;
+    class Etablissement {
+    +Long id;
+    +String siren;
+    +String sigle;
+    +String libelle;
+    +TypeInstance typeInstance;
+    +Set~College~ colleges;
 
-        class College {
-            +Long id;
-            +String identifiant;
-            +Set~Synonyme~ synonymes;
+    class College {
+    +Long id;
+    +String identifiant;
+    +Set~Synonyme~ synonymes;
 
-        class Synonyme {
-            +String libelle;
-            +Boolean defaut;
+    class Synonyme {
+    +String libelle;
+    +Boolean defaut;
 
-        class Mandat {
-            +Long id;
-            +MandatType type;
-            +Date debut;
-            +Date fin;
-            +EtatMandat etat;
+    class Mandat {
+    +Long id;
+    +MandatType type;
+    +Date debut;
+    +Date fin;
+    +EtatMandat etat;
 
-        class Charge {
-            +Long id;
-            +String libelle;
-            +Set~Ministere~ ministeres;
+    class Charge {
+    +Long id;
+    +String libelle;
+    +Set~Ministere~ ministeres;
 
-        class Ministere {
-            +Long id;
-            +String sigle;
-            +String nom;
-            +Statut statut;
+    class Ministere {
+    +Long id;
+    +String sigle;
+    +String nom;
+    +Statut statut;
 
-        class Direction {
-            +Long id;
-            +String sigle;
-            +String intitule;
+    class Direction {
+    +Long id;
+    +String sigle;
+    +String intitule;
 
-        class TypeInstance {
-            +Long id;
-            +String type;
+    class TypeInstance {
+    +Long id;
+    +String type;
 
-        class TypeMandat {
-            +Long id;
-            +String libelle;
+    class TypeMandat {
+    +Long id;
+    +String libelle;
 
-        class ModeNomination {
-            +Long id;
-            +String code;
-            +String libelle;
-            +String motCleTitre;
-            +String motCleCorps;
+    class ModeNomination {
+    +Long id;
+    +String code;
+    +String libelle;
+    +String motCleTitre;
+    +String motCleCorps;
 
-        class Role {
-            +String code;
-            +String libelle;
+    class Role {
+    +String code;
+    +String libelle;
 
-        class OutilRecherche {
-            <<interface>>
-            +search(String query) List~Result~
+    class OutilRecherche {
+    <<interface>>
+    +search(String query) List~Result~
 
     package "Security" {
-        class BaseAdminUserSession {
-            +String token;
-            +Date expiration;
-            +Set~Role~ roles;
+    class BaseAdminUserSession {
+    +String token;
+    +Date expiration;
+    +Set~Role~ roles;
 
-        class RightsHelper {
-            +hasAccess(User, Action): Boolean;
+    class RightsHelper {
+    +hasAccess(User, Action): Boolean;
 
-        class SecurityFilter {
-            <<filter>>
-            +doFilter()
+    class SecurityFilter {
+    <<filter>>
+    +doFilter()
 
     package "Service" {
-        class AdminService {
-            +create(Admin)
-            +update(Admin)
-            +delete(Long)
-            +find(Long): Admin;
+    class AdminService {
+    +create(Admin)
+    +update(Admin)
+    +delete(Long)
+    +find(Long): Admin;
 
-        class EtablissementService {
-            +create(Etbl)
-            +search(String): List~Etbl~
+    class EtablissementService {
+    +create(Etbl)
+    +search(String): List~Etbl~
 
-        class MandatService {
-            +create(Mandat)
-            +expire(Long)
+    class MandatService {
+    +create(Mandat)
+    +expire(Long)
 
-        class IntegrationService {
-            <<interface>>
-            +importJORF()
+    class IntegrationService {
+    <<interface>>
+    +importJORF()
 
     package "DAO" {
-        class AdminDAO {
-            +persist(Admin)
-            +merge(Admin)
-            +remove(Long)
-            +find(Long): Admin;
+    class AdminDAO {
+    +persist(Admin)
+    +merge(Admin)
+    +remove(Long)
+    +find(Long): Admin;
 
-        class EtablissementDAO { ... }
-        class MandatDAO { ... }
-        class ChargeDAO { ... }
+    class EtablissementDAO { ... }
+    class MandatDAO { ... }
+    class ChargeDAO { ... }
 
     %% Associations;
     Admin "1" --> "*" Role : has;
@@ -185,35 +185,35 @@ classDiagram
 ### 2.2 Diagramme de Composants  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#00695c','edgeLabelBackground':'#e0f2f1'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#00695c','edgeLabelBackground':'#e0f2f1'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 componentDiagram;
     %% Components;
     component "admin_ep‑web" as WEB {
-        [Controller] 
-        [Service] 
-        [Security] 
-        [View (JSP/FTL)]
+    [Controller] 
+    [Service] 
+    [Security] 
+    [View (JSP/FTL)]
 
     component "admin_ep‑database" as DB {
-        [SQL Scripts] 
-        [Flyway / Maven‑assembly]
+    [SQL Scripts] 
+    [Flyway / Maven‑assembly]
 
     component "admin_ep‑deployment" as DEP {
-        [Dockerfile] 
-        [K8s Manifests] 
-        [Configuration (XML/Properties)]
+    [Dockerfile] 
+    [K8s Manifests] 
+    [Configuration (XML/Properties)]
 
     component "JORF‑Connector" as JORF {
-        [JORFExtractor] 
-        [Scheduler (Quartz)]
+    [JORFExtractor] 
+    [Scheduler (Quartz)]
 
     component "Elasticsearch" as ES {
-        [Index] 
-        [Search API]
+    [Index] 
+    [Search API]
 
     component "Cerbère‑Auth" as CER {
-        [Cerbère SSO] 
-        [Token Provider]
+    [Cerbère SSO] 
+    [Token Provider]
 
     %% Provided/Required interfaces;
     WEB --> DB : uses JDBC;
@@ -225,13 +225,13 @@ componentDiagram;
     CER --> DB : user/role tables;
     %% External systems;
     node "Tomcat 9" as TOMCAT {
-        WEB;
+    WEB;
 
     node "PostgreSQL 15" as PG {
-        DB;
+    DB;
 
     node "K8s Cluster" as K8S {
-        DEP;
+    DEP;
 
     TOMCAT --> PG : JDBC;
     TOMCAT --> ES : REST;
@@ -253,22 +253,22 @@ componentDiagram;
 ### 2.3 Diagramme de Déploiement  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#3e2723','edgeLabelBackground':'#d7ccc8'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#3e2723','edgeLabelBackground':'#d7ccc8'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 deploymentDiagram;
     node "Serveur d’applications\n(Tomcat 9 – Java 8)" as APP {
-        artifact "admin_ep‑web.war"
+    artifact "admin_ep‑web.war"
 
     node "Base de données\n(PostgreSQL 15)" as DB {
-        artifact "admin_ep‑db (schema integration)"
+    artifact "admin_ep‑db (schema integration)"
 
     node "Cluster Elasticsearch\n(7.x)" as ES {
-        artifact "admin_ep‑index"
+    artifact "admin_ep‑index"
 
     node "Scheduler (Quartz)" as SCH {
-        artifact "JORF‑Import‑Job"
+    artifact "JORF‑Import‑Job"
 
     node "Cerbère SSO" as AUTH {
-        artifact "Auth‑Provider"
+    artifact "Auth‑Provider"
 
     APP --> DB : JDBC (postgresql://admin_ep)
     APP --> ES : REST (https://es‑admin_ep_9200)
@@ -277,9 +277,9 @@ deploymentDiagram;
     SCH --> DB : insert / update;
     DB --> APP : DataSource JNDI;
     note right of APP;
-        Ports :
-        - 8080 (HTTP)
-        - 8443 (HTTPS)
+    Ports :
+    - 8080 (HTTP)
+    - 8443 (HTTPS)
     end note
 ```
 
@@ -303,25 +303,25 @@ deploymentDiagram;
 ```mermaid
 classDiagram
     class Admin#42 {
-        +id = 42;
-        +nom = "Dupont"
-        +prenom = "Jean"
-        +email = "j.dupont@admin.ep"
-        +login = "jdupont"
-        +roles = {ROLE_ADMIN, ROLE_USER}
-        +mandats = {Mandat#101, Mandat#102}
+    +id = 42;
+    +nom = "Dupont"
+    +prenom = "Jean"
+    +email = "j.dupont@admin.ep"
+    +login = "jdupont"
+    +roles = {ROLE_ADMIN, ROLE_USER}
+    +mandats = {Mandat#101, Mandat#102}
 
     class Mandat#101 {
-        +type = Titulaire;
-        +debut = 2022‑01‑01;
-        +fin = 2025‑12‑31;
-        +etat = EN_COURS;
+    +type = Titulaire;
+    +debut = 2022‑01‑01;
+    +fin = 2025‑12‑31;
+    +etat = EN_COURS;
 
     class Mandat#102 {
-        +type = Suppléant;
-        +debut = 2022‑01‑01;
-        +fin = 2025‑12‑31;
-        +etat = EN_COURS;
+    +type = Suppléant;
+    +debut = 2022‑01‑01;
+    +fin = 2025‑12‑31;
+    +etat = EN_COURS;
 
     Admin#42 --> Mandat#101 : possède;
     Admin#42 --> Mandat#102 : possède
@@ -334,24 +334,24 @@ classDiagram
 ### 2.5 Diagramme de Packages  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#283593','edgeLabelBackground':'#c5cae9'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#283593','edgeLabelBackground':'#c5cae9'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 graph TD
     subgraph "web"
-        C[controller] --> S[service]
-        S --> D[dao]
-        S --> O[security]
-        C --> V[view (JSP/FTL)]
+    C[controller] --> S[service]
+    S --> D[dao]
+    S --> O[security]
+    C --> V[view (JSP/FTL)]
     end
     subgraph "database"
-        SQL[SQL scripts]
-        MIG[Flyway / Maven‑assembly]
+    SQL[SQL scripts]
+    MIG[Flyway / Maven‑assembly]
     end
     subgraph "integration"
-        JORF[JORFConnector]
-        ES[Elasticsearch]
+    JORF[JORFConnector]
+    ES[Elasticsearch]
     end
     subgraph "deployment"
-        DEP[Docker/K8s]
+    DEP[Docker/K8s]
     end
     C -->|calls| S;
     S -->|persists| D;
@@ -370,19 +370,19 @@ graph TD
 ```mermaid
 classDiagram
     class Etablissement {
-        +Long id;
-        +String libelle;
-        +Set~College~ colleges;
-        +TypeInstance typeInstance;
+    +Long id;
+    +String libelle;
+    +Set~College~ colleges;
+    +TypeInstance typeInstance;
 
     class College {
-        +Long id;
-        +String identifiant;
-        +Set~Synonyme~ synonymes;
+    +Long id;
+    +String identifiant;
+    +Set~Synonyme~ synonymes;
 
     class Synonyme {
-        +String libelle;
-        +Boolean defaut;
+    +String libelle;
+    +Boolean defaut;
 
     Etablissement "1" o-- "*" College : contient;
     College "*" o-- "*" Synonyme : possède
@@ -397,7 +397,7 @@ classDiagram
 ### 3.1 Diagramme de Cas d’Utilisation (Use‑case)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#00695c','edgeLabelBackground':'#e0f2f1'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#00695c','edgeLabelBackground':'#e0f2f1'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 usecaseDiagram;
     actor Administrateur as Admin;
     actor Gestionnaire as Gest;
@@ -431,7 +431,7 @@ usecaseDiagram;
 ### 3.2 Diagramme d’Activités (Activity)
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#4e342e','edgeLabelBackground':'#d7ccc8'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#4e342e','edgeLabelBackground':'#d7ccc8'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 flowchart TD
     A[Début] --> B[Authentifier via Cerbère]
     B --> C{Authentification OK ?}
@@ -472,10 +472,10 @@ statediagram-v2;
     EXPIRÉ --> ARCHIVÉ : purge > 30j;
     RENOUVELÉ --> EN_COURS : nouvelle période;
     note right of EN_COURS;
-        Mandat actif;
+    Mandat actif;
     end note;
     note right of EXPIRÉ;
-        En attente de notification;
+    En attente de notification;
     end note
 ```
 
@@ -490,7 +490,7 @@ statediagram-v2;
 ### 4.1 Diagramme de Séquence – **Scénario de création d’un administrateur**  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#1a237e','edgeLabelBackground':'#c5cae9'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#1a237e','edgeLabelBackground':'#c5cae9'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 sequencediagram;
     participant UI as "Navigateur (JSP/FTL)"
     participant Ctrl as "AdminController"
@@ -529,7 +529,7 @@ sequencediagram;
 ### 4.2 Diagramme de Communication – **Import JORF**  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#004d40','edgeLabelBackground':'#b2dfdb'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#004d40','edgeLabelBackground':'#b2dfdb'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 graph LR
     Scheduler["Scheduler (Quartz)"] -->|trigger| JORFExtractor["JORFExtractor"]
     JORFExtractor -->|parse XML| ArticleParser["ArticleParser"]
@@ -550,21 +550,21 @@ graph LR
 ```mermaid
 flowchart TD
     subgraph UI["Interface Utilisateur"]
-        UI1[Login] --> UI2[Dashboard]
-        UI2 --> UI3[Gestion Admins]
-        UI2 --> UI4[Gestion Etablissements]
+    UI1[Login] --> UI2[Dashboard]
+    UI2 --> UI3[Gestion Admins]
+    UI2 --> UI4[Gestion Etablissements]
     end
     subgraph BIZ["Business Layer"]
-        B1[SecurityFilter] --> B2[AdminService]
-        B2 --> B3[AdminDAO]
-        B2 --> B4[EtablissementService]
-        B4 --> B5[EtablissementDAO]
+    B1[SecurityFilter] --> B2[AdminService]
+    B2 --> B3[AdminDAO]
+    B2 --> B4[EtablissementService]
+    B4 --> B5[EtablissementDAO]
     end
     subgraph INFRA["Infrastructure"]
-        I1[Tomcat] --> I2[PostgreSQL]
-        I1 --> I3[Elasticsearch]
-        I1 --> I4[Cerbère SSO]
-        I1 --> I5[Scheduler (Quartz)]
+    I1[Tomcat] --> I2[PostgreSQL]
+    I1 --> I3[Elasticsearch]
+    I1 --> I4[Cerbère SSO]
+    I1 --> I5[Scheduler (Quartz)]
     end
     UI1 --> B1;
     UI3 --> B2;
@@ -583,7 +583,7 @@ flowchart TD
 ### 4.4 Diagramme de Temps (optionnel) – **Expiration d’un mandat**  
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#bf360c','edgeLabelBackground':'#ffccbc'}}%%%%%%%%%%%%%%%%%%%%%%%%}%%
+%%{init: {'theme':'base', 'themeVariables':{'primaryColor':'#bf360c','edgeLabelBackground':'#ffccbc'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%}%%
 timeline;
     title Expiration du mandat;
     2022-01-01 : Début mandat;

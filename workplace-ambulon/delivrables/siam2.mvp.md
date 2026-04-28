@@ -201,10 +201,10 @@ C4Context;
     title Matrice MoSCoW - Migration SIAM vers LIGEO (exemple de résultat)
     
     System_Boundary(moscow, "Matrice MoSCoW") {
-        System(must, "Must Have", "Entités critiques pour un test viable")
-        System(should, "Should Have", "Important pour la qualité, reportable")
-        System(could, "Could Have", "Enrichissement optionnel")
-        System(wont, "Won't Have (MVP)", "Exclu de la première vague")
+    System(must, "Must Have", "Entités critiques pour un test viable")
+    System(should, "Should Have", "Important pour la qualité, reportable")
+    System(could, "Could Have", "Enrichissement optionnel")
+    System(wont, "Won't Have (MVP)", "Exclu de la première vague")
 
     Rel(must, should, "Priorité décroissante")
     Rel(should, could, "Priorité décroissante")

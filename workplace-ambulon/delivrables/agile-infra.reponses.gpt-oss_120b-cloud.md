@@ -188,10 +188,10 @@ graph TD
 ```mermaid
 flowchart TD
     subgraph Playbook;
-        P1[Set application path] --> P2[Create target directory]
-        P2 --> P3[Load secrets]
-        P3 --> P4[Load versions]
-        P4 --> P5[Render docker‑compose.yml]
+    P1[Set application path] --> P2[Create target directory]
+    P2 --> P3[Load secrets]
+    P3 --> P4[Load versions]
+    P4 --> P5[Render docker‑compose.yml]
     end
     P5 -->|notify| H[Handler: up the containers]
     H --> D[Docker Compose up -d]

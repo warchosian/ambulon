@@ -143,17 +143,17 @@ graph LR
 ```mermaid
 graph TD
     subgraph "Infrastructure"
-        Nginx[Nginx Load‑Balancer]
-        Docker[Docker Engine]
+    Nginx[Nginx Load‑Balancer]
+    Docker[Docker Engine]
     end
     subgraph "Application"
-        SPA[Vue SPA (agile‑front)] 
-        API[Legacy Proxy Service] 
-        Auth[Security Service] 
-        Export[Export Service] 
+    SPA[Vue SPA (agile‑front)] 
+    API[Legacy Proxy Service] 
+    Auth[Security Service] 
+    Export[Export Service] 
     end
     subgraph "Données"
-        DB[(PostgreSQL DB)]
+    DB[(PostgreSQL DB)]
     end
     Nginx -->|HTTPS| SPA;
     SPA -->|REST| API;

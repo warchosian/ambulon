@@ -23,16 +23,16 @@
 ```mermaid
 graph LR
     subgraph "Utilisateur"
-        DEV[Développeur] 
+    DEV[Développeur] 
     end
     subgraph "Environnement Docker"
-        APP[Conteneur PHP‑Apache (app)] 
-        DB[Conteneur PostgreSQL (db)] 
-        COMPOSE[Docker‑Compose (orchestration)]
+    APP[Conteneur PHP‑Apache (app)] 
+    DB[Conteneur PostgreSQL (db)] 
+    COMPOSE[Docker‑Compose (orchestration)]
     end
     subgraph "Systèmes externes"
-        PROXY[Proxy HTTP(s) d’entreprise] 
-        VCS[GitLab] 
+    PROXY[Proxy HTTP(s) d’entreprise] 
+    VCS[GitLab] 
     end
     DEV -->|docker‑compose up| COMPOSE
     COMPOSE --> APP
@@ -126,21 +126,21 @@ graph LR
 ```mermaid
 classDiagram
     class ApplicationConfig {
-        +string APP_ENV
-        +string DB_HOST
-        +string DB_PORT
-        +string DB_NAME
-        +string DB_USER
-        +string DB_PASSWORD
+    +string APP_ENV
+    +string DB_HOST
+    +string DB_PORT
+    +string DB_NAME
+    +string DB_USER
+    +string DB_PASSWORD
 
     class DatabaseConfig {
-        +string POSTGRES_USER
-        +string POSTGRES_PASSWORD
-        +string POSTGRES_DB
+    +string POSTGRES_USER
+    +string POSTGRES_PASSWORD
+    +string POSTGRES_DB
 
     class ProxyConfig {
-        +string HTTP_PROXY
-        +string HTTPS_PROXY
+    +string HTTP_PROXY
+    +string HTTPS_PROXY
 
     ApplicationConfig --> ProxyConfig : uses
     ApplicationConfig --> DatabaseConfig : connects_to

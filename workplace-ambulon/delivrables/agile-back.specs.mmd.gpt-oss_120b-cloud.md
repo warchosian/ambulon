@@ -71,7 +71,7 @@
 ### 3.1 Acteurs & cas d’usage  
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 usecaseDiagram;
     actor Administrateur as Admin;
     actor Utilisateur métier as User;
@@ -167,22 +167,22 @@ usecaseDiagram;
 ```mermaid
 flowchart LR
     subgraph "Web Server"
-        Apache[Apache / php-fpm]
+    Apache[Apache / php-fpm]
     end
     subgraph "PHP Application"
-        Index["public/index.php"]
-        Router["Routing (annotations)"]
-        Controllers["Controllers"]
-        Services["Services"]
-        Repositories["Repositories (Doctrine)"]
-        Entities["Entities"]
-        Forms["Form Types"]
-        Events["Event Dispatcher"]
-        Security["Security (CAS, Voter)"]
-        Templates["Twig Templates"]
+    Index["public/index.php"]
+    Router["Routing (annotations)"]
+    Controllers["Controllers"]
+    Services["Services"]
+    Repositories["Repositories (Doctrine)"]
+    Entities["Entities"]
+    Forms["Form Types"]
+    Events["Event Dispatcher"]
+    Security["Security (CAS, Voter)"]
+    Templates["Twig Templates"]
     end
     subgraph "Database"
-        Oracle["Oracle (prep37)"]
+    Oracle["Oracle (prep37)"]
     end
     Apache --> Index;
     Index --> Router;
@@ -204,15 +204,15 @@ flowchart LR
 ```mermaid
 flowchart TB
     subgraph "DMZ"
-        LB[Load Balancer] --> Web1[Web Server 1<br>(Apache+PHP)]
-        LB --> Web2[Web Server 2<br>(Apache+PHP)]
+    LB[Load Balancer] --> Web1[Web Server 1<br>(Apache+PHP)]
+    LB --> Web2[Web Server 2<br>(Apache+PHP)]
     end
     subgraph "App Tier"
-        Web1 --> App1[Docker container<br>php_8.2‑apache]
-        Web2 --> App2[Docker container<br>php_8.2‑apache]
+    Web1 --> App1[Docker container<br>php_8.2‑apache]
+    Web2 --> App2[Docker container<br>php_8.2‑apache]
     end
     subgraph "Data Tier"
-        DB[Oracle (prep37)<br>RAC (optional)]
+    DB[Oracle (prep37)<br>RAC (optional)]
     end
     App1 --> DB;
     App2 --> DB;
@@ -229,40 +229,40 @@ flowchart TB
 ```mermaid
 classDiagram
     class Etudes {
-        +int id;
-        +string titre_etude;
-        +string zone_geographique;
-        +date date_creation;
-        +float solde;
+    +int id;
+    +string titre_etude;
+    +string zone_geographique;
+    +date date_creation;
+    +float solde;
 
     class Groupes {
-        +int id;
-        +string token;
-        +string libelle;
+    +int id;
+    +string token;
+    +string libelle;
 
     class Bop {
-        +int id;
-        +string libelle_bop;
-        +string sigle;
-        +bool visible;
+    +int id;
+    +string libelle_bop;
+    +string sigle;
+    +bool visible;
 
     class Versements {
-        +int id;
-        +float montant;
-        +date date_versement;
-        +string type   // + ou -
+    +int id;
+    +float montant;
+    +date date_versement;
+    +string type   // + ou -
 
     class Demandes {
-        +int id;
-        +string type;
-        +string motif;
-        +date date_demande;
+    +int id;
+    +string type;
+    +string motif;
+    +date date_demande;
 
     class Utilisateurs {
-        +int id;
-        +string email;
-        +string nom;
-        +string prenom;
+    +int id;
+    +string email;
+    +string nom;
+    +string prenom;
 
     Etudes "*" --> "1" Groupes : appartient à;
     Etudes "1" --> "*" Versements : possède;
@@ -343,7 +343,7 @@ statediagram-v2;
 ### 8.1 Diagramme de cas d’usage (déjà affiché en 3.1)  
 
 ```mermaid
-%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%%%
+%%{init: {'theme':'neutral'}}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 usecaseDiagram;
     actor Administrateur as Admin;
     actor Utilisateur métier as User;
@@ -370,22 +370,22 @@ usecaseDiagram;
 ```mermaid
 flowchart LR
     subgraph "Web Server"
-        Apache[Apache / php-fpm]
+    Apache[Apache / php-fpm]
     end
     subgraph "PHP Application"
-        Index["public/index.php"]
-        Router["Routing (annotations)"]
-        Controllers["Controllers"]
-        Services["Services"]
-        Repositories["Repositories (Doctrine)"]
-        Entities["Entities"]
-        Forms["Form Types"]
-        Events["Event Dispatcher"]
-        Security["Security (CAS, Voter)"]
-        Templates["Twig Templates"]
+    Index["public/index.php"]
+    Router["Routing (annotations)"]
+    Controllers["Controllers"]
+    Services["Services"]
+    Repositories["Repositories (Doctrine)"]
+    Entities["Entities"]
+    Forms["Form Types"]
+    Events["Event Dispatcher"]
+    Security["Security (CAS, Voter)"]
+    Templates["Twig Templates"]
     end
     subgraph "Database"
-        Oracle["Oracle (prep37)"]
+    Oracle["Oracle (prep37)"]
     end
     Apache --> Index;
     Index --> Router;
@@ -407,15 +407,15 @@ flowchart LR
 ```mermaid
 flowchart TB
     subgraph "DMZ"
-        LB[Load Balancer] --> Web1[Web Server 1<br>(Apache+PHP)]
-        LB --> Web2[Web Server 2<br>(Apache+PHP)]
+    LB[Load Balancer] --> Web1[Web Server 1<br>(Apache+PHP)]
+    LB --> Web2[Web Server 2<br>(Apache+PHP)]
     end
     subgraph "App Tier"
-        Web1 --> App1[Docker container<br>php_8.2‑apache]
-        Web2 --> App2[Docker container<br>php_8.2‑apache]
+    Web1 --> App1[Docker container<br>php_8.2‑apache]
+    Web2 --> App2[Docker container<br>php_8.2‑apache]
     end
     subgraph "Data Tier"
-        DB[Oracle (prep37)<br>RAC (optional)]
+    DB[Oracle (prep37)<br>RAC (optional)]
     end
     App1 --> DB;
     App2 --> DB;
@@ -446,40 +446,40 @@ statediagram-v2;
 ```mermaid
 classDiagram
     class Etudes {
-        +int id;
-        +string titre_etude;
-        +string zone_geographique;
-        +date date_creation;
-        +float solde;
+    +int id;
+    +string titre_etude;
+    +string zone_geographique;
+    +date date_creation;
+    +float solde;
 
     class Groupes {
-        +int id;
-        +string token;
-        +string libelle;
+    +int id;
+    +string token;
+    +string libelle;
 
     class Bop {
-        +int id;
-        +string libelle_bop;
-        +string sigle;
-        +bool visible;
+    +int id;
+    +string libelle_bop;
+    +string sigle;
+    +bool visible;
 
     class Versements {
-        +int id;
-        +float montant;
-        +date date_versement;
-        +string type   // + ou -
+    +int id;
+    +float montant;
+    +date date_versement;
+    +string type   // + ou -
 
     class Demandes {
-        +int id;
-        +string type;
-        +string motif;
-        +date date_demande;
+    +int id;
+    +string type;
+    +string motif;
+    +date date_demande;
 
     class Utilisateurs {
-        +int id;
-        +string email;
-        +string nom;
-        +string prenom;
+    +int id;
+    +string email;
+    +string nom;
+    +string prenom;
 
     Etudes "*" --> "1" Groupes : appartient à;
     Etudes "1" --> "*" Versements : possède;

@@ -177,34 +177,34 @@ bpmnDiagram;
 ```mermaid
 classDiagram
     class User {
-        +uuid id;
-        +string email;
-        +string passwordHash;
-        +enum role {ADMIN, USER, RGPD}
-        +Date createdAt;
-        +Date updatedAt;
+    +uuid id;
+    +string email;
+    +string passwordHash;
+    +enum role {ADMIN, USER, RGPD}
+    +Date createdAt;
+    +Date updatedAt;
 
     class Dossier {
-        +uuid id;
-        +string title;
-        +string description;
-        +Date createdAt;
-        +Date updatedAt;
+    +uuid id;
+    +string title;
+    +string description;
+    +Date createdAt;
+    +Date updatedAt;
 
     class File {
-        +uuid id;
-        +string filename;
-        +string mimeType;
-        +int size;
-        +string s3Key;
-        +Date uploadedAt;
+    +uuid id;
+    +string filename;
+    +string mimeType;
+    +int size;
+    +string s3Key;
+    +Date uploadedAt;
 
     class AuditLog {
-        +uuid id;
-        +uuid userId;
-        +string action;
-        +string details;
-        +Date timestamp;
+    +uuid id;
+    +uuid userId;
+    +string action;
+    +string details;
+    +Date timestamp;
 
     User "1" --> "0..*" Dossier : owns;
     Dossier "1" --> "0..*" File : contains;

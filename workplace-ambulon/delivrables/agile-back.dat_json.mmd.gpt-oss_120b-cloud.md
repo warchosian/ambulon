@@ -20,15 +20,15 @@ Il permet aux agents de :
 ```mermaid
 graph TB
     subgraph Utilisateurs;
-        U[Agents / Utilisateurs finaux]
+    U[Agents / Utilisateurs finaux]
     end
     subgraph Systèmes;
-        B[agile‑back] 
-        F[agile‑front] 
-        C[CAS (authentification)] 
-        DB[(PostgreSQL)] 
-        M[SMTP / Mailer] 
-        P[Prometheus / Grafana] 
+    B[agile‑back] 
+    F[agile‑front] 
+    C[CAS (authentification)] 
+    DB[(PostgreSQL)] 
+    M[SMTP / Mailer] 
+    P[Prometheus / Grafana] 
     end
     U -->|HTTP(S) + session CAS| B;
     B -->|API REST (JSON/CSV)| F;
@@ -184,12 +184,12 @@ graph TB
 graph TD
     %% Conteneurs internes;
     subgraph "Infrastructure"
-        Nginx[Nginx (reverse‑proxy, load‑balancing)]
-        PHPFPM[PHP‑FPM (Symfony app)]
-        PG[PostgreSQL]
-        CAS[CAS Server (auth)]
-        Mail[SMTP / SwiftMailer]
-        Metrics[Prometheus Exporter]
+    Nginx[Nginx (reverse‑proxy, load‑balancing)]
+    PHPFPM[PHP‑FPM (Symfony app)]
+    PG[PostgreSQL]
+    CAS[CAS Server (auth)]
+    Mail[SMTP / SwiftMailer]
+    Metrics[Prometheus Exporter]
     end
     %% Flux;
     User[Agent / Navigateur] -->|HTTPS| Nginx;
@@ -262,8 +262,8 @@ sequencediagram;
     PHP->>DB: SELECT études WHERE date_alerte <= now()
     DB-->>PHP: Liste d’études;
     loop for each étude;
-        PHP->>Mail: sendMail(alerte, étude)
-        Mail-->>PHP: Mail sent;
+    PHP->>Mail: sendMail(alerte, étude)
+    Mail-->>PHP: Mail sent;
     end
     PHP->>Scheduler: Retour code 0
 ```
