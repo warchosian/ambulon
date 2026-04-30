@@ -35,6 +35,7 @@ PROVIDERS: Dict[str, Type[BaseProvider]] = {
     'cloud_gpt_oss_20b': OpenAICompatibleProvider,
     'cloud_qwen3_coder_480b': OpenAICompatibleProvider,
     'cloud_deepseek_v3_1_671b': OpenAICompatibleProvider,
+    'cloud_minimax_2_7': OpenAICompatibleProvider,
 }
 
 
