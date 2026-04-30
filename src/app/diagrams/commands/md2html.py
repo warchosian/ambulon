@@ -92,10 +92,15 @@ def process_markdown_to_html(
             return 1
 
         # Convert diagrams to SVG if not disabled
+        failed_by_type: dict = {}
         if not no_diagrams:
-            content = _convert_diagrams_in_content(
+            content, failed_by_type = _convert_diagrams_in_content(
                 content, plantuml_method, plantuml_jar, verbose
             )
+
+        # Write failed diagrams to side-files <name>_diagram-fails.<ext>.md
+        if failed_by_type:
+            _write_failed_diagrams(md_path, failed_by_type)
 
         # Convert remaining markdown to HTML
         html_content = markdown_to_html_basic(content, add_toc_backlinks=add_toc_backlinks)
@@ -111,7 +116,7 @@ def process_markdown_to_html(
             f.write(html_content)
 
         rel_path = format_output_path(output_path)
-        logger.info("✓ Conversion md2html reussie !")
+        logger.info("[OK] Conversion md2html reussie !")
         logger.info("Fichier produit : %s", rel_path)
 
         return 0
@@ -139,20 +144,62 @@ def _read_file_with_encoding(file_path: Path, verbose: bool = False) -> Optional
     return None
 
 
+def _write_failed_diagrams(md_path: Path, failed_by_type: dict) -> None:
+    """Write failed diagrams of each type to a side-file next to md_path.
+
+    PlantUML failures -> <stem>_diagram-fails.puml.md
+    Mermaid failures  -> <stem>_diagram-fails.mmd.md
+    Graphviz failures -> <stem>_diagram-fails.dot.md
+    """
+    type_to_ext = {
+        DiagramType.PLANTUML: 'puml',
+        DiagramType.MERMAID: 'mmd',
+        DiagramType.GRAPHVIZ: 'dot',
+    }
+    for diagram_type, fails in failed_by_type.items():
+        ext = type_to_ext.get(diagram_type)
+        if not ext or not fails:
+            continue
+        out_path = md_path.parent / f"{md_path.stem}_diagram-fails.{ext}.md"
+        lines = [
+            f"# Diagrammes {diagram_type.value} en échec",
+            "",
+            f"Source: `{md_path.name}`",
+            f"Total: {len(fails)} diagramme(s) en erreur",
+            "",
+        ]
+        for idx, (diagram, err_msg) in enumerate(fails, 1):
+            lines.append(f"## Diagramme {idx} (ligne {diagram.start_line})")
+            lines.append("")
+            lines.append(f"**Erreur** : {err_msg}")
+            lines.append("")
+            lines.append("```" + diagram_type.value)
+            lines.append(diagram.content)
+            lines.append("```")
+            lines.append("")
+        out_path.write_text("\n".join(lines), encoding='utf-8')
+        logger.info(f"  [FAILS] {len(fails)} {diagram_type.value} diagram(s) -> {out_path.name}")
+
+
 def _convert_diagrams_in_content(
     content: str,
     plantuml_method: str,
     plantuml_jar: Optional[str],
     verbose: bool
-) -> str:
-    """Convert all diagrams in content to SVG."""
+):
+    """Convert all diagrams in content to SVG.
+
+    Returns:
+        tuple (result_content, failed_by_type) where failed_by_type is a dict
+        mapping DiagramType -> list of (diagram, error_message).
+    """
     # Detect diagrams using the core module
     diagrams = extract_diagram_blocks(content)
 
     if not diagrams:
         if verbose:
             logger.info("No diagrams found in content")
-        return content
+        return content, {}
 
     if verbose:
         stats = get_diagram_stats(diagrams)
@@ -174,8 +221,14 @@ def _convert_diagrams_in_content(
     except ValueError:
         method = ConversionMethod.KROKI
 
+    # Track conversion statistics
+    converted = 0
+    failed = 0
+    skipped = 0
+    failed_by_type: dict = {}  # DiagramType -> list of (diagram, error_message)
+
     # Convert each diagram
-    for diagram in diagrams:
+    for idx, diagram in enumerate(diagrams, 1):
         diagram_type = diagram.diagram_type
         diagram_code = diagram.content
         full_block = diagram.full_block
@@ -183,11 +236,12 @@ def _convert_diagrams_in_content(
         # Skip Excalidraw diagrams - they are handled specially in markdown_to_html_basic
         if diagram_type == DiagramType.EXCALIDRAW:
             if verbose:
-                logger.info(f"Skipping {diagram_type.value} diagram at line {diagram.start_line} (handled by React)")
+                logger.info(f"  [{idx}/{len(diagrams)}] Skipping {diagram_type.value} diagram at line {diagram.start_line} (handled by React)")
+            skipped += 1
             continue
 
         if verbose:
-            logger.info(f"Converting {diagram_type.value} diagram at line {diagram.start_line}...")
+            logger.info(f"  [{idx}/{len(diagrams)}] Converting {diagram_type.value} diagram at line {diagram.start_line}...")
 
         result = convert_diagram(
             diagram_type=diagram_type,
@@ -203,12 +257,28 @@ def _convert_diagrams_in_content(
             result_content = result_content.replace(full_block, replacement, 1)
 
             if verbose:
-                logger.info(f"  [OK] Converted successfully using {result.method_used}")
+                logger.info(f"    [OK] Converted successfully using {result.method_used}")
+            converted += 1
         else:
+            err_msg = result.error_message or 'Unknown error'
             if verbose:
-                logger.warning(f"  [FAILED] {result.error_message or 'Unknown error'}")
+                logger.warning(f"    [FAILED] {err_msg}")
+            failed += 1
+            failed_by_type.setdefault(diagram_type, []).append((diagram, err_msg))
 
-    return result_content
+    # Print final summary if verbose
+    if verbose:
+        logger.info("")
+        logger.info("-" * 60)
+        logger.info("CONVERSION SUMMARY")
+        logger.info("-" * 60)
+        logger.info(f"Total diagrams:  {len(diagrams)}")
+        logger.info(f"Converted:       {converted} ({converted*100//len(diagrams) if len(diagrams) > 0 else 0}%)")
+        logger.info(f"Failed:          {failed}")
+        logger.info(f"Skipped:         {skipped}")
+        logger.info("-" * 60)
+
+    return result_content, failed_by_type
 
 
 def main(argv=None):
