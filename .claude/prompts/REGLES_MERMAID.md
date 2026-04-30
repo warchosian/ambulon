@@ -202,4 +202,4 @@ Avant de générer un diagramme Mermaid, vérifier:
 
 - [Documentation Mermaid Officielle](https://mermaid-js.github.io/)
 - [Syntax Reference](https://mermaid-js.github.io/syntax/syntax.html)
-- Projet Ambulon: Règles complètes en `workplace-ambulon/piag-chat/prompts/REGLES_MERMAID.mmd.md`
+- Projet Ambulon: Règles complètes en `workplace-ambulon/piag-chat/prompts/REGLES_MERMAID.md`

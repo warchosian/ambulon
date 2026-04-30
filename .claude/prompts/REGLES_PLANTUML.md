@@ -201,6 +201,190 @@ object feat {
 <a name="rectangles-et-composants"></a>
 ## 2. Rectangles et Composants
 
+### ✅ Règle #3bis : Fermer correctement les blocs PlantUML/Mermaid
+
+**TOUJOURS fermer les blocs PlantUML avec `@enduml` suivi des backticks fermants ` ``` `.**
+
+#### ❌ Mauvais exemple (backticks manquants)
+
+```markdown
+```plantuml
+@startuml
+rectangle "Test"
+@enduml
+```
+
+**Erreur** : Les backticks fermants manquent après `@enduml`. Le bloc n'est pas correctement fermé en Markdown.
+
+#### ✅ Bon exemple (fermeture correcte)
+
+```markdown
+```plantuml
+@startuml
+rectangle "Test"
+@enduml
+```
+```
+
+**Pourquoi** : Sans les backticks fermants, le reste du document est traité comme du code PlantUML, ce qui casse le parsing Markdown et les diagrammes suivants.
+
+#### 🔧 Comment corriger
+
+**Pattern incorrect** :
+```
+@startuml
+rectangle "Test"
+@enduml
+```autre contenu...
+```
+
+**Pattern correct** :
+```
+@startuml
+rectangle "Test"
+@enduml
+```
+```
+
+---
+
+### ✅ Règle #3ter : Syntaxe C4_Container vs C4_Component
+
+**NE PAS imbriquer `Component()` dans `Container()` en C4_Container. Les `Component()` sont réservés à C4_Component.**
+
+#### ❌ Mauvais exemple (composants imbriqués dans Container)
+
+```plantuml
+@startuml C4_Container
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Container(app, "MyApp", "App") {
+    Component(search, "Search", "Search engine")    # ❌ ERREUR!
+    Component(auth, "Auth", "Authentication")      # ❌ ERREUR!
+}
+@enduml
+```
+
+**Pourquoi** : C4_Container ne supporte pas l'imbrication de composants avec accolades. Les `Component()` doivent être utilisés dans un diagramme C4_Component séparé.
+
+#### ✅ Bon exemple (syntaxe C4_Container correcte)
+
+```plantuml
+@startuml C4_Container
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Container(app, "MyApp", "Application")
+Container(db, "Database", "PostgreSQL")
+Container(cache, "Cache", "Redis")
+
+Rel(app, db, "JDBC")
+Rel(app, cache, "TCP")
+@enduml
+```
+
+**Puis créer un diagramme C4_Component séparé pour les composants** :
+
+```plantuml
+@startuml C4_Component
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container(app, "MyApp")
+
+Component(search, "Search", "Search engine")
+Component(auth, "Auth", "Authentication")
+
+Rel(search, auth, "Uses")
+@enduml
+```
+
+#### 🔧 Comment corriger
+
+**Transformation** : Supprimer les `Component()` et les accolades du C4_Container
+
+1. Retirer tous les `Component()` du bloc C4_Container
+2. Retirer les accolades `{}`
+3. Créer un diagramme C4_Component séparé pour les détails internes
+
+**Pattern correct pour C4_Container** :
+```
+Container(nom, "label", "description")
+ContainerDb(nom, "label", "description")
+Rel(source, destination, "label")
+```
+
+**Pattern INCORRECT pour C4_Container** :
+```
+Container(nom, "label") {
+    Component(...)    # ❌ Ne pas utiliser ici!
+}
+```
+
+---
+
+### ✅ Règle #4 : Remplacer `profile` par `rectangle` dans les Définitions
+
+**TOUJOURS utiliser `rectangle` à la place de `profile` pour les définitions de profils.**
+
+#### ❌ Mauvais exemple (utilise `profile`)
+
+```text
+profile Causalis {
+    stereotype <<Entity>> as Entity
+    stereotype <<DAO>> as DAO
+    stereotype <<Service>> as Service
+    stereotype <<Controller>> as Controller
+}
+```
+
+```plantuml
+@startuml
+profile Causalis {
+    stereotype <<Entity>> as Entity
+    stereotype <<DAO>> as DAO
+}
+@enduml
+```
+
+**Pourquoi** : `profile` n'est pas un élément de conteneur valide dans PlantUML. Cela cause une erreur de parsing.
+
+#### ✅ Bon exemple (utilise `rectangle`)
+
+```text
+rectangle Causalis {
+    stereotype <<Entity>> as Entity
+    stereotype <<DAO>> as DAO
+    stereotype <<Service>> as Service
+    stereotype <<Controller>> as Controller
+}
+```
+
+```plantuml
+@startuml
+rectangle Causalis {
+    stereotype <<Entity>> as Entity
+    stereotype <<DAO>> as DAO
+    stereotype <<Service>> as Service
+    stereotype <<Controller>> as Controller
+}
+@enduml
+```
+
+**Pourquoi** : `rectangle` est le bon élément de conteneur pour définir des groupes de stéréotypes en PlantUML.
+
+#### 🔧 Comment corriger
+
+**Transformation** : `profile Nom {` → `rectangle Nom {`
+
+**Pattern correct** :
+```
+rectangle NomDuProfil {
+    stereotype <<Type1>> as TypeAlias1
+    stereotype <<Type2>> as TypeAlias2
+}
+```
+
+---
+
 ### ✅ Règle #5 : Utiliser les Listes à Tirets dans les Rectangles Imbriqués
 
 **TOUJOURS privilégier les listes à tirets dans les rectangles imbriqués pour une meilleure lisibilité.**
