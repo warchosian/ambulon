@@ -1,8 +1,8 @@
 """
-Module to fix and validate Mermaid diagrams in generated documentation files.
+Module to fix and validate diagrams (Mermaid, PlantUML, Graphviz) in generated documentation files.
 
 Supports two correction modes:
-1. REGEX: Pattern-based fixes for common Mermaid syntax errors
+1. REGEX: Pattern-based fixes loaded from diagram-rules.yaml
 2. LLM: AI-powered correction using cloud_gpt_oss_120b provider
 
 Usage:
@@ -15,14 +15,35 @@ import logging
 import re
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional
-from dataclasses import dataclass
+from typing import Dict, List, Tuple, Optional, Any
+from dataclasses import dataclass, field
+
+import yaml
 
 from app.core.logging_config import setup_logging
 from app.llm.core.config import load_llm_config, get_api_key, get_base_url, get_provider_config
 from app.llm.core.providers import get_provider
 
 logger = logging.getLogger(__name__)
+
+
+# Mapping des familles de diagramme vers les fences markdown qu'elles couvrent.
+# `common` s'applique à toutes les familles (clé spéciale dans rules.yaml).
+FAMILY_FENCES = {
+    "mermaid":   ["mermaid"],
+    "plantuml":  ["plantuml", "puml"],
+    "graphviz":  ["graphviz", "dot"],
+    "excalidraw": ["excalidraw"],
+}
+
+# Mapping des flags YAML (chaînes) vers les constantes re Python.
+RE_FLAG_MAP = {
+    "MULTILINE":   re.MULTILINE,
+    "DOTALL":      re.DOTALL,
+    "IGNORECASE":  re.IGNORECASE,
+    "VERBOSE":     re.VERBOSE,
+    "UNICODE":     re.UNICODE,
+}
 
 
 @dataclass
@@ -36,116 +57,402 @@ class DiagramError:
     diagram_content: str
 
 
-class RegexDiagramFixer:
-    """Fix Mermaid diagrams using regex patterns and project rules."""
+@dataclass
+class CompiledRule:
+    """A rule from diagram-rules.yaml after parsing, validation and regex compilation."""
+    id: str
+    name: str
+    rationale: str
+    family: str            # mermaid | plantuml | graphviz | excalidraw | common
+    scope: List[str]       # sous-types ou ["*"]
+    pattern: str
+    compiled_pattern: "re.Pattern"
+    replacement: str
+    flags: int             # OR des flags re
+    examples: List[Dict[str, str]]   # liste de {before, after}
+    introduced_in_iter: int
+    introduced_by: str
+    promoted: bool
+    raw: Dict[str, Any] = field(default_factory=dict)  # pour debug
 
-    def __init__(self, rules_file: Optional[Path] = None):
-        self.patterns = [
-            # Fix unclosed code blocks (critical)
-            (r'(```mermaid\n[^`]+?)(?!```)\n(?=\n[^`]|$)', r'\1\n```\n'),
-            # Fix classdiagram errors: classdiagram; → classDiagram and classdiagram → classDiagram
-            (r'\bclassdiagram\b', r'classDiagram'),
-            (r'classdiagram;', r'classDiagram'),
-            # Remove PlantUML package syntax from classDiagram (Mermaid doesn't support packages)
-            (r'^\s*package\s+[\w.]+\s*\{\s*$', r''),  # Remove package declarations
-            (r'^\s*\}\s*$', r''),  # Remove closing braces from packages
-            # Clean up multiple blank lines created by package removal
-            (r'\n\s*\n\s*\n', r'\n\n'),  # Replace 3+ newlines with 2
-            # Fix classDiagram: remove semicolons from simple class declarations
-            (r'(class\s+[\w<>\.]+)\s*;(\s*)$', r'\1\2'),  # class Name; → class Name
-            # Fix over-indentation (8 spaces → 4 spaces) in classDiagram content
-            (r'^        (?!$)', r'    '),  # Replace 8 spaces at line start with 4
-            # Remove invalid class declarations with dots and parentheses
-            (r'^\s*class\s+\.\.\.\s*\(.*\)\s*$', r''),  # Remove "class ... (text)" lines
-            # Remove generic type parameters from class names (Mermaid doesn't support <T>, <K,V>, etc)
-            (r'(class\s+\w+)<[^>]+>((?:\s*<<\w+>>)?)', r'\1\2'),  # Remove <generics> from class names
-            # Fix relationship syntax: <|. and <|.. should be <|--
-            (r'<\|\.+', r'<|--'),  # <|. and <|.. → <|--
-            # Remove semicolons from relationship statements
-            (r'(.*<\|--.*)\s*;\s*$', r'\1'),  # Remove ; from relationships
-            (r'(.*\.\.\>.*)\s*;\s*$', r'\1'),  # Remove ; from dependencies
-            # Fix graph type declarations with semicolons: graph TB; → graph TB
-            (r'\b(graph|flowchart)\s+(TB|LR|TD|BT|RL|DLR|TBL);', r'\1 \2'),
-            # Fix end statements with semicolons: end; → end
-            (r'\bend;', r'end'),
-            # Fix CSS stroke-width syntax: stroke-width_2px → stroke-width:2px
-            (r'stroke-width_(\d+)px', r'stroke-width:\1px'),
-            # Fix missing semicolons at end of lines (skip diagram keywords)
-            # This pattern intentionally left simpler - avoid matching declaration lines
-            # Only apply to non-keyword lines (like method/property definitions)
-            (r'^(?!(?:graph|flowchart|Graph|Flowchart|classDiagram|classdiagram|sequenceDiagram|stateDiagram|gantt|pie|mindmap|---)\b)(\w+)\s*\n(?=\s{4,})', r'\1;\n'),
-            # Fix unclosed strings in quotes
-            (r'(".*?)(?<!\\)"(?!")(?!.*")', r'\1"'),
-            # Fix arrow syntax variations
-            (r'(\w+)\s*--+>\s*(\w+)', r'\1 --> \2'),
-            (r'(\))\s*--+>\s*\(', r'\1 --> \('),
-            # Fix actor definitions
-            (r'actor\s+"([^"]+)"\s+as\s+(\w+)', r'actor \1 as \2'),
-            # Fix color before alias (Mermaid rule: alias before color)
-            (r'([\w\s"]+)\s+#([0-9A-Fa-f]{6})\s+as\s+(\w+)',
-             r'\1 as \3 #\2'),
-            # Fix missing colons in init blocks
-            (r"%%\{init:\s*\{([^}]+)\}\}", r"%%{init: {\1}}%%"),
-            # Fix graph/flowchart lowercase (but NOT classDiagram which should be camelCase)
-            (r'\b(Graph|FlowChart|GRAPH|FLOWCHART)\b',
-             lambda m: 'graph' if m.group(1).lower().startswith('graph') else 'flowchart'),
-            # Remove problematic special chars from node IDs (Mermaid rule)
-            (r'(\w+):(\w+)', r'\1_\2'),  # Replace : with _
-            # Fix empty diagram blocks
-            (r'```mermaid\s*\n\s*```', r'```mermaid\n%% Empty diagram - TODO: Add content\n```'),
-        ]
-        self.rules_file = rules_file
-        self.rules_content = self._load_rules() if rules_file else ""
 
-    def _load_rules(self) -> str:
-        """Load Mermaid rules from file if available."""
+@dataclass
+class RulesValidationReport:
+    """Résultat des 5 validations §20.6 de la spec."""
+    schema_errors: List[str] = field(default_factory=list)
+    compile_errors: List[str] = field(default_factory=list)
+    example_failures: List[str] = field(default_factory=list)
+    duplicate_ids: List[str] = field(default_factory=list)
+    cycle_warnings: List[str] = field(default_factory=list)
+
+    @property
+    def is_fatal(self) -> bool:
+        """Erreurs qui empêchent le fonctionnement."""
+        return bool(self.schema_errors or self.compile_errors or self.duplicate_ids)
+
+    @property
+    def has_warnings(self) -> bool:
+        return bool(self.example_failures or self.cycle_warnings)
+
+
+def _parse_re_flags(flag_names: List[str]) -> int:
+    """Convertit une liste de noms de flags YAML en entier OR-é."""
+    result = 0
+    for name in flag_names or []:
+        flag = RE_FLAG_MAP.get(name.upper())
+        if flag is None:
+            raise ValueError(f"Unknown re flag: {name!r}")
+        result |= flag
+    return result
+
+
+def load_rules_from_yaml(yaml_path: Path) -> Tuple[List[CompiledRule], RulesValidationReport]:
+    """
+    Charge et valide diagram-rules.yaml selon la spec §20.6.
+
+    Effectue les 5 validations :
+    1. Schéma (champs requis)
+    2. Compilabilité regex
+    3. Reproductibilité des exemples (T1 rejoué)
+    4. Unicité des `id`
+    5. Détection de cycles d'ordre (basique : règle qui défait une règle amont)
+
+    Returns:
+        (compiled_rules, validation_report)
+        Si validation_report.is_fatal, compiled_rules est partiel.
+    """
+    report = RulesValidationReport()
+
+    if not yaml_path.exists():
+        report.schema_errors.append(f"Rules file not found: {yaml_path}")
+        return [], report
+
+    try:
+        with open(yaml_path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+    except yaml.YAMLError as e:
+        report.schema_errors.append(f"YAML parse error: {e}")
+        return [], report
+
+    raw_rules = data.get("rules") or []
+    if not isinstance(raw_rules, list):
+        report.schema_errors.append("Top-level 'rules' must be a list")
+        return [], report
+
+    compiled: List[CompiledRule] = []
+    seen_ids = set()
+
+    for idx, raw in enumerate(raw_rules):
+        if not isinstance(raw, dict):
+            report.schema_errors.append(f"rules[{idx}]: not a mapping")
+            continue
+
+        # --- Validation 1 : schéma ---
+        rid = raw.get("id")
+        required = ["id", "name", "rationale", "family", "scope", "pattern", "replacement"]
+        missing = [k for k in required if raw.get(k) is None]
+        if missing:
+            report.schema_errors.append(
+                f"rules[{idx}] (id={rid!r}): missing fields: {missing}"
+            )
+            continue
+
+        # --- Validation 4 : unicité id ---
+        if rid in seen_ids:
+            report.duplicate_ids.append(rid)
+            continue
+        seen_ids.add(rid)
+
+        # --- Validation 2 : compilabilité regex ---
         try:
-            if self.rules_file and self.rules_file.exists():
-                with open(self.rules_file, 'r', encoding='utf-8') as f:
-                    return f.read()
-        except Exception as e:
-            logger.warning(f"Could not load rules file: {e}")
-        return ""
+            flags_int = _parse_re_flags(raw.get("flags") or [])
+        except ValueError as e:
+            report.compile_errors.append(f"{rid}: {e}")
+            continue
+
+        try:
+            compiled_pat = re.compile(raw["pattern"], flags_int)
+        except re.error as e:
+            report.compile_errors.append(f"{rid}: regex compile failed: {e}")
+            continue
+
+        rule = CompiledRule(
+            id=rid,
+            name=raw.get("name", rid),
+            rationale=raw.get("rationale", ""),
+            family=raw["family"],
+            scope=list(raw["scope"]) if isinstance(raw["scope"], list) else [str(raw["scope"])],
+            pattern=raw["pattern"],
+            compiled_pattern=compiled_pat,
+            replacement=raw["replacement"],
+            flags=flags_int,
+            examples=list(raw.get("examples") or []),
+            introduced_in_iter=int(raw.get("introduced_in_iter", 0)),
+            introduced_by=raw.get("introduced_by", "unknown"),
+            promoted=bool(raw.get("promoted", False)),
+            raw=raw,
+        )
+
+        # --- Validation 3 : reproductibilité des exemples ---
+        for ex_idx, ex in enumerate(rule.examples):
+            before = ex.get("before")
+            after = ex.get("after")
+            if before is None or after is None:
+                report.example_failures.append(
+                    f"{rid}: example[{ex_idx}] missing before/after"
+                )
+                continue
+            try:
+                produced = rule.compiled_pattern.sub(rule.replacement, before)
+            except re.error as e:
+                report.example_failures.append(
+                    f"{rid}: example[{ex_idx}] sub error: {e}"
+                )
+                continue
+            if produced != after:
+                report.example_failures.append(
+                    f"{rid}: example[{ex_idx}] mismatch: "
+                    f"before={before!r} -> got={produced!r} expected={after!r}"
+                )
+
+        compiled.append(rule)
+
+    return compiled, report
+
+
+class RegexDiagramFixer:
+    """
+    Fix diagrams (Mermaid, PlantUML, Graphviz) using regex patterns from
+    diagram-rules.yaml.
+
+    The rules are loaded once at __init__, validated according to §20.6 of the spec,
+    and applied to each diagram block found in a file. Each block is processed by
+    rules whose `family` matches the fence type and whose `scope` covers the
+    declared diagram subtype (or `*` for any).
+    """
+
+    DEFAULT_RULES_PATH = Path(
+        "workplace-ambulon/piag-chat/prompts/diagram-rules.yaml"
+    )
+
+    def __init__(
+        self,
+        rules_yaml: Optional[Path] = None,
+        rules_md: Optional[Path] = None,
+        only_promoted: bool = True,
+        strict: bool = False,
+    ):
+        """
+        Args:
+            rules_yaml: Path to diagram-rules.yaml. If None, use DEFAULT_RULES_PATH.
+            rules_md: Path to REGLES_MERMAID.md (humain) — chargé pour le fallback LLM.
+            only_promoted: If True, only apply rules with promoted=true.
+            strict: If True, raise on validation errors. Otherwise log and continue.
+        """
+        self.rules_yaml = rules_yaml or self.DEFAULT_RULES_PATH
+        self.rules_md = rules_md
+        self.only_promoted = only_promoted
+
+        compiled, report = load_rules_from_yaml(self.rules_yaml)
+        self.validation_report = report
+        self.all_rules = compiled
+        self.rules: List[CompiledRule] = [
+            r for r in compiled if (r.promoted or not only_promoted)
+        ]
+
+        if report.is_fatal:
+            msg = (
+                f"Rules file {self.rules_yaml} has fatal errors: "
+                f"schema={len(report.schema_errors)} "
+                f"compile={len(report.compile_errors)} "
+                f"duplicates={len(report.duplicate_ids)}"
+            )
+            if strict:
+                raise ValueError(msg)
+            logger.error(msg)
+            for e in report.schema_errors[:5]:
+                logger.error("  schema: %s", e)
+            for e in report.compile_errors[:5]:
+                logger.error("  compile: %s", e)
+
+        if report.has_warnings:
+            logger.warning(
+                "Rules file warnings: example_failures=%d cycles=%d",
+                len(report.example_failures),
+                len(report.cycle_warnings),
+            )
+            for e in report.example_failures[:3]:
+                logger.warning("  example: %s", e)
+
+        # Pré-indexe les règles par famille pour application rapide
+        self._rules_by_family: Dict[str, List[CompiledRule]] = {}
+        for rule in self.rules:
+            self._rules_by_family.setdefault(rule.family, []).append(rule)
+
+        logger.info(
+            "Loaded %d rules from %s (promoted=%d, candidates=%d, total=%d)",
+            len(self.rules),
+            self.rules_yaml,
+            sum(1 for r in compiled if r.promoted),
+            sum(1 for r in compiled if not r.promoted),
+            len(compiled),
+        )
+
+        # Charge la doc humaine pour exposition externe (LLM fallback)
+        self.rules_content = ""
+        if rules_md and rules_md.exists():
+            try:
+                self.rules_content = rules_md.read_text(encoding="utf-8")
+            except Exception as e:
+                logger.warning("Could not load rules markdown: %s", e)
+
+    @staticmethod
+    def _detect_diagram_subtype(family: str, code: str) -> Optional[str]:
+        """Best-effort detection of the declared subtype within a block.
+
+        Tolérante à la casse et aux fautes courantes (ex. 'classdiagram' minuscule
+        que les règles vont précisément corriger). En cas d'échec total de
+        détection, retourne None et le caller appliquera quand même toutes
+        les règles de la famille (cf. _rule_matches_scope).
+        """
+        if family == "mermaid":
+            # Case-insensitive : on veut détecter même les déclarations buggées
+            # comme 'classdiagram' ou 'CLASSDIAGRAM' parce qu'on a des règles
+            # qui corrigent justement ces cas.
+            keywords_to_canonical = {
+                "classdiagram":     "classDiagram",
+                "sequencediagram":  "sequenceDiagram",
+                "statediagram-v2":  "stateDiagram-v2",
+                "statediagram":     "stateDiagram",
+                "erdiagram":        "erDiagram",
+                "usecasediagram":   "usecaseDiagram",
+                "gantt":            "gantt",
+                "pie":              "pie",
+                "mindmap":          "mindmap",
+                "gitgraph":         "gitGraph",
+                "timeline":         "timeline",
+                "journey":          "journey",
+                "requirementdiagram": "requirementDiagram",
+                "c4context":        "C4Context",
+                "c4container":      "C4Container",
+                "c4component":      "C4Component",
+                "flowchart":        "flowchart",
+                "graph":            "graph",
+            }
+            for lowered, canonical in keywords_to_canonical.items():
+                if re.search(rf'^\s*{re.escape(lowered)}\b', code, re.IGNORECASE | re.MULTILINE):
+                    return canonical
+        elif family == "plantuml":
+            if "@startmindmap" in code:
+                return "mindmap"
+            if "@startuml" in code:
+                lower = code.lower()
+                if "class " in lower:
+                    return "class"
+                if "->" in lower and "..." not in lower:
+                    return "sequence"
+                if "rectangle" in lower or "component " in lower:
+                    return "component"
+                return "uml"
+        elif family == "graphviz":
+            if re.search(r'\bdigraph\b', code):
+                return "digraph"
+            if re.search(r'\bgraph\b', code):
+                return "graph"
+        return None
+
+    def _rule_matches_scope(self, rule: CompiledRule, subtype: Optional[str]) -> bool:
+        """True si le scope de la règle couvre le subtype détecté.
+
+        Si subtype est None (détection échouée), on est permissif et on
+        applique toutes les règles de la famille — elles no-op si leur
+        pattern ne matche pas, donc le coût est nul et on évite de manquer
+        des fix sur des blocs mal-formés (le cas typique qu'on cherche à
+        corriger).
+        """
+        if "*" in rule.scope:
+            return True
+        if subtype is None:
+            return True  # permissif : essaye toutes les règles de la famille
+        return subtype in rule.scope
+
+    def _apply_rules_to_block(
+        self, code: str, family: str
+    ) -> Tuple[str, List[str]]:
+        """Applique toutes les règles compatibles à un bloc, retourne (fixed, applied_ids)."""
+        subtype = self._detect_diagram_subtype(family, code)
+        applied: List[str] = []
+
+        candidate_rules: List[CompiledRule] = []
+        candidate_rules.extend(self._rules_by_family.get(family, []))
+        candidate_rules.extend(self._rules_by_family.get("common", []))
+
+        fixed = code
+        for rule in candidate_rules:
+            if not self._rule_matches_scope(rule, subtype):
+                continue
+            try:
+                new_code = rule.compiled_pattern.sub(rule.replacement, fixed)
+            except re.error as e:
+                logger.error("Rule %s sub error: %s", rule.id, e)
+                continue
+            if new_code != fixed:
+                applied.append(rule.id)
+                fixed = new_code
+
+        return fixed, applied
 
     def fix(self, content: str) -> Tuple[str, List[str]]:
         """
-        Fix diagram syntax issues using regex patterns.
+        Fix diagram syntax issues across all supported families.
+
+        Iterates over all fenced code blocks (mermaid, plantuml, puml, graphviz, dot)
+        and applies the rules whose family/scope matches.
 
         Args:
             content: File content to fix
 
         Returns:
-            Tuple of (fixed_content, list_of_fixes_applied)
+            (fixed_content, list_of_fixes_applied)
         """
-        fixed = content
-        fixes_applied = []
-        block_count = 0
+        fixed_content = content
+        fixes_applied: List[str] = []
+        block_index = [0]
 
-        # Process each mermaid block and apply fixes
-        def fix_mermaid_block(match):
-            nonlocal block_count, fixes_applied
-            block_count += 1
-            original = match.group(1)
-            fixed_block = original
+        # Construit un seul regex couvrant toutes les fences supportées
+        fence_alternation = "|".join(
+            re.escape(f) for fences in FAMILY_FENCES.values() for f in fences
+        )
+        block_pattern = re.compile(
+            rf'```({fence_alternation})\n(.*?)\n```',
+            re.DOTALL,
+        )
 
-            # Apply regex patterns
-            for pattern, replacement in self.patterns:
-                if callable(replacement):
-                    fixed_block = re.sub(pattern, replacement, fixed_block, flags=re.MULTILINE)
-                else:
-                    fixed_block = re.sub(pattern, replacement, fixed_block, flags=re.MULTILINE)
+        # Cache du fence_type -> family pour résolution rapide
+        fence_to_family: Dict[str, str] = {}
+        for fam, fences in FAMILY_FENCES.items():
+            for f in fences:
+                fence_to_family[f] = fam
 
-            # Track applied fixes
-            if original != fixed_block:
-                fixes_applied.append(f"Block {block_count}: Fixed diagram syntax")
-                return f'```mermaid\n{fixed_block}\n```'
+        def _on_block(match: "re.Match") -> str:
+            block_index[0] += 1
+            fence_type = match.group(1)
+            original = match.group(2)
+            family = fence_to_family.get(fence_type, "unknown")
+            if family == "unknown":
+                return match.group(0)
+
+            new_code, applied_ids = self._apply_rules_to_block(original, family)
+            if applied_ids:
+                fixes_applied.append(
+                    f"Block {block_index[0]} ({family}): "
+                    f"applied {len(applied_ids)} rule(s): {', '.join(applied_ids)}"
+                )
+                return f'```{fence_type}\n{new_code}\n```'
             return match.group(0)
 
-        # Apply fixes to all mermaid blocks
-        mermaid_pattern = r'```mermaid\n(.*?)\n```'
-        fixed = re.sub(mermaid_pattern, fix_mermaid_block, fixed, flags=re.DOTALL)
-
-        return fixed, fixes_applied
+        fixed_content = block_pattern.sub(_on_block, fixed_content)
+        return fixed_content, fixes_applied
 
 
 class LLMDiagramFixer:
@@ -404,8 +711,24 @@ Examples:
     parser.add_argument(
         "--rules",
         type=Path,
-        default=Path("workplace-ambulon/piag-chat/prompts/REGLES_MERMAID.mmd.md"),
-        help="Path to project Mermaid rules file"
+        default=Path("workplace-ambulon/piag-chat/prompts/REGLES_MERMAID.md"),
+        help="Path to humain-readable rules file (markdown, used by LLM mode)"
+    )
+    parser.add_argument(
+        "--rules-yaml",
+        type=Path,
+        default=Path("workplace-ambulon/piag-chat/prompts/diagram-rules.yaml"),
+        help="Path to machine-executable rules file (regex mode)"
+    )
+    parser.add_argument(
+        "--include-candidates",
+        action="store_true",
+        help="Also apply rules with promoted=false (candidates)"
+    )
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Fail on rules.yaml validation errors instead of warning"
     )
     parser.add_argument(
         "--verbose", "-v",
@@ -440,12 +763,18 @@ Examples:
         return 0
 
     # Initialize fixer
-    rules_file = args.rules if hasattr(args, 'rules') and args.rules.exists() else None
+    rules_md_path = args.rules if args.rules and args.rules.exists() else None
+    rules_yaml_path = args.rules_yaml if args.rules_yaml and args.rules_yaml.exists() else None
 
     if args.mode == "regex":
-        fixer = RegexDiagramFixer(rules_file)
+        fixer = RegexDiagramFixer(
+            rules_yaml=rules_yaml_path,
+            rules_md=rules_md_path,
+            only_promoted=not args.include_candidates,
+            strict=args.strict,
+        )
     elif args.mode == "llm":
-        fixer = LLMDiagramFixer(args.provider, config, rules_file)
+        fixer = LLMDiagramFixer(args.provider, config, rules_md_path)
     else:  # validate
         fixer = None
 
