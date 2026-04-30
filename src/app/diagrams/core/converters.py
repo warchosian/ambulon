@@ -2,8 +2,8 @@
 Convertisseurs de diagrammes vers SVG.
 
 Supporte:
-- PlantUML (via Kroki ou JAR local)
-- Mermaid (via Kroki)
+- PlantUML (via JAR local ou Kroki)
+- Mermaid (via mermaid-cli local ou Kroki)
 - Graphviz/DOT (via commande dot ou Kroki)
 """
 
@@ -294,9 +294,93 @@ def _convert_plantuml_with_kroki(
 # =============================================================================
 
 
+def _find_mmdc_binary() -> Optional[str]:
+    """Localise le binaire mermaid-cli (mmdc) si installé."""
+    candidates = [
+        os.environ.get("MMDC_BIN"),
+        "mmdc",
+        "mmdc.cmd",
+    ]
+    for cand in candidates:
+        if not cand:
+            continue
+        try:
+            result = subprocess.run(
+                [cand, "--version"],
+                capture_output=True,
+                timeout=10,
+                text=True,
+            )
+            if result.returncode == 0:
+                return cand
+        except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+            continue
+    return None
+
+
+def _convert_mermaid_with_mmdc(
+    mermaid_code: str, timeout: int = 30
+) -> ConversionResult:
+    """
+    Convertit Mermaid via mermaid-cli local (mmdc).
+
+    Avantages : hors-ligne, rapide, retourne les vraies erreurs syntaxiques.
+    """
+    mmdc = _find_mmdc_binary()
+    if not mmdc:
+        return ConversionResult(
+            success=False, error_message="mmdc binary not found"
+        )
+
+    with tempfile.TemporaryDirectory() as tmp:
+        in_path = Path(tmp) / "in.mmd"
+        out_path = Path(tmp) / "out.svg"
+        in_path.write_text(mermaid_code, encoding="utf-8")
+
+        try:
+            result = subprocess.run(
+                [mmdc, "-i", str(in_path), "-o", str(out_path), "--quiet"],
+                capture_output=True,
+                timeout=timeout,
+                text=True,
+            )
+        except subprocess.TimeoutExpired:
+            return ConversionResult(
+                success=False,
+                error_message=f"mmdc timeout after {timeout}s",
+            )
+        except Exception as e:
+            return ConversionResult(
+                success=False, error_message=f"mmdc execution error: {e}"
+            )
+
+        if result.returncode != 0 or not out_path.exists():
+            err = (result.stderr or result.stdout or "").strip()
+            return ConversionResult(
+                success=False,
+                error_message=f"mmdc syntax error: {err[:500]}",
+            )
+
+        try:
+            svg_content = out_path.read_text(encoding="utf-8")
+        except Exception as e:
+            return ConversionResult(
+                success=False, error_message=f"mmdc output read error: {e}"
+            )
+
+        return ConversionResult(
+            success=True, svg_content=svg_content, method_used="mmdc-local"
+        )
+
+
 def convert_mermaid(mermaid_code: str, timeout: int = 30) -> ConversionResult:
     """
     Convertit du code Mermaid en SVG.
+
+    Stratégie :
+    1. Tente mermaid-cli local (mmdc) — hors-ligne, rapide, vraies erreurs.
+    2. Fallback sur le module kroki Python si présent.
+    3. Fallback sur l'API HTTP Kroki publique.
 
     Args:
         mermaid_code: Code Mermaid
@@ -305,14 +389,24 @@ def convert_mermaid(mermaid_code: str, timeout: int = 30) -> ConversionResult:
     Returns:
         Résultat de la conversion
     """
-    # Essaie d'abord le module kroki si disponible
+    # 1. mmdc local (préféré)
+    result = _convert_mermaid_with_mmdc(mermaid_code, timeout)
+    if result.success:
+        return result
+    mmdc_error = result.error_message
+    if mmdc_error and "syntax error" in mmdc_error:
+        # Erreur syntaxique avérée — pas de fallback Kroki, on remonte la vraie erreur
+        return result
+    logger.debug("mmdc unavailable or non-syntax failure (%s); trying Kroki", mmdc_error)
+
+    # 2. Module kroki Python
     svg = _try_kroki_module_render("mermaid", mermaid_code)
     if svg:
         return ConversionResult(
             success=True, svg_content=svg, method_used="kroki-module"
         )
 
-    # Sinon utilise l'API HTTP
+    # 3. API HTTP Kroki
     try:
         compressed = zlib.compress(mermaid_code.encode("utf-8"), 9)
         encoded = base64.urlsafe_b64encode(compressed).decode("utf-8")
@@ -330,7 +424,8 @@ def convert_mermaid(mermaid_code: str, timeout: int = 30) -> ConversionResult:
 
     except Exception as e:
         return ConversionResult(
-            success=False, error_message=f"Mermaid conversion error: {e}"
+            success=False,
+            error_message=f"Mermaid conversion error: mmdc={mmdc_error}; kroki={e}",
         )
 
 
